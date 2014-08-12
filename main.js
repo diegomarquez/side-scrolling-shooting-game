@@ -10,7 +10,7 @@ define(function(require){
 
 	var starField = require('star-field');
 
-	gb.debug = true;
+	// gb.debug = true;
 
 	// Storing some references to avoid excesive typing
 	var game = gb.game;
