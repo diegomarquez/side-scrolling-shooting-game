@@ -16,7 +16,7 @@ define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
 			Keyboard.onKeyDown(Keyboard.A, this, function() {
 				var bullet = Gb.add('PlayerBullet', 'First', 'MainFront');
 
-				bullet.x = this.X;
+				bullet.x = this.X + 20;
 				bullet.y = this.Y;
 			});
 		},
