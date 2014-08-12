@@ -4,7 +4,7 @@ define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
 		init: function() {
 			this._super();
 
-			this.speed = 100;
+			this.speed = 200;
 
 			this.viewportOffsetX = 0;
 			this.viewportOffsetY = 0;
