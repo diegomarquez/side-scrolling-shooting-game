@@ -1,6 +1,6 @@
 define(function(require) {	
-	var gameObject = require("game-object");
-	var pathRenderer = require('path-renderer');
+	var basicBullet = require("basic-bullet");
+	var basicBulletRenderer = require('basic-bullet-renderer');
 	var circleCollider = require('circle-collider');
 
 	var reclaimer = require('reclaimer');
@@ -10,51 +10,17 @@ define(function(require) {
 	var Bullets = require("bundle").extend({
 		create: function(args) {	
 			this.componentPool.createPool('circle-collider', circleCollider);
-			this.componentPool.createPool('path-renderer', pathRenderer);
+			this.componentPool.createPool('basic-bullet-renderer', basicBulletRenderer);
 			
-			this.gameObjectPool.createPool('Bullet', gameObject, 20);
-			// this.gameObjectPool.createPool('Dummy', gameObject, 1);
+			this.gameObjectPool.createPool('Bullet', basicBullet, 20);
 			
-			// this.componentPool.createConfiguration("ShipCollider", 'circle-collider')
+			// this.componentPool.createConfiguration("BulletCollider", 'circle-collider')
 			// 	.args({id:'shipColliderId', radius:20});
-
-			// this.componentPool.createConfiguration("DummyCollider", 'circle-collider')
-			// 	.args({id:'dummyColliderId', radius:10});
 			
-			this.componentPool.createConfiguration("BulletRender", 'path-renderer')
-				.args({
-					width: 20,
-					height: 20,
-					name: 'bullet',
-					offset: 'center',
-					drawPath: function(context) {
-						context.translate(this.width/2, this.height/2);
-						draw.circle(context, 0, 0, 10, "#FF0000")
-					}
-				});
+			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer')
 			
 			this.gameObjectPool.createConfiguration("PlayerBullet", "Bullet")
-				.args({
-					life: 50,
-
-					update: function() {
-						this.x += 5;
-
-						if (this.life < 0) {
-							reclaimer.claim(this, this.typeId);
-						} else {
-							this.life--;
-						}
-					}
-				})
 				.setRenderer("BulletRender");
-
-			// this.gameObjectPool.createConfiguration("DummyShip", "Dummy")
-			// 	.args({rotation: 90, onCollide:function(other) {
-
-			// 	}})
-			// 	.addComponent('DummyCollider')
-			// 	.setRenderer("ShipRenderer");
 		},
 	});
 
