@@ -1,49 +1,55 @@
 define(["path-renderer", "draw"], function(PathRenderer, Draw) {
-	var BasicBulletRenderer = PathRenderer.extend({
-		init: function() {
-			this._super();
-		
-			this.width = 20;
-			this.height = 20;
-			this.name = 'BasicBullet';
-			this.offset = 'center';
-		},
+  var BasicBulletRenderer = PathRenderer.extend({
+    init: function() {
+      this._super();
 
-		drawPath: function(context) { 
-			context.save();
-			
-			context.translate(this.width/2, this.height/2);
+      this.size = 10;
 
-			context.strokeStyle = '#FF0000';
-			context.lineWidth = 1;
-			
-			context.beginPath();
-			context.arc(0, 0, 10, -Math.PI/2, Math.PI/2, false);	
-			
-			var startX = 0;
-			var startY = -10;
-			var zigzagSpacing = 2.5;
-			
-			context.moveTo(startX, startY);
+      this.width = this.size*3;
+      this.height = this.size*3;
+      this.name = 'BasicBullet';
+      this.offset = 'center';
+    },
 
-			for (var n = 0; n < 8; n++) {
-				var x = null;
-				var y = startY + ((n + 1) * zigzagSpacing);
+    drawPath: function(context) {
+      context.save();
 
-				if (n % 2 == 0) {
-					x = startX + 7.5;
-				} else {
-					x = startX;
-				}
+      context.translate(this.width/2, this.height/2);
 
-				context.lineTo(x, y);
-			}
+      context.strokeStyle = '#FF0000';
+      context.lineWidth = 1;
 
-			context.stroke();
-			
-			context.restore();
-		}
-	});
+      context.beginPath();
 
-	return BasicBulletRenderer;
+      context.moveTo(-this.size, -this.size);
+      context.lineTo(0, -this.size);
+      context.arc(0, 0, this.size, -Math.PI/2, Math.PI/2, false);
+      context.lineTo(-this.size, this.size);
+
+      var startX = -this.size;
+      var startY = -this.size;
+      var spacing = this.size/4;
+
+      context.moveTo(startX, startY);
+
+      for (var n = 0; n < 8; n++) {
+        var x = null;
+        var y = startY + ((n + 1) * spacing);
+
+        if (n % 2 == 0) {
+          x = startX + (this.size*3/4);
+        } else {
+          x = startX;
+        }
+
+        context.lineTo(x, y);
+      }
+
+      context.stroke();
+
+      context.restore();
+    }
+  });
+
+  return BasicBulletRenderer;
 });

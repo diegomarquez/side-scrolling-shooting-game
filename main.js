@@ -1,62 +1,62 @@
-// side-shmup's main entry point 
+// side-shmup's main entry point
 
-define(function(require){	
-	var gb = require('gb');
-	
-	// var soundPlayer = require('sound-player');
-	var viewportFollow = require('viewport-follow');
-	var viewportOutline = require('viewport-outline');
-	var playerShipGetter = require('player-ship-getter');
+define(function(require){
+  var gb = require('gb');
 
-	var starField = require('star-field');
+  // var soundPlayer = require('sound-player');
+  var viewportFollow = require('viewport-follow');
+  var viewportOutline = require('viewport-outline');
+  var playerShipGetter = require('player-ship-getter');
 
-	// gb.debug = true;
+  var starField = require('star-field');
 
-	// Storing some references to avoid excesive typing
-	var game = gb.game;
+  gb.debug = true;
 
-	var mainViewport = null;
-	var minimapOutline = null;
+  // Storing some references to avoid excesive typing
+  var game = gb.game;
 
-	game.add_extension(require("display-setup"));
+  var mainViewport = null;
+  var minimapOutline = null;
 
-	var ship;
+  game.add_extension(require("display-setup"));
 
-	// This is the main initialization function
-	game.on(game.CREATE, this, function() {
+  var ship;
 
-		// var collision_resolver = require('collision-resolver');
-		// collision_resolver.addCollisionPair('shipColliderId', 'dummyColliderId');
+  // This is the main initialization function
+  game.on(game.CREATE, this, function() {
 
-		require('stars-bundle').create();
-		require('ship-bundle').create();
-		require('minimap-bundle').create();
-		require('bullets-bundle').create();
+    // var collision_resolver = require('collision-resolver');
+    // collision_resolver.addCollisionPair('shipColliderId', 'dummyColliderId');
 
-		// soundPlayer.createChannels(5);
-		// soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
-		// soundPlayer.assignChannels('SHOT', 5);
+    require('stars-bundle').create();
+    require('ship-bundle').create();
+    require('minimap-bundle').create();
+    require('bullets-bundle').create();
 
-		starField.create();
+    // soundPlayer.createChannels(5);
+    // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
+    // soundPlayer.assignChannels('SHOT', 5);
 
-		// Add player ship
-		playerShipGetter.get();
+    starField.create();
 
-		// Make 'Main' viewport follow the position of the player ship
-		viewportFollow.setFollow('Main', playerShipGetter.get());
+    // Add player ship
+    playerShipGetter.get();
 
-		// Make the outline in the minimap follow the position of the 'Main' viewport
-		viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
-	});
+    // Make 'Main' viewport follow the position of the player ship
+    viewportFollow.setFollow('Main', playerShipGetter.get());
 
-	// This is the main update loop
-	game.on(game.UPDATE, this, function() {
-		starField.update(game.delta);
-		viewportFollow.update(game.delta);
-		viewportOutline.update(game.delta);
-	});
+    // Make the outline in the minimap follow the position of the 'Main' viewport
+    viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
+  });
 
-	// This is the main setup that kicks off the whole thing
-	// Notice how it needs to find a '#main' and '#game' in the document
-	game.create(document.getElementById('main'), document.getElementById('game'));
+  // This is the main update loop
+  game.on(game.UPDATE, this, function() {
+    starField.update(game.delta);
+    viewportFollow.update(game.delta);
+    viewportOutline.update(game.delta);
+  });
+
+  // This is the main setup that kicks off the whole thing
+  // Notice how it needs to find a '#main' and '#game' in the document
+  game.create(document.getElementById('main'), document.getElementById('game'));
 });

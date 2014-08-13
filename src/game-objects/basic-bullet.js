@@ -1,28 +1,30 @@
 define(["game-object", "reclaimer"], function(GameObject, Reclaimer) {
-	var BasicBullet = GameObject.extend({		
-		// Contructor
-		init: function() {
-			this._super();
-		},
+  var BasicBullet = GameObject.extend({
+    // Contructor
+    init: function() {
+      this._super();
+    },
 
-		start: function() {
-			this._super();
+    start: function() {
+      this._super();
 
-			this.life = 50;
-		},
+      this.life = 50;
+    },
 
-		update: function(delta) {
-			this.x += 10;
+    update: function(delta) {
+      console.log(delta)
 
-			if (this.life < 0) {
-				Reclaimer.claim(this);
-			} else {
-				this.life--;
-			}
-		},
+      this.x += 10;
 
-		onCollide: function(other) {}
-	});
+      if (this.life < 0) {
+       Reclaimer.claim(this);
+      } else {
+       this.life--;
+      }
+    },
 
-	return BasicBullet;
+    onCollide: function(other) {}
+  });
+
+  return BasicBullet;
 });
