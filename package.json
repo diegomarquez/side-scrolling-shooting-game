@@ -6,7 +6,7 @@
   "frameworkRepo": "git@github.com:diegomarquez/game-builder.git",
   "framework": "./game-builder",
   "lib": "./lib",
-  "frameworkTag": "latest",
+  "frameworkTag": "master",
   "dependencies": {
     "grunt-shell": "~0.6.4",
     "grunt-open": "~0.2.2",

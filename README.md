@@ -2,9 +2,11 @@
 -------------------
 
 Commit fixes to game-builder
-Fix colliders debug draw
-	polygon-collider
-	fixed-collider
+
+Update Basic instruction on how to get a project running
+  make word 'website' a link to grunt
+  make word 'website' a link to bower
+  install grunt-cli
 
 A [GAME-BUILDER][game-builder] project
 
