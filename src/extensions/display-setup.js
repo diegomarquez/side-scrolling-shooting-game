@@ -1,49 +1,55 @@
 define(["groups", "viewports", "gb", "world", "extension", "util"], function(Groups, Viewports, Gb, World, Extension, Util) {
-	var DisplaySetup = Extension.extend({		
-		type: function() {
-			return Gb.game.CREATE; 
-		},
+  var DisplaySetup = Extension.extend({
+    type: function() {
+      return Gb.game.CREATE;
+    },
 
-		execute: function() {			
-			World.create(Gb.canvas.width*10, Gb.canvas.height);
+    execute: function() {
+      World.create(Gb.canvas.width*10, Gb.canvas.height);
 
-			Groups.add("First");
-			
-			var fastStarsViewport = Viewports.add("FastStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
-			fastStarsViewport.addLayer("Front");
+      Groups.add("First");
 
-			var normalStarsViewport = Viewports.add("NormalStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
-			normalStarsViewport.addLayer("Front");
+      var fastStarsViewport = Viewports.add("FastStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      fastStarsViewport.addLayer("Front");
 
-			var slowStarsViewport = Viewports.add("SlowStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
-			slowStarsViewport.addLayer("Front");
+      var normalStarsViewport = Viewports.add("NormalStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      normalStarsViewport.addLayer("Front");
 
-			var extraSlowStarsViewport = Viewports.add("ExtraSlowStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
-			extraSlowStarsViewport.addLayer("Front");
+      var slowStarsViewport = Viewports.add("SlowStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      slowStarsViewport.addLayer("Front");
 
-			var mainViewport = Viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
-			mainViewport.addLayer("Front");
+      var extraSlowStarsViewport = Viewports.add("ExtraSlowStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      extraSlowStarsViewport.addLayer("Front");
 
-			var miniMap = Viewports.add("Mini", Gb.canvas.width-20, Gb.canvas.height/10, 10, 10);
-			
-			miniMap.addLayer("Front");
-			miniMap.setStroke(2, "#FF0000");
-			World.scaleViewportToFit(miniMap);
+      var mainViewport = Viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      mainViewport.addLayer("Front");
 
-			Gb.setViewportShortCut('MainFront', [{viewport:'Main', layer:'Front'}]);
-			Gb.setViewportShortCut('MiniFront', [{viewport:'Mini', layer:'Front'}]);
-			Gb.setViewportShortCut('FastStarsFront', [{viewport:'FastStars', layer:'Front'}]);
-			Gb.setViewportShortCut('NormalStarsFront', [{viewport:'NormalStars', layer:'Front'}]);
-			Gb.setViewportShortCut('SlowStarsFront', [{viewport:'SlowStars', layer:'Front'}]);
-			Gb.setViewportShortCut('ExtraSlowStarsFront', [{viewport:'ExtraSlowStars', layer:'Front'}]);
+      var miniMap = Viewports.add("Mini", Gb.canvas.width-20, Gb.canvas.height/10, 10, 10);
 
-			var starViewports = ['FastStarsFront', 'NormalStarsFront', 'SlowStarsFront', 'ExtraSlowStarsFront'];
+      miniMap.addLayer("Front");
+      miniMap.setStroke(2, "#FF0000");
+      World.scaleViewportToFit(miniMap);
 
-			Gb.getRandomStarsViewport = function() {
-				return starViewports[Util.rand_i(0, starViewports.length-1)];
-			}
-		}
-	});
+      Gb.setViewportShortCut('MainFront', [{viewport:'Main', layer:'Front'}]);
+      Gb.setViewportShortCut('MiniFront', [{viewport:'Mini', layer:'Front'}]);
 
-	return DisplaySetup;
+      Gb.setViewportShortCut('MainMiniFront', [
+        {viewport:'Main', layer:'Front'},
+        {viewport:'Mini', layer:'Front'}
+      ]);
+
+      Gb.setViewportShortCut('FastStarsFront', [{viewport:'FastStars', layer:'Front'}]);
+      Gb.setViewportShortCut('NormalStarsFront', [{viewport:'NormalStars', layer:'Front'}]);
+      Gb.setViewportShortCut('SlowStarsFront', [{viewport:'SlowStars', layer:'Front'}]);
+      Gb.setViewportShortCut('ExtraSlowStarsFront', [{viewport:'ExtraSlowStars', layer:'Front'}]);
+
+      var starViewports = ['FastStarsFront', 'NormalStarsFront', 'SlowStarsFront', 'ExtraSlowStarsFront'];
+
+      Gb.getRandomStarsViewport = function() {
+        return starViewports[Util.rand_i(0, starViewports.length-1)];
+      }
+    }
+  });
+
+  return DisplaySetup;
 });
