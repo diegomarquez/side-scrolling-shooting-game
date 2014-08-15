@@ -12,8 +12,6 @@ define(["game-object", "reclaimer"], function(GameObject, Reclaimer) {
     },
 
     update: function(delta) {
-      console.log(delta)
-
       this.x += 10;
 
       if (this.life < 0) {

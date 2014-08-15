@@ -8,6 +8,9 @@ define(function(require){
   var viewportOutline = require('viewport-outline');
   var playerShipGetter = require('player-ship-getter');
 
+  var gameObjectDropdown = require('game-object-dropdown');
+  var mouseDetection = require('mouse-detection');
+
   var starField = require('star-field');
 
   gb.debug = true;
@@ -15,12 +18,7 @@ define(function(require){
   // Storing some references to avoid excesive typing
   var game = gb.game;
 
-  var mainViewport = null;
-  var minimapOutline = null;
-
   game.add_extension(require("display-setup"));
-
-  var ship;
 
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
@@ -32,6 +30,9 @@ define(function(require){
     require('ship-bundle').create();
     require('minimap-bundle').create();
     require('bullets-bundle').create();
+
+    gameObjectDropdown.create();
+    mouseDetection.create();
 
     // soundPlayer.createChannels(5);
     // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);

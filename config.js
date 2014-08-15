@@ -63,6 +63,8 @@ require.config({
     "minimap-bundle": "src/bundles/minimap-bundle",
     "ship-bundle": "src/bundles/ship-bundle",
     "stars-bundle": "src/bundles/stars-bundle",
+    "game-object-dropdown": "src/editor/game-object-dropdown",
+    "mouse-detection": "src/editor/mouse-detection",
     "display-setup": "src/extensions/display-setup",
     "basic-bullet": "src/game-objects/basic-bullet",
     "player-ship": "src/game-objects/player-ship",

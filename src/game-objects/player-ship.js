@@ -23,7 +23,7 @@ define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
 
     update: function(delta) {
       // Auto scrolling
-      this.x += 0.5;
+      // this.x += 0.5;
 
       // Movement independant of the viewport
       if (Keyboard.isKeyDown(Keyboard.GAME_LEFT)) {

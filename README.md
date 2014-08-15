@@ -1,6 +1,9 @@
 # side-shmup
 -------------------
 
+Editor
+  Mouse detection by viewport
+
 Commit fixes to game-builder
 
 Web Site
