@@ -9,7 +9,7 @@ define(function(require){
   var playerShipGetter = require('player-ship-getter');
 
   var gameObjectDropdown = require('game-object-dropdown');
-  var mouseDetection = require('mouse-detection');
+  // var mouseDetection = require('mouse-detection');
 
   var starField = require('star-field');
 
@@ -19,6 +19,7 @@ define(function(require){
   var game = gb.game;
 
   game.add_extension(require("display-setup"));
+  game.add_extension(require("mouse-events"));
 
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
@@ -32,7 +33,7 @@ define(function(require){
     require('bullets-bundle').create();
 
     gameObjectDropdown.create();
-    mouseDetection.create();
+    // mouseDetection.create();
 
     // soundPlayer.createChannels(5);
     // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
@@ -41,7 +42,12 @@ define(function(require){
     starField.create();
 
     // Add player ship
-    playerShipGetter.get();
+    var ship = playerShipGetter.get();
+
+    ship.on(ship.CLICK, this, function(clickData) {
+    	console.log(clickData.viewport.name);
+    	console.log(clickData.go.typeId);
+    });
 
     // Make 'Main' viewport follow the position of the player ship
     viewportFollow.setFollow('Main', playerShipGetter.get());
