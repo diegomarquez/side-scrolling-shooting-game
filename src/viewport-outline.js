@@ -22,6 +22,7 @@ define(function(require) {
 				pair = this.viewportOutlines[name];
 
 				pair.outline.x = pair.viewport.x*-1;
+				pair.outline.y = pair.viewport.y*-1;
 			}
 		}
  	});

@@ -1,16 +1,17 @@
 # side-shmup
 -------------------
 
-Editor
-  Mouse detection by viewport
-
 Commit fixes to game-builder
+
+Editor
+	Be able to choose viewport and layer to add a game-object to
+	Think about a better UI
 
 Web Site
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
     make word 'website' a link to bower
-    install grunt-cli
+    make it clear that you need to install grunt-cli
 
 Generator
   Fix .gitignore generation

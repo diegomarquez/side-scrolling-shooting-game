@@ -1,6 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
+  var gameObjectMouseInteraction = require('game-object-input-interaction');
 
   var selectedValues = {
     selectedGameObject: null,
@@ -8,12 +9,16 @@ define(function(require) {
     selectedViewport: null
   }
 
+  var mainViewport = null
+
   var GameObjectDropdown = require("class").extend({
     init: function() {
-
+  
     },
 
-    create: function() {
+    create: function(main) {
+      mainViewport = main;
+
       var container = document.createElement('div');
 
       container.appendChild(setupDropdown({
@@ -25,7 +30,7 @@ define(function(require) {
 
       container.appendChild(setupDropdown({
         id: 'group-selector',
-        defaultMessage: 'Choose a Group',
+        defaultMessage: 'Choose an Update Group',
         data: gb.groups.allGroupNames(),
         property: 'selectedGroup'
       }));
@@ -50,21 +55,29 @@ define(function(require) {
 
     button.style.float = 'right';
 
-    button.onclick = function(event) {
-      if (selectedValues.selectedGameObject &&
-          selectedValues.selectedGroup &&
-          selectedValues.selectedViewport)
-      {
-        var object = gb.add(selectedValues.selectedGameObject,
-                            selectedValues.selectedGroup,
-                            selectedValues.selectedViewport);
+    var viewport = gb.viewports.get(mainViewport);
 
-        object.x = 100;
-        object.y = 100;
+    button.onclick = function(event) {
+      if (selectedValues.selectedGameObject && selectedValues.selectedGroup && selectedValues.selectedViewport) {
+        // Create an editor object and place it in the middle of the viewport
+        var createdObject = createGameObject(selectedValues, viewport);
+        // Setup events to be able to interact with it
+        gameObjectMouseInteraction.setupInteraction(createdObject);
       }
-    }
+    };
 
     return button;
+  }
+
+  var createGameObject = function(data, viewport) {
+    var object = gb.add(data.selectedGameObject, data.selectedGroup, data.selectedViewport);
+
+    object.x = -viewport.x + viewport.width/2;
+    object.y = -viewport.y + viewport.height/2;
+
+    object.update = function(delta) {}
+
+    return object;
   }
 
   var setupDropdown = function(options) {

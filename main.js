@@ -8,8 +8,8 @@ define(function(require){
   var viewportOutline = require('viewport-outline');
   var playerShipGetter = require('player-ship-getter');
 
-  var gameObjectDropdown = require('game-object-dropdown');
-  // var mouseDetection = require('mouse-detection');
+  var gameObjectDropdown = require('game-object-creator');
+  var mainViewportControl = require('main-viewport-control');
 
   var starField = require('star-field');
 
@@ -32,25 +32,21 @@ define(function(require){
     require('minimap-bundle').create();
     require('bullets-bundle').create();
 
-    gameObjectDropdown.create();
-    // mouseDetection.create();
+    gameObjectDropdown.create('Main');
+    mainViewportControl.create('Main', 50);
 
     // soundPlayer.createChannels(5);
     // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
     // soundPlayer.assignChannels('SHOT', 5);
 
-    starField.create();
+    // starField.create();
 
     // Add player ship
-    var ship = playerShipGetter.get();
-
-    ship.on(ship.CLICK, this, function(clickData) {
-    	console.log(clickData.viewport.name);
-    	console.log(clickData.go.typeId);
-    });
+    // var ship = playerShipGetter.get();
+    // playerShipGetter.get();
 
     // Make 'Main' viewport follow the position of the player ship
-    viewportFollow.setFollow('Main', playerShipGetter.get());
+    // viewportFollow.setFollow('Main', playerShipGetter.get());
 
     // Make the outline in the minimap follow the position of the 'Main' viewport
     viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
@@ -58,8 +54,8 @@ define(function(require){
 
   // This is the main update loop
   game.on(game.UPDATE, this, function() {
-    starField.update(game.delta);
-    viewportFollow.update(game.delta);
+    // starField.update(game.delta);
+    // viewportFollow.update(game.delta);
     viewportOutline.update(game.delta);
   });
 

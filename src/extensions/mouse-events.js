@@ -106,11 +106,11 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
           // Return it
           return t_go;
         } 
-
-        // Nothing was clicked in the current viewport
-        return null;
       }
     }
+
+    // Nothing was clicked in the current viewport
+    return null;
   }
   
   Object.defineProperty(GameObject.prototype, "CLICK", { get: function() { return 'click'; } });
