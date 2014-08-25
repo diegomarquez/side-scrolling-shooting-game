@@ -2,11 +2,13 @@ define(function(require) {
 
   var gb = require('gb');
   var gameObjectMouseInteraction = require('game-object-input-interaction');
+  var levelSerializer = require('level-serializer');
 
   var selectedValues = {
     selectedGameObject: null,
     selectedGroup: null,
-    selectedViewport: null
+    selectedViewport: null,
+    levelName: null
   }
 
   var mainViewport = null
@@ -20,6 +22,18 @@ define(function(require) {
       mainViewport = main;
 
       var container = document.createElement('div');
+
+      container.style.position = 'relative';
+
+      container.appendChild(setupTextbox({
+        id: 'level-name',
+        defaultMessage: 'Set a Level Name',
+        onChange: function() {
+          selectedValues['levelName'] = this.value;
+        }
+      }));
+
+      container.appendChild(setupHorizontalLine());
 
       container.appendChild(setupDropdown({
         id: 'game-object-selector',
@@ -42,32 +56,48 @@ define(function(require) {
         property: 'selectedViewport'
       }));
 
-      container.appendChild(setupCreateButton(document.createElement('button')));
+      container.appendChild(setupButton({
+        id: 'game-object-create-button',
+        defaultMessage: 'Create',
+        onClick: function(event) {
+          var viewport = gb.viewports.get(mainViewport);
+          
+          if (selectedValues.selectedGameObject && selectedValues.selectedGroup && selectedValues.selectedViewport) {
+            // Create an editor object and place it in the middle of the viewport
+            var createdObject = createGameObject(selectedValues, viewport);
+            // Setup events to be able to interact with it
+            gameObjectMouseInteraction.setupInteraction(createdObject);
+            // Add the recently created object to the serializer module
+            levelSerializer.add(createdObject, selectedValues);
+          }
+        }
+      }));
+
+      container.appendChild(setupHorizontalLine());
+      
+      container.appendChild(setupButton({
+        id: 'game-object-export-button',
+        defaultMessage: 'Export',
+        onClick: function(event) {
+          if (selectedValues['levelName']) {
+            // Set the level name before ssending everything to the server 
+            levelSerializer.setLevelName(selectedValues['levelName']);
+            // Serialize all the currently active objects in the editor
+            var data = levelSerializer.serialize();
+
+            // Post the result to the server so the file can be saved localy
+            var request = new XMLHttpRequest();
+            request.open("POST", "http://localhost:3000", true);
+            request.send(data);
+          } else {
+            console.error("Missing level name field");
+          }
+        }
+      }));
 
       document.getElementById('main').appendChild(container)
     }
   });
-
-  var setupCreateButton = function(button) {
-    button.id = 'game-object-create-button';
-    button.type = 'button';
-    button.innerHTML = 'Create';
-
-    button.style.float = 'right';
-
-    var viewport = gb.viewports.get(mainViewport);
-
-    button.onclick = function(event) {
-      if (selectedValues.selectedGameObject && selectedValues.selectedGroup && selectedValues.selectedViewport) {
-        // Create an editor object and place it in the middle of the viewport
-        var createdObject = createGameObject(selectedValues, viewport);
-        // Setup events to be able to interact with it
-        gameObjectMouseInteraction.setupInteraction(createdObject);
-      }
-    };
-
-    return button;
-  }
 
   var createGameObject = function(data, viewport) {
     var object = gb.add(data.selectedGameObject, data.selectedGroup, data.selectedViewport);
@@ -80,10 +110,52 @@ define(function(require) {
     return object;
   }
 
+  var wrapInDiv = function(child) {
+    var container = document.createElement('div')
+
+    container.appendChild(child);
+
+    return container;
+  }
+
+  var setupHorizontalLine = function(data) {
+    var hr = document.createElement('hr');  
+    hr.style.width = '50%';
+  
+    return wrapInDiv(hr);
+  }
+
+  var setupButton = function(data) {
+    var button = document.createElement('button');
+
+    button.id = data.id;
+    button.type = 'button';
+    button.innerHTML = data.defaultMessage;
+    button.style.width = '100%';
+    
+    button.onclick = data.onClick;
+
+    return wrapInDiv(button);
+  }
+
+  var setupTextbox = function(options) {
+    var input = document.createElement('input');
+
+    input.id = options.id;
+    input.type = 'text';
+    input.placeholder = options.defaultMessage;
+    input.style.width = '100%';
+
+    input.onchange = options.onChange;
+
+    return wrapInDiv(input);
+  }
+
   var setupDropdown = function(options) {
     var dropdown = document.createElement('select');
 
     dropdown.id = options.id;
+    dropdown.style.width = '100%';
 
     var data = gb.goPool.getConfigurationTypes();
 
@@ -101,7 +173,7 @@ define(function(require) {
       }
     }
 
-    return dropdown;
+    return wrapInDiv(dropdown);
   }
 
   var createOption = function(name, value) {

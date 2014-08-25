@@ -65,6 +65,7 @@ require.config({
     "stars-bundle": "src/bundles/stars-bundle",
     "game-object-creator": "src/editor/game-object-creator",
     "game-object-input-interaction": "src/editor/game-object-input-interaction",
+    "level-serializer": "src/editor/level-serializer",
     "main-viewport-control": "src/editor/main-viewport-control",
     "display-setup": "src/extensions/display-setup",
     "mouse-events": "src/extensions/mouse-events",
