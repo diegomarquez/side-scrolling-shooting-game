@@ -1,11 +1,13 @@
 # side-shmup
 -------------------
 
-Commit fixes to game-builder
+Editor
+	Save level
+	Load level
 
 Editor
 	Be able to choose viewport and layer to add a game-object to
-	Think about a better UI
+	Put the styling in a .css file
 
 Web Site
   Update Basic instruction on how to get a project running

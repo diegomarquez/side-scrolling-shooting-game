@@ -8,7 +8,7 @@ define(function(require){
   var viewportOutline = require('viewport-outline');
   var playerShipGetter = require('player-ship-getter');
 
-  var gameObjectDropdown = require('game-object-creator');
+  var sceneEditor = require('scene-editor');
   var mainViewportControl = require('main-viewport-control');
 
   var starField = require('star-field');
@@ -32,7 +32,7 @@ define(function(require){
     require('minimap-bundle').create();
     require('bullets-bundle').create();
 
-    gameObjectDropdown.create('Main');
+    sceneEditor.create('Main');
     mainViewportControl.create('Main', 50);
 
     // soundPlayer.createChannels(5);

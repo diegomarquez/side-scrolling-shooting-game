@@ -28,7 +28,7 @@ app.use('/', function(req, res) {
 
 			var name = S(json.name).slugify().s
 
-	        fs.writeFile("levels/" + name + ".json", JSON.stringify(), function(err) {
+	        fs.writeFile("levels/" + name + ".json", JSON.stringify(json), function(err) {
 			    if(err) {
 			        console.log(err);
 			    } else {

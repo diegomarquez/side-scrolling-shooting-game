@@ -1,19 +1,20 @@
 define(function(require) {
 
   var gb = require('gb');
-  var gameObjectMouseInteraction = require('game-object-input-interaction');
-  var levelSerializer = require('level-serializer');
+  var sceneSerializer = require('scene-serializer');
+  var sceneLoader = require('scene-loader');
+  var setupEditorObject = require('setup-editor-object');
 
   var selectedValues = {
     selectedGameObject: null,
     selectedGroup: null,
     selectedViewport: null,
-    levelName: null
+    sceneName: null
   }
 
   var mainViewport = null
 
-  var GameObjectDropdown = require("class").extend({
+  var SceneEditor = require("class").extend({
     init: function() {
   
     },
@@ -26,10 +27,10 @@ define(function(require) {
       container.style.position = 'relative';
 
       container.appendChild(setupTextbox({
-        id: 'level-name',
+        id: 'scene-name',
         defaultMessage: 'Set a Level Name',
         onChange: function() {
-          selectedValues['levelName'] = this.value;
+          selectedValues['sceneName'] = this.value;
         }
       }));
 
@@ -60,30 +61,24 @@ define(function(require) {
         id: 'game-object-create-button',
         defaultMessage: 'Create',
         onClick: function(event) {
-          var viewport = gb.viewports.get(mainViewport);
-          
-          if (selectedValues.selectedGameObject && selectedValues.selectedGroup && selectedValues.selectedViewport) {
-            // Create an editor object and place it in the middle of the viewport
-            var createdObject = createGameObject(selectedValues, viewport);
-            // Setup events to be able to interact with it
-            gameObjectMouseInteraction.setupInteraction(createdObject);
-            // Add the recently created object to the serializer module
-            levelSerializer.add(createdObject, selectedValues);
-          }
+            setupEditorObject.setupWithViewport(selectedValues.selectedGameObject, 
+                                                selectedValues.selectedGroup, 
+                                                selectedValues.selectedViewport, 
+                                                gb.viewports.get(mainViewport));
         }
       }));
 
       container.appendChild(setupHorizontalLine());
       
       container.appendChild(setupButton({
-        id: 'game-object-export-button',
-        defaultMessage: 'Export',
+        id: 'level-save-button',
+        defaultMessage: 'Save',
         onClick: function(event) {
-          if (selectedValues['levelName']) {
+          if (selectedValues['sceneName']) {
             // Set the level name before ssending everything to the server 
-            levelSerializer.setLevelName(selectedValues['levelName']);
+            sceneSerializer.setSceneName(selectedValues['sceneName']);
             // Serialize all the currently active objects in the editor
-            var data = levelSerializer.serialize();
+            var data = sceneSerializer.serialize();
 
             // Post the result to the server so the file can be saved localy
             var request = new XMLHttpRequest();
@@ -95,20 +90,30 @@ define(function(require) {
         }
       }));
 
-      document.getElementById('main').appendChild(container)
+      container.appendChild(setupFileLoaderButton({
+        id: 'level-load-button',
+        defaultMessage: 'Load',
+        onClick: function(event) {
+          var file = event.target.files[0];
+
+          var reader = new FileReader();
+
+          reader.onload = function(f) {
+            var data = JSON.parse(this.result);
+
+            selectedValues['sceneName'] = data.name;
+            document.getElementById('scene-name').value = data.name;
+            
+            sceneLoader.load(data);
+          };
+
+          reader.readAsText(file);
+        }
+      }));
+
+      document.getElementById('main').appendChild(container);
     }
   });
-
-  var createGameObject = function(data, viewport) {
-    var object = gb.add(data.selectedGameObject, data.selectedGroup, data.selectedViewport);
-
-    object.x = -viewport.x + viewport.width/2;
-    object.y = -viewport.y + viewport.height/2;
-
-    object.update = function(delta) {}
-
-    return object;
-  }
 
   var wrapInDiv = function(child) {
     var container = document.createElement('div')
@@ -118,22 +123,36 @@ define(function(require) {
     return container;
   }
 
-  var setupHorizontalLine = function(data) {
+  var setupHorizontalLine = function(options) {
     var hr = document.createElement('hr');  
     hr.style.width = '50%';
   
     return wrapInDiv(hr);
   }
 
-  var setupButton = function(data) {
+  var setupFileLoaderButton = function(options) {
+    var button = document.createElement('input');
+
+    button.id = options.id;
+    button.type = 'file';
+    button.innerHTML = options.defaultMessage;
+    button.style.width = '100%';
+    button.style.border = 1;
+
+    button.onchange = options.onClick;
+
+    return wrapInDiv(button);
+  }
+
+  var setupButton = function(options) {
     var button = document.createElement('button');
 
-    button.id = data.id;
+    button.id = options.id;
     button.type = 'button';
-    button.innerHTML = data.defaultMessage;
+    button.innerHTML = options.defaultMessage;
     button.style.width = '100%';
     
-    button.onclick = data.onClick;
+    button.onclick = options.onClick;
 
     return wrapInDiv(button);
   }
@@ -185,5 +204,5 @@ define(function(require) {
     return option;
   }
 
-  return new GameObjectDropdown();
+  return new SceneEditor();
 });

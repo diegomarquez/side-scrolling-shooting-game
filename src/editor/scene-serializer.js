@@ -1,19 +1,19 @@
 define(function(require) {
-  var GameObjectSerializer = require("class").extend({
+  var SceneSerializer = require("class").extend({
     init: function() {
       this.serializableObjects = [];
       this.name = null;
     },
 
-    setLevelName: function(name) {
+    setSceneName: function(name) {
       this.name = name;
     },
 
-    add: function(go, displayProperties) {
+    add: function(go, goId, group, viewport) {
       var serializableObject = {
         go: go,
-        group: displayProperties.selectedGroup,
-        viewport: displayProperties.selectedViewport
+        group: group,
+        viewport: viewport
       };
 
       this.serializableObjects.push(serializableObject);
@@ -30,22 +30,22 @@ define(function(require) {
         var o = this.serializableObjects[i];
 
         r.push({
-          id: o.typeId,
-          updateGroup: o.group,
-          viewport: o.viewport,
+          id: o.go.typeId,
+          g: o.group,
+          v: o.viewport,
           x: o.go.x,
           y: o.go.y 
         });
       }
 
-      var level = {
+      var scene = {
         name: this.name,
         objects: r
       }
 
-      return JSON.stringify(level);
+      return JSON.stringify(scene);
     }
   });
 
-  return new GameObjectSerializer();
+  return new SceneSerializer();
 });
