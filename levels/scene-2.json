@@ -1,1 +1,1 @@
-{"name":"scene-2","objects":[{"id":"PlayerBullet","g":"First","v":"MainFront","x":200,"y":120},{"id":"PlayerBullet","g":"First","v":"MainFront","x":250,"y":195},{"id":"PlayerBullet","g":"First","v":"MainFront","x":345,"y":135}]}
+{"name":"scene-2","objects":[{"id":"PlayerBullet","g":"First","v":[{"viewport":"Main","layer":"Front"}],"x":185,"y":145}]}

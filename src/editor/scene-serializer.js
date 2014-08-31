@@ -9,11 +9,11 @@ define(function(require) {
       this.name = name;
     },
 
-    add: function(go, goId, group, viewport) {
+    add: function(go, goId, group, viewports) {
       var serializableObject = {
         go: go,
         group: group,
-        viewport: viewport
+        viewports: viewports
       };
 
       this.serializableObjects.push(serializableObject);
@@ -32,7 +32,7 @@ define(function(require) {
         r.push({
           id: o.go.typeId,
           g: o.group,
-          v: o.viewport,
+          v: o.viewports,
           x: o.go.x,
           y: o.go.y 
         });

@@ -4,11 +4,11 @@ define(function(require) {
   var sceneSerializer = require('scene-serializer');
   var sceneLoader = require('scene-loader');
   var setupEditorObject = require('setup-editor-object');
+  var activeViewports = require('active-viewports');
 
   var selectedValues = {
     selectedGameObject: null,
     selectedGroup: null,
-    selectedViewport: null,
     sceneName: null
   }
 
@@ -28,7 +28,7 @@ define(function(require) {
 
       container.appendChild(setupTextbox({
         id: 'scene-name',
-        defaultMessage: 'Set a Level Name',
+        defaultMessage: 'Set a Scene Name',
         onChange: function() {
           selectedValues['sceneName'] = this.value;
         }
@@ -50,21 +50,30 @@ define(function(require) {
         property: 'selectedGroup'
       }));
 
-      container.appendChild(setupDropdown({
-        id: 'viewport-selector',
-        defaultMessage: 'Choose a Viewport',
-        data: gb.getViewportShortCuts(),
-        property: 'selectedViewport'
-      }));
+      container.appendChild(setupHorizontalLine());
+
+      var allViewports = gb.viewports.allAsArray();
+
+      for (var i = 0; i < allViewports.length; i++) {
+        var viewport = allViewports[i];
+
+        container.appendChild(setupViewportSelector({
+          id: 'viewport-selector-' + viewport.name,
+          name: viewport.name,
+          defaultMessage: 'Choose a Layer',
+          data: viewport.layers.map(function(layer) { return layer.name; }),
+          property: 'selectedViewport'
+        }));
+      }
 
       container.appendChild(setupButton({
         id: 'game-object-create-button',
         defaultMessage: 'Create',
         onClick: function(event) {
-            setupEditorObject.setupWithViewport(selectedValues.selectedGameObject, 
-                                                selectedValues.selectedGroup, 
-                                                selectedValues.selectedViewport, 
-                                                gb.viewports.get(mainViewport));
+          setupEditorObject.setupWithViewport(selectedValues.selectedGameObject, 
+                                              selectedValues.selectedGroup, 
+                                              activeViewports.get(), 
+                                              gb.viewports.get(mainViewport));
         }
       }));
 
@@ -117,17 +126,12 @@ define(function(require) {
 
   var wrapInDiv = function(child) {
     var container = document.createElement('div')
-
     container.appendChild(child);
-
     return container;
   }
 
   var setupHorizontalLine = function(options) {
-    var hr = document.createElement('hr');  
-    hr.style.width = '50%';
-  
-    return wrapInDiv(hr);
+    return wrapInDiv(document.createElement('hr'));
   }
 
   var setupFileLoaderButton = function(options) {
@@ -136,7 +140,7 @@ define(function(require) {
     button.id = options.id;
     button.type = 'file';
     button.innerHTML = options.defaultMessage;
-    button.style.width = '100%';
+    button.style.width = '50%';
     button.style.border = 1;
 
     button.onchange = options.onClick;
@@ -150,7 +154,7 @@ define(function(require) {
     button.id = options.id;
     button.type = 'button';
     button.innerHTML = options.defaultMessage;
-    button.style.width = '100%';
+    button.style.width = '50%';
     
     button.onclick = options.onClick;
 
@@ -163,7 +167,7 @@ define(function(require) {
     input.id = options.id;
     input.type = 'text';
     input.placeholder = options.defaultMessage;
-    input.style.width = '100%';
+    input.style.width = '50%';
 
     input.onchange = options.onChange;
 
@@ -174,7 +178,7 @@ define(function(require) {
     var dropdown = document.createElement('select');
 
     dropdown.id = options.id;
-    dropdown.style.width = '100%';
+    dropdown.style.width = '50%';
 
     var data = gb.goPool.getConfigurationTypes();
 
@@ -202,6 +206,55 @@ define(function(require) {
     option.value = value;
 
     return option;
+  }
+
+  var setupViewportSelector = function(options) {
+    var container = document.createElement('div');
+
+    container.id = 'viewportCheckbox';
+
+    var input = document.createElement('input');
+
+    input.id = options.id;
+    input.type  = 'checkbox';
+    input.name  = options.name;
+    input.value = options.name;
+
+    var label = document.createElement('label');
+    
+    label.setAttribute('for', input.id);
+    label.innerHTML = options.name; 
+
+    container.appendChild(input);
+    container.appendChild(label);
+
+    var dropdown = setupLayerDropdown({
+      id: 'layers-' + options.id,
+      defaultMessage: options.defaultMessage,
+      data: options.data,
+      property: 'selectedLayer'      
+    });
+
+    container.appendChild(dropdown);
+
+    return wrapInDiv(container); 
+  }
+
+  var setupLayerDropdown = function(options) {
+    var dropdown = document.createElement('select');
+
+    dropdown.id = options.id;
+    dropdown.style.width = '100%';
+
+    var data = gb.goPool.getConfigurationTypes();
+
+    dropdown.add(createOption(options.defaultMessage, 'Nothing'));
+
+    for(var i=0; i<options.data.length; i++) {
+      dropdown.add(createOption(options.data[i], options.data[i]));
+    }
+
+    return wrapInDiv(dropdown);
   }
 
   return new SceneEditor();

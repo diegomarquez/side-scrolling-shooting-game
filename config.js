@@ -63,6 +63,7 @@ require.config({
     "minimap-bundle": "src/bundles/minimap-bundle",
     "ship-bundle": "src/bundles/ship-bundle",
     "stars-bundle": "src/bundles/stars-bundle",
+    "active-viewports": "src/editor/active-viewports",
     "game-object-input-interaction": "src/editor/game-object-input-interaction",
     "main-viewport-control": "src/editor/main-viewport-control",
     "scene-editor": "src/editor/scene-editor",

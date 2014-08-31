@@ -1,5 +1,45 @@
-/* Insert all the styling needed here*/
+html, body, div, canvas {
+    margin: 0;
+    padding: 0;
+}
 
 #game {
 	background-color: #000000;
 }
+
+input[type=checkbox] {
+	visibility: hidden;
+	position: relative;
+}
+
+#viewportCheckbox input[type=checkbox]:checked + label {
+	background: #0f0;
+}
+
+#viewportCheckbox {
+	margin: 1px;
+	border-radius: 5px;	
+	background: #555;
+	width: 50%;
+}
+
+#viewportCheckbox label {
+	display: block;
+	border-radius: 5px;
+	cursor: pointer;
+	background: #f00;
+	margin-top: -18px;
+	text-align: center;
+
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+#viewportCheckbox select {
+	margin-bottom: 0px;
+}
+
+

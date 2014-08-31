@@ -9,31 +9,34 @@ define(function(require) {
       
     },
 
-    setup: function(goId, group, viewport) {
-      var object = gb.add(goId, group, viewport);
-
-      object.update = function(delta) {}
-
-      gameObjectInputInteraction.setupInteraction(object);      
-      sceneSerializer.add(object, goId, group, viewport);
-
-      return object;
+    setup: function(goId, group, viewports) {
+      return createObject(goId, group, viewports);
     },
 
-    setupWithViewport: function(goId, group, viewport, mainViewport) {
-      var object = gb.add(goId, group, viewport);
+    setupWithViewport: function(goId, group, viewports, mainViewport) {
+      var object = createObject(goId, group, viewports);
+      
+      if (object) {
+        object.x = -mainViewport.x + mainViewport.width/2;
+        object.y = -mainViewport.y + mainViewport.height/2;
 
-      object.x = -mainViewport.x + mainViewport.width/2;
-      object.y = -mainViewport.y + mainViewport.height/2;
+        return object;
+      }   
+    }
+  });
+
+  var createObject = function(goId, group, viewports) {
+    if (goId && group && viewports) {
+      var object = gb.add(goId, group, viewports);
 
       object.update = function(delta) {}
 
       gameObjectInputInteraction.setupInteraction(object);      
-      sceneSerializer.add(object, goId, group, viewport);
+      sceneSerializer.add(object, goId, group, viewports);
 
       return object;
     }
-  });
+  }
   
   return new SetupEditorObject();
 });
