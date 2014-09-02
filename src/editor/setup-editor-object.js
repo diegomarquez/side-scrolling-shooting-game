@@ -15,10 +15,10 @@ define(function(require) {
 
     setupWithViewport: function(goId, group, viewports, mainViewport) {
       var object = createObject(goId, group, viewports);
-      
+
       if (object) {
-        object.x = -mainViewport.x + mainViewport.width/2;
-        object.y = -mainViewport.y + mainViewport.height/2;
+        object.x = -mainViewport.x + mainViewport.Width/2;
+        object.y = -mainViewport.y + mainViewport.Height/2;
 
         return object;
       }   

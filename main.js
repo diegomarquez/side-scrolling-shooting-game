@@ -20,6 +20,7 @@ define(function(require){
 
   game.add_extension(require("display-setup"));
   game.add_extension(require("mouse-events"));
+  game.add_extension(require("activity-display"));
 
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
@@ -33,7 +34,7 @@ define(function(require){
     require('bullets-bundle').create();
 
     sceneEditor.create('Main');
-    mainViewportControl.create('Main', 50);
+    // mainViewportControl.create('Main', 50);
 
     // soundPlayer.createChannels(5);
     // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
@@ -62,6 +63,4 @@ define(function(require){
   // This is the main setup that kicks off the whole thing
   // Notice how it needs to find a '#main' and '#game' in the document
   game.create(document.getElementById('main'), document.getElementById('game'));
-
-  document.getElementById('main').style.position = 'relative';
 });

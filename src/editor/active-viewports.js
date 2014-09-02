@@ -19,7 +19,7 @@ define(function(require) {
         var name = checkbox.name;
         var layer  = viewport.querySelector('select').value;
 
-        if (active) {
+        if (active & layer != 'Nothing') {
           result.push({
             viewport: name,
             layer: layer

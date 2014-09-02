@@ -23,8 +23,7 @@ define(function(require) {
       mainViewport = main;
 
       var container = document.createElement('div');
-
-      container.style.position = 'relative';
+      container.id = "editor-container";
 
       container.appendChild(setupTextbox({
         id: 'scene-name',
@@ -50,25 +49,36 @@ define(function(require) {
         property: 'selectedGroup'
       }));
 
-      container.appendChild(setupHorizontalLine());
-
       var allViewports = gb.viewports.allAsArray();
+
+      var viewportsContainer = document.createElement('div');
+      viewportsContainer.id = 'viewports-container';
 
       for (var i = 0; i < allViewports.length; i++) {
         var viewport = allViewports[i];
 
-        container.appendChild(setupViewportSelector({
+        viewportsContainer.appendChild(setupViewportSelector({
           id: 'viewport-selector-' + viewport.name,
           name: viewport.name,
+          viewport: viewport, 
           defaultMessage: 'Choose a Layer',
-          data: viewport.layers.map(function(layer) { return layer.name; }),
-          property: 'selectedViewport'
+          data: viewport.layers.map(function(layer) { return layer.name; })
         }));
+
+        container.appendChild(viewportsContainer);
       }
+
+      container.appendChild(setupViewportCreateButton({
+        id: 'viewport-creation',
+        defaultMessage: 'Add Viewport'
+      }));
+
+      container.appendChild(setupHorizontalLine());
+
 
       container.appendChild(setupButton({
         id: 'game-object-create-button',
-        defaultMessage: 'Create',
+        defaultMessage: 'Create Game Object',
         onClick: function(event) {
           setupEditorObject.setupWithViewport(selectedValues.selectedGameObject, 
                                               selectedValues.selectedGroup, 
@@ -77,7 +87,7 @@ define(function(require) {
         }
       }));
 
-      container.appendChild(setupHorizontalLine());
+      container.appendChild(setupHorizontalLine());      
       
       container.appendChild(setupButton({
         id: 'level-save-button',
@@ -131,7 +141,7 @@ define(function(require) {
   }
 
   var setupHorizontalLine = function(options) {
-    return wrapInDiv(document.createElement('hr'));
+    return document.createElement('hr');
   }
 
   var setupFileLoaderButton = function(options) {
@@ -140,9 +150,7 @@ define(function(require) {
     button.id = options.id;
     button.type = 'file';
     button.innerHTML = options.defaultMessage;
-    button.style.width = '50%';
-    button.style.border = 1;
-
+    
     button.onchange = options.onClick;
 
     return wrapInDiv(button);
@@ -154,7 +162,6 @@ define(function(require) {
     button.id = options.id;
     button.type = 'button';
     button.innerHTML = options.defaultMessage;
-    button.style.width = '50%';
     
     button.onclick = options.onClick;
 
@@ -167,7 +174,6 @@ define(function(require) {
     input.id = options.id;
     input.type = 'text';
     input.placeholder = options.defaultMessage;
-    input.style.width = '50%';
 
     input.onchange = options.onChange;
 
@@ -178,7 +184,6 @@ define(function(require) {
     var dropdown = document.createElement('select');
 
     dropdown.id = options.id;
-    dropdown.style.width = '50%';
 
     var data = gb.goPool.getConfigurationTypes();
 
@@ -223,10 +228,148 @@ define(function(require) {
     var label = document.createElement('label');
     
     label.setAttribute('for', input.id);
-    label.innerHTML = options.name; 
+    label.innerHTML = options.name;
+
+    var button = document.createElement('button');
+    button.innerHTML = 'Remove'
+    button.type  = 'button';
+
+    button.onclick = function(event) {
+      var viewportGos = gb.viewports.remove(options.name);
+
+      for (var i = 0; i < viewportGos.length; i++) {
+        var go = viewportGos[i];
+
+        if (!go.hasViewport()) {
+          gb.reclaimer.claim(go);
+        }
+      }
+      
+      var viewportsContainer = document.querySelector('#viewports-container');
+      viewportsContainer.removeChild(container.parentNode);
+    };
+
+    var sizeContainer = document.createElement('div');
+    sizeContainer.id = 'size-container';
+    sizeContainer.className += 'viewport-editor-container';
+
+    var sizeLabel = document.createElement('div');
+    sizeLabel.innerHTML = 'Size';
+    sizeLabel.className += 'viewport-editor-label';
+
+    var sizeX = document.createElement('input');
+    sizeX.type  = 'text';
+    sizeX.className += 'viewport-editor-input';
+    sizeX.value = options.viewport.Width;
+
+    sizeX.onchange = function(event) {
+      gb.viewports.get(options.name).Width = event.target.value;
+    }
+
+    var sizeY = document.createElement('input');
+    sizeY.type  = 'text';
+    sizeY.className += 'viewport-editor-input';
+    sizeY.value = options.viewport.Height;
+
+    sizeY.onchange = function(event) {
+      gb.viewports.get(options.name).Height = event.target.value;
+    }
+
+    sizeContainer.appendChild(sizeLabel);
+    sizeContainer.appendChild(sizeX);
+    sizeContainer.appendChild(sizeY);
+
+    /**
+     * --------------------------------
+     */
+
+    var offsetContainer = document.createElement('div');
+    offsetContainer.id = 'offset-container';
+    offsetContainer.className += 'viewport-editor-container';
+
+    var offsetLabel = document.createElement('div');
+    offsetLabel.innerHTML = 'Offset';
+    offsetLabel.className += 'viewport-editor-label';
+
+    var offsteX = document.createElement('input');
+    offsteX.type  = 'text';
+    offsteX.className += 'viewport-editor-input';
+    offsteX.value = options.viewport.offsetX;
+
+    offsteX.onchange = function(event) {
+      gb.viewports.get(options.name).offsetX = event.target.value;
+    }
+
+    var offsteY = document.createElement('input');
+    offsteY.type  = 'text'; 
+    offsteY.className += 'viewport-editor-input';
+    offsteY.value = options.viewport.offsetX;
+
+    offsteY.onchange = function(event) {
+      gb.viewports.get(options.name).offsetY = event.target.value;
+    }
+
+    offsetContainer.appendChild(offsetLabel);
+    offsetContainer.appendChild(offsteX);
+    offsetContainer.appendChild(offsteY);
+
+    /**
+     * --------------------------------
+     */
+
+    var stroke = options.viewport.getStroke();
+
+    var strokeColorContainer = document.createElement('div');
+    strokeColorContainer.id = 'stroke-color-container';
+    strokeColorContainer.className += 'viewport-editor-container';
+
+    var strokeColorLabel = document.createElement('div');
+    strokeColorLabel.innerHTML = 'Stroke Color';
+    strokeColorLabel.className += 'viewport-editor-label';
+
+    var strokeColor = document.createElement('input');
+    strokeColor.type  = 'text';
+    strokeColor.className += 'viewport-editor-input';
+    strokeColor.value = stroke.color;
+
+    strokeColor.onchange = function(event) {
+      gb.viewports.get(options.name).setStroke(null, event.target.value);
+    }
+
+    strokeColorContainer.appendChild(strokeColorLabel);
+    strokeColorContainer.appendChild(strokeColor);
+
+    /**
+     * --------------------------------
+     */
+
+    var strokeSizeContainer = document.createElement('div');
+    strokeSizeContainer.id = 'stroke-size-container';
+    strokeSizeContainer.className += 'viewport-editor-container';
+
+    var strokeSizeLabel = document.createElement('div');
+    strokeSizeLabel.className += 'viewport-editor-label';
+    strokeSizeLabel.innerHTML = 'Stroke Size';
+
+    var strokeSize = document.createElement('input');
+    strokeSize.type  = 'text';
+    strokeSize.className += 'viewport-editor-input';
+    strokeSize.value = stroke.width;
+
+    strokeSize.onchange = function(event) {
+      gb.viewports.get(options.name).setStroke(event.target.value, null);
+    }
+
+    strokeSizeContainer.appendChild(strokeSizeLabel);
+    strokeSizeContainer.appendChild(strokeSize);
+
+    /**
+     * --------------------------------
+     */
 
     container.appendChild(input);
     container.appendChild(label);
+    container.appendChild(button);
 
     var dropdown = setupLayerDropdown({
       id: 'layers-' + options.id,
@@ -236,6 +379,10 @@ define(function(require) {
     });
 
     container.appendChild(dropdown);
+    container.appendChild(sizeContainer);
+    container.appendChild(offsetContainer);
+    container.appendChild(strokeColorContainer);
+    container.appendChild(strokeSizeContainer);
 
     return wrapInDiv(container); 
   }
@@ -244,17 +391,52 @@ define(function(require) {
     var dropdown = document.createElement('select');
 
     dropdown.id = options.id;
-    dropdown.style.width = '100%';
 
     var data = gb.goPool.getConfigurationTypes();
 
     dropdown.add(createOption(options.defaultMessage, 'Nothing'));
 
-    for(var i=0; i<options.data.length; i++) {
+    for(var i = 0; i < options.data.length; i++) {
       dropdown.add(createOption(options.data[i], options.data[i]));
     }
 
     return wrapInDiv(dropdown);
+  }
+
+  var setupViewportCreateButton = function(options) {
+    var container = document.createElement('div');
+    container.id = options.id;
+
+    var button = document.createElement('button');
+    button.type  = 'button';
+    button.innerHTML = options.defaultMessage;
+
+    var text = document.createElement('input');
+    text.type  = 'text';
+    text.placeholder = 'Set a viewport name';
+
+    container.appendChild(text);
+    container.appendChild(button);
+
+    button.onclick = function(event) {
+      if (text.value) {
+        if (!gb.viewports.exists(text.value)) {
+          var viewport = gb.viewports.add(text.value, gb.canvas.width, gb.canvas.height, 0, 0);  
+
+          var viewportsContainer = document.getElementById('viewports-container');
+
+          viewportsContainer.appendChild(setupViewportSelector({
+            id: 'viewport-selector-' + viewport.name,
+            name: viewport.name,
+            viewport: viewport,
+            defaultMessage: 'Choose a Layer',
+            data: viewport.layers.map(function(layer) { return layer.name; })
+          }));
+        }
+      }
+    }
+
+    return wrapInDiv(container);
   }
 
   return new SceneEditor();

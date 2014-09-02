@@ -2,11 +2,40 @@
 -------------------
 
 Editor
-	Be able to choose viewport and layer to add a game-object to, instead of the shortcuts
-		- The current UI needs to change to do that.
 	Be able to add and remove viewports from the UI
+		- Edit size
+			- UI (DONE)
+			- Integration
+				- Initial Values (DONE)
+				- Update
+		- Edit stroke
+		 	- UI (DONE)
+		 	- Integration
+		 		- Initial Values (DONE)
+				- Update
+		- Edit screen offset
+		    - UI (DONE)
+		    - Integration
+		    	- Initial Values (DONE)
+				- Update
+		- Edit scale
+		    - UI (DONE)
+		    - Integration
+		    	- Initial Values (DONE)
+				- Update
+
+	Make separate modules for all the parts of the editor
+	
+	Add layers to viewport
+		- UI
+		- Integration
+			- Initial Values
+			- Update
+
+	Be able to add and remove update groups
 	Be able to choose which is the main viewport from the UI
-	Save the viewport structure tot the scene file
+		The main viewport position can be changed with the arrow keys
+	Save the viewport structure to the scene file
 
 	Save the bundles the current scene is using
 		- Object with all the bundle names and if they are currently in use or not
@@ -20,17 +49,18 @@ Editor
 				- Remove them from the pools
 		- When a scene is loaded the pools are cleared and all the corresponding corresponding bundles call their create method
 	
-	Put all the styling in a .css file
-	Make separate modules for all the parts of the editor
 	
 	Add a toggle to show and hide a grid
 	Move objects around by dragging with the mouse
+
+Complete TODO in keyboard.js
 
 Web Site
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
     make word 'website' a link to bower
     make it clear that you need to install grunt-cli
+  Rebuild documentation
 
 Generator
   Fix .gitignore generation

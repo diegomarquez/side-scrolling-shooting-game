@@ -7,9 +7,43 @@ html, body, div, canvas {
 	background-color: #000000;
 }
 
-input[type=checkbox] {
+/*Container for all the editing options*/
+#editor-container input[type=text] {
+	position: relative;
+}
+
+/*Scene name input field*/
+#scene-name {
+	width: 50%;
+}
+
+/*Separator*/
+hr {
+	height: 4px;
+	border: 0;
+	background-color: #ccc;
+	width: 50%;
+	margin-right: 50%;
+}
+
+/*Game Object selection dropdown*/
+#game-object-selector {
+	width: 50%;
+}
+
+/*Update group selection dropdown*/
+#group-selector {
+	width: 50%;
+}
+
+/* Viewport selection */
+#viewportCheckbox input[type=checkbox] {
 	visibility: hidden;
 	position: relative;
+}
+
+#viewportCheckbox select {
+	width: 100%;
 }
 
 #viewportCheckbox input[type=checkbox]:checked + label {
@@ -19,7 +53,7 @@ input[type=checkbox] {
 #viewportCheckbox {
 	margin: 1px;
 	border-radius: 5px;	
-	background: #555;
+	background: #ccc;
 	width: 50%;
 }
 
@@ -28,8 +62,11 @@ input[type=checkbox] {
 	border-radius: 5px;
 	cursor: pointer;
 	background: #f00;
-	margin-top: -18px;
+	margin-top: -16px;
+	margin-left: 2px;
 	text-align: center;
+
+	width: 90%;
 
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
@@ -38,8 +75,72 @@ input[type=checkbox] {
 	transition: all .5s ease;
 }
 
-#viewportCheckbox select {
-	margin-bottom: 0px;
+#viewportCheckbox button {
+	float: right;
+	margin-top: -18px;
 }
+
+#viewportCheckbox select {
+	margin-bottom: 2px;
+	margin-right: 2px;
+
+	width: 99.7%;
+}
+
+.viewport-editor-label {
+	margin-left: 2px;
+	margin-top: 3px;
+	float: left;
+	font-size: 0.8em;
+}
+
+.viewport-editor-input {
+	width: 60px;
+	margin-left: 4px;
+}
+
+.viewport-editor-container {
+	display: inline-block;
+	margin-left: 2px;
+}
+/* Viewport selection */
+
+/* Viewport creation */
+#viewport-creation button {
+	margin-top: 5px;
+	width: 24.7%;
+}
+
+#viewport-creation input {
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 25%;
+}
+/* Viewport creation */
+
+
+/*Create button*/
+#game-object-create-button {
+	width: 50%;
+}
+/*Create button*/
+
+/*Scene save*/
+#level-save-button {
+	width: 50%;
+}
+/*Scene save*/
+
+/*File load*/
+#level-load-button {
+	width: 50%;
+	border: 1;	
+}
+/*File load*/
+
+
+
+
+
 
 
