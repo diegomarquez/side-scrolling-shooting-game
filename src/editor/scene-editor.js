@@ -294,24 +294,58 @@ define(function(require) {
     var offsteX = document.createElement('input');
     offsteX.type  = 'text';
     offsteX.className += 'viewport-editor-input';
-    offsteX.value = options.viewport.offsetX;
+    offsteX.value = options.viewport.OffsetX;
 
     offsteX.onchange = function(event) {
-      gb.viewports.get(options.name).offsetX = event.target.value;
+      gb.viewports.get(options.name).OffsetX = event.target.value;
     }
 
     var offsteY = document.createElement('input');
     offsteY.type  = 'text'; 
     offsteY.className += 'viewport-editor-input';
-    offsteY.value = options.viewport.offsetX;
+    offsteY.value = options.viewport.OffsetY;
 
     offsteY.onchange = function(event) {
-      gb.viewports.get(options.name).offsetY = event.target.value;
+      gb.viewports.get(options.name).OffsetY = event.target.value;
     }
 
     offsetContainer.appendChild(offsetLabel);
     offsetContainer.appendChild(offsteX);
     offsetContainer.appendChild(offsteY);
+
+    /**
+     * --------------------------------
+     */
+    
+    var scaleContainer = document.createElement('div');
+    scaleContainer.id = 'scale-container';
+    scaleContainer.className += 'viewport-editor-container';
+
+    var scaleLabel = document.createElement('div');
+    scaleLabel.innerHTML = 'Scale';
+    scaleLabel.className += 'viewport-editor-label';
+
+    var scaleX = document.createElement('input');
+    scaleX.type  = 'text';
+    scaleX.className += 'viewport-editor-input';
+    scaleX.value = options.viewport.ScaleX;
+
+    scaleX.onchange = function(event) {
+      gb.viewports.get(options.name).ScaleX = event.target.value;
+    }
+
+    var scaleY = document.createElement('input');
+    scaleY.type  = 'text'; 
+    scaleY.className += 'viewport-editor-input';
+    scaleY.value = options.viewport.ScaleY;
+
+    scaleY.onchange = function(event) {
+      gb.viewports.get(options.name).ScaleY = event.target.value;
+    }
+
+    scaleContainer.appendChild(scaleLabel);
+    scaleContainer.appendChild(scaleX);
+    scaleContainer.appendChild(scaleY);
 
     /**
      * --------------------------------
@@ -381,6 +415,7 @@ define(function(require) {
     container.appendChild(dropdown);
     container.appendChild(sizeContainer);
     container.appendChild(offsetContainer);
+    container.appendChild(scaleContainer);
     container.appendChild(strokeColorContainer);
     container.appendChild(strokeSizeContainer);
 

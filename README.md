@@ -1,43 +1,26 @@
 # side-shmup
 -------------------
 
-Editor
-	Be able to add and remove viewports from the UI
-		- Edit size
-			- UI (DONE)
-			- Integration
-				- Initial Values (DONE)
-				- Update
-		- Edit stroke
-		 	- UI (DONE)
-		 	- Integration
-		 		- Initial Values (DONE)
-				- Update
-		- Edit screen offset
-		    - UI (DONE)
-		    - Integration
-		    	- Initial Values (DONE)
-				- Update
-		- Edit scale
-		    - UI (DONE)
-		    - Integration
-		    	- Initial Values (DONE)
-				- Update
-
-	Make separate modules for all the parts of the editor
+- Editor
+	- Make separate modules for all the parts of the editor
 	
-	Add layers to viewport
+	- Be able to choose which is the main viewport from the UI 
+		- Another checkbox
+		- The main viewport position can be changed with the arrow keys
+
+	- Edit world size
+	- Toogle to fit world in viewport
+
+	- Add layers to viewport
 		- UI
 		- Integration
 			- Initial Values
 			- Update
 
-	Be able to add and remove update groups
-	Be able to choose which is the main viewport from the UI
-		The main viewport position can be changed with the arrow keys
-	Save the viewport structure to the scene file
+	- Be able to add and remove update groups
+	- Save the viewport structure to the scene file
 
-	Save the bundles the current scene is using
+	- Save the bundles the current scene is using
 		- Object with all the bundle names and if they are currently in use or not
 		- Add a dropdown to select which bundles the current scene should use
 		- Editor bundles should implement a method with all they TYPES they handle, so it is easy to destroy all those objects if the bundle is
@@ -50,8 +33,8 @@ Editor
 		- When a scene is loaded the pools are cleared and all the corresponding corresponding bundles call their create method
 	
 	
-	Add a toggle to show and hide a grid
-	Move objects around by dragging with the mouse
+	- Add a toggle to show and hide a grid
+	- Move objects around by dragging with the mouse
 
 Complete TODO in keyboard.js
 
