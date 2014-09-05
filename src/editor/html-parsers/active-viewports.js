@@ -6,7 +6,7 @@ define(function(require) {
     init: function() {},
 
     get: function() {
-      var viewports = document.querySelectorAll('#viewportCheckbox');        
+      var viewports = document.querySelectorAll('#viewport-control');        
 
       result = [];
 

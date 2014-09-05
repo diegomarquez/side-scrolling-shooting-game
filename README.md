@@ -2,23 +2,23 @@
 -------------------
 
 - Editor
-	- Make separate modules for all the parts of the editor
-	
-	- Be able to choose which is the main viewport from the UI 
-		- Another checkbox
-		- The main viewport position can be changed with the arrow keys
+    - Viewport outline game object should be part of a bundle hidden from the UI
+      - Those outlines should use the viewport-follow module to follow the 'MAIN' viewport
+      - Module to handle creation of viewport and outline. Should be used in viewport-creator-ui.js
 
-	- Edit world size
-	- Toogle to fit world in viewport
+	- Put back the module to handle movement of the 'Main viewport with the arrow keys'
+
+	- Edit world size. Same row as the scene name
+
+	- Toogle to fit world in viewport. Checkbox next to scale control
 
 	- Add layers to viewport
 		- UI
 		- Integration
-			- Initial Values
+			- Initial Values (DONE)
 			- Update
 
-	- Be able to add and remove update groups
-	- Save the viewport structure to the scene file
+	- Be able to add and remove update groups. Same row as group-selector.js
 
 	- Save the bundles the current scene is using
 		- Object with all the bundle names and if they are currently in use or not
@@ -35,23 +35,29 @@
 	
 	- Add a toggle to show and hide a grid
 	- Move objects around by dragging with the mouse
+		- Toggle snap to grid
+		- Move main viewport by grid size
 
 Complete TODO in keyboard.js
+Use stylesheets to put the canvas in the top corner in the examples
+	remove the styling from game.js
+Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
 
 Web Site
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
     make word 'website' a link to bower
     make it clear that you need to install grunt-cli
-  Rebuild documentation
+  Rebuild docs and examples
 
 Generator
   Fix .gitignore generation
     remove prefix from lib and game-builder
 
+Test the editor using Jasmine
+
 Start doing the objects for the actual game
 	- level one design is on notebook
-
 
 A [GAME-BUILDER][game-builder] project
 

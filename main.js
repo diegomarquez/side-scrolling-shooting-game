@@ -4,14 +4,14 @@ define(function(require){
   var gb = require('gb');
 
   // var soundPlayer = require('sound-player');
-  var viewportFollow = require('viewport-follow');
-  var viewportOutline = require('viewport-outline');
-  var playerShipGetter = require('player-ship-getter');
+  // var viewportFollow = require('viewport-follow');
+  // var viewportOutline = require('viewport-outline');
+  // var playerShipGetter = require('player-ship-getter');
 
   var sceneEditor = require('scene-editor');
-  var mainViewportControl = require('main-viewport-control');
+  // var mainViewportControl = require('main-viewport-control');
 
-  var starField = require('star-field');
+  // var starField = require('star-field');
 
   gb.debug = true;
 
@@ -28,12 +28,12 @@ define(function(require){
     // var collision_resolver = require('collision-resolver');
     // collision_resolver.addCollisionPair('shipColliderId', 'dummyColliderId');
 
-    require('stars-bundle').create();
+    // require('stars-bundle').create();
     require('ship-bundle').create();
-    require('minimap-bundle').create();
-    require('bullets-bundle').create();
+    require('outline-bundle').create();
+    // require('bullets-bundle').create();
 
-    sceneEditor.create('Main');
+    sceneEditor.create();
     // mainViewportControl.create('Main', 50);
 
     // soundPlayer.createChannels(5);
@@ -50,14 +50,14 @@ define(function(require){
     // viewportFollow.setFollow('Main', playerShipGetter.get());
 
     // Make the outline in the minimap follow the position of the 'Main' viewport
-    viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
+    // viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
   });
 
   // This is the main update loop
   game.on(game.UPDATE, this, function() {
     // starField.update(game.delta);
     // viewportFollow.update(game.delta);
-    viewportOutline.update(game.delta);
+    // viewportOutline.update(game.delta);
   });
 
   // This is the main setup that kicks off the whole thing

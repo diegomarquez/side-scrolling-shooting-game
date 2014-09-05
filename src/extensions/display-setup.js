@@ -1,13 +1,16 @@
-define(["groups", "viewports", "gb", "world", "extension", "util"], function(Groups, Viewports, Gb, World, Extension, Util) {
+define(["extension", "gb", "world"], function(Extension, Gb, World) {
   var DisplaySetup = Extension.extend({
     type: function() {
       return Gb.game.CREATE;
     },
 
     execute: function() {
-      World.create(Gb.canvas.width*10, Gb.canvas.height);
+      World.create(Gb.canvas.width, Gb.canvas.height);
 
-      Groups.add("First");
+      Gb.groups.add("First");
+
+      var mainViewport = Gb.viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      mainViewport.addLayer("Front");
 
       // var fastStarsViewport = Viewports.add("FastStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
       // fastStarsViewport.addLayer("Front");
@@ -21,17 +24,15 @@ define(["groups", "viewports", "gb", "world", "extension", "util"], function(Gro
       // var extraSlowStarsViewport = Viewports.add("ExtraSlowStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
       // extraSlowStarsViewport.addLayer("Front");
 
-      var mainViewport = Viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
-      mainViewport.addLayer("Front");
 
-      var miniMap = Viewports.add("Mini", Gb.canvas.width-20, Gb.canvas.height/10, 10, 10);
+      // var miniMap = Viewports.add("Mini", Gb.canvas.width-20, Gb.canvas.height/10, 10, 10);
 
-      miniMap.addLayer("Front");
-      miniMap.setStroke(2, "#FF0000");
-      World.scaleViewportToFit(miniMap);
+      // miniMap.addLayer("Front");
+      // miniMap.setStroke(2, "#FF0000");
+      // World.scaleViewportToFit(miniMap);
 
-      Gb.setViewportShortCut('MainFront', [{viewport:'Main', layer:'Front'}]);
-      Gb.setViewportShortCut('MiniFront', [{viewport:'Mini', layer:'Front'}]);
+      // Gb.setViewportShortCut('MainFront', [{viewport:'Main', layer:'Front'}]);
+      // Gb.setViewportShortCut('MiniFront', [{viewport:'Mini', layer:'Front'}]);
 
       // Gb.setViewportShortCut('MainMiniFront', [
       //   {viewport:'Main', layer:'Front'},

@@ -27,7 +27,7 @@ define(function(require) {
 
   var createObject = function(goId, group, viewports) {
     if (goId && group && viewports) {
-      var object = gb.add(goId, group, viewports);
+      var object = gb.create(goId, group, viewports);
 
       object.update = function(delta) {}
 

@@ -11,10 +11,6 @@ define(function(require) {
 
     setupInteraction: function(go) {
       go.on(go.CLICK, this, function(clickData) {
-        
-        console.log(clickData.viewport.name);
-        console.log(clickData.go.typeId);        
-
         if (currentSelection) {
           currentSelection.Selected = false;
           currentSelection = clickData.go;

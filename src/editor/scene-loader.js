@@ -2,17 +2,28 @@ define(function(require) {
 
   var gb = require('gb');
   var setupEditorObject = require('setup-editor-object');
+  var sceneName = require('scene-name');
 
   var SceneLoader = require("class").extend({
     init: function() {},
 
-    load: function(sceneJson) {
-      gb.reclaimer.claimAllBut('type', 'MinimapOutline');
+    load: function(scene) {
+      sceneName.set(scene.name);
 
-      var objects = sceneJson.objects;
+      gb.reclaimer.claimAll();
+      gb.viewports.removeAll();
 
-      for(var i = 0; i < objects.length; i++) {
+      var viewports = scene.viewports;
 
+      for(var i = 0; i < viewports.length; i++) {
+        debugger;
+
+        gb.viewports.addFromObject(viewports[i]);
+      }
+
+      var objects = scene.objects;
+
+      for(i = 0; i < objects.length; i++) {
         var object = setupEditorObject.setup(objects[i].id, objects[i].g, objects[i].v);
 
         object.x = objects[i].x;

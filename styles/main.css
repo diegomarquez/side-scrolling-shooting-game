@@ -37,27 +37,27 @@ hr {
 }
 
 /* Viewport selection */
-#viewportCheckbox input[type=checkbox] {
+#viewport-control input[type=checkbox] {
 	visibility: hidden;
 	position: relative;
 }
 
-#viewportCheckbox select {
+#viewport-control select {
 	width: 100%;
 }
 
-#viewportCheckbox input[type=checkbox]:checked + label {
+#viewport-control input[type=checkbox]:checked + label {
 	background: #0f0;
 }
 
-#viewportCheckbox {
+#viewport-control {
 	margin-top: 5px;
 	border-radius: 5px;	
 	background: #ccc;
 	width: 50%;
 }
 
-#viewportCheckbox label {
+#viewport-control label {
 	display: block;
 	border-radius: 5px;
 	cursor: pointer;
@@ -75,12 +75,12 @@ hr {
 	transition: all .5s ease;
 }
 
-#viewportCheckbox button {
+#viewport-control button {
 	float: right;
 	margin-top: -18px;
 }
 
-#viewportCheckbox select {
+#viewport-control select {
 	margin-bottom: 2px;
 	margin-right: 2px;
 
@@ -106,12 +106,12 @@ hr {
 /* Viewport selection */
 
 /* Viewport creation */
-#viewport-creation button {
+#viewport-creator button {
 	margin-top: 5px;
 	width: 24.7%;
 }
 
-#viewport-creation input {
+#viewport-creator input {
 	margin-top: 5px;
 	margin-right: 5px;
 	width: 25%;

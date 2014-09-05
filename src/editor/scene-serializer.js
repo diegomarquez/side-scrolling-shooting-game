@@ -1,12 +1,12 @@
 define(function(require) {
+
+  var gb = require('gb');
+
+  var sceneName = require('scene-name');
+
   var SceneSerializer = require("class").extend({
     init: function() {
       this.serializableObjects = [];
-      this.name = null;
-    },
-
-    setSceneName: function(name) {
-      this.name = name;
     },
 
     add: function(go, goId, group, viewports) {
@@ -24,12 +24,14 @@ define(function(require) {
     },
 
     serialize: function() {
-      var r = [];
+      if (!this.check()) return;
+
+      var gos = [];
 
       for (var i = 0; i < this.serializableObjects.length; i++) {
         var o = this.serializableObjects[i];
 
-        r.push({
+        gos.push({
           id: o.go.typeId,
           g: o.group,
           v: o.viewports,
@@ -38,12 +40,40 @@ define(function(require) {
         });
       }
 
+      var vs = [];
+
+      var allViewports = gb.viewports.allAsArray();
+
+      for (i = 0; i < allViewports.length; i++) {
+        var v = allViewports[i];
+
+        vs.push({
+          name: v.name,
+          width: v.Width,
+          height: v.Height,
+          offsetX: v.OffsetX,
+          offsetY: v.OffsetY, 
+          scaleX: v.ScaleX,
+          scaleY: v.ScaleY,
+          stroke: v.getStroke()
+        });
+      }
+
       var scene = {
-        name: this.name,
-        objects: r
+        name: sceneName.get(),
+        objects: gos,
+        viewports: vs
       }
 
       return JSON.stringify(scene);
+    },
+
+    check: function () {
+      if (!sceneName.get()) {
+        return false;
+      }
+
+      return true;
     }
   });
 
