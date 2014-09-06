@@ -2,21 +2,19 @@
 -------------------
 
 - Editor
-    - Viewport outline game object should be part of a bundle hidden from the UI
-      - Those outlines should use the viewport-follow module to follow the 'MAIN' viewport
-      - Module to handle creation of viewport and outline. Should be used in viewport-creator-ui.js
-
-	- Put back the module to handle movement of the 'Main viewport with the arrow keys'
-
+    - Something to ensure the 'Front' layer of viewports is always on top of every other layer
+	- Make the the module to handle movement of the 'Main' viewport with the arrow keys default
 	- Edit world size. Same row as the scene name
-
 	- Toogle to fit world in viewport. Checkbox next to scale control
+
+	- Complete TODO in keyboard.js
 
 	- Add layers to viewport
 		- UI
 		- Integration
 			- Initial Values (DONE)
 			- Update
+		- If a layer is removed, recycle it's game-objets only if they are not visible elsewhere
 
 	- Be able to add and remove update groups. Same row as group-selector.js
 
@@ -35,10 +33,9 @@
 	
 	- Add a toggle to show and hide a grid
 	- Move objects around by dragging with the mouse
-		- Toggle snap to grid
+		- remove move by key presses from game-objects in favour of snap to grid toogle
 		- Move main viewport by grid size
 
-Complete TODO in keyboard.js
 Use stylesheets to put the canvas in the top corner in the examples
 	remove the styling from game.js
 Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling

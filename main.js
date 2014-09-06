@@ -5,11 +5,10 @@ define(function(require){
 
   // var soundPlayer = require('sound-player');
   // var viewportFollow = require('viewport-follow');
-  // var viewportOutline = require('viewport-outline');
   // var playerShipGetter = require('player-ship-getter');
 
   var sceneEditor = require('scene-editor');
-  // var mainViewportControl = require('main-viewport-control');
+  var mainViewportControl = require('main-viewport-control');
 
   // var starField = require('star-field');
 
@@ -34,7 +33,7 @@ define(function(require){
     // require('bullets-bundle').create();
 
     sceneEditor.create();
-    // mainViewportControl.create('Main', 50);
+    mainViewportControl.create('Main', 50);
 
     // soundPlayer.createChannels(5);
     // soundPlayer.load('SHOT', assetMap['SPACEINVADERS_FIRE.WAV']);
@@ -48,16 +47,12 @@ define(function(require){
 
     // Make 'Main' viewport follow the position of the player ship
     // viewportFollow.setFollow('Main', playerShipGetter.get());
-
-    // Make the outline in the minimap follow the position of the 'Main' viewport
-    // viewportOutline.setOutline('Main', 'Outline', 'First', 'MiniFront');
   });
 
   // This is the main update loop
   game.on(game.UPDATE, this, function() {
     // starField.update(game.delta);
     // viewportFollow.update(game.delta);
-    // viewportOutline.update(game.delta);
   });
 
   // This is the main setup that kicks off the whole thing

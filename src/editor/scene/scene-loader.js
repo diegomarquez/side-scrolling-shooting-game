@@ -1,7 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
-  var setupEditorObject = require('setup-editor-object');
+  var setupEditorObject = require('setup-editable-game-object');
   var sceneName = require('scene-name');
 
   var SceneLoader = require("class").extend({
@@ -16,8 +16,6 @@ define(function(require) {
       var viewports = scene.viewports;
 
       for(var i = 0; i < viewports.length; i++) {
-        debugger;
-
         gb.viewports.addFromObject(viewports[i]);
       }
 

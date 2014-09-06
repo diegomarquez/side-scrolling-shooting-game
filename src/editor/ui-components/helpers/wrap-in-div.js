@@ -3,7 +3,7 @@ define(function(require) {
   var WrapInDiv = require("class").extend({
     init: function() {},
 
-    wrap: function(child, options) {
+    wrap: function(children, options) {
       var container = document.createElement('div')
 
       if (options) {
@@ -16,8 +16,12 @@ define(function(require) {
         }
       }
       
-      container.appendChild(child);
-      
+      var c = [].concat(children);
+
+      for (var i = 0; i < c.length; i++) {
+        container.appendChild(c[i]);
+      }
+
       return container;
     }
   });

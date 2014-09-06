@@ -8,6 +8,8 @@ define(function(require) {
   var oneDimentionInput = require('one-dimention-input');
   var twoDimentionsInput = require('two-dimentions-input');
 
+  var setupViewport = require('setup-viewport');
+
   var ViewportEditor = require('class').extend({
     init: function() {
 
@@ -19,8 +21,21 @@ define(function(require) {
 
       // Selection check box
       var labelCheckboxUI = new checkbox().create({
-        id: 'viewport-checkbox-' + options.viewport.name,
+        id: 'viewport-active-checkbox-' + options.viewport.name,
         label: options.viewport.name
+      });
+
+      // Selection check box
+      var outlineCheckboxUI = new checkbox().create({
+        id: 'viewport-outline-checkbox-' + options.viewport.name,
+        label: 'Outline',
+        onChange: function(event) {
+          if (event.target.checked) {
+            setupViewport.addOutline(options.viewport.name);
+          } else {
+            setupViewport.removeOutline(options.viewport.name);
+          }
+        }
       });
    
       //  Remove Button
@@ -135,7 +150,8 @@ define(function(require) {
         }
       });
 
-      container.appendChild(labelCheckboxUI)
+      container.appendChild(labelCheckboxUI);
+      container.appendChild(outlineCheckboxUI);
       container.appendChild(buttonUI);
       container.appendChild(layersUI);  
       container.appendChild(sizeUI);

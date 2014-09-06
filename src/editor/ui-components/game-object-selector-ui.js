@@ -3,6 +3,7 @@ define(function(require) {
   var wrapper = require('wrap-in-div');
   var dropdown = require('dropdown');
   var gb = require('gb');
+  var outlineBundle = require('outline-bundle');
 
   var GameObjectSelector = require('class').extend({
     init: function() {
@@ -12,7 +13,7 @@ define(function(require) {
     create: function() {
       var data = gb.goPool.getConfigurationTypes();
 
-      data.splice(data.indexOf('ViewportOutline'), 1);
+      data.splice(data.indexOf(outlineBundle.getOutlineId()), 1);
 
       var selector = new dropdown().create({
         id: 'game-object-selector',

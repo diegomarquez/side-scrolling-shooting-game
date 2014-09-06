@@ -1,7 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
-  var gameObjectInputInteraction = require('game-object-input-interaction');
+  var gameObjectInputInteraction = require('setup-game-object-input');
   var sceneSerializer = require('scene-serializer');
 
   var SetupEditorObject = require("class").extend({

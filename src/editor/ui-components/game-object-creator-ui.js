@@ -2,7 +2,7 @@ define(function(require) {
   var wrapper = require('wrap-in-div');
   var button = require('button'); 
 
-  var setupEditorObject = require('setup-editor-object');
+  var setupEditorObject = require('setup-editable-game-object');
 
   var activeViewports = require('active-viewports');
   var selectedGameObject = require('selected-game-object');

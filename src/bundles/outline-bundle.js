@@ -34,6 +34,10 @@ define(function(require) {
 				.args({x:1, y:1})
 				.setRenderer('OutlineRenderer');
 		},
+
+		getOutlineId: function () {
+			return "ViewportOutline";
+		}
 	});
 
 	return new OutlineBundle();
