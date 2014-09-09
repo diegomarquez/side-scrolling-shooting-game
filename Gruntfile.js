@@ -31,11 +31,6 @@ module.exports = function(grunt) {
       options: { force: true }
     },
 
-    bower: {
-      // Generate requirejs configuration from bower components
-      requireJS: { rjsConfig: 'config.js' }
-    },
-
     open: {
       // Open index.html with the default browser
       index : { path : 'index.html' }
@@ -44,8 +39,8 @@ module.exports = function(grunt) {
     // Merge files to create asset-map.js
     "merge-json": {
       map: {
-        src: [ 'asset-map.js', "remote-assets.json"],
-        dest: 'asset-map.js'
+        src: [ 'generated/asset-map.js', "config/remote-assets.json"],
+        dest: 'generated/asset-map.js'
       }
     },
 
@@ -53,7 +48,7 @@ module.exports = function(grunt) {
     file_append: {
       default_options: {
         files: {
-          'asset-map.js': {
+          'generated/asset-map.js': {
             prepend: "var assetMap = "
           }
         }
@@ -65,7 +60,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-open');
-  grunt.loadNpmTasks('grunt-bower-requirejs');
   grunt.loadNpmTasks('grunt-merge-json');
   grunt.loadNpmTasks('grunt-file-append');
 
@@ -75,7 +69,7 @@ module.exports = function(grunt) {
   // This task creates the asset map 
   grunt.registerTask('asset-map', ['local-assets', 'merge-json', 'file_append']);
   // This task creates all the requirejs configuration needed
-  grunt.registerTask('config', ['create-config', 'bower:requireJS']);
+  grunt.registerTask('config', ['create-config']);
   // This task downloads game-builder source code
   grunt.registerTask('framework', ['clean', 'shell:framework']);
   // This task opens index.html

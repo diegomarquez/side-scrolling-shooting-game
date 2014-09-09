@@ -7,9 +7,8 @@ define(function(require) {
     create: function(options) {
       var button = document.createElement('button');
       button.id = options.id;
-      button.innerHTML = options.label;
       button.type  = 'button';
-
+      button.innerHTML = options.label;
       button.onclick = options.onClick;
 
       return button;

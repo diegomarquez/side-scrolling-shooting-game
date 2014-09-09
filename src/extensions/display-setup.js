@@ -11,6 +11,7 @@ define(["extension", "gb", "world"], function(Extension, Gb, World) {
 
       var mainViewport = Gb.viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
       mainViewport.addLayer("Front");
+      mainViewport.addLayer("Outline");
 
       // var fastStarsViewport = Viewports.add("FastStars", Gb.canvas.width, Gb.canvas.height, 0, 0);
       // fastStarsViewport.addLayer("Front");

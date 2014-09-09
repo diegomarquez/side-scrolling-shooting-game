@@ -14,7 +14,6 @@ module.exports = function(grunt) {
 	    // Add all source paths
 	    paths.push(p.additionalSrcPaths);
 	    paths.push(p.framework);
-	    paths.push(p.lib);
 	    paths.push('src');
 
 	    // Create array with all the file paths in the source paths provided
@@ -38,13 +37,22 @@ module.exports = function(grunt) {
 	      paths.push({alias:base, path:p});
 	    }
 
-	    // Contribed template to generate requirejs configuration
-	    var r = grunt.template.process('require.config({ \n\t paths: { \n\t\t <% paths.forEach(function(pathObject) { %>"<%= pathObject.alias %>": "<%= pathObject.path %>", \n\t\t <% }); %> \n\t } \n });', 
-	    {data: { paths: paths }});
+	    var libPaths = grunt.file.readJSON('config/lib-paths.json');
+
+	    for (var k in libPaths) {
+	    	paths.push({alias:k, path:libPaths[k]});
+	    }
+
+		var r = grunt.template.process(grunt.file.read('tasks/config-template.txt'), { 
+			data: { 
+				paths: paths, 
+				shim: grunt.file.read('config/shim-config.json')
+			}
+		});
 
 	    // Write the contents of processing the previous template into config.js
 	    // If the file already exists, it is deleted
-	    var name = 'config.js'
+	    var name = 'generated/config.js'
 	    if (grunt.file.isFile(name)) {
 	      grunt.file.delete(name, {force: true});  
 	    }

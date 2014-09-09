@@ -64,11 +64,11 @@ define(function(require) {
         }
       });
 
-      // Viewport layers selector
+      // Viewport layers selector. Skips the 'Outline layer that all viewports have'
       var layersUI = new dropdown().create({
         id: 'layers-' + options.viewport.name,
         defaultMessage: 'Choose a Layer',
-        data: options.viewport.layers.map(function(layer) { return layer.name; })
+        data: options.viewport.layers.map(function(layer) { return layer.name; }).filter(function(layer) { return layer.name != 'Outline' })
       });
 
       //  Size editor

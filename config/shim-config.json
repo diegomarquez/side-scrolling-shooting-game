@@ -1,0 +1,6 @@
+{
+	"jquery-ui": {
+        "export": "$",
+        "deps": ["jquery"]
+    }
+}

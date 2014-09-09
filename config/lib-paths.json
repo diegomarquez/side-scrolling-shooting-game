@@ -1,0 +1,5 @@
+{
+	"domready": "./lib/requirejs-domready/domReady",
+	"jquery": "./lib/jquery/dist/jquery",
+	"jquery-ui": "./lib/jquery-ui/jquery-ui"
+}

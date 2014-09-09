@@ -10,7 +10,6 @@
   "dependencies": {
     "grunt-shell": "~0.6.4",
     "grunt-open": "~0.2.2",
-    "grunt-bower-requirejs": "~0.8.4",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-merge-json": "~0.9.4",
     "grunt-file-append": "0.0.2",

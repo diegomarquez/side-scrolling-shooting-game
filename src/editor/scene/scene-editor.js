@@ -11,6 +11,8 @@ define(function(require) {
       this.sceneLoadUI = new (require('scene-load-ui'));
       
       this.horizontalBar = new (require('horizontal-bar'));
+
+      this.editableDropdown = new (require('editable-dropdown'));
     },
 
     create: function() {
@@ -42,9 +44,24 @@ define(function(require) {
       container.appendChild(this.gameObjectCreatorUI.create());
       // Horizontal line
       container.appendChild(this.horizontalBar.create());      
+      
+      // container.appendChild(this.editableDropdown.create({
+      //   id: 'LALA',
+      //   defaultMessage: 'Message',
+      //   selectedMessage: 'Selected Message:',
+      //   data: ['1', '2', '3'],
+      //   onEdit: function(value, newIndex, oldIndex) {
+      //     console.log('edit', value, newIndex, oldIndex);
+      //   },
+      //   onSelect: function(value) {
+      //     console.log('select', value);
+      //   }
+      // }));      
+
       // Save and Load scene buttons
       container.appendChild(this.sceneSaveUI.create());
       container.appendChild(this.sceneLoadUI.create());
+
     }
   });
 

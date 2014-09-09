@@ -170,6 +170,49 @@ div[id*=viewport-outline-checkbox] label {
 /*File load*/
 
 
+#LALA {
+	width: 50%;	
+}
+
+/*Editable dropdown*/
+.editable-drop-down ul {
+	min-width: 120px;
+	max-width: 250px;
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+	display: inline-block;
+	position: absolute;
+}
+
+.editable-drop-down ul li {
+	margin: 5px;
+    padding-left: 10px;
+    font-size: 0.6em;
+}
+
+.editable-drop-down .ui-state-highlight {
+	margin: 5px;
+}
+
+.editable-drop-down .ui-button {
+	width: 100%;
+	text-align: left;
+}
+
+.editable-drop-down .ui-button-icon-secondary {
+	right: 0px;
+	top: 50%;
+	bottom: 50%;
+}
+/*Editable dropdown*/
+
+/*Override jQuery UI default font size*/
+.ui-button-text {
+  font-size: .6em;
+}
+
+
 
 
 

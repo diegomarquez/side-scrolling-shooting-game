@@ -1,12 +1,12 @@
 {
   "name": "side-shmup",
   "version": "0.1.0",
-  
   "dependencies": {
     "requirejs": "2.x.x",
-    "requirejs-domready": "2.x.x"
+    "requirejs-domready": "2.x.x",
+    "jquery-ui": "~1.11.1",
+    "jquery": "~1.11.1"
   },
-
   "ignore": [
     "**/.*",
     "node_modules",
@@ -15,6 +15,3 @@
     "./lib"
   ]
 }
-
-
-

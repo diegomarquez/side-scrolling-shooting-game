@@ -12,6 +12,7 @@ define(function(require) {
     setup: function(name) {    
       var viewport = gb.viewports.add(name, gb.canvas.width, gb.canvas.height, 0, 0)
       viewport.addLayer('Front');
+      viewport.addLayer('Outline');
 
       return viewport;
     },
@@ -24,7 +25,7 @@ define(function(require) {
         viewports: [
           {
             viewport: viewportName, 
-            layer: 'Front'
+            layer: 'Outline'
           }
         ],
         gameObjectArguments: {
