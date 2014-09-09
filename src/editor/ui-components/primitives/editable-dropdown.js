@@ -47,6 +47,7 @@ define(function(require) {
       });
 
       $(container).addClass('editable-drop-down');
+      $(container).addClass('ui-widget');
 
       clickedOutside.registerMissedClick(list, function (element) {
         element.remove();
