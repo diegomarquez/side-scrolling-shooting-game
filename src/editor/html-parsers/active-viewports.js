@@ -17,9 +17,9 @@ define(function(require) {
 
         var active = checkbox.checked;
         var name = checkbox.name;
-        var layer  = viewport.querySelector('select').value;
+        var layer  = viewport.querySelector('.editable-drop-down').getAttribute('value');
 
-        if (active & layer != 'Nothing') {
+        if (active && layer) {
           result.push({
             viewport: name,
             layer: layer

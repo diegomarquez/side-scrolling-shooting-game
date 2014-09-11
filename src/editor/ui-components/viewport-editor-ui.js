@@ -4,11 +4,13 @@ define(function(require) {
 
   var checkbox = require('label-checkbox');
   var button = require('button');
-  var dropdown = require('dropdown');
+  var editableDropdown = require('editable-dropdown');
   var oneDimentionInput = require('one-dimention-input');
   var twoDimentionsInput = require('two-dimentions-input');
 
   var setupViewport = require('setup-viewport');
+  
+  var masonry = require('masonry-v2-shim');
 
   var ViewportEditor = require('class').extend({
     init: function() {
@@ -65,10 +67,15 @@ define(function(require) {
       });
 
       // Viewport layers selector. Skips the 'Outline layer that all viewports have'
-      var layersUI = new dropdown().create({
+      var layersUI = new editableDropdown().create({
         id: 'layers-' + options.viewport.name,
-        defaultMessage: 'Choose a Layer',
-        data: options.viewport.layers.map(function(layer) { return layer.name; }).filter(function(layer) { return layer.name != 'Outline' })
+        defaultMessage: 'Select a Layer',
+        selectedMessage: 'Selected Layer:',
+        disabledItems: ['Outline'],
+        data: options.viewport.layers.map(function(layer) { return layer.name; }),
+        onEdit: function(value, newIndex, oldIndex) {
+          // TODO: arrange layers
+        }
       });
 
       //  Size editor
@@ -77,7 +84,7 @@ define(function(require) {
         containerClass: 'viewport-editor-container',
         label: 'Size',
         labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input',
+        inputClass: 'viewport-editor-input-double',
         xValue: options.viewport.Width,
         yValue: options.viewport.Height,
         onXChange: function(event) { 
@@ -94,7 +101,7 @@ define(function(require) {
         containerClass: 'viewport-editor-container',
         label: 'Offset',
         labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input',
+        inputClass: 'viewport-editor-input-double',
         xValue: options.viewport.OffsetX,
         yValue: options.viewport.OffsetY,
         onXChange: function(event) { 
@@ -111,7 +118,7 @@ define(function(require) {
         containerClass: 'viewport-editor-container',
         label: 'Scale',
         labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input',
+        inputClass: 'viewport-editor-input-double',
         xValue: options.viewport.ScaleX,
         yValue: options.viewport.ScaleY,
         onXChange: function(event) { 
@@ -130,7 +137,7 @@ define(function(require) {
         containerClass: 'viewport-editor-container',
         label: 'Stroke Color',
         labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input',
+        inputClass: 'viewport-editor-input-single',
         value: stroke.color,
         onChange: function(event) { 
           gb.viewports.get(options.viewport.name).setStroke(null, event.target.value); 
@@ -143,7 +150,7 @@ define(function(require) {
         containerClass: 'viewport-editor-container',
         label: 'Stroke Size',
         labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input',
+        inputClass: 'viewport-editor-input-single',
         value: stroke.width,
         onChange: function(event) { 
           gb.viewports.get(options.viewport.name).setStroke(event.target.value, null); 
@@ -154,15 +161,63 @@ define(function(require) {
       container.appendChild(outlineCheckboxUI);
       container.appendChild(buttonUI);
       container.appendChild(layersUI);  
-      container.appendChild(sizeUI);
-      container.appendChild(offsetUI);
-      container.appendChild(scaleUI);
-      container.appendChild(strokeColorUI);
-      container.appendChild(strokeSizeUI);
 
-      return wrapper.wrap(container);
+      var colWidth = function () {
+        var w = $(c).width();
+        var columnNum;
+
+        if (w > 1200) {
+          columnNum  = 5;
+        } else if (w > 900) {
+          columnNum  = 4;
+        } else if (w > 600) {
+          columnNum  = 3;
+        } else {
+          columnNum  = 2;
+        }
+
+        var columnWidth = Math.floor(w/columnNum) - 0.5;
+        
+        $(c).find('.viewport-editor-container').each(function() {
+          var $item = $(this);    
+
+          var margins = parseFloat($item.css('margin-left')) + parseFloat($item.css('margin-right'))
+
+          $item.css('width', columnWidth - margins);
+        });
+
+        return columnWidth;
+      }
+      
+      var c = document.createElement('div');
+
+      c.appendChild(sizeUI);
+      c.appendChild(offsetUI);
+      c.appendChild(scaleUI);
+      c.appendChild(strokeColorUI);
+      c.appendChild(strokeSizeUI);
+
+      container.appendChild(c);
+
+      var wrapped = wrapper.wrap(container);
+
+      $(document).on('DOMNodeInserted', function(event) {
+        // TODO: Hacer que esto pase de una forma copada
+        if ($(wrapped).is($(event.target).children().children())) {
+          $(c).masonry({
+            itemSelector: '.viewport-editor-container',
+            columnWidth:  colWidth,
+            transitionDuration: 0
+          });
+
+          $(document).off(event);
+        }
+      });
+
+      return wrapped;
     }
   });
 
   return ViewportEditor;
 });
+

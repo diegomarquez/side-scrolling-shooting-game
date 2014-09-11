@@ -5,7 +5,7 @@ define(["extension", "gb", "world"], function(Extension, Gb, World) {
     },
 
     execute: function() {
-      World.create(Gb.canvas.width, Gb.canvas.height);
+      World.create(Gb.canvas.width, Gb.canvas.height, 50);
 
       Gb.groups.add("First");
 

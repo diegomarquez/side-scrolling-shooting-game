@@ -53,6 +53,16 @@ module.exports = function(grunt) {
           }
         }
       }
+    },
+
+    downloadfile: {
+      files: [
+        {
+          url: 'http://masonry.desandro.com/masonry.pkgd.js',
+          dest: 'lib/masonry',
+          name: 'masonry.pkgd.js'
+        }
+      ]
     }
   });
 
@@ -62,6 +72,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-merge-json');
   grunt.loadNpmTasks('grunt-file-append');
+  grunt.loadNpmTasks('grunt-downloadfile');
 
   // Local tasks
   grunt.loadTasks('tasks');
@@ -72,6 +83,8 @@ module.exports = function(grunt) {
   grunt.registerTask('config', ['create-config']);
   // This task downloads game-builder source code
   grunt.registerTask('framework', ['clean', 'shell:framework']);
+  // Download files which are not available from bower
+  grunt.registerTask('download', ['downloadfile']);
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
   // This task 
@@ -79,7 +92,7 @@ module.exports = function(grunt) {
     // downloads game-builder source
     // generates requirejs configuration
     // generates the local and remote asset map
-  grunt.registerTask('build', ['shell:bower', 'framework', 'config', 'asset-map']);
+  grunt.registerTask('build', ['shell:bower', 'framework', 'download', 'config', 'asset-map']);
 
   // The default task get's all dependencies, generates everything needed and finally opens index.html 
   grunt.registerTask('default', ['build', 'run']);

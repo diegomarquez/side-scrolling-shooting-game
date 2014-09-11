@@ -86,6 +86,7 @@ require.config({
 		"option": "src/editor/ui-components/helpers/option", 
 		"uid": "src/editor/ui-components/helpers/uid", 
 		"wrap-in-div": "src/editor/ui-components/helpers/wrap-in-div", 
+		"wrap-in-span": "src/editor/ui-components/helpers/wrap-in-span", 
 		"button": "src/editor/ui-components/primitives/button", 
 		"dropdown": "src/editor/ui-components/primitives/dropdown", 
 		"editable-dropdown": "src/editor/ui-components/primitives/editable-dropdown", 
@@ -108,7 +109,7 @@ require.config({
 		"mouse-events": "src/extensions/mouse-events", 
 		"basic-bullet": "src/game-objects/basic-bullet", 
 		"player-ship": "src/game-objects/player-ship", 
-		"player-ship-getter": "src/player-ship-getter", 
+		"masonry-v2-shim": "src/layout/masonry-v2-shim", 
 		"basic-bullet-renderer": "src/renderers/basic-bullet-renderer", 
 		"large-star-renderer": "src/renderers/large-star-renderer", 
 		"medium-star-renderer": "src/renderers/medium-star-renderer", 
@@ -120,6 +121,8 @@ require.config({
 		"domready": "./lib/requirejs-domready/domReady", 
 		"jquery": "./lib/jquery/dist/jquery", 
 		"jquery-ui": "./lib/jquery-ui/jquery-ui", 
+		"masonry": "./lib/masonry/masonry.pkgd", 
+		"bridget": "./lib/jquery-bridget/jquery.bridget", 
 		  
 	}  
 });

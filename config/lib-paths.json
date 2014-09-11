@@ -1,5 +1,7 @@
 {
 	"domready": "./lib/requirejs-domready/domReady",
 	"jquery": "./lib/jquery/dist/jquery",
-	"jquery-ui": "./lib/jquery-ui/jquery-ui"
+	"jquery-ui": "./lib/jquery-ui/jquery-ui",
+	"masonry": "./lib/masonry/masonry.pkgd",
+	"bridget": "./lib/jquery-bridget/jquery.bridget"
 }

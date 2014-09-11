@@ -1,4 +1,10 @@
 define(function(require) {
+
+  var divWrapper = require('wrap-in-div');
+
+  require('jquery');
+  require('jquery-ui');
+
   var OneDimentionsInput = require('class').extend({
     init: function() {
 
@@ -7,22 +13,29 @@ define(function(require) {
     create: function(options) {
       var container = document.createElement('div');
       container.id = options.id;
-      container.className += options.containerClass; 
+
+      $(container).addClass('ui-state-default');
+      $(container).addClass('ui-corner-all'); 
 
       var label = document.createElement('div');
       label.innerHTML = options.label;
-      label.className += options.labelClass;
+      $(label).addClass(options.labelClass);
 
       var input = document.createElement('input');
 	    input.type  = 'text';
-	    input.className += options.inputClass;
 	    input.value = options.value;
 	    input.onchange = options.onChange;
+      $(input).addClass('ui-corner-all');
+      $(input).addClass(options.inputClass);
 
 	    container.appendChild(label);
       container.appendChild(input);
 
-      return container;
+      var wrapped = divWrapper.wrap(container);
+      $(wrapped).addClass('ui-widget');
+      $(wrapped).addClass(options.containerClass);
+
+      return wrapped;
     }
   });
 

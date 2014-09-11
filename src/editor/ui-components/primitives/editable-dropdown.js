@@ -20,7 +20,7 @@ define(function(require) {
           $(container).append(list);
 
           setupSortable($(list), options);
-          setupOptionEvents(optionElements, button, list, options);
+          setupOptionEvents(optionElements, container, button, list, options);
           
           fitInViewport.fit(list, mouseCoordinates.get(event));
         }
@@ -38,7 +38,7 @@ define(function(require) {
       $(list).addClass('ui-widget-content');
 
       var optionElements = [];
-      optionElements = createOptions(options.data);
+      optionElements = createOptions(options);
 
       $(list).append(optionElements);      
 
@@ -62,12 +62,17 @@ define(function(require) {
     var newIndex;
 
     element.sortable({
-      placeholder: "ui-state-highlight",
+      placeholder: 'ui-state-highlight',
+      items: 'li:not(.ui-state-disabled)',
+      cursor: 'move', 
+      delay: 15,
+
       start: function (event, ui) {
         oldIndex = ui.item.index();
 
         ui.placeholder.height(ui.item.height());
       },
+
       update: function (event, ui) {
         if (options.onEdit) {
           newIndex = ui.item.index();
@@ -78,28 +83,35 @@ define(function(require) {
     }).disableSelection();
   }
 
-  var createOptions = function(data) {
-    var options = [];
+  var createOptions = function(options) {
+    var optionElements = [];
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < options.data.length; i++) {
       var option = $(document.createElement('li'));
-
-      option.addClass('ui-state-default');
-      option.addClass('ui-corner-all');
-
-      option.attr('value', data[i]);
-
-      option.html(data[i]);
       
-      options.push(option[0]);
+      if (options.disabledItems.indexOf(options.data[i]) == -1) {
+        option.addClass('ui-state-default');
+      } else {
+        option.addClass('ui-state-disabled');
+      }
+      
+      option.addClass('ui-corner-all');
+      option.attr('value', options.data[i]);
+      option.html(options.data[i]);
+    
+      optionElements.push(option[0]);
     }
 
-    return options
+    return optionElements;
   }
 
-  var setupOptionEvents = function(optionElements, button, list, options) {
+  var setupOptionEvents = function(optionElements, container, button, list, options) {
     for (var i = 0; i < optionElements.length; i++) {
       var option = optionElements[i];
+
+      if (!$(option).hasClass('ui-state-default')) {
+        continue;
+      }
 
       $(option).on('mouseover', function() {
         $(this).addClass('ui-state-hover');
@@ -110,8 +122,10 @@ define(function(require) {
       });
 
       $(option).on('click', function() {
-        $(button).find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
         $(this).removeClass('ui-state-hover');
+
+        $(container).attr('value', $(this).attr('value'));
+        $(button).find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
         $(list).remove();
 
         if (options.onSelect) {
