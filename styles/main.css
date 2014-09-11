@@ -17,6 +17,46 @@ html, body, div, canvas {
 	width: 50%;
 }
 
+/*World Edit*/
+#world-edit {
+	margin-top: 5px;
+	border-radius: 5px;	
+	background: #ccc;
+	width: 50%;
+}
+
+.world-edit-container {	
+	margin: 2px;
+	font-size: 0.6em;
+}
+
+.world-edit-label {
+	margin: 4px;
+	width: 25%;
+	display: inline-block;
+	white-space:nowrap;
+}
+
+.world-edit-input-double {
+	margin-top: 1px;
+	margin-left: 1px;
+	font-size: 0.8em;
+	width: 31%;
+	display: inline-block;
+	white-space: normal;
+	float:right;
+}
+
+.world-edit-input-single {
+	margin-top: 1px;
+	margin-left: 1px;
+	font-size: 0.8em;
+	width: 62%;
+	display: inline-block;
+	white-space: normal;
+	float:right;
+}
+
 /*Separator*/
 hr {
 	height: 4px;
@@ -26,12 +66,12 @@ hr {
 	margin-right: 50%;
 }
 
-/*Game Object selection dropdown*/
+/* Game Object selection dropdown */
 #game-object-selector {
 	width: 50%;
 }
 
-/*Update group selection dropdown*/
+/* Update group selection dropdown */
 #group-selector {
 	width: 50%;
 }
@@ -108,7 +148,6 @@ div[id*=viewport-outline-checkbox] label {
 }
 
 #viewport-control button {
-	float: right;
 }
 
 #viewport-control select {
@@ -118,7 +157,6 @@ div[id*=viewport-outline-checkbox] label {
 }
 
 .viewport-editor-container {	
-	width: 20%;
 	margin: 2px;
 	font-size: 0.6em;
 }
@@ -151,7 +189,6 @@ div[id*=viewport-outline-checkbox] label {
 	white-space: normal;
 	float:right;
 }
-/* Viewport selection */
 
 /* Viewport creation */
 #viewport-creator button {
@@ -164,34 +201,30 @@ div[id*=viewport-outline-checkbox] label {
 	margin-right: 5px;
 	width: 25%;
 }
-/* Viewport creation */
 
-
-/*Create button*/
+/* Game Object Create button */
 #game-object-create-button {
 	width: 50%;
 }
-/*Create button*/
 
-/*Scene save*/
+/* Scene save */
 #level-save-button {
 	width: 50%;
 }
-/*Scene save*/
 
-/*File load*/
+/* File load */
 #level-load-button {
 	width: 50%;
 	border: 1;	
 }
-/*File load*/
 
+/* Editable dropdown */
 .editable-drop-down {
-	margin-left: 4px;
+	margin-left: 2px;
+	margin-right: 2px;
 	overflow: hidden;
 }
 
-/*Editable dropdown*/
 .editable-drop-down ul {
 	min-width: 200px;
 	max-width: 250px;
@@ -214,8 +247,8 @@ div[id*=viewport-outline-checkbox] label {
 }
 
 .editable-drop-down .ui-button {
-	width: 100%;
 	text-align: left;
+	width: 100%;
 }
 
 .editable-drop-down .ui-button-icon-secondary {
@@ -223,7 +256,6 @@ div[id*=viewport-outline-checkbox] label {
 	top: 50%;
 	bottom: 50%;
 }
-/*Editable dropdown*/
 
 /*Override jQuery UI default font size*/
 .ui-button-text {

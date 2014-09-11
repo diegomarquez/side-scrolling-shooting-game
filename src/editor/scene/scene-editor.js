@@ -1,7 +1,12 @@
 define(function(require) {
+
+  var setupMasonryContainers = require('setup-masonry-containers');
+  var mainViewportControl = require('main-viewport-control');
+
   var SceneEditor = require("class").extend({
     init: function() {
       this.sceneNameUI = new (require('scene-name-ui'));
+      this.worldEditUI = new (require('world-edit-ui'));
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.groupSelectorUI = new (require('group-selector-ui'));
       this.viewportsUI = new (require('viewport-selector-ui'));
@@ -11,8 +16,6 @@ define(function(require) {
       this.sceneLoadUI = new (require('scene-load-ui'));
       
       this.horizontalBar = new (require('horizontal-bar'));
-
-      this.mainViewportControl = require('main-viewport-control');
     },
 
     create: function() {
@@ -29,6 +32,8 @@ define(function(require) {
 
       // Scene name
       container.appendChild(this.sceneNameUI.create());
+      // Wordl Size
+      container.appendChild(this.worldEditUI.create());
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Game object configuration
@@ -50,7 +55,9 @@ define(function(require) {
       container.appendChild(this.sceneLoadUI.create());
 
       // Setup control of 'Main' viewport with the keyboard
-      this.mainViewportControl.create();
+      mainViewportControl.create();
+      // Initialize All the masonry containers
+      setupMasonryContainers.setup();
     }
   });
 

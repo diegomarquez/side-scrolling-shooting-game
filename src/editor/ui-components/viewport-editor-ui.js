@@ -10,6 +10,8 @@ define(function(require) {
 
   var setupViewport = require('setup-viewport');
   
+  var setupMasonryContainers = require('setup-masonry-containers');
+
   var masonry = require('masonry-v2-shim');
 
   var ViewportEditor = require('class').extend({
@@ -162,59 +164,12 @@ define(function(require) {
       container.appendChild(buttonUI);
       container.appendChild(layersUI);  
 
-      var colWidth = function () {
-        var w = $(c).width();
-        var columnNum;
+      container.appendChild(setupMasonryContainers.add(
+        [sizeUI, offsetUI, scaleUI, strokeColorUI, strokeSizeUI], 
+        { itemSelector: '.viewport-editor-container' }
+      ));
 
-        if (w > 1200) {
-          columnNum  = 5;
-        } else if (w > 900) {
-          columnNum  = 4;
-        } else if (w > 600) {
-          columnNum  = 3;
-        } else {
-          columnNum  = 2;
-        }
-
-        var columnWidth = Math.floor(w/columnNum) - 0.5;
-        
-        $(c).find('.viewport-editor-container').each(function() {
-          var $item = $(this);    
-
-          var margins = parseFloat($item.css('margin-left')) + parseFloat($item.css('margin-right'))
-
-          $item.css('width', columnWidth - margins);
-        });
-
-        return columnWidth;
-      }
-      
-      var c = document.createElement('div');
-
-      c.appendChild(sizeUI);
-      c.appendChild(offsetUI);
-      c.appendChild(scaleUI);
-      c.appendChild(strokeColorUI);
-      c.appendChild(strokeSizeUI);
-
-      container.appendChild(c);
-
-      var wrapped = wrapper.wrap(container);
-
-      $(document).on('DOMNodeInserted', function(event) {
-        // TODO: Hacer que esto pase de una forma copada
-        if ($(wrapped).is($(event.target).children().children())) {
-          $(c).masonry({
-            itemSelector: '.viewport-editor-container',
-            columnWidth:  colWidth,
-            transitionDuration: 0
-          });
-
-          $(document).off(event);
-        }
-      });
-
-      return wrapped;
+      return wrapper.wrap(container);
     }
   });
 

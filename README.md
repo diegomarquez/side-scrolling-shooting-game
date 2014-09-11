@@ -3,9 +3,13 @@
 
 - Editor
 	- Edit World
-		- Size
-		- Step
-	- Toogle to fit world in viewport. Checkbox next to scale control
+		- Size UI (DONE)
+		- Step UI (DONE)
+		- Integrate Size (DONE)
+		- Integrate Step (DONE)
+		- Toogle to fit world in viewport. Checkbox next to scale control
+			- Viewports that are set to fit the world, should update their scale when this changes
+
 	- Make nicer checkboxes with jQueryUI
 	- Main Viewport can not be removed
 	- Editor Only viewport
@@ -15,8 +19,9 @@
 		- It is not serialized
 		- It does show up in the main UI, but it is disabled
 		- It's main purpose is letting the user know which part of the world is in view
-	- Accordion with viewports
-	- Sort viewports
+	- Accordion for viewports, or just a way to hide the bulk of the configuration
+	- Sort viewports. Sortable list with the viewport-editor-ui elements
+	- New viewports need to setup their masonry containers
 
 	- Complete TODO in keyboard.js
 
@@ -54,16 +59,15 @@
 	- Use LESS as a CSS preprocessor
 
 	- Save the bundles the current scene is using
-		- Object with all the bundle names and if they are currently in use or not
+		- Editor should hold an object with all the bundle names and if they are currently in use or not
 		- Add a dropdown to select which bundles the current scene should use
-		- Editor bundles should implement a method with all they TYPES they handle, so it is easy to destroy all those objects if the bundle is
-		  deselected
+		- Editor bundles should implement a method with all the TYPES they handle, so it is easy to destroy all those objects if the bundle is deselected
 		- The editor should have toogles to decide which bundles to use
 			- Turning a bundle on, creates it
 			- Turning it off should remove all the corresponding active and pooled game-objects
 				- Claim back all objects
 				- Remove them from the pools
-		- When a scene is loaded the pools are cleared and all the corresponding corresponding bundles call their create method
+		- When a scene is loaded the pools are cleared and all the corresponding bundles call their create method
 	
 Web Site
   Update Basic instruction on how to get a project running
