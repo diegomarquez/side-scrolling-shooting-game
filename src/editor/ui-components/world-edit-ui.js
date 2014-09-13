@@ -2,8 +2,6 @@ define(function(require) {
   var wrapper = require('wrap-in-div');
   var twoDimentionsInput = require('two-dimentions-input');
   var oneDimentionInput = require('one-dimention-input');
-  
-  var setupMasonryContainers = require('setup-masonry-containers');
 
   var world = require('world');
 
@@ -39,12 +37,7 @@ define(function(require) {
         }
       });
       
-      // return wrapper.wrap(wrapper.wrap([sizeUI, stepUI], { id: 'world-edit'}));
-
-      return wrapper.wrap(
-        setupMasonryContainers.add([sizeUI, stepUI], { itemSelector: '.world-edit-container'}), 
-        { id: 'world-edit'}
-      );
+      return wrapper.wrap(wrapper.wrap([sizeUI, stepUI], { className: 'world-edit'}));
     }
   });
 

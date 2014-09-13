@@ -56,13 +56,7 @@ module.exports = function(grunt) {
     },
 
     downloadfile: {
-      files: [
-        {
-          url: 'http://masonry.desandro.com/masonry.pkgd.js',
-          dest: 'lib/masonry',
-          name: 'masonry.pkgd.js'
-        }
-      ]
+      files: []
     }
   });
 

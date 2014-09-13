@@ -9,10 +9,6 @@ define(function(require) {
   var twoDimentionsInput = require('two-dimentions-input');
 
   var setupViewport = require('setup-viewport');
-  
-  var setupMasonryContainers = require('setup-masonry-containers');
-
-  var masonry = require('masonry-v2-shim');
 
   var ViewportEditor = require('class').extend({
     init: function() {
@@ -164,10 +160,9 @@ define(function(require) {
       container.appendChild(buttonUI);
       container.appendChild(layersUI);  
 
-      container.appendChild(setupMasonryContainers.add(
-        [sizeUI, offsetUI, scaleUI, strokeColorUI, strokeSizeUI], 
-        { itemSelector: '.viewport-editor-container' }
-      ));
+      container.appendChild(wrapper.wrap([sizeUI, offsetUI, scaleUI, strokeColorUI, strokeSizeUI], {
+        className: 'viewport-options'
+      }));
 
       return wrapper.wrap(container);
     }

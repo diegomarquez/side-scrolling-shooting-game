@@ -1,6 +1,4 @@
 define(function(require) {
-
-  var setupMasonryContainers = require('setup-masonry-containers');
   var mainViewportControl = require('main-viewport-control');
 
   var SceneEditor = require("class").extend({
@@ -56,8 +54,6 @@ define(function(require) {
 
       // Setup control of 'Main' viewport with the keyboard
       mainViewportControl.create();
-      // Initialize All the masonry containers
-      setupMasonryContainers.setup();
     }
   });
 

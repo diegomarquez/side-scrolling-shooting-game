@@ -46,10 +46,7 @@
 
 	- Visual feedback if there are things missing in order to add a game-object to the scene.
 		- Flashing red or something
-
-	- Use stylesheets to put the canvas in the top corner in the examples
-		- remove the styling from game.js
-	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
+	
 	- Have 4 regions
 		- canvas
 		- Right of canvas
@@ -68,6 +65,10 @@
 				- Claim back all objects
 				- Remove them from the pools
 		- When a scene is loaded the pools are cleared and all the corresponding bundles call their create method
+	
+	- Use stylesheets to put the canvas in the top corner in the examples
+		- remove the styling from game.js
+	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
 	
 Web Site
   Update Basic instruction on how to get a project running

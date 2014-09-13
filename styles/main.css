@@ -18,16 +18,25 @@ html, body, div, canvas {
 }
 
 /*World Edit*/
-#world-edit {
-	margin-top: 5px;
-	border-radius: 5px;	
+.world-edit {
+	border-radius: 5px;
 	background: #ccc;
 	width: 50%;
+	display: inline-block;
 }
 
 .world-edit-container {	
-	margin: 2px;
+	padding: 2px;
+	width: 50%;
 	font-size: 0.6em;
+	white-space:nowrap;
+	float: left;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .world-edit-label {
@@ -156,14 +165,30 @@ div[id*=viewport-outline-checkbox] label {
 	width: 99.7%;
 }
 
-.viewport-editor-container {	
-	margin: 2px;
+.viewport-options {
+	width: 100%;
+	display: inline-block;
+}
+
+.viewport-editor-container {
+	padding: 2px;
+	width: 50%;
 	font-size: 0.6em;
+	white-space:nowrap;
+	float: left;
+
+	overflow: hidden;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .viewport-editor-label {
 	margin: 4px;
-	width: 25%;
+	width: 15%;
 	display: inline-block;
 	white-space:nowrap;
 }
