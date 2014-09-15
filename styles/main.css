@@ -93,76 +93,20 @@ hr {
 	width: 50%;
 }
 
-div[id*=viewport-active-checkbox] {
-	display: inline-block;	
-	margin: 2px;
-}
-
-div[id*=viewport-active-checkbox] input {
-	display: none;
-	position: relative;
-}
-
-div[id*=viewport-active-checkbox] input[type=checkbox]:checked + label {
-	background: #0f0;
-}
-
-div[id*=viewport-active-checkbox] label {
-	border-radius: 5px;
-	cursor: pointer;
-	background: #f00;
-	text-align: center;
-
-	padding-left: 20px;
-	padding-right: 20px;
-
-	-webkit-transition: all .5s ease;
-	-moz-transition: all .5s ease;
-	-o-transition: all .5s ease;
-	-ms-transition: all .5s ease;
-	transition: all .5s ease;
-}
-
-div[id*=viewport-outline-checkbox] {
-	display: inline-block;	
-}
-
-div[id*=viewport-outline-checkbox] input {
-	display: none;
-	position: relative;
-}
-
-div[id*=viewport-outline-checkbox] input[type=checkbox]:checked + label {
-	background: #0f0;
-}
-
-div[id*=viewport-outline-checkbox] label {
-	border-radius: 5px;
-	cursor: pointer;
-	background: #f00;
-	text-align: center;
-
-	padding-left: 20px;
-	padding-right: 20px;
-
-	-webkit-transition: all .5s ease;
-	-moz-transition: all .5s ease;
-	-o-transition: all .5s ease;
-	-ms-transition: all .5s ease;
-	transition: all .5s ease;
-}
-
-#viewport-control select {
+.viewport-checkboxes {
+	padding: 2px;
 	width: 100%;
+	display: table;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-#viewport-control button {
-}
-
-#viewport-control select {
-	margin-bottom: 2px;
-	margin-right: 2px;
-	width: 99.7%;
+.viewport-checkboxes > label {
+    display: table-cell;
 }
 
 .viewport-options {

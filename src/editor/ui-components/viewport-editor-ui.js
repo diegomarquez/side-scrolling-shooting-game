@@ -1,9 +1,9 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
   var gb = require('gb');
-
-  var checkbox = require('label-checkbox');
-  var button = require('button');
+  var world = require('world');
+  
+  var checkboxSet = require('checkbox-set');
   var editableDropdown = require('editable-dropdown');
   var oneDimentionInput = require('one-dimention-input');
   var twoDimentionsInput = require('two-dimentions-input');
@@ -19,49 +19,62 @@ define(function(require) {
       var container = document.createElement('div');
       container.id = 'viewport-control';
 
-      // Selection check box
-      var labelCheckboxUI = new checkbox().create({
-        id: 'viewport-active-checkbox-' + options.viewport.name,
-        label: options.viewport.name
-      });
+      var checkboxSetUI = new checkboxSet().create({
+        id: 'viewport-checkboxes',
+        checkboxes: [
+          {
+            label: options.viewport.name
+          },
+          {
+            label: 'Outline',
+            onChange: function (event) {
+              if (event.target.checked) {
+                setupViewport.addOutline(options.viewport.name);
+              } else {
+                setupViewport.removeOutline(options.viewport.name);
+              }
+            }
+          },
+          {
+            label: 'Fit World',
+            onChange: function (event) {
+              if (event.target.checked) {
+                world.scaleViewportToFit(options.viewport);
+                options.viewport.worldFit = true;
+                scaleUI.X = options.viewport.ScaleX;
+                scaleUI.Y = options.viewport.ScaleY;
+              } else {
+                options.viewport.worldFit = false;
+                options.viewport.ScaleX = 1;
+                options.viewport.ScaleY = 1; 
+              }
+            }
+          },
+          {
+            label: 'Remove',
+            onChange: function (event) {
+              // Remove viewport
+              var viewportGos = gb.viewports.remove(options.viewport.name);
 
-      // Selection check box
-      var outlineCheckboxUI = new checkbox().create({
-        id: 'viewport-outline-checkbox-' + options.viewport.name,
-        label: 'Outline',
-        onChange: function(event) {
-          if (event.target.checked) {
-            setupViewport.addOutline(options.viewport.name);
-          } else {
-            setupViewport.removeOutline(options.viewport.name);
-          }
-        }
-      });
-   
-      //  Remove Button
-      var buttonUI = new button().create({
-        label: 'Remove',
-        onClick: function() {
-          // Remove viewport
-          var viewportGos = gb.viewports.remove(options.viewport.name);
+              // TODO: this logic can go in the guts of the framework
+              // Check which game objects are not renderer in any viewport
+              for (var i = 0; i < viewportGos.length; i++) {
+                var go = viewportGos[i];
 
-          // TODO: this logic can go in the guts of the framework
-          // Check which game objects are not renderer in any viewport
-          for (var i = 0; i < viewportGos.length; i++) {
-            var go = viewportGos[i];
+                // If a game object is not renderer anywhere send it back to it's pool
+                if (!go.hasViewport()) {
+                  gb.reclaimer.claim(go);
+                }
+              }
+              /**
+               * --------------------------------
+               */
 
-            // If a game object is not renderer anywhere send it back to it's pool
-            if (!go.hasViewport()) {
-              gb.reclaimer.claim(go);
+              // Remove the UI component from it's parent
+              container.parentNode.removeChild(container);
             }
           }
-          /**
-           * --------------------------------
-           */
-
-          // Remove the UI component from it's parent
-          container.parentNode.removeChild(container);
-        }
+        ]
       });
 
       // Viewport layers selector. Skips the 'Outline layer that all viewports have'
@@ -121,9 +134,17 @@ define(function(require) {
         yValue: options.viewport.ScaleY,
         onXChange: function(event) { 
           gb.viewports.get(options.viewport.name).ScaleX = event.target.value; 
+
+          if (options.viewport.worldFit) {
+            world.scaleViewportToFit(options.viewport);
+          }
         },
         onYChange: function(event) { 
           gb.viewports.get(options.viewport.name).ScaleY = event.target.value; 
+
+          if (options.viewport.worldFit) {
+            world.scaleViewportToFit(options.viewport);
+          }
         }
       });
 
@@ -155,12 +176,9 @@ define(function(require) {
         }
       });
 
-      container.appendChild(labelCheckboxUI);
-      container.appendChild(outlineCheckboxUI);
-      container.appendChild(buttonUI);
+      container.appendChild(checkboxSetUI);
       container.appendChild(layersUI);  
-
-      container.appendChild(wrapper.wrap([sizeUI, offsetUI, scaleUI, strokeColorUI, strokeSizeUI], {
+      container.appendChild(wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
         className: 'viewport-options'
       }));
 

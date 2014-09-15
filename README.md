@@ -2,15 +2,13 @@
 -------------------
 
 - Editor
-	- Edit World
-		- Size UI (DONE)
-		- Step UI (DONE)
-		- Integrate Size (DONE)
-		- Integrate Step (DONE)
-		- Toogle to fit world in viewport. Checkbox next to scale control
-			- Viewports that are set to fit the world, should update their scale when this changes
+	- World fit Value
+		- Add it to game-builder in viewport.js
+		- Serialize that value, and restore it on save
+		- Turn on/off the toogle as a viewport is created from reading a file
+	- Remove button
+		- Move the logic in the remove click handler into game-builder core
 
-	- Make nicer checkboxes with jQueryUI
 	- Main Viewport can not be removed
 	- Editor Only viewport
 		- It can not be removed
@@ -33,7 +31,7 @@
 		- If a layer is removed, recycle it's game-objets only if they are not visible elsewhere
 	- Change layer order
 		- UI (DONE)
-		- Integration
+		- Integration. Reflect the change in the rendering order of a layers in a viewport
 
 	- Be able to add, remove and arrange update groups
 		- UI
@@ -53,8 +51,6 @@
 		- Bottom of canvas 
 		- Bottom right of canvas
 
-	- Use LESS as a CSS preprocessor
-
 	- Save the bundles the current scene is using
 		- Editor should hold an object with all the bundle names and if they are currently in use or not
 		- Add a dropdown to select which bundles the current scene should use
@@ -66,6 +62,10 @@
 				- Remove them from the pools
 		- When a scene is loaded the pools are cleared and all the corresponding bundles call their create method
 	
+	- Use LESS as a CSS preprocessor
+	- Delete unused files
+	- Stadarize how a module using jQueryUI should look
+
 	- Use stylesheets to put the canvas in the top corner in the examples
 		- remove the styling from game.js
 	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling

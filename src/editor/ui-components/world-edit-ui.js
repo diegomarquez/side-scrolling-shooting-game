@@ -37,7 +37,7 @@ define(function(require) {
         }
       });
       
-      return wrapper.wrap(wrapper.wrap([sizeUI, stepUI], { className: 'world-edit'}));
+      return wrapper.wrap(wrapper.wrap([sizeUI.html, stepUI.html], { className: 'world-edit'}));
     }
   });
 

@@ -88,6 +88,7 @@ require.config({
 		"wrap-in-div": "src/editor/ui-components/helpers/wrap-in-div", 
 		"wrap-in-span": "src/editor/ui-components/helpers/wrap-in-span", 
 		"button": "src/editor/ui-components/primitives/button", 
+		"checkbox-set": "src/editor/ui-components/primitives/checkbox-set", 
 		"dropdown": "src/editor/ui-components/primitives/dropdown", 
 		"editable-dropdown": "src/editor/ui-components/primitives/editable-dropdown", 
 		"file-loader": "src/editor/ui-components/primitives/file-loader", 

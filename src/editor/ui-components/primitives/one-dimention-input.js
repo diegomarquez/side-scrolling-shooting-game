@@ -35,7 +35,15 @@ define(function(require) {
       $(wrapped).addClass('ui-widget');
       $(wrapped).addClass(options.containerClass);
 
-      return wrapped;
+      return {
+        html: wrapped,
+        get Value() { 
+          return input.value; 
+        },
+        set Value(value) { 
+          input.value = value; 
+        }
+      };
     }
   });
 

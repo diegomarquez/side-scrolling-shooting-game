@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var divWrapper = require('wrap-in-div');
+  var wrapper = require('wrap-in-div');
 
   require('jquery');
   require('jquery-ui');
@@ -38,16 +38,31 @@ define(function(require) {
       $(y).addClass(options.inputClass);
 
 	    container.appendChild(label);
-      container.appendChild(x);
       container.appendChild(y);
+      container.appendChild(x);
 
-      var wrapped = divWrapper.wrap(container);
+      var wrapped = wrapper.wrap(container);
       $(wrapped).addClass('ui-widget');
       $(wrapped).addClass(options.containerClass);
 
-      return wrapped;
-    }
+      return {
+        html: wrapped,
+        get X() { 
+          return x.value; 
+        },
+        set X(value) { 
+          x.value = value; 
+        },
+        get Y() { 
+          return y.value; 
+        },
+        set Y(value) { 
+          y.value = value; 
+        }
+      };
+    }    
   });
+
 
   return TwoDimentionsInput;
 });
