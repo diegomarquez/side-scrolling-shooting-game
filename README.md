@@ -2,10 +2,7 @@
 -------------------
 
 - Editor
-	- Main Viewport can not be removed (DONE)
-		- Remove button is disabled (DONE)
-
-	- Edit World size should update viewports that are set to fit the world (DONE)
+	- Disable Scale UI component when the Fit to World option is set
 	
 	- Editor Only viewport
 		- It can not be removed
