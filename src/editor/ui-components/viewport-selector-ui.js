@@ -7,6 +7,7 @@ define(function(require) {
   var ViewportSelector = require('class').extend({
     init: function() {
       this.container = null;
+      this.children = {};
     },
 
     create: function() {
@@ -25,9 +26,17 @@ define(function(require) {
     add: function(viewport) {
       setupViewport.setup(viewport.name);
 
-      this.container.appendChild(new viewportEditorUI().create({
+      var viewportEditor = new viewportEditorUI().create({
         viewport: viewport
-      }));
+      })
+
+      this.container.appendChild(viewportEditor);
+      this.children[viewport.name] = viewportEditor;
+    },
+
+    remove: function(viewport) {
+      this.container.removeChild(this.children[viewport.name]);
+      delete this.children[viewport.name];
     }
   });
 

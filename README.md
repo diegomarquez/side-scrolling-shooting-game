@@ -2,14 +2,9 @@
 -------------------
 
 - Editor
-	- World fit Value
-		- Add it to game-builder in viewport.js
-		- Serialize that value, and restore it on save
-		- Turn on/off the toogle as a viewport is created from reading a file
-	- Remove button
-		- Move the logic in the remove click handler into game-builder core
-
 	- Main Viewport can not be removed
+		- Remove button is disabled
+	
 	- Editor Only viewport
 		- It can not be removed
 		- It is not editable in any way, other than hiding it
@@ -17,9 +12,8 @@
 		- It is not serialized
 		- It does show up in the main UI, but it is disabled
 		- It's main purpose is letting the user know which part of the world is in view
-	- Accordion for viewports, or just a way to hide the bulk of the configuration
+	- Hide the bulk of the configuration of viewports
 	- Sort viewports. Sortable list with the viewport-editor-ui elements
-	- New viewports need to setup their masonry containers
 
 	- Complete TODO in keyboard.js
 
@@ -32,6 +26,8 @@
 	- Change layer order
 		- UI (DONE)
 		- Integration. Reflect the change in the rendering order of a layers in a viewport
+	- Save Layers
+	- Load Layers
 
 	- Be able to add, remove and arrange update groups
 		- UI
@@ -40,7 +36,8 @@
 	- Add a toggle to show and hide a grid
 	- Move objects around by dragging with the mouse
 		- remove move by key presses from game-objects in favour of snap to grid toogle
-		- Move main viewport by grid size
+		- Move main viewport by grid size when pressing keys. 
+			- Add a spinner to move the main viewport with the mouse. Less functional, but easier to understand.
 
 	- Visual feedback if there are things missing in order to add a game-object to the scene.
 		- Flashing red or something
@@ -76,6 +73,7 @@ Web Site
     make word 'website' a link to bower
     make it clear that you need to install grunt-cli
   Rebuild docs and examples
+  	- Make sure all the examples work with all the new changes in game-buildre core
 
 Generator
   Fix .gitignore generation

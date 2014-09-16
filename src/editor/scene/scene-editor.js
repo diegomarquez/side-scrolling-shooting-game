@@ -1,5 +1,6 @@
 define(function(require) {
   var mainViewportControl = require('main-viewport-control');
+  var gb = require('gb');
 
   var SceneEditor = require("class").extend({
     init: function() {
@@ -38,9 +39,7 @@ define(function(require) {
       container.appendChild(this.gameObjectSelectorUI.create());
       container.appendChild(this.groupSelectorUI.create());
       container.appendChild(this.viewportsUI.create());
-      container.appendChild(this.viewportCreateUI.create({
-        container: this.viewportsUI
-      }));
+      container.appendChild(this.viewportCreateUI.create());
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Game object creation button
@@ -51,6 +50,16 @@ define(function(require) {
       // Save and Load scene buttons
       container.appendChild(this.sceneSaveUI.create());
       container.appendChild(this.sceneLoadUI.create());
+
+      // Add a viewport UI component when a viewport is added
+      gb.viewports.on(gb.viewports.ADD, this, function (v) {
+        this.viewportsUI.add(v);
+      });
+
+      // Remove the UI component from it's parent when a viewport is removed
+      gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
+        this.viewportsUI.remove(v);
+      });
 
       // Setup control of 'Main' viewport with the keyboard
       mainViewportControl.create();

@@ -55,7 +55,8 @@ define(function(require) {
           offsetY: v.OffsetY, 
           scaleX: v.ScaleX,
           scaleY: v.ScaleY,
-          stroke: v.getStroke()
+          stroke: v.getStroke(),
+          worldFit: v.WorldFit
         });
       }
 

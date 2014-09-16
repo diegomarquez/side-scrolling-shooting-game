@@ -37,41 +37,23 @@ define(function(require) {
           },
           {
             label: 'Fit World',
+            state: options.viewport.WorldFit,
             onChange: function (event) {
               if (event.target.checked) {
                 world.scaleViewportToFit(options.viewport);
-                options.viewport.worldFit = true;
-                scaleUI.X = options.viewport.ScaleX;
-                scaleUI.Y = options.viewport.ScaleY;
               } else {
-                options.viewport.worldFit = false;
-                options.viewport.ScaleX = 1;
-                options.viewport.ScaleY = 1; 
+                world.resetViewportScale(options.viewport);  
               }
+              
+              scaleUI.X = options.viewport.ScaleX;
+              scaleUI.Y = options.viewport.ScaleY;
             }
           },
           {
             label: 'Remove',
             onChange: function (event) {
               // Remove viewport
-              var viewportGos = gb.viewports.remove(options.viewport.name);
-
-              // TODO: this logic can go in the guts of the framework
-              // Check which game objects are not renderer in any viewport
-              for (var i = 0; i < viewportGos.length; i++) {
-                var go = viewportGos[i];
-
-                // If a game object is not renderer anywhere send it back to it's pool
-                if (!go.hasViewport()) {
-                  gb.reclaimer.claim(go);
-                }
-              }
-              /**
-               * --------------------------------
-               */
-
-              // Remove the UI component from it's parent
-              container.parentNode.removeChild(container);
+              gb.viewports.remove(options.viewport.name);
             }
           }
         ]

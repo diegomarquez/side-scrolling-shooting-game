@@ -22,7 +22,7 @@ define(function(require) {
         onClick: function (event) {
           if (textInputUI.value) {
             if (!gb.viewports.exists(textInputUI.value)) {
-              options.container.add(gb.viewports.add(textInputUI.value, gb.canvas.width, gb.canvas.height, 0, 0));
+              gb.viewports.add(textInputUI.value, gb.canvas.width, gb.canvas.height, 0, 0);
             }
           }
         }

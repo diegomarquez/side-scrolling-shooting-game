@@ -17,7 +17,8 @@ define(function(require) {
 
         checkbox.id = options.id + '-' + options.checkboxes[i].label + '-' + 'checkbox';
         checkbox.type = 'checkbox';
-        
+        checkbox.checked = options.checkboxes[i].state;
+
         checkbox.name = options.checkboxes[i].label;
         checkbox.value = options.checkboxes[i].label;
 
