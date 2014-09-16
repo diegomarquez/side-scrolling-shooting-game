@@ -20,7 +20,7 @@ define(function(require) {
       container.id = 'viewport-control';
 
       var checkboxSetUI = new checkboxSet().create({
-        id: 'viewport-checkboxes',
+        id: 'viewport-checkboxes-' + options.viewport.name,
         checkboxes: [
           {
             label: options.viewport.name

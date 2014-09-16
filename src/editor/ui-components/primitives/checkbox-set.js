@@ -15,7 +15,7 @@ define(function(require) {
       for (var i = 0; i < options.checkboxes.length; i++) {
         var checkbox = document.createElement('input');
 
-        checkbox.id = options.id + '-' + options.checkboxes[i].label + '-' + 'checkbox';
+        checkbox.id = options.id + '-' + options.checkboxes[i].label;
         checkbox.type = 'checkbox';
         checkbox.checked = options.checkboxes[i].state;
 
@@ -32,7 +32,7 @@ define(function(require) {
         elements.push(label);
       };
 
-      var wrapped = wrapper.wrap(elements, { className: options.id });
+      var wrapped = wrapper.wrap(elements, { id: options.id });
 
       $(wrapped).buttonset();
 
