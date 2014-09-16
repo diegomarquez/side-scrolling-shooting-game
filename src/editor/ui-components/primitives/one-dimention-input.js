@@ -23,7 +23,8 @@ define(function(require) {
 
       var input = document.createElement('input');
 	    input.type  = 'text';
-	    input.value = options.value;
+      input.value = options.value;
+      input.className = 'value';
 	    input.onchange = options.onChange;
       $(input).addClass('ui-corner-all');
       $(input).addClass(options.inputClass);
