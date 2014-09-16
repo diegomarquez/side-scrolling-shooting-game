@@ -2,7 +2,7 @@ define(function(require) {
 
   var gb = require('gb');
   var keyboard = require('keyboard');
-  var wordl = require('world');
+  var world = require('world');
 
   var MainViewportControl = require("class").extend({
     init: function() {},
