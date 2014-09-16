@@ -1,6 +1,8 @@
 define(function(require) {
   var mainViewportControl = require('main-viewport-control');
+  var scaleUIValueSetter = require('scale-ui-value-setter');
   var gb = require('gb');
+  var world = require('world');
 
   var SceneEditor = require("class").extend({
     init: function() {
@@ -31,7 +33,7 @@ define(function(require) {
 
       // Scene name
       container.appendChild(this.sceneNameUI.create());
-      // Wordl Size
+      // World Size
       container.appendChild(this.worldEditUI.create());
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
@@ -59,6 +61,17 @@ define(function(require) {
       // Remove the UI component from it's parent when a viewport is removed
       gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
         this.viewportsUI.remove(v);
+      });
+
+      world.on(world.CHANGE, this, function () {
+        gb.viewports.iterate(this, function(v) { 
+          if (v.WorldFit) {
+            world.scaleViewportToFit(v); 
+
+            debugger;
+            scaleUIValueSetter.set(v);
+          } 
+        });
       });
 
       // Setup control of 'Main' viewport with the keyboard

@@ -14,25 +14,27 @@ define(function(require) {
 
       for (var i = 0; i < options.checkboxes.length; i++) {
         var checkbox = document.createElement('input');
+        var checkboxOptions = options.checkboxes[i];
 
-        checkbox.id = options.id + '-' + options.checkboxes[i].label;
+        checkbox.id = options.id + '-' + checkboxOptions.label;
         checkbox.type = 'checkbox';
-        checkbox.checked = options.checkboxes[i].state;
+        checkbox.checked = checkboxOptions.state;
+        checkbox.disabled = checkboxOptions.disable;
 
-        checkbox.name = options.checkboxes[i].label;
-        checkbox.value = options.checkboxes[i].label;
+        checkbox.name = checkboxOptions.label;
+        checkbox.value = checkboxOptions.label;
 
-        checkbox.onchange = options.checkboxes[i].onChange;
+        checkbox.onchange = checkboxOptions.onChange;
 
         var label = document.createElement('label');
         label.setAttribute('for', checkbox.id);
-        label.innerHTML = options.checkboxes[i].label;
+        label.innerHTML = checkboxOptions.label;
 
         elements.push(checkbox);
         elements.push(label);
       };
 
-      var wrapped = wrapper.wrap(elements, { id: options.id });
+      var wrapped = wrapper.wrap(elements, { id: options.id, className: options.containerClass });
 
       $(wrapped).buttonset();
 

@@ -24,7 +24,8 @@ define(function(require) {
       var x = document.createElement('input');
 	    x.type  = 'text';
 	    x.value = options.xValue;
-	    x.onchange = options.onXChange;
+	    x.className = 'xValue';
+      x.onchange = options.onXChange;
             
       $(x).addClass('ui-corner-all');
       $(x).addClass(options.inputClass);
@@ -32,7 +33,8 @@ define(function(require) {
 	    var y = document.createElement('input');
       y.type  = 'text';
 	    y.value = options.yValue;
-	    y.onchange = options.onYChange;
+	    y.className = 'yValue';
+      y.onchange = options.onYChange;
       
       $(y).addClass('ui-corner-all');
       $(y).addClass(options.inputClass);
@@ -47,6 +49,12 @@ define(function(require) {
 
       return {
         html: wrapped,
+        disable: function () {
+          
+        },
+        enable: function () {
+
+        },
         get X() { 
           return x.value; 
         },

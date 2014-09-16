@@ -21,6 +21,7 @@ define(function(require) {
 
       var checkboxSetUI = new checkboxSet().create({
         id: 'viewport-checkboxes-' + options.viewport.name,
+        containerClass: 'viewport-checkboxes',
         checkboxes: [
           {
             label: options.viewport.name
@@ -30,7 +31,8 @@ define(function(require) {
             onChange: function (event) {
               if (event.target.checked) {
                 setupViewport.addOutline(options.viewport.name);
-              } else {
+              }
+              else { 
                 setupViewport.removeOutline(options.viewport.name);
               }
             }
@@ -41,18 +43,16 @@ define(function(require) {
             onChange: function (event) {
               if (event.target.checked) {
                 world.scaleViewportToFit(options.viewport);
-              } else {
-                world.resetViewportScale(options.viewport);  
+              } 
+              else {
+                world.resetViewportScale(options.viewport);
               }
-              
-              scaleUI.X = options.viewport.ScaleX;
-              scaleUI.Y = options.viewport.ScaleY;
             }
           },
           {
             label: 'Remove',
+            disable: (options.viewport.name === 'Main'),
             onChange: function (event) {
-              // Remove viewport
               gb.viewports.remove(options.viewport.name);
             }
           }
@@ -117,14 +117,14 @@ define(function(require) {
         onXChange: function(event) { 
           gb.viewports.get(options.viewport.name).ScaleX = event.target.value; 
 
-          if (options.viewport.worldFit) {
+          if (options.viewport.WorldFit) {
             world.scaleViewportToFit(options.viewport);
           }
         },
         onYChange: function(event) { 
           gb.viewports.get(options.viewport.name).ScaleY = event.target.value; 
 
-          if (options.viewport.worldFit) {
+          if (options.viewport.WorldFit) {
             world.scaleViewportToFit(options.viewport);
           }
         }
@@ -161,6 +161,7 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI);  
       container.appendChild(wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
+        id: 'viewport-options-' + options.viewport.name,
         className: 'viewport-options'
       }));
 

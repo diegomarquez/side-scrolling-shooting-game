@@ -2,17 +2,22 @@
 -------------------
 
 - Editor
-	- Main Viewport can not be removed
-		- Remove button is disabled
+	- Main Viewport can not be removed (DONE)
+		- Remove button is disabled (DONE)
+
+	- Edit World size should update viewports that are set to fit the world (DONE)
 	
 	- Editor Only viewport
 		- It can not be removed
-		- It is not editable in any way, other than hiding it
+		- It is not editable in any way, other than hiding/showing it
 		- It is always scaled to fit the world size
 		- It is not serialized
-		- It does show up in the main UI, but it is disabled
+		- It does not show up in the main UI
+		- It is always in the top
 		- It's main purpose is letting the user know which part of the world is in view
+	
 	- Hide the bulk of the configuration of viewports
+	
 	- Sort viewports. Sortable list with the viewport-editor-ui elements
 
 	- Complete TODO in keyboard.js

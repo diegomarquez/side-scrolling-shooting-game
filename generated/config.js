@@ -74,6 +74,7 @@ require.config({
 		"scene-name": "src/editor/html-parsers/scene-name", 
 		"selected-game-object": "src/editor/html-parsers/selected-game-object", 
 		"selected-group": "src/editor/html-parsers/selected-group", 
+		"scale-ui-value-setter": "src/editor/html-setters/scale-ui-value-setter", 
 		"scene-editor": "src/editor/scene/scene-editor", 
 		"scene-loader": "src/editor/scene/scene-loader", 
 		"scene-serializer": "src/editor/scene/scene-serializer", 
