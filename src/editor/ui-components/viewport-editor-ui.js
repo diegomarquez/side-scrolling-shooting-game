@@ -84,9 +84,17 @@ define(function(require) {
         yValue: options.viewport.Height,
         onXChange: function(event) { 
           gb.viewports.get(options.viewport.name).Width = event.target.value; 
+
+          if (options.viewport.WorldFit) {
+            world.scaleViewportToFit(options.viewport);
+          }
         },
         onYChange: function(event) { 
           gb.viewports.get(options.viewport.name).Height = event.target.value; 
+
+          if (options.viewport.WorldFit) {
+            world.scaleViewportToFit(options.viewport);
+          }
         }
       });
 

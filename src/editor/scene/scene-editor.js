@@ -64,12 +64,19 @@ define(function(require) {
       });
 
       world.on(world.CHANGE, this, function () {
-        gb.viewports.iterate(this, function(v) { 
+        gb.viewports.iterate(this, function (v) { 
           if (v.WorldFit) {
             world.scaleViewportToFit(v); 
-            scaleUIValueSetter.set(v);
           } 
         });
+      });
+
+      world.on(world.SCALE_TO_FIT, this, function (v) {
+        scaleUIValueSetter.set(v);
+      });
+
+      world.on(world.RESET_SCALE, this, function (v) {
+        scaleUIValueSetter.set(v);
       });
 
       // Setup control of 'Main' viewport with the keyboard

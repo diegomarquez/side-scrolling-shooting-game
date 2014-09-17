@@ -18,6 +18,8 @@ define(function(require) {
       $(container).addClass('ui-corner-all');
       
       var cover = document.createElement('div');
+      $(cover).addClass('mouse-cover');
+      $(cover).hide();
 
       var label = document.createElement('div');
       label.innerHTML = options.label;
@@ -53,13 +55,11 @@ define(function(require) {
       return {
         html: wrapped,
         disable: function () {
-          $(cover).addClass('mouse-cover-on');
-          $(cover).removeClass('mouse-cover-off');
+          $(cover).show({duration: 0});
           $(container).addClass('ui-state-disabled');
         },
         enable: function () {
-          $(cover).removeClass('mouse-cover-on');
-          $(cover).addClass('mouse-cover-off');
+          $(cover).hide();
           $(container).removeClass('ui-state-disabled');
         },
         get X() { 
