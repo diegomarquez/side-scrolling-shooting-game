@@ -1,9 +1,7 @@
 # side-shmup
 -------------------
 
-- Editor
-	- Disable Scale UI component when the Fit to World option is set
-	
+- Editor	
 	- Editor Only viewport
 		- It can not be removed
 		- It is not editable in any way, other than hiding/showing it
@@ -49,6 +47,7 @@
 		- Right of canvas
 		- Bottom of canvas 
 		- Bottom right of canvas
+		- Add some styling for the background of the regions
 
 	- Save the bundles the current scene is using
 		- Editor should hold an object with all the bundle names and if they are currently in use or not

@@ -17,6 +17,8 @@ define(function(require) {
       $(container).addClass('ui-state-default');
       $(container).addClass('ui-corner-all');
       
+      var cover = document.createElement('div');
+
       var label = document.createElement('div');
       label.innerHTML = options.label;
       $(label).addClass(options.labelClass);
@@ -39,9 +41,10 @@ define(function(require) {
       $(y).addClass('ui-corner-all');
       $(y).addClass(options.inputClass);
 
-	    container.appendChild(label);
+      container.appendChild(label);
       container.appendChild(y);
       container.appendChild(x);
+      container.appendChild(cover);
 
       var wrapped = wrapper.wrap(container);
       $(wrapped).addClass('ui-widget');
@@ -50,10 +53,14 @@ define(function(require) {
       return {
         html: wrapped,
         disable: function () {
-          
+          $(cover).addClass('mouse-cover-on');
+          $(cover).removeClass('mouse-cover-off');
+          $(container).addClass('ui-state-disabled');
         },
         enable: function () {
-
+          $(cover).removeClass('mouse-cover-on');
+          $(cover).addClass('mouse-cover-off');
+          $(container).removeClass('ui-state-disabled');
         },
         get X() { 
           return x.value; 

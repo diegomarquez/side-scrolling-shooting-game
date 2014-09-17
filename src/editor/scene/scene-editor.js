@@ -67,8 +67,6 @@ define(function(require) {
         gb.viewports.iterate(this, function(v) { 
           if (v.WorldFit) {
             world.scaleViewportToFit(v); 
-
-            debugger;
             scaleUIValueSetter.set(v);
           } 
         });

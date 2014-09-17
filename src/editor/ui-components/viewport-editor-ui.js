@@ -43,9 +43,11 @@ define(function(require) {
             onChange: function (event) {
               if (event.target.checked) {
                 world.scaleViewportToFit(options.viewport);
+                scaleUI.disable();
               } 
               else {
                 world.resetViewportScale(options.viewport);
+                scaleUI.enable();
               }
             }
           },
@@ -164,6 +166,10 @@ define(function(require) {
         id: 'viewport-options-' + options.viewport.name,
         className: 'viewport-options'
       }));
+
+      if (options.viewport.WorldFit) {
+        scaleUI.disable();
+      }
 
       return wrapper.wrap(container);
     }
