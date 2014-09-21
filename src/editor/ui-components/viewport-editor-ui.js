@@ -52,6 +52,17 @@ define(function(require) {
             }
           },
           {
+            onLabel: 'Show',
+            offLabel: 'Hide',
+            onChange: function (event) {
+              if (event.target.checked) {
+                options.viewport.hide()
+              } else {
+                options.viewport.show()
+              }
+            }
+          },
+          {
             label: 'Remove',
             disable: (options.viewport.name === 'Main'),
             onChange: function (event) {
