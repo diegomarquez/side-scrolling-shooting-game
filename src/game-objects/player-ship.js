@@ -13,12 +13,12 @@ define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
     start: function() {
       this._super();
 
-      Keyboard.onKeyDown(Keyboard.A, this, function() {
-        var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
+      // Keyboard.onKeyDown(Keyboard.A, this, function() {
+      //   var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
 
-        bullet.x = this.X + 20;
-        bullet.y = this.Y;
-      });
+      //   bullet.x = this.X + 20;
+      //   bullet.y = this.Y;
+      // });
     },
 
     update: function(delta) {
