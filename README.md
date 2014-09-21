@@ -2,19 +2,10 @@
 -------------------
 
 - Editor
-	- Editor Only viewport
-		- It can not be removed
-		- It is not editable in any way, other than hiding/showing it
-		- It is always scaled to fit the world size
-		- It is not serialized
-		- It does not show up in the main UI
-		- It is always in the top of the drawing stack
-		- All game-objects are added to it
-		- It's main purpose is letting the user know which part of the world is in view
-	
-	- Hide the bulk of the configuration of viewports
+	- Hide the bulk of the configuration of viewports in a plus icon button
 	
 	- Sort viewports. Sortable list with the viewport-editor-ui elements
+		- Change the viewport drawing order when the UI changes
 
 	- Complete TODO in keyboard.js
 
@@ -63,12 +54,17 @@
 	
 	- Use LESS as a CSS preprocessor
 	- Delete unused files
+
 	- Stadarize how a module using jQueryUI should look
+		- require jQuery and jQueryUI once in the beginning
 
 	- Use stylesheets to put the canvas in the top corner in the examples
 		- remove the styling from game.js
 	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
 	
+	- Fix Tab selection, if possible
+	- Enable viewport movement with keys only when the canvas is in focus
+
 Web Site
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
