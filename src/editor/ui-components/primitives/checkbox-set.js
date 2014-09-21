@@ -16,19 +16,34 @@ define(function(require) {
         var checkbox = document.createElement('input');
         var checkboxOptions = options.checkboxes[i];
 
-        checkbox.id = options.id + '-' + checkboxOptions.label;
+        var startLabel = checkboxOptions.label ? checkboxOptions.label : checkboxOptions.offLabel;
+
+        checkbox.id = options.id + '-' + startLabel;
+        checkbox.name = startLabel;
+        checkbox.value = startLabel;
         checkbox.type = 'checkbox';
         checkbox.checked = checkboxOptions.state;
         checkbox.disabled = checkboxOptions.disable;
 
-        checkbox.name = checkboxOptions.label;
-        checkbox.value = checkboxOptions.label;
-
-        checkbox.onchange = checkboxOptions.onChange;
-
         var label = document.createElement('label');
         label.setAttribute('for', checkbox.id);
-        label.innerHTML = checkboxOptions.label;
+        label.innerHTML = startLabel;
+
+        checkbox.onchange = function (checkboxOptions) {
+          return function (event) {
+            if (checkboxOptions.onChange) {
+              if (!checkboxOptions.label) {
+                if (event.target.checked) {
+                  $(event.target).next('label').find("span").text(checkboxOptions.onLabel);
+                } else {
+                  $(event.target).next('label').find("span").text(checkboxOptions.offLabel);
+                }
+              }
+
+              checkboxOptions.onChange(event);
+            }
+          }
+        }(checkboxOptions);
 
         elements.push(checkbox);
         elements.push(label);
