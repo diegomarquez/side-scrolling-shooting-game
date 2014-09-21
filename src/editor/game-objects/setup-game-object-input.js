@@ -7,34 +7,44 @@ define(function(require) {
   var currentSelection = null;
 
   var GameObjectMouseInteraction = require("class").extend({
-    init: function() {},
-
-    setupInteraction: function(go) {
-      go.on(go.CLICK, this, function(clickData) {
-        if (currentSelection) {
-          currentSelection.Selected = false;
-          currentSelection = clickData.go;
-        } else {
-          currentSelection = clickData.go;
-        }
-
-        currentSelection.Selected = true;
-      });
-
+    init: function() {
       keyboard.onKeyUp(keyboard.W, this, function() {
-        currentSelection.y -= 5;
+        if (this.currentSelection) {
+          this.currentSelection.y -= 5;
+        }
       });
 
       keyboard.onKeyUp(keyboard.S, this, function() {
-        currentSelection.y += 5;
+        if (this.currentSelection) {
+          this.currentSelection.y += 5;
+        }
       });
 
       keyboard.onKeyUp(keyboard.A, this, function() {
-        currentSelection.x -= 5;
+        if (this.currentSelection) {
+          this.currentSelection.x -= 5;
+        }
       });
 
       keyboard.onKeyUp(keyboard.D, this, function() {
-        currentSelection.x += 5;
+        if (this.currentSelection) {
+          this.currentSelection.x += 5;
+        }
+      });
+
+      this.currentSelection = null;
+    },
+
+    setupInteraction: function(go) {
+      go.single(go.CLICK, this, function(clickData) {
+        if (this.currentSelection) {
+          this.currentSelection.Selected = false;
+          this.currentSelection = clickData.go;
+        } else {
+          this.currentSelection = clickData.go;
+        }
+
+        this.currentSelection.Selected = true;
       });
     }
   });
