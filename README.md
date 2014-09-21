@@ -64,6 +64,9 @@
 	
 	- Fix Tab selection, if possible
 	- Enable viewport movement with keys only when the canvas is in focus
+	- Improve how game-objects are disabled for the editor
+		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
+			  because they are set on initialization
 
 Web Site
   Update Basic instruction on how to get a project running
