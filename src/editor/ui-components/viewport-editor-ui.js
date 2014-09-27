@@ -23,6 +23,19 @@ define(function(require) {
         id: 'viewport-checkboxes-' + options.viewport.name,
         containerClass: 'viewport-checkboxes',
         checkboxes: [
+          { 
+            label: 'MoreOptions',
+            text: false,
+            icons: { on: 'ui-icon-plus', off: "ui-icon-minus" }, 
+            onChange: function (event) {
+              if (event.target.checked) {
+                $(container).find('[id*=viewport-options]').slideUp();
+              }
+              else { 
+                $(container).find('[id*=viewport-options]').slideDown();
+              }
+            }
+          },
           {
             label: options.viewport.name
           },

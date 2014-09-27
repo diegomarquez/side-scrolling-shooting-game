@@ -3,6 +3,9 @@
 
 - Editor
 	- Hide the bulk of the configuration of viewports in a plus icon button
+		- Check how it works with one viewport (DONE)
+		- Check how it works with two viewports (DONE)
+		- Hide everything by default
 	
 	- Sort viewports. Sortable list with the viewport-editor-ui elements
 		- Change the viewport drawing order when the UI changes

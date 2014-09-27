@@ -29,7 +29,7 @@ define(function(require) {
         label.setAttribute('for', checkbox.id);
         label.innerHTML = startLabel;
 
-        checkbox.onchange = function (checkboxOptions) {
+        checkbox.onchange = function (checkboxOptions, checkbox) {
           return function (event) {
             if (checkboxOptions.onChange) {
               if (!checkboxOptions.label) {
@@ -40,10 +40,23 @@ define(function(require) {
                 }
               }
 
+              if (checkboxOptions.icons) {
+                if (checkboxOptions.icons.on && checkboxOptions.icons.off) {
+                  if (event.target.checked) {
+                    checkboxOptions.icons.primary = checkboxOptions.icons.on;
+                  } else {
+                    checkboxOptions.icons.primary = checkboxOptions.icons.off;
+                  }
+
+                  $(checkbox).button(checkboxOptions);
+                }
+              }
+
+
               checkboxOptions.onChange(event);
             }
           }
-        }(checkboxOptions);
+        }(checkboxOptions, checkbox);
 
         elements.push(checkbox);
         elements.push(label);
@@ -52,6 +65,18 @@ define(function(require) {
       var wrapped = wrapper.wrap(elements, { id: options.id, className: options.containerClass });
 
       $(wrapped).buttonset();
+
+      for (var i = 0; i < elements.length; i += 2) {
+        var o = options.checkboxes[i/2];
+
+        if (o.icons) {
+          if (o.icons.on && o.icons.off) {
+            o.icons.primary = o.icons.off;
+          }
+        }
+
+        $(elements[i]).button(o);
+      }
 
       return wrapped;
     }
