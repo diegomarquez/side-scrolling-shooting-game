@@ -3,6 +3,10 @@ html, body, div, canvas {
     padding: 0;
 }
 
+input {
+    border: 2px solid transparent
+}
+
 #game {
 	background-color: #000000;
 }
@@ -19,7 +23,6 @@ html, body, div, canvas {
 
 /*World Edit*/
 .world-edit {
-	border-radius: 5px;
 	background: #ccc;
 	width: 50%;
 	display: inline-block;
@@ -87,8 +90,7 @@ hr {
 
 /* Viewport selection */
 #viewport-control {
-	margin-top: 5px;
-	border-radius: 5px;	
+	margin-top: 5px;	
 	background: #ccc;
 	width: 50%;
 }
@@ -112,6 +114,7 @@ hr {
 .viewport-options {
 	width: 100%;
 	display: inline-block;
+	overflow:hidden
 }
 
 .viewport-editor-container {

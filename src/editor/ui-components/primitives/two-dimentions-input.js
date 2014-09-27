@@ -15,7 +15,6 @@ define(function(require) {
       container.id = options.id;
       
       $(container).addClass('ui-state-default');
-      $(container).addClass('ui-corner-all');
       
       var cover = document.createElement('div');
       $(cover).addClass('mouse-cover');
@@ -31,7 +30,6 @@ define(function(require) {
 	    x.className = 'xValue';
       x.onchange = options.onXChange;
             
-      $(x).addClass('ui-corner-all');
       $(x).addClass(options.inputClass);
 
 	    var y = document.createElement('input');
@@ -40,7 +38,6 @@ define(function(require) {
 	    y.className = 'yValue';
       y.onchange = options.onYChange;
       
-      $(y).addClass('ui-corner-all');
       $(y).addClass(options.inputClass);
 
       container.appendChild(label);

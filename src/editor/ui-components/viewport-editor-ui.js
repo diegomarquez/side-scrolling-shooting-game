@@ -26,13 +26,14 @@ define(function(require) {
           { 
             label: 'MoreOptions',
             text: false,
+            state: false,
             icons: { on: 'ui-icon-plus', off: "ui-icon-minus" }, 
             onChange: function (event) {
               if (event.target.checked) {
-                $(container).find('[id*=viewport-options]').slideUp();
+                $(container).find('[id*=viewport-options]').slideDown();
               }
               else { 
-                $(container).find('[id*=viewport-options]').slideDown();
+                $(container).find('[id*=viewport-options]').slideUp();
               }
             }
           },
@@ -194,10 +195,14 @@ define(function(require) {
 
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI);  
-      container.appendChild(wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
+
+      var additionalOptions = wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
         id: 'viewport-options-' + options.viewport.name,
         className: 'viewport-options'
-      }));
+      });
+
+      container.appendChild(additionalOptions);
+      $(additionalOptions).hide();
 
       if (options.viewport.WorldFit) {
         scaleUI.disable();

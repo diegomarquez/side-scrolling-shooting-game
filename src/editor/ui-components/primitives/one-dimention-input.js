@@ -15,7 +15,6 @@ define(function(require) {
       container.id = options.id;
 
       $(container).addClass('ui-state-default');
-      $(container).addClass('ui-corner-all'); 
 
       var label = document.createElement('div');
       label.innerHTML = options.label;
@@ -26,7 +25,6 @@ define(function(require) {
       input.value = options.value;
       input.className = 'value';
 	    input.onchange = options.onChange;
-      $(input).addClass('ui-corner-all');
       $(input).addClass(options.inputClass);
 
 	    container.appendChild(label);

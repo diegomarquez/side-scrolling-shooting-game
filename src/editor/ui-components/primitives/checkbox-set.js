@@ -42,16 +42,16 @@ define(function(require) {
 
               if (checkboxOptions.icons) {
                 if (checkboxOptions.icons.on && checkboxOptions.icons.off) {
-                  if (event.target.checked) {
-                    checkboxOptions.icons.primary = checkboxOptions.icons.on;
-                  } else {
+                  if (checkboxOptions.icons.primary == checkboxOptions.icons.on){
                     checkboxOptions.icons.primary = checkboxOptions.icons.off;
+                  }
+                  else {
+                    checkboxOptions.icons.primary = checkboxOptions.icons.on;
                   }
 
                   $(checkbox).button(checkboxOptions);
                 }
               }
-
 
               checkboxOptions.onChange(event);
             }
@@ -71,7 +71,11 @@ define(function(require) {
 
         if (o.icons) {
           if (o.icons.on && o.icons.off) {
-            o.icons.primary = o.icons.off;
+            if (checkboxOptions.state) {
+              o.icons.primary = o.icons.off;
+            } else {
+              o.icons.primary = o.icons.on;
+            }
           }
         }
 
