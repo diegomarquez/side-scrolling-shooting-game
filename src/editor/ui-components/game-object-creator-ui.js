@@ -19,8 +19,6 @@ define(function(require) {
         id: 'game-object-create-button',
         label: 'Create Game Object',
         onClick: function(event) {
-          debugger;
-
           setupEditorObject.setupWithViewport(selectedGameObject.get(), selectedGroup.get(), activeViewports.get(), mainViewport.get());
         }
       });

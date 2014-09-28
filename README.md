@@ -2,12 +2,12 @@
 -------------------
 
 - Editor	
-	- Complete TODO in keyboard.js
-
 	- Add and remove layers of a viewport
-		- UI (DONE)
+		- UI 
+			Add: Plus button next to the drop down
+			Remove: remove button next to each layer
 		- Integration
-			- Initial Values (DONE)
+			- Initial Values
 			- Arrange layers when sorting happens
 		- If a layer is removed, recycle it's game-objets only if they are not visible elsewhere
 	- Change layer order
@@ -15,6 +15,9 @@
 		- Integration. Reflect the change in the rendering order of a layers in a viewport
 	- Save Layers
 	- Load Layers
+
+	- Update UI of game-object and group selector
+	- Update UI to add new viewports
 
 	- Be able to add, remove and arrange update groups
 		- UI
@@ -53,10 +56,6 @@
 	- Stadarize how a module using jQueryUI should look
 		- require jQuery and jQueryUI once in the beginning
 
-	- Use stylesheets to put the canvas in the top corner in the examples
-		- remove the styling from game.js
-	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
-	
 	- Fix Tab selection, if possible
 	- Enable viewport movement with keys only when the canvas is in focus
 	- Improve how game-objects are disabled for the editor
@@ -64,12 +63,16 @@
 			  because they are set on initialization
 	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
 
-Web Site
+Web Site and Game-builde core
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
     make word 'website' a link to bower
     make it clear that you need to install grunt-cli
   Rebuild docs and examples
+  	- Make an extension to make use of the configuration of keyboard.js to prevent the behaviour of certain keys 
+	- Use stylesheets to put the canvas in the top corner in the examples
+		- remove the styling from game.js
+	- Fix Activity display so it appear in the lower corner of the canvas. It's not working propery in the editor when scrolling
   	- Make sure all the examples work with all the new changes in game-buildre core
 
 Generator

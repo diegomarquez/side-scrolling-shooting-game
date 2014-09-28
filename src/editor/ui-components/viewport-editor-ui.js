@@ -4,7 +4,7 @@ define(function(require) {
   var world = require('world');
   
   var checkboxSet = require('checkbox-set');
-  var editableDropdown = require('editable-dropdown');
+  var editableDropdown = require('editable-dropdown-remove');
   var oneDimentionInput = require('one-dimention-input');
   var twoDimentionsInput = require('two-dimentions-input');
 

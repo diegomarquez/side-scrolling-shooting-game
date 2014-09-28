@@ -54,33 +54,46 @@ define(function(require) {
       });
 
       return container;
-    }
+    },
+
+    setupSortable: function(element, options) {
+      var oldIndex;
+      var newIndex;
+
+      element.sortable({
+        placeholder: 'ui-state-highlight',
+        items: 'li:not(.ui-state-disabled)',
+        cursor: 'move', 
+        delay: 15,
+
+        start: function (event, ui) {
+          oldIndex = ui.item.index();
+
+          ui.placeholder.height(ui.item.height());
+        },
+
+        update: function (event, ui) {
+          if (options.onEdit) {
+            newIndex = ui.item.index();
+
+            options.onEdit(ui.item.attr('value'), newIndex, oldIndex);
+          }
+        }
+      }).disableSelection();
+    },
+
+    createOptions: function(options) {
+
+    },
+
+    setupOptionEvents: function(optionElements, container, button, list, options) {
+
+    },
+
+
   });
 
   var setupSortable = function(element, options) {
-    var oldIndex;
-    var newIndex;
-
-    element.sortable({
-      placeholder: 'ui-state-highlight',
-      items: 'li:not(.ui-state-disabled)',
-      cursor: 'move', 
-      delay: 15,
-
-      start: function (event, ui) {
-        oldIndex = ui.item.index();
-
-        ui.placeholder.height(ui.item.height());
-      },
-
-      update: function (event, ui) {
-        if (options.onEdit) {
-          newIndex = ui.item.index();
-
-          options.onEdit(ui.item.attr('value'), newIndex, oldIndex);
-        }
-      }
-    }).disableSelection();
   }
 
   var createOptions = function(options) {

@@ -4,12 +4,12 @@ define(function(require) {
     init: function() {},
 
     create: function(name, value) {
-		var option = document.createElement("option");
+  		var option = document.createElement("option");
 
-		option.text = name;
-		option.value = value;
+  		option.text = name;
+  		option.value = value;
 
-		return option;
+  		return option;
     }
   });
 
