@@ -16,10 +16,12 @@ define(function(require) {
 
       var allViewports = gb.viewports.allAsArray();
 
+      setupSortable(this.container)
+
       for (var i = 0; i < allViewports.length; i++) {
         this.add(allViewports[i]);
       }
-      
+
       return wrapper.wrap(this.container);
     },
 
@@ -30,15 +32,42 @@ define(function(require) {
         viewport: viewport
       })
 
-      this.container.appendChild(viewportEditor);
       this.children[viewport.name] = viewportEditor;
+
+      $(this.container).append($(viewportEditor));
+      $(this.container).sortable('refresh');
     },
 
     remove: function(viewport) {
-      this.container.removeChild(this.children[viewport.name]);
+      var child = this.children[viewport.name];
+
       delete this.children[viewport.name];
+
+      $(this.container).remove($(child));
+      $(this.container).sortable('refresh');
     }
   });
+
+  var setupSortable = function(element) {
+    var oldIndex, newIndex;
+
+    $(element).sortable({
+      placeholder: 'ui-state-highlight',
+      items: '.viewport-control',
+      cursor: 'move', 
+      delay: 15,
+
+      start: function (event, ui) {
+        oldIndex = ui.item.index();
+        ui.placeholder.height(ui.item.height());
+      },
+
+      update: function (event, ui) {
+        newIndex = ui.item.index();
+        gb.viewports.swap(newIndex, oldIndex);
+      }
+    }).disableSelection();
+  }
 
   return ViewportSelector;
 });

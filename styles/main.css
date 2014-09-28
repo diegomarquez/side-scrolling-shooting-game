@@ -89,8 +89,7 @@ hr {
 }
 
 /* Viewport selection */
-#viewport-control {
-	margin-top: 5px;	
+.viewport-control {
 	background: #ccc;
 	width: 50%;
 }

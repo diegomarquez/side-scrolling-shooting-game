@@ -6,14 +6,14 @@ define(function(require) {
     init: function() {},
 
     get: function() {
-      var viewports = document.querySelectorAll('#viewport-control');        
+      var viewports = document.querySelectorAll('.viewport-control');        
 
       result = [];
 
       for (var i = 0; i < viewports.length; i++) {
         var viewport = viewports[i];
 
-        var checkbox = viewport.querySelector('input');
+        var checkbox = viewport.querySelector('.active-viewport');
 
         var active = checkbox.checked;
         var name = checkbox.name;

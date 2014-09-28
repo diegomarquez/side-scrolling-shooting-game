@@ -2,9 +2,6 @@
 -------------------
 
 - Editor	
-	- Sort viewports. Sortable list with the viewport-editor-ui elements
-		- Change the viewport drawing order when the UI changes
-
 	- Complete TODO in keyboard.js
 
 	- Add and remove layers of a viewport
@@ -65,6 +62,7 @@
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
+	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
 
 Web Site
   Update Basic instruction on how to get a project running

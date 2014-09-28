@@ -18,6 +18,7 @@ define(function(require) {
     create: function(options) {
       var container = document.createElement('div');
       container.id = 'viewport-control';
+      container.className = 'viewport-control'
 
       var checkboxSetUI = new checkboxSet().create({
         id: 'viewport-checkboxes-' + options.viewport.name,
@@ -38,7 +39,8 @@ define(function(require) {
             }
           },
           {
-            label: options.viewport.name
+            label: options.viewport.name,
+            classNames: ['active-viewport']
           },
           {
             label: 'Outline',

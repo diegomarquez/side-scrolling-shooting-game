@@ -15,6 +15,12 @@ define(function(require) {
       for (var i = 0; i < options.checkboxes.length; i++) {
         var checkbox = document.createElement('input');
         var checkboxOptions = options.checkboxes[i];
+        
+        if (checkboxOptions.classNames) {
+          for (var i = 0; i < checkboxOptions.classNames.length; i++) {
+            $(checkbox).addClass(checkboxOptions.classNames[i]);
+          }
+        }
 
         var startLabel = checkboxOptions.label ? checkboxOptions.label : checkboxOptions.offLabel;
 
