@@ -2,7 +2,6 @@
 -------------------
 
 - Editor	
-	- Fix Viewport arranging logic, swapping is wrong.
 	- Fix clicking on canvas, it does not work when the main viewport is scrolled
 
 	- Remove all update groups before loading a new scene

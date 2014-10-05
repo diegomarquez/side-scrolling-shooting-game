@@ -22,6 +22,8 @@ define(function(require) {
       var container = document.createElement('div');
       container.id = 'viewport-control';
       container.className = 'viewport-control'
+      
+      $(container).attr('viewport-name', options.viewport.name);
 
       var checkboxSetUI = new checkboxSet().create({
         id: 'viewport-checkboxes-' + options.viewport.name,

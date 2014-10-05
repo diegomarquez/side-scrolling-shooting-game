@@ -47,8 +47,6 @@ define(function(require) {
   });
 
   var setupSortable = function(element) {
-    var oldIndex, newIndex;
-
     $(element).sortable({
       placeholder: 'ui-state-highlight',
       items: '.viewport-control',
@@ -56,13 +54,15 @@ define(function(require) {
       delay: 15,
 
       start: function (event, ui) {
-        oldIndex = ui.item.index();
         ui.placeholder.height(ui.item.height());
       },
 
       update: function (event, ui) {
-        newIndex = ui.item.index();
-        gb.viewports.swap(newIndex, oldIndex);
+        console.log(gb.viewports.allAsArray().map(function(v) { return v.name; }));
+
+        gb.viewports.change($(ui.item).attr('viewport-name'), ui.item.index());
+
+        console.log(gb.viewports.allAsArray().map(function(v) { return v.name; }));
       }
     }).disableSelection();
   }
