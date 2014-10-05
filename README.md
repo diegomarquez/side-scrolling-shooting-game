@@ -2,8 +2,6 @@
 -------------------
 
 - Editor	
-	- Fix clicking on canvas, it does not work when the main viewport is scrolled
-
 	- Remove all update groups before loading a new scene
 	- Update UI of game-object and group selector
 	- Update UI to add new viewports, put it on top instead of the bottom

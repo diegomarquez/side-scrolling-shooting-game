@@ -30,8 +30,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
       // Register to canvas 'click' event
       Gb.canvas.addEventListener('click', function(event) {
         var allViewports = Viewports.allAsArray();
-        var x = event.x;
-        var y = event.y;
+        
+        var x = event.pageX;
+        var y = event.pageY;
 
         // Loop over every viewport, do so backwards so the things on top are processed first.
         for (var i=allViewports.length-1; i >= 0; i--) {
