@@ -8,7 +8,7 @@ define(function(require) {
 			this.componentPool.createPool('circle-collider', circleCollider);
 			this.componentPool.createPool('ship-renderer', shipRenderer);
 			
-			this.gameObjectPool.createPool('Ship', playerShip, 1);
+			this.gameObjectPool.createDynamicPool('Ship', playerShip);
 			
 			this.componentPool.createConfiguration("ShipCollider", 'circle-collider')
 				.args({id:'shipColliderId', radius:20});

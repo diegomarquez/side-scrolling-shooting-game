@@ -28,7 +28,7 @@ define(function(require) {
 					}
 				});
 
-			this.gameObjectPool.createPool("Outline", gameObject, 1);
+			this.gameObjectPool.createDynamicPool("Outline", gameObject);
 			
 			this.gameObjectPool.createConfiguration("ViewportOutline", "Outline")
 				.args({x:1, y:1})

@@ -2,8 +2,6 @@
 -------------------
 
 - Editor	
-	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
-
 	- Fix Viewport arranging logic, swapping is wrong.
 	- Fix clicking on canvas, it does not work when the main viewport is scrolled
 
