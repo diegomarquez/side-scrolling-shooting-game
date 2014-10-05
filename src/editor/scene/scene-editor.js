@@ -1,7 +1,9 @@
 define(function(require) {
   var mainViewportControl = require('main-viewport-control');
   var scaleUIValueSetter = require('scale-ui-value-setter');
+  
   var gb = require('gb');
+  var editorConfig = require('editor-config');
   var world = require('world');
 
   var SceneEditor = require("class").extend({
@@ -20,6 +22,12 @@ define(function(require) {
     },
 
     create: function() {
+      // Default update group and viewport setup
+      this.defaultSetup();
+
+      // Setup editor only pools
+      require('outline-bundle').create();
+
       // Create main editor container
       var container = document.createElement('div');
       container.id = "editor-container";
@@ -81,6 +89,24 @@ define(function(require) {
 
       // Setup control of 'Main' viewport with the keyboard
       mainViewportControl.create();
+    },
+
+    defaultSetup: function() {
+      // Claim all Game Objects
+      gb.reclaimer.claimAll();
+      // Remove all update groups
+      gb.groups.removeAll();
+      // Remove all Viewports
+      gb.viewports.removeAll();
+
+      // Setup the default world size 
+      world.create(gb.canvas.width, gb.canvas.height, 50);
+      // Setup the default update group
+      gb.groups.add(editorConfig.getDefaultGroupName());
+      // Setup the default viewport
+      var mainViewport = gb.viewports.add(editorConfig.getMainViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
+      mainViewport.addLayer(editorConfig.getDefaultLayerName());
+      mainViewport.addLayer(editorConfig.getOutlineLayerName());
     }
   });
 

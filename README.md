@@ -2,11 +2,12 @@
 -------------------
 
 - Editor	
-	- Create layers for Main viewport on initialization of the editor
+	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
+
 	- Fix Viewport arranging logic, swapping is wrong.
 	- Fix clicking on canvas, it does not work when the main viewport is scrolled
-	- Clear all layer, viewports and pools during editor initialization
 
+	- Remove all update groups before loading a new scene
 	- Update UI of game-object and group selector
 	- Update UI to add new viewports, put it on top instead of the bottom
 		- Use Dialog to create new viewport
@@ -54,7 +55,6 @@
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
-	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
 	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly
 
 ====================================================================
