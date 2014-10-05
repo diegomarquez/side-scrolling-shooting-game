@@ -1,5 +1,7 @@
 define(function(require) {
-  var EditableDropdownRemove = require('editable-dropdown-base').extend({
+  var wrapper = require('wrap-in-div');
+
+  var EditableDropdownRemove = require('editable-dropdown-basic').extend({
     init: function() {
 
     },
@@ -10,8 +12,9 @@ define(function(require) {
 
       element.sortable({
         placeholder: 'ui-state-highlight',
-        items: 'tr:not(.ui-state-disabled)',
+        items: 'li:not(.ui-state-disabled)',
         cursor: 'move', 
+        handle: '.handle',
         delay: 15,
 
         start: function (event, ui) {
@@ -28,76 +31,57 @@ define(function(require) {
       }).disableSelection();
     },
 
-    createContentContainer: function() {
-      var table = document.createElement('table');
-      $(table).append(document.createElement('tbody'));
-
-      return $(table)[0];
-    },
-
-    appendContentToContainer: function(contentContainer, contentElements) {
-      $(contentContainer).find('tbody').append(contentElements);
-    },
-
     createOptions: function(options) {
       var optionElements = [];
 
-      for (var i = 0; i < options.data.length; i++) {
-        var option = $(document.createElement('tr'));        
-        var value = $(document.createElement('td'));
+      var data = options.data();
+
+      for (var i = 0; i < data.length; i++) {
+        var option = $(document.createElement('li'));
         
-        var remove = $(document.createElement('td'));
+        var value = $(document.createElement('div'));
         var button = $(document.createElement('button'))
-
-        value.html(options.data[i]);
+        
+        value.html(data[i]);
+        value.addClass('handle');
+        button.attr('value', data[i]);
         button.html('Remove');
-        remove.append(button);
 
-        if (options.disabledItems.indexOf(options.data[i]) == -1) {
+        if (options.disabledItems.indexOf(data[i]) == -1) {
           option.addClass('ui-state-default');
         } else {
           option.addClass('ui-state-disabled');
         }
         
         option.addClass('ui-corner-all');
-        option.attr('value', options.data[i]);
-        
+        option.attr('value', data[i]);
+
         option.append(value);
-        option.append(remove);
-      
+        option.append(wrapper.wrap(button[0]));
+
         optionElements.push(option[0]);
       }
 
       return optionElements;
     },
 
-    setupOptionEvents: function(optionElements, container, button, contentContainer, options) {
+    setupOptionEvents: function(optionElements, container, contentContainer, options) {
+      this._super(optionElements, container, contentContainer, options);
+
       for (var i = 0; i < optionElements.length; i++) {
-        var option = optionElements[i];
+        var option = $(optionElements[i]);
+        var button = option.find('button').button();
 
-        if (!$(option).hasClass('ui-state-default')) {
-          continue;
-        }
+        button.click(function (option) {
+          return function (event) {
+            if (options.onRemove) {
+              options.onRemove($(event.target).parent().attr('value'));
 
-        $(option).on('mouseover', function() {
-          $(this).addClass('ui-state-hover');
-        });
-
-        $(option).on('mouseout', function() {
-          $(this).removeClass('ui-state-hover');
-        });
-
-        $(option).on('click', function() {
-          $(this).removeClass('ui-state-hover');
-
-          $(container).attr('value', $(this).attr('value'));
-          $(button).find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
-          $(contentContainer).remove();
-
-          if (options.onSelect) {
-            options.onSelect($(this).attr('value'));
-          }
-        });
+              option.remove();
+              $(contentContainer).remove();
+            }
+          } 
+        }(option));        
       }
     } 
   });

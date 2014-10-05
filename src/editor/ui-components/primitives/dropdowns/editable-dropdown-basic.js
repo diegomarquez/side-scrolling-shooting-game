@@ -1,4 +1,8 @@
 define(function(require) {
+  var buttonUI = require('button');
+  var mouseCoordinates = require('mouse-coordinates');
+  var fitInViewport = require('fit-in-viewport');
+
   var EditableDropdownBasic = require('editable-dropdown-base').extend({
     init: function() {
 
@@ -28,6 +32,29 @@ define(function(require) {
       }).disableSelection();
     },
 
+    createMainUI: function(options, container, contentContainer, optionElements) {
+      var button = new buttonUI().create({
+        label: options().defaultMessage,
+        
+        onClick: function(event) {
+          $(container()).append(contentContainer());
+
+          this.setupSortable($(contentContainer()), options());
+          this.setupOptionEvents(optionElements(), container(), contentContainer(), options());
+          
+          fitInViewport.fit(contentContainer(), mouseCoordinates.get(event));
+        }.bind(this)
+      });
+
+      $(button).button({
+        icons: {
+          secondary: 'ui-icon-triangle-2-n-s'
+        }
+      }).addClass('main-button');
+
+      return button;
+    },
+
     createContentContainer: function() {
       return document.createElement('ul');
     },
@@ -39,18 +66,20 @@ define(function(require) {
     createOptions: function(options) {
       var optionElements = [];
 
-      for (var i = 0; i < options.data.length; i++) {
+      var data = options.data();
+
+      for (var i = 0; i < data.length; i++) {
         var option = $(document.createElement('li'));
         
-        if (options.disabledItems.indexOf(options.data[i]) == -1) {
+        if (options.disabledItems.indexOf(data[i]) == -1) {
           option.addClass('ui-state-default');
         } else {
           option.addClass('ui-state-disabled');
         }
         
         option.addClass('ui-corner-all');
-        option.attr('value', options.data[i]);
-        option.html(options.data[i]);
+        option.attr('value', data[i]);
+        option.html(data[i]);
       
         optionElements.push(option[0]);
       }
@@ -58,7 +87,7 @@ define(function(require) {
       return optionElements;
     },
 
-    setupOptionEvents: function(optionElements, container, button, contentContainer, options) {
+    setupOptionEvents: function(optionElements, container, contentContainer, options) {
       for (var i = 0; i < optionElements.length; i++) {
         var option = optionElements[i];
 
@@ -78,7 +107,8 @@ define(function(require) {
           $(this).removeClass('ui-state-hover');
 
           $(container).attr('value', $(this).attr('value'));
-          $(button).find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
+
+          $(container).find('.main-button').find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
           $(contentContainer).remove();
 
           if (options.onSelect) {

@@ -6,9 +6,19 @@ define(function(require) {
 
     create: function(options) {
       var button = document.createElement('button');
-      button.id = options.id;
+      if (options.id) {
+        button.id = options.id;
+      }
+
+      if (options.className) {
+        button.className = options.className;
+      }
+
+      if (options.label) {
+        button.innerHTML = options.label;
+      }
+
       button.type  = 'button';
-      button.innerHTML = options.label;
       button.onclick = options.onClick;
 
       return button;

@@ -195,44 +195,109 @@ hr {
 	margin-left: 2px;
 	margin-right: 2px;
 	overflow: hidden;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .editable-drop-down ul {
 	min-width: 200px;
 	max-width: 250px;
 	margin: 0px;
-	padding: 0px;
+	padding: 4px;
 	list-style-type: none;
 	display: inline-block;
 	position: absolute;
 	z-index: 99999;
+
 }
 
 .editable-drop-down ul li {
-	margin: 5px;
-    padding-left: 10px;
+	margin: 0px;
+	padding: 0px;
     font-size: 0.6em;
+    display: table;
+    width: 100%;
+}
+
+.editable-drop-down ul li div {
+	display: table-cell;
+	padding: 3px;
+	width: 50%;
+}
+
+.editable-drop-down ul li div button {
+	width: 100%;
 }
 
 .editable-drop-down .ui-state-highlight {
-	margin: 5px;
+	margin: 2px;
 }
 
-.editable-drop-down .ui-button {
+.editable-drop-down .split-button {
+	width: 100%;
+}
+
+.editable-drop-down .split-button .main-button {
+	text-align: left;
+	width: 90%;
+}
+
+.editable-drop-down .split-button .add-button {
+	width: 10%;
+}
+
+.editable-drop-down > .ui-button {
 	text-align: left;
 	width: 100%;
 }
 
 .editable-drop-down .ui-button-icon-secondary {
-	right: 0px;
+	right: 10px;
 	top: 50%;
 	bottom: 50%;
 }
 
-/*Override jQuery UI default font size*/
-.ui-button-text {
-  font-size: .6em;
+/*Dialog*/
+.dialog .tip {
+	border: 1px solid transparent; padding: 0.3em;
+	font-weight: bold;
 }
+
+.dialog .tip.ui-state-error {
+	border: 1px solid; padding: 0.3em;
+	font-weight: bold;
+}
+
+.dialog label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.dialog input {
+	display: block;
+	width: 100%;
+	margin-bottom: 7px;
+}
+
+.dialog fieldset {
+	padding:0; 
+	border:0; 
+	margin-top:25px;
+}
+
+.ui-dialog { 
+	font-size: .6em; 
+	padding: .3em; 
+}
+
+/*    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    h1 { font-size: 1.2em; margin: .6em 0; }*/
+
 
 .mouse-cover {
    position: absolute;
@@ -240,4 +305,14 @@ hr {
    left: 0px;
    width: 100%;
    height: 100%;
+}
+
+/*Override jQuery UI defaults*/
+.ui-button-text {
+  font-size: .6em;
+}
+
+.ui-buttonset .ui-button {
+	margin-left: 0;
+	margin-right: 0;
 }

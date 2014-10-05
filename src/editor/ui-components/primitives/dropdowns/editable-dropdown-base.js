@@ -1,9 +1,6 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
-  var buttonUI = require('button');
   var clickedOutside = require('clicked-outside');
-  var mouseCoordinates = require('mouse-coordinates');
-  var fitInViewport = require('fit-in-viewport');
 
   require('jquery');
   require('jquery-ui');
@@ -14,43 +11,43 @@ define(function(require) {
     },
 
     create: function(options) {
-      var button = new buttonUI().create({
-        label: options.defaultMessage,
-        onClick: function(event) {
-          $(container).append(contentContainer);
-
-          this.setupSortable($(contentContainer), options);
-          this.setupOptionEvents(optionElements, container, button, contentContainer, options);
-          
-          fitInViewport.fit(contentContainer, mouseCoordinates.get(event));
-        }.bind(this)
-      });
-
-      $(button).button({
-        icons: {
-          secondary: 'ui-icon-triangle-2-n-s'
-        }
-      });
-
+      // Methods to get the parts of the UI in child classes
+      this.getOptions = function() { return options; }
+      this.getContainer = function() { return container; }
+      this.getContentContainer = function() { return contentContainer; }
+      this.getOptionElements = function() { return optionElements; }
+      this.getMainUI = function() { return mainUI; }
+      
+      // Create the main components
+      var mainUI = this.createMainUI(this.getOptions, this.getContainer, this.getContentContainer, function() { return this.getOptionElements(); }.bind(this));
       var contentContainer = this.createContentContainer();
-
+      var optionElements = this.createOptions(options);      
+      var container = wrapper.wrap(mainUI, { id: options.id });
+      
+      // Append the options to the popup menu
+      this.appendContentToContainer(contentContainer, optionElements);
+      
+      // Add some classes for styling
       $(contentContainer).addClass('ui-corner-all');
-      $(contentContainer).addClass('ui-widget');
-
-      var optionElements = this.createOptions(options);
-
-      this.appendContentToContainer(contentContainer, optionElements);      
-
-      var container = wrapper.wrap([button], { id: options.id });
-
+      $(contentContainer).addClass('ui-widget-content');
       $(container).addClass('editable-drop-down');
       $(container).addClass('ui-widget');
 
+      // Register event to know when to hide the popup menu
       clickedOutside.registerMissedClick(contentContainer, function (element) {
         element.remove();
       });
 
-      return container;
+      return {
+        html: container,
+        refresh: function() { 
+          this.refreshContent(); 
+        }.bind(this)
+      }
+    },
+
+    createMainUI: function(options, container, contentContainer, optionElements) {
+      throw new Error('Must Override');
     },
 
     createContentContainer: function() {
@@ -71,6 +68,23 @@ define(function(require) {
 
     setupSortable: function (element, options) {
       throw new Error('Must Override');
+    },
+
+    refreshContent: function () {
+      // Get the options
+      var options = this.getOptions();
+      // Get the content container
+      var contentContainer = this.getContentContainer();
+      // Create the option elements
+      var optionElements = this.createOptions(options);
+      // Override the getOptionElements method
+      this.getOptionElements = function() { 
+        return optionElements; 
+      }
+      // Clear the current options
+      $(contentContainer).empty();
+      // Append the new options to the content container
+      this.appendContentToContainer(contentContainer, optionElements);
     }
   });
 

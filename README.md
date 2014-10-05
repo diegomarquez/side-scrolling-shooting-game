@@ -2,22 +2,16 @@
 -------------------
 
 - Editor	
-	- Add and remove layers of a viewport
-		- UI 
-			Add: Plus button next to the drop down
-			Remove: remove button next to each layer
-		- Integration
-			- Initial Values
-			- Arrange layers when sorting happens
-		- If a layer is removed, recycle it's game-objets only if they are not visible elsewhere
-	- Change layer order
-		- UI (DONE)
-		- Integration. Reflect the change in the rendering order of a layers in a viewport
-	- Save Layers
-	- Load Layers
+	- Viewports 
+		- Save
+		- Load
+
+	- Fix Viewport arranging logic, swapping is wrong.
+	- Fix clicking on canvas, it does not work when the main viewport is scrolled
 
 	- Update UI of game-object and group selector
-	- Update UI to add new viewports
+	- Update UI to add new viewports, put it on top instead of the bottom
+		- Use Dialog to create new viewport
 
 	- Be able to add, remove and arrange update groups
 		- UI
@@ -34,9 +28,9 @@
 	
 	- Have 4 regions
 		- canvas
-		- Right of canvas
-		- Bottom of canvas 
-		- Bottom right of canvas
+		- Right of canvas (Empty)
+		- Bottom of canvas (Game Object Creation)
+		- Bottom right of canvas (Viewport and layers editing)
 		- Add some styling for the background of the regions
 
 	- Save the bundles the current scene is using
@@ -52,6 +46,7 @@
 	
 	- Use LESS as a CSS preprocessor
 	- Delete unused files
+	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
 
 	- Stadarize how a module using jQueryUI should look
 		- require jQuery and jQueryUI once in the beginning
@@ -62,6 +57,10 @@
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
 	- Game builder should create all editor objects on demand. Avoid having that 1 object created in every pool.
+	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly
+
+====================================================================
+====================================================================
 
 Web Site and Game-builde core
   Update Basic instruction on how to get a project running
@@ -83,8 +82,14 @@ Generator
    Add code to generator task
    Put in all the changes made into this project into the generator
 
+====================================================================
+====================================================================
+
 Start doing the objects for the actual game
 	- level one design is on notebook
+
+====================================================================
+====================================================================
 
 Test the editor using Jasmine
 

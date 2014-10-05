@@ -4,7 +4,8 @@ define(function(require) {
   var world = require('world');
   
   var checkboxSet = require('checkbox-set');
-  var editableDropdown = require('editable-dropdown-remove');
+  var editableDropdown = require('editable-dropdown-add-remove');
+  var dialogUI = require('dialog');
   var oneDimentionInput = require('one-dimention-input');
   var twoDimentionsInput = require('two-dimentions-input');
 
@@ -88,16 +89,67 @@ define(function(require) {
         ]
       });
 
+      var addLayerDialogUI = new dialogUI().create({
+        id: 'add-layer-dialog-' + options.viewport.name,
+        title: 'Add a new layer in viewport ' + options.viewport.name,
+        tip: 'Use a unique name',
+        autoOpen: false,
+        minHeight: 'auto',
+        minWidth: 'auto',
+        modal: true,
+        
+        fields: [
+          { 
+            name: 'Layer Name', 
+            value: '',
+            validations: [
+              {
+                check: function(value) { return value != ''; },
+                tip: "Layer name can't be empty"
+              },
+              {
+                check: function(value) { return !options.viewport.layerExists(value); },
+                tip: 'This layer Id is already in use'
+              }
+            ]
+          }
+        ],
+
+        buttons: {
+          Add: function () {            
+            options.viewport.addLayerBefore(this.LayerName(), 'Outline');
+            $(this).dialog('close');
+          }
+        },
+
+        validateOnAction: {
+          'Add': ['Layer Name'] 
+        }
+      });
+
       // Viewport layers selector. Skips the 'Outline layer that all viewports have'
       var layersUI = new editableDropdown().create({
         id: 'layers-' + options.viewport.name,
         defaultMessage: 'Select a Layer',
         selectedMessage: 'Selected Layer:',
         disabledItems: ['Outline'],
-        data: options.viewport.layers.map(function(layer) { return layer.name; }),
-        onEdit: function(value, newIndex, oldIndex) {
-          // TODO: arrange layers
+        data: function() {
+          return options.viewport.layers.map(function(layer) { return layer.name; })
+        },
+        onAdd: function() {
+          $(addLayerDialogUI).dialog('open');
+        },
+        onEdit: function(value, newIndex) {
+          options.viewport.changeLayer(value, newIndex);
+        },
+        onRemove: function(layerName) {
+          options.viewport.removeLayer(layerName);
         }
+      });
+
+      // When a layer is added, refresh the content of the UI
+      options.viewport.on(options.viewport.ADD, this, function (layer) {
+        layersUI.refresh();
       });
 
       //  Size editor
@@ -196,7 +248,7 @@ define(function(require) {
       });
 
       container.appendChild(checkboxSetUI);
-      container.appendChild(layersUI);  
+      container.appendChild(layersUI.html);  
 
       var additionalOptions = wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
         id: 'viewport-options-' + options.viewport.name,

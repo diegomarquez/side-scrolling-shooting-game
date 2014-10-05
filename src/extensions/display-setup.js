@@ -10,6 +10,8 @@ define(["extension", "gb", "world"], function(Extension, Gb, World) {
       Gb.groups.add("First");
 
       var mainViewport = Gb.viewports.add("Main", Gb.canvas.width, Gb.canvas.height, 0, 0);
+      mainViewport.addLayer("Back");
+      mainViewport.addLayer("Middle");
       mainViewport.addLayer("Front");
       mainViewport.addLayer("Outline");
 

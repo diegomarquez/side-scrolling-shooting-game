@@ -26,7 +26,7 @@ define(function(require) {
   });
 
   var createObject = function(goId, group, viewports) {
-    if (goId && group && viewports) {
+    if (goId != 'Nothing' && group != 'Nothing' && viewports.length > 0) {
       var object = gb.create(goId, group, viewports);
 
       object.update = function(delta) {}
