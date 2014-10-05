@@ -2,6 +2,7 @@ define(function(require) {
 
   var gb = require('gb');
 
+  var editorConfig = require('editor-config');
   var sceneName = require('scene-name');
 
   var SceneSerializer = require("class").extend({
@@ -26,6 +27,7 @@ define(function(require) {
     serialize: function() {
       if (!this.check()) return;
 
+      // Serialize Game Objects
       var gos = [];
 
       for (var i = 0; i < this.serializableObjects.length; i++) {
@@ -40,12 +42,17 @@ define(function(require) {
         });
       }
 
+      // Serialize viewports
       var vs = [];
 
       var allViewports = gb.viewports.allAsArray();
 
       for (i = 0; i < allViewports.length; i++) {
         var v = allViewports[i];
+
+        // Do not serialize 'Outline' layer
+        var layerNames = v.getLayers().map(function(layer) { return layer.name; });
+        layerNames.splice(layerNames.indexOf(editorConfig.getOutlineLayerName()));
 
         vs.push({
           name: v.name,
@@ -56,7 +63,8 @@ define(function(require) {
           scaleX: v.ScaleX,
           scaleY: v.ScaleY,
           stroke: v.getStroke(),
-          worldFit: v.WorldFit
+          worldFit: v.WorldFit,
+          layers: layerNames 
         });
       }
 

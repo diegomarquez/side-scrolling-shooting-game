@@ -1,18 +1,17 @@
 define(function(require) {
   
   var gb = require('gb');
+  var editorConfig = require('editor-config');
   var outlineBundle = require('outline-bundle');
   var viewportOutline = require('viewport-outline');
 
   var SetupViewport = require('class').extend({
-    init: function() {
-      this.outlines = {};
-    },
+    init: function() {},
 
-    setup: function(name) {    
-      var viewport = gb.viewports.add(name, gb.canvas.width, gb.canvas.height, 0, 0)
-      viewport.addLayer('Front');
-      viewport.addLayer('Outline');
+    setup: function(viewportName) {    
+      var viewport = gb.viewports.add(viewportName, gb.canvas.width, gb.canvas.height, 0, 0)
+      viewport.addLayer(editorConfig.getDefaultLayerName());
+      viewport.addLayer(editorConfig.getOutlineLayerName());
 
       return viewport;
     },
@@ -21,11 +20,11 @@ define(function(require) {
       viewportOutline.add({
         viewportName: viewportName,
         gameObjectId: outlineBundle.getOutlineId(),
-        updateGroup: 'First',
+        updateGroup: editorConfig.getDefaultGroupName(),
         viewports: [
           {
             viewport: viewportName, 
-            layer: 'Outline'
+            layer: editorConfig.getOutlineLayerName()
           }
         ],
         gameObjectArguments: {

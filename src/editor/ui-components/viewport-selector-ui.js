@@ -39,12 +39,10 @@ define(function(require) {
     },
 
     remove: function(viewport) {
-      var child = this.children[viewport.name];
-
-      delete this.children[viewport.name];
-
-      $(this.container).remove($(child));
+      $(this.children[viewport.name]).remove();
       $(this.container).sortable('refresh');
+      
+      delete this.children[viewport.name];
     }
   });
 

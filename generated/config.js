@@ -67,6 +67,7 @@ require.config({
 		"outline-bundle": "src/bundles/outline-bundle", 
 		"ship-bundle": "src/bundles/ship-bundle", 
 		"stars-bundle": "src/bundles/stars-bundle", 
+		"editor-config": "src/editor/editor-config", 
 		"setup-editable-game-object": "src/editor/game-objects/setup-editable-game-object", 
 		"setup-game-object-input": "src/editor/game-objects/setup-game-object-input", 
 		"active-viewports": "src/editor/html-parsers/active-viewports", 

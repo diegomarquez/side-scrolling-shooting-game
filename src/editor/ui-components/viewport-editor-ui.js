@@ -1,8 +1,10 @@
 define(function(require) {
+  var editorConfig = require('editor-config');
+
   var wrapper = require('wrap-in-div');
   var gb = require('gb');
   var world = require('world');
-  
+
   var checkboxSet = require('checkbox-set');
   var editableDropdown = require('editable-dropdown-add-remove');
   var dialogUI = require('dialog');
@@ -44,7 +46,7 @@ define(function(require) {
             classNames: ['active-viewport']
           },
           {
-            label: 'Outline',
+            label: editorConfig.getOutlineLayerName(),
             onChange: function (event) {
               if (event.target.checked) {
                 setupViewport.addOutline(options.viewport.name);
@@ -81,7 +83,7 @@ define(function(require) {
           },
           {
             label: 'Remove',
-            disable: (options.viewport.name === 'Main'),
+            disable: (options.viewport.name == editorConfig.getMainViewportName()),
             onChange: function (event) {
               gb.viewports.remove(options.viewport.name);
             }
@@ -117,7 +119,7 @@ define(function(require) {
 
         buttons: {
           Add: function () {            
-            options.viewport.addLayerBefore(this.LayerName(), 'Outline');
+            options.viewport.addLayerBefore(this.LayerName(), editorConfig.getOutlineLayerName());
             $(this).dialog('close');
           }
         },
@@ -132,7 +134,7 @@ define(function(require) {
         id: 'layers-' + options.viewport.name,
         defaultMessage: 'Select a Layer',
         selectedMessage: 'Selected Layer:',
-        disabledItems: ['Outline'],
+        disabledItems: [editorConfig.getOutlineLayerName()],
         data: function() {
           return options.viewport.layers.map(function(layer) { return layer.name; })
         },

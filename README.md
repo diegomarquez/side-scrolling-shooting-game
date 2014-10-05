@@ -2,12 +2,10 @@
 -------------------
 
 - Editor	
-	- Viewports 
-		- Save
-		- Load
-
+	- Create layers for Main viewport on initialization of the editor
 	- Fix Viewport arranging logic, swapping is wrong.
 	- Fix clicking on canvas, it does not work when the main viewport is scrolled
+	- Clear all layer, viewports and pools during editor initialization
 
 	- Update UI of game-object and group selector
 	- Update UI to add new viewports, put it on top instead of the bottom
