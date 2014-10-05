@@ -58,11 +58,7 @@ define(function(require) {
       },
 
       update: function (event, ui) {
-        console.log(gb.viewports.allAsArray().map(function(v) { return v.name; }));
-
         gb.viewports.change($(ui.item).attr('viewport-name'), ui.item.index());
-
-        console.log(gb.viewports.allAsArray().map(function(v) { return v.name; }));
       }
     }).disableSelection();
   }
