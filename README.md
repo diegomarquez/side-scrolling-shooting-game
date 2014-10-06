@@ -3,36 +3,39 @@
 
 - Editor	
 	- Add a toggle to show and hide a grid
+	
 	- Move objects around by dragging with the mouse
 		- remove move by key presses from game-objects in favour of snap to grid toogle
-		- Move main viewport by grid size when pressing keys. 
-			- Add a spinner to move the main viewport with the mouse. Less functional, but easier to understand.
+	
+	- Remove main viewport movement when pressing keys. 
+		- Move world using a spinner instead of the keyboard
 
 	- Visual feedback if there are things missing in order to add a game-object to the scene.
 		- Flashing red or something
 	
 	- Have 4 regions
 		- canvas
-		- Right of canvas (Empty)
+		- Right of canvas (Input controls. Snap to grid, world movement spinner)
 		- Bottom of canvas (Game Object Creation)
 		- Bottom right of canvas (Viewport and layers editing)
 		- Add some styling for the background of the regions
 	
 	- Use LESS as a CSS preprocessor
-	- Delete unused files
+
 	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
 		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
 
 	- Stadarize how a module using jQueryUI should look
 		- require jQuery and jQueryUI once in the beginning of the editor
 
-	- Enable viewport movement with keys only when the canvas is in focus
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
 	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly. This will fix tab selection.
 	- Method in Game-Builder to empty a pool, without destrying it.
 		- This should be used by the actual game when changing levels
+	
+	- Delete unused files
 
 ====================================================================
 ====================================================================
