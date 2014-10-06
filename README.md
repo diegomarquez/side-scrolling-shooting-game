@@ -2,21 +2,10 @@
 -------------------
 
 - Editor	
-	- Save and Load update groups (DONE)
-	- Remove all update groups before loading a new scene (DONE)
-	
-	- Update UI of group selector
-		- Refresh content of dropdown when things change
-			- Groups
-	
 	- Update UI of game-object selector
 
 	- Update UI to add new viewports, put it on top instead of the bottom
 		- Use Dialog to create new viewport
-
-	- Be able to add, remove and arrange update groups
-		- UI
- 		- Integration
 
 	- Add a toggle to show and hide a grid
 	- Move objects around by dragging with the mouse
@@ -33,30 +22,22 @@
 		- Bottom of canvas (Game Object Creation)
 		- Bottom right of canvas (Viewport and layers editing)
 		- Add some styling for the background of the regions
-
-	- Save the bundles the current scene is using
-		- Editor should hold an object with all the bundle names and if they are currently in use or not
-		- Add a dropdown to select which bundles the current scene should use
-		- Editor bundles should implement a method with all the TYPES they handle, so it is easy to destroy all those objects if the bundle is deselected
-		- The editor should have toogles to decide which bundles to use
-			- Turning a bundle on, creates it
-			- Turning it off should remove all the corresponding active and pooled game-objects
-				- Claim back all objects
-				- Remove them from the pools
-		- When a scene is loaded the pools are cleared and all the corresponding bundles call their create method
 	
 	- Use LESS as a CSS preprocessor
 	- Delete unused files
 	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
+		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
 
 	- Stadarize how a module using jQueryUI should look
-		- require jQuery and jQueryUI once in the beginning
+		- require jQuery and jQueryUI once in the beginning of the editor
 
 	- Enable viewport movement with keys only when the canvas is in focus
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
 	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly. This will fix tab selection.
+	- Method in Game-Builder to empty a pool, without destrying it.
+		- This should be used by the actual game when changing levels
 
 ====================================================================
 ====================================================================

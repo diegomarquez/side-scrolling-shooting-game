@@ -70,6 +70,18 @@ define(function(require) {
       throw new Error('Must Override');
     },
 
+    setOptionState: function (element, data, options) {
+      if (options.disabledItems) {
+        if (options.disabledItems.indexOf(data) == -1) {
+          element.addClass('ui-state-default');
+        } else {
+          element.addClass('ui-state-disabled');
+        }
+      } else {
+        element.addClass('ui-state-default');
+      }
+    },
+
     refreshContent: function () {
       // Get the options
       var options = this.getOptions();

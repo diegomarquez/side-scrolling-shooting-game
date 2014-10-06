@@ -71,12 +71,8 @@ define(function(require) {
       for (var i = 0; i < data.length; i++) {
         var option = $(document.createElement('li'));
         
-        if (options.disabledItems.indexOf(data[i]) == -1) {
-          option.addClass('ui-state-default');
-        } else {
-          option.addClass('ui-state-disabled');
-        }
-        
+        this.setOptionState(option, data[i], options);
+
         option.addClass('ui-corner-all');
         option.attr('value', data[i]);
         option.html(data[i]);

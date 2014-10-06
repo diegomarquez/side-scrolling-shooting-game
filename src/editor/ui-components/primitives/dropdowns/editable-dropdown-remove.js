@@ -39,6 +39,8 @@ define(function(require) {
       for (var i = 0; i < data.length; i++) {
         var option = $(document.createElement('li'));
         
+        this.setOptionState(option, data[i], options);
+
         var value = $(document.createElement('div'));
         var button = $(document.createElement('button'))
         
@@ -47,12 +49,6 @@ define(function(require) {
         button.attr('value', data[i]);
         button.html('Remove');
 
-        if (options.disabledItems.indexOf(data[i]) == -1) {
-          option.addClass('ui-state-default');
-        } else {
-          option.addClass('ui-state-disabled');
-        }
-        
         option.addClass('ui-corner-all');
         option.attr('value', data[i]);
 
