@@ -1,9 +1,11 @@
 define(function(require) {
+  require('jquery');
+
   var SelectedGameObject = require("class").extend({
     init: function() {},
 
     get: function() {
-      return document.querySelector('#game-object-selector').value;
+      return $(document.querySelector('#game-object-selector')).attr('value');
     }
   });
 

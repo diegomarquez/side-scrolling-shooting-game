@@ -6,7 +6,7 @@ define(function(require) {
 
     },
 
-    setupSortable: function(element, options) {
+    setupUI: function(element, options) {
       var oldIndex;
       var newIndex;
 

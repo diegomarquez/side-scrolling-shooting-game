@@ -8,8 +8,9 @@ define(function(require) {
   var SetupViewport = require('class').extend({
     init: function() {},
 
-    setup: function(viewportName) {    
-      var viewport = gb.viewports.add(viewportName, gb.canvas.width, gb.canvas.height, 0, 0)
+    setup: function(viewportName) {      
+      var viewport = gb.viewports.get(viewportName);
+
       viewport.addLayer(editorConfig.getDefaultLayerName());
       viewport.addLayer(editorConfig.getOutlineLayerName());
 

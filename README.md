@@ -2,11 +2,6 @@
 -------------------
 
 - Editor	
-	- Update UI of game-object selector
-
-	- Update UI to add new viewports, put it on top instead of the bottom
-		- Use Dialog to create new viewport
-
 	- Add a toggle to show and hide a grid
 	- Move objects around by dragging with the mouse
 		- remove move by key presses from game-objects in favour of snap to grid toogle

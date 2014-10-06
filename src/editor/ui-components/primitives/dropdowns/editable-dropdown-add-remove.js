@@ -1,9 +1,6 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
-
   var buttonUI = require('button');
-  var mouseCoordinates = require('mouse-coordinates');
-  var fitInViewport = require('fit-in-viewport');
 
   var EditableDropdownAddRemove = require('editable-dropdown-remove').extend({
     init: function() {

@@ -117,12 +117,10 @@ hr {
 }
 
 .viewport-editor-container {
-	padding: 2px;
 	width: 50%;
 	font-size: 0.6em;
 	white-space:nowrap;
-	float: left;
-
+	
 	overflow: hidden;
 	position: relative;
 
@@ -164,14 +162,7 @@ hr {
 
 /* Viewport creation */
 #viewport-creator button {
-	margin-top: 5px;
-	width: 24.7%;
-}
-
-#viewport-creator input {
-	margin-top: 5px;
-	margin-right: 5px;
-	width: 25%;
+	width: 50%;
 }
 
 /* Game Object Create button */
@@ -186,12 +177,11 @@ hr {
 
 /* File load */
 #level-load-button {
-	width: 50%;
-	border: 1;	
+	width: 50%;	
 }
 
 /* Editable dropdown */
-.editable-drop-down {
+.drop-down {
 	overflow: hidden;
     
     -webkit-box-sizing: border-box;
@@ -201,7 +191,7 @@ hr {
     box-sizing: border-box;
 }
 
-.editable-drop-down ul {
+.drop-down ul {
 	min-width: 200px;
 	max-width: 250px;
 	margin: 0px;
@@ -210,10 +200,9 @@ hr {
 	display: inline-block;
 	position: absolute;
 	z-index: 99999;
-
 }
 
-.editable-drop-down ul li {
+.drop-down ul li {
 	margin: 0px;
 	padding: 0px;
     font-size: 0.6em;
@@ -221,39 +210,39 @@ hr {
     width: 100%;
 }
 
-.editable-drop-down ul li div {
+.drop-down ul li div {
 	display: table-cell;
 	padding: 3px;
 	width: 50%;
 }
 
-.editable-drop-down ul li div button {
+.drop-down ul li div button {
 	width: 100%;
 }
 
-.editable-drop-down .ui-state-highlight {
+.drop-down .ui-state-highlight {
 	margin: 2px;
 }
 
-.editable-drop-down .split-button {
+.drop-down .split-button {
 	width: 100%;
 }
 
-.editable-drop-down .split-button .main-button {
+.drop-down .split-button .main-button {
 	text-align: left;
 	width: 90%;
 }
 
-.editable-drop-down .split-button .add-button {
+.drop-down .split-button .add-button {
 	width: 10%;
 }
 
-.editable-drop-down > .ui-button {
+.drop-down > .ui-button {
 	text-align: left;
 	width: 100%;
 }
 
-.editable-drop-down .ui-button-icon-secondary {
+.drop-down .ui-button-icon-secondary {
 	right: 10px;
 	top: 50%;
 	bottom: 50%;

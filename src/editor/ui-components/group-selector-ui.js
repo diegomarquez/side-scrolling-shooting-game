@@ -11,7 +11,7 @@ define(function(require) {
   
   var GroupSelector = require('class').extend({
     init: function() {
-      
+
     },
 
     create: function() {

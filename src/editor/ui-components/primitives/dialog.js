@@ -97,8 +97,11 @@ define(function(require) {
     try {
       $.each(actions, function(i, action) {
         $.each(fields, function(j, field) {
-          if (field.name == action) {
 
+          // No validations to do
+          if (!field.validations) return;
+
+          if (field.name == action) {
             $.each(field.validations, function(k, validation) {
               var method = toMethodName(field.name);
 
