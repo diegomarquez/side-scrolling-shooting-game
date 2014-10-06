@@ -42,6 +42,9 @@ define(function(require) {
         });
       }
 
+      // Serialize Update Groups
+      var groups = gb.groups.allGroupNames();
+
       // Serialize viewports
       var vs = [];
 
@@ -71,6 +74,7 @@ define(function(require) {
       var scene = {
         name: sceneName.get(),
         objects: gos,
+        groups: groups,
         viewports: vs
       }
 

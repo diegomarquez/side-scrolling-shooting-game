@@ -2,8 +2,15 @@
 -------------------
 
 - Editor	
-	- Remove all update groups before loading a new scene
-	- Update UI of game-object and group selector
+	- Save and Load update groups (DONE)
+	- Remove all update groups before loading a new scene (DONE)
+	
+	- Update UI of group selector
+		- Refresh content of dropdown when things change
+			- Groups
+	
+	- Update UI of game-object selector
+
 	- Update UI to add new viewports, put it on top instead of the bottom
 		- Use Dialog to create new viewport
 
@@ -45,12 +52,11 @@
 	- Stadarize how a module using jQueryUI should look
 		- require jQuery and jQueryUI once in the beginning
 
-	- Fix Tab selection, if possible
 	- Enable viewport movement with keys only when the canvas is in focus
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
-	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly
+	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly. This will fix tab selection.
 
 ====================================================================
 ====================================================================

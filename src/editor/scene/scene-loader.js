@@ -8,17 +8,29 @@ define(function(require) {
     init: function() {},
 
     load: function(scene) {
-      sceneName.set(scene.name);
-
+      // Clear all previous content
       gb.reclaimer.claimAll();
+      gb.groups.removeAll();
       gb.viewports.removeAll();
 
+      // Set the scene name in the UI
+      sceneName.set(scene.name);
+
+      // Create Update Groups
+      var groups = scene.groups;
+
+      for(var i = 0; i < groups.length; i++) {
+        gb.groups.add(groups[i]);
+      } 
+
+      // Create Viewports
       var viewports = scene.viewports;
 
       for(var i = 0; i < viewports.length; i++) {
         gb.viewports.addFromObject(viewports[i]);
       }
 
+      // Create Game Objects
       var objects = scene.objects;
 
       for(i = 0; i < objects.length; i++) {
