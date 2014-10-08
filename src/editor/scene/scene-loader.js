@@ -1,6 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
+  var editorSetup = require('editor-setup');
   var setupEditorObject = require('setup-editable-game-object');
   var sceneName = require('scene-name');
 
@@ -9,9 +10,7 @@ define(function(require) {
 
     load: function(scene) {
       // Clear all previous content
-      gb.reclaimer.claimAll();
-      gb.groups.removeAll();
-      gb.viewports.removeAll();
+      editorSetup.clear();
 
       // Set the scene name in the UI
       sceneName.set(scene.name);
@@ -19,6 +18,7 @@ define(function(require) {
       // Create Update Groups
       var groups = scene.groups;
 
+      // Create Update Groups
       for(var i = 0; i < groups.length; i++) {
         gb.groups.add(groups[i]);
       } 
@@ -30,6 +30,9 @@ define(function(require) {
         gb.viewports.addFromObject(viewports[i]);
       }
 
+      // Create grid viewport
+      editorSetup.gridViewport();
+      
       // Create Game Objects
       var objects = scene.objects;
 

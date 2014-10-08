@@ -7,6 +7,7 @@ define(function(require) {
   var dialog = require('dialog');
 
   var gb = require('gb');
+  var editorConfig = require('editor-config');
   
   var ViewportCreator = require('class').extend({
     init: function() {
@@ -120,7 +121,9 @@ define(function(require) {
               this.StrokeColor(),
               this.StrokeWidth(),
               this.FitWorld()
-            ); 
+            );
+
+            gb.viewports.before(this.Name(), editorConfig.getGridViewportName()); 
              
             $(this).dialog('close');
           }

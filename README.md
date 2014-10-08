@@ -2,16 +2,9 @@
 -------------------
 
 - Editor	
-	- Add a toggle to show and hide a grid
-		- Viewport with grid (DONE)
-		- Grid Toggle
-		- Game Object 
-			Control size of grid
-			Renderer (DONE)
-
-	- Don't show grid viewport in UI
-	- Don't serialize grid viewport
-	- New viewports should be added before the grid viewport
+	- Fix Viewport creation dialog
+		- Close on successful creation (DONE)
+		- Form reset should reset to default, not empty
 
 	- Move objects around by dragging with the mouse
 		- remove move by key presses from game-objects in favour of snap to grid toogle
@@ -24,25 +17,31 @@
 		- Have spinners for X and Y coordinates
 		- The movement step should be the grid cell size on each coordinate
 
-	- Visual feedback if there are things missing in order to add a game-object to the scene.
-		- Flashing red or something
-	
 	- require jQuery and jQueryUI once in the beginning of the editor
 	- Use LESS as a CSS preprocessor
+	
 	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
 		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
 		- Redisign the interface
 			- Have 4 regions
-				- canvas
-				- Right of canvas 
-					Scene name
-					Input controls. 
+				- Top Left
+					- Canvas
+				- Top Right
+					Scene name 
 					Snap to grid toggle, 
 					world movement spinners, 
 					grid toggle, 
 					world size
-				- Bottom of canvas (Game Object Creation)
-				- Bottom right of canvas (Viewport and layers editing)
+					world step
+				- Bottom Left 
+					- Game Object Creation
+						- Select game object
+						- Select Update group
+						- Select viewports and layers
+						- Visual feedback if there are things missing in order to add a game-object to the scene.
+							- Flashing red or something
+				- Bottom Right 
+					Viewport and layers editing (current implementation)
 
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 

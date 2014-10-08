@@ -3,6 +3,7 @@ define(function(require) {
   var gb = require('gb');
   var viewportEditorUI = require('viewport-editor-ui');
   var setupViewport = require('setup-viewport');
+  var editorConfig = require('editor-config');
 
   var ViewportSelector = require('class').extend({
     init: function() {
@@ -14,7 +15,7 @@ define(function(require) {
       this.container = document.createElement('div');
       this.container.id = 'viewports-container';
 
-      var allViewports = gb.viewports.allAsArray();
+      var allViewports = editorConfig.getViewports();
 
       setupSortable(this.container)
 

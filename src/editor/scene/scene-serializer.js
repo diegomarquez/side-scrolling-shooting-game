@@ -48,14 +48,10 @@ define(function(require) {
       // Serialize viewports
       var vs = [];
 
-      var allViewports = gb.viewports.allAsArray();
+      var allViewports = editorConfig.getViewports();
 
       for (i = 0; i < allViewports.length; i++) {
         var v = allViewports[i];
-
-        // Do not serialize 'Outline' layer
-        var layerNames = v.getLayers().map(function(layer) { return layer.name; });
-        layerNames.splice(layerNames.indexOf(editorConfig.getOutlineLayerName()));
 
         vs.push({
           name: v.name,
@@ -67,7 +63,7 @@ define(function(require) {
           scaleY: v.ScaleY,
           stroke: v.getStroke(),
           worldFit: v.WorldFit,
-          layers: layerNames 
+          layers: editorConfig.getViewportLayers(v); 
         });
       }
 

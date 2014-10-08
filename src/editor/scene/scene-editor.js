@@ -3,7 +3,7 @@ define(function(require) {
   var scaleUIValueSetter = require('scale-ui-value-setter');
   
   var gb = require('gb');
-  var editorConfig = require('editor-config');
+  var editorSetup = require('editor-setup');
   var world = require('world');
 
   var SceneEditor = require("class").extend({
@@ -23,10 +23,7 @@ define(function(require) {
     },
 
     create: function() {
-      // Default update group and viewport setup
-      this.defaultSetup();
-      // Setup pools with Game Objects only used in the editor
-      this.setupPools();
+      editorSetup.all();
 
       // Create main editor container
       var container = document.createElement('div');
@@ -91,39 +88,6 @@ define(function(require) {
 
       // Setup control of 'Main' viewport with the keyboard
       mainViewportControl.create();
-    },
-
-    defaultSetup: function() {
-      // Claim all Game Objects
-      gb.reclaimer.claimAll();
-      // Remove all update groups
-      gb.groups.removeAll();
-      // Remove all Viewports
-      gb.viewports.removeAll();
-
-      // TODO: Remove all objects from pools to start with a clean slate
-
-      // Setup the default world size and world step
-      world.create(gb.canvas.width, gb.canvas.height, 50);
-      
-      // Setup the default update group
-      gb.groups.add(editorConfig.getDefaultGroupName());
-      
-      // Setup the default viewport
-      var mainViewport = gb.viewports.add(editorConfig.getMainViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
-      mainViewport.addLayer(editorConfig.getDefaultLayerName());
-      mainViewport.addLayer(editorConfig.getOutlineLayerName());
-      
-      // Setup the grid viewport
-      var gridViewport = gb.viewports.add(editorConfig.getGridViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
-      // This viewport does not perform any culling logic
-      gridViewport.Culling = false;
-      gridViewport.addLayer(editorConfig.getGridLayerName());
-    },
-
-    setupPools: function() {
-      require('outline-bundle').create();
-      require('grid-bundle').create();
     }
   });
 

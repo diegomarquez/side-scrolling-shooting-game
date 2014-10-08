@@ -136,9 +136,8 @@ define(function(require) {
         id: 'layers-' + options.viewport.name,
         defaultMessage: 'Select a Layer',
         selectedMessage: 'Selected Layer:',
-        disabledItems: [editorConfig.getOutlineLayerName()],
         data: function() {
-          return options.viewport.layers.map(function(layer) { return layer.name; })
+          return editorConfig.getViewportLayers(options.viewport);
         },
         onAdd: function() {
           $(addLayerDialogUI).dialog('open');
