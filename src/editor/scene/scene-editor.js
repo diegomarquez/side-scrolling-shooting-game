@@ -10,6 +10,7 @@ define(function(require) {
     init: function() {
       this.sceneNameUI = new (require('scene-name-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
+      this.gridToggleUI = new (require('grid-toggle-ui'));
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.groupSelectorUI = new (require('group-selector-ui'));
       this.viewportsUI = new (require('viewport-selector-ui'));
@@ -24,9 +25,8 @@ define(function(require) {
     create: function() {
       // Default update group and viewport setup
       this.defaultSetup();
-
-      // Setup editor only pools
-      require('outline-bundle').create();
+      // Setup pools with Game Objects only used in the editor
+      this.setupPools();
 
       // Create main editor container
       var container = document.createElement('div');
@@ -43,6 +43,8 @@ define(function(require) {
       container.appendChild(this.sceneNameUI.create());
       // World Size
       container.appendChild(this.worldEditUI.create());
+      // Grid Toggle Size
+      container.appendChild(this.gridToggleUI.create());
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Game object configuration
@@ -99,14 +101,29 @@ define(function(require) {
       // Remove all Viewports
       gb.viewports.removeAll();
 
-      // Setup the default world size 
+      // TODO: Remove all objects from pools to start with a clean slate
+
+      // Setup the default world size and world step
       world.create(gb.canvas.width, gb.canvas.height, 50);
+      
       // Setup the default update group
       gb.groups.add(editorConfig.getDefaultGroupName());
+      
       // Setup the default viewport
       var mainViewport = gb.viewports.add(editorConfig.getMainViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
       mainViewport.addLayer(editorConfig.getDefaultLayerName());
       mainViewport.addLayer(editorConfig.getOutlineLayerName());
+      
+      // Setup the grid viewport
+      var gridViewport = gb.viewports.add(editorConfig.getGridViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
+      // This viewport does not perform any culling logic
+      gridViewport.Culling = false;
+      gridViewport.addLayer(editorConfig.getGridLayerName());
+    },
+
+    setupPools: function() {
+      require('outline-bundle').create();
+      require('grid-bundle').create();
     }
   });
 

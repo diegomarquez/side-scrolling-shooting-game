@@ -16,6 +16,18 @@ define(function(require) {
 
     getMainViewportName: function() {
       return 'Main';
+    },
+
+    getGridViewportName: function() {
+      return 'Grid';
+    },
+
+    getGridLayerName: function() {
+      return 'Front';
+    },
+
+    getGridSize: function() {
+      return {width: 12, height:12};
     }
   });
 
