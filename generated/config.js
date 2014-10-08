@@ -69,6 +69,7 @@ require.config({
 		"grid-bundle": "src/editor/bundles/grid-bundle", 
 		"outline-bundle": "src/editor/bundles/outline-bundle", 
 		"editor-config": "src/editor/editor-config", 
+		"editor-setup": "src/editor/editor-setup", 
 		"setup-editable-game-object": "src/editor/game-objects/setup-editable-game-object", 
 		"setup-game-object-input": "src/editor/game-objects/setup-game-object-input", 
 		"active-viewports": "src/editor/html-parsers/active-viewports", 

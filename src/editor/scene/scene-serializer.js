@@ -63,7 +63,7 @@ define(function(require) {
           scaleY: v.ScaleY,
           stroke: v.getStroke(),
           worldFit: v.WorldFit,
-          layers: editorConfig.getViewportLayers(v); 
+          layers: editorConfig.getViewportLayers(v)
         });
       }
 

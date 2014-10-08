@@ -1,8 +1,9 @@
 define(function(require) {	
 	var gameObject = require("game-object"); 
 	var pathRenderer = require("path-renderer");
+	var editorConfig = require("editor-config");
 
-	var viewports = require('viewports');
+	var viewports = require("viewports");
 
 	var OutlineBundle = require("bundle").extend({
 		create: function(args) {	
@@ -11,8 +12,8 @@ define(function(require) {
 			this.componentPool.createConfiguration("OutlineRenderer", 'path-renderer')
 				.args({
 					skipCache: true, 
-					width: viewports.get('Main').width,
-					height: viewports.get('Main').height,
+					width: viewports.get(editorConfig.getMainViewportName()).width,
+					height: viewports.get(editorConfig.getMainViewportName()).height,
 					name: 'outline',
 					drawPath: function(context) {
 						context.save();

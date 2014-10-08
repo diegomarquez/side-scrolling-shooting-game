@@ -1,5 +1,6 @@
 define(function(require) {
   var gb = require('gb');
+  var world = require('world');
   var editorConfig = require('editor-config');
 
   var EditorSetup = require('class').extend({
@@ -9,11 +10,11 @@ define(function(require) {
 
     all: function() {
       this.clear();
-      this.pools();
       this.world();
       this.groups();
       this.mainViewport();
       this.gridViewport();  
+      this.pools();
     },
 
     clear: function() {
