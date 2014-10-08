@@ -2,10 +2,13 @@
 -------------------
 
 - Editor	
-	- Move objects around by dragging with the mouse
-		- remove move by key presses from game-objects in favour of snap to grid toogle
-		- snap to grid should take into account the offset of the main viewport
+	- Move objects around by dragging with the mouse (DONE)
+		- remove 'move by key presses' from game-objects in favour of snap to grid toogle
+			- Remove key press handling (DONE)
+			- Make Snap
+			- Make the toogle
 
+	- Hide viewport grid from game object selector
 	- Disable all editing from the main viewport, to simplify how it works with the grid
 	
 	- Remove main viewport movement when pressing keys. 
