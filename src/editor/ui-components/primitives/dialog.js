@@ -39,6 +39,8 @@ define(function(require) {
         input.id = lowerCaseName;
         input.value = field.value;
 
+        $(input).attr('default', field.value);
+
         $(input).addClass('ui-widget-content');
         $(input).addClass('ui-corner-all');
 
@@ -54,7 +56,9 @@ define(function(require) {
         }(input);
 
         inputFields[toMethodName(field.name)] = function(input) {
-          return input; 
+          return function() {
+            return input; 
+          }
         }(input)
       });
 
@@ -83,8 +87,16 @@ define(function(require) {
         }(buttonCallback, action);
       });
 
-      options.close = function() { form.reset(); }
-      options.open = function() { resetFeedback(tip, inputFields, options); }
+      options.close = function() {          
+        for(var m in inputFields) {
+          var input = $(inputFields[m]());
+          input.attr('value', input.attr('default'));
+        } 
+      }
+      
+      options.open = function() { 
+        resetFeedback(tip, inputFields, options); 
+      }
 
       // Create the jQuery ui dialog
       var dialog = $.extend($(container).dialog(options), fieldGetters);
@@ -106,7 +118,7 @@ define(function(require) {
               var method = toMethodName(field.name);
 
               if (!validation.check(fieldGetters[method]())) {
-                applyFeedback(tip, inputFields[method], validation.tip);
+                applyFeedback(tip, inputFields[method](), validation.tip);
                 throw new Error(validation.tip);
               }
             });
@@ -131,7 +143,7 @@ define(function(require) {
     $(tipContainer).removeClass("ui-state-error");
 
     $.each(inputFields, function (key, value) {
-      $(value).removeClass('ui-state-error');
+      $(value()).removeClass('ui-state-error');
     });
   }
 

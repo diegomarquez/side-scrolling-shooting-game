@@ -2,10 +2,6 @@
 -------------------
 
 - Editor	
-	- Fix Viewport creation dialog
-		- Close on successful creation (DONE)
-		- Form reset should reset to default, not empty
-
 	- Move objects around by dragging with the mouse
 		- remove move by key presses from game-objects in favour of snap to grid toogle
 		- snap to grid should take into account the offset of the main viewport
