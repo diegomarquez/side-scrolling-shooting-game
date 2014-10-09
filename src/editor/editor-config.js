@@ -32,6 +32,11 @@ define(function(require) {
       return { width: 12, height:12 };
     },
 
+    getGridCellSize: function() {
+      var gridSize = this.getGridSize();
+      return { width: gb.canvas.width / gridSize.width, height:gb.canvas.height / gridSize.height };
+    },
+
     getViewportLayers: function(viewport) {
       return viewport.getLayers()
                   .filter(function(layer) { 

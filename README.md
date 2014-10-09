@@ -2,23 +2,22 @@
 -------------------
 
 - Editor	
-	- Move objects around by dragging with the mouse (DONE)
-		- remove 'move by key presses' from game-objects in favour of snap to grid toogle
-			- Remove key press handling (DONE)
-			- Make Snap
-			- Make the toogle
-
-	- Hide viewport grid from game object selector
-	- Disable all editing from the main viewport, to simplify how it works with the grid
+	- Make the toogle
+		- UI
+		- Integration
 	
 	- Remove main viewport movement when pressing keys. 
 		- Move world using a spinner instead of the keyboard
 		- Have spinners for X and Y coordinates
-		- The movement step should be the grid cell size on each coordinate
+		
+	- Hide viewport grid from game object selector
+	- Disable all editing from the main viewport, to simplify how it works with the grid
 
 	- require jQuery and jQueryUI once in the beginning of the editor
 	- Use LESS as a CSS preprocessor
 	
+	- Remove world step
+
 	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
 		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
 		- Redisign the interface
@@ -42,6 +41,9 @@
 				- Bottom Right 
 					Viewport and layers editing (current implementation)
 
+	- Serialize information in each region
+	- Load all the information
+
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
@@ -51,6 +53,11 @@
 	
 	- Delete unused files
 
+====================================================================
+====================================================================
+
+Test the editor UI components using Jasmine/QUnit and Karma
+	
 ====================================================================
 ====================================================================
 
@@ -84,7 +91,7 @@ Start doing the objects for the actual game
 ====================================================================
 ====================================================================
 
-Test the editor using Jasmine/QUnit
+Test the editor using Jasmine/QUnit and Karma
 
 ====================================================================
 ====================================================================

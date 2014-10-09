@@ -5,7 +5,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
   var p2 = new Vector2D();
   var p3 = new Vector2D();
   var p4 = new Vector2D();
-  var mouseWorldPos = new Vector2D();
+  
   var m = null;
   var r = null;
   var t_go = null;
@@ -15,6 +15,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
     new Vector2D(),
     [ new Vector2D(), new Vector2D(), new Vector2D(), new Vector2D() ]
   );
+  
+  var mouseWorldPos = new Vector2D();
+  var mouseMoveWorldPos = new Vector2D();
 
   var MouseEvents = Extension.extend({
     type: function() {
@@ -55,13 +58,12 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
             // It contains a Game Object and the viewport it belongs to
             mouseUpData.go.execute(mouseUpData.go.CLICK, mouseUpData);
           }
-
-          // Stop the dragging sequence
-          stopDrag(event, mouseUpData);
-
-          // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
-          currentMouseDownData = null;
         }
+
+        // Stop the dragging sequence
+        stopDrag(event, mouseUpData);
+        // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
+        currentMouseDownData = null;
       }, false);
 
       Gb.canvas.addEventListener('mouseout', function (event) {
@@ -94,33 +96,48 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
   }
 
   var stopDrag = function(event, mouseData) {
+    if (mouseData) {
+      // Execute MOUSE_DRAG_END event with the current mouseUpData object
+      mouseData.go.execute(mouseData.go.MOUSE_DRAG_END, mouseData);
+    }
+
     if(mouseMovehandlers.length > 0) {
       // Remove the mousemove handlers    
       while(mouseMovehandlers.length) {
         // Remove mousemove event because it can be quite expensive
         Gb.canvas.removeEventListener('mousemove', mouseMovehandlers.pop());
-      }
- 
-      // Execute MOUSE_DRAG_END event with the current mouseUpData object
-      mouseData.go.execute(mouseData.go.MOUSE_DRAG_END, mouseData);
+      } 
     }
   }
 
   var getMouseMoveHandler = function (event, mouseData) {
+    var initX = mouseData.go.x;
+    var initY = mouseData.go.y;
+
     var lastX = event.pageX;
     var lastY = event.pageY;
     
+    var totalDeltaX = 0;
+    var totalDeltaY = 0;
+
+    var deltaX;
+    var deltaY;
+
     return function (event) {
       // Get different between last and current mouse position
-      mouseData.deltaX = event.pageX - lastX; 
-      mouseData.deltaY = event.pageY - lastY;
+      deltaX = event.pageX - lastX; 
+      deltaY = event.pageY - lastY;
 
       // Save mouse last position
       lastX = event.pageX;
       lastY = event.pageY;
 
-      mouseData.go.x += mouseData.deltaX;
-      mouseData.go.y += mouseData.deltaY;
+      // Accumulate deltas
+      totalDeltaX += deltaX;
+      totalDeltaY += deltaY;
+
+      mouseData.go.x = initX + totalDeltaX;
+      mouseData.go.y = initY + totalDeltaY;
 
       // Execute MOUSE_DRAG event with current mouseData plus the current X and Y delta
       mouseData.go.execute(mouseData.go.MOUSE_DRAG, mouseData);
@@ -221,6 +238,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
   Object.defineProperty(GameObject.prototype, "CLICK", { get: function() { return 'click'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DOWN", { get: function() { return 'mousedown'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_UP", { get: function() { return 'mouseup'; } });
+  Object.defineProperty(GameObject.prototype, "MOUSE_DRAG", { get: function() { return 'mousedrag'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DRAG_START", { get: function() { return 'mousedragstart'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DRAG_END", { get: function() { return 'mousedragend'; } });
 

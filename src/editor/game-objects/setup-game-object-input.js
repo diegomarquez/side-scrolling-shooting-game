@@ -1,9 +1,10 @@
 define(function(require) {
 
   var gb = require('gb');
-  var keyboard = require('keyboard');
-  var gameObject = require('game-object');
+  var editorConfig = require('editor-config');
 
+  var gridCellSize = editorConfig.getGridCellSize();
+  
   var GameObjectMouseInteraction = require("class").extend({
     init: function() {
       
@@ -19,10 +20,19 @@ define(function(require) {
       go.single(go.MOUSE_DRAG_END, this, function(mouseData) {
         go.Selected = false;
       });
+
+      go.single(go.MOUSE_DRAG, this, function(mouseData) {
+        // Snap to grid
+        var stepX = gridCellSize.width;
+        var stepY = gridCellSize.height;
+
+        mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
+        mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
+      });
     }
   });
 
-  Object.defineProperty(gameObject.prototype, "Selected", { 
+  Object.defineProperty(require('game-object').prototype, "Selected", { 
     get: function() {  
       return this.selected; 
     },

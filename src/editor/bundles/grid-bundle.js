@@ -15,34 +15,33 @@ define(function(require) {
 					skipCache: true, 
 					drawPath: function(context) {
 
-						var xStep = gb.canvas.width / editorConfig.getGridSize().width;
-						var yStep = gb.canvas.height / editorConfig.getGridSize().height;
-
-						var i;
+						var step = editorConfig.getGridCellSize();
 
 						context.save();
 						context.beginPath();
 						
-						for (i = 0; i < xStep + 1; i++) {
-							var posX = (xStep) * i;
+						for (var i = 1; i < step.width; i++) {
+							var posX = step.width * i;
 	        				
 	        				context.moveTo(posX, 0);
 	        				context.lineTo(posX, gb.canvas.height);	
 						}
 
-						for (i = 0; i < yStep + 1; i++) {
-	        				var posY = (yStep) * i;
+						for (var i = 1; i < step.height; i++) {
+	        				var posY = step.height * i;
 
 	        				context.moveTo(0, posY);
 	        				context.lineTo(gb.canvas.width, posY);	
 						}
 
-						context.closePath();
-						context.restore();
-						
-		        		context.lineWidth = 1;
+		        		context.lineWidth = 2;
+						context.globalAlpha = 0.5;
 		        		context.strokeStyle = "#FFFFFF";
 		        		context.stroke();        	
+						context.closePath();
+						
+						context.restore();
+						
 					}
 				});
 
