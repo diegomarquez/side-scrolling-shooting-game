@@ -1,14 +1,11 @@
 # side-shmup
 -------------------
 
-- Editor	
-	- Make the toogle
-		- UI
-		- Integration
-	
+- Editor		
 	- Remove main viewport movement when pressing keys. 
 		- Move world using a spinner instead of the keyboard
-		- Have spinners for X and Y coordinates
+			- UI
+			- Have spinners for X and Y coordinates
 		
 	- Hide viewport grid from game object selector
 	- Disable all editing from the main viewport, to simplify how it works with the grid

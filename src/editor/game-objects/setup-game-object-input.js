@@ -2,6 +2,7 @@ define(function(require) {
 
   var gb = require('gb');
   var editorConfig = require('editor-config');
+  var snapToGridValue = require('snap-to-grid-value');
 
   var gridCellSize = editorConfig.getGridCellSize();
   
@@ -22,12 +23,14 @@ define(function(require) {
       });
 
       go.single(go.MOUSE_DRAG, this, function(mouseData) {
-        // Snap to grid
-        var stepX = gridCellSize.width;
-        var stepY = gridCellSize.height;
+        if (snapToGridValue.get()) {
+          // Snap to grid
+          var stepX = gridCellSize.width;
+          var stepY = gridCellSize.height;
 
-        mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
-        mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
+          mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
+          mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
+        }
       });
     }
   });

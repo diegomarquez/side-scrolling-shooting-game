@@ -11,6 +11,8 @@ define(function(require) {
       this.sceneNameUI = new (require('scene-name-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
       this.gridToggleUI = new (require('grid-toggle-ui'));
+      this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
+      
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.groupSelectorUI = new (require('group-selector-ui'));
       this.viewportsUI = new (require('viewport-selector-ui'));
@@ -36,12 +38,17 @@ define(function(require) {
        * --------------------------------
        */
 
+      // Horizontal line
+      container.appendChild(this.horizontalBar.create());
       // Scene name
       container.appendChild(this.sceneNameUI.create());
       // World Size
       container.appendChild(this.worldEditUI.create());
-      // Grid Toggle Size
+      // Grid Toggle
       container.appendChild(this.gridToggleUI.create());
+      // Snap To Grid Toggle
+      container.appendChild(this.snapToGridToggleUI.create());
+      
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Game object configuration
@@ -49,13 +56,11 @@ define(function(require) {
       container.appendChild(this.groupSelectorUI.create());
       container.appendChild(this.viewportsUI.create());
       container.appendChild(this.viewportCreateUI.create());
-      // Horizontal line
-      container.appendChild(this.horizontalBar.create());
       // Game object creation button
       container.appendChild(this.gameObjectCreatorUI.create());
+
       // Horizontal line
       container.appendChild(this.horizontalBar.create());      
-
       // Save and Load scene buttons
       container.appendChild(this.sceneSaveUI.create());
       container.appendChild(this.sceneLoadUI.create());

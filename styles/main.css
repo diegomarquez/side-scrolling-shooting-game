@@ -85,6 +85,22 @@ input {
 	width: 100%;
 }
 
+/*Snap to Grid Toggle*/
+#snap-to-grid-toggle-button {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+
+	margin-top: 4px;
+	width: 50%;
+}
+
+#snap-to-grid-toggle-button label {
+	width: 100%;
+}
+
 /*Separator*/
 hr {
 	height: 4px;
