@@ -1,10 +1,6 @@
 define(function(require) {
   var checkbox = require('checkbox');
-
-  var gb = require('gb');
-  var editorConfig = require('editor-config');
-  var gridBundle = require('grid-bundle');
-
+  
   var SnapToGridToggle = require('class').extend({
     init: function() {},
 

@@ -8,11 +8,13 @@ define(function(require) {
 
   var SceneEditor = require("class").extend({
     init: function() {
+      this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
       this.sceneNameUI = new (require('scene-name-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
       this.gridToggleUI = new (require('grid-toggle-ui'));
       this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
       
+
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.groupSelectorUI = new (require('group-selector-ui'));
       this.viewportsUI = new (require('viewport-selector-ui'));
@@ -27,6 +29,9 @@ define(function(require) {
     create: function() {
       editorSetup.all();
 
+      // Vertical and Horizontal scroll bars
+      this.canvasScrollBarsUI.create();
+
       // Create main editor container
       var container = document.createElement('div');
       container.id = "editor-container";
@@ -37,7 +42,7 @@ define(function(require) {
        * Append all the UI Components
        * --------------------------------
        */
-
+            
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Scene name

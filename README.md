@@ -3,21 +3,25 @@
 
 - Editor		
 	- Remove main viewport movement when pressing keys. 
-		- Move world using a spinner instead of the keyboard
-			- UI
-			- Have spinners for X and Y coordinates
-		
-	- Hide viewport grid from game object selector
-	- Disable all editing from the main viewport, to simplify how it works with the grid
+		- use X/Y Sliders (DONE)
+		- Update minimun and maximun values when world changes
+		- Step by the respective grid cell size
+		- Deactivate if the world fits the canvas
+
+	- Increase and Decrese world size in steps
+		- Spinners
+
+	- Disable all editing from the main viewport. Integrating the grid with a changing viewport would be too much work,
+		and not really worth it.
 
 	- require jQuery and jQueryUI once in the beginning of the editor
 	- Use LESS as a CSS preprocessor
 	
 	- Remove world step
 
-	- Investigate how to use bootstrap to style, this would require removing all mention of jQuery UI CSS classes
+	- Re-style and re-design interface 
 		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
-		- Redisign the interface
+		- Regions
 			- Have 4 regions
 				- Top Left
 					- Canvas
@@ -53,11 +57,6 @@
 ====================================================================
 ====================================================================
 
-Test the editor UI components using Jasmine/QUnit and Karma
-	
-====================================================================
-====================================================================
-
 Web Site and Game-builder core
   Update Basic instruction on how to get a project running
     make word 'website' a link to grunt
@@ -78,6 +77,11 @@ Generator
 	   - Add shim-config to generator
 	   - Add code to generator task
 	   - Put in all the changes made into this project into the generator
+
+====================================================================
+====================================================================
+
+Test the editor UI components using Jasmine/QUnit and Karma
 
 ====================================================================
 ====================================================================

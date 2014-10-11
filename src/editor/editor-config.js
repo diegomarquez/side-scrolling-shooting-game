@@ -37,6 +37,15 @@ define(function(require) {
       return { width: gb.canvas.width / gridSize.width, height:gb.canvas.height / gridSize.height };
     },
 
+    getGameObjects: function() {
+      var data = gb.goPool.getConfigurationTypes();
+
+      data.splice(data.indexOf('ViewportOutline'), 1);
+      data.splice(data.indexOf('ViewportGrid'), 1);
+
+      return data;
+    },
+
     getViewportLayers: function(viewport) {
       return viewport.getLayers()
                   .filter(function(layer) { 
