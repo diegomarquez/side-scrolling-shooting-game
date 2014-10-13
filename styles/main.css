@@ -331,3 +331,44 @@ hr {
 	margin-left: 0;
 	margin-right: 0;
 }
+
+/*Override jQuery UI slider defaults*/
+.ui-slider {
+	overflow: hidden;
+}
+
+.ui-slider .ui-slider-handle {
+	position: absolute;
+	z-index: 2;
+	width: 1.2em;
+	height: 1.2em;
+	cursor: default;
+	-ms-touch-action: none;
+	touch-action: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+
+}
+
+.ui-slider-vertical .ui-slider-handle {
+
+}
+
+.ui-slider-horizontal .ui-state-hover { 
+
+}
+
+.ui-slider-vertical .ui-state-hover { 
+
+}
+
+.ui-slider-horizontal .ui-state-default { 
+
+}
+
+.ui-slider-vertical .ui-state-default { 
+
+}

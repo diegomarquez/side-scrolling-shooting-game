@@ -2,20 +2,14 @@
 -------------------
 
 - Editor		
-	- Remove main viewport movement when pressing keys. 
-		- use X/Y Sliders (DONE)
-		- Update minimun and maximun values when world changes
-		- Step by the respective grid cell size
-		- Deactivate if the world fits the canvas
-
-	- Increase and Decrese world size in steps
+	- Increase and Decrese world size in steps the size of a grid cell
 		- Spinners
 
-	- Disable all editing from the main viewport. Integrating the grid with a changing viewport would be too much work,
-		and not really worth it.
+	- Investigate what happens to the sliders when the size of the world is changed
+
+	- Disable all editing from the main viewport. Integrating the grid with a changing viewport would be too much work, not worth it.
 
 	- require jQuery and jQueryUI once in the beginning of the editor
-	- Use LESS as a CSS preprocessor
 	
 	- Remove world step
 
@@ -44,6 +38,8 @@
 
 	- Serialize information in each region
 	- Load all the information
+	
+	- Use LESS as a CSS preprocessor
 
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 

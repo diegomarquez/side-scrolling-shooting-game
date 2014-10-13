@@ -1,5 +1,4 @@
 define(function(require) {
-  var mainViewportControl = require('main-viewport-control');
   var scaleUIValueSetter = require('scale-ui-value-setter');
   
   var gb = require('gb');
@@ -95,9 +94,6 @@ define(function(require) {
       world.on(world.RESET_SCALE, this, function (v) {
         scaleUIValueSetter.set(v);
       });
-
-      // Setup control of 'Main' viewport with the keyboard
-      mainViewportControl.create();
     }
   });
 

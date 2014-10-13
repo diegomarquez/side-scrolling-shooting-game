@@ -1,6 +1,10 @@
 define(function(require) {
+  require('jquery');
+  require('jquery-ui');
+
   var scrollBar = require('scroll-bar');
   var gb = require('gb');
+  var world = require('world');
   var editorConfig = require('editor-config');
 
   var CanvasScrollBars = require('class').extend({
@@ -10,44 +14,62 @@ define(function(require) {
       var canvas = document.getElementById('main');
       var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 
-      var verticalScrollBar = new scrollBar().create({
-        id: 'canvas-vertical-scroll-bar',
-        value: viewport.height,
-        min: 0,
-        max: viewport.height,
-        step: 1,
-        orientation: 'vertical',
-        style: {
-          height: (viewport.height-2) + 'px',
-          display: 'inline-block'
-        },
-        onChange: function(event, ui) {
-          console.log(ui.value);
-
-          // viewport.Y = ui.value;
-        } 
-      });
-
-      var horizontalScrollBar = new scrollBar().create({
-        id: 'canvas-horizontal-scroll-bar', 
-        value: 0,
-        min: 0,
-        max: viewport.width,
-        step: 1,
-        orientation: 'horizontal',
-        style: {
-          width: (viewport.width-2) + 'px'
-        },
-        onChange: function(event, ui) {
-          console.log(ui.value);
-          // viewport.X = ui.value;
+      var verticalScrollBar = new scrollBar().create(function() {
+        return {
+          id: 'canvas-vertical-scroll-bar',
+          value: clampAtCero(world.getHeight(), viewport.height),
+          min: 0,
+          max: clampAtCero(world.getHeight(), viewport.height),
+          step: editorConfig.getGridCellSize().height,
+          orientation: 'vertical',
+          height: viewport.height,
+          contentHeight: world.getHeight(),
+          style: {
+            height: (viewport.height-2) + 'px',
+            display: 'inline-block'
+          },
+          onSlide: function(event, ui) {
+            viewport.Y = -(clampAtCero(world.getHeight(), viewport.height) - ui.value);
+          } 
         }
       });
 
-      canvas.appendChild(verticalScrollBar);
-      canvas.appendChild(horizontalScrollBar);
+      var horizontalScrollBar = new scrollBar().create(function() {
+       return {
+          id: 'canvas-horizontal-scroll-bar', 
+          value: 0,
+          min: 0,
+          max: clampAtCero(world.getWidth(), viewport.width),
+          step: editorConfig.getGridCellSize().width,
+          orientation: 'horizontal',
+          width: viewport.width,
+          contentWidth: world.getWidth(),
+          style: {
+            width: (viewport.width-2) + 'px'
+          },
+          onSlide: function(event, ui) {
+            viewport.X = -ui.value;
+          }
+        } 
+      });
+
+      canvas.appendChild(verticalScrollBar.html);
+      canvas.appendChild(horizontalScrollBar.html);
+
+      world.on(world.CHANGE_HEIGHT, this, function() {
+        verticalScrollBar.refresh();
+      });
+      
+      world.on(world.CHANGE_WIDTH, this, function() {
+        horizontalScrollBar.refresh();
+      });
     }
   });
+
+  var clampAtCero = function (first, second) {
+    var result = first - second;
+    return result < 0 ? 0 : result;
+  }
 
   return CanvasScrollBars;
 });
