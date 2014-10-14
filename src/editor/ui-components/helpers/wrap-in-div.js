@@ -11,8 +11,14 @@ define(function(require) {
           container.id = options.id;
         }
 
-        if (options.className) {
-          container.className = options.className;
+        var cssClasses = options.className || options.classNames;
+
+        if (cssClasses) {
+          if (Object.prototype.toString.call(cssClasses) === "[object Array]") {
+            container.className = cssClasses.join(" ");
+          } else {
+            container.className = cssClasses;
+          }
         }
       }
       

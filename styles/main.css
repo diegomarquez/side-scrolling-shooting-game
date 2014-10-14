@@ -280,6 +280,80 @@ hr {
 	bottom: 50%;
 }
 
+/*One Dimentional Spinner*/
+.one-dimentional-spinner {
+	font-size: .6em;
+    width: 50%;
+	display: table;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.one-dimentional-spinner > div:nth-child(1) {
+	display: table-cell;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding-right: 5px;
+	width: 20%;
+}
+
+.one-dimentional-spinner > div:nth-child(2) {
+	display: table-cell;
+	width: 80%;
+}
+
+.one-dimentional-spinner input {
+    width: 100%;
+}
+
+.one-dimentional-spinner div > span {
+	width: 100%;
+}
+
+/*Two Dimentional Spinner*/
+.two-dimentional-spinner {
+	font-size: .6em;
+    width: 50%;
+	display: table;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.two-dimentional-spinner > div:nth-child(1) {
+	display: table-cell;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding-right: 5px;
+	width: 20%;
+}
+
+.two-dimentional-spinner > div:nth-child(2) {
+	display: table-cell;
+	width: 40%;
+	padding-right: 5px;
+}
+
+.two-dimentional-spinner > div:nth-child(3) {
+	display: table-cell;
+	width: 40%;
+}
+
+.two-dimentional-spinner input {
+    width: 100%;
+}
+
+.two-dimentional-spinner div > span {
+	width: 100%;
+}
+
 /*Dialog*/
 .dialog .tip {
 	border: 1px solid transparent; padding: 0.3em;
@@ -322,11 +396,12 @@ hr {
    height: 100%;
 }
 
-/*Override jQuery UI defaults*/
+/*Override jQuery UI button defaults*/
 .ui-button-text {
   font-size: .6em;
 }
 
+/*Override jQuery UI buttonset defaults*/
 .ui-buttonset .ui-button {
 	margin-left: 0;
 	margin-right: 0;
@@ -349,26 +424,7 @@ hr {
 	margin: 0;
 }
 
-.ui-slider-horizontal .ui-slider-handle {
-
-}
-
-.ui-slider-vertical .ui-slider-handle {
-
-}
-
-.ui-slider-horizontal .ui-state-hover { 
-
-}
-
-.ui-slider-vertical .ui-state-hover { 
-
-}
-
-.ui-slider-horizontal .ui-state-default { 
-
-}
-
-.ui-slider-vertical .ui-state-default { 
-
+/*Override jQuery UI spinner defaults*/
+.ui-spinner {
+	font-size: 0.6em;
 }

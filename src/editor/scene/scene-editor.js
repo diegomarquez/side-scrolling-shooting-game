@@ -23,6 +23,8 @@ define(function(require) {
       this.sceneLoadUI = new (require('scene-load-ui'));
       
       this.horizontalBar = new (require('horizontal-bar'));
+
+      this.spinner = new ((require('two-dimentions-spinner')));
     },
 
     create: function() {
@@ -42,6 +44,19 @@ define(function(require) {
        * --------------------------------
        */
             
+      container.appendChild(this.spinner.create({
+        id: 'LALALA',
+        label: 'My Spinner',
+        minX: 0,
+        maxX: 100,
+        stepX: 10,
+        valueX: 0,
+        minY: 0,
+        maxY: 100,
+        stepY: 10,
+        valueY: 0
+      }));
+
       // Horizontal line
       container.appendChild(this.horizontalBar.create());
       // Scene name

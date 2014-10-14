@@ -4,15 +4,19 @@
 - Editor		
 	- Increase and Decrese world size in steps the size of a grid cell
 		- Spinners
+			- UI (DONE)
+			- Integration
+	- Remove world step (DONE)
+		- UI (DONE)
+		- Remove the logic from world.js
 
-	- Investigate what happens to the sliders when the size of the world is changed
-
-	- Disable all editing from the main viewport. Integrating the grid with a changing viewport would be too much work, not worth it.
+	- Disable all editing from the main viewport. 
+		- Integrating the grid with a changing viewport would be too much work, not worth it.
+		- Remove 'Outline' button
+		- Remove 'Remove' button
 
 	- require jQuery and jQueryUI once in the beginning of the editor
 	
-	- Remove world step
-
 	- Re-style and re-design interface 
 		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
 		- Regions
@@ -33,13 +37,19 @@
 						- Select viewports and layers
 						- Visual feedback if there are things missing in order to add a game-object to the scene.
 							- Flashing red or something
+					- Delete currently selected Game Object
+					- Default to 'First' update group, as it isn't a very important setting
+						- Condider hiding the option completely to remove clutter
 				- Bottom Right 
-					Viewport and layers editing (current implementation)
+					- Viewport and layers editing (current implementation)
+					- Remove the selection toggle, that functionality moves to the Game Object creation section
 
 	- Serialize information in each region
 	- Load all the information
-	
+
 	- Use LESS as a CSS preprocessor
+
+	- Search to TODO: comments and complete them
 
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 

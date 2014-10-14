@@ -1,7 +1,18 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
+  var spinner = require('spinner');
+
   var twoDimentionsInput = require('two-dimentions-input');
-  var oneDimentionInput = require('one-dimention-input');
+  // var oneDimentionInput = require('one-dimention-input');
+
+  // container.appendChild(this.spinner.create({
+      //   id: 'LALALA',
+      //   min: 0,
+      //   max: 100,
+      //   step: 10,
+      //   value: 0,
+      //   disabled: false
+      // }));
 
   var world = require('world');
 
@@ -25,19 +36,20 @@ define(function(require) {
         }
       });
 
-      var stepUI = new oneDimentionInput().create({
-        id: 'world-step-container',
-        containerClass: 'world-edit-container',
-        label: 'World Step',
-        labelClass: 'world-edit-label',
-        inputClass: 'world-edit-input-single',
-        value: world.getStep(),
-        onChange: function(event) { 
-          world.setStep(event.target.value);
-        }
-      });
+      // var stepUI = new oneDimentionInput().create({
+      //   id: 'world-step-container',
+      //   containerClass: 'world-edit-container',
+      //   label: 'World Step',
+      //   labelClass: 'world-edit-label',
+      //   inputClass: 'world-edit-input-single',
+      //   value: world.getStep(),
+      //   onChange: function(event) { 
+      //     world.setStep(event.target.value);
+      //   }
+      // });
       
-      return wrapper.wrap(wrapper.wrap([sizeUI.html, stepUI.html], { className: 'world-edit'}));
+      // return wrapper.wrap(wrapper.wrap([sizeUI.html, stepUI.html], { className: 'world-edit'}));
+      return wrapper.wrap(wrapper.wrap([sizeUI.html], { className: 'world-edit'}));
     }
   });
 

@@ -36,7 +36,6 @@ define(function(require) {
     world: function() {
       // Setup the default world size and world step
       world.create(gb.canvas.width, gb.canvas.height, 50);
-      // world.create(gb.canvas.width + editorConfig.getGridCellSize().width*5, gb.canvas.height + editorConfig.getGridCellSize().height*5, 50);
     },
 
     groups: function() {
