@@ -3,6 +3,7 @@
 
 - Editor		
 	- Fix refresh of scrollbars on world change
+		- Try out how changing the world affect the scrolling when there are objects in it
 
 	- Disable all editing from the main viewport. 
 		- Integrating the grid with a changing viewport would be too much work, not worth it.
