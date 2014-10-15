@@ -2,13 +2,7 @@
 -------------------
 
 - Editor		
-	- Increase and Decrese world size in steps the size of a grid cell
-		- Spinners
-			- UI (DONE)
-			- Integration
-	- Remove world step (DONE)
-		- UI (DONE)
-		- Remove the logic from world.js
+	- Fix refresh of scrollbars on world change
 
 	- Disable all editing from the main viewport. 
 		- Integrating the grid with a changing viewport would be too much work, not worth it.

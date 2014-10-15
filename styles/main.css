@@ -21,54 +21,6 @@ input {
 	width: 50%;
 }
 
-/*World Edit*/
-.world-edit {
-	background: #ccc;
-	width: 50%;
-	display: inline-block;
-}
-
-.world-edit-container {	
-	padding: 2px;
-	width: 50%;
-	font-size: 0.6em;
-	white-space:nowrap;
-	float: left;
-    
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-.world-edit-label {
-	margin: 4px;
-	width: 25%;
-	display: inline-block;
-	white-space:nowrap;
-}
-
-.world-edit-input-double {
-	margin-top: 1px;
-	margin-left: 1px;
-	font-size: 0.8em;
-	width: 31%;
-	display: inline-block;
-	white-space: normal;
-	float:right;
-}
-
-.world-edit-input-single {
-	margin-top: 1px;
-	margin-left: 1px;
-	font-size: 0.8em;
-	width: 62%;
-	display: inline-block;
-	white-space: normal;
-	float:right;
-}
-
 /*Grid Toggle*/
 #grid-toggle-button {
 	-webkit-box-sizing: border-box;
