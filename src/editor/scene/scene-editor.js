@@ -1,4 +1,7 @@
 define(function(require) {
+  require('jquery');
+  require('jquery-ui');
+
   var scaleUIValueSetter = require('scale-ui-value-setter');
   
   var gb = require('gb');

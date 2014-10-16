@@ -1,6 +1,4 @@
 define(function(require) {
-  require('jquery');
-
   var ScaleUIValueSetter = require("class").extend({
     init: function() {},
 

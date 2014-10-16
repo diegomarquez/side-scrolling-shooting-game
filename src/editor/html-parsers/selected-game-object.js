@@ -1,6 +1,4 @@
 define(function(require) {
-  require('jquery');
-
   var SelectedGameObject = require("class").extend({
     init: function() {},
 

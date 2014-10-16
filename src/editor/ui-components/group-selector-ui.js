@@ -1,8 +1,4 @@
 define(function(require) {
-
-  require('jquery');
-  require('jquery-ui');
-
   var wrapper = require('wrap-in-div');
   var gb = require('gb');
 

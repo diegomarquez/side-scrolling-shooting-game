@@ -1,7 +1,4 @@
 define(function(require) {
-  
-  require('jquery');
-
   var MouseCoordinates = require('class').extend({
     init: function() {
       

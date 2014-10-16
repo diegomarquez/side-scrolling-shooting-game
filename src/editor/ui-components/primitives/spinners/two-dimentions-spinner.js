@@ -1,9 +1,6 @@
 define(function(require) {
-  require('jquery');
-  require('jquery-ui');
-
+  
   var wrapper = require('wrap-in-div');
-
   var spinnerUI = require('spinner');
 
   var TwoDimentionsSpinner = require('class').extend({

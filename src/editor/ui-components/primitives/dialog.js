@@ -1,6 +1,4 @@
 define(function(require) {
-  require('jquery');
-  require('jquery-ui');
 
   var Dialog = require('class').extend({
     init: function() {

@@ -2,9 +2,6 @@ define(function(require) {
 
   var wrapper = require('wrap-in-div');
 
-  require('jquery');
-  require('jquery-ui');
-
   var TwoDimentionsInput = require('class').extend({
     init: function() {
 

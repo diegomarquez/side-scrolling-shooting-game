@@ -1,7 +1,4 @@
 define(function(require) {
-  
-  require('jquery');
-
   var ClickOutside = require('class').extend({
     init: function() {
       this.callbacks = [];

@@ -1,7 +1,4 @@
-define(function(require) {
-  require('jquery');
-  require('jquery-ui');
-  
+define(function(require) {  
   var ScrollBar = require('class').extend({
     init: function() {},
 

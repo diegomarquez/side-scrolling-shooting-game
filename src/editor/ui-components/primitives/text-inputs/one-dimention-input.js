@@ -2,9 +2,6 @@ define(function(require) {
 
   var divWrapper = require('wrap-in-div');
 
-  require('jquery');
-  require('jquery-ui');
-
   var OneDimentionsInput = require('class').extend({
     init: function() {
 

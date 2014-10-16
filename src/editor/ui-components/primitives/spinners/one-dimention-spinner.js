@@ -1,6 +1,4 @@
 define(function(require) {
-  require('jquery');
-  require('jquery-ui');
 
   var spinnerUI = require('spinner');
   var wrapper = require('wrap-in-div');

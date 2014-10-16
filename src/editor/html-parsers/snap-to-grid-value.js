@@ -1,6 +1,4 @@
 define(function(require) {
-  require('jquery');
-
   var SnapToGridValue = require("class").extend({
     init: function() {},
 

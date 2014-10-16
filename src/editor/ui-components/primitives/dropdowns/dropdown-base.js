@@ -5,9 +5,6 @@ define(function(require) {
   var mouseCoordinates = require('mouse-coordinates');
   var fitInViewport = require('fit-in-viewport');
 
-  require('jquery');
-  require('jquery-ui');
-
   var Dropdown = require('class').extend({
     init: function() {
 

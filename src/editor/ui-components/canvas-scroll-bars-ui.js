@@ -1,7 +1,4 @@
 define(function(require) {
-  require('jquery');
-  require('jquery-ui');
-
   var scrollBar = require('scroll-bar');
   var gb = require('gb');
   var world = require('world');

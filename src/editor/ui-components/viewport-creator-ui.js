@@ -1,7 +1,4 @@
 define(function(require) {
-  require('jquery');
-  require('jquery-ui');
-
   var wrapper = require('wrap-in-div');
   var button = require('button');
   var dialog = require('dialog');
