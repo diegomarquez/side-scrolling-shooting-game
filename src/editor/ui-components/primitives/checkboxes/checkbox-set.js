@@ -17,8 +17,8 @@ define(function(require) {
         var checkboxOptions = options.checkboxes[i];
         
         if (checkboxOptions.classNames) {
-          for (var i = 0; i < checkboxOptions.classNames.length; i++) {
-            $(checkbox).addClass(checkboxOptions.classNames[i]);
+          for (var j = 0; j < checkboxOptions.classNames.length; j++) {
+            $(checkbox).addClass(checkboxOptions.classNames[j]);
           }
         }
 

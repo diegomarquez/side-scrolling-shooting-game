@@ -2,11 +2,6 @@
 -------------------
 
 - Editor		
-	- Disable all editing from the main viewport. 
-		- Integrating the grid with a changing viewport would be too much work, not worth it.
-		- Remove 'Outline' button
-		- Remove 'Remove' button
-
 	- require jQuery and jQueryUI once in the beginning of the editor
 	
 	- Re-style and re-design interface 
@@ -31,7 +26,7 @@
 							- Flashing red or something
 					- Delete currently selected Game Object
 					- Default to 'First' update group, as it isn't a very important setting
-						- Condider hiding the option completely to remove clutter
+						- Consider hiding the option completely to remove clutter
 				- Bottom Right 
 					- Viewport and layers editing (current implementation)
 					- Remove the selection toggle, that functionality moves to the Game Object creation section
@@ -41,7 +36,7 @@
 
 	- Use LESS as a CSS preprocessor
 
-	- Search to TODO: comments and complete them
+	- Search for TODO: comments and complete them
 
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 

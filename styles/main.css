@@ -65,17 +65,23 @@ hr {
 /* Game Object selection dropdown */
 #game-object-selector {
 	width: 50%;
+
+	margin-bottom: 4px;
 }
 
 /* Update group selection dropdown */
 #group-selector {
 	width: 50%;
+
+	margin-bottom: 4px;
 }
 
 /* Viewport selection */
 .viewport-control {
 	background: #ccc;
 	width: 50%;
+
+	margin-bottom: 4px;
 }
 
 .viewport-checkboxes {
@@ -147,6 +153,8 @@ hr {
 /* Viewport creation */
 #viewport-creator button {
 	width: 50%;
+
+	margin-bottom: 4px;
 }
 
 /* Game Object Create button */

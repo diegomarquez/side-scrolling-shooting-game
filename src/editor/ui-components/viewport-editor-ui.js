@@ -25,74 +25,14 @@ define(function(require) {
       
       $(container).attr('viewport-name', options.viewport.name);
 
+      // Button set with main options
       var checkboxSetUI = new checkboxSet().create({
         id: 'viewport-checkboxes-' + options.viewport.name,
         containerClass: 'viewport-checkboxes',
-        checkboxes: [
-          { 
-            label: 'MoreOptions',
-            text: false,
-            state: false,
-            icons: { on: 'ui-icon-plus', off: "ui-icon-minus" }, 
-            onChange: function (event) {
-              if (event.target.checked) {
-                $(container).find('[id*=viewport-options]').slideDown();
-              }
-              else { 
-                $(container).find('[id*=viewport-options]').slideUp();
-              }
-            }
-          },
-          {
-            label: options.viewport.name,
-            classNames: ['active-viewport']
-          },
-          {
-            label: editorConfig.getOutlineLayerName(),
-            onChange: function (event) {
-              if (event.target.checked) {
-                setupViewport.addOutline(options.viewport.name);
-              }
-              else { 
-                setupViewport.removeOutline(options.viewport.name);
-              }
-            }
-          },
-          {
-            label: 'Fit World',
-            state: options.viewport.WorldFit,
-            onChange: function (event) {
-              if (event.target.checked) {
-                world.scaleViewportToFit(options.viewport);
-                scaleUI.disable();
-              } 
-              else {
-                world.resetViewportScale(options.viewport);
-                scaleUI.enable();
-              }
-            }
-          },
-          {
-            onLabel: 'Show',
-            offLabel: 'Hide',
-            onChange: function (event) {
-              if (event.target.checked) {
-                options.viewport.hide()
-              } else {
-                options.viewport.show()
-              }
-            }
-          },
-          {
-            label: 'Remove',
-            disable: (options.viewport.name == editorConfig.getMainViewportName()),
-            onChange: function (event) {
-              gb.viewports.remove(options.viewport.name);
-            }
-          }
-        ]
+        checkboxes: getOptions(options.viewport, container, function() { return scaleUI; })
       });
 
+      // Layer creator Dialog
       var addLayerDialogUI = new dialogUI().create({
         id: 'add-layer-dialog-' + options.viewport.name,
         title: 'Add a new layer in viewport ' + options.viewport.name,
@@ -269,6 +209,116 @@ define(function(require) {
     }
   });
 
+  var getOptions = function(viewport) {
+    var buttons;
+
+    if (viewport.name == editorConfig.getMainViewportName()) {
+      // Options available on Main viewport
+      buttons = [
+        getMainButton,
+        getVisibilityButton
+      ]
+    } else {
+      // Options available on additional viewports
+      buttons = [
+        getMoreOptionsButton,
+        getMainButton,
+        getOutlineButton,
+        getFitToWorldButton,
+        getVisibilityButton,
+        getRemoveButton
+      ]
+    }
+
+    var args = arguments;
+
+    return $.map(buttons, function(f) {
+      debugger;
+
+      return f.apply(null, args);
+    });
+  }
+
+  var getMoreOptionsButton = function (viewport, container) {
+    return {
+      label: 'MoreOptions',
+      text: false,
+      state: false,
+      icons: { on: 'ui-icon-plus', off: "ui-icon-minus" }, 
+      onChange: function (event) {
+        if (event.target.checked) {
+          $(container).find('[id*=viewport-options]').slideDown();
+        }
+        else { 
+          $(container).find('[id*=viewport-options]').slideUp();
+        }
+      }
+    }
+  }
+
+  var getMainButton = function (viewport, container) {
+    return {
+      label: viewport.name,
+      classNames: ['active-viewport']
+    } 
+  }
+
+  var getOutlineButton = function(viewport, container) {
+    return {
+      label: editorConfig.getOutlineLayerName(),
+      onChange: function (event) {
+        if (event.target.checked) {
+          setupViewport.addOutline(viewport.name);
+        }
+        else { 
+          setupViewport.removeOutline(viewport.name);
+        }
+      }
+    }
+  }
+
+  var getFitToWorldButton = function(viewport, container, scaleUI) { 
+    return {
+      label: 'Fit World',
+      state: viewport.WorldFit,
+      onChange: function (event) {
+        if (event.target.checked) {
+          world.scaleViewportToFit(viewport);
+          scaleUI().disable();
+        } 
+        else {
+          world.resetViewportScale(viewport);
+          scaleUI().enable();
+        }
+      }
+    }
+  }
+
+  var getVisibilityButton = function(viewport, container) {
+    return {
+      onLabel: 'Show',
+      offLabel: 'Hide',
+      onChange: function (event) {
+        if (event.target.checked) {
+          viewport.hide()
+        } else {
+          viewport.show()
+        }
+      }
+    }
+  }
+
+
+  var getRemoveButton = function (viewport, container) {
+    return {
+      label: 'Remove',
+      disable: (viewport.name == editorConfig.getMainViewportName()),
+      onChange: function (event) {
+        gb.viewports.remove(viewport.name);
+      }
+    }
+  }
+  
   return ViewportEditor;
 });
 
