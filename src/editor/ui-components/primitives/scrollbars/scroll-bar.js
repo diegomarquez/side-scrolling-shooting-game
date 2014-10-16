@@ -32,45 +32,93 @@ define(function(require) {
         refresh: function() {
           var refreshOptions = getOptions(optionsGetter);
 
-          // Keep the current slider value before refreshing on a verticla slider         
+          // Set the current value of the refreshed vertical scrollbar         
           if (refreshOptions.orientation == 'vertical') {
-            if (currentOptions['value'] == refreshOptions['max']) {
-              // At the top of the scrollbar... 
-              // stay at the top when there is a refresh
-              refreshOptions['value'] = refreshOptions['max'];
-            } 
-            else if (currentOptions['value'] == 0) {
-              // At the bottom of the scrollbar...
-              if (currentOptions.contentHeight < refreshOptions.contentHeight) {
-                // Place the handle at a step distance from the bottom if the content increases in size
-                refreshOptions['value'] = refreshOptions['step'];
-              } else {
-                //Place the handle at the bottom if the content decreases in size
-                refreshOptions['value'] = 0;
-              }
-            }
-            else {
-              // In every other case, calculate the position of the handle
-              refreshOptions['value'] = refreshOptions['max'] - (currentOptions['max'] - currentOptions['value']);
-            }
+            setValueVerticalScrollBar(refreshOptions, currentOptions);
           } 
 
-          // Keep the current slider value before refreshing on a horizontal slider
+          // Set the current value of the refreshed horizontal scrollbar
           if (refreshOptions.orientation == 'horizontal') {
-            if (currentOptions['value'] <= refreshOptions['max']) {
-              refreshOptions['value'] = currentOptions['value'];
-            } else {
-              refreshOptions['value'] = refreshOptions['max'];
-            }
+            setValueHorizontalScrollBar(refreshOptions, currentOptions);
           }
 
+          // Update the current options
           currentOptions = refreshOptions;
 
+          // Refresh the jQuery UI slider
           initScrollBar(scrollbar, refreshOptions);
+        },
+
+        isAtMinEdge: function() {
+          if (currentOptions.orientation == 'vertical') {
+            return Math.round(currentOptions['value'] - currentOptions['max']) == 0 && !currentOptions['disabled'];
+          } 
+
+          if (currentOptions.orientation == 'horizontal') {
+            return currentOptions['value'] == 0 && !currentOptions['disabled'];
+          }
+        },
+
+        isAtMaxEdge: function() {
+          if (currentOptions.orientation == 'vertical') {
+            return currentOptions['value'] == 0 && !currentOptions['disabled'];
+          } 
+
+          if (currentOptions.orientation == 'horizontal') {
+            return Math.round(currentOptions['value'] - currentOptions['max']) == 0 && !currentOptions['disabled'];
+          }
+        },
+
+        option: function(name) {
+          return currentOptions[name];
+        },
+
+        sliderOption: function(name) {
+          return $(scrollbar).slider('option', name);
         }
       };
     }
   });
+
+  var setValueVerticalScrollBar = function(refreshOptions, currentOptions) {
+    if (currentOptions['value'] == refreshOptions['max']) {
+      // At the top of the scrollbar... 
+      if (currentOptions.contentHeight < refreshOptions.contentHeight) {
+        // Stay at the top when there is a refresh and the content has increased in size
+        refreshOptions['value'] = refreshOptions['max'];
+      } else {
+        //Increase the position of the handle by one step when the content has decreased in size 
+        refreshOptions['value'] = currentOptions['value'] - refreshOptions['step']; 
+      }
+    } 
+    else if (currentOptions['value'] == 0) {
+      // At the bottom of the scrollbar...
+      if (currentOptions.contentHeight < refreshOptions.contentHeight) {
+        // Place the handle at a step distance from the bottom if the content increases in size
+        refreshOptions['value'] = refreshOptions['step'];
+      } else {
+        //Place the handle at the bottom if the content decreases in size
+        refreshOptions['value'] = 0;
+      }
+    }
+    else {
+      // In every other case, calculate the position of the handle
+      refreshOptions['value'] = refreshOptions['max'] - (currentOptions['max'] - currentOptions['value']);
+    }
+    
+    // If the content and the scrollbar are the same height, default to initial position
+    if (refreshOptions.contentHeight == refreshOptions.height) {
+      refreshOptions['value'] = 0;
+    }
+  }
+
+  var setValueHorizontalScrollBar = function(refreshOptions, currentOptions) {
+    if (currentOptions['value'] <= refreshOptions['max']) {
+      refreshOptions['value'] = currentOptions['value'];
+    } else {
+      refreshOptions['value'] = refreshOptions['max'];
+    }
+  }
   
   var setEvents = function(options) {
     options.change = function(event, ui) {

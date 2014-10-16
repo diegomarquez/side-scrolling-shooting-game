@@ -56,12 +56,26 @@ define(function(require) {
       canvas.appendChild(verticalScrollBar.html);
       canvas.appendChild(horizontalScrollBar.html);
 
-      world.on(world.CHANGE_HEIGHT, this, function() {
+      // Refresh the scrollbars when the world changes
+      world.on(world.CHANGE_HEIGHT, this, function(value) {
         verticalScrollBar.refresh();
       });
       
-      world.on(world.CHANGE_WIDTH, this, function() {
+      world.on(world.CHANGE_WIDTH, this, function(value) {
         horizontalScrollBar.refresh();
+      });
+
+      // Adjust the viewport offset when the world decreases and the scrollbar is at it's maximum value
+      world.on(world.CHANGE_HEIGHT_DECREASE, this, function(value) {
+        if(verticalScrollBar.isAtMaxEdge()) {
+          viewport.Y += verticalScrollBar.option('step');
+        }
+      });
+      
+      world.on(world.CHANGE_WIDTH_DECREASE, this, function(value) {
+        if(horizontalScrollBar.isAtMaxEdge()) {
+          viewport.X += horizontalScrollBar.option('step');
+        }
       });
     }
   });
