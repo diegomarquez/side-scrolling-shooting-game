@@ -3,7 +3,7 @@ define(function(require) {
     init: function() {},
 
     get: function() {
-    	return $(document.querySelector('#group-selector')).attr('value');
+    	return 'First';
     }
   });
 

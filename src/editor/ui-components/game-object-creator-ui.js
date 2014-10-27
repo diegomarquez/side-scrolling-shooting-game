@@ -23,6 +23,8 @@ define(function(require) {
         }
       });
 
+      $(element).button();
+
       return wrapper.wrap(element);
     }
   });

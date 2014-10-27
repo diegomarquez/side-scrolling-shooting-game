@@ -6,7 +6,7 @@ define(function(require) {
 
     fit: function(element, offset) {    
       $(element).css(offset);
-            
+
       var boundingRect = element.getBoundingClientRect();
 
       if (boundingRect.bottom >= (window.innerHeight || document.documentElement.clientHeight)) {

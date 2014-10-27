@@ -2,34 +2,39 @@
 -------------------
 
 - Editor		
-	- require jQuery and jQueryUI once in the beginning of the editor
-	
 	- Re-style and re-design interface 
-		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap
+		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap (DONE)
 		- Regions
 			- Have 4 regions
 				- Top Left
-					- Canvas
+					- Canvas (DONE)
+					- Scroll bars (DONE)
 				- Top Right
-					Scene name 
-					Snap to grid toggle, 
-					world movement spinners, 
-					grid toggle, 
-					world size
-					world step
+					Scene name (DONE)
+					Snap to grid toggle (DONE) 
+					grid toggl (DONE)
+					world size (DONE)
 				- Bottom Left 
 					- Game Object Creation
-						- Select game object
-						- Select Update group
-						- Select viewports and layers
-						- Visual feedback if there are things missing in order to add a game-object to the scene.
-							- Flashing red or something
+						- Select game object (DONE)
+						- Select Update group (DONE)
+							- Default to 'First' (DONE)
+						- Select viewports (DONE)
+							- Modify Objects that parses the HTML to get the selected viewports (active-viewports.js)
+						- Game Object Creator
+							- Visual feedback if there are things missing in order to add a game-object to the scene.
+								- Flashing red or something
 					- Delete currently selected Game Object
-					- Default to 'First' update group, as it isn't a very important setting
-						- Consider hiding the option completely to remove clutter
 				- Bottom Right 
 					- Viewport and layers editing (current implementation)
-					- Remove the selection toggle, that functionality moves to the Game Object creation section
+					- Remove the selection toggle, that functionality moves to the Game Object creation section (DONE)
+
+	- Put things that are similar inside bootstrap wells with an appropiate title
+	- Be able to alter layer of created game object after creation
+	- Remove all focus outlines
+	- Game Object Context menu
+		- Clone (Clone the viewports and layers it belongs to)
+		- Remove
 
 	- Serialize information in each region
 	- Load all the information
@@ -41,9 +46,10 @@
 	- Improve how game-objects are disabled for the editor
 		- Ej. player-ship.js keydown events are not disabled by overriding the update method 
 			  because they are set on initialization
+			  	- Editor objects should implement an interface and all logic should be executed inside those methods
+			  	- All the methods in the interface can then be overrriden to ensure no un wanted code is executed in editor view
 	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly. This will fix tab selection.
-	- Method in Game-Builder to empty a pool, without destrying it.
-		- This should be used by the actual game when changing levels
+	- Method in Game-Builder to empty a pool, without destrying it. This should be used by the actual game when changing levels
 	
 	- Delete unused files
 

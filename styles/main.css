@@ -3,77 +3,131 @@ html, body, div, canvas {
     padding: 0;
 }
 
-input {
-    border: 2px solid transparent
+.region {
+	position: relative;
+	
+	background-color: #fff;
+	border: 2.5px solid #ddd;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.region-container {
+	padding: 5px;
+}
+
+#main {
+	position: relative;
 }
 
 #game {
 	background-color: #000000;
 }
 
-/*Container for all the editing options*/
-#editor-container input[type=text] {
-	position: relative;
+#editor-regions {
+
+}
+
+#editor-regions > div:nth-child(1) {
+	float: left;
+	overflow: hidden;
+    background: #ff0000;
+    width: 50%;
+    height: 50%;
+}
+
+#editor-regions > div:nth-child(2) {
+	float: right;
+    overflow: hidden;
+    background: #00ff00;
+    width: 50%;
+    height: 50%;
+}
+
+#editor-regions > div:nth-child(3) {
+	float: left;
+    background: #0000ff;
+    width: 50%;
+    height: 50%;
+}
+
+#editor-regions > div:nth-child(4) {
+	float: right;
+    background: #00ffff;
+    width: 50%;
+    height: 50%;
 }
 
 /*Scene name input field*/
 #scene-name {
-	width: 50%;
+	width: 100%;
 }
 
 /*Grid Toggle*/
 #grid-toggle-button {
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-
-	margin-top: 4px;
-	width: 50%;
+	width: 100%;
+	margin-top: 5px;
 }
 
 #grid-toggle-button label {
 	width: 100%;
-}
+	text-align: center;
 
-/*Snap to Grid Toggle*/
-#snap-to-grid-toggle-button {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
     box-sizing: border-box;
+	
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-	margin-top: 4px;
-	width: 50%;
+/*Snap to Grid Toggle*/
+#snap-to-grid-toggle-button {
+	width: 100%;
+	margin-top: 5px;
 }
 
 #snap-to-grid-toggle-button label {
 	width: 100%;
+	text-align: center;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+	
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-/*Separator*/
-hr {
-	height: 4px;
-	border: 0;
-	background-color: #ccc;
-	width: 50%;
-	margin-right: 50%;
+#world-edit {
+	width: 100%;
+	margin-top: 15px;
 }
 
 /* Game Object selection dropdown */
 #game-object-selector {
-	width: 50%;
-
-	margin-bottom: 4px;
+	width: 100%;
 }
 
-/* Update group selection dropdown */
-#group-selector {
-	width: 50%;
-
-	margin-bottom: 4px;
+#viewport-selector-simple {
+	width: 100%;
+	margin-top: 5px;
 }
 
 /* Viewport selection */
@@ -159,7 +213,8 @@ hr {
 
 /* Game Object Create button */
 #game-object-create-button {
-	width: 50%;
+	width: 100%;
+	margin-top: 5px;
 }
 
 /* Scene save */
@@ -174,20 +229,18 @@ hr {
 
 /* Editable dropdown */
 .drop-down {
-	overflow: hidden;
-    
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .drop-down ul {
 	min-width: 200px;
 	max-width: 250px;
 	margin: 0px;
-	padding: 4px;
+
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 4px;
+	
 	list-style-type: none;
 	display: inline-block;
 	position: absolute;
@@ -195,11 +248,18 @@ hr {
 }
 
 .drop-down ul li {
-	margin: 0px;
-	padding: 0px;
-    font-size: 0.6em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+
     display: table;
     width: 100%;
+    
+	margin: 0px;
+	padding: 5px;
+	margin-top: 4px;
 }
 
 .drop-down ul li div {
@@ -212,12 +272,13 @@ hr {
 	width: 100%;
 }
 
-.drop-down .ui-state-highlight {
-	margin: 2px;
-}
-
 .drop-down .split-button {
 	width: 100%;
+}
+
+.drop-down .ui-state-highlight {
+	margin: 0px;
+	margin-top: 4px;
 }
 
 .drop-down .split-button .main-button {
@@ -232,12 +293,6 @@ hr {
 .drop-down > .ui-button {
 	text-align: left;
 	width: 100%;
-}
-
-.drop-down .ui-button-icon-secondary {
-	right: 10px;
-	top: 50%;
-	bottom: 50%;
 }
 
 /*One Dimentional Spinner*/
@@ -276,34 +331,31 @@ hr {
 
 /*Two Dimentional Spinner*/
 .two-dimentional-spinner {
-	font-size: .6em;
-    width: 50%;
-	display: table;
-
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
     box-sizing: border-box;
+
+    width: 100%;
+}
+
+.two-dimentional-spinner label {
+	font-weight: bold;
 }
 
 .two-dimentional-spinner > div:nth-child(1) {
-	display: table-cell;
-	vertical-align: middle;
-	white-space: nowrap;
-	padding-right: 5px;
-	width: 20%;
+	width: 100%;
 }
 
+
 .two-dimentional-spinner > div:nth-child(2) {
-	display: table-cell;
-	width: 40%;
-	padding-right: 5px;
+	width: 100%;
 }
 
 .two-dimentional-spinner > div:nth-child(3) {
-	display: table-cell;
-	width: 40%;
+	width: 100%;
+	margin-top: 2.5px;
 }
 
 .two-dimentional-spinner input {
@@ -356,16 +408,6 @@ hr {
    height: 100%;
 }
 
-/*Override jQuery UI button defaults*/
-.ui-button-text {
-  font-size: .6em;
-}
-
-/*Override jQuery UI buttonset defaults*/
-.ui-buttonset .ui-button {
-	margin-left: 0;
-	margin-right: 0;
-}
 
 /*Override jQuery UI slider defaults*/
 .ui-slider {
@@ -382,9 +424,9 @@ hr {
 	touch-action: none;
 	padding: 0;
 	margin: 0;
+	background: #777;
 }
 
-/*Override jQuery UI spinner defaults*/
-.ui-spinner {
-	font-size: 0.6em;
+.ui-slider .ui-slider-handle:focus {
+    outline: 0;
 }

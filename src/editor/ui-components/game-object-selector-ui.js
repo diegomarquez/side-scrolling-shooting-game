@@ -15,7 +15,8 @@ define(function(require) {
         defaultMessage: 'Choose a Game Object',
         selectedMessage: 'Selected Game Object:',
         data: function() {          
-          return editorConfig.getGameObjects();
+          // return editorConfig.getGameObjects();
+          return ['LALA', 'HJKHJKH', 'YUIYUI', 'jksladjklsa', '6478367382'];
         }
       });
 

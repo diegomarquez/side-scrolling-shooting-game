@@ -35,7 +35,7 @@ define(function(require) {
 
       return wrapper.wrap([wrapper.wrap(label), wrapper.wrap(spinnerX), wrapper.wrap(spinnerY)], {
         id: options.id,
-        classNames: ['ui-widget', 'two-dimentional-spinner']
+        classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
       });
     }
   });

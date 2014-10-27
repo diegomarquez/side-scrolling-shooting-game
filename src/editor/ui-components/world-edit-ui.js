@@ -29,7 +29,7 @@ define(function(require) {
         }
       }); 
 
-      return wrapper.wrap(wrapper.wrap([sizeUI], { className: 'world-edit'}));
+      return wrapper.wrap(wrapper.wrap([sizeUI], { id: 'world-edit'}));
     }
   });
 

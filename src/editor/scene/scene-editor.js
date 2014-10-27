@@ -2,101 +2,115 @@ define(function(require) {
   require('jquery');
   require('jquery-ui');
 
-  var scaleUIValueSetter = require('scale-ui-value-setter');
-  
   var gb = require('gb');
   var editorSetup = require('editor-setup');
   var world = require('world');
+  
+  var scaleUIValueSetter = require('scale-ui-value-setter');
 
   var SceneEditor = require("class").extend({
     init: function() {
+      this.editorRegions = new (require('editor-regions'));
+
+      // Top Left Components
       this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
+      
+      // Top Right Components
       this.sceneNameUI = new (require('scene-name-ui'));
-      this.worldEditUI = new (require('world-edit-ui'));
       this.gridToggleUI = new (require('grid-toggle-ui'));
       this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
+      this.worldEditUI = new (require('world-edit-ui'));
+      // this.sceneSaveUI = new (require('scene-save-ui'));
+      // this.sceneLoadUI = new (require('scene-load-ui'));
       
-
+      // Bottom Left Components
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
-      this.groupSelectorUI = new (require('group-selector-ui'));
-      this.viewportsUI = new (require('viewport-selector-ui'));
-      this.viewportCreateUI = new (require('viewport-creator-ui'));
+      this.viewportSelectorSimpleUI = new (require('viewport-selector-simple-ui'));
       this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
-      this.sceneSaveUI = new (require('scene-save-ui'));
-      this.sceneLoadUI = new (require('scene-load-ui'));
       
-      this.horizontalBar = new (require('horizontal-bar'));
+      // Bottom Right Components
+      // this.viewportsUI = new (require('viewport-selector-ui'));
+      // this.viewportCreateUI = new (require('viewport-creator-ui'));
+      
     },
 
     create: function() {
       editorSetup.all();
 
-      // Vertical and Horizontal scroll bars
+      // Create main editor container
+      // var container = document.createElement('div');
+      // container.id = "editor-container";
+      // Append to the div containing the canvas
+      // document.getElementById('main').appendChild(container);
+
+      var editorRegions = this.editorRegions.create();
+
+      // Append the regions to the document body
+      document.body.appendChild(editorRegions.html);
+      
+      // Top Left Region
+      // Canvas
+      editorRegions.appendToTopLeft(document.getElementById('main'));
+      // Scroll bars
       this.canvasScrollBarsUI.create();
 
-      // Create main editor container
-      var container = document.createElement('div');
-      container.id = "editor-container";
-      // Append to the div containing the canvas
-      document.getElementById('main').appendChild(container);
+      // Top Right Region
+      // Scene name
+      editorRegions.appendToTopRight(this.sceneNameUI.create());
+      // Grid Toggle
+      editorRegions.appendToTopRight(this.gridToggleUI.create());
+      // Snap To Grid Toggle
+      editorRegions.appendToTopRight(this.snapToGridToggleUI.create());
+      // World Size
+      editorRegions.appendToTopRight(this.worldEditUI.create());
+
+      // Bottom Left Region
+      // Game Object Selector
+      editorRegions.appendToBottomLeft(this.gameObjectSelectorUI.create());
+      // Viewport Selector 
+      editorRegions.appendToBottomLeft(this.viewportSelectorSimpleUI.create());
+      // Game Object Creator
+      editorRegions.appendToBottomLeft(this.gameObjectCreatorUI.create());
+
+      // Bottom Right Region
 
       /**
        * Append all the UI Components
        * --------------------------------
        */
-
-      // Horizontal line
-      container.appendChild(this.horizontalBar.create());
-      // Scene name
-      container.appendChild(this.sceneNameUI.create());
-      // World Size
-      container.appendChild(this.worldEditUI.create());
-      // Grid Toggle
-      container.appendChild(this.gridToggleUI.create());
-      // Snap To Grid Toggle
-      container.appendChild(this.snapToGridToggleUI.create());
       
-      // Horizontal line
-      container.appendChild(this.horizontalBar.create());
-      // Game object configuration
-      container.appendChild(this.gameObjectSelectorUI.create());
-      container.appendChild(this.groupSelectorUI.create());
-      container.appendChild(this.viewportsUI.create());
-      container.appendChild(this.viewportCreateUI.create());
-      // Game object creation button
-      container.appendChild(this.gameObjectCreatorUI.create());
+      // container.appendChild(this.viewportsUI.create());
+      // container.appendChild(this.viewportCreateUI.create());
 
-      // Horizontal line
-      container.appendChild(this.horizontalBar.create());      
-      // Save and Load scene buttons
-      container.appendChild(this.sceneSaveUI.create());
-      container.appendChild(this.sceneLoadUI.create());
+      // // Save and Load scene buttons
+      // container.appendChild(this.sceneSaveUI.create());
+      // container.appendChild(this.sceneLoadUI.create());
 
-      // Add a viewport UI component when a viewport is added
-      gb.viewports.on(gb.viewports.ADD, this, function (v) {
-        this.viewportsUI.add(v);
-      });
+      // // Add a viewport UI component when a viewport is added
+      // gb.viewports.on(gb.viewports.ADD, this, function (v) {
+      //   this.viewportsUI.add(v);
+      // });
 
-      // Remove the UI component from it's parent when a viewport is removed
-      gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
-        this.viewportsUI.remove(v);
-      });
+      // // Remove the UI component from it's parent when a viewport is removed
+      // gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
+      //   this.viewportsUI.remove(v);
+      // });
 
-      world.on(world.CHANGE, this, function () {
-        gb.viewports.iterate(this, function (v) { 
-          if (v.WorldFit) {
-            world.scaleViewportToFit(v); 
-          } 
-        });
-      });
+      // world.on(world.CHANGE, this, function () {
+      //   gb.viewports.iterate(this, function (v) { 
+      //     if (v.WorldFit) {
+      //       world.scaleViewportToFit(v); 
+      //     } 
+      //   });
+      // });
 
-      world.on(world.SCALE_TO_FIT, this, function (v) {
-        scaleUIValueSetter.set(v);
-      });
+      // world.on(world.SCALE_TO_FIT, this, function (v) {
+      //   scaleUIValueSetter.set(v);
+      // });
 
-      world.on(world.RESET_SCALE, this, function (v) {
-        scaleUIValueSetter.set(v);
-      });
+      // world.on(world.RESET_SCALE, this, function (v) {
+      //   scaleUIValueSetter.set(v);
+      // });
     }
   });
 

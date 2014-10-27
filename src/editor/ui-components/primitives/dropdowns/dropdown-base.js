@@ -55,16 +55,12 @@ define(function(require) {
 
           this.setupUI($(contentContainer()), options());
           this.setupOptionEvents(optionElements(), container(), contentContainer(), options());
-          
+   
           fitInViewport.fit(contentContainer(), mouseCoordinates.get(event));
         }.bind(this)
       });
 
-      $(button).button({
-        icons: {
-          secondary: 'ui-icon-triangle-2-n-s'
-        }
-      }).addClass('main-button');
+      $(button).button().addClass('main-button');
 
       return button;
     },
@@ -123,10 +119,9 @@ define(function(require) {
         $(option).on('click', function() {
           $(this).removeClass('ui-state-hover');
 
-          $(container).attr('value', $(this).attr('value'));
-
-          $(container).find('.main-button').find('span')[0].innerHTML = options.selectedMessage + " " + $(this).attr('value');
-          $(contentContainer).remove();
+          if (!options.multiSelect) {
+            $(contentContainer).remove();
+          }
 
           if (options.onSelect) {
             options.onSelect($(this).attr('value'));
@@ -136,6 +131,8 @@ define(function(require) {
     },
 
     setOptionState: function (element, data, options) {
+      element.removeClass('ui-state-highlight');
+
       if (options.disabledItems) {
         if (options.disabledItems.indexOf(data) == -1) {
           element.addClass('ui-state-default');
