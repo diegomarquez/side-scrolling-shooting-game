@@ -89,6 +89,7 @@ require.config({
 		"grid-toggle-ui": "src/editor/ui-components/grid-toggle-ui", 
 		"group-selector-ui": "src/editor/ui-components/group-selector-ui", 
 		"clicked-outside": "src/editor/ui-components/helpers/clicked-outside", 
+		"create-status-message": "src/editor/ui-components/helpers/create-status-message", 
 		"fit-in-viewport": "src/editor/ui-components/helpers/fit-in-viewport", 
 		"mouse-coordinates": "src/editor/ui-components/helpers/mouse-coordinates", 
 		"option": "src/editor/ui-components/helpers/option", 

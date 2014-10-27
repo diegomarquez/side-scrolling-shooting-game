@@ -56,6 +56,22 @@ define(function(require) {
                   })
     },
 
+    getViewportTopMostLayer: function(viewport) {
+      var v;
+
+      if (typeof viewport === 'string') {
+        v = gb.viewports.get(viewport);
+      } else {
+        v = viewport;
+      }
+
+      var layers = v.getLayers().filter(function(layer) { 
+        return layer.name != this.getOutlineLayerName(); 
+      }.bind(this));
+
+      return layers.pop().name;
+    },
+
     getViewports: function() {
       return gb.viewports.allAsArray().filter(function(viewport) { 
         return viewport.name != this.getGridViewportName()

@@ -18,23 +18,35 @@
 					- Game Object Creation
 						- Select game object (DONE)
 						- Select Update group (DONE)
-							- Default to 'First' (DONE)
+							- Default to top most layer (DONE)
 						- Select viewports (DONE)
-							- Modify Objects that parses the HTML to get the selected viewports (active-viewports.js)
+							- Modify Objects that parses the HTML to get the selected viewports (active-viewports.js) (DONE)
+							- Remove menu once any kind of selection is complete
 						- Game Object Creator
 							- Visual feedback if there are things missing in order to add a game-object to the scene.
-								- Flashing red or something
-					- Delete currently selected Game Object
+								- Flashing red or something (DONE)
 				- Bottom Right 
 					- Viewport and layers editing (current implementation)
-					- Remove the selection toggle, that functionality moves to the Game Object creation section (DONE)
+						- Needs a total refactoring, lots of stuff are not needed anymore
+							- Obsolete functionality
+								- Layer Selection is not needed any more, only ordering and removing
+								- Remove the selection toggle, that functionality moves to the Game Object creation section (DONE)
+									- Put the fine tunning into a modal dialog
+								- Remove the 'more options' toggle
+							- Styling
+								Almost everything needs to change
 
+	- Give a title to each region
+	- Add dropdown context menues to the body and position them in relation to the window
+		- This way the region can have overflow: hidden and the menues will still show up on top of everything
 	- Put things that are similar inside bootstrap wells with an appropiate title
 	- Be able to alter layer of created game object after creation
 	- Remove all focus outlines
 	- Game Object Context menu
 		- Clone (Clone the viewports and layers it belongs to)
-		- Remove
+		- Change Layer
+		- Add to, remove from vieworts
+		- Remove completely
 
 	- Serialize information in each region
 	- Load all the information

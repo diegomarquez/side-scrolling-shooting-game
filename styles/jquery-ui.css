@@ -277,7 +277,7 @@
 }
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {
   position: relative;
-  margin-bottom: 18px;
+  margin-bottom: auto;
   color: #404040;
   background-color: #eedc94;
   background-repeat: repeat-x;
@@ -308,7 +308,7 @@
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
 .ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
   position: relative;
-  margin-bottom: 18px;
+  margin-bottom: auto;
   color: #ffffff;
   border-width: 1px;
   border-style: solid;

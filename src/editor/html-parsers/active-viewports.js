@@ -1,30 +1,25 @@
 define(function(require) {
-
-  var result = null;
+  var editorConfig = require('editor-config');
 
   var ActiveViewports = require("class").extend({
     init: function() {},
 
     get: function() {
-      var viewports = document.querySelectorAll('.viewport-control');        
+      var selectedViewports = $('#viewport-selector-simple').attr('value');
 
-      result = [];
+      if (!selectedViewports) return;
 
-      for (var i = 0; i < viewports.length; i++) {
-        var viewport = viewports[i];
+      var viewportNames = selectedViewports.split(', ')
 
-        var checkbox = viewport.querySelector('.active-viewport');
+      var result = [];
 
-        var active = checkbox.checked;
-        var name = checkbox.name;
-        var layer  = viewport.querySelector('.drop-down').getAttribute('value');
+      for (var i = 0; i < viewportNames.length; i++) {
+        var viewportName = viewportNames[i];
 
-        if (active && layer) {
-          result.push({
-            viewport: name,
-            layer: layer
-          })
-        }
+        result.push({
+          viewport: viewportName,
+          layer: editorConfig.getViewportTopMostLayer(viewportName)
+        })        
       }
 
       return result; 

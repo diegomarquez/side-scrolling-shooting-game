@@ -25,7 +25,13 @@ define(function(require) {
       var c = [].concat(children);
 
       for (var i = 0; i < c.length; i++) {
-        container.appendChild(c[i]);
+        var child = c[i];
+
+        if (child.length) {
+          container.appendChild(c[i][0]);
+        } else {
+          container.appendChild(c[i]);
+        }
       }
 
       return container;

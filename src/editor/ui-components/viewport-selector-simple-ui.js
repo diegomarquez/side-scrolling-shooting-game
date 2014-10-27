@@ -14,9 +14,7 @@ define(function(require) {
         selectedMessage: 'Selected Viewports:',
         multiSelect: true,
         data: function() {          
-          // return editorConfig.getViewports().map(function(viewport) { return viewport.name; });
-          // 
-          return ['LALA', 'HJKHJK', 'LALAL', 'YUIYUIYIU'];
+          return editorConfig.getViewports().map(function(viewport) { return viewport.name; });
         }
       });
 

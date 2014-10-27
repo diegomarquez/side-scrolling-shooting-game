@@ -29,9 +29,8 @@ define(function(require) {
       this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
       
       // Bottom Right Components
-      // this.viewportsUI = new (require('viewport-selector-ui'));
-      // this.viewportCreateUI = new (require('viewport-creator-ui'));
-      
+      this.viewportsUI = new (require('viewport-selector-ui'));
+      this.viewportCreateUI = new (require('viewport-creator-ui'));
     },
 
     create: function() {
@@ -73,44 +72,39 @@ define(function(require) {
       editorRegions.appendToBottomLeft(this.gameObjectCreatorUI.create());
 
       // Bottom Right Region
+      editorRegions.appendToBottomRight(this.viewportsUI.create());
+      editorRegions.appendToBottomRight(this.viewportCreateUI.create());
 
-      /**
-       * Append all the UI Components
-       * --------------------------------
-       */
-      
-      // container.appendChild(this.viewportsUI.create());
-      // container.appendChild(this.viewportCreateUI.create());
-
+      // This go in the top right region
       // // Save and Load scene buttons
       // container.appendChild(this.sceneSaveUI.create());
       // container.appendChild(this.sceneLoadUI.create());
 
-      // // Add a viewport UI component when a viewport is added
-      // gb.viewports.on(gb.viewports.ADD, this, function (v) {
-      //   this.viewportsUI.add(v);
-      // });
+      // Add a viewport UI component when a viewport is added
+      gb.viewports.on(gb.viewports.ADD, this, function (v) {
+        this.viewportsUI.add(v);
+      });
 
-      // // Remove the UI component from it's parent when a viewport is removed
-      // gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
-      //   this.viewportsUI.remove(v);
-      // });
+      // Remove the UI component from it's parent when a viewport is removed
+      gb.viewports.on(gb.viewports.REMOVE, this, function (v) {
+        this.viewportsUI.remove(v);
+      });
 
-      // world.on(world.CHANGE, this, function () {
-      //   gb.viewports.iterate(this, function (v) { 
-      //     if (v.WorldFit) {
-      //       world.scaleViewportToFit(v); 
-      //     } 
-      //   });
-      // });
+      world.on(world.CHANGE, this, function () {
+        gb.viewports.iterate(this, function (v) { 
+          if (v.WorldFit) {
+            world.scaleViewportToFit(v); 
+          } 
+        });
+      });
 
-      // world.on(world.SCALE_TO_FIT, this, function (v) {
-      //   scaleUIValueSetter.set(v);
-      // });
+      world.on(world.SCALE_TO_FIT, this, function (v) {
+        scaleUIValueSetter.set(v);
+      });
 
-      // world.on(world.RESET_SCALE, this, function (v) {
-      //   scaleUIValueSetter.set(v);
-      // });
+      world.on(world.RESET_SCALE, this, function (v) {
+        scaleUIValueSetter.set(v);
+      });
     }
   });
 

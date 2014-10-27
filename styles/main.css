@@ -132,16 +132,17 @@ html, body, div, canvas {
 
 /* Viewport selection */
 .viewport-control {
-	background: #ccc;
-	width: 50%;
+	width: 100%;
+	background: #666;
 
-	margin-bottom: 4px;
+	/*margin-bottom: 4px;*/
 }
 
 .viewport-checkboxes {
-	padding: 2px;
 	width: 100%;
 	display: table;
+	margin: 0;
+	padding: 0;
 
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -162,7 +163,7 @@ html, body, div, canvas {
 
 .viewport-editor-container {
 	width: 50%;
-	font-size: 0.6em;
+	/*font-size: 0.6em;*/
 	white-space:nowrap;
 	
 	overflow: hidden;
@@ -206,26 +207,29 @@ html, body, div, canvas {
 
 /* Viewport creation */
 #viewport-creator button {
-	width: 50%;
+	width: 100%;
 
-	margin-bottom: 4px;
+	margin-top: 5px;
 }
 
 /* Game Object Create button */
 #game-object-create-button {
 	width: 100%;
+}
+
+#game-object-create-button-wrapper {
 	margin-top: 5px;
 }
 
 /* Scene save */
-#level-save-button {
+/*#level-save-button {
 	width: 50%;
-}
+}*/
 
 /* File load */
-#level-load-button {
+/*#level-load-button {
 	width: 50%;	
-}
+}*/
 
 /* Editable dropdown */
 .drop-down {
@@ -408,6 +412,13 @@ html, body, div, canvas {
    height: 100%;
 }
 
+.status-error {
+	margin-top: 5px;
+}
+
+.status-success {
+	margin-top: 5px;
+}
 
 /*Override jQuery UI slider defaults*/
 .ui-slider {
