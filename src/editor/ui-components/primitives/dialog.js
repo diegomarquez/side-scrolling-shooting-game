@@ -1,5 +1,7 @@
 define(function(require) {
 
+  var statusMessage = require('create-status-message'); 
+
   var Dialog = require('class').extend({
     init: function() {
 
@@ -10,14 +12,13 @@ define(function(require) {
       container.id = options.id;
       $(container).addClass('dialog');
 
-      var tip = document.createElement('p');
-      tip.innerHTML = options.tip;
-      $(tip).addClass('tip');
-
+      var tip = statusMessage.createInfoMessage(options.tip);
+      
       var form = document.createElement('form');
       var fieldset = document.createElement('fieldset');
       
-      $(container).append(tip);
+      tip.appendTo(container);
+
       $(container).append(form);
       $(form).append(fieldset);
 
@@ -101,6 +102,10 @@ define(function(require) {
         }
       }
       
+      options.create = function (event, ui) {
+        $(this).css("minWidth", options.minWidth);
+      }
+
       options.open = function() { 
         resetFeedback(tip, inputFields, options); 
 
@@ -133,7 +138,7 @@ define(function(require) {
 
       options.setField = function(name, value) {
         var input = inputFields[toMethodName(name)]();
-        
+
         input.value = value;
       }
 
@@ -173,13 +178,11 @@ define(function(require) {
 
   var applyFeedback = function(tipContainer, inputField, validationTipMessage) {
     $(inputField).addClass("ui-state-error");
-    $(tipContainer).addClass("ui-state-error");
-    $(tipContainer).html(validationTipMessage);
+    tipContainer.toError(validationTipMessage);
   }
 
   var resetFeedback = function(tipContainer, inputFields, options) {
-    $(tipContainer).html(options.tip);
-    $(tipContainer).removeClass("ui-state-error");
+    tipContainer.toInfo(options.tip);
 
     $.each(inputFields, function (key, value) {
       $(value()).removeClass('ui-state-error');

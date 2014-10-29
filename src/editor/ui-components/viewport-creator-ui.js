@@ -17,8 +17,9 @@ define(function(require) {
         title: 'Add a viewport',
         tip: 'Use a unique name',
         autoOpen: false,
-        minHeight: 'auto',
-        minWidth: 'auto',
+        height: 'auto',
+        width: 'auto',
+        minWidth: 300,
         modal: true,
         
         fields: [

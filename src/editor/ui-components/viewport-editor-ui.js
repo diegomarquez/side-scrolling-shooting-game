@@ -36,8 +36,9 @@ define(function(require) {
         title: 'Add a new layer in viewport ' + options.viewport.name,
         tip: 'Use a unique name',
         autoOpen: false,
-        minHeight: 'auto',
-        minWidth: 'auto',
+        height: 'auto',
+        width: 'auto',
+        minWidth: 300,
         modal: true,
         
         fields: [
@@ -132,8 +133,9 @@ define(function(require) {
       title: 'Edit viewport ' + viewport.name,
       tip: '',
       autoOpen: false,
-      minHeight: 'auto',
-      minWidth: 'auto',
+      height: 'auto',
+      width: 'auto',
+      minWidth: 300,
       modal: true,
       resetOnClose: true,
       

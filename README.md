@@ -5,15 +5,13 @@
 	- Re-style and re-design interface 
 		- Bottom Right Region
 			- Viewport and layers editing
-				- Put icons for error messages on modal popups
-				- Put icons for initial tip
 				- Styling
 					- Fix placeholders position and size when arranging things
 				- Put the viewportEditorUI elements into a div with overflow:hidden
 				- Put the viewport creation button below that div
 
 	- Give a title to each region other than the canvas one
-	- Refresh layers on Game Object creation region
+	- Refresh viewports on Game Object creation region
 	- Add dropdown context menues to the body
 		- This way the regions can have overflow: hidden and the menues will still show up on top of everything
 		- Requires changing the calculated coordinates when clicking
@@ -21,7 +19,7 @@
 	
 	- Game Object Manipulation
 		- Be able to alter layer of created game object after creation
-		- Remove all focus outlines
+		- Be able to alter viewports of created game object after creation
 		- Game Object Context menu
 			- Clone (Clone the viewports and layers it belongs to)
 			- Change Layer
