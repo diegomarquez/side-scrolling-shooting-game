@@ -3,50 +3,30 @@
 
 - Editor		
 	- Re-style and re-design interface 
-		- https://github.com/jquery-ui-bootstrap/jquery-ui-bootstrap (DONE)
-		- Regions
-			- Have 4 regions
-				- Top Left
-					- Canvas (DONE)
-					- Scroll bars (DONE)
-				- Top Right
-					Scene name (DONE)
-					Snap to grid toggle (DONE) 
-					grid toggl (DONE)
-					world size (DONE)
-				- Bottom Left 
-					- Game Object Creation
-						- Select game object (DONE)
-						- Select Update group (DONE)
-							- Default to top most layer (DONE)
-						- Select viewports (DONE)
-							- Modify Objects that parses the HTML to get the selected viewports (active-viewports.js) (DONE)
-							- Remove menu once any kind of selection is complete
-						- Game Object Creator
-							- Visual feedback if there are things missing in order to add a game-object to the scene.
-								- Flashing red or something (DONE)
-				- Bottom Right 
-					- Viewport and layers editing (current implementation)
-						- Needs a total refactoring, lots of stuff are not needed anymore
-							- Obsolete functionality
-								- Layer Selection is not needed any more, only ordering and removing
-								- Remove the selection toggle, that functionality moves to the Game Object creation section (DONE)
-									- Put the fine tunning into a modal dialog
-								- Remove the 'more options' toggle
-							- Styling
-								Almost everything needs to change
+		- Bottom Right Region
+			- Viewport and layers editing
+				- Put icons for error messages on modal popups
+				- Put icons for initial tip
+				- Styling
+					- Fix placeholders position and size when arranging things
+				- Put the viewportEditorUI elements into a div with overflow:hidden
+				- Put the viewport creation button below that div
 
-	- Give a title to each region
-	- Add dropdown context menues to the body and position them in relation to the window
-		- This way the region can have overflow: hidden and the menues will still show up on top of everything
+	- Give a title to each region other than the canvas one
+	- Refresh layers on Game Object creation region
+	- Add dropdown context menues to the body
+		- This way the regions can have overflow: hidden and the menues will still show up on top of everything
+		- Requires changing the calculated coordinates when clicking
 	- Put things that are similar inside bootstrap wells with an appropiate title
-	- Be able to alter layer of created game object after creation
-	- Remove all focus outlines
-	- Game Object Context menu
-		- Clone (Clone the viewports and layers it belongs to)
-		- Change Layer
-		- Add to, remove from vieworts
-		- Remove completely
+	
+	- Game Object Manipulation
+		- Be able to alter layer of created game object after creation
+		- Remove all focus outlines
+		- Game Object Context menu
+			- Clone (Clone the viewports and layers it belongs to)
+			- Change Layer
+			- Add to, remove from vieworts
+			- Remove completely
 
 	- Serialize information in each region
 	- Load all the information
@@ -60,7 +40,6 @@
 			  because they are set on initialization
 			  	- Editor objects should implement an interface and all logic should be executed inside those methods
 			  	- All the methods in the interface can then be overrriden to ensure no un wanted code is executed in editor view
-	- Refactor one-dimention and two-dimentions input HTML structure, so they are similar to the dropdown menues. Fields are not floated and centered properly. This will fix tab selection.
 	- Method in Game-Builder to empty a pool, without destrying it. This should be used by the actual game when changing levels
 	
 	- Delete unused files
@@ -92,21 +71,12 @@ Generator
 ====================================================================
 ====================================================================
 
-Test the editor UI components using Jasmine/QUnit and Karma
-
-====================================================================
-====================================================================
-
 Start doing the objects for the actual game
 	- level one design is on notebook
 
 ====================================================================
 ====================================================================
 
-Test the editor using Jasmine/QUnit and Karma
-
-====================================================================
-====================================================================
 
 A [GAME-BUILDER][game-builder] project
 

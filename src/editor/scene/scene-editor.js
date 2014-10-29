@@ -5,8 +5,6 @@ define(function(require) {
   var gb = require('gb');
   var editorSetup = require('editor-setup');
   var world = require('world');
-  
-  var scaleUIValueSetter = require('scale-ui-value-setter');
 
   var SceneEditor = require("class").extend({
     init: function() {
@@ -96,14 +94,6 @@ define(function(require) {
             world.scaleViewportToFit(v); 
           } 
         });
-      });
-
-      world.on(world.SCALE_TO_FIT, this, function (v) {
-        scaleUIValueSetter.set(v);
-      });
-
-      world.on(world.RESET_SCALE, this, function (v) {
-        scaleUIValueSetter.set(v);
       });
     }
   });

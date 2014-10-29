@@ -8,8 +8,6 @@ define(function(require) {
   var checkboxSet = require('checkbox-set');
   var editableDropdown = require('editable-dropdown-add-remove');
   var dialogUI = require('dialog');
-  var oneDimentionInput = require('one-dimention-input');
-  var twoDimentionsInput = require('two-dimentions-input');
 
   var setupViewport = require('setup-viewport');
 
@@ -29,7 +27,7 @@ define(function(require) {
       var checkboxSetUI = new checkboxSet().create({
         id: 'viewport-checkboxes-' + options.viewport.name,
         containerClass: 'viewport-checkboxes',
-        checkboxes: getOptions(options.viewport, container, function() { return scaleUI; })
+        checkboxes: getOptions(options.viewport, container)
       });
 
       // Layer creator Dialog
@@ -74,8 +72,7 @@ define(function(require) {
       // Viewport layers selector. Skips the 'Outline layer that all viewports have'
       var layersUI = new editableDropdown().create({
         id: 'layers-' + options.viewport.name,
-        defaultMessage: 'Select a Layer',
-        selectedMessage: 'Selected Layer:',
+        defaultMessage: 'Arrange Layers',
         data: function() {
           return editorConfig.getViewportLayers(options.viewport);
         },
@@ -95,115 +92,8 @@ define(function(require) {
         layersUI.refresh();
       });
 
-      //  Size editor
-      var sizeUI = new twoDimentionsInput().create({
-        id: 'size-container',
-        containerClass: 'viewport-editor-container',
-        label: 'Size',
-        labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input-double',
-        xValue: options.viewport.Width,
-        yValue: options.viewport.Height,
-        onXChange: function(event) { 
-          gb.viewports.get(options.viewport.name).Width = event.target.value; 
-
-          if (options.viewport.WorldFit) {
-            world.scaleViewportToFit(options.viewport);
-          }
-        },
-        onYChange: function(event) { 
-          gb.viewports.get(options.viewport.name).Height = event.target.value; 
-
-          if (options.viewport.WorldFit) {
-            world.scaleViewportToFit(options.viewport);
-          }
-        }
-      });
-
-      // Offset editor
-      var offsetUI = new twoDimentionsInput().create({
-        id: 'offset-container',
-        containerClass: 'viewport-editor-container',
-        label: 'Offset',
-        labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input-double',
-        xValue: options.viewport.OffsetX,
-        yValue: options.viewport.OffsetY,
-        onXChange: function(event) { 
-          gb.viewports.get(options.viewport.name).OffsetX = event.target.value; 
-        },
-        onYChange: function(event) { 
-          gb.viewports.get(options.viewport.name).OffsetY = event.target.value; 
-        }
-      });
-
-      // Scale editor
-      var scaleUI = new twoDimentionsInput().create({
-        id: 'scale-container',
-        containerClass: 'viewport-editor-container',
-        label: 'Scale',
-        labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input-double',
-        xValue: options.viewport.ScaleX,
-        yValue: options.viewport.ScaleY,
-        onXChange: function(event) { 
-          gb.viewports.get(options.viewport.name).ScaleX = event.target.value; 
-
-          if (options.viewport.WorldFit) {
-            world.scaleViewportToFit(options.viewport);
-          }
-        },
-        onYChange: function(event) { 
-          gb.viewports.get(options.viewport.name).ScaleY = event.target.value; 
-
-          if (options.viewport.WorldFit) {
-            world.scaleViewportToFit(options.viewport);
-          }
-        }
-      });
-
-      var stroke = options.viewport.getStroke();
-
-      // Stroke color editor
-      var strokeColorUI = new oneDimentionInput().create({
-        id: 'stroke-color-container',
-        containerClass: 'viewport-editor-container',
-        label: 'Stroke Color',
-        labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input-single',
-        value: stroke.color,
-        onChange: function(event) { 
-          gb.viewports.get(options.viewport.name).setStroke(null, event.target.value); 
-        }
-      });
-
-      // Stroke color editor
-      var strokeSizeUI = new oneDimentionInput().create({
-        id: 'stroke-size-container',
-        containerClass: 'viewport-editor-container',
-        label: 'Stroke Size',
-        labelClass: 'viewport-editor-label',
-        inputClass: 'viewport-editor-input-single',
-        value: stroke.width,
-        onChange: function(event) { 
-          gb.viewports.get(options.viewport.name).setStroke(event.target.value, null); 
-        }
-      });
-
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
-
-      var additionalOptions = wrapper.wrap([sizeUI.html, offsetUI.html, scaleUI.html, strokeColorUI.html, strokeSizeUI.html], {
-        id: 'viewport-options-' + options.viewport.name,
-        className: 'viewport-options'
-      });
-
-      container.appendChild(additionalOptions);
-      $(additionalOptions).hide();
-
-      if (options.viewport.WorldFit) {
-        scaleUI.disable();
-      }
 
       return wrapper.wrap(container);
     }
@@ -215,14 +105,12 @@ define(function(require) {
     if (viewport.name == editorConfig.getMainViewportName()) {
       // Options available on Main viewport
       buttons = [
-        getMainButton,
         getVisibilityButton
       ]
     } else {
       // Options available on additional viewports
       buttons = [
-        getMoreOptionsButton,
-        getMainButton,
+        getEditButton,
         getOutlineButton,
         getFitToWorldButton,
         getVisibilityButton,
@@ -233,34 +121,121 @@ define(function(require) {
     var args = arguments;
 
     return $.map(buttons, function(f) {
-      debugger;
-
       return f.apply(null, args);
     });
   }
 
-  var getMoreOptionsButton = function (viewport, container) {
+  var getEditButton = function(viewport, container) { 
+    // Layer creator Dialog
+    var editViewportDialogUI = new dialogUI().create({
+      id: 'edit-viewport-dialog',
+      title: 'Edit viewport ' + viewport.name,
+      tip: '',
+      autoOpen: false,
+      minHeight: 'auto',
+      minWidth: 'auto',
+      modal: true,
+      resetOnClose: true,
+      
+      fields: [
+        { 
+          name: 'Width', 
+          value: gb.canvas.width,
+          validations: [
+            {
+              check: function(width) { return width > 0; },
+              tip: "Width must be greater than 0"
+            }
+          ]
+        },
+        { 
+          name: 'Height', 
+          value: gb.canvas.height,
+          validations: [
+            {
+              check: function(height) { return height > 0; },
+              tip: "Height must be greater than 0"
+            },
+          ]
+        },
+        { 
+          name: 'Offset X', 
+          value: viewport.OffsetX
+        },
+        { 
+          name: 'Offset Y', 
+          value: viewport.OffsetY
+        },
+        { 
+          name: 'Scale X', 
+          value: viewport.ScaleX,
+          validations: [
+            {
+              check: function(scale) { return scale > 0; },
+              tip: "Scale X must be greater to 0"
+            }
+          ]
+        },
+        { 
+          name: 'Scale Y', 
+          value: viewport.ScaleY,
+          validations: [
+            {
+              check: function(scale) { return scale > 0; },
+              tip: "Scale Y must be greater to 0"
+            }
+          ]
+        },
+        { 
+          name: 'Stroke Color', 
+          value: viewport.getStroke().color
+        },
+        { 
+          name: 'Stroke Width', 
+          value: viewport.getStroke().width
+        }
+      ],
+
+      buttons: {
+        Save: function () {
+          viewport.Width = this.Width();
+          viewport.Height = this.Height();
+          viewport.OffsetX = this.OffsetX();
+          viewport.OffsetY = this.OffsetY();
+          viewport.ScaleX = this.ScaleX();
+          viewport.ScaleY = this.ScaleY();
+          viewport.setStroke(this.StrokeWidth(), this.StrokeColor());
+
+          if(viewport.WorldFit) {
+            world.scaleViewportToFit(options.viewport);
+          }
+
+          $(this).dialog('close');
+        }
+      },
+
+      validateOnAction: {
+        'Save': ['Width', 'Height', 'Scale X', 'Scale Y'] 
+      }
+    });
+
     return {
-      label: 'MoreOptions',
-      text: false,
-      state: false,
-      icons: { on: 'ui-icon-plus', off: "ui-icon-minus" }, 
+      label: 'Edit',
       onChange: function (event) {
-        if (event.target.checked) {
-          $(container).find('[id*=viewport-options]').slideDown();
+        editViewportDialogUI.dialog('open');
+
+        if (viewport.WorldFit) {
+          editViewportDialogUI.dialog('option', 'disableField')('ScaleX');
+          editViewportDialogUI.dialog('option', 'disableField')('ScaleY');
+        } else {
+          editViewportDialogUI.dialog('option', 'enableField')('ScaleX');
+          editViewportDialogUI.dialog('option', 'enableField')('ScaleY');
         }
-        else { 
-          $(container).find('[id*=viewport-options]').slideUp();
-        }
+        
+        editViewportDialogUI.dialog('option', 'setField')('ScaleX', viewport.ScaleX);
+        editViewportDialogUI.dialog('option', 'setField')('ScaleY', viewport.ScaleY);
       }
     }
-  }
-
-  var getMainButton = function (viewport, container) {
-    return {
-      label: viewport.name,
-      classNames: ['active-viewport']
-    } 
   }
 
   var getOutlineButton = function(viewport, container) {
@@ -277,18 +252,16 @@ define(function(require) {
     }
   }
 
-  var getFitToWorldButton = function(viewport, container, scaleUI) { 
+  var getFitToWorldButton = function(viewport, container) { 
     return {
       label: 'Fit World',
       state: viewport.WorldFit,
       onChange: function (event) {
         if (event.target.checked) {
           world.scaleViewportToFit(viewport);
-          scaleUI().disable();
         } 
         else {
           world.resetViewportScale(viewport);
-          scaleUI().enable();
         }
       }
     }
@@ -307,7 +280,6 @@ define(function(require) {
       }
     }
   }
-
 
   var getRemoveButton = function (viewport, container) {
     return {

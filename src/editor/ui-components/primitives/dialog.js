@@ -23,6 +23,7 @@ define(function(require) {
 
       var fieldGetters = {};
       var inputFields = {};
+      var fieldLabels = {};
 
       $.each(options.fields, function(index, field) {
         var lowerCaseName = field.name.toLowerCase();
@@ -36,8 +37,6 @@ define(function(require) {
         input.name = lowerCaseName;
         input.id = lowerCaseName;
         input.value = field.value;
-
-        $(input).attr('default', field.value);
 
         $(input).addClass('ui-widget-content');
         $(input).addClass('ui-corner-all');
@@ -53,20 +52,18 @@ define(function(require) {
           } 
         }(input);
 
+        fieldLabels[toMethodName(field.name)] = function(label) {
+          return function() {
+            return label; 
+          }
+        }(label);
+
         inputFields[toMethodName(field.name)] = function(input) {
           return function() {
             return input; 
           }
-        }(input)
+        }(input);
       });
-
-      var submit = document.createElement('input');
-      submit.type = 'submit';
-      submit.tabindex = -1;
-      submit.style.position = 'absolute';
-      submit.style.top = -1000;
-
-      $(fieldset).append(submit);
 
       $.each(options.buttons, function(action, buttonCallback) {
         options.buttons[action] = function(f, action) {
@@ -86,14 +83,58 @@ define(function(require) {
       });
 
       options.close = function() {          
-        for(var m in inputFields) {
-          var input = $(inputFields[m]());
-          input.attr('value', input.attr('default'));
-        } 
+        if (options.resetOnClose) {
+          // If the close butoon was pressed ...
+          if ($(arguments[0].currentTarget).attr('title') == 'Close') {
+            // Set all the values to the ones set when the dialog was opened
+            for (var m in inputFields) {
+              var input = inputFields[m]();
+              input.value = $(input).attr('default');
+            } 
+          } 
+        } else {
+          // Set all the values to the ones set when the dialog was opened
+          for (var m in inputFields) {
+            var input = inputFields[m]();
+            input.value = $(input).attr('default');
+          }
+        }
       }
       
       options.open = function() { 
         resetFeedback(tip, inputFields, options); 
+
+        // Set the current values as defaults to go back to them in case the close button is pressed
+        for(var m in inputFields) {
+          var input = $(inputFields[m]());
+          input.attr('default', fieldGetters[m]());
+        }
+      }
+
+      options.disableField = function(name) {
+        var label = $(fieldLabels[toMethodName(name)]());
+        var input = $(inputFields[toMethodName(name)]());
+
+        label.addClass('ui-state-disabled');
+        input.addClass('ui-state-disabled');
+
+        input.attr('disabled', true);
+      }
+
+      options.enableField = function(name) {
+        var label = $(fieldLabels[toMethodName(name)]());
+        var input = $(inputFields[toMethodName(name)]());
+
+        label.removeClass('ui-state-disabled');
+        input.removeClass('ui-state-disabled');
+
+        input.attr('disabled', false);
+      }
+
+      options.setField = function(name, value) {
+        var input = inputFields[toMethodName(name)]();
+        
+        input.value = value;
       }
 
       // Create the jQuery ui dialog

@@ -69,8 +69,8 @@ define(function(require) {
             value: 1,
             validations: [
               {
-                check: function(scale) { return scale >= 1; },
-                tip: "Scale X must be greater or equal to 1"
+                check: function(scale) { return scale > 0; },
+                tip: "Scale X must be greater to 0"
               }
             ]
           },
@@ -79,8 +79,8 @@ define(function(require) {
             value: 1,
             validations: [
               {
-                check: function(scale) { return scale >= 1; },
-                tip: "Scale Y must be greater or equal to 1"
+                check: function(scale) { return scale > 0; },
+                tip: "Scale Y must be greater to 0"
               }
             ]
           },

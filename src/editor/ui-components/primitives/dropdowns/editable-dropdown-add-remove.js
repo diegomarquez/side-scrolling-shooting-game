@@ -13,7 +13,7 @@ define(function(require) {
 
       // Crete the add button
       var addButton = new buttonUI().create({        
-        label: 'Add button',
+        label: 'Add',
 
         onClick: function(event) {
           if (options().onAdd) {
@@ -23,12 +23,7 @@ define(function(require) {
       });
 
       // Initialize the add button with jQuery UI button()
-      $(addButton).button({ 
-        text: false, 
-        icons: { 
-          secondary: 'ui-icon-plus' 
-        } 
-      }).addClass('add-button');
+      $(addButton).button().addClass('add-button');
 
       // Wrap everything in a div
       var container = wrapper.wrap([parentContent, addButton], {

@@ -20,6 +20,7 @@ define(function(require) {
           }
         }
 
+
         var startLabel = checkboxOptions.label ? checkboxOptions.label : checkboxOptions.offLabel;
 
         checkbox.id = options.id + '-' + startLabel;
@@ -66,7 +67,10 @@ define(function(require) {
         elements.push(label);
       };
 
-      var wrapped = wrapper.wrap(elements, { id: options.id, className: options.containerClass });
+      var wrapped = wrapper.wrap(wrapper.wrap(elements), {
+        id: options.id, 
+        className: options.containerClass 
+      });
 
       $(wrapped).buttonset();
 
