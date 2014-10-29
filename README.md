@@ -6,9 +6,8 @@
 		- Bottom Right Region
 			- Viewport and layers editing
 				- Styling
-					- Fix placeholders position and size when arranging things
-				- Put the viewportEditorUI elements into a div with overflow:hidden
-				- Put the viewport creation button below that div
+					- Put the viewportEditorUI elements into a div with overflow:hidden
+					- Put the viewport creation button below that div
 
 	- Give a title to each region other than the canvas one
 	- Refresh viewports on Game Object creation region

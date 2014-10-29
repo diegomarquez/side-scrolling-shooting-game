@@ -92,16 +92,6 @@ define(function(require) {
           { 
             name: 'Stroke Width', 
             value: 'none'
-          },
-          { 
-            name: 'Fit World', 
-            value: false,
-            validations: [
-              {
-                check: function(fit) { return fit.toLowerCase() == 'false' || fit.toLowerCase() == 'true'; },
-                tip: "Fit to world must be a boolean value"
-              }
-            ]
           }
         ],
 
@@ -118,7 +108,7 @@ define(function(require) {
               null,
               this.StrokeColor(),
               this.StrokeWidth(),
-              this.FitWorld()
+              false
             );
 
             gb.viewports.before(this.Name(), editorConfig.getGridViewportName()); 
@@ -128,7 +118,7 @@ define(function(require) {
         },
 
         validateOnAction: {
-          'Add': ['Name', 'Width', 'Height', 'Scale X', 'Scale Y', 'Fit World'] 
+          'Add': ['Name', 'Width', 'Height', 'Scale X', 'Scale Y'] 
         }
       });
       

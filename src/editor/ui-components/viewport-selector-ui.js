@@ -55,6 +55,7 @@ define(function(require) {
       delay: 15,
 
       start: function (event, ui) {
+        ui.placeholder.width(ui.item.width());
         ui.placeholder.height(ui.item.height());
       },
 

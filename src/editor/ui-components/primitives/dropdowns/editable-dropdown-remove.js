@@ -19,6 +19,7 @@ define(function(require) {
 
         start: function (event, ui) {
           oldIndex = ui.item.index();
+          ui.placeholder.width(ui.item.width());
           ui.placeholder.height(ui.item.height());
         },
 

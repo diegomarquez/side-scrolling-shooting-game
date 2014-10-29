@@ -62,9 +62,15 @@ define(function(require) {
     	remove: function() { 
         $(this.html).remove(); 
       },
-    	
+
       message: function(m) { 
         this.messageContent.textContent = m; 
+
+        if (m == '' || !m) {
+          $(this.html).hide();
+        } else {
+          $(this.html).show(0);
+        }
       },
 
       toError: function(m) { 
