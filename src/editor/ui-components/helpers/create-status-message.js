@@ -24,6 +24,13 @@ define(function(require) {
       convertTo.call(messageController, 'Info: ', message, 'status-success', 'ui-state-highlight', 'ui-icon-info');
 
       return messageController;
+    },
+
+    createCustomMessage: function(title, message, icon) {
+      var messageController = createStructure();
+      convertTo.call(messageController, title, message, 'status-success', 'ui-state-highlight', icon);
+
+      return messageController;
     }
   });
 

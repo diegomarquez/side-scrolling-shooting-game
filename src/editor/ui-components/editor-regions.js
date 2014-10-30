@@ -1,51 +1,66 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
   
+  var statusMessage = require('create-status-message')
+
   var EditorRegions = require('class').extend({
     init: function() {},
 
     create: function() {
-      var topLeft = document.createElement('div');
-      var topRight = document.createElement('div');
-      var bottomLeft = document.createElement('div');
-      var bottomRight = document.createElement('div');
-
-      $(topLeft).addClass('region-container'); 
-      $(topRight).addClass('region-container');
-      $(bottomLeft).addClass('region-container');
-      $(bottomRight).addClass('region-container');
-
-      topLeft = wrapper.wrap(topLeft, { className: 'region'});
-      topRight = wrapper.wrap(topRight, { className: 'region'});
-      bottomLeft = wrapper.wrap(bottomLeft, { className: 'region'});
-      bottomRight = wrapper.wrap(bottomRight, { className: 'region'});
-
-      var wrapped = wrapper.wrap([topLeft, topRight, bottomLeft, bottomRight], {
-        id: 'editor-regions',
-        classNames: ['ui-widget']
-      });
-
       return {
-        html: wrapped,
+        html: wrapper.wrap(
+          [ 
+            createRegion('topLeft', 'Canvas'), 
+            createRegion('topRight', 'World and Grid'), 
+            createRegion('bottomLeft', 'Object Creation'), 
+            createRegion('bottomRight', 'Viewport Management')
+          ], 
+          {
+            id: 'editor-regions',
+            classNames: ['ui-widget']
+          }
+        ),
 
         appendToTopLeft: function(content) {
-          $(topLeft).find('.region-container').append(content); 
+          $(this.html).find('#topLeft').append(content); 
         },
 
         appendToTopRight: function(content) {
-          $(topRight).find('.region-container').append(content);
+          $(this.html).find('#topRight').append(content);
         },
 
         appendToBottomLeft: function(content) {
-          $(bottomLeft).find('.region-container').append(content);
+          $(this.html).find('#bottomLeft').append(content);
         },
 
         appendToBottomRight: function(content) {
-          $(bottomRight).find('.region-container').append(content);
+          $(this.html).find('#bottomRight').append(content);
         }
       }
     }
   });
+
+  var createRegion = function(id, title) {
+    var header = document.createElement('div');
+    var headerIcon = document.createElement('span');
+
+    var content = document.createElement('div');
+
+    var handler = statusMessage.createCustomMessage('Area: ', title, 'ui-icon-circle-triangle-e');
+
+    // $(header).html(title);
+    $(header).addClass('region-header');
+    // $(header).prepend(headerIcon);
+
+    $(header).append(handler.html);
+
+    // $(headerIcon).addClass('ui-icon ui-icon-circle-triangle-e');
+
+    content.id = id;
+    $(content).addClass('region-container'); 
+    
+    return wrapper.wrap([header, content], { className: 'region'});
+  }
 
   return EditorRegions;
 });

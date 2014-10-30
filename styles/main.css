@@ -3,6 +3,7 @@ html, body, div, canvas {
     padding: 0;
 }
 
+/*Regions*/
 .region {
 	position: relative;
 	
@@ -16,6 +17,16 @@ html, body, div, canvas {
     box-sizing: border-box;
 }
 
+.region-header {
+	margin: 5px;
+	margin-bottom: 10px;
+}
+
+.region-header > .status-success {
+	padding: 5px;
+	margin: 0px;
+}
+
 .region-container {
 	padding: 5px;
 }
@@ -23,6 +34,7 @@ html, body, div, canvas {
 .region-container > div {
 	margin-bottom: 5px;
 }
+/*Regions*/
 
 #main {
 	position: relative;
@@ -32,13 +44,9 @@ html, body, div, canvas {
 	background-color: #000000;
 }
 
-#editor-regions {
-
-}
-
 #editor-regions > div:nth-child(1) {
 	float: left;
-	overflow: hidden;
+	overflow: scroll;
     background: #ff0000;
     width: 50%;
     height: 50%;

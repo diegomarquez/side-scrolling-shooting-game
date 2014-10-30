@@ -2,7 +2,6 @@
 -------------------
 
 - Editor		
-	- Give a title to each region other than the canvas one
 	- Refresh viewports on Game Object creation region
 	- Add dropdown context menues to the body
 		- This way the regions can have overflow: hidden and the menues will still show up on top of everything
@@ -10,7 +9,8 @@
 	- Put things that are similar inside bootstrap wells with an appropiate title
 	- Style the main region containers
 
-	- Game Object Manipulation
+	- Game Object Manipulation 
+		* Watch out for mouse coordinates whne clicking on the canvas
 		- Be able to alter layer of created game object after creation
 		- Be able to alter viewports of created game object after creation
 		- Game Object Context menu
