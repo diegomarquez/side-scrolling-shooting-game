@@ -288,7 +288,6 @@ define(function(require) {
   var getRemoveButton = function (viewport, container) {
     return {
       label: 'Remove',
-      disable: (viewport.name == editorConfig.getMainViewportName()),
       onChange: function (event) {
         gb.viewports.remove(viewport.name);
       }

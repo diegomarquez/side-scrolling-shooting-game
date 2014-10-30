@@ -17,35 +17,33 @@ define(function(require) {
     },
 
     create: function(options) {
-      var errorFeedback = statusMessage.createErrorMessage();
-      var successFeedback = statusMessage.createSuccessMessage();
+      var message = statusMessage.createErrorMessage();
 
       var element = new button().create({
         id: 'game-object-create-button',
         label: 'Create Game Object',
         onClick: function(event) {
-          errorFeedback.remove();
-          successFeedback.remove();
-
+          message.remove();
+          
           var goName = selectedGameObject.get();
           var group = selectedGroup.get();
           var viewports = activeViewports.get();
           var mainViewportName = mainViewport.get();
 
           if (goName == 'Nothing' || goName == '' || !goName) {
-            errorFeedback.message('No game object has been selected');
-            errorFeedback.appendTo($('#game-object-create-button-wrapper'));
+            message.toError('No game object has been selected');
+            message.appendTo($('#game-object-create-button-wrapper'));
             return;
           }
 
           if (!viewports || viewports.length == 0) {
-            errorFeedback.message('No viewports have been selected');
-            errorFeedback.appendTo($('#game-object-create-button-wrapper'));
+            message.toError('No viewports have been selected');
+            message.appendTo($('#game-object-create-button-wrapper'));
             return;
           }
 
-          successFeedback.message('Game object created successfully!');
-          successFeedback.appendTo($('#game-object-create-button-wrapper'));
+          message.toSuccess('Game object created successfully!');
+          message.appendTo($('#game-object-create-button-wrapper'));
               
           setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
         }

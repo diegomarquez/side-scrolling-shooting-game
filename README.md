@@ -2,12 +2,16 @@
 -------------------
 
 - Editor		
-	- Refresh viewports on Game Object creation region
 	- Add dropdown context menues to the body
 		- This way the regions can have overflow: hidden and the menues will still show up on top of everything
 		- Requires changing the calculated coordinates when clicking
 	- Put things that are similar inside bootstrap wells with an appropiate title
 	- Style the main region containers
+	
+	- Tooltips
+		On viewportEditorUI elements with the name of the viewport
+		Little question mark icon on the region titles with a little bit more text about the region
+			- Add a right hand side icon to the create-status-message.js objects. Maybe a new type which has two icons
 
 	- Game Object Manipulation 
 		* Watch out for mouse coordinates whne clicking on the canvas

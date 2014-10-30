@@ -1,6 +1,7 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
   var editorConfig = require('editor-config');
+  var gb = require('gb');
 
   var dropdown = require('dropdown-basic');
 
@@ -16,6 +17,22 @@ define(function(require) {
         data: function() {          
           return editorConfig.getViewports().map(function(viewport) { return viewport.name; });
         }
+      });
+
+      gb.viewports.on(gb.viewports.ADD, this, function(v) {
+        viewportSelectorUI.refresh();
+      });
+
+      gb.viewports.on(gb.viewports.REMOVE, this, function(v) {
+        viewportSelectorUI.refresh();
+      });
+
+      gb.viewports.on(gb.viewports.MOVE, this, function(v) {
+        viewportSelectorUI.refresh();
+      });
+
+      gb.viewports.on(gb.viewports.CHANGE, this, function(v) {
+        viewportSelectorUI.refresh();
       });
 
       return wrapper.wrap(viewportSelectorUI.html);

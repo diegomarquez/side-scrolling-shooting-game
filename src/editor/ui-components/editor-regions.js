@@ -12,7 +12,7 @@ define(function(require) {
           [ 
             createRegion('topLeft', 'Canvas'), 
             createRegion('topRight', 'World and Grid'), 
-            createRegion('bottomLeft', 'Object Creation'), 
+            createRegion('bottomLeft', 'Game Object Creation'), 
             createRegion('bottomRight', 'Viewport Management')
           ], 
           {
@@ -46,15 +46,10 @@ define(function(require) {
 
     var content = document.createElement('div');
 
-    var handler = statusMessage.createCustomMessage('Area: ', title, 'ui-icon-circle-triangle-e');
+    var handler = statusMessage.createCustomMessage('Section: ', title, 'ui-icon-circle-triangle-e');
 
-    // $(header).html(title);
     $(header).addClass('region-header');
-    // $(header).prepend(headerIcon);
-
     $(header).append(handler.html);
-
-    // $(headerIcon).addClass('ui-icon ui-icon-circle-triangle-e');
 
     content.id = id;
     $(content).addClass('region-container'); 
