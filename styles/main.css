@@ -20,6 +20,10 @@ html, body, div, canvas {
 	padding: 5px;
 }
 
+.region-container > div {
+	margin-bottom: 5px;
+}
+
 #main {
 	position: relative;
 }
@@ -130,14 +134,26 @@ html, body, div, canvas {
 	margin-top: 5px;
 }
 
-#viewports-container .ui-state-highlight {
+/* Viewport selection */
+#viewports-container {
+	overflow: scroll;
+	height: 250px;
+}
+
+#viewports-container > * {
 	margin-bottom: 5px;
 }
 
-/* Viewport selection */
+#viewports-container > :nth-child(odd):not(.ui-state-highlight) {
+	background-color: #e6e6e6;
+}
+
+#viewports-container > :nth-child(even):not(.ui-state-highlight) {
+	background-color: #c6c6c6;
+}
+
 .viewport-control {
 	width: 100%;
-	margin-bottom: 5px;
 }
 
 .viewport-checkboxes {
@@ -230,7 +246,6 @@ html, body, div, canvas {
 /* Viewport creation */
 #viewport-creator button {
 	width: 100%;
-	margin-top: 5px;
 }
 
 /* Game Object Create button */

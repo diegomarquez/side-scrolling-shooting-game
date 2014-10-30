@@ -23,7 +23,9 @@ define(function(require) {
         this.add(allViewports[i]);
       }
 
-      return wrapper.wrap(this.container);
+      return wrapper.wrap(this.container, {
+        classNames: ['well', 'well-small']
+      });
     },
 
     add: function(viewport) {
@@ -50,17 +52,17 @@ define(function(require) {
   var setupSortable = function(element) {
     $(element).sortable({
       placeholder: 'ui-state-highlight',
-      items: '.viewport-control',
+      items: '> div',
       cursor: 'move', 
       delay: 15,
 
       start: function (event, ui) {
-        ui.placeholder.width(ui.item.width());
-        ui.placeholder.height(ui.item.height());
+        ui.placeholder.width(ui.item.outerWidth());
+        ui.placeholder.height(ui.item.outerHeight());
       },
 
       update: function (event, ui) {
-        gb.viewports.change($(ui.item).attr('viewport-name'), ui.item.index());
+        gb.viewports.change($(ui.item).find('.viewport-control').attr('viewport-name'), ui.item.index());
       }
     }).disableSelection();
   }

@@ -96,7 +96,9 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
-      return wrapper.wrap(container);
+      return wrapper.wrap(container, {
+        classNames: ['well', 'well-small']
+      });
     }
   });
 
