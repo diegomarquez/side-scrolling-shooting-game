@@ -4,11 +4,11 @@ define(function(require) {
 
     },
 
-    setupUI: function (element, options) {
+    setupUI: function (container, contentContainer, options) {
       var oldIndex;
       var newIndex;
 
-      element.sortable({
+      contentContainer.find('ul').sortable({
         placeholder: 'ui-state-highlight',
         items: 'li:not(.ui-state-disabled)',
         cursor: 'move', 

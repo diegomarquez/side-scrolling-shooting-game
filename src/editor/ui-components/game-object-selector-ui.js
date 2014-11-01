@@ -2,7 +2,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
 
   var wrapper = require('wrap-in-div');
-  var dropdown = require('dropdown-basic');
+  var dropdown = require('dropdown-single');
 
   var GameObjectSelector = require('class').extend({
     init: function() {
@@ -14,7 +14,7 @@ define(function(require) {
         id: 'game-object-selector',
         defaultMessage: 'Choose a Game Object',
         selectedMessage: 'Selected Game Object:',
-        data: function() {          
+        data: function() {      
           return editorConfig.getGameObjects();
         }
       });

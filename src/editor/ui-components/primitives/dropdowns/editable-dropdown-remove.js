@@ -6,11 +6,11 @@ define(function(require) {
 
     },
 
-    setupUI: function(element, options) {
+    setupUI: function(container, contentContainer, options) {
       var oldIndex;
       var newIndex;
 
-      element.sortable({
+      contentContainer.find('ul').sortable({
         placeholder: 'ui-state-highlight',
         items: 'li:not(.ui-state-disabled)',
         cursor: 'move', 
@@ -67,6 +67,11 @@ define(function(require) {
 
       for (var i = 0; i < optionElements.length; i++) {
         var option = $(optionElements[i]);
+
+        if (!$(option).hasClass('ui-state-default')) {
+          continue;
+        }
+
         var button = option.find('button').button();
 
         button.click(function (option) {

@@ -19,20 +19,29 @@ define(function(require) {
       this.getMainUI = function() { return mainUI; }
       
       // Create the main components
-      var mainUI = this.createMainUI(this.getOptions, this.getContainer, this.getContentContainer, function() { return this.getOptionElements(); }.bind(this));
+      var mainUI = this.createMainUI(
+        function() { return this.getOptions(); }.bind(this),
+        function() { return this.getContainer(); }.bind(this),
+        function() { return this.getContentContainer(); }.bind(this),
+        function() { return this.getOptionElements(); }.bind(this)
+      );
+
+      var container = wrapper.wrap(mainUI, { 
+        id: options.id 
+      });
+
       var contentContainer = this.createContentContainer();
       var optionElements = this.createOptions(options);      
-      var container = wrapper.wrap(mainUI, { id: options.id });
       
       // Append the options to the popup menu
       this.appendContentToContainer(contentContainer, optionElements);
       // Add styling classes
-      this.addStyles($(container), $(contentContainer));
+      this.addStyles($(container));
 
       // Register event to know when to hide the popup menu
-      clickedOutside.registerMissedClick(contentContainer, function (element) {
-        element.remove();
-      });
+      clickedOutside.registerMissedClick(function() { return this.getContentContainer(); }.bind(this), function (element) {
+        this.removeMenu(element);
+      }.bind(this));
 
       return {
         html: container,
@@ -51,9 +60,9 @@ define(function(require) {
         label: options().defaultMessage,
         
         onClick: function(event) {
-          $(container()).append(contentContainer());
+          $('body').append(contentContainer());
 
-          this.setupUI($(contentContainer()), options());
+          this.setupUI($(container()), $(contentContainer()), options());
           this.setupOptionEvents(optionElements(), container(), contentContainer(), options());
    
           fitInViewport.fit(contentContainer(), mouseCoordinates.get(event));
@@ -65,19 +74,22 @@ define(function(require) {
       return button;
     },
 
-    addStyles: function(container, contentContainer) {
-      $(contentContainer).addClass('ui-corner-all');
-      $(contentContainer).addClass('ui-widget-content');
+    addStyles: function(container) {      
       $(container).addClass('drop-down');
       $(container).addClass('ui-widget');
     },
 
     createContentContainer: function() {
-      return document.createElement('ul');
+      var ul = document.createElement('ul');
+      $(ul).addClass('ui-widget-content');
+
+      return wrapper.wrap(ul, {
+        classNames: ['ui-corner-all', 'drop-down-menu', 'ui-widget']
+      });
     },
 
     appendContentToContainer: function(contentContainer, contentElements) {
-      $(contentContainer).append(contentElements);
+      $(contentContainer).find('ul').append(contentElements);
     },
 
     createOptions: function(options) {
@@ -115,48 +127,55 @@ define(function(require) {
         $(option).on('mouseout', function() {
           $(this).removeClass('ui-state-hover');
         });
-
-        $(option).on('click', function() {
-          $(this).removeClass('ui-state-hover');
-
-          if (!options.multiSelect) {
-            $(contentContainer).remove();
-          }
-
-          if (options.onSelect) {
-            options.onSelect($(this).attr('value'));
-          }
-        });
       }
     },
 
     setOptionState: function (element, data, options) {
-      element.removeClass('ui-state-highlight');
+      $(element).removeClass('ui-state-highlight');
 
       if (options.disabledItems) {
         if (options.disabledItems.indexOf(data) == -1) {
-          element.addClass('ui-state-default');
+          $(element).addClass('ui-state-default');
         } else {
-          element.addClass('ui-state-disabled');
+          $(element).addClass('ui-state-disabled');
         }
       } else {
-        element.addClass('ui-state-default');
+        $(element).addClass('ui-state-default');
+      }
+    },
+
+    removeMenu: function(element) {
+      $(element).remove();
+      this.resetContentState();
+    },
+
+    resetContentState: function() {
+      // Get the options
+      var options = this.getOptions();
+      // Get the option elements
+      var optionElements = this.getOptionElements();
+
+      // Reset the state of all the elements
+      for (var i = 0; i < optionElements.length; i++) {
+        this.setOptionState(optionElements[i], options.data()[i], options);
       }
     },
 
     refreshContent: function () {
-      // Get the options
-      var options = this.getOptions();
       // Get the content container
-      var contentContainer = this.getContentContainer();
+      var contentContainer = this.createContentContainer();
       // Create the option elements
-      var optionElements = this.createOptions(options);
+      var optionElements = this.createOptions(this.getOptions());
+      
+      // Override the getContentContainer method
+      this.getContentContainer = function() { 
+        return contentContainer; 
+      }
       // Override the getOptionElements method
       this.getOptionElements = function() { 
         return optionElements; 
       }
-      // Clear the current options
-      $(contentContainer).empty();
+
       // Append the new options to the content container
       this.appendContentToContainer(contentContainer, optionElements);
     }

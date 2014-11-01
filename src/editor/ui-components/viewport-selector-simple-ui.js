@@ -3,7 +3,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var gb = require('gb');
 
-  var dropdown = require('dropdown-basic');
+  var dropdown = require('dropdown-multi');
 
   var ViewportSelectorSimple = require('class').extend({
     init: function() {},
@@ -13,7 +13,6 @@ define(function(require) {
         id: 'viewport-selector-simple',
         defaultMessage: 'Choose Viewports',
         selectedMessage: 'Selected Viewports:',
-        multiSelect: true,
         data: function() {          
           return editorConfig.getViewports().map(function(viewport) { return viewport.name; });
         }

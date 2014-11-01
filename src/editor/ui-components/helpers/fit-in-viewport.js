@@ -5,19 +5,24 @@ define(function(require) {
     },
 
     fit: function(element, offset) {    
-      $(element).css(offset);
+      var o = {
+        left: offset.globalX,
+        top: offset.globalY
+      };
+
+      $(element).css(o);
 
       var boundingRect = element.getBoundingClientRect();
 
       if (boundingRect.bottom >= (window.innerHeight || document.documentElement.clientHeight)) {
-          offset.top -= boundingRect.height;
+          o.top -= boundingRect.height;
       }
       
       if (boundingRect.right >= (window.innerWidth || document.documentElement.clientWidth)) {
-          offset.left -= boundingRect.width;
+          o.left -= boundingRect.width;
       }
 
-      $(element).css(offset);
+      $(element).css(o);
     }
   });
 

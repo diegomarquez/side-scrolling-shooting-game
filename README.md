@@ -2,9 +2,6 @@
 -------------------
 
 - Editor		
-	- Add dropdown context menues to the body
-		- This way the regions can have overflow: hidden and the menues will still show up on top of everything
-		- Requires changing the calculated coordinates when clicking
 	- Put things that are similar inside bootstrap wells with an appropiate title
 	- Style the main region containers
 	

@@ -45,7 +45,7 @@ html, body, div, canvas {
 
 #editor-regions > div:nth-child(2) {
 	float: right;
-    overflow: hidden;
+    overflow: scroll;
     background: #00ff00;
     width: 50%;
     height: 50%;
@@ -53,6 +53,7 @@ html, body, div, canvas {
 
 #editor-regions > div:nth-child(3) {
 	float: left;
+	overflow: scroll;
     background: #0000ff;
     width: 50%;
     height: 50%;
@@ -60,6 +61,7 @@ html, body, div, canvas {
 
 #editor-regions > div:nth-child(4) {
 	float: right;
+	overflow: scroll;
     background: #00ffff;
     width: 50%;
     height: 50%;
@@ -281,7 +283,11 @@ html, body, div, canvas {
     position: relative;
 }
 
-.drop-down ul {
+.drop-down-menu {
+	position: absolute;
+}
+
+.drop-down-menu ul {
 	min-width: 200px;
 	max-width: 250px;
 	margin: 0px;
@@ -292,11 +298,10 @@ html, body, div, canvas {
 	
 	list-style-type: none;
 	display: inline-block;
-	position: absolute;
 	z-index: 99999;
 }
 
-.drop-down ul li {
+.drop-down-menu ul li {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -311,7 +316,7 @@ html, body, div, canvas {
 	margin-top: 4px;
 }
 
-.drop-down ul li div {
+.drop-down-menu ul li div {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -322,7 +327,7 @@ html, body, div, canvas {
 	width: 50%;
 }
 
-.drop-down ul li div button {
+.drop-down-menu ul li div button {
 	width: 100%;
 }
 
