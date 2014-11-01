@@ -2,7 +2,6 @@
 -------------------
 
 - Editor		
-	- Put things that are similar inside bootstrap wells with an appropiate title
 	- Style the main region containers
 	
 	- Tooltips

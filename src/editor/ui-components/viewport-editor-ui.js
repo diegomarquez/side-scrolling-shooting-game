@@ -96,6 +96,14 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
+      $(document).tooltip({
+        items: "[viewport-name]",
+        content: function() {
+          return $(this).attr('viewport-name');
+        },
+        position: {my: "right center", at: "left-20 center"}
+      });
+
       return wrapper.wrap(container, {
         classNames: ['well', 'well-small']
       });

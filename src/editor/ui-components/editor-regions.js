@@ -17,7 +17,7 @@ define(function(require) {
           ], 
           {
             id: 'editor-regions',
-            classNames: ['ui-widget']
+            classNames: ['ui-widget', 'ui-widget-content']
           }
         ),
 
