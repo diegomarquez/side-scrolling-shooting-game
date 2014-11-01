@@ -2,13 +2,6 @@
 -------------------
 
 - Editor		
-	- Style the main region containers
-	
-	- Tooltips
-		On viewportEditorUI elements with the name of the viewport
-		Little question mark icon on the region titles with a little bit more text about the region
-			- Add a right hand side icon to the create-status-message.js objects. Maybe a new type which has two icons
-
 	- Game Object Manipulation 
 		* Watch out for mouse coordinates whne clicking on the canvas
 		- Be able to alter layer of created game object after creation

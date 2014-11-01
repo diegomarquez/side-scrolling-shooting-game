@@ -6,15 +6,14 @@ html, body, div, canvas {
 /*Regions*/
 .region {
 	position: relative;
-	
-	background-color: #fff;
-	border: 2.5px solid #ddd;
-
+		
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -o-box-sizing: border-box;
     box-sizing: border-box;
+
+    border: 5px solid #fff;
 }
 
 .region-header {
@@ -36,35 +35,48 @@ html, body, div, canvas {
 }
 
 #editor-regions > div:nth-child(1) {
-	float: left;
-	overflow: scroll;
-    background: #ff0000;
-    width: 50%;
-    height: 50%;
+   float: left;
+   overflow: scroll;
+   width: 50%;
+   height: 50%;
+
+   border-right: 2.5px solid #fff;
+   border-bottom: 2.5px solid #fff;
+
+   background: #1f2f5f;
 }
 
 #editor-regions > div:nth-child(2) {
 	float: right;
     overflow: scroll;
-    background: #00ff00;
+    background: #1f2f5f;
     width: 50%;
     height: 50%;
+
+    border-left: 2.5px solid #fff;
+    border-bottom: 2.5px solid #fff;
 }
 
 #editor-regions > div:nth-child(3) {
 	float: left;
 	overflow: scroll;
-    background: #0000ff;
+    background: #1f2f5f;
     width: 50%;
     height: 50%;
+
+    border-right: 2.5px solid #fff;
+    border-top: 2.5px solid #fff;
 }
 
 #editor-regions > div:nth-child(4) {
 	float: right;
 	overflow: scroll;
-    background: #00ffff;
+    background: #1f2f5f;
     width: 50%;
     height: 50%;
+
+    border-left: 2.5px solid #fff;
+    border-top: 2.5px solid #fff;
 }
 /*Regions*/
 
