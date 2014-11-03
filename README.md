@@ -18,9 +18,6 @@
 				- Change Layer
 				- Add to, remove from vieworts
 
-	- menu.js should be a primitive element
-	- There should be another file which creates the menu and then that class is used in setup-game-object-input.js
-
 	- Some loading feedback when entering editor view. It takes a little while to build everything
 
 	- Serialize information in each region

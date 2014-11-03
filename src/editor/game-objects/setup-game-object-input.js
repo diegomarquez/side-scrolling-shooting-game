@@ -5,65 +5,13 @@ define(function(require) {
   var snapToGridValue = require('snap-to-grid-value');
 
   var keyboard = require('keyboard');
-  var menu = require('menu');
+  var gameObjectContextMenu = require('game-obejct-context-menu');
 
   var gridCellSize = editorConfig.getGridCellSize();
   
   var GameObjectMouseInteraction = require("class").extend({
     init: function() {
-      this.contextMenu = (new menu()).create({
-        id: 'game-object-context-menu',
-        options: [
-          {
-            name: 'Clone',
-            icon: 'ui-icon-copy',
-            click: function() {
-
-            }
-          },
-          {
-            name: 'Viewports',
-            icon: 'ui-icon-wrench',
-
-            options: [
-              {
-                name: 'Add',
-                icon: 'ui-icon-plusthick',
-                data: function() {
-
-                },
-                click: function() {
-              
-                }
-              },
-              {
-                name: 'Remove from current',
-                icon: 'ui-icon-minusthick',
-                click: function() {
-              
-                }
-              },
-              {
-                name: 'Remove from all',
-                icon: 'ui-icon-trash',
-                click: function() {
-              
-                }
-              },
-            ]
-          },
-          {
-            name: 'Change layer',
-            icon: 'ui-icon-transferthick-e-w',
-            data: function() {
-              
-            },
-            click: function() {
-              
-            }
-          }
-        ]
-      });      
+      this.contextMenu = new gameObjectContextMenu().create();
     },
 
     setupInteraction: function(go) {

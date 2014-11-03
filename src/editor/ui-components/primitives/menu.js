@@ -20,6 +20,7 @@ define(function(require) {
         var optionText = currentOptions.name;
         var optionIcon = currentOptions.icon;
         var optionSubMenu = currentOptions.options;
+        var optionClick = currentOptions.click;
 
         var icon = $(document.createElement('span'));
         icon.addClass('ui-icon');
@@ -62,34 +63,23 @@ define(function(require) {
 
           var subMenu = this.create(currentOptions);
 
-          $(optionsElement).on('click', function() {
+          $(optionsElement).on('click', function (event) {
             subMenu.attachToParent(this);
-
-            // var value = $(this).attr('value');
-            // var methodName = toMethodName(value);
-
-            // if (options[methodName]) {
-            //   options[methodName](value);
-            // }
           });
-
+        } else {
+          $(optionsElement).on('click', function (click) {
+            return function (event) {
+              if (click) {
+                click();
+              }
+            }
+          }(optionClick));
         }
-
-        // $(optionsElement).on('click', function() {
-          // var value = $(this).attr('value');
-          // var methodName = toMethodName(value);
-
-          // if (options[methodName]) {
-          //   options[methodName](value);
-          // }
-        // });
-        // 
 
         $(list).append(optionsElement);  
       };
 
       var menuController = {
-        go: null,
         subMenu: subMenu,
 
         html: wrapper.wrap(list, {
@@ -104,9 +94,7 @@ define(function(require) {
           });
         },
 
-        show: function(x, y, go) {
-          this.go = go;
-          
+        show: function(x, y) {          
           var self = $(this.html);
 
           if (self.parent().length <= 0) {
@@ -136,12 +124,6 @@ define(function(require) {
       return menuController;
     }
   });
-
-  var toMethodName = function(name) {
-    var methodName = name.replace(/\b./g, function(m) { return m.toUpperCase(); }).replace(/ /g,'');
-
-    return methodName.charAt(0).toUpperCase() + methodName.slice(1);
-  }
 
   return Menu;
 });
