@@ -1,5 +1,5 @@
-define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"], 
-  function(Extension, Viewports, SAT, Vector2D, Gb, GameObject) {
+define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "delegate"], 
+  function(Extension, Viewports, SAT, Vector2D, Gb, GameObject, Delegate) {
  
   var p1 = new Vector2D();
   var p2 = new Vector2D();
@@ -18,6 +18,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
   
   var mouseWorldPos = new Vector2D();
   var mouseMoveWorldPos = new Vector2D();
+
+  var Mouse = Delegate.extend({
+    init: function() {
+      this._super();
+    }
+  });
+
+  Object.defineProperty(Mouse.prototype, "NOTHING_CLICKED_ON_CANVAS", { get: function() { return 'nothing_clicked_on_canvas'; } });
+  Object.defineProperty(Mouse.prototype, "CLICKED_OUTSIDE_CANVAS", { get: function() { return 'clicked_outside_canvas'; } });
 
   var MouseEvents = Extension.extend({
     type: function() {
@@ -58,6 +67,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
             // It contains a Game Object and the viewport it belongs to
             mouseUpData.go.execute(mouseUpData.go.CLICK, mouseUpData);
           }
+        } else {
+          // Nothing was clicked, execute a delegate to capture this global mouse state
+          Gb.Mouse.execute(Gb.Mouse.NOTHING_CLICKED_ON_CANVAS);
         }
 
         // Stop the dragging sequence
@@ -70,7 +82,36 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
         // Moving outside the canvas resets the mouse state
         stopDrag(event, currentMouseDownData);
         currentMouseDownData = null;
-      })
+      });
+
+      // Any click outside the Canvas triggers a NOTHING_CLICKED event
+      // Clicks on elements which are covering the canvas don't trigger this event
+      document.body.addEventListener('mouseup', function (event) {
+        if(event.target !== Gb.canvas) {
+          var globalX, globalY;
+
+          if (event.pageX || event.pageY) {
+            globalX = event.pageX;
+            globalY = event.pageY;
+          }
+          else if (event.clientX || event.clientY)  {
+            globalX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            globalY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+
+          var canvasBoundingRect = Gb.canvas.getBoundingClientRect(); 
+
+          if (globalX < canvasBoundingRect.left || 
+              globalX > canvasBoundingRect.right || 
+              globalY < canvasBoundingRect.top || 
+              globalY > canvasBoundingRect.bottom) {
+            Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS);  
+          }
+        }
+      });
+
+      // Global mouse events delegate
+      Gb.Mouse = new Mouse();
     }
   });
 
@@ -145,19 +186,32 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
   }
 
   var getTopMostObject = function(event) {
-    var allViewports = Viewports.allAsArray();
-        
-    var x = event.pageX;
-    var y = event.pageY;
+    var localX, localY, globalX, globalY;
 
+    if (event.pageX || event.pageY) {
+      globalX = event.pageX;
+      globalY = event.pageY;
+    }
+    else if (event.clientX || event.clientY)  {
+      globalX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+      globalY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+    }
+
+    var parentOffset = event.target.getBoundingClientRect(); 
+    
+    localX = globalX - parentOffset.left;
+    localY = globalY - parentOffset.top;
+
+    var allViewports = Viewports.allAsArray();
+    
     // Loop over every viewport, do so backwards so the things on top are processed first.
     for (var  i = allViewports.length-1; i >= 0; i--) {
       var viewport = allViewports[i];
 
       // Work only with viewports configured to interect with the mouse and only if the event occured inside the viewport
-      if (viewport.mouseEnabled() && viewport.isPointInside(x, y)) {
+      if (viewport.mouseEnabled() && viewport.isPointInside(localX, localY)) {
         // Convert the mouse position to local viewport coordinates
-        viewport.canvasToLocalCoordinates(x, y, mouseWorldPos); 
+        viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 
         
         // Find the top most game object that was clicked in any of the layers of the viewport
         var go = loopLayers.call(viewport, mouseWorldPos);
@@ -167,7 +221,11 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object"],
         if (go) {          
           return {
             go: go,
-            viewport: viewport
+            viewport: viewport,
+            localMouseX: localX,
+            localMouseY: localY,
+            globalMouseX: globalX,
+            globalMouseY: globalY
           }
         }
       }          

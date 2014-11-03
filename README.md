@@ -3,14 +3,25 @@
 
 - Editor		
 	- Game Object Manipulation 
-		* Watch out for mouse coordinates whne clicking on the canvas
-		- Be able to alter layer of created game object after creation
-		- Be able to alter viewports of created game object after creation
+		- Watch out for mouse coordinates whne clicking on the canvas (DONE)
 		- Game Object Context menu
-			- Clone (Clone the viewports and layers it belongs to)
-			- Change Layer
-			- Add to, remove from vieworts
-			- Remove completely
+			- UI
+				- Clone (Clone the viewports and layers it belongs to) (DONE)
+				- Remove Current (DONE)
+				- Remove All (DONE)
+				- Change Layer (DONE)
+				- Add to, remove from vieworts (DONE)
+			- Integration
+				- Clone (Clone the viewports and layers it belongs to)
+				- Remove Current
+				- Remove All
+				- Change Layer
+				- Add to, remove from vieworts
+
+	- menu.js should be a primitive element
+	- There should be another file which creates the menu and then that class is used in setup-game-object-input.js
+
+	- Some loading feedback when entering editor view. It takes a little while to build everything
 
 	- Serialize information in each region
 	- Load all the information

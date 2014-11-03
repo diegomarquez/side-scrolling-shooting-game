@@ -107,6 +107,7 @@ require.config({
 		"editable-dropdown-remove": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-remove", 
 		"file-loader": "src/editor/ui-components/primitives/file-loader", 
 		"horizontal-bar": "src/editor/ui-components/primitives/horizontal-bar", 
+		"menu": "src/editor/ui-components/primitives/menu", 
 		"scroll-bar": "src/editor/ui-components/primitives/scrollbars/scroll-bar", 
 		"one-dimention-spinner": "src/editor/ui-components/primitives/spinners/one-dimention-spinner", 
 		"spinner": "src/editor/ui-components/primitives/spinners/spinner", 
