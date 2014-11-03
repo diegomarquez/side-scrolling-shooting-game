@@ -84,6 +84,7 @@ require.config({
 		"scene-serializer": "src/editor/scene/scene-serializer", 
 		"canvas-scroll-bars-ui": "src/editor/ui-components/canvas-scroll-bars-ui", 
 		"editor-regions": "src/editor/ui-components/editor-regions", 
+		"game-object-context-menu": "src/editor/ui-components/game-object-context-menu", 
 		"game-object-creator-ui": "src/editor/ui-components/game-object-creator-ui", 
 		"game-object-selector-ui": "src/editor/ui-components/game-object-selector-ui", 
 		"grid-toggle-ui": "src/editor/ui-components/grid-toggle-ui", 

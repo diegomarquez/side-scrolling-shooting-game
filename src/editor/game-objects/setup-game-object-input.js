@@ -5,7 +5,7 @@ define(function(require) {
   var snapToGridValue = require('snap-to-grid-value');
 
   var keyboard = require('keyboard');
-  var gameObjectContextMenu = require('game-obejct-context-menu');
+  var gameObjectContextMenu = require('game-object-context-menu');
 
   var gridCellSize = editorConfig.getGridCellSize();
   
@@ -27,7 +27,7 @@ define(function(require) {
 
       go.single(go.CLICK, this, function(mouseData) {
         if(keyboard.isKeyDown(keyboard.ALT)) {
-          this.contextMenu.show(mouseData.globalMouseX, mouseData.globalMouseY, mouseData.go);
+          this.contextMenu.show(mouseData);
         }
       });
 

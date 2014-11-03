@@ -3,20 +3,12 @@
 
 - Editor		
 	- Game Object Manipulation 
-		- Watch out for mouse coordinates whne clicking on the canvas (DONE)
 		- Game Object Context menu
-			- UI
-				- Clone (Clone the viewports and layers it belongs to) (DONE)
-				- Remove Current (DONE)
-				- Remove All (DONE)
-				- Change Layer (DONE)
-				- Add to, remove from vieworts (DONE)
-			- Integration
-				- Clone (Clone the viewports and layers it belongs to)
-				- Remove Current
-				- Remove All
-				- Change Layer
-				- Add to, remove from vieworts
+			- Add to viewport (DONE)
+				- Populate context menu dynamically
+				- Disable viewports already in use
+
+	- Bug: Clickear sobre el menu contextual solo tiene que ocultarlo si ejecuta una accion
 
 	- Some loading feedback when entering editor view. It takes a little while to build everything
 

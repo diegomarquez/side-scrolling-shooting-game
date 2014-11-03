@@ -214,14 +214,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
         viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 
         
         // Find the top most game object that was clicked in any of the layers of the viewport
-        var go = loopLayers.call(viewport, mouseWorldPos);
+        var result = loopLayers.call(viewport, mouseWorldPos);
 
         // If a game object was found, execute it's click callback and break out of the loop
         // The callback receives the game-object that was clicked on and the viewport it was clicked on
-        if (go) {          
+        if (result) {          
           return {
-            go: go,
+            go: result.go,
             viewport: viewport,
+            layer: result.layer,
             localMouseX: localX,
             localMouseY: localY,
             globalMouseX: globalX,
@@ -235,12 +236,14 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   var loopLayers = function(mouse) {
     // Loop over all the layers of the viewport
     for (var i = this.layers.length-1; i >= 0 ; i--) {
+      var layer = this.layers[i];
+
       // Find the game-object that is in the absolute top most position, including layer and viewport draw order
-      var go = gameObjectUnderPoint.call(this.layers[i], this, mouse);
+      var go = gameObjectUnderPoint.call(layer, this, mouse);
 
       // If something is found, return it and break out of the loop
       if (go) {
-        return go;
+        return { go: go, layer: layer.name };
       }
     }
 
