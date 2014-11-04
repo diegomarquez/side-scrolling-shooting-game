@@ -179,8 +179,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       totalDeltaX += deltaX;
       totalDeltaY += deltaY;
 
-      mouseData.go.x = initX + totalDeltaX;
-      mouseData.go.y = initY + totalDeltaY;
+      mouseData.go.x = initX + (totalDeltaX / mouseData.viewport.ScaleX);
+      mouseData.go.y = initY + (totalDeltaY / mouseData.viewport.ScaleY);
 
       // Execute MOUSE_DRAG event with current mouseData plus the current X and Y delta
       mouseData.go.execute(mouseData.go.MOUSE_DRAG, mouseData);
