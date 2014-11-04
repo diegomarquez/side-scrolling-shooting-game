@@ -145,6 +145,10 @@ define(function(require) {
       // Create the jQuery ui dialog
       var dialog = $.extend($(container).dialog(options), fieldGetters);
 
+      $(dialog).submit( function(e) {
+        e.preventDefault();
+      });
+
       return dialog;
     }
   });
