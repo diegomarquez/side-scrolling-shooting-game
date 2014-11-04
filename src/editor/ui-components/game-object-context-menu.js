@@ -3,27 +3,23 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var mainViewport = require('main-viewport');
 
-  var menu = require('menu');
+  var menuUI = require('menu');
 
   var GameObjectContextMenu = require('class').extend({
     init: function() {},
 
     create: function() {
-      var selectedGo, selectedViewport, selectedLayer;
       var setupEditorObject;
 
-      var contextMenu = (new menu()).create({
+      var contextMenu = (new menuUI()).create({
         id: 'game-object-context-menu',
         options: [
           {
             name: 'Clone',
             icon: 'ui-icon-copy',
             click: function() {
-
               setupEditorObject = require('setup-editable-game-object');
-              selectedGo = contextMenuController.currentGameObject;
-
-              setupEditorObject.setupWithViewport(selectedGo.typeId, selectedGo.getUpdateGroup(), selectedGo.getViewportList(), mainViewport.get());
+              setupEditorObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
             }
           },
           {
@@ -34,22 +30,51 @@ define(function(require) {
               {
                 name: 'Add To',
                 icon: 'ui-icon-plusthick',
-                data: function() {
+                options: function() {
+                  var viewports = editorConfig.getViewports().map(function(viewport) { return viewport.name; });
 
-                },
-                click: function() {
-                  
+                  return viewports.map(function(viewportName) {
+                    return {
+                      name: viewportName,
+                      icon: 'ui-icon-bullet',
+                      disable: isInViewport(menu.go, viewportName),
+                      click: function (newViewport) {
+                        var success = gb.viewports.get(newViewport).addGameObject(menu.l, menu.go);
+
+                        // TODO: Give this feedback
+                        if (!success) {
+                          console.log('Destination Viewport must have a layer named' + menu.l);
+                        }
+                      }
+                    }
+                  });
                 }
               },
               {
-                name: 'Remove',
-                icon: 'ui-icon-trash',
-                
-                click: function() {
-                  go = contextMenuController.currentGameObject;  
-                  gb.reclaimer.claim(go);
+                name: 'Remove From',
+                icon: 'ui-icon-minusthick',
+                options: function() {
+                  var viewports = editorConfig.getViewports().map(function(viewport) { return viewport.name; });
+
+                  return viewports.map(function(viewportName) {
+                    return {
+                      name: viewportName,
+                      icon: 'ui-icon-bullet',
+                      disable: !isInViewport(menu.go, viewportName),
+                      click: function (removeFromViewport) {
+                        gb.viewports.get(removeFromViewport).removeGameObject(menu.l, menu.go);
+                      }
+                    }
+                  });
                 }
               },
+              {
+                name: 'Remove Current',
+                icon: 'ui-icon-minusthick',
+                click: function () {
+                  menu.v.removeGameObject(menu.l, menu.go);
+                }
+              }
             ]
           },
           {
@@ -57,49 +82,64 @@ define(function(require) {
             icon: 'ui-icon-transferthick-e-w',
             
             options: function() {
-              selectedGo = contextMenuController.currentGameObject;
-              selectedViewport = contextMenuController.currentViewport;
-              selectedLayer = contextMenuController.currentLayer;
-
-              return editorConfig.getViewportLayers(selectedViewport).map(function(layerName) {
+              return editorConfig.getViewportLayers(menu.v).map(function(layerName) {
                 return {
                   name: layerName,
                   icon: 'ui-icon-bullet',
-                  disable: selectedLayer == layerName,
+                  disable: menu.l == layerName,
                   click: function (newLayer) {
-                    selectedViewport.moveGameObject(selectedLayer, newLayer, selectedGo);
+                    menu.v.moveGameObject(menu.l, newLayer, menu.go);
                   }
                 }
               });
+            }
+          },
+          {
+            name: 'Scrap',
+            icon: 'ui-icon-trash',
+            click: function() {
+              gb.reclaimer.claim(menu.go);
             }
           }
         ]
       });
 
-      var contextMenuController = {
+      var isInViewport = function(go, viewportName) {
+        for (var i = 0; i < go.getViewportList().length; i++) {
+          var vo = go.getViewportList()[i];
+
+          if (vo.viewport === viewportName) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      var menu = {
         menu: contextMenu,
-        currentGameObject: null,
-        currentViewport: null,
-        currentLayer: null,
+        go: null,
+        v: null,
+        l: null,
 
         show: function (mouseData) {
-          this.currentGameObject = mouseData.go;
-          this.currentViewport = mouseData.viewport;
-          this.currentLayer = mouseData.layer;
+          this.go = mouseData.go;
+          this.v = mouseData.viewport;
+          this.l = mouseData.layer;
 
           this.menu.show(mouseData.globalMouseX, mouseData.globalMouseY);
         },
 
         hide: function () {
-          this.currentGameObject = null;
-          this.currentViewport = null;
-          this.currentLayer = null;
+          this.go = null;
+          this.v = null;
+          this.l = null;
 
           this.menu.hide();
         }
       };
 
-      return contextMenuController;
+      return menu;
     }
   });
 

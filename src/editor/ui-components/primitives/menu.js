@@ -20,19 +20,27 @@ define(function(require) {
           classNames: ['menu', 'ui-widget']
         }),
 
-        attachToParent: function(parent) {
-          $(this.html).appendTo('body').position({
-            my: 'left top',
-            at: 'right+3 top-2',
-            of: parent
-          });
+        attachStaticToParent: function(parent, parentMenu) {
+          this.dynamic = false;
+          this.parentMenu = parentMenu;
+        
+          attach(parent, this.html);
+        },
+
+        attachDynamicToParent: function(parent, parentMenu) {
+          this.dynamic = true;
+          this.parentMenu = parentMenu;
+          this.parentMenu.hideSubMenues();
+          this.parentMenu.subMenues.push(this);
+
+          attach(parent, this.html);
         },
 
         show: function(x, y) {          
           var self = $(this.html);
 
           if (self.parent().length <= 0) {
-            self.appendTo('body')
+            self.appendTo('body');
           } else {
             this.hideSubMenues();
           }
@@ -52,6 +60,8 @@ define(function(require) {
           } else {
             $(this.html).detach();
           }
+
+          return this.parentMenu;
         },
 
         hideSubMenues: function() {
@@ -65,8 +75,10 @@ define(function(require) {
         },
 
         hideParentMenu: function() {
-          if (this.parentMenu) {
-            this.parentMenu.hide();  
+          var p = this.parentMenu;
+
+          while (p) {
+            p = p.hide();
           }
         },
 
@@ -220,33 +232,24 @@ define(function(require) {
 
     $(optionsElement).append(iconSubMenu);
 
-    var subMenu = null;
-
     var self = this;
 
     if (Object.prototype.toString.call(options.options) == '[object Function]') {
       $(optionsElement).on('click', function (event) {
-        var controller = getMenuController();
-        
         var dynamicSubMenu = self.create(options);        
-        dynamicSubMenu.dynamic = true;
-        controller.subMenues.push(dynamicSubMenu);
-
-        dynamicSubMenu.attachToParent(this);
-        dynamicSubMenu.parentMenu = getMenuController();
+        dynamicSubMenu.attachDynamicToParent(this, getMenuController());
       });
-    } else {
-      subMenu = this.create(options);
 
-      subMenu.dynamic = false;
+      return null;
+    } else {
+      var subMenu = this.create(options);
 
       $(optionsElement).on('click', function (event) {
-        subMenu.attachToParent(this);
-        subMenu.parentMenu = getMenuController();
+        subMenu.attachStaticToParent(this, getMenuController());
       });
+      
+      return subMenu;
     }
-
-    return subMenu;
   };
 
   var setupMenuEntryClick = function(optionsElement, click, getMenuController) {
@@ -254,9 +257,17 @@ define(function(require) {
       if (click) {
         click($(this).attr('value'));
       }
-      
+
       getMenuController().hide();
       getMenuController().hideParentMenu();
+    });
+  };
+
+  var attach = function(parent, child) {
+    $(child).appendTo('body').position({
+      my: 'left top',
+      at: 'right+3 top-2',
+      of: parent
     });
   };
 
