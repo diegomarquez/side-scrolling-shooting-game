@@ -152,7 +152,7 @@ define(function(require) {
       fields: [
         { 
           name: 'Width', 
-          value: gb.canvas.width,
+          value: viewport.Width,
           validations: [
             {
               check: function(width) { return width > 0; },
@@ -162,7 +162,7 @@ define(function(require) {
         },
         { 
           name: 'Height', 
-          value: gb.canvas.height,
+          value: viewport.Height,
           validations: [
             {
               check: function(height) { return height > 0; },

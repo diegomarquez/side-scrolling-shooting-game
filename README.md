@@ -2,8 +2,7 @@
 -------------------
 
 - Editor		
-	- Bug: Editing a newly created viewport, some values are not set correctly
-	- Bug: dragging on a viewport should take into account the current scale
+	- Bug: dragging a game object in a viewport should take into account the current scale
 
 	- Some loading feedback when entering editor view. It takes a little while to build everything
 
