@@ -84,6 +84,24 @@ define(function(require) {
 
         removeSubMenu: function(subMenu) {
           this.subMenues.splice(this.subMenues.indexOf(subMenu), 1);
+        },
+
+        belongs: function(element) {
+          if ($(this.html).find(element).length) {
+            return true;
+          }
+
+          if (this.subMenues) {
+            for (var i = 0; i < this.subMenues.length; i++) {
+              if (this.subMenues[i]) {
+                if (this.subMenues[i].belongs(element)) {
+                  return true;
+                }  
+              }
+            }
+          }
+
+          return false;
         }
       }
 

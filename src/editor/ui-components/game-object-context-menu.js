@@ -41,7 +41,7 @@ define(function(require) {
                       click: function (newViewport) {
                         var success = gb.viewports.get(newViewport).addGameObject(menu.l, menu.go);
 
-                        // TODO: Give this feedback
+                        // TODO: Give this feedback properly
                         if (!success) {
                           console.log('Destination Viewport must have a layer named' + menu.l);
                         }
@@ -128,6 +128,9 @@ define(function(require) {
           this.l = mouseData.layer;
 
           this.menu.show(mouseData.globalMouseX, mouseData.globalMouseY);
+
+          this.removeHideEvents();
+          this.addHideEvents();
         },
 
         hide: function () {
@@ -136,7 +139,33 @@ define(function(require) {
           this.l = null;
 
           this.menu.hide();
-        }
+
+          this.removeHideEvents();
+        },
+
+        belongs: function (element) {
+          return this.menu.belongs(element);
+        },
+
+        addHideEvents: function() {
+          gb.Mouse.on(gb.Mouse.NOTHING_CLICKED_ON_CANVAS, this, this.hideMenu);
+          gb.Mouse.on(gb.Mouse.CLICKED_OUTSIDE_CANVAS, this, this.checkBelongsThenHide);
+        },
+
+        removeHideEvents: function() {
+          gb.Mouse.remove(gb.Mouse.NOTHING_CLICKED_ON_CANVAS, this, this.hideMenu);
+          gb.Mouse.remove(gb.Mouse.CLICKED_OUTSIDE_CANVAS, this, this.checkBelongsThenHide);
+        },
+
+        hideMenu: function(event) {
+          this.hide();
+        },
+
+        checkBelongsThenHide: function(event) {
+          if (!this.belongs(event.target)) {
+            this.hide();
+          }
+        }  
       };
 
       return menu;

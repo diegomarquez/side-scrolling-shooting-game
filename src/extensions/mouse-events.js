@@ -69,7 +69,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
           }
         } else {
           // Nothing was clicked, execute a delegate to capture this global mouse state
-          Gb.Mouse.execute(Gb.Mouse.NOTHING_CLICKED_ON_CANVAS);
+          Gb.Mouse.execute(Gb.Mouse.NOTHING_CLICKED_ON_CANVAS, event);
         }
 
         // Stop the dragging sequence
@@ -105,10 +105,12 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
               globalX > canvasBoundingRect.right || 
               globalY < canvasBoundingRect.top || 
               globalY > canvasBoundingRect.bottom) {
-            Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS);  
+            Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS, event);  
           }
         }
       });
+
+      debugger;
 
       // Global mouse events delegate
       Gb.Mouse = new Mouse();

@@ -1,6 +1,4 @@
 define(function(require) {
-
-  var gb = require('gb');
   var editorConfig = require('editor-config');
   var snapToGridValue = require('snap-to-grid-value');
 
@@ -16,14 +14,6 @@ define(function(require) {
 
     setupInteraction: function(go) {
       go.Dragable = true;
-
-      gb.Mouse.single(gb.Mouse.NOTHING_CLICKED_ON_CANVAS, this, function() {
-        this.contextMenu.hide();
-      });
-
-      gb.Mouse.single(gb.Mouse.CLICKED_OUTSIDE_CANVAS, this, function() {
-        this.contextMenu.hide();
-      });
 
       go.single(go.CLICK, this, function(mouseData) {
         if(keyboard.isKeyDown(keyboard.ALT)) {

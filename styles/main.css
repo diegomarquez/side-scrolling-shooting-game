@@ -496,11 +496,6 @@ html, body, div, canvas {
 	margin-bottom: 2px;
 }
 
-/*.menu .ui-state-highlight {
-	margin-top: 2px;
-	margin-bottom: 2px;
-}*/
-
 /*Override jQuery UI slider defaults*/
 .ui-slider {
 	overflow: hidden;

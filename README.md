@@ -2,7 +2,6 @@
 -------------------
 
 - Editor		
-	- Bug: Clickear sobre el menu contextual solo tiene que ocultarlo si ejecuta una accion
 	- Bug: Editing a newly created viewport, some values are not set correctly
 	- Bug: dragging on a viewport should take into account the current scale
 
