@@ -2,13 +2,19 @@
 -------------------
 
 - Editor		
-	- Some loading feedback when entering editor view. It takes a little while to build everything
-
 	- Serialize information in each region
-		- Create all the objects to serialize when saving, that way it is easier to take care of all the changes
+		- Create all the objects to serialize upon saving, instead of keeping track of them individualy, that way the system will be more resilient
+		- Add the Save button back in the Scene Settings region
+		- Save stuff to local storage
 	- Load all the information
+		- Add Load button to Scene Settings
+		- Style the Load button
+		- Load stuff from local storage
 
 	- Use LESS as a CSS preprocessor
+		Make main.css slimmer
+		Concat all stylesheets together into a single file with a grunt task
+		Minimize the concatenated stylesheet
 
 	- Search for TODO: comments and complete them
 

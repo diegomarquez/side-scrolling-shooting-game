@@ -11,7 +11,7 @@ define(function(require) {
         html: wrapper.wrap(
           [ 
             createRegion('topLeft', 'Canvas'), 
-            createRegion('topRight', 'World and Grid'), 
+            createRegion('topRight', 'Scene Settings'), 
             createRegion('bottomLeft', 'Game Object Creation'), 
             createRegion('bottomRight', 'Viewport Management')
           ], 

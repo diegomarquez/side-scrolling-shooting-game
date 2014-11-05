@@ -34,12 +34,6 @@ define(function(require) {
     create: function() {
       editorSetup.all();
 
-      // Create main editor container
-      // var container = document.createElement('div');
-      // container.id = "editor-container";
-      // Append to the div containing the canvas
-      // document.getElementById('main').appendChild(container);
-
       var editorRegions = this.editorRegions.create();
 
       // Append the regions to the document body
