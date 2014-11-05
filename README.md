@@ -2,9 +2,6 @@
 -------------------
 
 - Editor		
-	- Bug: dragging a game object in a viewport should take into account the current scale (DONE)
-	- Bug: Dragging should stop if the mouse leaves the viewport it started on
-
 	- Some loading feedback when entering editor view. It takes a little while to build everything
 
 	- Serialize information in each region

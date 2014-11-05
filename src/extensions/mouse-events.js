@@ -48,7 +48,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
           // It contains a Game Object and the viewport it belongs to
           mouseDownData.go.execute(mouseDownData.go.MOUSE_DOWN, mouseDownData);
           // Start the dragging sequence if the game objects has registered events
-          startDrag(event, mouseDownData);
+          startDrag(event, mouseDownData, function (event, mouseData) {
+            stopDrag(event, mouseData);
+            currentMouseDownData = null;
+          });
         }
       }, false);
 
@@ -88,29 +91,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       // Clicks on elements which are covering the canvas don't trigger this event
       document.body.addEventListener('mouseup', function (event) {
         if(event.target !== Gb.canvas) {
-          var globalX, globalY;
+          setGlobalMouseCoordinates(event);
 
-          if (event.pageX || event.pageY) {
-            globalX = event.pageX;
-            globalY = event.pageY;
-          }
-          else if (event.clientX || event.clientY)  {
-            globalX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-            globalY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-          }
+          var bRect = Gb.canvas.getBoundingClientRect(); 
 
-          var canvasBoundingRect = Gb.canvas.getBoundingClientRect(); 
-
-          if (globalX < canvasBoundingRect.left || 
-              globalX > canvasBoundingRect.right || 
-              globalY < canvasBoundingRect.top || 
-              globalY > canvasBoundingRect.bottom) {
+          if (globalX < bRect.left || globalX > bRect.right || globalY < bRect.top || globalY > bRect.bottom) {
             Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS, event);  
           }
         }
       });
-
-      debugger;
 
       // Global mouse events delegate
       Gb.Mouse = new Mouse();
@@ -124,10 +113,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   // Reference to the current mousemove handler
   var mouseMovehandlers = [];
 
-  var startDrag = function(event, mouseData) {
+  var startDrag = function(event, mouseData, onOutOfViewport) {
     // If the specified game object is set to be draggable
     if (mouseData.go.Dragable) {
-      var mouseMovehandler = getMouseMoveHandler(event, mouseData);
+      var mouseMovehandler = getMouseMoveHandler(event, mouseData, onOutOfViewport);
       // Dragging requires registering to the mousemove event, so we do so.
       Gb.canvas.addEventListener('mousemove', mouseMovehandler);
       // Execute MOUSE_DRAG_START event with the current mouseUpData object
@@ -153,7 +142,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     }
   }
 
-  var getMouseMoveHandler = function (event, mouseData) {
+  var getMouseMoveHandler = function (event, mouseData, onOutOfViewport) {
     var initX = mouseData.go.x;
     var initY = mouseData.go.y;
 
@@ -167,6 +156,14 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     var deltaY;
 
     return function (event) {
+      setLocalMouseCoordinates(event)
+
+      // Execute this when the mouse goes outside the current viewport
+      if (!mouseData.viewport.isPointInside(localX, localY)) {
+        onOutOfViewport(event, mouseData);
+        return;
+      }
+
       // Get different between last and current mouse position
       deltaX = event.pageX - lastX; 
       deltaY = event.pageY - lastY;
@@ -187,9 +184,20 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     }
   }
 
-  var getTopMostObject = function(event) {
-    var localX, localY, globalX, globalY;
+  var localX, localY;
 
+  var setLocalMouseCoordinates = function(event) {
+    setGlobalMouseCoordinates(event);
+
+    var parentOffset = event.target.getBoundingClientRect(); 
+    
+    localX = globalX - parentOffset.left;
+    localY = globalY - parentOffset.top;
+  }
+
+  var globalX, globalY;
+
+  var setGlobalMouseCoordinates = function(event) {
     if (event.pageX || event.pageY) {
       globalX = event.pageX;
       globalY = event.pageY;
@@ -198,11 +206,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       globalX = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
       globalY = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
     }
+  }
 
-    var parentOffset = event.target.getBoundingClientRect(); 
-    
-    localX = globalX - parentOffset.left;
-    localY = globalY - parentOffset.top;
+  var getTopMostObject = function(event) {
+    setLocalMouseCoordinates(event);
 
     var allViewports = Viewports.allAsArray();
     
