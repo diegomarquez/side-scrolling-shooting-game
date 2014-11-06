@@ -3,15 +3,22 @@
 
 - Editor		
 	- Serialize information in each region
-		- Create all the objects to serialize upon saving, instead of keeping track of them individualy, that way the system will be more resilient
-		- Add the Save button back in the Scene Settings region
-		- Save stuff to local storage
+		- Add the Save button back in the Scene Settings region (DONE)
+			- Open dialog to save (DONE)
+			- Ask for the scene name in the dialog (DONE)
+			- Create all the objects to serialize upon saving, instead of keeping track of them individualy, that way the system will be more resilient (DONE)
+			- Save stuff to local storage (DONE)
 	- Load all the information
 		- Add Load button to Scene Settings
 		- Style the Load button
-		- Load stuff from local storage
+		- Dialog to select what to load from local storage
+			- Add option to create a dropdown on a dialog
+	- Delete button
+		Should have  a dialog with a dropdown to select which scene to remove from the local storage
 
-	- Use LESS as a CSS preprocessor
+	- Add a title to the 'save & load' group
+
+	- Use LESS
 		Make main.css slimmer
 		Concat all stylesheets together into a single file with a grunt task
 		Minimize the concatenated stylesheet

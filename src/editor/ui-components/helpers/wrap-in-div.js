@@ -20,6 +20,20 @@ define(function(require) {
             container.className = cssClasses;
           }
         }
+
+        if (options.style) {
+          if (Object.prototype.toString.call(options.style) === "[object String]") {
+            container.style.cssText = options.style;
+          } else {
+            var styles = [];
+
+            for (var style in options.style) {
+              styles.push(style + ': ' + options.style[style]);  
+            };
+
+            container.style.cssText = styles.join(';');
+          }
+        }
       }
       
       var c = [].concat(children);

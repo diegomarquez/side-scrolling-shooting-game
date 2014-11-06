@@ -10,6 +10,7 @@ define(function(require) {
       input.id = options.id;
       input.type = 'text';
       input.placeholder = options.defaultMessage;
+      input.readOnly = options.readOnly;
 
       input.onchange = options.onChange;
 

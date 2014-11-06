@@ -2,7 +2,8 @@ define(function(require) {
 
   var wrapper = require('wrap-in-div');
   var sceneLoader = require('scene-loader');
-  var fileLoader = require('file-loader');
+  var button = require('button');
+  // var fileLoader = require('file-loader');
 
   var SceneLoad = require('class').extend({
     init: function() {
@@ -10,22 +11,40 @@ define(function(require) {
     },
 
     create: function() {
-      var button = new fileLoader().create({
+      // var button = new fileLoader().create({
+      //   id: 'level-load-button',
+      //   label: 'Load',
+      //   onClick: function(event) {
+      //     var file = event.target.files[0];
+      //     var reader = new FileReader();
+
+      //     reader.onload = function(event) {  
+      //       sceneLoader.load(JSON.parse(event.target.result));
+      //     };
+
+      //     reader.readAsText(file);
+      //   } 
+      // });
+      
+      var element = new button().create({
         id: 'level-load-button',
         label: 'Load',
         onClick: function(event) {
-          var file = event.target.files[0];
-          var reader = new FileReader();
+          // Serialize all the currently active objects in the editor
+          // var data = sceneSerializer.serialize();
 
-          reader.onload = function(event) {  
-            sceneLoader.load(JSON.parse(event.target.result));
-          };
-
-          reader.readAsText(file);
+          // if (data) {
+          //   // Post the result to the server so the file can be saved localy
+          //   var request = new XMLHttpRequest();
+          //   request.open("POST", "http://localhost:3000", true);
+          //   request.send(data);
+          // }
         } 
-      })
+      });
+
+      $(element).button();
       
-      return wrapper.wrap(button);
+      return wrapper.wrap(element);
     }
   });
   

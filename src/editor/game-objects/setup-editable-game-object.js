@@ -32,7 +32,7 @@ define(function(require) {
       object.update = function(delta) {}
 
       gameObjectInputInteraction.setupInteraction(object);      
-      sceneSerializer.add(object, goId, group, viewports);
+      sceneSerializer.add(object);
 
       return object;
     }

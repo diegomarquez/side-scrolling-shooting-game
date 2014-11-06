@@ -18,8 +18,7 @@ define(function(require) {
       this.gridToggleUI = new (require('grid-toggle-ui'));
       this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
-      // this.sceneSaveUI = new (require('scene-save-ui'));
-      // this.sceneLoadUI = new (require('scene-load-ui'));
+      this.saveAndLoadUI = new (require('save-and-load-ui'));
       
       // Bottom Left Components
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
@@ -54,6 +53,8 @@ define(function(require) {
       editorRegions.appendToTopRight(this.snapToGridToggleUI.create());
       // World Size
       editorRegions.appendToTopRight(this.worldEditUI.create());
+      // Save & Load
+      editorRegions.appendToTopRight(this.saveAndLoadUI.create());
 
       // Bottom Left Region
       // Game Object Selector
@@ -66,11 +67,6 @@ define(function(require) {
       // Bottom Right Region
       editorRegions.appendToBottomRight(this.viewportsUI.create());
       editorRegions.appendToBottomRight(this.viewportCreateUI.create());
-
-      // This go in the top right region
-      // // Save and Load scene buttons
-      // container.appendChild(this.sceneSaveUI.create());
-      // container.appendChild(this.sceneLoadUI.create());
 
       // Add a viewport UI component when a viewport is added
       gb.viewports.on(gb.viewports.ADD, this, function (v) {

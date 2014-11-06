@@ -1,32 +1,21 @@
 define(function(require) {
-
   var gb = require('gb');
-
   var editorConfig = require('editor-config');
-  var sceneName = require('scene-name');
 
   var SceneSerializer = require("class").extend({
     init: function() {
       this.serializableObjects = [];
     },
 
-    add: function(go, goId, group, viewports) {
-      var serializableObject = {
-        go: go,
-        group: group,
-        viewports: viewports
-      };
+    add: function(go) {
+      this.serializableObjects.push(go);
 
-      this.serializableObjects.push(serializableObject);
-
-      go.on(go.RECYCLE, this, function() {
-        this.serializableObjects.splice(this.serializableObjects.indexOf(serializableObject), 1);
+      go.on(go.RECYCLE, this, function (go) {
+        this.serializableObjects.splice(this.serializableObjects.indexOf(go), 1);
       });
     },
 
-    serialize: function() {
-      if (!this.check()) return;
-
+    serialize: function(sceneName) {
       // Serialize Game Objects
       var gos = [];
 
@@ -35,8 +24,8 @@ define(function(require) {
 
         gos.push({
           id: o.go.typeId,
-          g: o.group,
-          v: o.viewports,
+          g: o.getUpdateGroup(),
+          v: o.getViewportList(),
           x: o.go.x,
           y: o.go.y 
         });
@@ -68,21 +57,13 @@ define(function(require) {
       }
 
       var scene = {
-        name: sceneName.get(),
+        name: sceneName,
         objects: gos,
         groups: groups,
         viewports: vs
       }
 
       return JSON.stringify(scene);
-    },
-
-    check: function () {
-      if (!sceneName.get()) {
-        return false;
-      }
-
-      return true;
     }
   });
 

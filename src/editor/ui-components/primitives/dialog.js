@@ -37,7 +37,19 @@ define(function(require) {
         input.type = 'text';
         input.name = lowerCaseName;
         input.id = lowerCaseName;
-        input.value = field.value;
+
+        if (Object.prototype.toString.call(field.value) == '[object Function]') {
+          // Function values are assigned to the input when the dialog opens
+          $(input).data('valueGetter', field.value);
+        } else {
+          // Regular value is assigned on initialization
+          input.value = field.value;
+        }
+
+        if (field.hidden) {
+          label.style.display = 'none'; 
+          input.style.display = 'none'; 
+        }
 
         $(input).addClass('ui-widget-content');
         $(input).addClass('ui-corner-all');
@@ -73,14 +85,14 @@ define(function(require) {
             resetFeedback(tip, inputFields, options);
 
             // Validate the fields corresponding to this action
-            result = validate(tip, options.validateOnAction[action], options.fields, fieldGetters, inputFields);
+            result = validate.call(dialog, tip, options.validateOnAction[action], options.fields, fieldGetters, inputFields);
 
             if (result === true) {
               // Change the context of the dialog buttons callback so they point to this dialog instance
               f.call(dialog);
             }
           }
-        }(buttonCallback, action);
+        }.call(this, buttonCallback, action);
       });
 
       options.close = function() {          
@@ -112,8 +124,19 @@ define(function(require) {
         // Set the current values as defaults to go back to them in case the close button is pressed
         for(var m in inputFields) {
           var input = $(inputFields[m]());
+
+          // Function values are set dynamically when the dialog opens
+          var valueGetter = $(input).data('valueGetter');
+          if (valueGetter) {
+            input[0].value = valueGetter();
+          } 
+
           input.attr('default', fieldGetters[m]());
         }
+      }
+
+      options.resizeStop = function (event, ui) {
+        $(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
       }
 
       options.disableField = function(name) {
@@ -145,8 +168,14 @@ define(function(require) {
       // Create the jQuery ui dialog
       var dialog = $.extend($(container).dialog(options), fieldGetters);
 
+      // Prevent form submition
       $(dialog).submit( function(e) {
         e.preventDefault();
+      });
+
+      // Center the dialog when width changes
+      $(dialog).on('autoCenter', function() {
+        $(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
       });
 
       return dialog;
@@ -155,6 +184,8 @@ define(function(require) {
 
   var validate = function(tip, actions, fields, fieldGetters, inputFields) {
     try {
+      var self = this;
+
       $.each(actions, function(i, action) {
         $.each(fields, function(j, field) {
 
@@ -165,8 +196,11 @@ define(function(require) {
             $.each(field.validations, function(k, validation) {
               var method = toMethodName(field.name);
 
-              if (!validation.check(fieldGetters[method]())) {
+              if (!validation.check.call(self, fieldGetters[method]())) {
                 applyFeedback(tip, inputFields[method](), validation.tip);
+
+                $(self).trigger('autoCenter');
+
                 throw new Error(validation.tip);
               }
             });

@@ -8,7 +8,7 @@ define(function(require) {
     create: function() {
       var input = new textInput().create({
         id: 'scene-name',
-        defaultMessage: 'Set a Scene Name',  
+        defaultMessage: 'Set a scene name Scene'
       });
       
       return wrapper.wrap(input);
