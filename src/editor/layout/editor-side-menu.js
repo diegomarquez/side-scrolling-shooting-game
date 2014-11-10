@@ -12,19 +12,19 @@ define(function(require) {
 
       items.push(createTitleItem('Scene Editor'));
       
-      items.push(createRegionOptionItem('Canvas', 'icon-question-sign', function (event) {
+      items.push(createRegionOptionItem('Canvas', 'icon-question-sign', 'View the created objects in the canvas. They can be dragged and right clicking will display a context menu on them. Use the scrollbars to view more of the game world if it doesn\'t fit in the canvas.' ,function (event) {
         editorRegions.getTopLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Settings', 'icon-question-sign', function (event) {
+      items.push(createRegionOptionItem('Settings', 'icon-question-sign', 'Global settings. These options affect the whole scene.', function (event) {
         editorRegions.getTopRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Game Objects', 'icon-question-sign', function (event) {
+      items.push(createRegionOptionItem('Game Objects', 'icon-question-sign', 'Use this section to create predifined objects. After selecting an object type and the viewports it should be displayed in click the "Create Game Object" button to add it to the scene.', function (event) {
         editorRegions.getBottomLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Viewports', 'icon-question-sign', function (event) {
+      items.push(createRegionOptionItem('Viewports', 'icon-question-sign', 'Add new viewports, edit and sort them in this section. Sorting is done by dragging and dropping.', function (event) {
         editorRegions.getBottomRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
 
@@ -39,6 +39,17 @@ define(function(require) {
       })
 
       $(ul).append($(items));
+
+      $(ul).tooltip({
+        items: ".side-menu-option",
+        content: function() {
+          return $(this).attr('region-description');
+        },
+        position: {
+          my: "left+15 left",
+          at: "right center"
+        }
+      });
 
       return {
          html: wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' })
@@ -69,10 +80,11 @@ define(function(require) {
     return li;
   }
 
-  var createRegionOptionItem = function(content, iconName, onClick) {
+  var createRegionOptionItem = function(content, iconName, description, onClick) {
     var li = createOptionItem(content, iconName);
 
     $(li).on('click', onClick);
+    $(li).attr('region-description', description);
 
     return li;
   }

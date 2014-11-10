@@ -73,9 +73,9 @@ html, body, div, canvas {
 	background: #FFD180;
 }
 
-#editor-side-menu .side-menu-option:focus {
+/*#editor-side-menu .side-menu-option:focus {
     background: #FFAB40;
-}
+}*/
 
 #editor-side-menu li:focus {
 	outline: 0px;
@@ -537,7 +537,7 @@ html, body, div, canvas {
 }
 
 .two-dimentional-spinner label {
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 
 .two-dimentional-spinner > div:nth-child(1) {
