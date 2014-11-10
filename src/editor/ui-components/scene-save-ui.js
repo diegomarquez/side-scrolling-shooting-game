@@ -1,7 +1,7 @@
 define(function(require) {
 
   var wrapper = require('wrap-in-div');
-  var localStorage = require('local-storage');
+  var localStorageWrapper = require('local-storage');
   var sceneSerializer = require('scene-serializer');
   var button = require('button');
   var dialogUI = require('dialog');
@@ -37,28 +37,28 @@ define(function(require) {
             hidden: true,
             validations: [
               {
-                check: function(value) { return !localStorage.getLevel($(this).SceneName()); },
-                tip: "Scene name already in use. To overwrite the old scene click the 'Overwite' button"
+                check: function() { 
+                  return !localStorageWrapper.getLevel(this.SceneName()); 
+                },
+                tip: "To overwrite the old scene click the 'Update' button"
               }
             ]
           }
         ],
 
         buttons: {
-          Save: function () {            
-            serializeAndStore($(this).SceneName());
-            $(this).dialog('close');
+          Save: function () {     
+            serializeAndStore(this.SceneName(), $(this).dialog);
           },
 
-          Overwrite: function () {            
-            serializeAndStore($(this).SceneName());
-            $(this).dialog('close');
+          Update: function () {            
+            serializeAndStore(this.SceneName(), $(this).dialog);
           }
         },
 
         validateOnAction: {
           'Save': ['Scene Name', 'Scene Already Exists'],
-          'Overwrite': ['Scene Name'] 
+          'Update': ['Scene Name'] 
         }
       });
     },
@@ -69,7 +69,7 @@ define(function(require) {
         label: 'Save',
         onClick: function(event) {
           $(this.saveSceneDialog).dialog('open');
-        }.bind(this) 
+        }.bind(this)
       });
 
       $(element).button();
@@ -78,8 +78,12 @@ define(function(require) {
     }
   });
   
-  var serializeAndStore = function(sceneName) {     
-    localStorage.setLevel(sceneName, sceneSerializer.serialize(sceneName));
+  var serializeAndStore = function(sceneName, dialog) {     
+    if (localStorageWrapper.setLevel(sceneName, sceneSerializer.serialize(sceneName))) {
+      dialog('close');
+    } else {
+      dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
+    }
   }
   
   return SceneSave;

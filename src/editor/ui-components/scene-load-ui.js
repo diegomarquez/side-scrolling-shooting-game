@@ -1,45 +1,46 @@
 define(function(require) {
 
   var wrapper = require('wrap-in-div');
+  var localStorageWrapper = require('local-storage');
   var sceneLoader = require('scene-loader');
+  
   var button = require('button');
-  // var fileLoader = require('file-loader');
+  var dialogDropdownUI = require('dialog-dropdown');
 
   var SceneLoad = require('class').extend({
     init: function() {
-      
+      this.loadSceneDialog = new dialogDropdownUI().create({
+        id: 'load-scene-dialog',
+        title: 'Load a scene',
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        minWidth: 300,
+        modal: true,
+        
+        data: function () {
+          return localStorageWrapper.getAllLevels()
+        },
+
+        buttons: {
+          Load: function () {
+            var scene = localStorageWrapper.getLevel(this.SelectedOption());
+
+            sceneLoader.load(JSON.parse(scene));
+
+            $(this).dialog('close');
+          }
+        }
+      });
     },
 
     create: function() {
-      // var button = new fileLoader().create({
-      //   id: 'level-load-button',
-      //   label: 'Load',
-      //   onClick: function(event) {
-      //     var file = event.target.files[0];
-      //     var reader = new FileReader();
-
-      //     reader.onload = function(event) {  
-      //       sceneLoader.load(JSON.parse(event.target.result));
-      //     };
-
-      //     reader.readAsText(file);
-      //   } 
-      // });
-      
       var element = new button().create({
         id: 'level-load-button',
         label: 'Load',
         onClick: function(event) {
-          // Serialize all the currently active objects in the editor
-          // var data = sceneSerializer.serialize();
-
-          // if (data) {
-          //   // Post the result to the server so the file can be saved localy
-          //   var request = new XMLHttpRequest();
-          //   request.open("POST", "http://localhost:3000", true);
-          //   request.send(data);
-          // }
-        } 
+          $(this.loadSceneDialog).dialog('open');
+        }.bind(this) 
       });
 
       $(element).button();

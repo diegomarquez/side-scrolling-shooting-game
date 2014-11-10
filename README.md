@@ -2,24 +2,26 @@
 -------------------
 
 - Editor		
-	- Serialize information in each region
-		- Add the Save button back in the Scene Settings region (DONE)
-			- Open dialog to save (DONE)
-			- Ask for the scene name in the dialog (DONE)
-			- Create all the objects to serialize upon saving, instead of keeping track of them individualy, that way the system will be more resilient (DONE)
-			- Save stuff to local storage (DONE)
-	- Load all the information
-		- Add Load button to Scene Settings
-		- Style the Load button
-		- Dialog to select what to load from local storage
-			- Add option to create a dropdown on a dialog
-	- Delete button
-		Should have  a dialog with a dropdown to select which scene to remove from the local storage
-
-	- Add a title to the 'save & load' group
-
+	- Side menu
+		- Sacar el encabazedo de cada region (DONE)
+		- Hacer el componente (DONE)
+		- Darle estilo (DONE)
+		- Poner un boton para cada region en el menu izquierdo. 
+			- Elementos (DONE)
+			- Cada boton hace algun tipo de highlight sobre la region correspondiente (DONE)
+			- Poner un icono de signo de pregunta con un tooltip al lado de cada boton explicado que es lo que esta pasando en esa region
+		- Save 
+		- Load
+			- Disable if there is nothing to load
+		- Delete
+			- Disable if there is nothing to delete
+		
+	- BUG: Red background on form field errors
+	- BUG: Use color pallete on jquery-ui highlight and error
+	- BUG: Clicking on a Game Object when the context menu is open should close it, same as clicking in an empty region of the canvas
+	
 	- Use LESS
-		Make main.css slimmer
+		Make main.css slimmer, easier to maintain (ej. change colors)
 		Concat all stylesheets together into a single file with a grunt task
 		Minimize the concatenated stylesheet
 

@@ -2,5 +2,9 @@
 	"jquery-ui": {
         "export": "$",
         "deps": ["jquery"]
+    },
+
+    "jquery-selectBoxIt": {
+        "deps": ["jquery", "jquery-ui"]
     }
 }

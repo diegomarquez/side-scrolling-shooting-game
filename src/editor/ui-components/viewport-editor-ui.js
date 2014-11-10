@@ -101,7 +101,18 @@ define(function(require) {
         content: function() {
           return $(this).attr('viewport-name');
         },
-        position: {my: "right center", at: "left-20 center"}
+        position: {
+          my: "right center", 
+          at: "left-15 center",
+          using: function( position, feedback ) {
+            $( this ).css( position );
+            $( "<div>" )
+            .addClass( "arrow right" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+          }
+        }
       });
 
       return wrapper.wrap(container, {

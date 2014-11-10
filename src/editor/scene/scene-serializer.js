@@ -20,14 +20,14 @@ define(function(require) {
       var gos = [];
 
       for (var i = 0; i < this.serializableObjects.length; i++) {
-        var o = this.serializableObjects[i];
+        var go = this.serializableObjects[i];
 
         gos.push({
-          id: o.go.typeId,
-          g: o.getUpdateGroup(),
-          v: o.getViewportList(),
-          x: o.go.x,
-          y: o.go.y 
+          id: go.typeId,
+          g: go.getUpdateGroup(),
+          v: go.getViewportList(),
+          x: go.x,
+          y: go.y 
         });
       }
 

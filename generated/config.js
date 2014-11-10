@@ -3,6 +3,10 @@ require.config({
 	"jquery-ui": {
         "export": "$",
         "deps": ["jquery"]
+    },
+
+    "jquery-selectBoxIt": {
+        "deps": ["jquery", "jquery-ui"]
     }
 },
 	paths: { 
@@ -79,12 +83,13 @@ require.config({
 		"selected-group": "src/editor/html-parsers/selected-group", 
 		"snap-to-grid-value": "src/editor/html-parsers/snap-to-grid-value", 
 		"scale-ui-value-setter": "src/editor/html-setters/scale-ui-value-setter", 
+		"editor-regions": "src/editor/layout/editor-regions", 
+		"editor-side-menu": "src/editor/layout/editor-side-menu", 
 		"local-storage": "src/editor/local-storage", 
 		"scene-editor": "src/editor/scene/scene-editor", 
 		"scene-loader": "src/editor/scene/scene-loader", 
 		"scene-serializer": "src/editor/scene/scene-serializer", 
 		"canvas-scroll-bars-ui": "src/editor/ui-components/canvas-scroll-bars-ui", 
-		"editor-regions": "src/editor/ui-components/editor-regions", 
 		"game-object-context-menu": "src/editor/ui-components/game-object-context-menu", 
 		"game-object-creator-ui": "src/editor/ui-components/game-object-creator-ui", 
 		"game-object-selector-ui": "src/editor/ui-components/game-object-selector-ui", 
@@ -100,15 +105,14 @@ require.config({
 		"button": "src/editor/ui-components/primitives/button", 
 		"checkbox-set": "src/editor/ui-components/primitives/checkboxes/checkbox-set", 
 		"checkbox": "src/editor/ui-components/primitives/checkboxes/checkbox", 
-		"dialog": "src/editor/ui-components/primitives/dialog", 
+		"dialog-dropdown": "src/editor/ui-components/primitives/dialogs/dialog-dropdown", 
+		"dialog": "src/editor/ui-components/primitives/dialogs/dialog", 
 		"dropdown-base": "src/editor/ui-components/primitives/dropdowns/dropdown-base", 
 		"dropdown-multi": "src/editor/ui-components/primitives/dropdowns/dropdown-multi", 
 		"dropdown-single": "src/editor/ui-components/primitives/dropdowns/dropdown-single", 
 		"editable-dropdown-add-remove": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-add-remove", 
 		"editable-dropdown-basic": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-basic", 
 		"editable-dropdown-remove": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-remove", 
-		"file-loader": "src/editor/ui-components/primitives/file-loader", 
-		"horizontal-bar": "src/editor/ui-components/primitives/horizontal-bar", 
 		"menu": "src/editor/ui-components/primitives/menu", 
 		"scroll-bar": "src/editor/ui-components/primitives/scrollbars/scroll-bar", 
 		"one-dimention-spinner": "src/editor/ui-components/primitives/spinners/one-dimention-spinner", 
@@ -144,6 +148,7 @@ require.config({
 		"domready": "./lib/requirejs-domready/domReady", 
 		"jquery": "./lib/jquery/dist/jquery", 
 		"jquery-ui": "./lib/jquery-ui/jquery-ui", 
+		"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt", 
 		  
 	}  
 });

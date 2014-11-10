@@ -58,7 +58,7 @@ define(function(require) {
         $(fieldset).append(input);
 
         // Set up getters for all the fields in the dialog.
-        // This will be easy accesible in button callbacks
+        // This will be easily accesible in button callbacks
         fieldGetters[toMethodName(field.name)] = function(input) { 
           return function() { 
             return input.value; 
@@ -165,6 +165,14 @@ define(function(require) {
         input.value = value;
       }
 
+      options.setErrorFeedback = function(message) {
+        setErrorTip(tip, message);
+      }
+
+      options.setInfoFeedback = function(message) {
+        setInfoTip(tip, message);
+      }
+
       // Create the jQuery ui dialog
       var dialog = $.extend($(container).dialog(options), fieldGetters);
 
@@ -214,13 +222,21 @@ define(function(require) {
     return true;
   }
 
+  var setErrorTip = function(tipContainer, message) {
+    tipContainer.toError(message);
+  }
+
+  var setInfoTip = function(tipContainer, message) {
+    tipContainer.toInfo(message);
+  }
+
   var applyFeedback = function(tipContainer, inputField, validationTipMessage) {
     $(inputField).addClass("ui-state-error");
-    tipContainer.toError(validationTipMessage);
+    setErrorTip(tipContainer, validationTipMessage);
   }
 
   var resetFeedback = function(tipContainer, inputFields, options) {
-    tipContainer.toInfo(options.tip);
+    setInfoTip(tipContainer, options.tip);
 
     $.each(inputFields, function (key, value) {
       $(value()).removeClass('ui-state-error');

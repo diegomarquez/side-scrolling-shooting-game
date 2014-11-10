@@ -16,18 +16,18 @@ define(function(require) {
     },
 
     setLevel: function (key, value) {
-      this.setItem.call(this, 'level_' + key, value);
+      return setItem.call(this, 'level_' + key, value);
     },
 
     getLevel: function (key, value) {
-      this.getItem.call(this, 'level_' + key);
+      return getItem.call(this, 'level_' + key.replace(/^level_/, ''));
     },
 
     removeLevel: function (key) {
-      this.removeItem.call(this, 'level_' + key);
+      removeItem.call(this, 'level_' + key.replace(/^level_/, ''));
     },
 
-    getAllLevelKeys: function() {
+    getAllLevels: function() {
       available.call(this);
 
       return Object.keys(localStorage).filter(function(key) {
@@ -38,10 +38,10 @@ define(function(require) {
     clearLevels: function () {
       available.call(this);
 
-      var levels = this.getAllLevelKeys();
+      var levels = this.getAllLevels();
 
       for (var i = 0; i < levels.length; i++) {
-        this.removeItem.call(this, thie.levels[i]);
+        removeItem.call(this, levels[i]);
       };
     },
 
@@ -63,11 +63,15 @@ define(function(require) {
 
     try {
       localStorage.setItem(key, value);
+
+      return true;
     } catch (e) {
       this.execute(this.STORAGE_LIMIT_REACHED, {
         key: key,
         value: value
       });
+
+      return false;
     }
   }
 

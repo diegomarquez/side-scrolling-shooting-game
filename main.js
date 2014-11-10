@@ -11,7 +11,6 @@ define(function(require){
   var game = gb.game;
 
   game.add_extension(require("mouse-events"));
-  game.add_extension(require("activity-display"));
 
   // This is the main initialization function
   game.on(game.CREATE, this, function() {

@@ -1,6 +1,7 @@
 define(function(require) {
   require('jquery');
   require('jquery-ui');
+  require('jquery-selectBoxIt');
 
   var gb = require('gb');
   var editorSetup = require('editor-setup');
@@ -8,6 +9,8 @@ define(function(require) {
 
   var SceneEditor = require("class").extend({
     init: function() {
+      // Main Layout
+      this.editorSideMenu = new (require('editor-side-menu'));
       this.editorRegions = new (require('editor-regions'));
 
       // Top Left Components
@@ -33,11 +36,17 @@ define(function(require) {
     create: function() {
       editorSetup.all();
 
+      var mainContainer = document.createElement('div');
+      mainContainer.id = 'main-container';
+      document.body.appendChild(mainContainer);
+
       var editorRegions = this.editorRegions.create();
+      var editorSideMenu = this.editorSideMenu.create(editorRegions)
 
       // Append the regions to the document body
-      document.body.appendChild(editorRegions.html);
-      
+      mainContainer.appendChild(editorSideMenu.html);
+      mainContainer.appendChild(editorRegions.html);
+
       // Top Left Region
       // Canvas
       editorRegions.appendToTopLeft(document.getElementById('main'));

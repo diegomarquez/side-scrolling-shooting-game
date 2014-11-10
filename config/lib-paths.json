@@ -1,5 +1,6 @@
 {
 	"domready": "./lib/requirejs-domready/domReady",
 	"jquery": "./lib/jquery/dist/jquery",
-	"jquery-ui": "./lib/jquery-ui/jquery-ui"
+	"jquery-ui": "./lib/jquery-ui/jquery-ui",
+	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt"
 }
