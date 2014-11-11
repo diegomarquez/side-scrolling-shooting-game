@@ -8,6 +8,7 @@ define(function(require) {
       this.loadSceneDialog = new dialogDropdownUI().create({
         id: 'load-scene-dialog',
         title: 'Load a scene',
+        tip: 'Choose a scene to load from the dropdown',
         autoOpen: false,
         height: 'auto',
         width: 'auto',

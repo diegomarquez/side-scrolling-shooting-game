@@ -1,4 +1,7 @@
 define(function(require) {
+
+  var statusMessage = require('create-status-message');
+
   var DialogDropDown = require('class').extend({
     init: function() {
 
@@ -8,6 +11,9 @@ define(function(require) {
       var container = document.createElement('div');
       container.id = options.id;
       $(container).addClass('dialog');      
+
+      var tip = statusMessage.createInfoMessage(options.tip);
+      tip.appendTo(container);
 
       var form = document.createElement('form');
       var fieldset = document.createElement('fieldset');

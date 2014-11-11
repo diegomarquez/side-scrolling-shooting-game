@@ -7,6 +7,7 @@ define(function(require) {
       this.deleteSceneDialog = new dialogDropdownUI().create({
         id: 'delete-scene-dialog',
         title: 'Delete Scenes',
+        tip: 'Choose a scene to delete from the dropdown',
         autoOpen: false,
         height: 'auto',
         width: 'auto',
