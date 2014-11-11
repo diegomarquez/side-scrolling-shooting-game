@@ -44,12 +44,12 @@ define(function(require) {
         ],
 
         buttons: {
-          Save: function () {     
-            serializeAndStore(this.SceneName(), $(this).dialog);
+          Save: function () {
+            serializeAndStore.call(this);
           },
 
           Update: function () {            
-            serializeAndStore(this.SceneName(), $(this).dialog);
+            serializeAndStore.call(this);
           }
         },
 
@@ -65,11 +65,13 @@ define(function(require) {
     }
   });
   
-  var serializeAndStore = function(sceneName, dialog) {     
+  var serializeAndStore = function() { 
+    var sceneName = this.SceneName();
+
     if (localStorageWrapper.setLevel(sceneName, sceneSerializer.serialize(sceneName))) {
-      dialog('close');
+      $(this).dialog('close');
     } else {
-      dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
+      $(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
     }
   }
   
