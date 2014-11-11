@@ -40,7 +40,12 @@ define(function(require) {
   	container.addClass('ui-corner-all');
 
   	var icon = $(document.createElement('span'));
-  	icon.css({ 'float': 'left', 'margin-right': '3px'});
+  	icon.css({ 
+      'float': 'left', 
+      'margin-top': '2px',
+      'margin-right': '3px',
+      'margin-left': '3px'
+    });
 
   	var statusTitle = $(document.createElement('strong'))
   	statusTitle.html(statusTitle);
