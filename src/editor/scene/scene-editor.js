@@ -1,7 +1,12 @@
 define(function(require) {
+  $.widget.bridge('uitooltip', $.ui.tooltip);
+
   require('jquery');
   require('jquery-ui');
   require('jquery-selectBoxIt');
+  require('jquery-bootstrap');
+
+  $.fn.button.noConflict();
 
   var gb = require('gb');
   var editorSetup = require('editor-setup');

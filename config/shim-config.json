@@ -6,5 +6,9 @@
 
     "jquery-selectBoxIt": {
         "deps": ["jquery", "jquery-ui"]
+    },
+
+    "jquery-bootstrap": {
+        "deps": ["jquery", "jquery-ui"]
     }
 }
