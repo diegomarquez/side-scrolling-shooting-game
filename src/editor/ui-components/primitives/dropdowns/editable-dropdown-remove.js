@@ -77,7 +77,8 @@ define(function(require) {
         button.click(function (option) {
           return function (event) {
             if (options.onRemove) {
-              options.onRemove($(event.target).parent().attr('value'));
+              var value = $(event.target).closest('[value]').first().attr('value');
+              options.onRemove(value);
 
               option.remove();
               $(contentContainer).remove();
