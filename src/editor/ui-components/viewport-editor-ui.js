@@ -96,14 +96,22 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
-      $(document).tooltip({
+      $(document).uitooltip({
         items: "[viewport-name]",
         content: function() {
           return $(this).attr('viewport-name');
         },
         position: {
           my: "right center", 
-          at: "left-15 center"
+          at: "left-15 center",
+          using: function( position, feedback ) {
+            $( this ).css( position );
+            $( "<div>" )
+            .addClass( "arrow right" )
+            .addClass( feedback.vertical )
+            .addClass( feedback.horizontal )
+            .appendTo( this );
+          }
         }
       });
 
