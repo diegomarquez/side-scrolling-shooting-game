@@ -16,23 +16,25 @@ define(function(require) {
     },
 
     setLevel: function (key, value) {
-      return setItem.call(this, 'level_' + key, value);
+      return setItem.call(this, 'scene_' + key, value);
     },
 
     getLevel: function (key, value) {
-      return getItem.call(this, 'level_' + key.replace(/^level_/, ''));
+      return getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
     },
 
     removeLevel: function (key) {
-      removeItem.call(this, 'level_' + key.replace(/^level_/, ''));
+      removeItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
     },
 
     getAllLevels: function() {
       available.call(this);
 
       return Object.keys(localStorage).filter(function(key) {
-        return key.search(/^level_/) != -1;
-      });
+          return key.search(/^scene_/) != -1;
+        }).map(function(key) {
+          return key.replace(/^scene_/, '');
+        });
     },
 
     clearLevels: function () {

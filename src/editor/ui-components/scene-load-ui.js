@@ -16,7 +16,7 @@ define(function(require) {
         modal: true,
         
         data: function () {
-          return localStorageWrapper.getAllLevels()
+          return localStorageWrapper.getAllLevels();
         },
 
         buttons: {
