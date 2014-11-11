@@ -29,14 +29,9 @@ html, body, div, canvas {
     top: 0;
     left: 0;
     bottom: 0;
-    z-index: 1000; /* so the menu or its navicon stays above all content */
-    background: #03A9F4;
-    color: #fff;
     overflow-y: auto;
 
     width: 15%;
-
-	list-style-type: none;
 	margin: 0px;
 
 	border-top: 5px solid #fff;
@@ -52,26 +47,16 @@ html, body, div, canvas {
 
 #editor-side-menu .side-menu-title {
 	font-size: 20px;
-	background: #FF6D00;
+	padding-bottom: 20px;
 }
 
-#editor-side-menu .side-menu-option {
-	font-size: 15px;
-	padding-left: 30px;
+#editor-side-menu .side-menu-item {
+	margin-bottom: 10px;
 }
 
-#editor-side-menu li {
-	margin: 0px;
-	padding: 0px;
-
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-}
-
-#editor-side-menu .side-menu-option:hover {
+/*#editor-side-menu .side-menu-option:hover {
 	background: #FFD180;
-}
+}*/
 
 /*#editor-side-menu .side-menu-option:focus {
     background: #FFAB40;
@@ -81,11 +66,15 @@ html, body, div, canvas {
 	outline: 0px;
 }
 
-#editor-side-menu .side-menu-icon {
-	float: right;
-	margin-right: 10px;
+#editor-side-menu li:focus {
+	outline: 0px;
 }
 
+#editor-side-menu .side-menu-icon {
+	float: right;
+	left: 20px;
+	margin-top: 3px;
+}
 
 /*Regions*/
 #editor-regions-wrapper {
