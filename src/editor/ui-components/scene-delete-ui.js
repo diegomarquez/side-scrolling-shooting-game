@@ -22,14 +22,12 @@ define(function(require) {
           Delete: function () {
             localStorageWrapper.removeLevel(this.SelectedOption());
             
-            this.deleteSceneDialog.dialog('option', 'clear')();
             $(this).dialog('close');
           },
 
           "Delete All": function () {
             localStorageWrapper.clearLevels();
 
-            this.deleteSceneDialog.dialog('option', 'clear')();
             $(this).dialog('close');
           }
 

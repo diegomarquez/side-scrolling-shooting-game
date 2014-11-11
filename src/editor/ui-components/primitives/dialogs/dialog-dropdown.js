@@ -44,7 +44,13 @@ define(function(require) {
         $(this).css("minWidth", options.minWidth);
       }
 
-      options.open = function() { 
+      options.open = function() {         
+        var selectBoxIt = $(select).data("selectBox-selectBoxIt");
+
+        if (selectBoxIt) {
+          selectBoxIt.remove();
+        }
+
         $(select).empty().prop( "disabled", (options.data().length == 0)).selectBoxIt({
           populate: options.data()
         })
@@ -66,12 +72,6 @@ define(function(require) {
 
       options.resizeStop = function (event, ui) {
         $(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
-      }
-
-      options.clear = function () {
-        if (options.data().length == 0) {
-          $(select)[0].value = "";
-        }
       }
 
       // Create the jQuery ui dialog
