@@ -7,8 +7,8 @@ define(function(require) {
     init: function() {
       this.loadSceneDialog = new dialogDropdownUI().create({
         id: 'load-scene-dialog',
-        title: 'Load a scene',
-        tip: 'Choose a scene to load from the dropdown',
+        title: 'Open a scene',
+        tip: 'Choose a scene to open from the dropdown',
         autoOpen: false,
         height: 'auto',
         width: 'auto',
@@ -20,7 +20,7 @@ define(function(require) {
         },
 
         buttons: {
-          Load: function () {
+          Open: function () {
             var scene = localStorageWrapper.getLevel(this.SelectedOption());
 
             sceneLoader.load(JSON.parse(scene));
