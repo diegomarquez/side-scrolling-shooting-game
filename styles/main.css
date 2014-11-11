@@ -628,3 +628,9 @@ html, body, div, canvas {
 .ui-slider .ui-slider-handle:focus {
     outline: 0;
 }
+
+.ui-selectable-helper {
+  position: absolute;
+  z-index: 100;
+  border: 0px dotted black;
+}
