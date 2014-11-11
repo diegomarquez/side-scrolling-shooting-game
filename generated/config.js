@@ -126,6 +126,7 @@ require.config({
 		"text-input": "src/editor/ui-components/primitives/text-inputs/text-input", 
 		"two-dimentions-input": "src/editor/ui-components/primitives/text-inputs/two-dimentions-input", 
 		"save-and-load-ui": "src/editor/ui-components/save-and-load-ui", 
+		"scene-delete-ui": "src/editor/ui-components/scene-delete-ui", 
 		"scene-load-ui": "src/editor/ui-components/scene-load-ui", 
 		"scene-name-ui": "src/editor/ui-components/scene-name-ui", 
 		"scene-save-ui": "src/editor/ui-components/scene-save-ui", 

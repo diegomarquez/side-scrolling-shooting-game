@@ -4,9 +4,9 @@ define(function(require) {
 
   var SceneDelete = require('class').extend({
     init: function() {
-      this.loadSceneDialog = new dialogDropdownUI().create({
+      this.deleteSceneDialog = new dialogDropdownUI().create({
         id: 'delete-scene-dialog',
-        title: 'Delete a scene',
+        title: 'Delete Scenes',
         autoOpen: false,
         height: 'auto',
         width: 'auto',
@@ -20,11 +20,15 @@ define(function(require) {
         buttons: {
           Delete: function () {
             localStorageWrapper.removeLevel(this.SelectedOption());
+            
+            this.deleteSceneDialog.dialog('option', 'clear')();
             $(this).dialog('close');
           },
 
           "Delete All": function () {
             localStorageWrapper.clearLevels();
+
+            this.deleteSceneDialog.dialog('option', 'clear')();
             $(this).dialog('close');
           }
 
@@ -33,7 +37,7 @@ define(function(require) {
     },
 
     open: function() {
-      return this.loadSceneDialog.dialog('open');
+      return this.deleteSceneDialog.dialog('open');
     }
   });
   

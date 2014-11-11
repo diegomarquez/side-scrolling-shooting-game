@@ -44,19 +44,19 @@ define(function(require) {
       items.push(createOptionItem(
         'Save', 
         'icon-folder-close', 
-        function() { this.open() }.bind(this.saveDialog), 
+        function() { this.open() }.bind(this.saveDialog)
       ));
 
       items.push(createOptionItem(
         'Open', 
         'icon-folder-open', 
-        function() { this.open() }.bind(this.loadDialog),
+        function() { this.open() }.bind(this.loadDialog)
       ));
       
       items.push(createOptionItem(
         'Delete', 
         'icon-trash', 
-        function() { this.open() }.bind(this.deleteDialog),
+        function() { this.open() }.bind(this.deleteDialog)
       ));
 
       $(items).each(function(index, element) {
