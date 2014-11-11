@@ -18,6 +18,8 @@ define(function(require) {
       go.single(go.CLICK, this, function(mouseData) {
         if(keyboard.isKeyDown(keyboard.ALT)) {
           this.contextMenu.show(mouseData);
+        } else {
+          this.contextMenu.hide();
         }
       });
 
