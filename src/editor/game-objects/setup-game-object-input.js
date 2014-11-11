@@ -2,7 +2,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var snapToGridValue = require('snap-to-grid-value');
 
-  var keyboard = require('keyboard');
+  
   var gameObjectContextMenu = require('game-object-context-menu');
 
   var gridCellSize = editorConfig.getGridCellSize();
@@ -15,13 +15,13 @@ define(function(require) {
     setupInteraction: function(go) {
       go.Dragable = true;
 
-      go.single(go.CLICK, this, function(mouseData) {
-        if(keyboard.isKeyDown(keyboard.ALT)) {
-          this.contextMenu.show(mouseData);
-        } else {
-          this.contextMenu.hide();
-        }
+      go.single(go.CONTEXT_MENU, this, function(mouseData) {
+        this.contextMenu.show(mouseData);
       });
+
+      go.single(go.CLICK, this, function(mouseData) {
+        this.contextMenu.hide();
+      })
 
       go.single(go.MOUSE_DRAG_START, this, function(mouseData) {
         mouseData.go.Selected = true;

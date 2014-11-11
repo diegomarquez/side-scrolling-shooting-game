@@ -37,6 +37,21 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       // Reference to the last object that executed a delegate on the MOUSE_DOWN event
       var currentMouseDownData = null;
 
+      Gb.canvas.addEventListener('contextmenu', function (event) {
+        // If a game bbject was clicked on when triggering the context menu event
+        if (currentMouseDownData) {
+          // Prevent the menu from appearing
+          event.preventDefault();
+
+          currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);
+
+          // Stop the dragging sequence
+          stopDrag(event, currentMouseDownData);
+          // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
+          currentMouseDownData = null;
+        }
+      })
+
       Gb.canvas.addEventListener('mousedown', function (event) {
         var mouseDownData = getTopMostObject(event);
 
@@ -311,6 +326,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   Object.defineProperty(GameObject.prototype, "MOUSE_DRAG", { get: function() { return 'mousedrag'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DRAG_START", { get: function() { return 'mousedragstart'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DRAG_END", { get: function() { return 'mousedragend'; } });
+  Object.defineProperty(GameObject.prototype, "CONTEXT_MENU", { get: function() { return 'context_menu'; } });
 
   Object.defineProperty(GameObject.prototype, "Dragable", { 
     get: function() { 
