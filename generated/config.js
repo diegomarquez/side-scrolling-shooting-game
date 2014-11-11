@@ -7,6 +7,10 @@ require.config({
 
     "jquery-selectBoxIt": {
         "deps": ["jquery", "jquery-ui"]
+    },
+
+    "jquery-bootstrap": {
+        "deps": ["jquery", "jquery-ui"]
     }
 },
 	paths: { 
@@ -149,6 +153,7 @@ require.config({
 		"jquery": "./lib/jquery/dist/jquery", 
 		"jquery-ui": "./lib/jquery-ui/jquery-ui", 
 		"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt", 
+		"jquery-bootstrap": "./lib/bootstrap", 
 		  
 	}  
 });

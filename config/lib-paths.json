@@ -2,5 +2,6 @@
 	"domready": "./lib/requirejs-domready/domReady",
 	"jquery": "./lib/jquery/dist/jquery",
 	"jquery-ui": "./lib/jquery-ui/jquery-ui",
-	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt"
+	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt",
+	"jquery-bootstrap": "./lib/bootstrap"
 }
