@@ -26,7 +26,7 @@ define(function(require) {
       this.gridToggleUI = new (require('grid-toggle-ui'));
       this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
-      this.saveAndLoadUI = new (require('save-and-load-ui'));
+      // this.saveAndLoadUI = new (require('save-and-load-ui'));
       
       // Bottom Left Components
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
@@ -67,8 +67,6 @@ define(function(require) {
       editorRegions.appendToTopRight(this.snapToGridToggleUI.create());
       // World Size
       editorRegions.appendToTopRight(this.worldEditUI.create());
-      // Save & Load
-      editorRegions.appendToTopRight(this.saveAndLoadUI.create());
 
       // Bottom Left Region
       // Game Object Selector

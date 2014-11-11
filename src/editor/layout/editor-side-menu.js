@@ -1,8 +1,16 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
 
+  var sceneSaveDialog = require('scene-save-ui');
+  var sceneLoadDialog = require('scene-load-ui');
+  var sceneDeleteDialog = require('scene-delete-ui');
+
   var EditorSideMenu = require('class').extend({
-    init: function() {},
+    init: function() {
+      this.saveDialog = new sceneSaveDialog();
+      this.loadDialog = new sceneLoadDialog();
+      this.deleteDialog = new sceneDeleteDialog();
+    },
 
     create: function(editorRegions) {
       var ul = document.createElement('ul');
@@ -33,10 +41,24 @@ define(function(require) {
       items.push(createDivider());
 
       items.push(createTitleItem('Storage'));
-      items.push(createOptionItem('Save', 'icon-folder-close'));
-      items.push(createOptionItem('Open', 'icon-folder-open'));
-      items.push(createOptionItem('Delete', 'icon-trash'));
- 
+      items.push(createOptionItem(
+        'Save', 
+        'icon-folder-close', 
+        function() { this.open() }.bind(this.saveDialog), 
+      ));
+
+      items.push(createOptionItem(
+        'Open', 
+        'icon-folder-open', 
+        function() { this.open() }.bind(this.loadDialog),
+      ));
+      
+      items.push(createOptionItem(
+        'Delete', 
+        'icon-trash', 
+        function() { this.open() }.bind(this.deleteDialog),
+      ));
+
       $(items).each(function(index, element) {
         this.tabIndex = index;
       })
@@ -58,7 +80,7 @@ define(function(require) {
     return li; 
   }
 
-  var createOptionItem = function(content, iconName) {
+  var createOptionItem = function(content, iconName, onClick) {
     var li = document.createElement('li'); 
     var a = document.createElement('a');
 
@@ -67,7 +89,9 @@ define(function(require) {
 
     $(li).append(a);
     $(li).addClass('side-menu-item');
-
+    
+    $(li).on('click', onClick);
+    
     var icon = document.createElement('i');
     $(icon).addClass('side-menu-icon');
     $(icon).addClass(iconName);
@@ -77,9 +101,7 @@ define(function(require) {
   }
 
   var createRegionOptionItem = function(content, iconName, description, onClick) {
-    var li = createOptionItem(content, iconName);
-
-    $(li).on('click', onClick);
+    var li = createOptionItem(content, iconName, onClick);
 
     var a = $(li).find('.side-menu-icon');
     

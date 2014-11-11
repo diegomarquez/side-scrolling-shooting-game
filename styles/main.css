@@ -54,14 +54,6 @@ html, body, div, canvas {
 	margin-bottom: 10px;
 }
 
-/*#editor-side-menu .side-menu-option:hover {
-	background: #FFD180;
-}*/
-
-/*#editor-side-menu .side-menu-option:focus {
-    background: #FFAB40;
-}*/
-
 #editor-side-menu li:focus {
 	outline: 0px;
 }

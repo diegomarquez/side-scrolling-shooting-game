@@ -1,13 +1,12 @@
 define(function(require) {
   var localStorageWrapper = require('local-storage');
-  var sceneLoader = require('scene-loader');
   var dialogDropdownUI = require('dialog-dropdown');
 
-  var SceneLoad = require('class').extend({
+  var SceneDelete = require('class').extend({
     init: function() {
       this.loadSceneDialog = new dialogDropdownUI().create({
-        id: 'load-scene-dialog',
-        title: 'Load a scene',
+        id: 'delete-scene-dialog',
+        title: 'Delete a scene',
         autoOpen: false,
         height: 'auto',
         width: 'auto',
@@ -19,13 +18,16 @@ define(function(require) {
         },
 
         buttons: {
-          Load: function () {
-            var scene = localStorageWrapper.getLevel(this.SelectedOption());
+          Delete: function () {
+            localStorageWrapper.removeLevel(this.SelectedOption());
+            $(this).dialog('close');
+          },
 
-            sceneLoader.load(JSON.parse(scene));
-
+          "Delete All": function () {
+            localStorageWrapper.clearLevels();
             $(this).dialog('close');
           }
+
         }
       });
     },
@@ -35,6 +37,6 @@ define(function(require) {
     }
   });
   
-  return SceneLoad;
+  return SceneDelete;
 });
 

@@ -1,9 +1,6 @@
 define(function(require) {
-
-  var wrapper = require('wrap-in-div');
   var localStorageWrapper = require('local-storage');
   var sceneSerializer = require('scene-serializer');
-  var button = require('button');
   var dialogUI = require('dialog');
   var sceneName = require('scene-name');
 
@@ -63,18 +60,8 @@ define(function(require) {
       });
     },
 
-    create: function() {
-      var element = new button().create({
-        id: 'level-save-button',
-        label: 'Save',
-        onClick: function(event) {
-          $(this.saveSceneDialog).dialog('open');
-        }.bind(this)
-      });
-
-      $(element).button();
-      
-      return wrapper.wrap(element);
+    open: function() {
+      return this.saveSceneDialog.dialog('open');
     }
   });
   
