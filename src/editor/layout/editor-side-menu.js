@@ -8,6 +8,8 @@ define(function(require) {
       var ul = document.createElement('ul');
       ul.id = 'editor-side-menu';
 
+      $(ul).addClass('nav nav-list');
+
       var items = [];
 
       items.push(createTitleItem('Scene Editor'));
@@ -28,28 +30,18 @@ define(function(require) {
         editorRegions.getBottomRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
 
+      items.push(createDivider());
+
       items.push(createTitleItem('Storage'));
       items.push(createOptionItem('Save', 'icon-folder-close'));
       items.push(createOptionItem('Open', 'icon-folder-open'));
       items.push(createOptionItem('Delete', 'icon-trash'));
-      items.push(createOptionItem('Upload', 'icon-upload'));
  
       $(items).each(function(index, element) {
         this.tabIndex = index;
       })
 
       $(ul).append($(items));
-
-      $(ul).tooltip({
-        items: ".side-menu-option",
-        content: function() {
-          return $(this).attr('region-description');
-        },
-        position: {
-          my: "left+15 left",
-          at: "right center"
-        }
-      });
 
       return {
          html: wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' })
@@ -59,23 +51,27 @@ define(function(require) {
 
   var createTitleItem = function(content) {
     var li = createItem(content);
-    
+  
+    $(li).addClass('nav-header');
     $(li).addClass('side-menu-title');
 
     return li; 
   }
 
   var createOptionItem = function(content, iconName) {
-    var li = createItem(content);
-    
-    $(li).addClass('side-menu-option');
+    var li = document.createElement('li'); 
+    var a = document.createElement('a');
+
+    a.href = '#'
+    a.innerHTML = content;
+
+    $(li).append(a);
+    $(li).addClass('side-menu-item');
 
     var icon = document.createElement('i');
     $(icon).addClass('side-menu-icon');
-    $(icon).addClass('icon-white');
     $(icon).addClass(iconName);
-
-    $(li).append(icon);
+    $(a).append(icon);
 
     return li;
   }
@@ -84,7 +80,29 @@ define(function(require) {
     var li = createOptionItem(content, iconName);
 
     $(li).on('click', onClick);
-    $(li).attr('region-description', description);
+
+    var a = $(li).find('.side-menu-icon');
+    
+    a.attr('data-toogle', 'tooltip');
+    a.attr('data-placement', 'bottom');
+    a.attr('title', description);
+
+    $(li).on('mouseover', function() {  
+      a.tooltip();
+      a.tooltip('show');
+    });
+
+    $(li).on('mouseout', function() {
+      a.tooltip('destroy');
+    });
+    
+    return li;
+  }
+
+  var createDivider = function() {
+    var li = document.createElement('li');
+
+    $(li).addClass('divider');
 
     return li;
   }
