@@ -51,7 +51,6 @@ define(function(require) {
           input.style.display = 'none'; 
         }
 
-        $(input).addClass('ui-widget-content');
         $(input).addClass('ui-corner-all');
 
         $(fieldset).append(label);
