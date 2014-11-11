@@ -8,6 +8,10 @@ define(function(require) {
 
     },
 
+    config: function() {
+      return editorConfig;
+    },
+
     all: function() {
       this.clear();
       this.world();
