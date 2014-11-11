@@ -39,6 +39,10 @@ define(function(require) {
 
   	container.addClass('ui-corner-all');
 
+    container.css({ 
+      'padding-right': '5px',
+    });
+
   	var icon = $(document.createElement('span'));
   	icon.css({ 
       'float': 'left', 
