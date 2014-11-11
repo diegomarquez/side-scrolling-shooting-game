@@ -106,11 +106,13 @@ define(function(require) {
     var a = $(li).find('.side-menu-icon');
     
     a.attr('data-toogle', 'tooltip');
-    a.attr('data-placement', 'bottom');
+    a.attr('data-placement', 'right');
     a.attr('title', description);
 
     $(li).on('mouseover', function() {  
-      a.tooltip();
+      a.tooltip({
+        container: 'body'
+      });
       a.tooltip('show');
     });
 
