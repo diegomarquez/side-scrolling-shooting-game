@@ -211,7 +211,7 @@ define(function(require) {
     icon.css({ 
       'float': 'left', 
       'margin-right': '3px',
-      'margin-top': '-1px'
+      'margin-top': '1px'
     });
 
     optionsElement.innerHTML = optionText;
@@ -245,7 +245,7 @@ define(function(require) {
     iconSubMenu.css({ 
       'float': 'right', 
       'margin-right': '3px',
-      'margin-top': '-1px'
+      'margin-top': '1px'
     });
 
     $(optionsElement).append(iconSubMenu);
