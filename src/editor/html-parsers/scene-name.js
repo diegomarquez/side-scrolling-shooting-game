@@ -6,11 +6,11 @@ define(function(require) {
     init: function() {},
 
     set: function(sceneName) {
-      document.querySelector('#scene-name').value = sceneName;
+      document.querySelector('.side-menu-scene-title').innerHTML = sceneName;
     },
 
     get: function() {
-      return document.querySelector('#scene-name').value;
+      return document.querySelector('.side-menu-scene-title').innerHTML;
     }
   });
 

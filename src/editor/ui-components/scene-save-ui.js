@@ -66,13 +66,15 @@ define(function(require) {
   });
   
   var serializeAndStore = function() { 
-    var sceneName = this.SceneName();
+    var name = this.SceneName();
 
-    if (localStorageWrapper.setLevel(sceneName, sceneSerializer.serialize(sceneName))) {
+    if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
       $(this).dialog('close');
     } else {
       $(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
     }
+
+    sceneName.set(name);
   }
   
   return SceneSave;

@@ -22,7 +22,6 @@ define(function(require) {
       this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
       
       // Top Right Components
-      this.sceneNameUI = new (require('scene-name-ui'));
       this.gridToggleUI = new (require('grid-toggle-ui'));
       this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
@@ -59,8 +58,6 @@ define(function(require) {
       this.canvasScrollBarsUI.create();
 
       // Top Right Region
-      // Scene name
-      editorRegions.appendToTopRight(this.sceneNameUI.create());
       // Grid Toggle
       editorRegions.appendToTopRight(this.gridToggleUI.create());
       // Snap To Grid Toggle

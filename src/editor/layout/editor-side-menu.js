@@ -20,7 +20,11 @@ define(function(require) {
 
       var items = [];
 
-      items.push(createTitleItem('Scene Editor'));
+      items.push(createTitleItem('Untitled', 'side-menu-scene-title'));
+
+      items.push(createDivider());
+
+      items.push(createTitleItem('Sections'));
       
       items.push(createRegionOptionItem('Canvas', 'icon-question-sign', 'View the created objects in the canvas. They can be dragged and right clicking will display a context menu on them. Use the scrollbars to view more of the game world if it doesn\'t fit in the canvas.' ,function (event) {
         editorRegions.getTopLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
@@ -71,11 +75,16 @@ define(function(require) {
     }
   });
 
-  var createTitleItem = function(content) {
+  var createTitleItem = function(content, className) {
     var li = createItem(content);
   
     $(li).addClass('nav-header');
-    $(li).addClass('side-menu-title');
+
+    if (className) {
+      $(li).addClass(className);
+    } else {
+      $(li).addClass('side-menu-title');
+    }
 
     return li; 
   }
