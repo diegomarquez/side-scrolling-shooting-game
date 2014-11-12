@@ -11,6 +11,10 @@ require.config({
 
     "jquery-bootstrap": {
         "deps": ["jquery", "jquery-ui"]
+    },
+
+    "bootstrap-toogle": {
+        "deps": ["jquery"]
     }
 },
 	paths: { 
@@ -153,8 +157,9 @@ require.config({
 		"domready": "./lib/requirejs-domready/domReady", 
 		"jquery": "./lib/jquery/dist/jquery", 
 		"jquery-ui": "./lib/jquery-ui/jquery-ui", 
-		"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt", 
 		"jquery-bootstrap": "./lib/bootstrap", 
+		"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle", 
+		"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt", 
 		  
 	}  
 });

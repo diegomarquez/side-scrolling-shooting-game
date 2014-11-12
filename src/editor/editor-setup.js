@@ -12,13 +12,23 @@ define(function(require) {
       return editorConfig;
     },
 
-    all: function() {
+    begin: function() {
       this.clear();
       this.world();
       this.groups();
       this.mainViewport();
       this.gridViewport();  
       this.pools();
+    },
+
+    end: function() {
+      gb.viewports.on(gb.viewports.ADD, this, function (v) {
+        // Initialize new toogles
+        $('input[editor-toggle').bootstrapToggle();
+      });
+
+      // Initialize first toggles
+      $('input[editor-toggle').bootstrapToggle();
     },
 
     clear: function() {

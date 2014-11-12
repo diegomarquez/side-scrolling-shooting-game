@@ -10,5 +10,9 @@
 
     "jquery-bootstrap": {
         "deps": ["jquery", "jquery-ui"]
+    },
+
+    "bootstrap-toogle": {
+        "deps": ["jquery"]
     }
 }

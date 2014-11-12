@@ -3,8 +3,9 @@ define(function(require) {
 
   require('jquery');
   require('jquery-ui');
-  require('jquery-selectBoxIt');
   require('jquery-bootstrap');
+  require('jquery-selectBoxIt');
+  require('bootstrap-toogle');
 
   $.fn.button.noConflict();
 
@@ -38,7 +39,7 @@ define(function(require) {
     },
 
     create: function() {
-      editorSetup.all();
+      editorSetup.begin();
 
       var mainContainer = document.createElement('div');
       mainContainer.id = 'main-container';
@@ -47,6 +48,11 @@ define(function(require) {
       var editorRegions = this.editorRegions.create();
       var editorSideMenu = this.editorSideMenu.create(editorRegions)
 
+      // var input = document.createElement('input');
+      // input.type = 'checkbox';
+      // $(input).attr('editor-toggle', '');
+      // mainContainer.appendChild(input);
+      
       // Append the regions to the document body
       mainContainer.appendChild(editorSideMenu.html);
       mainContainer.appendChild(editorRegions.html);
@@ -97,6 +103,8 @@ define(function(require) {
           } 
         });
       });
+
+      editorSetup.end();
     }
   });
 
