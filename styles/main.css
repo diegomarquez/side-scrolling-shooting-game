@@ -170,22 +170,10 @@ html, body, div, canvas {
 	width: 100%;
 }
 
-#grid-toggle-button label {
-	width: 100%;
-	text-align: center;
-
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-	
-	-webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+#grid-toggle-button > div {
+	width: 100% !important;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 /*Snap to Grid Toggle*/
@@ -194,22 +182,10 @@ html, body, div, canvas {
 	margin-top: 5px;
 }
 
-#snap-to-grid-toggle-button label {
-	width: 100%;
-	text-align: center;
-
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-	
-	-webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+#snap-to-grid-toggle-button > div {
+	width: 100% !important;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 #world-edit {
@@ -219,35 +195,6 @@ html, body, div, canvas {
 
 #world-size-container {
 	margin: 0px;
-}
-
-#save-and-load-buttons {
-	width: 100%;
-	margin-top: 10px;
-
-	-webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-#save-and-load-buttons :nth-child(1) {
-	margin-bottom: 1.5px;
-}
-
-#save-and-load-buttons :nth-child(2) {
-	margin-top: 1.5px;
-}
-
-/* Scene save */
-#level-save-button {
-	width: 100%;
-}
-
-/* File load */
-#level-load-button {
-	width: 100%;	
 }
 
 /* Game Object selection dropdown */
@@ -664,6 +611,7 @@ a,
 /*Override bootstrap button colors*/
 .btn-primary {
   background-color: #428bca;
+  border-color: #2e6da4;
 }
 
 .btn-primary:hover,
@@ -673,10 +621,12 @@ a,
 .btn-primary.disabled,
 .btn-primary[disabled] {
   background-color: #3071a9;
+  border-color: #204d74;
 }
 
 .btn-warning {
   background-color: #f0ad4e;
+  border-color: #eea236;
 }
 
 .btn-warning:hover,
@@ -686,10 +636,12 @@ a,
 .btn-warning.disabled,
 .btn-warning[disabled] {
   background-color: #ec971f;
+  border-color: #d58512;
 }
 
 .btn-danger {
   background-color: #d9534f;
+  border-color: #d43f3a;
 }
 
 .btn-danger:hover,
@@ -699,10 +651,12 @@ a,
 .btn-danger.disabled,
 .btn-danger[disabled] {
   background-color: #c9302c;
+  border-color: #ac2925;
 }
 
 .btn-success {
   background-color: #5cb85c;
+  border-color: #4cae4c;
 }
 
 .btn-success:hover,
@@ -712,10 +666,12 @@ a,
 .btn-success.disabled,
 .btn-success[disabled] {
   background-color: #449d44;
+  border-color: #398439;
 }
 
 .btn-info {
   background-color: #5bc0de;
+  border-color: #46b8da;
 }
 
 .btn-info:hover,
@@ -725,4 +681,5 @@ a,
 .btn-info.disabled,
 .btn-info[disabled] {
   background-color: #31b0d5;
+  border-color: #269abc;
 }

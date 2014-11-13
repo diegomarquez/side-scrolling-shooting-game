@@ -1,6 +1,5 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
-  var checkbox = require('checkbox');
 
   var gb = require('gb');
   var editorConfig = require('editor-config');
@@ -16,20 +15,24 @@ define(function(require) {
       var gridViewport = gb.viewports.get(editorConfig.getGridViewportName());
       gridViewport.hide();
 
-      var gridToogleUI = new checkbox().create({
-        id: 'grid-toggle-button',
-        onLabel: 'Hide Grid',
-        offLabel: 'Show Grid',
-        onChange: function(event) {
-          if (event.target.checked) {
-            gridViewport.show();
-          } else {
-            gridViewport.hide();
-          }
-        } 
+      var input = document.createElement('input');
+      input.type = 'checkbox';
+      $(input).attr('editor-toggle', '');
+
+      $(input).attr('data-on', 'Turn Grid Off');
+      $(input).attr('data-off', 'Turn Grid On');
+      
+      $(input).change(function() {
+        if ($(this).prop('checked')) {
+          gridViewport.show();
+        } else {
+          gridViewport.hide();
+        }     
       });
       
-      return gridToogleUI;
+      return wrapper.wrap(input, {
+        id: 'grid-toggle-button'
+      });
     }
   });
 

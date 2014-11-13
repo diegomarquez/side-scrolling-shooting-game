@@ -101,6 +101,7 @@ require.config({
 		"game-object-context-menu": "src/editor/ui-components/game-object-context-menu", 
 		"game-object-creator-ui": "src/editor/ui-components/game-object-creator-ui", 
 		"game-object-selector-ui": "src/editor/ui-components/game-object-selector-ui", 
+		"grid-controls-ui": "src/editor/ui-components/grid-controls-ui", 
 		"grid-toggle-ui": "src/editor/ui-components/grid-toggle-ui", 
 		"group-selector-ui": "src/editor/ui-components/group-selector-ui", 
 		"clicked-outside": "src/editor/ui-components/helpers/clicked-outside", 

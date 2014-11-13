@@ -23,10 +23,8 @@ define(function(require) {
       this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
       
       // Top Right Components
-      this.gridToggleUI = new (require('grid-toggle-ui'));
-      this.snapToGridToggleUI = new (require('snap-to-grid-toggle-ui'));
+      this.gridControlsUI = new (require('grid-controls-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
-      // this.saveAndLoadUI = new (require('save-and-load-ui'));
       
       // Bottom Left Components
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
@@ -46,12 +44,7 @@ define(function(require) {
       document.body.appendChild(mainContainer);
 
       var editorRegions = this.editorRegions.create();
-      var editorSideMenu = this.editorSideMenu.create(editorRegions)
-
-      // var input = document.createElement('input');
-      // input.type = 'checkbox';
-      // $(input).attr('editor-toggle', '');
-      // mainContainer.appendChild(input);
+      var editorSideMenu = this.editorSideMenu.create(editorRegions);
       
       // Append the regions to the document body
       mainContainer.appendChild(editorSideMenu.html);
@@ -64,10 +57,8 @@ define(function(require) {
       this.canvasScrollBarsUI.create();
 
       // Top Right Region
-      // Grid Toggle
-      editorRegions.appendToTopRight(this.gridToggleUI.create());
-      // Snap To Grid Toggle
-      editorRegions.appendToTopRight(this.snapToGridToggleUI.create());
+      // Grid Controls
+      editorRegions.appendToTopRight(this.gridControlsUI.create());
       // World Size
       editorRegions.appendToTopRight(this.worldEditUI.create());
 
