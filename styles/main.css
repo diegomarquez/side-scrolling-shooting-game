@@ -138,7 +138,6 @@ html, body, div, canvas {
 
 #editor-regions > div:nth-child(4) {
 	float: right;
-	overflow: scroll;
     background: #03A9F4;
     width: 50%;
     height: 50%;
@@ -154,15 +153,6 @@ html, body, div, canvas {
 #game {
 	position: relative;
 	background-color: #000000;
-}
-
-/*Scene name input field*/
-#scene-name {
-	width: 100%;
-	height: 28px;
-	margin: 0px;
-
-	cursor: default;
 }
 
 /*Grid Toggle*/
@@ -190,7 +180,7 @@ html, body, div, canvas {
 
 #world-edit {
 	width: 100%;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 #world-size-container {
@@ -202,27 +192,52 @@ html, body, div, canvas {
 	width: 100%;
 }
 
+/* Viewport Selection dropdown */
 #viewport-selector-simple {
 	width: 100%;
 	margin-top: 5px;
 }
 
-/* Viewport selection */
-#viewports-container {
-	overflow: scroll;
-	height: 250px;
+/* Viewport creation */
+#viewport-creator button {
+	width: 100%;
 }
 
-#viewports-container > * {
-	margin-bottom: 5px;
+/* Viewport Editing */
+#viewports-container {
+	overflow: scroll;
+	height: calc(100% - 65px);
 }
 
 #viewports-container > :nth-child(odd):not(.ui-state-highlight) {
 	background-color: #e6e6e6;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 #viewports-container > :nth-child(even):not(.ui-state-highlight) {
 	background-color: #c6c6c6;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+#viewports-container > :nth-child(2):not(.ui-state-highlight) {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#viewports-container > :nth-last-child(2):not(.ui-state-highlight) {
+	margin-bottom: 10px;
+}
+
+#viewports-container > :nth-child(1):not(.ui-state-highlight) {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#viewports-container > :nth-last-child(1):not(.ui-state-highlight) {
+	margin-bottom: 0px;
+	margin-top: 0px;
 }
 
 .viewport-control {
@@ -322,11 +337,6 @@ html, body, div, canvas {
 .ui-buttonset .ui-button {
 	margin-left: 0;
 	margin-right: 0;
-}
-
-/* Viewport creation */
-#viewport-creator button {
-	width: 100%;
 }
 
 /* Game Object Create button */

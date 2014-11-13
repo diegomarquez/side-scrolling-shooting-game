@@ -4,10 +4,20 @@ define(function(require) {
   var statusMessage = require('create-status-message')
 
   var EditorRegions = require('class').extend({
-    init: function() {},
+    init: function() {
+      this.controller = null;
+    },
+
+    get: function() {
+      if (this.controller) {
+        return this.controller;
+      } else {
+        return this.create();
+      }
+    },
 
     create: function() {
-      return {
+      this.controller = {
         html: wrapper.wrap(wrapper.wrap(
           [ 
             createRegion('topLeft'), 
@@ -39,40 +49,61 @@ define(function(require) {
           this.getBottomRight().append(content);
         },
 
-        getTopLeft: function(content) {
+        getTopLeft: function() {
           return $(this.html).find('#topLeft'); 
         },
 
-        getTopRight: function(content) {
+        getTopRight: function() {
           return $(this.html).find('#topRight');
         },
 
-        getBottomLeft: function(content) {
+        getBottomLeft: function() {
           return $(this.html).find('#bottomLeft');
         },
 
-        getBottomRight: function(content) {
+        getBottomRight: function() {
           return $(this.html).find('#bottomRight');
         },
 
-        getTopLeftContainer: function(content) {
+        getTopLeftContainer: function() {
           return this.getTopLeft().parent('.region'); 
         },
 
-        getTopRightContainer: function(content) {
+        getTopRightContainer: function() {
           return this.getTopRight().parent('.region');
         },
 
-        getBottomLeftContainer: function(content) {
+        getBottomLeftContainer: function() {
           return this.getBottomLeft().parent('.region');
         },
 
-        getBottomRightContainer: function(content) {
+        getBottomRightContainer: function() {
           return this.getBottomRight().parent('.region');
+        },
+
+        getRegion: function(child) {
+          for (var i = 0; i < this.regionGetters.length; i++) {
+            var r = isInRegion(this.regionGetters[i].call(this), child);
+            
+            if (r.contains) {
+              return r.region;
+            }
+          }
         }
       }
+
+      this.controller.regionGetters = [this.controller.getTopLeft, this.controller.getTopRight, this.controller.getBottomLeft, this.controller.getBottomRight]
+
+      return this.controller;
     }
   });
+
+  var isInRegion = function(region, child) {
+    return {
+      contains: $(region).find(child).length == 1,
+      region: $(region)[0]
+    };
+  }
 
   var createRegion = function(id) {
     var content = document.createElement('div');
@@ -83,5 +114,5 @@ define(function(require) {
     return wrapper.wrap([content], { className: 'region'});
   }
 
-  return EditorRegions;
+  return new EditorRegions();
 });

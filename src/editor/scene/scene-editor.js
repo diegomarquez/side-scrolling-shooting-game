@@ -17,7 +17,7 @@ define(function(require) {
     init: function() {
       // Main Layout
       this.editorSideMenu = new (require('editor-side-menu'));
-      this.editorRegions = new (require('editor-regions'));
+      this.editorRegions = require('editor-regions');
 
       // Top Left Components
       this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
@@ -44,7 +44,7 @@ define(function(require) {
       document.body.appendChild(mainContainer);
 
       var editorRegions = this.editorRegions.create();
-      var editorSideMenu = this.editorSideMenu.create(editorRegions);
+      var editorSideMenu = this.editorSideMenu.create();
       
       // Append the regions to the document body
       mainContainer.appendChild(editorSideMenu.html);
@@ -71,8 +71,8 @@ define(function(require) {
       editorRegions.appendToBottomLeft(this.gameObjectCreatorUI.create());
 
       // Bottom Right Region
-      editorRegions.appendToBottomRight(this.viewportsUI.create());
       editorRegions.appendToBottomRight(this.viewportCreateUI.create());
+      editorRegions.appendToBottomRight(this.viewportsUI.create());
 
       // Add a viewport UI component when a viewport is added
       gb.viewports.on(gb.viewports.ADD, this, function (v) {

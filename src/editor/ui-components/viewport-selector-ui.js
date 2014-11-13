@@ -4,6 +4,7 @@ define(function(require) {
   var viewportEditorUI = require('viewport-editor-ui');
   var setupViewport = require('setup-viewport');
   var editorConfig = require('editor-config');
+  var editorRegions = require('editor-regions');
 
   var ViewportSelector = require('class').extend({
     init: function() {
@@ -15,17 +16,19 @@ define(function(require) {
       this.container = document.createElement('div');
       this.container.id = 'viewports-container';
 
-      var allViewports = editorConfig.getViewports();
+      var wrapped = wrapper.wrap(this.container, {
+        classNames: ['well', 'well-small'],
+      });
 
-      setupSortable(this.container)
+      setupSortable(this.container);
+      
+      var allViewports = editorConfig.getViewports();
 
       for (var i = 0; i < allViewports.length; i++) {
         this.add(allViewports[i]);
       }
 
-      return wrapper.wrap(this.container, {
-        classNames: ['well', 'well-small']
-      });
+      return wrapped;
     },
 
     add: function(viewport) {
@@ -38,6 +41,7 @@ define(function(require) {
       this.children[viewport.name] = viewportEditor;
 
       $(this.container).append($(viewportEditor));
+
       $(this.container).sortable('refresh');
     },
 
