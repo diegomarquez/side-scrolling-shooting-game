@@ -11,12 +11,6 @@ define(function(require) {
       var canvas = document.getElementById('main');
       var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 
-      gb.viewports.on(gb.viewports.ADD, this, function (v) {
-        if (v.name == editorConfig.getMainViewportName()) {
-          viewport = v;
-        }
-      });
-
       var verticalScrollBar = new scrollBar().create(function() {
         return {
           id: 'canvas-vertical-scroll-bar',
@@ -58,6 +52,18 @@ define(function(require) {
 
       canvas.appendChild(verticalScrollBar.html);
       canvas.appendChild(horizontalScrollBar.html);
+
+      // Stuff to do when a new 'Main' viewport is added. AKA, load a new scene
+      gb.viewports.on(gb.viewports.ADD, this, function (v) {
+        // Make sure the following is only done when it is detected that a viewport with name 'Main' was added
+        if (v.name == editorConfig.getMainViewportName()) {
+          // Update the viewport reference
+          viewport = v;
+          // Reset scroll bars position          
+          horizontalScrollBar.slider('value', 0);
+          verticalScrollBar.slider('value', 0);
+        }
+      });
 
       // Refresh the scrollbars when the world changes
       world.on(world.CHANGE_HEIGHT, this, function(value) {

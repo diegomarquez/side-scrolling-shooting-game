@@ -72,6 +72,10 @@ define(function(require) {
 
         sliderOption: function(name) {
           return $(scrollbar).slider('option', name);
+        },
+
+        slider: function() {
+          return $(scrollbar).slider.apply($(scrollbar), arguments);
         }
       };
     }
