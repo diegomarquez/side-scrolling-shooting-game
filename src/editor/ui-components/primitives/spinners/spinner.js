@@ -14,10 +14,16 @@ define(function(require) {
 
       options.change = options.onChange;
       options.spin = options.onSpin;
+      options.stop = options.onStop;
 
       var spinner = $(input).spinner(options);
 
-      return wrapper.wrap(spinner.parent()[0], options);
+      return {
+        html: wrapper.wrap(spinner.parent()[0], options),
+        controller: function() {
+          $(input).spinner.apply($(input), arguments);
+        }
+      }
     }
   });
 

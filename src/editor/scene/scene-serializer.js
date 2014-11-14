@@ -1,5 +1,6 @@
 define(function(require) {
   var gb = require('gb');
+  var world = require('world');
   var editorConfig = require('editor-config');
 
   var SceneSerializer = require("class").extend({
@@ -60,7 +61,11 @@ define(function(require) {
         name: sceneName,
         objects: gos,
         groups: groups,
-        viewports: vs
+        viewports: vs,
+        world: {
+          width: world.getWidth(),
+          height: world.getHeight()
+        }
       }
 
       return JSON.stringify(scene);

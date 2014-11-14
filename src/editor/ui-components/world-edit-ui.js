@@ -18,18 +18,26 @@ define(function(require) {
         minX: gb.canvas.width,
         stepX: gridCellSize.width,
         valueX: world.getWidth(),
-        onSpinX: function(event, ui) {
-          world.setWidth(ui.value);
+        onStopX: function(event, ui) {
+          world.setWidth($(event.target).spinner('value'));
         },
         minY: gb.canvas.height,
         stepY: gridCellSize.height,
         valueY: world.getHeight(),
-        onSpinY: function(event, ui) {
-          world.setHeight(ui.value);
-        }
+        onStopY: function(event, ui) {
+          world.setHeight($(event.target).spinner('value'));
+        },
       }); 
 
-      return wrapper.wrap(wrapper.wrap([sizeUI], { id: 'world-edit'}));
+      world.on(world.CHANGE_WIDTH, this, function(width) {
+        sizeUI.controller.X('value', width);
+      });
+
+      world.on(world.CHANGE_HEIGHT, this, function(height) {
+        sizeUI.controller.Y('value', height);
+      });
+
+      return wrapper.wrap(wrapper.wrap([sizeUI.html], { id: 'world-edit'}));
     }
   });
 

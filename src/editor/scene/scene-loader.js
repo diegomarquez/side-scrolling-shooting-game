@@ -1,6 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
+  var world = require('world');
   var editorSetup = require('editor-setup');
   var setupEditorObject = require('setup-editable-game-object');
   var sceneName = require('scene-name');
@@ -14,6 +15,10 @@ define(function(require) {
 
       // Set the scene name in the UI
       sceneName.set(scene.name);
+
+      // Set the world dimentions
+      world.setWidth(scene.world.width);
+      world.setHeight(scene.world.height);
 
       // Create Update Groups
       var groups = scene.groups;

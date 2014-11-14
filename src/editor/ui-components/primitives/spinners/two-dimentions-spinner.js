@@ -20,7 +20,8 @@ define(function(require) {
         min: options.minX,
         step: options.stepX,
         onChange: options.onChangeX,
-        onSpin: options.onSpinX
+        onSpin: options.onSpinX,
+        onStop: options.onStopX
       });
 
       var spinnerY = new spinnerUI().create({
@@ -30,13 +31,20 @@ define(function(require) {
         min: options.minY,
         step: options.stepY,
         onChange: options.onChangeY,
-        onSpin: options.onSpinY
+        onSpin: options.onSpinY,
+        onStop: options.onStopY
       });
 
-      return wrapper.wrap([wrapper.wrap(label), wrapper.wrap(spinnerX), wrapper.wrap(spinnerY)], {
-        id: options.id,
-        classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
-      });
+      return {
+        html: wrapper.wrap([wrapper.wrap(label), wrapper.wrap(spinnerX.html), wrapper.wrap(spinnerY.html)], {
+          id: options.id,
+          classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
+        }),
+        controller: {
+          X: spinnerX.controller,
+          Y: spinnerY.controller
+        }
+      }
     }
   });
 
