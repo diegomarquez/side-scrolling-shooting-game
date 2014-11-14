@@ -11,6 +11,12 @@ define(function(require) {
       var canvas = document.getElementById('main');
       var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 
+      gb.viewports.on(gb.viewports.ADD, this, function (v) {
+        if (v.name == editorConfig.getMainViewportName()) {
+          viewport = v;
+        }
+      });
+
       var verticalScrollBar = new scrollBar().create(function() {
         return {
           id: 'canvas-vertical-scroll-bar',
