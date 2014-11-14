@@ -5,6 +5,8 @@ define(function(require) {
   var sceneLoadDialog = require('scene-load-ui');
   var sceneDeleteDialog = require('scene-delete-ui');
 
+  var listCreator = require('list');
+
   var editorRegions = require('editor-regions');
 
   var EditorSideMenu = require('class').extend({
@@ -12,6 +14,86 @@ define(function(require) {
       this.saveDialog = new sceneSaveDialog();
       this.loadDialog = new sceneLoadDialog();
       this.deleteDialog = new sceneDeleteDialog();
+
+      this.tooltipListCreator = new listCreator();
+
+      this.canvasTooltipContent = this.tooltipListCreator.create({
+        id: 'canvas-section-tooltip',
+        items: [
+          {
+            type: 'item',
+            content: 'View the created objects.'
+          },
+          {
+            type: 'item',
+            content: 'Drag them around the world.'
+          },
+          {
+            type: 'item',
+            content: 'Right click on them for more editing options.'
+          },
+          {
+            type: 'item',
+            content: 'Use the scrollbars to view all the world.'
+          }
+        ]
+      });
+
+      this.settingsTooltipContent = this.tooltipListCreator.create({
+        id: 'settings-section-tooltip',
+        items: [
+          {
+            type: 'item',
+            content: 'Toggle the grid on and off.'
+          },
+          {
+            type: 'item',
+            content: 'Toggle snap to grid when dragging objects.'
+          },
+          {
+            type: 'item',
+            content: 'Change the size of the world.'
+          }
+        ]
+      });
+
+      this.gameObjectsTooltipContent = this.tooltipListCreator.create({
+        id: 'game-objects-section-tooltip',
+        items: [
+          {
+            type: 'item',
+            content: 'Choose an object type to create.'
+          },
+          {
+            type: 'item',
+            content: 'Choose the viewports the object will appear in. Drag on the menu to select more than one viewport.'
+          }
+        ]
+      });
+
+      'Add new viewports, edit and sort them in this section. Sorting is done by dragging and dropping.'
+
+      this.viewportsTooltipContent = this.tooltipListCreator.create({
+        id: 'viewports-section-tooltip',
+        items: [
+          {
+            type: 'item',
+            content: 'Add new viewports.'
+          },
+          {
+            type: 'item',
+            content: 'Edit them after creation.'
+          },
+          {
+            type: 'item',
+            content: 'Sort them to change drawing order by draggin them in their container.'
+          },
+          {
+            type: 'item',
+            content: 'Add, remove and sort layers of each viewport.'
+          }
+        ]
+      });
     },
 
     create: function() {
@@ -27,20 +109,20 @@ define(function(require) {
       items.push(createDivider());
 
       items.push(createTitleItem('Sections'));
-      
-      items.push(createRegionOptionItem('Canvas', 'icon-question-sign', 'View the created objects in the canvas. They can be dragged and right clicking will display a context menu on them. Use the scrollbars to view more of the game world if it doesn\'t fit in the canvas.' ,function (event) {
+
+      items.push(createRegionOptionItem('Canvas', 'icon-question-sign', this.canvasTooltipContent.html.outerHTML ,function (event) {
         editorRegions.get().getTopLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Settings', 'icon-question-sign', 'Global settings. These options affect the whole scene.', function (event) {
+      items.push(createRegionOptionItem('Misc. Settings', 'icon-question-sign', this.settingsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getTopRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Game Objects', 'icon-question-sign', 'Use this section to create predifined objects. After selecting an object type and the viewports it should be displayed in click the "Create Game Object" button to add it to the scene.', function (event) {
+      items.push(createRegionOptionItem('Game Objects', 'icon-question-sign', this.gameObjectsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getBottomLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Viewports', 'icon-question-sign', 'Add new viewports, edit and sort them in this section. Sorting is done by dragging and dropping.', function (event) {
+      items.push(createRegionOptionItem('Viewports', 'icon-question-sign', this.viewportsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getBottomRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
 
@@ -112,24 +194,29 @@ define(function(require) {
     return li;
   }
 
-  var createRegionOptionItem = function(content, iconName, description, onClick) {
-    var li = createOptionItem(content, iconName, onClick);
+  var createRegionOptionItem = function(title, iconName, description, onClick) {
+    var li = createOptionItem(title, iconName, onClick);
 
     var a = $(li).find('.side-menu-icon');
     
-    a.attr('data-toogle', 'tooltip');
+    a.attr('data-toogle', 'popover');
     a.attr('data-placement', 'right');
-    a.attr('title', description);
+    a.attr('data-html', true);
+    a.attr('title', title);
+    a.attr('data-content', description);
 
     $(li).on('mouseover', function() {  
-      a.tooltip({
+      a.popover({
         container: 'body'
+      }).on("show.bs.popover", function() {
+        $(this).data("popover").tip().css({ maxWidth: "350px" });
       });
-      a.tooltip('show');
+
+      a.popover('show');
     });
 
     $(li).on('mouseout', function() {
-      a.tooltip('destroy');
+      a.popover('destroy');
     });
     
     return li;

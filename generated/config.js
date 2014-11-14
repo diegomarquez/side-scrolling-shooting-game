@@ -122,6 +122,7 @@ require.config({
 		"editable-dropdown-add-remove": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-add-remove", 
 		"editable-dropdown-basic": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-basic", 
 		"editable-dropdown-remove": "src/editor/ui-components/primitives/dropdowns/editable-dropdown-remove", 
+		"list": "src/editor/ui-components/primitives/list", 
 		"menu": "src/editor/ui-components/primitives/menu", 
 		"scroll-bar": "src/editor/ui-components/primitives/scrollbars/scroll-bar", 
 		"one-dimention-spinner": "src/editor/ui-components/primitives/spinners/one-dimention-spinner", 
