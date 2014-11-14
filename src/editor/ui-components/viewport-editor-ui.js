@@ -96,28 +96,19 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
-      $(document).uitooltip({
-        items: "[viewport-name]",
-        content: function() {
-          return $(this).attr('viewport-name');
-        },
-        position: {
-          my: "right center", 
-          at: "left-15 center",
-          using: function( position, feedback ) {
-            $( this ).css( position );
-            $( "<div>" )
-            .addClass( "arrow right" )
-            .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
-            .appendTo( this );
-          }
-        }
-      });
-
-      return wrapper.wrap(container, {
+      return $(wrapper.wrap(container, {
         classNames: ['well', 'well-small']
-      });
+      })).on('mouseover', function() {  
+        $(this).tooltip({
+          container: 'body',
+          title: options.viewport.name,
+          placement: 'left'
+        })
+
+        $(this).tooltip('show');
+      }).on('mouseout', function() {
+        $(this).tooltip('destroy');
+      })[0];
     }
   });
 
