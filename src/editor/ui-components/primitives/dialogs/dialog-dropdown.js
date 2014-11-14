@@ -49,6 +49,7 @@ define(function(require) {
 
         if (selectBoxIt) {
           selectBoxIt.remove();
+          selectBoxIt.destroy();
         }
 
         $(select).empty().prop( "disabled", (options.data().length == 0)).selectBoxIt({
