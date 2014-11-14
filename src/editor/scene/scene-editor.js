@@ -1,6 +1,4 @@
 define(function(require) {
-  $.widget.bridge('uitooltip', $.ui.tooltip);
-
   require('jquery');
   require('jquery-ui');
   require('jquery-bootstrap');
