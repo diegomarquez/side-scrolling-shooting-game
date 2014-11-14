@@ -43,7 +43,7 @@ define(function(require) {
       var levels = this.getAllLevels();
 
       for (var i = 0; i < levels.length; i++) {
-        removeItem.call(this, levels[i]);
+        this.removeLevel.call(this, levels[i]);
       };
     },
 
