@@ -1,3 +1,50 @@
+/*Pallete*/
+
+/*PRIMARY
+2196F3
+
+BBDEFB
+2196F3
+1976D2
+
+ACCENT
+
+f0ad4e
+eea236
+*/
+
+/*Buttons*/
+/*PRIMARY
+	#428bca
+	border #357ebd
+	hover #3276b1
+	hover border #285e8e
+
+SUCCESS
+	#5cb85c
+	border #4cae4c
+	hover #449d44
+	hover border #398439
+
+INFO
+	#5bc0de
+	border #46b8da
+	hover #31b0d5
+	hover border #269abc
+
+WARNING
+	#f0ad4e
+	border #eea236
+	hover #ec971f
+	hover border #d58512
+
+DANGER
+	#d9534f
+	border #d43f3a
+	hover #c9302c
+	hover border #ac2925*/
+
+
 html, body, div, canvas {
     margin: 0;
     padding: 0;
@@ -16,8 +63,12 @@ html, body, div, canvas {
     bottom: 0;
     overflow-y: auto;
 
+    background: #2196F3;
+
     width: 15%;
+
 	margin: 0px;
+	padding: 0px;
 
 	border-top: 5px solid #fff;
 	border-left: 5px solid #fff;
@@ -33,15 +84,49 @@ html, body, div, canvas {
 #editor-side-menu .side-menu-scene-title {
 	font-size: 20px;
 	padding-bottom: 15px;
+	padding-top: 15px;
+	padding-left: 20px;
+
+	color: #f0ad4e;
+
+	cursor: default;
+}
+
+#editor-side-menu .divider {
+	margin: 5px;
+	padding: 0px;
+
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 #editor-side-menu .side-menu-title {
 	font-size: 17px;
-	padding-bottom: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+
+	color: #f0ad4e;
+
+	cursor: default;
 }
 
 #editor-side-menu .side-menu-item {
-	margin-bottom: 10px;
+	margin: 0px;
+
+	padding: 5px;
+	padding-left: 20px;
+}
+
+#editor-side-menu .side-menu-item * {
+	color: #fff;
+}
+
+#editor-side-menu .side-menu-item:hover {
+	background-color: #FFD180;
+}
+
+#editor-side-menu .side-menu-item:hover * {
+	background-color: transparent;
 }
 
 #editor-side-menu li:focus {
@@ -111,13 +196,13 @@ html, body, div, canvas {
    border-right: 2.5px solid #fff;
    border-bottom: 2.5px solid #fff;
 
-   background: #03A9F4;
+   background: #2196F3;
 }
 
 #editor-regions > div:nth-child(2) {
 	float: right;
     overflow: scroll;
-    background: #03A9F4;
+    background: #2196F3;
     width: 50%;
     height: 50%;
 
@@ -128,7 +213,7 @@ html, body, div, canvas {
 #editor-regions > div:nth-child(3) {
 	float: left;
 	overflow: scroll;
-    background: #03A9F4;
+    background: #2196F3;
     width: 50%;
     height: 50%;
 
@@ -138,7 +223,7 @@ html, body, div, canvas {
 
 #editor-regions > div:nth-child(4) {
 	float: right;
-    background: #03A9F4;
+    background: #2196F3;
     width: 50%;
     height: 50%;
 
@@ -153,6 +238,14 @@ html, body, div, canvas {
 #game {
 	position: relative;
 	background-color: #000000;
+}
+
+#canvas-horizontal-scroll-bar {
+	border: 0px solid transparent;
+}
+
+#canvas-vertical-scroll-bar {
+	border: 0px solid transparent;
 }
 
 /*Grid Toggle*/
@@ -577,11 +670,13 @@ html, body, div, canvas {
 	touch-action: none;
 	padding: 0;
 	margin: 0;
-	background: #777;
+	background-color: #428bca;
+  	border-color: #357ebd;
 }
 
-.ui-slider .ui-slider-handle:focus {
-    outline: 0;
+.ui-slider .ui-slider-handle:hover {
+	background-color: #3276b1;
+ 	border-color: #285e8e;
 }
 
 /*Override selectable helper of jquery UI to remove dotted line*/
@@ -611,6 +706,17 @@ a,
   -webkit-border-radius: 0!important;
      -moz-border-radius: 0!important;
           border-radius: 0!important;
+
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+*:focus {
+	outline: 0;
 }
 
 
@@ -621,7 +727,7 @@ a,
 /*Override bootstrap button colors*/
 .btn-primary {
   background-color: #428bca;
-  border-color: #2e6da4;
+  border-color: #357ebd;
 }
 
 .btn-primary:hover,
@@ -630,8 +736,8 @@ a,
 .btn-primary.active,
 .btn-primary.disabled,
 .btn-primary[disabled] {
-  background-color: #3071a9;
-  border-color: #204d74;
+  background-color: #3276b1;
+  border-color: #285e8e;
 }
 
 .btn-warning {

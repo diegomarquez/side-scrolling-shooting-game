@@ -27,7 +27,7 @@ define(function(require) {
         $('input[editor-toggle').bootstrapToggle();
       });
 
-      // Initialize first toggles
+      // Initialize first toggles 
       $('input[editor-toggle').bootstrapToggle();
     },
 

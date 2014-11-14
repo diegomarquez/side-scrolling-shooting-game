@@ -105,6 +105,7 @@ define(function(require) {
     
     var icon = document.createElement('i');
     $(icon).addClass('side-menu-icon');
+    $(icon).addClass('icon-white');
     $(icon).addClass(iconName);
     $(a).append(icon);
 
