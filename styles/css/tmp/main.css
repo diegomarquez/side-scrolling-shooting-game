@@ -34,7 +34,7 @@ canvas {
   left: 0;
   bottom: 0;
   overflow-y: auto;
-  background: #2196f3;
+  background: #4e91f0;
   width: 15%;
   margin: 0px;
   padding: 0px;
@@ -55,14 +55,14 @@ canvas {
   padding-bottom: 15px;
   padding-top: 15px;
   padding-left: 20px;
-  color: #c77c11;
+  color: #eea236;
   cursor: default;
 }
 #editor-side-menu .side-menu-title {
   font-size: 17px;
   padding-bottom: 10px;
   padding-left: 20px;
-  color: #c77c11;
+  color: #eea236;
   cursor: default;
 }
 #editor-side-menu .side-menu-item {
@@ -74,7 +74,7 @@ canvas {
   color: #fff;
 }
 #editor-side-menu .side-menu-item:hover {
-  background-color: #f8d9ac;
+  background-color: #f2b866;
 }
 #editor-side-menu .side-menu-item:hover * {
   background-color: transparent;
@@ -119,7 +119,7 @@ canvas {
   overflow: auto;
   width: 50%;
   height: 50%;
-  background: #2196f3;
+  background: #4e91f0;
   border-right: 2.5px solid #fff;
   border-bottom: 2.5px solid #fff;
 }
@@ -128,7 +128,7 @@ canvas {
   overflow: auto;
   width: 50%;
   height: 50%;
-  background: #2196f3;
+  background: #4e91f0;
   border-left: 2.5px solid #fff;
   border-bottom: 2.5px solid #fff;
 }
@@ -137,7 +137,7 @@ canvas {
   overflow: auto;
   width: 50%;
   height: 50%;
-  background: #2196f3;
+  background: #4e91f0;
   border-top: 2.5px solid #fff;
   border-right: 2.5px solid #fff;
 }
@@ -145,7 +145,7 @@ canvas {
   float: right;
   width: 50%;
   height: 50%;
-  background: #2196f3;
+  background: #4e91f0;
   border-top: 2.5px solid #fff;
   border-left: 2.5px solid #fff;
 }
@@ -424,12 +424,12 @@ canvas {
   touch-action: none;
   padding: 0;
   margin: 0;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 .ui-slider .ui-slider-handle:hover {
-  background-color: #5697d0;
-  border-color: #428bca;
+  background-color: #f2b866;
+  border-color: #f0ad4e;
 }
 #grid-toggle-button {
   width: 100%;

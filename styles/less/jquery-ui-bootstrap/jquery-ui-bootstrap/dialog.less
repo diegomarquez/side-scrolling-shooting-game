@@ -108,12 +108,12 @@
 
 .ui-dialog-buttonpane .ui-dialog-buttonset .ui-button {
     color: #ffffff;
-    background-color: #428bca;
-    border-color: #357ebd;
+    background-color: @editor-button-primary;
+    border-color: @editor-button-primary-border;
 	&.ui-state-hover{
 		color: #ffffff;
-		background-color: #3276b1;
-		border-color: #285e8e;
+		background-color: darken(@editor-button-primary, 5%);
+		border-color: darken(@editor-button-primary-border, 5%);
 	}
 }
 
