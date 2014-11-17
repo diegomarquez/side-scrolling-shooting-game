@@ -96,19 +96,26 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
-      return $(wrapper.wrap(container, {
+      var wrapped = wrapper.wrap(container, {
         classNames: ['well', 'well-small']
-      })).on('mouseover', function() {  
-        $(this).tooltip({
-          container: 'body',
-          title: options.viewport.name,
-          placement: 'left'
-        })
+      });
 
-        $(this).tooltip('show');
-      }).on('mouseout', function() {
-        $(this).tooltip('destroy');
-      })[0];
+      return $(wrapped)
+        .on('mouseenter', function() {  
+          $(this).tooltip({
+            container: 'body',
+            title: options.viewport.name,
+            placement: 'left'
+          })
+
+          $(this).tooltip('show');
+        })
+        .on('mouseleave', function() {
+          $(this).tooltip('destroy');
+        })
+        .on('mousedown', function(event) {
+          $(this).tooltip('destroy');
+        })[0];
     }
   });
 
