@@ -6078,31 +6078,31 @@ td.visible-print {
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-  color: #f0ad4e;
-  background-color: #f2b866;
+  color: #000000;
+  background-color: #fae3c4;
   border-color: #eea236;
 }
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,
 .ui-widget-header .ui-state-highlight a {
-  color: #f0ad4e;
+  color: #000000;
 }
 .ui-state-error,
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
-  color: #cd0a0a;
-  background-color: #f64747;
-  border-color: #6c0505;
+  color: #f05c4e;
+  background-color: #fac8c4;
+  border-color: #ee4636;
 }
 .ui-state-error a,
 .ui-widget-content .ui-state-error a,
 .ui-widget-header .ui-state-error a {
-  color: #6c0505;
+  color: #c72111;
 }
 .ui-state-error-text,
 .ui-widget-content .ui-state-error-text,
 .ui-widget-header .ui-state-error-text {
-  color: #6c0505;
+  color: #c72111;
 }
 .ui-priority-primary,
 .ui-widget-content .ui-priority-primary,
