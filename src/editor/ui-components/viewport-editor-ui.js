@@ -96,27 +96,35 @@ define(function(require) {
       container.appendChild(checkboxSetUI);
       container.appendChild(layersUI.html);  
 
-      var wrapped = wrapper.wrap(container, {
-        classNames: ['well', 'well-small']
-      });
-
-      return $(wrapped)
+      return $(wrapper.wrap(container, { classNames: ['well', 'well-small'] }))
+        .tooltip({
+          container: 'body',
+          title: options.viewport.name,
+          placement: 'left',
+          trigger: 'manual'
+        })
         .on('mouseenter', function() {  
-          $(this).tooltip({
-            container: 'body',
-            title: options.viewport.name,
-            placement: 'left'
-          })
-
-          $(this).tooltip('show');
+          if (canShowTooltip) {
+            $(this).tooltip('show');
+          }
         })
         .on('mouseleave', function() {
-          $(this).tooltip('destroy');
+          $(this).tooltip('hide');
         })
         .on('mousedown', function(event) {
-          $(this).tooltip('destroy');
-        })[0];
+          $(this).tooltip('hide');
+        })[0]
     }
+  });
+  
+  var canShowTooltip = true;
+
+  $(document).on('mousedown', function() {
+    canShowTooltip = false;
+  });
+
+  $(document).on('mouseup', function() {
+    canShowTooltip = true;
   });
 
   var getOptions = function(viewport) {
