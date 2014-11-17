@@ -205,17 +205,17 @@ define(function(require) {
     a.attr('title', title);
     a.attr('data-content', description);
 
-    $(li).on('mouseover', function() {  
+    $(li).on('mouseenter', function() {  
       a.popover({
         container: 'body'
       }).on("show.bs.popover", function() {
-        $(this).data("popover").tip().css({ maxWidth: "350px" });
+        $(this).data("bs.popover").tip().css({ maxWidth: "350px" });
       });
 
       a.popover('show');
     });
 
-    $(li).on('mouseout', function() {
+    $(li).on('mouseleave', function() {
       a.popover('destroy');
     });
     
