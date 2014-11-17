@@ -182,6 +182,9 @@ canvas {
   margin-bottom: 0px;
   margin-top: 0px;
 }
+#viewports-container .ui-state-highlight {
+  margin-bottom: 10px;
+}
 .viewport-control {
   width: 100%;
 }
