@@ -57,6 +57,25 @@ module.exports = function(grunt) {
 
     downloadfile: {
       files: []
+    },
+
+    less: {
+      target: {
+        options: {
+          paths: ['styles/less']
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'styles/less/',   
+            src: ['*/style.less'],
+            dest: 'styles/css/tmp/',
+            rename: function(dest, src) {
+              return dest + src.substring(0, src.indexOf('/')) + '.css';
+            }
+          }
+        ]
+      }
     }
   });
 
@@ -67,6 +86,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-merge-json');
   grunt.loadNpmTasks('grunt-file-append');
   grunt.loadNpmTasks('grunt-downloadfile');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
   // Local tasks
   grunt.loadTasks('tasks');
@@ -79,6 +99,8 @@ module.exports = function(grunt) {
   grunt.registerTask('framework', ['clean', 'shell:framework']);
   // Download files which are not available from bower
   grunt.registerTask('download', ['downloadfile']);
+  // Preprocess .less files
+  // grunt.registerTask('less', ['less']);
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
   // This task 

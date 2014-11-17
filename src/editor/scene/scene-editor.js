@@ -1,8 +1,9 @@
 define(function(require) {
   require('jquery');
   require('jquery-ui');
-  require('jquery-bootstrap');
   require('jquery-selectBoxIt');
+  
+  require('bootstrap');
   require('bootstrap-toogle');
 
   $.fn.button.noConflict();
@@ -38,7 +39,7 @@ define(function(require) {
       editorSetup.begin();
 
       var mainContainer = document.createElement('div');
-      mainContainer.id = 'main-container';
+      mainContainer.id = 'main-editor-container';
       document.body.appendChild(mainContainer);
 
       var editorRegions = this.editorRegions.create();

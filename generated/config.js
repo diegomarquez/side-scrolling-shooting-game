@@ -9,12 +9,12 @@ require.config({
         "deps": ["jquery", "jquery-ui"]
     },
 
-    "jquery-bootstrap": {
+    "bootstrap": {
         "deps": ["jquery", "jquery-ui"]
     },
 
     "bootstrap-toogle": {
-        "deps": ["jquery"]
+        "deps": ["jquery", "bootstrap"]
     }
 },
 	paths: { 
@@ -159,7 +159,7 @@ require.config({
 		"domready": "./lib/requirejs-domready/domReady", 
 		"jquery": "./lib/jquery/dist/jquery", 
 		"jquery-ui": "./lib/jquery-ui/jquery-ui", 
-		"jquery-bootstrap": "./lib/bootstrap", 
+		"bootstrap": "./lib/bootstrap/dist/js/bootstrap", 
 		"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle", 
 		"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt", 
 		  

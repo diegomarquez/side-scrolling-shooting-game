@@ -110,19 +110,19 @@ define(function(require) {
 
       items.push(createTitleItem('Sections'));
 
-      items.push(createRegionOptionItem('Canvas', 'icon-question-sign', this.canvasTooltipContent.html.outerHTML ,function (event) {
+      items.push(createRegionOptionItem('Canvas', 'glyphicon-question-sign', this.canvasTooltipContent.html.outerHTML ,function (event) {
         editorRegions.get().getTopLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Misc. Settings', 'icon-question-sign', this.settingsTooltipContent.html.outerHTML, function (event) {
+      items.push(createRegionOptionItem('Misc. Settings', 'glyphicon-question-sign', this.settingsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getTopRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Game Objects', 'icon-question-sign', this.gameObjectsTooltipContent.html.outerHTML, function (event) {
+      items.push(createRegionOptionItem('Game Objects', 'glyphicon-question-sign', this.gameObjectsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getBottomLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
       
-      items.push(createRegionOptionItem('Viewports', 'icon-question-sign', this.viewportsTooltipContent.html.outerHTML, function (event) {
+      items.push(createRegionOptionItem('Viewports', 'glyphicon-question-sign', this.viewportsTooltipContent.html.outerHTML, function (event) {
         editorRegions.get().getBottomRightContainer().effect("highlight", {color: '#FFD180'}, 500);
       }));
 
@@ -131,19 +131,19 @@ define(function(require) {
       items.push(createTitleItem('Storage'));
       items.push(createOptionItem(
         'Save', 
-        'icon-folder-close', 
+        'glyphicon-floppy-save', 
         function() { this.open() }.bind(this.saveDialog)
       ));
 
       items.push(createOptionItem(
         'Open', 
-        'icon-folder-open', 
+        'glyphicon-floppy-open', 
         function() { this.open() }.bind(this.loadDialog)
       ));
       
       items.push(createOptionItem(
         'Delete', 
-        'icon-trash', 
+        'glyphicon-trash', 
         function() { this.open() }.bind(this.deleteDialog)
       ));
 
@@ -184,10 +184,10 @@ define(function(require) {
     $(li).addClass('side-menu-item');
     
     $(li).on('click', onClick);
-    
-    var icon = document.createElement('i');
+   
+    var icon = document.createElement('span');
     $(icon).addClass('side-menu-icon');
-    $(icon).addClass('icon-white');
+    $(icon).addClass('glyphicon icon-white');
     $(icon).addClass(iconName);
     $(a).append(icon);
 

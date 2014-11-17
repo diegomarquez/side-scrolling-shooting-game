@@ -8,11 +8,11 @@
         "deps": ["jquery", "jquery-ui"]
     },
 
-    "jquery-bootstrap": {
+    "bootstrap": {
         "deps": ["jquery", "jquery-ui"]
     },
 
     "bootstrap-toogle": {
-        "deps": ["jquery"]
+        "deps": ["jquery", "bootstrap"]
     }
 }

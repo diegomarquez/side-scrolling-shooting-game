@@ -1,0 +1,99 @@
+.margins-top-bottom() {
+	margin-bottom: @margin-base;
+	margin-top: @margin-base;
+}
+
+.margins-bottom() {
+	margin-bottom: @margin-base;
+	margin-top: 0px;
+}
+
+.margins-none() {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+#viewport-creator button {
+	width: 100%;
+}
+
+@odd-color: #e6e6e6;
+@even-color: #c6c6c6;
+
+@margin-base: 10px;
+
+#viewports-container {
+	overflow: scroll;
+	height: calc(100% - 65px);
+
+	& > :nth-child(odd):not(.ui-state-highlight) {
+		background-color: @odd-color;
+		.margins-top-bottom;
+	}
+
+	& > :nth-child(even):not(.ui-state-highlight) {
+		background-color: @even-color;
+		.margins-top-bottom;
+	}
+
+	& > :nth-child(2):not(.ui-state-highlight) { .margins-bottom; }
+	& > :nth-last-child(2):not(.ui-state-highlight) { .margins-bottom; }
+	& > :nth-child(1):not(.ui-state-highlight) { .margins-bottom; }
+	& > :nth-last-child(1):not(.ui-state-highlight) { .margins-none; }
+}
+
+.viewport-control {
+	width: 100%;
+}
+
+.viewport-checkboxes {
+	width: 100%;
+	display: table;
+	margin-bottom: 4px;
+
+	.editor-box-sizing;
+}
+
+.viewport-checkboxes > div {
+    display: table-row;
+}
+
+.viewport-checkboxes > div > input {
+    display: none;
+}
+
+.viewport-checkboxes > div > label {
+    display: table-cell;
+}
+
+/*jQuery UI override*/
+.viewport-checkboxes > div > input[name='Edit'] + label.ui-state-active {
+	cursor: pointer;
+	background-color: #e6e6e6;
+	background-repeat: no-repeat;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+	padding: 5px 14px 6px;
+	margin: 0;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	color: #333;
+	font-size: 13px;
+	line-height: normal;
+	border: 1px solid #ccc;
+	border-bottom-color: #bbb;
+
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	-webkit-transition: 0.1s linear background-image;
+	-moz-transition: 0.1s linear background-image;
+	-ms-transition: 0.1s linear background-image;
+	-o-transition: 0.1s linear background-image;
+	transition: 0.1s linear background-image;
+	overflow: visible;
+}

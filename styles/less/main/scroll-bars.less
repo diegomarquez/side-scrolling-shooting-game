@@ -1,0 +1,31 @@
+.scroll-bar-border() {
+	border: 0px solid transparent;
+}
+
+#canvas-horizontal-scroll-bar { .scroll-bar-border; }
+
+#canvas-vertical-scroll-bar { .scroll-bar-border; }
+
+/*Override jQuery UI slider defaults*/
+.ui-slider {
+	overflow: hidden;
+
+	.ui-slider-handle {
+		position: absolute;
+		z-index: 2;
+		width: 1.2em;
+		height: 1.2em;
+		cursor: default;
+		-ms-touch-action: none;
+		touch-action: none;
+		padding: 0;
+		margin: 0;
+		background-color: #428bca;
+	  	border-color: #357ebd;
+
+		&:hover {
+			background-color: #3276b1;
+ 			border-color: #285e8e;		
+		}
+	}
+}

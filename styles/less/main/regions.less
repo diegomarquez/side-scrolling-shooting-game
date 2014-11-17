@@ -1,0 +1,83 @@
+.common-region-style() {
+  width: 50%;
+  height: 50%;
+  background: #2196F3;
+}
+
+.region-border(@top; @left; @right; @bottom) {
+  & when (@top = true) {
+    border-top: 2.5px solid #fff;
+  }
+
+  & when (@left = true) {
+    border-left: 2.5px solid #fff;
+  }
+
+  & when (@right = true) {
+    border-right: 2.5px solid #fff;
+  }
+
+  & when (@bottom = true) {
+    border-bottom: 2.5px solid #fff;
+  }
+}
+
+#editor-regions-wrapper {
+	position: relative;
+	width: 85%;
+	height: 100%;
+	left: 15%;
+}
+
+#editor-regions {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.region {
+	position: relative;
+  border: 5px solid #fff;
+    
+  .editor-box-sizing
+}
+
+.region-container {
+	padding: 5px;
+
+  > div {
+	 margin-bottom: 5px; 
+  }
+}
+
+
+#editor-regions {
+  > div:nth-child(1) {
+    float: left;
+
+    .common-region-style;
+    .region-border(false, false, true, true);
+  }
+
+  > div:nth-child(2) {
+    float: right;
+
+    .common-region-style;
+    .region-border(false, true, false, true);
+  }
+
+  > div:nth-child(3) {
+    float: left;
+
+    .common-region-style;
+    .region-border(true, false, true, false);
+
+  }
+
+  > div:nth-child(4) {
+    float: right;
+
+    .common-region-style;
+    .region-border(true, true, false, false);
+  }
+}
