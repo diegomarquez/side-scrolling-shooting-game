@@ -4,6 +4,15 @@
 	padding-right: 0px;
 }
 
+.block-button() {
+	width: 100%;
+
+	button {
+		width: 100%;
+		text-align: left;
+	}	
+}
+
 // Grid Toggle
 #grid-toggle-button {
 	width: 100%;
@@ -35,13 +44,14 @@
 
 // Game object selection dropdown
 #game-object-selector {
-	width: 100%;
+	.block-button;
 }
 
 // Viewport selection dropdown
 #viewport-selector-simple {
-	width: 100%;
 	margin-top: 5px;
+
+	.block-button;
 }
 
 // Game Object create button
@@ -49,7 +59,7 @@
 	margin-top: 5px;
 
 	#game-object-create-button {
-		width: 100%;	
+		.block-button;
 	}	
 }
 

@@ -62,7 +62,8 @@ module.exports = function(grunt) {
     less: {
       target: {
         options: {
-          paths: ['styles/less']
+          paths: ['styles/less'],
+          strictMath: true
         },
         files: [
           {
@@ -72,7 +73,7 @@ module.exports = function(grunt) {
             dest: 'styles/css/tmp/',
             rename: function(dest, src) {
               return dest + src.substring(0, src.indexOf('/')) + '.css';
-            }
+            },
           }
         ]
       }

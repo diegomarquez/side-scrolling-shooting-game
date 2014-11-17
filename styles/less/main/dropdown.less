@@ -1,6 +1,31 @@
 /* Editable dropdown */
 .drop-down {
     position: relative;
+
+    .split-button {
+		width: 100%;
+
+		.main-button {
+			text-align: left;
+			display: inline-block;
+			width: 90%;
+		}
+
+		.add-button {
+			display: inline-block;
+			width: 10%;
+		}
+	}
+
+	.ui-state-highlight {
+		margin: 0px;
+		margin-top: 4px;	
+	}
+
+	& > .ui-button {
+		text-align: left;
+		width: 100%;
+	}
 }
 
 .drop-down-menu {
@@ -40,31 +65,6 @@
 				}
 			}
 		}
-	}
-
-	.split-button {
-		width: 100%;
-
-		.main-button {
-			text-align: left;
-			display: inline-block;
-			width: 90%;
-		}
-
-		.add-button {
-			display: inline-block;
-			width: 10%;
-		}
-	}
-
-	.ui-state-highlight {
-		margin: 0px;
-		margin-top: 4px;	
-	}
-
-	& > .ui-button {
-		text-align: left;
-		width: 100%;
 	}
 }
 
