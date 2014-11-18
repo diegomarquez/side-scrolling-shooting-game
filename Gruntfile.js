@@ -114,14 +114,11 @@ module.exports = function(grunt) {
 
     cssmin: {
       target: {
+        options: {
+          keepSpecialComments: 0
+        },
         files: [{
-          expand: true,
-          cwd: 'generated/css/',
-          src: ['!(main.css)'],
-          dest: 'styles/css/',
-          rename: function() {
-            return 'all_styles.css';
-          }
+          'styles/css/all_styles.css': ['styles/css/all_styles.css']
         }]
       }
     }
@@ -146,18 +143,18 @@ module.exports = function(grunt) {
   grunt.registerTask('config', ['create-config']);
   // This task downloads game-builder source code
   grunt.registerTask('framework', ['clean', 'shell:framework']);
-  // Preprocess .less files
-  // grunt.registerTask('less', ['less']);
-  grunt.registerTask('concatenate', ['concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
+  // This task builds css with minification
+  grunt.registerTask('build-stylesheet-prod', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main', 'cssmin']);
+  // This task builds css without minification
+  grunt.registerTask('build-stylesheet-dev', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
-  // This task 
-    // downloads any bower components
-    // downloads game-builder source
-    // generates requirejs configuration
-    // generates the local and remote asset map
-  grunt.registerTask('build', ['shell:bower', 'framework', 'config', 'asset-map']);
+  
+  // This tasks uses all the taks defined above, generating an unminified stylesheet for development
+  grunt.registerTask('build-dev', ['shell:bower', 'framework', 'config', 'asset-map', 'build-stylesheet-dev']);
+  // This tasks uses all the taks defined above, generating a minified stylesheet for production
+  grunt.registerTask('build-prod', ['shell:bower', 'framework', 'config', 'asset-map', 'build-stylesheet-prod']);
 
-  // The default task get's all dependencies, generates everything needed and finally opens index.html 
-  grunt.registerTask('default', ['build', 'run']);
+  // The default task builds for development and opens index.html on the default browser 
+  grunt.registerTask('default', ['build-dev', 'run']);
 };
