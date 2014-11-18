@@ -2,3 +2,5 @@ node_modules
 lib
 game-builder
 TODO.txt
+generated
+styles/css/all_styles.css
