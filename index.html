@@ -15,30 +15,12 @@
       </canvas>
     </div>
 
-
     <!-- require.js -->
     <script src="./lib/requirejs/require.js"></script>
     <!-- require.js configuration -->
     <script src="generated/config.js"></script>
-    <!-- Object with local and remote asset paths -->
-    <script src="generated/asset-map.js"></script>
-    <!-- Object with font data and version of webfonts.js to use -->
-    <script src="config/font-data.js"></script>
     <script>
-      // This waits for the DOM to be ready before doing anything. It loads the json-cache module.
-      require(["domready!", "json-cache", "font-loader"], function(doc, jsonCache, fontLoader) {
-        // Cache the asset map loaded from asset-map.js . Later it will be available through the json-cache module,
-        // using the 'asset-map' id.
-        jsonCache.cache("asset-map", assetMap);
-
-        // Start loading configured fonts
-        fontLoader.start(webfonts, function() {
-          // Now all fonts are loaded, and FOUT has been avoided.
-
-          // Create main module
-          require(["main"], function(main){});
-        });
-      });
+      require(["pre-load"]);
     </script>
   </body>
 </html>
