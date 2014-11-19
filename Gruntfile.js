@@ -152,7 +152,7 @@ module.exports = function(grunt) {
         baseUrl: './',
         name: './lib/almond/almond',
         mainConfigFile: generatedDir + 'config.js',
-        include: ['font-loader', 'domready', 'main'],
+        include: ['pre-load', 'font-loader', 'domready', 'main'],
         wrapShim: true
       },
 
@@ -193,6 +193,20 @@ module.exports = function(grunt) {
           { src: [generatedDir + 'asset-map.json'], dest: p.framework + '/src/' },
           { src: [configDir + 'font-data.json'], dest: p.framework + '/src/' }
         ]
+      }
+    },
+
+    'create-build-index': {
+      dev: {
+        options: {
+          buildDir: buildDevDir
+        }
+      },
+
+      prod: {
+        options: {
+          buildDir: buildProdDir
+        }
       }
     } 
   });
@@ -239,8 +253,8 @@ module.exports = function(grunt) {
   // Builds a production release, js and css minified
   // grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'index:prod', 'cssmin'])
   
-  grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev'])
-  grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'cssmin'])
+  grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev', 'create-build-index:dev'])
+  grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'create-build-index:prod', 'cssmin'])
 
   // The default task builds for development and opens index.html on the default browser 
   grunt.registerTask('default', ['setup', 'run']);

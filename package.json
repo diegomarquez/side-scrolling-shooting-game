@@ -5,6 +5,8 @@
   "additionalAssetPaths": "",
   "frameworkRepo": "git@github.com:diegomarquez/game-builder.git",
   "framework": "./game-builder",
+  "canvasWidth": 400,
+  "canvasHeight": 300,
   "lib": "./lib",
   "frameworkTag": "master",
   "dependencies": {

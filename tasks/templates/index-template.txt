@@ -1,0 +1,18 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= name %></title>
+    <link rel="stylesheet" href="styles/css/all_styles.css"/>
+  </head>
+  <body>
+    <div id="main">
+      <canvas id="game" width="<%= canvasWidth %>" height="<%= canvasHeight %>">
+        Sorry, your web browser does not support Canvas content.
+      </canvas>
+    </div>
+    <script src="packaged.js"></script>
+    <script>
+      require(["pre-load"]);
+    </script>
+  </body>
+</html>
