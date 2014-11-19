@@ -5,8 +5,6 @@ define(function(require){
 
   var sceneEditor = require('scene-editor');
 
-  gb.debug = true;
-
   // Storing some references to avoid excesive typing
   var game = gb.game;
 

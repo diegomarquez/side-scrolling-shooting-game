@@ -13,6 +13,8 @@ define(function(require) {
     },
 
     begin: function() {
+      gb.toggleDebug();
+
       this.clear();
       this.world();
       this.groups();
