@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   var allStylesFilename = 'all_styles.css';
   var buildProdDir = 'build/prod/';
   var buildDevDir = 'build/dev/';
+  var stylesDir = 'styles/';
   var stylesCssDir = 'styles/css/';
   var stylesLessDir = 'styles/less/';
   var generatedDir = 'generated/';
@@ -24,7 +25,7 @@ module.exports = function(grunt) {
         files: [
           { expand: true, src: 'assets/**', dest: buildDevDir },
           { expand: true, src: stylesCssDir + allStylesFilename, dest: buildDevDir },
-          { expand: true, src: stylesCssDir + 'assets/**', dest: buildDevDir + 'styles/' }
+          { expand: true, cwd: stylesDir, src: 'assets/**', dest: buildDevDir + stylesDir }
         ]
       },
       
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
         files: [
           { expand: true, src: 'assets/**', dest: buildProdDir },
           { expand: true, src: stylesCssDir + allStylesFilename, dest: buildProdDir },
-          { expand: true, src: stylesCssDir + 'assets/**', dest: buildProdDir + 'styles/' }
+          { expand: true, cwd: stylesDir, src: 'assets/**', dest: buildProdDir + stylesDir }
         ] 
       }
     },
@@ -50,12 +51,22 @@ module.exports = function(grunt) {
     },
 
     'clean': {
+      options: { force: true },
+
       // Clean the folder where game-builder is downloaded
-      target: {
+      framework: {
         src: [path.join(p.framework)],
       },
 
-      options: { force: true }
+      // Clean the folder of the development build
+      'build-dev': {
+        src: 'build/dev'
+      },
+
+      // Clean the folder of the production build
+      'build-prod': {
+        src: 'build/prod'
+      }
     },
 
     open: {
@@ -208,7 +219,7 @@ module.exports = function(grunt) {
   // This task creates all the requirejs configuration needed
   grunt.registerTask('config', ['create-config']);
   // This task downloads game-builder source code
-  grunt.registerTask('framework', ['clean', 'shell:framework']);  
+  grunt.registerTask('framework', ['clean:framework', 'shell:framework']);  
   // This task builds the css stylesheet
   grunt.registerTask('css', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
   // This task opens index.html
@@ -228,8 +239,8 @@ module.exports = function(grunt) {
   // Builds a production release, js and css minified
   // grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'index:prod', 'cssmin'])
   
-  grunt.registerTask('build-dev', ['requirejs:dev', 'copy:dev'])
-  grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'cssmin'])
+  grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev'])
+  grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'cssmin'])
 
   // The default task builds for development and opens index.html on the default browser 
   grunt.registerTask('default', ['setup', 'run']);
