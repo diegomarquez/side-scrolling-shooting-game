@@ -23,14 +23,16 @@ module.exports = function(grunt) {
       dev: {
         files: [
           { expand: true, src: 'assets/**', dest: buildDevDir },
-          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildDevDir }
+          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildDevDir },
+          { expand: true, src: stylesCssDir + 'assets/**', dest: buildDevDir + 'styles/' }
         ]
       },
       
       prod: {
         files: [
           { expand: true, src: 'assets/**', dest: buildProdDir },
-          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildProdDir }
+          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildProdDir },
+          { expand: true, src: stylesCssDir + 'assets/**', dest: buildProdDir + 'styles/' }
         ] 
       }
     },
@@ -68,17 +70,6 @@ module.exports = function(grunt) {
         dest: generatedDir + 'asset-map.json'
       }
     },
-
-    // Prepend a variable declaration in asset-map.js
-    // file_append: {
-    //   default_options: {
-    //     files: {
-    //       'generated/asset-map.js': {
-    //         prepend: "var assetMap = "
-    //       }
-    //     }
-    //   }
-    // },
 
     'less': {
       target: {
