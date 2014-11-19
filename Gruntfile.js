@@ -1,8 +1,17 @@
-var path = require('path')
+var path = require('path');
 
 module.exports = function(grunt) {
   var t = grunt.template.process;
   var p = grunt.file.readJSON('package.json');
+
+  var allStylesFilename = 'all_styles.css';
+  var buildProdDir = 'build/prod/';
+  var buildDevDir = 'build/dev/';
+  var stylesCssDir = 'styles/css/';
+  var stylesLessDir = 'styles/less/';
+  var generatedDir = 'generated/';
+  var generatedCssDir = 'generated/css/'; 
+  var configDir = 'config/';
 
   // Making sure that this path has the correct separator. Just in case.
   p.framework = p.framework.split(/[/|\\]/).join(path.sep);
@@ -10,7 +19,23 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: p,
 
-    shell: {
+    'copy': {
+      dev: {
+        files: [
+          { expand: true, src: 'assets/**', dest: buildDevDir },
+          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildDevDir }
+        ]
+      },
+      
+      prod: {
+        files: [
+          { expand: true, src: 'assets/**', dest: buildProdDir },
+          { expand: true, src: stylesCssDir + allStylesFilename, dest: buildProdDir }
+        ] 
+      }
+    },
+
+    'shell': {
       // Run bower from grunt.
       bower: { 
         command: 'bower install' 
@@ -22,7 +47,7 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: {
+    'clean': {
       // Clean the folder where game-builder is downloaded
       target: {
         src: [path.join(p.framework)],
@@ -37,39 +62,35 @@ module.exports = function(grunt) {
     },
 
     // Merge files to create asset-map.js
-    "merge-json": {
+    'merge-json': {
       map: {
-        src: [ 'generated/asset-map.js', "config/remote-assets.json"],
-        dest: 'generated/asset-map.js'
+        src: [ generatedDir + 'asset-map.json', configDir + "remote-assets.json"],
+        dest: generatedDir + 'asset-map.json'
       }
     },
 
     // Prepend a variable declaration in asset-map.js
-    file_append: {
-      default_options: {
-        files: {
-          'generated/asset-map.js': {
-            prepend: "var assetMap = "
-          }
-        }
-      }
-    },
+    // file_append: {
+    //   default_options: {
+    //     files: {
+    //       'generated/asset-map.js': {
+    //         prepend: "var assetMap = "
+    //       }
+    //     }
+    //   }
+    // },
 
-    downloadfile: {
-      files: []
-    },
-
-    less: {
+    'less': {
       target: {
         options: {
-          paths: ['styles/less'],
+          paths: [stylesLessDir],
           strictMath: true
         },
         files: [{
           expand: true,
-          cwd: 'styles/less/',   
+          cwd: stylesLessDir,   
           src: ['*/style.less'],
-          dest: 'generated/css/',
+          dest: generatedCssDir,
           rename: function(dest, src) {
             return dest + src.substring(0, src.indexOf('/')) + '.css';
           },
@@ -77,55 +98,106 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
+    'concat': {
       generated_sans_main: {
         files: [{
           expand: true,
-          cwd: 'generated/css/',
+          cwd: generatedCssDir,
           src: ['*.css', '!*main.css'],
-          dest: 'styles/css/',
+          dest: stylesCssDir,
           rename: function(dest, src) {
-            return dest + 'all_styles.css';
+            return dest + allStylesFilename;
           }
         }]
       },
       plain_sans_main: {
         files: [{
           expand: true,
-          cwd: 'styles/css/',
+          cwd: stylesCssDir,
           src: ['*.css', '!*main.css'],
-          dest: 'styles/css/',
+          dest: stylesCssDir,
           rename: function(dest, src) {
-            return dest + 'all_styles.css';
+            return dest + allStylesFilename;
           }
         }]
       },
       append_main: {
         files: [{
           expand: true,
-          src: ['styles/css/all_styles.css', 'generated/css/main.css', 'styles/css/main.css'],
-          dest: 'styles/css/',
+          src: [stylesCssDir + allStylesFilename, generatedCssDir + 'main.css', stylesCssDir + 'main.css'],
+          dest: stylesCssDir,
           rename: function(dest, src) {
-            return dest + 'all_styles.css';
+            return dest + allStylesFilename;
           }
         }]
       }
     },
 
-    cssmin: {
+    'cssmin': {
       target: {
         options: {
           keepSpecialComments: 0
         },
         files: [{
-          'styles/css/all_styles.css': ['styles/css/all_styles.css']
+          src: buildProdDir + stylesCssDir + allStylesFilename,
+          dest: buildProdDir + stylesCssDir + allStylesFilename
         }]
       }
-    }
+    },
+
+    'requirejs': {
+      options: {
+        baseUrl: './',
+        name: './lib/almond/almond',
+        mainConfigFile: generatedDir + 'config.js',
+        include: ['font-loader', 'domready', 'main'],
+        wrapShim: true
+      },
+
+      dev: {
+        options: {
+          out: buildDevDir + 'packaged.js',
+          optimize: 'none',
+          preserveLicenseComments: true
+        }
+      },
+
+      prod: {
+        options: {
+          out: buildProdDir + 'packaged.js',
+          optimize: 'uglify2',
+          preserveLicenseComments: false
+        }
+      }
+    },
+
+    'create-config': {
+      options: {
+        configDir: configDir,
+        generatedDir: generatedDir
+      }
+    },
+
+    'local-assets': {
+      options: {
+        configDir: configDir,
+        generatedDir: generatedDir
+      }
+    },
+
+    'create-data-module': {
+      target: {
+        files: [
+          { src: [generatedDir + 'asset-map.json'], dest: p.framework + '/src/' },
+          { src: [configDir + 'font-data.json'], dest: p.framework + '/src/' }
+        ]
+      }
+    } 
   });
 
   // Npm goodness
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-open');
@@ -133,28 +205,41 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-file-append');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // Local tasks
   grunt.loadTasks('tasks');
-
+  
+  // This taks creates requireJs modules out of .json files
+  grunt.registerTask('data-modules', ['create-data-module']);
   // This task creates the asset map 
-  grunt.registerTask('asset-map', ['local-assets', 'merge-json', 'file_append']);
+  grunt.registerTask('asset-map', ['local-assets', 'merge-json']);
   // This task creates all the requirejs configuration needed
   grunt.registerTask('config', ['create-config']);
   // This task downloads game-builder source code
-  grunt.registerTask('framework', ['clean', 'shell:framework']);
-  // This task builds css with minification
-  grunt.registerTask('build-stylesheet-prod', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main', 'cssmin']);
-  // This task builds css without minification
-  grunt.registerTask('build-stylesheet-dev', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
+  grunt.registerTask('framework', ['clean', 'shell:framework']);  
+  // This task builds the css stylesheet
+  grunt.registerTask('css', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
   
-  // This tasks uses all the taks defined above, generating an unminified stylesheet for development
-  grunt.registerTask('build-dev', ['shell:bower', 'framework', 'config', 'asset-map', 'build-stylesheet-dev']);
-  // This tasks uses all the taks defined above, generating a minified stylesheet for production
-  grunt.registerTask('build-prod', ['shell:bower', 'framework', 'config', 'asset-map', 'build-stylesheet-prod']);
+  // This task sets up the development environment
+    // Gets bower dependencies
+    // Gets game-builder source
+    // Builds the main stylesheet
+    // Builds the asset map
+    // Creates data modules
+    // Generates requireJS configuration
+  grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map', 'data-modules', 'config']);
+  
+  // Builds a development release, no minification
+  // grunt.registerTask('build-dev', ['requirejs:dev', 'copy:dev', 'index:dev'])
+  // Builds a production release, js and css minified
+  // grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'index:prod', 'cssmin'])
+  
+  grunt.registerTask('build-dev', ['requirejs:dev', 'copy:dev'])
+  grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'cssmin'])
 
   // The default task builds for development and opens index.html on the default browser 
-  grunt.registerTask('default', ['build-dev', 'run']);
+  grunt.registerTask('default', ['setup', 'run']);
 };

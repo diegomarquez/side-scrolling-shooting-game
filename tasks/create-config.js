@@ -3,6 +3,7 @@ var path = require('path');
 module.exports = function(grunt) {
     grunt.registerTask('create-config', function() {
 		var p = grunt.file.readJSON('package.json');
+		var options = this.options();
 
 	  	// Making sure that this path has the correct separator. Just in case.
 	  	p.additionalSrcPaths = p.additionalSrcPaths ? p.additionalSrcPaths.split(/[/|\\]/).join(path.sep) : "";
@@ -37,22 +38,22 @@ module.exports = function(grunt) {
 	      paths.push({alias:base, path:p});
 	    }
 
-	    var libPaths = grunt.file.readJSON('config/lib-paths.json');
+	    var libPaths = grunt.file.readJSON(options.configDir + 'lib-paths.json');
 
 	    for (var k in libPaths) {
 	    	paths.push({alias:k, path:libPaths[k]});
 	    }
 
-		var r = grunt.template.process(grunt.file.read('tasks/config-template.txt'), { 
+		var r = grunt.template.process(grunt.file.read('tasks/templates/requirejs-config-template.txt'), { 
 			data: { 
 				paths: paths, 
-				shim: grunt.file.read('config/shim-config.json')
+				shim: grunt.file.read(options.configDir + 'shim-config.json')
 			}
 		});
 
 	    // Write the contents of processing the previous template into config.js
 	    // If the file already exists, it is deleted
-	    var name = 'generated/config.js'
+	    var name = options.generatedDir + 'config.js'
 	    if (grunt.file.isFile(name)) {
 	      grunt.file.delete(name, {force: true});  
 	    }
