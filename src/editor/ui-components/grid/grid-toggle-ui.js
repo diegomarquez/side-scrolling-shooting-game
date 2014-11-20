@@ -1,7 +1,6 @@
 define(function(require) {
-  var wrapper = require('wrap-in-div');
-
   var gb = require('gb');
+  var toggle = require('toggle');
   var editorConfig = require('editor-config');
   var gridBundle = require('grid-bundle');
 
@@ -15,23 +14,17 @@ define(function(require) {
       var gridViewport = gb.viewports.get(editorConfig.getGridViewportName());
       gridViewport.hide();
 
-      var input = document.createElement('input');
-      input.type = 'checkbox';
-      $(input).attr('editor-toggle', '');
-
-      $(input).attr('data-on', 'Turn Grid Off');
-      $(input).attr('data-off', 'Turn Grid On');
-      
-      $(input).change(function() {
-        if ($(this).prop('checked')) {
-          gridViewport.show();
-        } else {
-          gridViewport.hide();
-        }     
-      });
-      
-      return wrapper.wrap(input, {
-        id: 'grid-toggle-button'
+      return toggle.create({
+        id: 'grid-toggle-button',
+        on: 'Turn Grid Off',
+        off: 'Turn Grid On',
+        onChange: function() {
+          if ($(this).prop('checked')) {
+            gridViewport.show();
+          } else {
+            gridViewport.hide();
+          }
+        }
       });
     }
   });

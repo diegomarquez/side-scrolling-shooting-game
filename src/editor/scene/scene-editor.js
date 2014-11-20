@@ -23,9 +23,7 @@ define(function(require) {
       
       // Top Right Components
       this.gridControlsUI = new (require('grid-controls-ui'));
-
-      this.colliderToggleUI = new (require('colliders-toggle-ui'));
-
+      this.gameObjectControlsUI = new (require('game-object-controls-ui'));
       this.worldEditUI = new (require('world-edit-ui'));
       
       // Bottom Left Components
@@ -61,11 +59,11 @@ define(function(require) {
       // Top Right Region
       // Grid Controls
       editorRegions.appendToTopRight(this.gridControlsUI.create());
+      // Game Object Controls
+      editorRegions.appendToTopRight(this.gameObjectControlsUI.create());
       // World Size
       editorRegions.appendToTopRight(this.worldEditUI.create());
-
-      editorRegions.appendToTopRight(this.colliderToggleUI.create());
-
+      
       // Bottom Left Region
       // Game Object Selector
       editorRegions.appendToBottomLeft(this.gameObjectSelectorUI.create());
