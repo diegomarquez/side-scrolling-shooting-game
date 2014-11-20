@@ -239,6 +239,8 @@ module.exports = function(grunt) {
   grunt.registerTask('css', ['less', 'concat:generated_sans_main', 'concat:plain_sans_main', 'concat:append_main']);
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
+  // Refreshes all the data before opening index.html
+  grunt.registerTask('refresh', ['css', 'asset-map', 'data-modules', 'config', 'open:index']);
   
   // This task sets up the development environment
     // Gets bower dependencies
@@ -250,13 +252,10 @@ module.exports = function(grunt) {
   grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map', 'data-modules', 'config']);
   
   // Builds a development release, no minification
-  // grunt.registerTask('build-dev', ['requirejs:dev', 'copy:dev', 'index:dev'])
-  // Builds a production release, js and css minified
-  // grunt.registerTask('build-prod', ['requirejs:prod', 'copy:prod', 'index:prod', 'cssmin'])
-  
   grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev', 'create-build-index:dev'])
+  // Builds a production release, js and css minified
   grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'create-build-index:prod', 'cssmin'])
 
-  // The default task builds for development and opens index.html on the default browser 
-  grunt.registerTask('default', ['setup', 'run']);
+  // Default task sets up for development
+  grunt.registerTask('default', ['setup']);
 };
