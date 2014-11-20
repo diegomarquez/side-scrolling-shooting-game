@@ -11,8 +11,5 @@
       </canvas>
     </div>
     <script src="packaged.js"></script>
-    <script>
-      require(["pre-load"]);
-    </script>
   </body>
 </html>

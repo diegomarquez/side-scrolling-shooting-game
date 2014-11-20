@@ -152,8 +152,9 @@ module.exports = function(grunt) {
         baseUrl: './',
         name: './lib/almond/almond',
         mainConfigFile: generatedDir + 'config.js',
-        include: ['pre-load', 'font-loader', 'domready', 'main'],
-        wrapShim: true
+        include: ['pre-load', 'main'],
+        wrapShim: true,
+        insertRequire: ['pre-load']
       },
 
       dev: {
