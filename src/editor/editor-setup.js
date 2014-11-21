@@ -34,14 +34,12 @@ define(function(require) {
     },
 
     clear: function() {
-      // Claim all Game Objects
-      gb.reclaimer.claimAll();
+      // Claim all Game Objects and clean up the pools from instances
+      gb.reclaimer.clearAllObjectsFromPools();
       // Remove all update groups
       gb.groups.removeAll();
       // Remove all Viewports
       gb.viewports.removeAll();
-      
-      // TODO: Remove all objects from pools to start with a clean slate
     },
 
     pools: function() {
