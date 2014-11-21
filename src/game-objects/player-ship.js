@@ -1,4 +1,4 @@
-define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
+define(["editor-game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
   var PlayerShip = GameObject.extend({
     // Contructor
     init: function() {
@@ -10,18 +10,16 @@ define(["game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
       this.viewportOffsetY = 0;
     },
 
-    start: function() {
-      this._super();
+    editorStart: function() {
+      Keyboard.onKeyDown(Keyboard.A, this, function() {
+        var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
 
-      // Keyboard.onKeyDown(Keyboard.A, this, function() {
-      //   var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
-
-      //   bullet.x = this.X + 20;
-      //   bullet.y = this.Y;
-      // });
+        bullet.x = this.X + 20;
+        bullet.y = this.Y;
+      });
     },
 
-    update: function(delta) {
+    editorUpdate: function(delta) {
       // Auto scrolling
       // this.x += 0.5;
 
