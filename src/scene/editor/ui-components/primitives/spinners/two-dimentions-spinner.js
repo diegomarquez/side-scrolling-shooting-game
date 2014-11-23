@@ -36,7 +36,7 @@ define(function(require) {
         onStop: options.onStopY
       });
 
-      return componentFactory.getController({
+      return componentFactory.getControllerWithParent({
           controller: {
             X: this.spinnerX.controller,
             Y: this.spinnerY.controller
@@ -45,7 +45,8 @@ define(function(require) {
         wrapper.wrap([wrapper.wrap(label), wrapper.wrap(this.spinnerX.html), wrapper.wrap(this.spinnerY.html)], {
           id: options.id,
           classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
-        }));
+        }),
+        this);
     }
   });
 
