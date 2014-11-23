@@ -17,7 +17,7 @@ define(function(require) {
       var label = document.createElement('label');
       label.innerHTML = 'Grid Controls';
 
-      return wrapper.wrap([label, grid, snap], {
+      return wrapper.wrap([label, this.grid, this.snap], {
         id: 'grid-control-buttons',
         classNames: ['well', 'well-small']
       });

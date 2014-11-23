@@ -130,9 +130,9 @@ define(function(require) {
         }
       });
 
-      $(buttonUI).button();
+      $(this.buttonUI).button();
 
-      return wrapper.wrap([buttonUI], {
+      return wrapper.wrap([this.buttonUI], {
         id: 'viewport-creator'
       });
     },

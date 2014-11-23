@@ -37,14 +37,15 @@ define(function(require) {
       });
 
       return componentFactory.getController({
-        controller: {
-          X: this.spinnerX.controller,
-          Y: this.spinnerY.controller
-        }
-      }, wrapper.wrap([wrapper.wrap(label), wrapper.wrap(this.spinnerX.html), wrapper.wrap(this.spinnerY.html)], {
-        id: options.id,
-        classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
-      }));
+          controller: {
+            X: this.spinnerX.controller,
+            Y: this.spinnerY.controller
+          }
+        }, 
+        wrapper.wrap([wrapper.wrap(label), wrapper.wrap(this.spinnerX.html), wrapper.wrap(this.spinnerY.html)], {
+          id: options.id,
+          classNames: ['ui-widget', 'two-dimentional-spinner', 'well', 'well-small']
+        }));
     }
   });
 

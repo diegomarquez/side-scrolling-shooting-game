@@ -52,16 +52,16 @@ define(function(require) {
         }
       });
 
-      $(element).button();
+      $(this.element).button();
 
-      return wrapper.wrap(element, {
+      return wrapper.wrap(this.element, {
         id: 'game-object-create-button-wrapper',
         classNames: ['well', 'well-small']
       });
     },
 
     destroy: function() {
-      $(element).button('destroy');      
+      $(this.element).button('destroy');      
     }
   });
 

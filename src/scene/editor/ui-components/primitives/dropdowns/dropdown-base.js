@@ -46,16 +46,20 @@ define(function(require) {
         this.removeMenu(element);
       }.bind(this));
 
-      return this.getComponentController({
+      return this.getComponentControllerWithParent({
         refresh: function() { 
           this.refreshContent(); 
         }.bind(this)
       }, this.container);
     },
 
+    getComponentControllerWithParent: function(extend, html) {
+      return componentFactory.getControllerWithParent(extend, html, this); 
+    },
+
     getComponentController: function(extend, html) {
       return componentFactory.getController(extend, html); 
-    }
+    },
 
     setupUI: function(contentContainer, options) {
       throw new Error('Must Override');
@@ -83,10 +87,10 @@ define(function(require) {
     setMainUIController: function(mainUIHtml) {
       return this.getComponentController({
         destroy: function() { 
-          $(mainUIHtml).find('.main-button').button('destroy');
+          $(mainUIHtml).button('destroy');
         }.bind(this)
       }, mainUIHtml);
-    }
+    },
 
     addStyles: function(container) {      
       $(container).addClass('drop-down');

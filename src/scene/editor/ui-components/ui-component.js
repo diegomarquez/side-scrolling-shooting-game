@@ -12,7 +12,7 @@ define(function(require) {
 			util.iterateObject(this, function(object, propName) {
 				destroyProp(object, propName);
 			});
-		}
+		},
 
 		destroy: function() {}
 	});
@@ -44,7 +44,11 @@ define(function(require) {
 		else if (util.isArray(value)) {
 			// When the property in the current scope is an Array, try and destroy it recursively
 			util.iterateArray(value, function (array, element, index) {
-				destroyObject(element);
+				// Only try and destroy recursively Arrays or Objects. Other types of complex objects are left alone, like jQUery objects or HTMLElement objects
+				if (util.isArray(element) || util.isObject(element)) {
+					destroyObject(element);
+				}
+
 				array[index] = null;
 			});
 

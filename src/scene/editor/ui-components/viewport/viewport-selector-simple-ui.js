@@ -22,22 +22,22 @@ define(function(require) {
       });
 
       editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
-        viewportSelectorUI.refresh();
+        this.viewportSelectorUI.refresh();
       });
 
       editorDelegates.add(gb.viewports, gb.viewports.REMOVE, this, function (v) {
-        viewportSelectorUI.refresh();
+        this.viewportSelectorUI.refresh();
       });
 
       editorDelegates.add(gb.viewports, gb.viewports.MOVE, this, function (v) {
-        viewportSelectorUI.refresh();
+        this.viewportSelectorUI.refresh();
       });
 
       editorDelegates.add(gb.viewports, gb.viewports.CHANGE, this, function (v) {
-        viewportSelectorUI.refresh();
+        this.viewportSelectorUI.refresh();
       });
 
-      return wrapper.wrap(viewportSelectorUI.html);
+      return wrapper.wrap(this.viewportSelectorUI.html);
     }
   });
 

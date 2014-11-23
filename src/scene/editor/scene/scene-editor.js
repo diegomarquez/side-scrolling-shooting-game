@@ -112,6 +112,8 @@ define(function(require) {
       editorSetup.end();
 
       setTimeout(function() {
+        debugger;
+
         this._destroy();
       }.bind(this), 1000);
     }

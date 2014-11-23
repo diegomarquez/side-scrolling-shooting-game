@@ -1,11 +1,11 @@
 define(function(require) {
 
   var wrapper = require('wrap-in-div');
+  var componentFactory = require('ui-component-factory');
 
   var ButtonSet = require('ui-component').extend({
     init: function() {
       this.wrapped = null;
-      this.elements = null;
     },
 
     create: function(options) {      
@@ -72,8 +72,6 @@ define(function(require) {
         className: options.containerClass 
       });
 
-      this.elements = elements;
-
       $(this.wrapped).buttonset();
 
       for (var i = 0; i < elements.length; i += 2) {
@@ -92,14 +90,10 @@ define(function(require) {
         $(elements[i]).button(o);
       }
 
-      return this.wrapped;
+      return componentFactory.getControllerWithParent(this.wrapped, this);
     },
 
     destroy: function() {
-      for (var i = 0; i < this.elements.length; i += 2) {
-        $(this.elements[i]).button('destroy');
-      }
-
       $(this.wrapped).buttonset('destroy');
     }
   });

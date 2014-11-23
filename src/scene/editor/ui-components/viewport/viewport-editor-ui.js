@@ -1,5 +1,7 @@
 define(function(require) {
   var editorConfig = require('editor-config');
+  var setupViewport = require('setup-viewport');
+  var componentFactory = require('ui-component-factory');
 
   var wrapper = require('wrap-in-div');
   var gb = require('gb');
@@ -8,8 +10,6 @@ define(function(require) {
   var checkboxSet = require('checkbox-set');
   var editableDropdown = require('editable-dropdown-add-remove');
   var dialogUI = require('dialog');
-
-  var setupViewport = require('setup-viewport');
 
   var ViewportEditor = require('ui-component').extend({
     init: function() {
@@ -96,7 +96,7 @@ define(function(require) {
         layersUI.refresh();
       });
 
-      container.appendChild(checkboxSetUI);
+      container.appendChild(checkboxSetUI.html);
       container.appendChild(layersUI.html);  
 
       this.container = container;
@@ -105,23 +105,26 @@ define(function(require) {
       this.layersUI = layersUI;
       this.wrapped = $(wrapper.wrap(container, { classNames: ['well', 'well-small'] }));
 
-      return this.wrapped.tooltip({
-          container: 'body',
-          title: options.viewport.name,
-          placement: 'left',
-          trigger: 'manual'
-        })
-        .on('mouseenter', function() {  
-          if (canShowTooltip) {
-            $(this).tooltip('show');
-          }
-        })
-        .on('mouseleave', function() {
-          $(this).tooltip('hide');
-        })
-        .on('mousedown', function(event) {
-          $(this).tooltip('hide');
-        })[0]
+      // Setup the bootstrap tooltip
+      this.wrapped.tooltip({
+        container: 'body',
+        title: options.viewport.name,
+        placement: 'left',
+        trigger: 'manual'
+      })
+      .on('mouseenter', function() {  
+        if (canShowTooltip) {
+          $(this).tooltip('show');
+        }
+      })
+      .on('mouseleave', function() {
+        $(this).tooltip('hide');
+      })
+      .on('mousedown', function(event) {
+        $(this).tooltip('hide');
+      })
+
+      return componentFactory.getControllerWithParent(this.wrapped[0], this);
     },
 
     destroy: function() {

@@ -40,13 +40,13 @@ define(function(require) {
 
       this.children[viewport.name] = viewportEditor;
 
-      $(this.container).append($(viewportEditor));
+      $(this.container).append($(viewportEditor.html));
 
       $(this.container).sortable('refresh');
     },
 
     remove: function(viewport) {
-      $(this.children[viewport.name]).remove();
+      $(this.children[viewport.name].html).remove();
       $(this.container).sortable('refresh');
       
       delete this.children[viewport.name];
@@ -54,8 +54,6 @@ define(function(require) {
 
     destroy: function() {
       $(this.container).sortable('destroy');
-
-      this._super();
     }
   });
 

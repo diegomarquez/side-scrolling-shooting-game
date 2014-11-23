@@ -19,7 +19,7 @@ define(function(require) {
         }
       });
 
-      return wrapper.wrap(gameObjectSelectorUI.html);
+      return wrapper.wrap(this.gameObjectSelectorUI.html);
     },
   });
 

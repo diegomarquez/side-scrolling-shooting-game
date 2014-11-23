@@ -39,9 +39,7 @@ define(function(require) {
     setMainUIController: function(mainUIHtml) {
       return this.getComponentController({
         destroy: function() { 
-          $(mainUIHtml).find('.main-button').button('destroy');
-          $(mainUIHtml).find('.add-button').button('destroy');
-          $(mainUIHtml).find('.split-button').buttonset('destroy');
+          $(mainUIHtml).buttonset('destroy');
         }.bind(this)
       }, mainUIHtml);
     } 
