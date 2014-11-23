@@ -89,11 +89,13 @@ define(function(require) {
 
       this.dialog = dialog;
       this.tip = tip;
+      this.container = container;
 
       return dialog;
     },
 
     destroy: function() {
+      $(this.container).find('select').data("selectBox-selectBoxIt").destroy();
       $(this.dialog).dialog('destroy');
     }
   });

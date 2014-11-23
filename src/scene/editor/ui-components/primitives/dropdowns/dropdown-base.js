@@ -190,6 +190,8 @@ define(function(require) {
       // Override the getOptionElements method
       this.getOptionElements = function() { return this.optionElements; }.bind(this)
 
+      debugger;
+
       // Append the new options to the content container
       this.appendContentToContainer(contentContainer, optionElements);
     }

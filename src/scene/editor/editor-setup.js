@@ -25,29 +25,34 @@ define(function(require) {
     end: function() {
       editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
         // Initialize new toogles
-        $('input[editor-toggle').bootstrapToggle();
+        $('input[editor-toggle]').bootstrapToggle();
       });
 
       // Initialize first toggles 
-      $('input[editor-toggle').bootstrapToggle();
+      $('input[editor-toggle]').bootstrapToggle();
     },
 
     exit: function() {
       // Turn global debug setting off
       gb.toggleDebug();
-      // Recycle all Game Objects and destroy Groups and Viewports
-      this.clear();
-      // Delete everything from the pools
-      gb.reclaimer.clearAllPools();
       // Remove all editor related delegates
       editorDelegates.clean();
+      // Recycle all Game Objects and destroy Groups and Viewports
+      this.clear();
+      // Destroy the pools
+      gb.reclaimer.clearAllPools();
 
       // Grab a reference to the scene editor
       var sceneEditor = require('scene-editor');
-      // Destroy all the references in the scene editor
-      sceneEditor.destroy();
+      // Destroy all the scene editor logic
+      sceneEditor._destroy();      
+      // Destroy toggles
+      $('input[editor-toggle]').bootstrapToggle('destroy');
+      // Remove left over dialogs
+      $('.ui-dialog').remove();
+      
       // Signal that the destruction of the scene editor is complete
-      sceneEditor.execute(this.sceneEditor.EXIT);
+      // sceneEditor.execute(this.sceneEditor.EXIT);
     },
 
     clear: function() {

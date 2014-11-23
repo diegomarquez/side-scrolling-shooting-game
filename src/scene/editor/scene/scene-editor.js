@@ -110,12 +110,6 @@ define(function(require) {
 
       // Finalize the setup of the editor
       editorSetup.end();
-
-      setTimeout(function() {
-        debugger;
-
-        this._destroy();
-      }.bind(this), 1000);
     }
   });
 
