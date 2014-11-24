@@ -4,7 +4,7 @@ define(function(require) {
   var world = require('world');
   var editorConfig = require('editor-config');
   var editorDelegates = require('editor-delegates');
-  var util = require('util');
+  var canvasContainer = require('canvas-container');
 
   var CanvasScrollBars = require('ui-component').extend({
     init: function() {
@@ -13,7 +13,7 @@ define(function(require) {
     },
 
     create: function() {
-      var canvas = document.getElementById('main');
+      var canvas = canvasContainer.getCanvasContainer();
       var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 
       this.verticalScrollBar = new scrollBar().create(function() {

@@ -126,8 +126,8 @@ define(function(require) {
       this.buttonUI = new button().create({
         label: 'Add Viewport',
         onClick: function (event) {
-          viewportDialogUI.dialog('open');
-        }
+          this.viewportDialogUI.dialog('open');
+        }.bind(this)
       });
 
       $(this.buttonUI).button();

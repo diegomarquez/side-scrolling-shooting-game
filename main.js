@@ -3,7 +3,7 @@
 define(function(require){
   var gb = require('gb');
 
-  var bodyContentCache = require('body-content-cache');
+  var canvasContainer = require('canvas-container');
   var sceneEditor = require('scene-editor');
   var scenePlayer = require('scene-player');
 
@@ -12,33 +12,41 @@ define(function(require){
 
   game.add_extension(require("mouse-events"));
 
-  require('ship-bundle').create();
+  // Populate the pools
+  // require('ship-bundle').create();
+
+  var createScenePlayer = function() {
+    // Detach the canvas container
+    canvasContainer.detachCanvas();
+    // Create the Scene Player
+    scenePlayer.create();
+  }
+
+  var createSceneEditor = function() {
+    // Populate the pools
+    require('ship-bundle').create();
+
+    // Detach the canvas container
+    canvasContainer.detachCanvas();
+    // Create the Scene Editor
+    sceneEditor.create();
+  }
   
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
-    // scenePlayer.create();
-    // bodyContentCache.saveBodyContent();
-    // 
-    
-    sceneEditor.create();
+    createScenePlayer();
+
+    scenePlayer.on(scenePlayer.EXIT, this, function() {
+      createSceneEditor();
+    });
+
+    sceneEditor.on(sceneEditor.EXIT, this, function() {
+      createScenePlayer();
+    });
   });
   
-  // sceneEditor.on(sceneEditor.EXIT, this, function() {
-  //   // Create the Scene Player
-  //   scenePlayer.create();
-  //   // Cache the current state of the body tag
-  //   bodyContentCache.saveBodyContent();
-  // });
-
-  // scenePlayer.on(scenePlayer.EXIT, this, function() {
-  //   // Create the Scene Editor
-  //   sceneEditor.create();
-  //   // Cache the current state of the body tag
-  //   bodyContentCache.saveBodyContent();
-  // });
-
   // This is the main update loop
-  game.on(game.UPDATE, this, function() {});
+  // game.on(game.UPDATE, this, function() {});
 
   // This is the main setup that kicks off the whole thing
   // Notice how it needs to find a '#main' and '#game' in the document

@@ -31,11 +31,7 @@ define(function(require) {
         }
       }).disableSelection();
 
-      this.uiContentController = this.getComponentController({
-        destroy: function() {
-          $(this.html).sortable('destroy');
-        }
-      }, contentContainer.find('ul')[0]);
+      this.uiContentController = this.getComponentController(contentContainer.find('ul')[0]);
     },
 
     createOptions: function(options) {

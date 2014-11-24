@@ -33,26 +33,42 @@ define(function(require) {
     },
 
     exit: function() {
+      var mainContainer = $('#main-editor-container');
+
+      // Hide the main editor container by setting it's display property to none
+      // Everything is still there to be destroyed by hidden and not taking part of the page layout
+      mainContainer.toggle();
+
       // Turn global debug setting off
       gb.toggleDebug();
       // Remove all editor related delegates
       editorDelegates.clean();
-      // Recycle all Game Objects and destroy Groups and Viewports
-      this.clear();
+      // Claim all Game Objects and clean up the pools from instances
+      gb.reclaimer.clearAllObjectsFromPools();
+      // Remove all update groups
+      gb.groups.removeAll();
+      // Remove all Viewports
+      gb.viewports.removeAll();
       // Destroy the pools
       gb.reclaimer.clearAllPools();
-
-      // Grab a reference to the scene editor
-      var sceneEditor = require('scene-editor');
-      // Destroy all the scene editor logic
-      sceneEditor._destroy();      
+      
       // Destroy toggles
       $('input[editor-toggle]').bootstrapToggle('destroy');
       // Remove left over dialogs
       $('.ui-dialog').remove();
+
+      // Grab a reference to the scene editor
+      var sceneEditor = require('scene-editor');
+
+      // Destroy the remaining logic and references
+      sceneEditor.cleanUp();      
       
-      // Signal that the destruction of the scene editor is complete
-      // sceneEditor.execute(this.sceneEditor.EXIT);
+      // Signal that the editor has been destroyed
+      sceneEditor.execute(sceneEditor.EXIT);
+      
+      // Remove the editor container from the DOM
+      // This should take care of any lingering references to events
+      mainContainer.remove();
     },
 
     clear: function() {

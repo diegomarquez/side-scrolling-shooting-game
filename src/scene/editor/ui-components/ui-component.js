@@ -6,11 +6,21 @@ define(function(require) {
 			this._super();
 		},
 
-		_destroy: function() {
+		cleanUp: function() {
+			this._destroy(true);
+		},
+
+		_destroy: function(keepDelegates) {
 			this.destroy();
 
 			util.iterateObject(this, function(object, propName) {
-				destroyProp(object, propName);
+				if (keepDelegates) {
+					if (propName !== 'callbackList' && propName !== 'list') {
+						destroyProp(object, propName);	
+					}
+				} else {
+					destroyProp(object, propName);
+				}
 			});
 		},
 

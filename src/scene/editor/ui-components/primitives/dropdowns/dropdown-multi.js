@@ -37,11 +37,7 @@ define(function(require) {
         }.bind(this)
       });
 
-      this.uiContentController = this.getComponentController({
-        destroy: function() {
-          $(this.html).selectable('destroy');
-        }
-      }, contentContainer.find('ul')[0]);
+      this.uiContentController = this.getComponentController(contentContainer.find('ul')[0]);
     }
   });
 

@@ -42,14 +42,23 @@ define(function(require) {
       this.addStyles($(this.container));
 
       // Register event to know when to hide the popup menu
-      clickedOutside.registerMissedClick(function() { return this.getContentContainer(); }.bind(this), function (element) {
-        this.removeMenu(element);
-      }.bind(this));
+      clickedOutside.register(
+        'dropdown-' + options.id,
+        function() { 
+          return this.getContentContainer(); 
+        }.bind(this), 
+        function (element) {
+          this.removeMenu(element);
+        }.bind(this)
+      );
 
       return this.getComponentControllerWithParent({
         refresh: function() { 
           this.refreshContent(); 
-        }.bind(this)
+        }.bind(this),
+        destroy: function() {
+          clickedOutside.unregister('dropdown-' + options.id);
+        }
       }, this.container);
     },
 
@@ -190,10 +199,8 @@ define(function(require) {
       // Override the getOptionElements method
       this.getOptionElements = function() { return this.optionElements; }.bind(this)
 
-      debugger;
-
       // Append the new options to the content container
-      this.appendContentToContainer(contentContainer, optionElements);
+      this.appendContentToContainer(this.contentContainer, this.optionElements);
     }
   });
 

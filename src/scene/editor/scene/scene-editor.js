@@ -13,6 +13,7 @@ define(function(require) {
   var editorSetup = require('editor-setup');
   var editorDelegates = require('editor-delegates');
   var world = require('world');
+  var canvasContainer = require('canvas-container');
 
   var SceneEditor = require("ui-component").extend({
     init: function() {
@@ -62,7 +63,7 @@ define(function(require) {
 
       // Top Left Region
       // Canvas
-      this.editorRegionsController.appendToTopLeft(document.getElementById('main'));
+      this.editorRegionsController.appendToTopLeft(canvasContainer.getCanvasContainer());
       // Scroll bars
       this.canvasScrollBarsUI.create();
 
