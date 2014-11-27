@@ -109,8 +109,22 @@ define(function(require) {
         });
       });
 
+      this.editorSideMenu.on(this.editorSideMenu.EXIT, this, function() {
+      	this.execute(this.EXIT);
+      });
+
       // Finalize the setup of the editor
       editorSetup.end();
+    }, 
+
+    cleanUp: function() {
+    	// Execute editor clean up
+    	editorSetup.exit();
+    	// Destroy all of this objects references
+    	this._super();
+    	// Remove the editor container from the DOM
+      // This should take care of any lingering references to events
+      $('#main-editor-container').remove();
     }
   });
 

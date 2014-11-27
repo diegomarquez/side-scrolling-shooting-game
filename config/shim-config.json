@@ -1,18 +1,22 @@
 {
 	"jquery-ui": {
-        "export": "$",
-        "deps": ["jquery"]
-    },
+	  "export": "$",
+	  "deps": ["jquery"]
+	},
 
-    "jquery-selectBoxIt": {
-        "deps": ["jquery", "jquery-ui"]
-    },
+  "jquery-selectBoxIt": {
+    "deps": ["jquery", "jquery-ui"]
+  },
 
-    "bootstrap": {
-        "deps": ["jquery", "jquery-ui"]
-    },
+  "jquery-transit": {
+    "deps": ["jquery"]
+  },
 
-    "bootstrap-toogle": {
-        "deps": ["jquery", "bootstrap"]
-    }
+  "bootstrap": {
+    "deps": ["jquery", "jquery-ui"]
+  },
+
+  "bootstrap-toogle": {
+    "deps": ["jquery", "bootstrap"]
+  }
 }

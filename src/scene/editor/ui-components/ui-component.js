@@ -51,20 +51,21 @@ define(function(require) {
 			object[name] = null;
 			delete object[name];
 		}
-		else if (util.isArray(value)) {
-			// When the property in the current scope is an Array, try and destroy it recursively
-			util.iterateArray(value, function (array, element, index) {
-				// Only try and destroy recursively Arrays or Objects. Other types of complex objects are left alone, like jQUery objects or HTMLElement objects
-				if (util.isArray(element) || util.isObject(element)) {
-					destroyObject(element);
-				}
+		// else if (util.isArray(value)) {
+		// 	// When the property in the current scope is an Array, try and destroy it recursively
+		// 	util.iterateArray(value, function (array, element, index) {
+		// 		// Only try and destroy recursively Arrays or Objects. Other types of complex objects are left alone, like jQUery objects or HTMLElement objects
+		// 		if (util.isArray(element) || util.isObject(element)) {
+		// 			destroyObject(element);
+		// 		}
 
-				array[index] = null;
-			});
+		// 		array[index] = null;
+		// 	});
 
-			value.length = 0;
-			object[name] = null;
-		} else {
+		// 	value.length = 0;
+		// 	object[name] = null;
+		// } 
+		else {
 			// Anything that is not an Array or an Object is just nulled
 			object[name] = null;
 

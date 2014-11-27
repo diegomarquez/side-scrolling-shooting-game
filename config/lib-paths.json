@@ -2,7 +2,8 @@
 	"domready": "./lib/requirejs-domready/domReady",
 	"jquery": "./lib/jquery/dist/jquery",
 	"jquery-ui": "./lib/jquery-ui/jquery-ui",
+	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt",
+	"jquery-transit": "./lib/jquery.transit/jquery.transit",
 	"bootstrap": "./lib/bootstrap/dist/js/bootstrap",
-	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle",
-	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt"
+	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle"
 }

@@ -9,10 +9,11 @@ define(function(require) {
   var listCreator = require('list');
 
   var editorRegions = require('editor-regions');
-  var editorSetup = require('editor-setup');
 
   var EditorSideMenu = require('ui-component').extend({
     init: function() {
+    	this._super();
+
       this.saveDialog = new sceneSaveDialog();
       this.loadDialog = new sceneLoadDialog();
       this.deleteDialog = new sceneDeleteDialog();
@@ -152,7 +153,7 @@ define(function(require) {
       items.push(createOptionItem(
         'Exit', 
         'glyphicon-log-out', 
-        function() { editorSetup.exit(); }
+        function() { this.execute(this.EXIT) }.bind(this)
       ));
 
       $(items).each(function(index, element) {
@@ -242,6 +243,8 @@ define(function(require) {
 
     return li;
   }
+
+  Object.defineProperty(EditorSideMenu.prototype, "EXIT", { get: function() { return 'exit'; } });
 
   return EditorSideMenu;
 });

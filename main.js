@@ -4,6 +4,7 @@ define(function(require){
   var gb = require('gb');
 
   var canvasContainer = require('canvas-container');
+  var loaderContainer = require('loader-container');
   var sceneEditor = require('scene-editor');
   var scenePlayer = require('scene-player');
 
@@ -34,14 +35,37 @@ define(function(require){
   
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
-    createScenePlayer();
+  	// Create the scene player
+  	createScenePlayer();
+  	// Open the loader
+    loaderContainer.open();
+  });
 
-    scenePlayer.on(scenePlayer.EXIT, this, function() {
-      createSceneEditor();
+  // When the scene player exits...
+  scenePlayer.on(scenePlayer.EXIT, this, function() {
+  	// Trigger a loader transition
+    loaderContainer.transition();
+
+    // When the loader closes...
+    loaderContainer.once(loaderContainer.CLOSE, this, function() {
+    	// Clean up the scene player view
+    	scenePlayer.cleanUp();
+    	// Create the scene editor view
+    	createSceneEditor();  
     });
+  });
 
-    sceneEditor.on(sceneEditor.EXIT, this, function() {
-      createScenePlayer();
+  // When the scene editor exits
+  sceneEditor.on(sceneEditor.EXIT, this, function() {
+  	// Trigger a loader transition
+    loaderContainer.transition();
+
+    // When the loader closes
+    loaderContainer.once(loaderContainer.CLOSE, this, function() {
+    	// Clean up the scene editor view
+    	sceneEditor.cleanUp();
+    	// Create the scene player view
+    	createScenePlayer();  
     });
   });
   

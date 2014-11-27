@@ -19,29 +19,29 @@ define(function(require) {
 
 			this.mainContainer.appendChild(canvasContainer.getCanvasContainer());
 
-			var button = new buttonUI().create({
+			this.button = new buttonUI().create({
         label: 'Level Editor',
         onClick: function(event) {
-        	// Hide the player container
-        	$(this.mainContainer).toggle();
-
-          $(button).button('destroy');
-
-          // Destroy everything
-          this.cleanUp();
-
-        	// Signal that the player has been destroyed
+        	// Signal that the player is about to be destroyed
           this.execute(this.EXIT);
-          
-          // Remove the player container
-          $('#main-player-container').remove();
         }.bind(this)
       });
 
-      $(button).button();
+      $(this.button).button();
 
-      this.mainContainer.appendChild(button);
-		}
+      this.mainContainer.appendChild(this.button);
+		},
+
+		cleanUp: function() {
+    	// Clean up jquery UI
+      $(this.mainContainer).toggle();
+      $(this.button).button('destroy');
+    	// Destroy all of this objects references
+    	this._super();
+    	// Remove the editor container from the DOM
+      // This should take care of any lingering references to events
+      $('#main-player-container').remove();
+    }
 	});
 
 	Object.defineProperty(ScenePlayer.prototype, "EXIT", { get: function() { return 'exit'; } });

@@ -56,19 +56,6 @@ define(function(require) {
       $('input[editor-toggle]').bootstrapToggle('destroy');
       // Remove left over dialogs
       $('.ui-dialog').remove();
-
-      // Grab a reference to the scene editor
-      var sceneEditor = require('scene-editor');
-
-      // Destroy the remaining logic and references
-      sceneEditor.cleanUp();      
-      
-      // Signal that the editor has been destroyed
-      sceneEditor.execute(sceneEditor.EXIT);
-      
-      // Remove the editor container from the DOM
-      // This should take care of any lingering references to events
-      mainContainer.remove();
     },
 
     clear: function() {

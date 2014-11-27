@@ -3,12 +3,11 @@ define(function(require) {
 
   var CanvasContainer = require("class").extend({
     init: function() {
-      this.canvasContainer = null;
+      this.canvasContainer = $('#main');
     },
 
     detachCanvas: function() {
-      this.canvasContainer = $('#main').detach();
-
+      this.canvasContainer.detach();
       this.canvasContainer.find(':not(canvas)').remove();
     },
 
