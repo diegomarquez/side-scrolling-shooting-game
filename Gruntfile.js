@@ -252,9 +252,9 @@ module.exports = function(grunt) {
   grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map', 'data-modules', 'config']);
   
   // Builds a development release, no minification
-  grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev', 'create-build-index:dev'])
+  grunt.registerTask('build-dev', ['clean:build-dev', 'requirejs:dev', 'copy:dev', 'create-build-index:dev']);
   // Builds a production release, js and css minified
-  grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'create-build-index:prod', 'cssmin'])
+  grunt.registerTask('build-prod', ['clean:build-prod', 'requirejs:prod', 'copy:prod', 'create-build-index:prod', 'cssmin']);
 
   // Default task sets up for development
   grunt.registerTask('default', ['setup']);

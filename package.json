@@ -5,8 +5,6 @@
   "additionalAssetPaths": "",
   "frameworkRepo": "git@github.com:diegomarquez/game-builder.git",
   "framework": "./game-builder",
-  "canvasWidth": 400,
-  "canvasHeight": 300,
   "lib": "./lib",
   "frameworkTag": "master",
   "dependencies": {
@@ -24,6 +22,7 @@
     "grunt-contrib-cssmin": "~0.10.0",
     "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-requirejs": "~0.4.4",
-    "grunt-contrib-copy": "~0.7.0"
+    "grunt-contrib-copy": "~0.7.0",
+    "cheerio": "~0.18.0"
   }
 }
