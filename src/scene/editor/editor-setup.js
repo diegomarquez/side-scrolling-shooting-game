@@ -36,7 +36,7 @@ define(function(require) {
       var mainContainer = $('#main-editor-container');
 
       // Hide the main editor container by setting it's display property to none
-      // Everything is still there to be destroyed by hidden and not taking part of the page layout
+      // Everything is still there to be destroyed but hidden and not taking part of the page layout
       mainContainer.toggle();
 
       // Turn global debug setting off

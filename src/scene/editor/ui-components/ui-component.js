@@ -30,8 +30,14 @@ define(function(require) {
 	var destroyProp = function(object, name) {
 		var value = object[name];
 
-		// The _super function property defined in modules extending class.js is omitted completely
+		// The _super function property defined in modules extending class.js is from destruction
 		if (name == '_super' && util.isFunction(value)) {
+			return;
+		}
+
+		// Delegate properties are just nulled to avoid 'Maximum call stack reached' error
+		if (name == 'callbackList' && name == 'list') {
+			nullProp(object, name);
 			return;
 		}
 
@@ -51,28 +57,23 @@ define(function(require) {
 			object[name] = null;
 			delete object[name];
 		}
-		// else if (util.isArray(value)) {
-		// 	// When the property in the current scope is an Array, try and destroy it recursively
-		// 	util.iterateArray(value, function (array, element, index) {
-		// 		// Only try and destroy recursively Arrays or Objects. Other types of complex objects are left alone, like jQUery objects or HTMLElement objects
-		// 		if (util.isArray(element) || util.isObject(element)) {
-		// 			destroyObject(element);
-		// 		}
+		else if (util.isArray(value)) {
+			// When the property in the current scope is an Array, try and destroy it recursively
+			util.iterateArray(value, function (array, element, index) {
+				// Only try and destroy recursively Arrays or Objects. Other types of complex objects are left alone, like jQUery objects or HTMLElement objects
+				if (util.isArray(element) || util.isObject(element)) {
+					destroyObject(element);
+				}
 
-		// 		array[index] = null;
-		// 	});
+				array[index] = null;
+			});
 
-		// 	value.length = 0;
-		// 	object[name] = null;
-		// } 
+			value.length = 0;
+			object[name] = null;
+		} 
 		else {
 			// Anything that is not an Array or an Object is just nulled
-			object[name] = null;
-
-			// If the parent object is an Object, use the delete operator
-			if (util.isObject(object)) {
-				delete object[name];
-			} 
+			nullProp(object, name);
 		}		
 	}
 
@@ -81,6 +82,14 @@ define(function(require) {
 		util.iterateObject(object, function (object, propName) {
 			destroyProp(object, propName);
 		});
+	}
+
+	var nullProp = function(object, propName) {
+		object[propName] = null;
+
+		if (util.isObject(object)) {
+			delete object[propName];
+		}
 	}
 
 	return UIComponent;

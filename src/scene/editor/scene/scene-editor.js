@@ -97,7 +97,9 @@ define(function(require) {
 
       // Remove the UI component from it's parent when a viewport is removed
       editorDelegates.add(gb.viewports, gb.viewports.REMOVE, this, function (v) {
-        this.viewportsUI.remove(v);
+        if (v.name != editorSetup.config().getGridViewportName()) {
+        	this.viewportsUI.remove(v);
+      	}
       });
 
       // Remove the UI component from it's parent when a viewport is removed
