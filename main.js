@@ -34,7 +34,7 @@ define(function(require){
     // Create the Scene Editor
     sceneEditor.create();
 
-    game.add_extension(require("activity-display"));
+    game.add_extension(require("activity-display"), { hide: true }, "activity-display");
   }
   
   // This is the main initialization function

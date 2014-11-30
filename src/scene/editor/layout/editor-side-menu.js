@@ -1,5 +1,6 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
+  var gb = require('gb');
   var componentFactory = require('ui-component-factory');
 
   var sceneSaveDialog = require('scene-save-ui');
@@ -146,6 +147,17 @@ define(function(require) {
         'Delete', 
         'glyphicon-trash', 
         function() { this.open() }.bind(this.deleteDialog)
+      ));
+
+      items.push(createDivider());
+      items.push(createTitleItem('Misc.'));
+
+      items.push(createOptionItem(
+        'Activity Display', 
+        'glyphicon-eye-open', 
+        function() {  
+        	gb.game.get_extension(require('activity-display')).toggle();
+        }.bind(this)
       ));
 
       items.push(createDivider());
