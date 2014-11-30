@@ -29,6 +29,14 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   Object.defineProperty(Mouse.prototype, "CLICKED_OUTSIDE_CANVAS", { get: function() { return 'clicked_outside_canvas'; } });
 
   var MouseEvents = Extension.extend({
+  	init: function() {
+  		this.onContextMenu = null;
+  		this.onMouseDown = null;
+  		this.onMouseUp = null;
+  		this.onMouseOut = null;
+  		this.documentMouseUp = null;
+  	},
+
     type: function() {
       return Gb.game.CREATE;
     },
@@ -37,7 +45,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       // Reference to the last object that executed a delegate on the MOUSE_DOWN event
       var currentMouseDownData = null;
 
-      Gb.canvas.addEventListener('contextmenu', function (event) {
+    	this.onContextMenu = function (event) {
         // If a game bbject was clicked on when triggering the context menu event
         if (currentMouseDownData) {
           // Prevent the menu from appearing
@@ -50,9 +58,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
           // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
           currentMouseDownData = null;
         }
-      })
+      }
 
-      Gb.canvas.addEventListener('mousedown', function (event) {
+      this.onMouseDown = function (event) {
         var mouseDownData = getTopMostObject(event);
 
         // Execute delegate only if some mouse data was returned
@@ -68,9 +76,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
             currentMouseDownData = null;
           });
         }
-      }, false);
+      }
 
-      Gb.canvas.addEventListener('mouseup', function (event) {
+      this.onMouseUp = function (event) {
         var mouseUpData = getTopMostObject(event);
 
         // Execute delegate only if some mouse data was returned and a MOUSE_DOWN event occured previously
@@ -94,17 +102,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
         stopDrag(event, mouseUpData);
         // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
         currentMouseDownData = null;
-      }, false);
+      }
 
-      Gb.canvas.addEventListener('mouseout', function (event) {
+      this.onMouseOut = function (event) {
         // Moving outside the canvas resets the mouse state
         stopDrag(event, currentMouseDownData);
         currentMouseDownData = null;
-      });
+      }
 
-      // Any click outside the Canvas triggers a NOTHING_CLICKED event
-      // Clicks on elements which are covering the canvas don't trigger this event
-      document.body.addEventListener('mouseup', function (event) {
+      this.documentMouseUp = function (event) {
         if(event.target !== Gb.canvas) {
           setGlobalMouseCoordinates(event);
 
@@ -114,10 +120,40 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
             Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS, event);  
           }
         }
-      });
+      }
+
+      Gb.canvas.addEventListener('contextmenu', this.onContextMenu);
+      Gb.canvas.addEventListener('mousedown', this.onMouseDown, false);
+      Gb.canvas.addEventListener('mouseup', this.onMouseUp, false);
+      Gb.canvas.addEventListener('mouseout', this.onMouseOut);
+      // Any click outside the Canvas triggers a NOTHING_CLICKED event
+      // Clicks on elements which are covering the canvas don't trigger this event
+      document.body.addEventListener('mouseup', this.documentMouseUp);
 
       // Global mouse events delegate
       Gb.Mouse = new Mouse();
+    },
+
+    destroy: function() {
+    	Gb.canvas.removeEventListener('contextmenu', this.onContextMenu);
+      Gb.canvas.removeEventListener('mousedown', this.onMouseDown);
+      Gb.canvas.removeEventListener('mouseup', this.onMouseUp);
+      Gb.canvas.removeEventListener('mouseout', this.onMouseOut);
+      document.body.removeEventListener('mouseup', this.documentMouseUp);
+
+      this.onContextMenu = null;
+      this.onMouseDown = null;
+      this.onMouseUp = null;
+      this.onMouseOut = null;
+      this.documentMouseUp = null;
+			Gb.Mouse = null;
+
+			delete this['onContextMenu'];
+      delete this['onMouseDown'];
+      delete this['onMouseUp'];
+      delete this['onMouseOut'];
+      delete this['documentMouseUp'];
+			delete Gb['Mouse'];
     }
   });
 

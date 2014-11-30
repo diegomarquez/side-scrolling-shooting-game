@@ -11,8 +11,6 @@ define(function(require){
   // Storing some references to avoid excesive typing
   var game = gb.game;
 
-  game.add_extension(require("mouse-events"));
-
   // Populate the pools
   // require('ship-bundle').create();
 
@@ -23,6 +21,7 @@ define(function(require){
     scenePlayer.create();
 
     game.remove_extension(require("activity-display"));
+    game.remove_extension(require("mouse-events"));
   }
 
   var createSceneEditor = function() {
@@ -34,7 +33,8 @@ define(function(require){
     // Create the Scene Editor
     sceneEditor.create();
 
-    game.add_extension(require("activity-display"), { hide: true }, "activity-display");
+    game.add_extension(require("activity-display"), { hide: true });
+    game.add_extension(require("mouse-events"));
   }
   
   // This is the main initialization function
