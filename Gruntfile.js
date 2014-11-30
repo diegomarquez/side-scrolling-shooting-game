@@ -209,6 +209,20 @@ module.exports = function(grunt) {
           buildDir: buildProdDir
         }
       }
+    },
+
+    'download-fonts': {
+    	target: {
+    		options: {
+    			fontsDir: 'styles/assets/fonts/',
+    			relativeFontsDir: '../assets/fonts/',
+    			cssDir: 'styles/css/'
+    		},
+
+        files: [
+          { src: 'http://fonts.googleapis.com/css?family=Exo:400,700' }
+        ]
+      }
     } 
   });
 

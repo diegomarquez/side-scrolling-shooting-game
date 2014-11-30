@@ -8,7 +8,7 @@ define(function(require) {
 
     detachCanvas: function() {
       this.canvasContainer.detach();
-      this.canvasContainer.find(':not(canvas)').remove();
+      this.canvasContainer.find(':not(canvas,#activity-display,#activity-display *)').remove();
     },
 
     getCanvasContainer: function() {

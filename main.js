@@ -21,6 +21,8 @@ define(function(require){
     canvasContainer.detachCanvas();
     // Create the Scene Player
     scenePlayer.create();
+
+    game.remove_extension(require("activity-display"));
   }
 
   var createSceneEditor = function() {
@@ -31,6 +33,8 @@ define(function(require){
     canvasContainer.detachCanvas();
     // Create the Scene Editor
     sceneEditor.create();
+
+    game.add_extension(require("activity-display"));
   }
   
   // This is the main initialization function
@@ -62,7 +66,7 @@ define(function(require){
 
     // When the loader closes
     loaderContainer.once(loaderContainer.CLOSE, this, function() {
-    	// Clean up the scene editor view
+    	// Clean up the scene editor view    	
     	sceneEditor.cleanUp();
     	// Create the scene player view
     	createScenePlayer();  

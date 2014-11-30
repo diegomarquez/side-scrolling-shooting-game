@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = function(grunt) {
-    grunt.registerMultiTask('create-data-module', function() {		
+  grunt.registerMultiTask('create-data-module', function() {		
 		for (var i = 0; i < this.files.length; i++) {
 			var file = this.files[i];
 

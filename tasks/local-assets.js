@@ -2,8 +2,8 @@ var path = require('path');
 
 module.exports = function(grunt) {
     grunt.registerTask('local-assets', function() {
-		var p = grunt.file.readJSON('package.json');
-		var options = this.options();
+			var p = grunt.file.readJSON('package.json');
+			var options = this.options();
 
 	  	// Making sure that this path has the correct separator. Just in case.
 	  	p.additionalAssetPaths = p.additionalAssetPaths ? p.additionalAssetPaths.split(/[/|\\]/).join(path.sep) : "";
