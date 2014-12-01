@@ -6,6 +6,8 @@ define(function(require) {
 	var gameObject = require("game-object"); 
 	var pathRenderer = require("path-renderer");
 
+	var step = editorConfig.getGridCellSize();
+
 	var GridBundle = require("bundle").extend({
 		create: function(args) {	
 			this.componentPool.createPool("path-renderer", pathRenderer);
@@ -14,34 +16,30 @@ define(function(require) {
 				.args({
 					skipCache: true, 
 					drawPath: function(context) {
-
-						var step = editorConfig.getGridCellSize();
-
 						context.save();
 						context.beginPath();
 						
 						for (var i = 1; i < step.width; i++) {
 							var posX = step.width * i;
 	        				
-	        				context.moveTo(posX, 0);
-	        				context.lineTo(posX, gb.canvas.height);	
+      				context.moveTo(posX, 0);
+      				context.lineTo(posX, gb.canvas.height);	
 						}
 
 						for (var i = 1; i < step.height; i++) {
-	        				var posY = step.height * i;
+      				var posY = step.height * i;
 
-	        				context.moveTo(0, posY);
-	        				context.lineTo(gb.canvas.width, posY);	
+      				context.moveTo(0, posY);
+      				context.lineTo(gb.canvas.width, posY);	
 						}
 
-		        		context.lineWidth = 2;
+		        context.lineWidth = 2;
 						context.globalAlpha = 0.5;
-		        		context.strokeStyle = "#FFFFFF";
-		        		context.stroke();        	
+        		context.strokeStyle = "#FFFFFF";
+        		context.stroke();        	
 						context.closePath();
 						
 						context.restore();
-						
 					}
 				});
 

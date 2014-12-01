@@ -5,6 +5,7 @@ define(function(require) {
 
   var gb = require('gb');
   var editorConfig = require('editor-config');
+  var editorViewports = require('editor-viewports');
   
   var ViewportCreator = require('ui-component').extend({
     init: function() {
@@ -97,9 +98,9 @@ define(function(require) {
         ],
 
         buttons: {
-          Add: function () {            
-            gb.viewports.add(
-              this.Name(), 
+          Add: function () {
+          	editorViewports.add(
+          		this.Name(), 
               this.Width(), 
               this.Height(), 
               this.OffsetX(), 
@@ -108,9 +109,8 @@ define(function(require) {
               this.ScaleY(),
               null,
               this.StrokeColor(),
-              this.StrokeWidth(),
-              false
-            );
+              this.StrokeWidth()
+            ).NoClipping();
 
             gb.viewports.before(this.Name(), editorConfig.getGridViewportName()); 
              

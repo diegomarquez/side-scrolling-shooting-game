@@ -65,7 +65,7 @@ define(function(require) {
       // Canvas
       this.editorRegionsController.appendToTopLeft(canvasContainer.getCanvasContainer());
       // Scroll bars
-      this.canvasScrollBarsUI.create();
+      // this.canvasScrollBarsUI.create();
 
       // Top Right Region
       // Grid Controls

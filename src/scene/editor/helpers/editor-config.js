@@ -1,6 +1,9 @@
 define(function(require) {
   var gb = require('gb');
 
+  var GRID_WIDTH = 12;
+  var GRID_HEIGHT = 12;
+
   var EditorConfig = require('class').extend({
     init: function() {},
 
@@ -29,12 +32,15 @@ define(function(require) {
     },
 
     getGridSize: function() {
-      return { width: 12, height:12 };
+      return { width: GRID_WIDTH, height:GRID_HEIGHT };
     },
 
     getGridCellSize: function() {
-      var gridSize = this.getGridSize();
-      return { width: gb.canvas.width / gridSize.width, height:gb.canvas.height / gridSize.height };
+      return { width: gb.canvas.width / GRID_WIDTH, height:gb.canvas.height / GRID_HEIGHT };
+    },
+
+    getGridViewport: function() {
+    	return gb.viewports.get(this.getGridViewportName());
     },
 
     getGameObjects: function() {
@@ -48,12 +54,12 @@ define(function(require) {
 
     getViewportLayers: function(viewport) {
       return viewport.getLayers()
-                  .filter(function(layer) { 
-                    return layer.name != this.getOutlineLayerName(); 
-                  }.bind(this))
-                  .map(function(layer) {
-                    return layer.name;
-                  })
+	      .filter(function(layer) { 
+	        return layer.name != this.getOutlineLayerName(); 
+	      }.bind(this))
+	      .map(function(layer) {
+	        return layer.name;
+	      });
     },
 
     getViewportTopMostLayer: function(viewport) {

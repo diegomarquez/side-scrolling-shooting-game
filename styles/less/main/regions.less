@@ -42,7 +42,7 @@
   .editor-box-sizing
 }
 
-.region-container {
+.region-container() {
 	padding: 5px;
 
   > div {
@@ -50,6 +50,19 @@
   }
 }
 
+#topLeft {}
+
+#topRight {
+	.region-container;
+}
+
+#bottomLeft {
+	.region-container;
+}
+
+#bottomRight {
+	.region-container;
+}
 
 #editor-regions {
   > div:nth-child(1) {

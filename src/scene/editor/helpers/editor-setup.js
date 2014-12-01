@@ -3,6 +3,7 @@ define(function(require) {
   var world = require('world');
   var editorConfig = require('editor-config');
   var editorDelegates = require('editor-delegates');
+  var editorViewports = require('editor-viewports');
 
   var EditorSetup = require('class').extend({
     init: function() {},
@@ -84,16 +85,23 @@ define(function(require) {
 
     mainViewport: function() {
       // Setup the default viewport
-      var mainViewport = gb.viewports.add(editorConfig.getMainViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
+      var name = editorConfig.getMainViewportName();
+      var width = gb.canvas.width;
+      var height = gb.canvas.height;
+
+      var mainViewport = editorViewports.add(name, width, height).NoClipping().viewport;
+
       mainViewport.addLayer(editorConfig.getDefaultLayerName());
       mainViewport.addLayer(editorConfig.getOutlineLayerName());
     },
 
     gridViewport: function() {
+    	var name = editorConfig.getGridViewportName();
+    	var width = gb.canvas.width;
+      var height = gb.canvas.height;
+
       // Setup the grid viewport
-      var gridViewport = gb.viewports.add(editorConfig.getGridViewportName(), gb.canvas.width, gb.canvas.height, 0, 0);
-      // This viewport does not perform any culling logic
-      gridViewport.Culling = false;
+      var gridViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
       gridViewport.addLayer(editorConfig.getGridLayerName());
     }
 
@@ -101,9 +109,3 @@ define(function(require) {
 
   return new EditorSetup();
 });
-
-
-
-      
-      
-      

@@ -3,6 +3,7 @@ define(function(require) {
   var gb = require('gb');
   var world = require('world');
   var editorSetup = require('editor-setup');
+  var editorViewports = require('editor-viewports');
   var setupEditorObject = require('setup-editable-game-object');
   var sceneName = require('scene-name');
 
@@ -32,7 +33,7 @@ define(function(require) {
       var viewports = scene.viewports;
 
       for(var i = 0; i < viewports.length; i++) {
-        gb.viewports.addFromObject(viewports[i]);
+      	editorViewports.add(viewports[i]).NoClipping();
       }
 
       // Create grid viewport
