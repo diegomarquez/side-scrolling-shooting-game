@@ -33,7 +33,7 @@ define(function(require) {
       var viewports = scene.viewports;
 
       for(var i = 0; i < viewports.length; i++) {
-      	editorViewports.add(viewports[i]).NoClipping();
+      	editorViewports.add(viewports[i]).NoClipping().NoCulling().NoMouseBounded();
       }
 
       // Create grid viewport

@@ -210,12 +210,13 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       setLocalMouseCoordinates(event)
 
       // Execute this when the mouse goes outside the current viewport
-      if (!mouseData.viewport.isPointInside(localX, localY)) {
+      // The viewport must be configured to care for this setting
+      if (mouseData.viewport.MouseBounded && !mouseData.viewport.isPointInside(localX, localY)) {
         onOutOfViewport(event, mouseData);
         return;
       }
 
-      // Get different between last and current mouse position
+      // Get difference between last and current mouse position
       deltaX = event.pageX - lastX; 
       deltaY = event.pageY - lastY;
 
@@ -269,7 +270,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       var viewport = allViewports[i];
 
       // Work only with viewports configured to interect with the mouse and only if the event occured inside the viewport
-      if (viewport.mouseEnabled() && viewport.isPointInside(localX, localY)) {
+      if (viewport.MouseEnabled && viewport.isPointInside(localX, localY)) {
         // Convert the mouse position to local viewport coordinates
         viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 
         

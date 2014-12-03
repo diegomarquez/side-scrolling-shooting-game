@@ -58,6 +58,14 @@ define(function(require) {
 		  	}.bind(this) }, TRANSITION_WAIT);
 
     	}.bind(this)}, TRANSITION_DURATION);
+    },
+
+    show: function() {
+    	this.loader.show();
+    },
+
+    hide: function() {
+    	this.loader.hide();
     }
   });
 

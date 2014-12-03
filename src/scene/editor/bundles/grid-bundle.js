@@ -15,6 +15,19 @@ define(function(require) {
 			this.componentPool.createConfiguration("GridRenderer", 'path-renderer')
 				.args({
 					skipCache: true, 
+					
+					width: {
+						_get: function() {
+							return gb.canvas.width;
+						}
+					},
+
+					height: {
+						_get: function() {
+							return gb.canvas.height;
+						}
+					},
+
 					drawPath: function(context) {
 						context.save();
 						context.beginPath();

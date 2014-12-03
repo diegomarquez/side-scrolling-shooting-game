@@ -14,6 +14,16 @@ define(function(require) {
   		NoCulling: function(value) {
   			this.viewport.Culling = false;
   			return this;
+  		},
+
+  		NoMouse: function(value) {
+  			this.viewport.MouseEnabled = false;
+  			return this;
+  		},
+
+  		NoMouseBounded: function(value) {
+  			this.viewport.MouseBounded = false;
+  			return this;
   		}
   	};
   }

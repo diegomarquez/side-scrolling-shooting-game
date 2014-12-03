@@ -110,7 +110,7 @@ define(function(require) {
               null,
               this.StrokeColor(),
               this.StrokeWidth()
-            ).NoClipping();
+            ).NoClipping().NoCulling().NoMouseBounded();
 
             gb.viewports.before(this.Name(), editorConfig.getGridViewportName()); 
              
