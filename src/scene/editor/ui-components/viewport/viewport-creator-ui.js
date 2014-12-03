@@ -46,6 +46,12 @@ define(function(require) {
               {
                 check: function(width) { return width > 0; },
                 tip: "Width must be greater than 0"
+              },
+              {
+                check: function(canvasWidth) {
+                	return function (width) { return width <= canvasWidth; }
+                }(gb.canvas.width),
+                tip: "Width must be less than or equal to " + gb.canvas.width
               }
             ]
           },
@@ -57,6 +63,12 @@ define(function(require) {
                 check: function(height) { return height > 0; },
                 tip: "Height must be greater than 0"
               },
+              {
+                check: function(canvasHeight) {
+                	return function (height) { return height <= canvasHeight; }
+                }(gb.canvas.height),
+                tip: "Height must be less than or equal to " + gb.canvas.height
+              }
             ]
           },
           { 
