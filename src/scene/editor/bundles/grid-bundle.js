@@ -46,9 +46,8 @@ define(function(require) {
       				context.lineTo(gb.canvas.width, posY);	
 						}
 
-		        context.lineWidth = 2;
-						context.globalAlpha = 0.5;
-        		context.strokeStyle = "#FFFFFF";
+		        context.lineWidth = 0.3;
+        		context.strokeStyle = "#f0ad4e";
         		context.stroke();        	
 						context.closePath();
 						

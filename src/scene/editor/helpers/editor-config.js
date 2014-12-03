@@ -52,6 +52,10 @@ define(function(require) {
       return data;
     },
 
+    isMainViewport: function(viewport) {
+    	return viewport.name == this.getMainViewportName();
+    },
+
     getViewportLayers: function(viewport) {
       return viewport.getLayers()
 	      .filter(function(layer) { 

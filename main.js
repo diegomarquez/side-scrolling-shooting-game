@@ -42,9 +42,12 @@ define(function(require){
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
   	// Create the scene player
-  	createScenePlayer();
+  	// createScenePlayer();
   	// Open the loader
-    loaderContainer.open();
+    // loaderContainer.open();
+    
+    createSceneEditor(); 
+    loaderContainer.hide();
   });
 
   // When the scene player exits...

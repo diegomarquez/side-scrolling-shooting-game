@@ -122,7 +122,11 @@ define(function(require) {
       })
       .on('mousedown', function(event) {
         $(this).tooltip('hide');
-      })
+      });
+
+      if (editorConfig.isMainViewport(options.viewport)) {
+      	setupViewport.addOutline(editorConfig.getMainViewportName());
+      }
 
       return componentFactory.getControllerWithParent(this.wrapped[0], this);
     },
@@ -251,7 +255,7 @@ define(function(require) {
           viewport.setStroke(this.StrokeWidth(), this.StrokeColor());
 
           if(viewport.WorldFit) {
-            world.scaleViewportToFit(options.viewport);
+            world.scaleViewportToFit(viewport);
           }
 
           $(this).dialog('close');

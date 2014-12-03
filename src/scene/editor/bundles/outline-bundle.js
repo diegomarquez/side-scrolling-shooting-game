@@ -19,10 +19,12 @@ define(function(require) {
 						context.save();
 
 						context.beginPath();
-	        			context.rect(0, 0, this.width, this.height);
-		        		context.lineWidth = 1 / this.parent.viewport.scaleX;
-		        		context.strokeStyle = "#FFFFFF";
-		        		context.stroke();        	
+      			
+      			context.rect(0, 0, this.width, this.height);
+        		context.lineWidth = 1 / this.parent.viewport.scaleX;
+        		context.strokeStyle = "#4E91F0";
+        		context.stroke();
+
 						context.closePath();
 						
 						context.restore();
