@@ -89,7 +89,7 @@ define(function(require) {
       var width = gb.canvas.width;
       var height = gb.canvas.height;
 
-      var mainViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().NoMouseBounded().viewport;
+      var mainViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().NoMouseBounded().Stroke(1, '#4E91F0').viewport;
 
       mainViewport.addLayer(editorConfig.getDefaultLayerName());
       mainViewport.addLayer(editorConfig.getOutlineLayerName());

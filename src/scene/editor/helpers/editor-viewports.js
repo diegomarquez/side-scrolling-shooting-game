@@ -24,6 +24,11 @@ define(function(require) {
   		NoMouseBounded: function(value) {
   			this.viewport.MouseBounded = false;
   			return this;
+  		},
+
+  		Stroke: function(width, color) {
+  			this.viewport.setStroke(width, color);
+  			return this;
   		}
   	};
   }

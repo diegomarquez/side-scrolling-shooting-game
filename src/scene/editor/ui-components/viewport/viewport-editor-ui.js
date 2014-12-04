@@ -124,10 +124,6 @@ define(function(require) {
         $(this).tooltip('hide');
       });
 
-      if (editorConfig.isMainViewport(options.viewport)) {
-      	setupViewport.addOutline(editorConfig.getMainViewportName());
-      }
-
       return componentFactory.getControllerWithParent(this.wrapped[0], this);
     },
 

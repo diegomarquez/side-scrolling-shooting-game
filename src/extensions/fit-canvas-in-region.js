@@ -13,15 +13,14 @@ define(function(require) {
     },
 
     execute: function() { 
-    	var game = document.getElementById('game');
     	var main = document.getElementById('main');
 
-    	this.originalWidth = game.width;
-    	this.originalHeight = game.height;
+    	this.originalWidth = gb.game.WIDTH;
+    	this.originalHeight = gb.game.HEIGHT;
 
     	this.onResize = function() {
-    		game.width = main.parentNode.parentNode.clientWidth;
-    		game.height = main.parentNode.parentNode.clientHeight;
+    		gb.game.WIDTH = main.parentNode.parentNode.clientWidth;
+    		gb.game.HEIGHT = main.parentNode.parentNode.clientHeight;
     	}
 
     	this.onResize();
@@ -32,8 +31,8 @@ define(function(require) {
 		destroy: function() {
     	window.removeEventListener('resize', this.onResize, false);
 
-			document.getElementById('game').width = this.originalWidth;
-    	document.getElementById('game').height = this.originalHeight;
+			gb.game.WIDTH = this.originalWidth;
+    	gb.game.HEIGHT = this.originalHeight;
 
     	this.onResize = null;
   		this.originalWidth = null;

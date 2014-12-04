@@ -17,13 +17,6 @@ define(function(require) {
         scrollbar.id = creationOptions.id;
       }
 
-      // Assign styles
-      if (creationOptions.style) {
-        for (var s in creationOptions.style) {
-          scrollbar.style[s] = creationOptions.style[s];  
-        }
-      }
-
       initScrollBar(scrollbar, creationOptions);
 
       var scrollBarComponentExtension = {
@@ -154,6 +147,12 @@ define(function(require) {
   }
 
   var initScrollBar = function(scrollbar, options) {
+  	// Assign styles
+  	if (options.style) {
+      for (var s in options.style) {
+        scrollbar.style[s] = options.style[s];  
+      }
+    }
     // Setup events
     setEvents(options);
     // Refresh the slider

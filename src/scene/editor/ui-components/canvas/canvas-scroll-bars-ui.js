@@ -15,6 +15,7 @@ define(function(require) {
     create: function() {
       var canvas = canvasContainer.getCanvasContainer();
       var viewport = gb.viewports.get(editorConfig.getMainViewportName());
+      var getGridCellSize = editorConfig.getGridCellSize();
 
       this.verticalScrollBar = new scrollBar().create(function() {
         return {
@@ -22,13 +23,12 @@ define(function(require) {
           value: clampAtCero(world.getHeight(), viewport.height),
           min: 0,
           max: clampAtCero(world.getHeight(), viewport.height),
-          step: editorConfig.getGridCellSize().height,
+          step: getGridCellSize.height,
           orientation: 'vertical',
           height: viewport.height,
           contentHeight: world.getHeight(),
           style: {
-            height: (viewport.height-2) + 'px',
-            display: 'inline-block'
+            height: (gb.canvas.height - 13) + 'px'
           },
           onSlide: function(event, ui) {
             viewport.Y = -(clampAtCero(world.getHeight(), viewport.height) - ui.value);
@@ -42,12 +42,12 @@ define(function(require) {
           value: 0,
           min: 0,
           max: clampAtCero(world.getWidth(), viewport.width),
-          step: editorConfig.getGridCellSize().width,
+          step: getGridCellSize.width,
           orientation: 'horizontal',
           width: viewport.width,
           contentWidth: world.getWidth(),
           style: {
-            width: (viewport.width-2) + 'px'
+            width: (gb.canvas.width - 14) + 'px'
           },
           onSlide: function(event, ui) {
             viewport.X = -ui.value;
@@ -81,15 +81,23 @@ define(function(require) {
 
       // Adjust the viewport offset when the world decreases and the scrollbar is at it's maximum value
       editorDelegates.add(world, world.CHANGE_HEIGHT_DECREASE, this, function (value) {
-        if(verticalScrollBar.isAtMaxEdge()) {
+        if(this.verticalScrollBar.isAtMaxEdge()) {
           viewport.Y += this.verticalScrollBar.option('step');
         }
       });
 
       editorDelegates.add(world, world.CHANGE_WIDTH_DECREASE, this, function (value) {
-        if(horizontalScrollBar.isAtMaxEdge()) {
+        if(this.horizontalScrollBar.isAtMaxEdge()) {
           viewport.X += this.horizontalScrollBar.option('step');
         }
+      });
+
+      editorDelegates.add(gb.game, gb.game.CHANGE_WIDTH, this, function (width) {
+      	this.horizontalScrollBar.refresh();
+      });
+
+      editorDelegates.add(gb.game, gb.game.CHANGE_HEIGHT, this, function (height) {
+      	this.verticalScrollBar.refresh();
       });
     }
   });

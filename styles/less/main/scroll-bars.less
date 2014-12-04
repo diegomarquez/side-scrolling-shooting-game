@@ -1,10 +1,23 @@
-.scroll-bar-border() {
+.scroll-bar() {
+	position: absolute;
+	
 	border: 0px solid transparent;
+	margin: 1px;
 }
 
-#canvas-horizontal-scroll-bar { .scroll-bar-border; }
+#canvas-horizontal-scroll-bar { 
+	.scroll-bar; 
 
-#canvas-vertical-scroll-bar { .scroll-bar-border; }
+	left: 0;
+	bottom: 0;
+}
+
+#canvas-vertical-scroll-bar { 
+	.scroll-bar; 
+
+	right: 0;
+	top: 0;
+}
 
 /*Override jQuery UI slider defaults*/
 .ui-slider {
