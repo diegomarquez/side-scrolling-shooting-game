@@ -1,5 +1,5 @@
-define(["editor-game-object", "keyboard", "gb"], function(GameObject, Keyboard, Gb) {
-  var PlayerShip = GameObject.extend({
+define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectContainer, Keyboard, Gb) {
+  var PlayerShip = GameObjectContainer.extend({
     // Contructor
     init: function() {
       this._super();

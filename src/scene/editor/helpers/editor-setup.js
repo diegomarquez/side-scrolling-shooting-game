@@ -71,6 +71,7 @@ define(function(require) {
     pools: function() {
       require('outline-bundle').create();
       require('grid-bundle').create();
+      require('gizmo-handle-bundle').create();
     },
 
     world: function() {

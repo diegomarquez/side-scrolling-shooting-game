@@ -1,8 +1,10 @@
 define(function(require) {
+  var gb = require('gb');
+
   var editorConfig = require('editor-config');
   var snapToGridValue = require('snap-to-grid-value');
   var gameObjectContextMenu = require('game-object-context-menu');
-  
+
   var gridCellSize = editorConfig.getGridCellSize();
   
   var GameObjectMouseInteraction = require("class").extend({
@@ -19,7 +21,15 @@ define(function(require) {
 
       go.single(go.CLICK, this, function(mouseData) {
         this.contextMenu.hide();
-      })
+
+        // TODO: // Add only one
+        if (!this.c) {
+        	this.c = true;
+        	gb.addComponentTo(go, 'ColliderGizmo');
+        } 
+        
+        
+      });
 
       go.single(go.MOUSE_DRAG_START, this, function(mouseData) {
         mouseData.go.Selected = true;

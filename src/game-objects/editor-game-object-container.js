@@ -10,6 +10,7 @@ define(["game-object-container"], function(GameObjectContainer) {
     },
 
     update: function(delta) {
+    	this._super(delta);
       this.editorUpdate(delta);  
     },
 

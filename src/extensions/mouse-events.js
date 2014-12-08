@@ -8,6 +8,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   
   var m = null;
   var r = null;
+  var t = null;
   var t_go = null;
   var rOffsetX, rOffsetY, rWidth, rHeight;
 
@@ -194,8 +195,20 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   }
 
   var getMouseMoveHandler = function (event, mouseData, onOutOfViewport) {
-    var initX = mouseData.go.x;
-    var initY = mouseData.go.y;
+  	var rotation = mouseData.go.parent.matrix.decompose(t).rotation;
+
+    rotation *= Math.PI / 180;
+		var cosAngle = Math.cos(rotation);
+		var sinAngle = Math.sin(rotation);
+
+		var x = mouseData.go.x;
+		var y = mouseData.go.y;
+
+    var initX = (x * cosAngle) - (y * sinAngle);
+    var initY = (x * sinAngle) + (y * cosAngle);
+
+    // var initX = mouseData.go.x;
+    // var initY = mouseData.go.y;
 
     var lastX = event.pageX;
     var lastY = event.pageY;
@@ -228,8 +241,19 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       totalDeltaX += deltaX;
       totalDeltaY += deltaY;
 
-      mouseData.go.x = initX + (totalDeltaX / mouseData.viewport.ScaleX);
-      mouseData.go.y = initY + (totalDeltaY / mouseData.viewport.ScaleY);
+      // Account for the rotation of the parent when dragging
+      rotation = mouseData.go.parent.matrix.decompose(t).rotation;
+
+      rotation  = -rotation * Math.PI / 180;
+			cosAngle = Math.cos(rotation);
+			sinAngle = Math.sin(rotation);
+
+			x = initX + (totalDeltaX / mouseData.viewport.ScaleX);
+			y = initY + (totalDeltaY / mouseData.viewport.ScaleY);
+
+      mouseData.go.x = (x * cosAngle) - (y * sinAngle);
+      mouseData.go.y = (x * sinAngle) + (y * cosAngle);
+			// Account for the rotation of the parent when dragging
 
       // Execute MOUSE_DRAG event with current mouseData plus the current X and Y delta
       mouseData.go.execute(mouseData.go.MOUSE_DRAG, mouseData);
@@ -313,39 +337,88 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   }
 
   var gameObjectUnderPoint = function(viewport, mouse) {
+  	var result;
+
     // Iterate over all the game objects in a layer, do so backwards to process first the ones that are drawn last. 
     for (var i = this.gameObjects.length-1; i >= 0; i--) {
       t_go = this.gameObjects[i];
       
-      r = t_go.renderer;
+	    if (t_go.isContainer()) {
+	    	// The game object being tested is a container, therefore we need to check against all of it's children recursively
+	    	result = testChildren(mouse, t_go, viewport);
 
-      // Only work with game objects which have a renderer, have registered mouse events and are visible in the viewport
-      if (r && isRegistered(t_go) && t_go.getViewportVisibility(viewport.name)) {
-        m = t_go.matrix;
+				// If something is found among the children, return that
+	  		if (result) {
+	  			return result;
+	  		}		
+  		}
 
-        rOffsetX = r.rendererOffsetX();
-        rOffsetY = r.rendererOffsetY();
-        rWidth = r.rendererWidth();
-        rHeight = r.rendererHeight();
-        
-        // Fill in the data of a temporary polygon collider to test against the mouse coordinates
-        gameObjectCollider.points[0] = m.transformPoint(rOffsetX, rOffsetY, p1);
-        gameObjectCollider.points[1] = m.transformPoint(rOffsetX + rWidth, rOffsetY, p2);;
-        gameObjectCollider.points[2] = m.transformPoint(rOffsetX + rWidth, rOffsetY + rHeight, p3);
-        gameObjectCollider.points[3] = m.transformPoint(rOffsetX, rOffsetY + rHeight, p4);
+  		// Nothing was found among the children or there are no children, so the collision test is performed on the object itself
+  		result = mouseVsGameObject(mouse, t_go, viewport);
 
-        // Setup the collider
-        gameObjectCollider.recalc();
-
-        // A game object was clicked? 
-        if (SAT.pointInPolygon(mouse, gameObjectCollider)) {
-          // Return it
-          return t_go;
-        } 
-      }
+  		// If something is found, return it
+  		if (result) {
+  			return result;
+  		}
     }
 
     // Nothing was clicked in the current viewport
+    return null;
+  }
+
+  var testChildren = function(mouse, go, viewport) {
+  	var result;
+
+  	if (go.childs) {
+  		for (var j = go.childs.length-1; j >= 0; j--) {
+  			var child = go.childs[j];
+
+  			if (child.isContainer()) {
+  				// The child is a container, test it's children recursively
+  				result = testChildren(mouse, child, viewport);
+  			} else {
+  				// The child is not a container, test for a collision normally
+  				result = mouseVsGameObject(mouse, child, viewport);	
+  			}
+
+  			// If something is found among the children, return that
+	  		if (result) {
+	  			return result;
+	  		}		
+			}
+  	}
+
+		return null;
+  }
+
+  var mouseVsGameObject = function(mouse, go, viewport) {
+  	r = go.renderer;
+
+  	// Only work with game objects which have a renderer, have registered mouse events and are visible in the viewport
+    if (r && isRegistered(go) && go.getViewportVisibility(viewport.name)) {
+      m = go.matrix;
+
+      rOffsetX = r.rendererOffsetX();
+      rOffsetY = r.rendererOffsetY();
+      rWidth = r.rendererWidth();
+      rHeight = r.rendererHeight();
+      
+      // Fill in the data of a temporary polygon collider to test against the mouse coordinates
+      gameObjectCollider.points[0] = m.transformPoint(rOffsetX, rOffsetY, p1);
+      gameObjectCollider.points[1] = m.transformPoint(rOffsetX + rWidth, rOffsetY, p2);;
+      gameObjectCollider.points[2] = m.transformPoint(rOffsetX + rWidth, rOffsetY + rHeight, p3);
+      gameObjectCollider.points[3] = m.transformPoint(rOffsetX, rOffsetY + rHeight, p4);
+
+      // Setup the collider
+      gameObjectCollider.recalc();
+
+      // A game object was clicked? 
+      if (SAT.pointInPolygon(mouse, gameObjectCollider)) {
+        // Return it
+        return go;
+      } 
+    }
+
     return null;
   }
 
