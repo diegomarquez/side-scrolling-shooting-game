@@ -3,7 +3,8 @@ define(function(require) {
 	var editorConfig = require('editor-config');
 
 	var colliderGizmo = require('collider-gizmo');
-	var gizmoHandle = require("gizmo-handle");
+	var circleGizmoHandle = require("circle-gizmo-handle");
+	var polygonGizmoHandle = require("polygon-gizmo-handle");
 	var gizmoHandleRenderer = require("gizmo-handle-renderer");
 
 	var GizmoHandle = require("bundle").extend({
@@ -14,10 +15,15 @@ define(function(require) {
 			this.componentPool.createConfiguration("ColliderGizmo", "collider-gizmo");
 			this.componentPool.createConfiguration("GizmoHandleRenderer", "gizmo-handle-renderer");
 
-			this.gameObjectPool.createDynamicPool("GizmoHandle", gizmoHandle);
+			this.gameObjectPool.createDynamicPool("CircleGizmoHandle", circleGizmoHandle);
+			this.gameObjectPool.createDynamicPool("PolygonGizmoHandle", polygonGizmoHandle);
 			
-			this.gameObjectPool.createConfiguration("Handle", "GizmoHandle")
-				.args( { skipDebug: false } )
+			this.gameObjectPool.createConfiguration("CircleHandle", "CircleGizmoHandle")
+				.args( { skipDebug: true } )
+				.setRenderer('GizmoHandleRenderer');
+
+			this.gameObjectPool.createConfiguration("PolygonHandle", "PolygonGizmoHandle")
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 		}
 	});

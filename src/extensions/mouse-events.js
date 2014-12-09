@@ -6,9 +6,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   var p3 = new Vector2D();
   var p4 = new Vector2D();
   
-  var m = null;
-  var r = null;
-  var t = null;
+  var m = {};
+  var r = {};
+  var t = {};
   var t_go = null;
   var rOffsetX, rOffsetY, rWidth, rHeight;
 
@@ -194,21 +194,29 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     }
   }
 
-  var getMouseMoveHandler = function (event, mouseData, onOutOfViewport) {
-  	var rotation = mouseData.go.parent.matrix.decompose(t).rotation;
+  var adjustedCoordinates = {};
 
-    rotation *= Math.PI / 180;
+  var adjustToParentRotationMatrix = function(matrix, x, y, sign) {
+  	var rotation = (matrix.decompose(t).rotation*sign) * (Math.PI / 180);
 		var cosAngle = Math.cos(rotation);
 		var sinAngle = Math.sin(rotation);
 
-		var x = mouseData.go.x;
-		var y = mouseData.go.y;
+		adjustedCoordinates.x = (x * cosAngle) - (y * sinAngle);
+		adjustedCoordinates.y = (x * sinAngle) + (y * cosAngle);
 
-    var initX = (x * cosAngle) - (y * sinAngle);
-    var initY = (x * sinAngle) + (y * cosAngle);
+		return adjustedCoordinates;
+  }
 
-    // var initX = mouseData.go.x;
-    // var initY = mouseData.go.y;
+  var getMouseMoveHandler = function (event, mouseData, onOutOfViewport) {
+		adjustedCoordinates = adjustToParentRotationMatrix(
+			mouseData.go.parent.matrix, 
+			mouseData.go.X, 
+			mouseData.go.Y,
+			1
+		);
+
+    var initX = adjustedCoordinates.x;
+    var initY = adjustedCoordinates.y;
 
     var lastX = event.pageX;
     var lastY = event.pageY;
@@ -242,18 +250,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       totalDeltaY += deltaY;
 
       // Account for the rotation of the parent when dragging
-      rotation = mouseData.go.parent.matrix.decompose(t).rotation;
+      adjustedCoordinates = adjustToParentRotationMatrix(
+      	mouseData.go.parent.matrix, 
+      	initX + (totalDeltaX / mouseData.viewport.ScaleX), 
+      	initY + (totalDeltaY / mouseData.viewport.ScaleY),
+      	-1
+      );
 
-      rotation  = -rotation * Math.PI / 180;
-			cosAngle = Math.cos(rotation);
-			sinAngle = Math.sin(rotation);
-
-			x = initX + (totalDeltaX / mouseData.viewport.ScaleX);
-			y = initY + (totalDeltaY / mouseData.viewport.ScaleY);
-
-      mouseData.go.x = (x * cosAngle) - (y * sinAngle);
-      mouseData.go.y = (x * sinAngle) + (y * cosAngle);
-			// Account for the rotation of the parent when dragging
+      mouseData.go.x = adjustedCoordinates.x;
+      mouseData.go.y = adjustedCoordinates.y;
 
       // Execute MOUSE_DRAG event with current mouseData plus the current X and Y delta
       mouseData.go.execute(mouseData.go.MOUSE_DRAG, mouseData);
@@ -427,7 +432,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
            go.isRegistered(go.MOUSE_DOWN) || 
            go.isRegistered(go.MOUSE_UP) ||
            go.isRegistered(go.MOUSE_DRAG_START) ||
-           go.isRegistered(go.MOUSE_DRAG_END)
+           go.isRegistered(go.MOUSE_DRAG_END) || 
+           go.isRegistered(go.MOUSE_DRAG)
   }
    
   Object.defineProperty(GameObject.prototype, "CLICK", { get: function() { return 'click'; } });
