@@ -5,7 +5,9 @@ define(function(require) {
   var menuUI = require('menu');
 
   var GameObjectContextMenu = require('ui-component').extend({
-    init: function() {},
+    init: function() {
+    	
+    },
 
     create: function() {
       var setupEditorObject;
@@ -94,6 +96,27 @@ define(function(require) {
             }
           },
           {
+          	name: 'Edit Collider',
+          	icon: 'ui-icon-wrench',
+
+          	options: [
+          		{
+          			name: 'Apply to all',
+          			icon: 'ui-icon-bullet',
+          			click: function() {
+          				//TODO: Apply changes made with the corresponding gizmo to all game objects of the same type
+          			}
+          		},
+          		{
+          			name: 'Save',
+          			icon: 'ui-icon-bullet',
+          			click: function() {
+          				//TODO: Create a new configuration in the game object pool based on the properties of this game-object
+          			}
+          		}
+          	]
+          },
+          {
             name: 'Scrap',
             icon: 'ui-icon-trash',
             click: function() {
@@ -133,12 +156,7 @@ define(function(require) {
         },
 
         hide: function () {
-          this.go = null;
-          this.v = null;
-          this.l = null;
-
           this.menu.hide();
-
           this.removeHideEvents();
         },
 
@@ -168,10 +186,6 @@ define(function(require) {
       };
 
       return menu;
-    },
-
-    destroy: function() {
-      this._super();
     }
   });
 

@@ -26,10 +26,6 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 			this._super();
 
 			this.Dragable = true;
-		},
-
-		destroy: function() {
-			this._super();
 		}
 	});
 

@@ -21,14 +21,6 @@ define(function(require) {
 
       go.single(go.CLICK, this, function(mouseData) {
         this.contextMenu.hide();
-
-        // TODO: // Add only one
-        if (mouseData.viewport.name = 'Main') {
-        	if (!this.c) {
-	        	this.c = true;
-	        	gb.addComponentTo(go, 'ColliderGizmo');
-	        }
-        }
       });
 
       go.single(go.MOUSE_DRAG_START, this, function(mouseData) {

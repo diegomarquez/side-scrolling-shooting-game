@@ -9,7 +9,7 @@ define(function(require) {
 
     create: function() {
       // Add Grid
-      gb.add(gridBundle.getGridId(), editorConfig.getDefaultGroupName(), [{viewport:editorConfig.getGridViewportName(), layer:editorConfig.getGridLayerName()}]);
+      gb.add(gridBundle.getGridId(), editorConfig.getDefaultGroupName(), [{viewport:editorConfig.getGridViewportName(), layer:editorConfig.getDefaultLayerName()}]);
       // Hide grid viewport      
       var gridViewport = gb.viewports.get(editorConfig.getGridViewportName());
       gridViewport.hide();

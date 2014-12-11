@@ -1,28 +1,43 @@
 define(["component", "gb", "collision-resolver"], function(Component, Gb, CollisionResolver) {
 	var ColliderGizmo = Component.extend({
-		// Called after the start method of the parent is called
-		start: function() {
+		init: function() {
 			this._super();
 
+			this.handles = null;
+		},
+
+		start: function() {
+			this.handles = [];
+
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
+			var handle;
 
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
+				debugger;
+
 				// Add one handle for circle collider editing
-				Gb.addChildTo(this.parent, 'CircleHandle', null, 'create');
+				handle = Gb.addChildTo(this.parent, 'CircleHandle', [{ viewport:'Gizmo', layer:'Front' }], null, 'create');
+
+				this.handles.push(handle);
 			}
 
 			if (parentCollider.colliderType == CollisionResolver.polygonCollider) {
 				// Add as many handles as vertexes for polygon colliders		
 				for (var i = 0; i < parentCollider.Points.length; i++) {
-					Gb.addChildTo(this.parent, 'PolygonHandle', { pointIndex: i }, 'create');
+					handle = Gb.addChildTo(this.parent, 'PolygonHandle', [{ viewport:'Gizmo', layer:'Front' }], { pointIndex: i }, 'create');
+
+					this.handles.push(handle);
 				}
 			}
 		},
 		
-		// Called before the component is sent back to its pool for reuse
-		destroy: function() {
-			this._super();
-		},
+		recycle: function() {
+			while(this.handles.length) {
+				Gb.reclaimer.claim(this.handles.pop());	
+			}
+
+			this.handles = null;
+		}
 	});
 
 	return ColliderGizmo;

@@ -39,6 +39,11 @@ define(function(require) {
       // Once the needed overrides are done, start the game object
       object.start();
 
+      // Add the Collider Gizmo to the newly created object if it has a collider
+      if (object.findComponents().firstWithProp('collider')) {
+      	gb.addComponentTo(object, 'ColliderGizmo');	
+      }
+      
       gameObjectInputInteraction.setupInteraction(object);      
       sceneSerializer.add(object);
 

@@ -4,32 +4,20 @@ define(function(require) {
   var GRID_WIDTH = 12;
   var GRID_HEIGHT = 12;
 
+  var EDITOR_ONLY_VIEWPORTS = ['Grid', 'Gizmo'];
+  var EDITOR_ONLY_GAME_OBJECTS = ['ViewportOutline', 'ViewportGrid', 'CircleHandle', 'PolygonHandle'];
+
   var EditorConfig = require('class').extend({
     init: function() {},
 
-    getDefaultLayerName: function() {
-      return 'Front';
-    },
+    getDefaultLayerName: function() { return 'Front'; },
+    getOutlineLayerName: function() { return 'Outline'; },
 
-    getDefaultGroupName: function() {
-      return 'First';
-    },
-
-    getOutlineLayerName: function() {
-      return 'Outline';
-    },
-
-    getMainViewportName: function() {
-      return 'Main';
-    },
-
-    getGridViewportName: function() {
-      return 'Grid';
-    },
-
-    getGridLayerName: function() {
-      return 'Front';
-    },
+    getDefaultGroupName: function() { return 'First'; },
+    
+    getMainViewportName: function() { return 'Main'; },
+    getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
+    getGizmoViewportName: function() { return EDITOR_ONLY_VIEWPORTS[1]; },
 
     getGridSize: function() {
       return { width: GRID_WIDTH, height:GRID_HEIGHT };
@@ -46,8 +34,9 @@ define(function(require) {
     getGameObjects: function() {
       var data = gb.goPool.getConfigurationTypes();
 
-      data.splice(data.indexOf('ViewportOutline'), 1);
-      data.splice(data.indexOf('ViewportGrid'), 1);
+      for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
+      	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
+      };
 
       return data;
     },
@@ -84,7 +73,7 @@ define(function(require) {
 
     getViewports: function() {
       return gb.viewports.allAsArray().filter(function(viewport) { 
-        return viewport.name != this.getGridViewportName()
+      	return EDITOR_ONLY_VIEWPORTS.indexOf(viewport.name) == -1;
       }.bind(this));
     }
   });

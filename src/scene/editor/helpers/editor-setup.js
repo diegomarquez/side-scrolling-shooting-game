@@ -19,7 +19,7 @@ define(function(require) {
       this.world();
       this.groups();
       this.mainViewport();
-      this.gridViewport();  
+      this.setupViewports();  
       this.pools();
     },
 
@@ -103,9 +103,25 @@ define(function(require) {
 
       // Setup the grid viewport
       var gridViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
-      gridViewport.addLayer(editorConfig.getGridLayerName());
-    }
+      
+      gridViewport.addLayer(editorConfig.getDefaultLayerName());
+    },
 
+    gizmoViewport: function() {
+    	var name = editorConfig.getGizmoViewportName();
+    	var width = gb.canvas.width;
+      var height = gb.canvas.height;
+
+      // Setup the gizmo viewport
+      var gizmoViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
+            
+      gizmoViewport.addLayer(editorConfig.getDefaultLayerName());
+    },
+
+    setupViewports: function() {
+    	this.gridViewport();
+      this.gizmoViewport();
+    }
   });
 
   return new EditorSetup();

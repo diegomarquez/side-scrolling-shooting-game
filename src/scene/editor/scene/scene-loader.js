@@ -36,8 +36,8 @@ define(function(require) {
       	editorViewports.add(viewports[i]).NoClipping().NoCulling().NoMouseBounded();
       }
 
-      // Create grid viewport
-      editorSetup.gridViewport();
+      // Create editor only viewports
+      editorSetup.setupViewports();
       
       // Create Game Objects
       var objects = scene.objects;

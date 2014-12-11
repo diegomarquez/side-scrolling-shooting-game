@@ -9,24 +9,12 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 
 			this.pointIndex = null;
 		},
-		
+
 		added: function() { 
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
 
 			this.x = parentCollider.collider.r;
       this.y = 0;
-
-			// this.on(this.CLICK, this, function(mouseData) {
-                
-   //    });
-
-			// this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
-        
-   //    });
-
-      // this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
-        
-      // });
 
       this.on(this.MOUSE_DRAG, this, function(mouseData) {
     	  center.x = 0;
@@ -43,10 +31,6 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 			this._super();
 
 			this.Dragable = true;
-		},
-
-		destroy: function() {
-			this._super();
 		}
 	});
 
