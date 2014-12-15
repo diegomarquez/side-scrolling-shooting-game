@@ -13,8 +13,6 @@ define(["component", "gb", "collision-resolver"], function(Component, Gb, Collis
 			var handle;
 
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
-				debugger;
-
 				// Add one handle for circle collider editing
 				handle = Gb.addChildTo(this.parent, 'CircleHandle', [{ viewport:'Gizmo', layer:'Front' }], null, 'create');
 
@@ -28,6 +26,18 @@ define(["component", "gb", "collision-resolver"], function(Component, Gb, Collis
 
 					this.handles.push(handle);
 				}
+			}
+		},
+
+		getChanges: function() {
+			var parentCollider = this.parent.findComponents().firstWithProp('collider');
+
+			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
+				return parentCollider.Radius;
+			}
+
+			if (parentCollider.colliderType == CollisionResolver.polygonCollider) {
+				return parentCollider.Points;
 			}
 		},
 		

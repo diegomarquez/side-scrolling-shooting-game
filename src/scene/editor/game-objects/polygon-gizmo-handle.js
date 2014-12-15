@@ -20,6 +20,11 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
     		parentCollider.Points[this.pointIndex].x = mouseData.go.x;
     		parentCollider.Points[this.pointIndex].y = mouseData.go.y;
       });
+
+      parentCollider.on(parentCollider.CHANGE_POINTS, this, function(points) {
+      	this.x = points[this.pointIndex].x;
+   			this.y = points[this.pointIndex].y;
+			});
 		},
 
 		start: function() {

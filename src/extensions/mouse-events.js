@@ -298,6 +298,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     for (var  i = allViewports.length-1; i >= 0; i--) {
       var viewport = allViewports[i];
 
+      // Skip invisible viewports
+      if (!viewport.isVisible()) continue;
+
       // Work only with viewports configured to interect with the mouse and only if the event occured inside the viewport
       if (viewport.MouseEnabled && viewport.isPointInside(localX, localY)) {
         // Convert the mouse position to local viewport coordinates
@@ -308,7 +311,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
         // If a game object was found, execute it's click callback and break out of the loop
         // The callback receives the game-object that was clicked on and the viewport it was clicked on
-        if (result) {          
+        if (result) {
           return {
             go: result.go,
             viewport: viewport,
@@ -327,6 +330,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     // Loop over all the layers of the viewport
     for (var i = this.layers.length-1; i >= 0 ; i--) {
       var layer = this.layers[i];
+
+      // Skip invisible layers
+      if (!layer.isVisible()) continue;
 
       // Find the game-object that is in the absolute top most position, including layer and viewport draw order
       var go = gameObjectUnderPoint.call(layer, this, mouse);
@@ -358,6 +364,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	  		}		
   		}
 
+  		// Skip game objects which are not drawing themselves
+      if (!t_go.canDraw) continue;
+
   		// Nothing was found among the children or there are no children, so the collision test is performed on the object itself
   		result = mouseVsGameObject(mouse, t_go, viewport);
 
@@ -385,6 +394,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   				// The child is not a container, test for a collision normally
   				result = mouseVsGameObject(mouse, child, viewport);	
   			}
+
+  			// Skip game objects which are not drawing themselves
+      	if (!child.canDraw) continue;
+      	if (!go.getChildOptions(child).draw) continue;
 
   			// If something is found among the children, return that
 	  		if (result) {

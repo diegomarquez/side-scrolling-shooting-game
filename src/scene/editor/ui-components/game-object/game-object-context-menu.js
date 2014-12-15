@@ -3,25 +3,99 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var mainViewport = require('main-viewport');
   var menuUI = require('menu');
-
+ 
   var GameObjectContextMenu = require('ui-component').extend({
     init: function() {
     	
     },
 
     create: function() {
-      var setupEditorObject;
-
       var contextMenu = (new menuUI()).create({
         id: 'game-object-context-menu',
         options: [
-          {
-            name: 'Clone',
-            icon: 'ui-icon-copy',
-            click: function() {
-              setupEditorObject = require('setup-editable-game-object');
-              setupEditorObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
-            }
+        	{
+          	name: 'Create',
+          	icon: 'ui-icon-wrench',
+
+          	options: [
+          		{
+		            name: 'Clone',
+		            icon: 'ui-icon-plusthick',
+		            click: function() {
+		            	var setupGameObject = require('setup-editable-game-object');
+		              setupGameObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
+		            }
+		          },
+          		{
+          			name: 'Swap with similar',
+          			icon: 'ui-icon-transferthick-e-w',
+
+          			options: function() {
+          				var similarConfigurations = getSimilarGameObjectConfigurations(menu.go.typeId);
+
+                  return similarConfigurations.map(function (similarConfigurationId) {
+                    return {
+                      name: similarConfigurationId,
+                      icon: 'ui-icon-bullet',
+                      disable: similarConfigurationId == menu.go.typeId,
+                      click: function (similarConfigurationId) {
+                      	// debugger;
+
+                        replaceGameObject(menu.go, similarConfigurationId);
+                      }
+                    }
+                  });
+                }
+          		},
+          		{
+          			name: 'Swap all with similar',
+          			icon: 'ui-icon-transferthick-e-w',
+          			options: function() {
+          				var similarConfigurations = getSimilarGameObjectConfigurations(menu.go.typeId);
+
+                  return similarConfigurations.map(function (similarConfigurationId) {
+                    return {
+                      name: similarConfigurationId,
+                      icon: 'ui-icon-bullet',
+                      disable: similarConfigurationId == menu.go.typeId,
+                      click: function (similarConfigurationId) {
+                        // Get a collection of all the game objects currently active in the scene that are similar to the selected game object
+			          				var gos = gb.findGameObjectsOfType(menu.go);
+
+			          				// debugger;
+
+			          				// Replace all the matching game objects with one of the new type
+			          				for (var i = 0; i < gos.length; i++) {
+			          					replaceGameObject(gos[i], similarConfigurationId);
+			          				}
+                      }
+                    }
+                  });
+                }
+          		},
+          		{
+          			name: 'New Type',
+          			icon: 'ui-icon-plusthick',
+          			click: function() {
+          				var newConfigurationId = createNewConfiguration(menu.go);
+          				replaceGameObject(menu.go, newConfigurationId);
+          			}
+          		},
+          		{
+          			name: 'New type to similar',
+          			icon: 'ui-icon-copy',
+          			click: function() {
+          				// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
+          				var gos = gb.findGameObjectsOfType(menu.go);
+          				// Create the new type
+          				var newConfigurationId = createNewConfiguration(menu.go);
+          				// Replace all the matching game objects with one of the new type
+          				for (var i = 0; i < gos.length; i++) {
+          					replaceGameObject(gos[i], newConfigurationId);
+          				}
+          			}
+          		},
+          	]
           },
           {
             name: 'Viewports',
@@ -96,27 +170,6 @@ define(function(require) {
             }
           },
           {
-          	name: 'Edit Collider',
-          	icon: 'ui-icon-wrench',
-
-          	options: [
-          		{
-          			name: 'Apply to all',
-          			icon: 'ui-icon-bullet',
-          			click: function() {
-          				//TODO: Apply changes made with the corresponding gizmo to all game objects of the same type
-          			}
-          		},
-          		{
-          			name: 'Save',
-          			icon: 'ui-icon-bullet',
-          			click: function() {
-          				//TODO: Create a new configuration in the game object pool based on the properties of this game-object
-          			}
-          		}
-          	]
-          },
-          {
             name: 'Scrap',
             icon: 'ui-icon-trash',
             click: function() {
@@ -125,6 +178,88 @@ define(function(require) {
           }
         ]
       });
+
+			var getSimilarGameObjectConfigurationCount = function(id) {
+	    	return getSimilarGameObjectConfigurations(id).length;
+	    }
+
+	    var getSimilarGameObjectConfigurations = function(id) {
+	    	var configurationTypes = gb.goPool.getConfigurationTypes();
+
+	    	var nameRoot = id.split('->')[0];
+
+	    	var result = [];
+
+	    	for (var i = 0; i < configurationTypes.length; i++) {
+	    		if (configurationTypes[i].search(nameRoot) != -1) {
+	    			result.push(configurationTypes[i]);
+	    		}
+	    	}
+
+	    	return result;
+	    }
+
+	    var createNewConfiguration = function(go) {          				
+				// Remove the generated part of the name if any
+				var nameRoot = go.typeId.split('->')[0]; 
+				// Get count of Game Objects with a similar name
+				var count = getSimilarGameObjectConfigurationCount(nameRoot);
+				// Generate the new configuration name
+      	var newConfigurationId = nameRoot + '->' + count;
+      	// Create a new configuration
+      	var newConfiguration = gb.goPool.createConfiguration(newConfigurationId, go.poolId);
+				// Copy over the game object arguments to the new configuration
+				newConfiguration.args(go.args);
+
+				// Add components to the new configuration if there are any components to be added
+				if (go.components) {
+					for (var i = 0; i < go.components.length; i++) {
+						var component = go.components[i];
+						
+						// Skip the gizmos
+						if (component.typeId == 'ColliderGizmo') continue;
+
+						newConfiguration.addComponent(component.typeId, component.Attributes);
+					}
+				}
+
+				// If the game object is a container and it has children...
+				if (go.isContainer() && go.childs) {
+					// Add them to the new configuration
+					
+					for (var i = 0; i < go.childs.length; i++) {
+						var child = go.childs[i];
+
+						// Skip childs created by a gizmo
+						if (child.typeId == 'CircleHandle') continue;
+						if (child.typeId == 'PolygonHandle') continue;
+
+						// Create a new configurations for each child
+						var childNewConfigurationId = createNewConfiguration(go.childs[i]);
+						// Add the child to the new configuration
+						newConfiguration.addChild(childNewConfigurationId, go.childs[i].args);											
+					}
+				}
+
+				// Add the renderer to the new configuration
+				newConfiguration.setRenderer(go.renderer.typeId, go.renderer.args);
+
+				// Return the id of the new confifguration
+				return newConfigurationId;
+	    }
+
+	    var replaceGameObject = function(go, newConfigurationId) {
+	    	var group = go.getUpdateGroup(); 
+				var viewports = JSON.parse(JSON.stringify(go.getViewportList()));
+	    	var position = { x: go.x, y: go.y };
+
+	    	// Remove the old game object	    	
+				gb.reclaimer.claim(go);
+
+				var setupGameObject = require('setup-editable-game-object');
+	    	// Add the new object in the place of the old one
+	    	setupGameObject.setup(newConfigurationId, group, viewports, position);
+	    }
 
       var isInViewport = function(go, viewportName) {
         for (var i = 0; i < go.getViewportList().length; i++) {

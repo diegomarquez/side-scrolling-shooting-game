@@ -22,7 +22,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("ShipColliderPolygon", 'polygon-collider')
 				.args({
 					id:'shipColliderId', 
-					points: [ new vector2D(-10, -10), new vector2D(10, -10), new vector2D(10, 10), new vector2D(-10, 10) ]
+					points: [ new vector2D(-20, -20), new vector2D(20, -20), new vector2D(20, 20), new vector2D(-20, 20) ]
 				});
 			
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');

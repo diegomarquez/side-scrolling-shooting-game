@@ -1,5 +1,5 @@
 define(function(require) {
-  var EditableDropdownMulti = require('dropdown-base').extend({
+  var DropdownMulti = require('dropdown-base').extend({
     init: function() {
       this.selectedOptions = [];
     },
@@ -41,6 +41,6 @@ define(function(require) {
     }
   });
 
-  return EditableDropdownMulti;
+  return DropdownMulti;
 });
 

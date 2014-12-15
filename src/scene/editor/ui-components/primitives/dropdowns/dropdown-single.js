@@ -1,5 +1,5 @@
 define(function(require) {
-  var EditableDropdownSingle = require('dropdown-base').extend({
+  var DropdownSingle = require('dropdown-base').extend({
     init: function() {
       
     },
@@ -36,6 +36,6 @@ define(function(require) {
     }
   });
 
-  return EditableDropdownSingle;
+  return DropdownSingle;
 });
 

@@ -23,6 +23,7 @@ define(function(require){
     game.remove_extension(require("activity-display"));
     game.remove_extension(require("mouse-events"));
     game.remove_extension(require("fit-canvas-in-region"));
+    game.remove_extension(require("patch-collider-components"));
   }
 
   var createSceneEditor = function() {
@@ -37,6 +38,7 @@ define(function(require){
     game.add_extension(require("activity-display"), { hide: true });
     game.add_extension(require("mouse-events"));
     game.add_extension(require("fit-canvas-in-region"));
+    game.add_extension(require("patch-collider-components"));
   }
   
   // This is the main initialization function

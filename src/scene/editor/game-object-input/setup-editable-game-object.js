@@ -1,6 +1,7 @@
 define(function(require) {
 
   var gb = require('gb');
+  var editorConfig = require('editor-config');
   var gameObjectInputInteraction = require('setup-game-object-input');
   var sceneSerializer = require('scene-serializer');
 
@@ -9,8 +10,28 @@ define(function(require) {
       
     },
 
-    setup: function(goId, group, viewports) {
-      return createObject(goId, group, viewports);
+    setup: function(goId, group, viewports, pos) {
+      var object = createObject(goId, group, viewports);
+
+      if (object) {
+      	if (pos) {
+      		object.x = pos.x;
+	      	object.y = pos.y;	
+      	}
+
+	      return object;	
+      }
+    },
+
+    setupWithGameObject: function(goId, go) {
+      var object = createObject(goId, go.getUpdateGroup(), go.getViewportList());
+
+      if (object) {
+      	object.x = go.x;
+	      object.y = go.y;      
+
+	      return object;	
+      }
     },
 
     setupWithViewport: function(goId, group, viewports, mainViewport) {

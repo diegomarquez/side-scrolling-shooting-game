@@ -25,6 +25,11 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 
       	parentCollider.collider.r = center.distance(handle);
       });
+
+      parentCollider.on(parentCollider.CHANGE_RADIUS, this, function(radius) {
+      	this.x = radius;
+      	this.y = 0;
+			});	
 		},
 
 		start: function() {
