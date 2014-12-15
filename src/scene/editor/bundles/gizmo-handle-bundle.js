@@ -1,6 +1,5 @@
 define(function(require) {	
 	var gb = require('gb');
-	var editorConfig = require('editor-config');
 
 	var colliderGizmo = require('collider-gizmo');
 	var circleGizmoHandle = require("circle-gizmo-handle");
@@ -18,13 +17,25 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool("CircleGizmoHandle", circleGizmoHandle);
 			this.gameObjectPool.createDynamicPool("PolygonGizmoHandle", polygonGizmoHandle);
 			
-			this.gameObjectPool.createConfiguration("CircleHandle", "CircleGizmoHandle")
+			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
 				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
-			this.gameObjectPool.createConfiguration("PolygonHandle", "PolygonGizmoHandle")
+			this.gameObjectPool.createConfiguration(this.getPolygonHandleId(), "PolygonGizmoHandle")
 				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
+		},
+
+		getCircleHandleId: function () {
+			return "CircleHandle";
+		},
+
+		getPolygonHandleId: function () {
+			return "PolygonHandle";
+		},
+
+		getColliderGizmoId: function () {
+			return "ColliderGizmo";
 		}
 	});
 

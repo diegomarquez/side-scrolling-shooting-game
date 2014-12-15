@@ -1,11 +1,21 @@
 define(function(require) {
   var gb = require('gb');
+  var util = require('util');
+  
+  var gizmoHandleBundle = require('gizmo-handle-bundle');
+  var outlineBundle = require('outline-bundle');
+  var gridBundle = require('grid-bundle');
 
   var GRID_WIDTH = 12;
   var GRID_HEIGHT = 12;
 
   var EDITOR_ONLY_VIEWPORTS = ['Grid', 'Gizmo'];
-  var EDITOR_ONLY_GAME_OBJECTS = ['ViewportOutline', 'ViewportGrid', 'CircleHandle', 'PolygonHandle'];
+  var EDITOR_ONLY_GAME_OBJECTS = [
+  	outlineBundle.getOutlineId(), 
+  	gridBundle.getGridId(), 
+  	gizmoHandleBundle.getCircleHandleId(), 
+  	gizmoHandleBundle.getPolygonHandleId()
+  ];
 
   var EditorConfig = require('class').extend({
     init: function() {},
@@ -41,8 +51,38 @@ define(function(require) {
       return data;
     },
 
+    isEditorGameObject: function(id) {
+    	for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
+      	if (id == EDITOR_ONLY_GAME_OBJECTS[i]) {
+      		return true;
+      	}
+      }
+
+      return false;
+    },
+
     isMainViewport: function(viewport) {
     	return viewport.name == this.getMainViewportName();
+    },
+
+    isEditorComponent: function(co) {
+    	if (co.typeId == gizmoHandleBundle.getColliderGizmoId()) {
+    		return true;
+    	}
+
+    	return false;
+    },
+
+    isEditorGameObject: function(go) {
+    	if (go.typeId == gizmoHandleBundle.getCircleHandleId()) {
+    		return true;
+    	}
+			
+			if (go.typeId == gizmoHandleBundle.getPolygonHandleId()) {
+				return true;
+			}
+
+			return false;
     },
 
     getViewportLayers: function(viewport) {

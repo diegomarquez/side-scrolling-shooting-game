@@ -1,4 +1,4 @@
-define(["component", "gb", "collision-resolver"], function(Component, Gb, CollisionResolver) {
+define(["component", "gb", "collision-resolver", "editor-handles"], function(Component, Gb, CollisionResolver, EditorHandles) {
 	var ColliderGizmo = Component.extend({
 		init: function() {
 			this._super();
@@ -10,28 +10,23 @@ define(["component", "gb", "collision-resolver"], function(Component, Gb, Collis
 			this.handles = [];
 
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
-			var handle;
 
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
 				// Add one handle for circle collider editing
-				handle = Gb.addChildTo(this.parent, 'CircleHandle', [{ viewport:'Gizmo', layer:'Front' }], null, 'create');
-
-				this.handles.push(handle);
+				this.handles.push(EditorHandles.addCircleHandle(this.parent));
 			}
 
 			if (parentCollider.colliderType == CollisionResolver.polygonCollider) {
-				// Add as many handles as vertexes for polygon colliders		
-				for (var i = 0; i < parentCollider.Points.length; i++) {
-					handle = Gb.addChildTo(this.parent, 'PolygonHandle', [{ viewport:'Gizmo', layer:'Front' }], { pointIndex: i }, 'create');
-
-					this.handles.push(handle);
-				}
+				// Add as many handles as vertexes for polygon colliders
+				this.handles = this.handles.concat(EditorHandles.addPolygonHandle(this.parent));
 			}
 		},
 
 		getChanges: function() {
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
 
+			// TODO: the gizmo should figure out if any changes where made
+			// If none, then this method should return null or something to signal nothing needs to be saved
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
 				return parentCollider.Radius;
 			}

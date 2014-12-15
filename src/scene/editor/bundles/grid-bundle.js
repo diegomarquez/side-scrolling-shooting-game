@@ -1,15 +1,13 @@
 define(function(require) {	
 	var gb = require('gb');
 	var world = require('world');
-	var editorConfig = require('editor-config');
-
 	var gameObject = require("game-object"); 
 	var pathRenderer = require("path-renderer");
 
-	var step = editorConfig.getGridCellSize();
-
 	var GridBundle = require("bundle").extend({
 		create: function(args) {	
+			var step = require('editor-config').getGridCellSize();
+
 			this.componentPool.createPool("path-renderer", pathRenderer);
 			
 			this.componentPool.createConfiguration("GridRenderer", 'path-renderer')

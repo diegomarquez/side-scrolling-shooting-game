@@ -4,6 +4,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var gameObjectInputInteraction = require('setup-game-object-input');
   var sceneSerializer = require('scene-serializer');
+  var editorHandles = require('editor-handles');
 
   var SetupEditorObject = require("class").extend({
     init: function() {
@@ -60,11 +61,9 @@ define(function(require) {
       // Once the needed overrides are done, start the game object
       object.start();
 
-      // Add the Collider Gizmo to the newly created object if it has a collider
-      if (object.findComponents().firstWithProp('collider')) {
-      	gb.addComponentTo(object, 'ColliderGizmo');	
-      }
-      
+      // Add all required gizmos
+      editorHandles.addGizmos(object);
+
       gameObjectInputInteraction.setupInteraction(object);      
       sceneSerializer.add(object);
 

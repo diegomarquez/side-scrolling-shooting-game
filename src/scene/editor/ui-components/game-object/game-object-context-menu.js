@@ -39,8 +39,6 @@ define(function(require) {
                       icon: 'ui-icon-bullet',
                       disable: similarConfigurationId == menu.go.typeId,
                       click: function (similarConfigurationId) {
-                      	// debugger;
-
                         replaceGameObject(menu.go, similarConfigurationId);
                       }
                     }
@@ -216,8 +214,8 @@ define(function(require) {
 					for (var i = 0; i < go.components.length; i++) {
 						var component = go.components[i];
 						
-						// Skip the gizmos
-						if (component.typeId == 'ColliderGizmo') continue;
+						// Skip editor only components
+						if (editorConfig.isEditorComponent(component)) continue;
 
 						newConfiguration.addComponent(component.typeId, component.Attributes);
 					}
@@ -230,9 +228,8 @@ define(function(require) {
 					for (var i = 0; i < go.childs.length; i++) {
 						var child = go.childs[i];
 
-						// Skip childs created by a gizmo
-						if (child.typeId == 'CircleHandle') continue;
-						if (child.typeId == 'PolygonHandle') continue;
+						// Skip editor only game objects
+						if (editorConfig.isEditorGameObject(child)) continue;
 
 						// Create a new configurations for each child
 						var childNewConfigurationId = createNewConfiguration(go.childs[i]);
