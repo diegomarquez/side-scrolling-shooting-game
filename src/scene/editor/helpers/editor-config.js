@@ -10,11 +10,17 @@ define(function(require) {
   var GRID_HEIGHT = 12;
 
   var EDITOR_ONLY_VIEWPORTS = ['Grid', 'Gizmo'];
+
+  var EDITOR_ONLY_COMPONENTS = [
+  	gizmoHandleBundle.getColliderGizmoId()
+  ]
+
   var EDITOR_ONLY_GAME_OBJECTS = [
   	outlineBundle.getOutlineId(), 
   	gridBundle.getGridId(), 
   	gizmoHandleBundle.getCircleHandleId(), 
-  	gizmoHandleBundle.getPolygonHandleId()
+  	gizmoHandleBundle.getPolygonHandleId(),
+  	gizmoHandleBundle.getFixedPolygonHandleId()
   ];
 
   var EditorConfig = require('class').extend({
@@ -28,6 +34,8 @@ define(function(require) {
     getMainViewportName: function() { return 'Main'; },
     getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
     getGizmoViewportName: function() { return EDITOR_ONLY_VIEWPORTS[1]; },
+
+    getColliderGizmoId: function() { return EDITOR_ONLY_COMPONENTS[0]; },
 
     getGridSize: function() {
       return { width: GRID_WIDTH, height:GRID_HEIGHT };
@@ -51,6 +59,10 @@ define(function(require) {
       return data;
     },
 
+    isMainViewport: function(viewport) {
+    	return viewport.name == this.getMainViewportName();
+    },
+
     isEditorGameObject: function(id) {
     	for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
       	if (id == EDITOR_ONLY_GAME_OBJECTS[i]) {
@@ -61,28 +73,14 @@ define(function(require) {
       return false;
     },
 
-    isMainViewport: function(viewport) {
-    	return viewport.name == this.getMainViewportName();
-    },
-
-    isEditorComponent: function(co) {
-    	if (co.typeId == gizmoHandleBundle.getColliderGizmoId()) {
-    		return true;
-    	}
+    isEditorComponent: function(id) {
+    	for (var i = 0; i < EDITOR_ONLY_COMPONENTS.length; i++) {
+      	if (id == EDITOR_ONLY_COMPONENTS[i]) {
+      		return true;
+      	}
+      }
 
     	return false;
-    },
-
-    isEditorGameObject: function(go) {
-    	if (go.typeId == gizmoHandleBundle.getCircleHandleId()) {
-    		return true;
-    	}
-			
-			if (go.typeId == gizmoHandleBundle.getPolygonHandleId()) {
-				return true;
-			}
-
-			return false;
     },
 
     getViewportLayers: function(viewport) {

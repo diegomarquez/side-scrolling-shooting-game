@@ -4,6 +4,7 @@ define(function(require) {
 	var colliderGizmo = require('collider-gizmo');
 	var circleGizmoHandle = require("circle-gizmo-handle");
 	var polygonGizmoHandle = require("polygon-gizmo-handle");
+	var fixedPolygonGizmoHandle = require("fixed-polygon-gizmo-handle");
 	var gizmoHandleRenderer = require("gizmo-handle-renderer");
 
 	var GizmoHandle = require("bundle").extend({
@@ -16,12 +17,17 @@ define(function(require) {
 
 			this.gameObjectPool.createDynamicPool("CircleGizmoHandle", circleGizmoHandle);
 			this.gameObjectPool.createDynamicPool("PolygonGizmoHandle", polygonGizmoHandle);
-			
+			this.gameObjectPool.createDynamicPool("FixedPolygonGizmoHandle", fixedPolygonGizmoHandle);
+
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
 				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getPolygonHandleId(), "PolygonGizmoHandle")
+				.args( { skipDebug: true } )
+				.setRenderer('GizmoHandleRenderer');
+
+			this.gameObjectPool.createConfiguration(this.getFixedPolygonHandleId(), "FixedPolygonGizmoHandle")
 				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 		},
@@ -32,6 +38,10 @@ define(function(require) {
 
 		getPolygonHandleId: function () {
 			return "PolygonHandle";
+		},
+
+		getFixedPolygonHandleId: function () {
+			return "FixedPolygonGizmoHandle";
 		},
 
 		getColliderGizmoId: function () {

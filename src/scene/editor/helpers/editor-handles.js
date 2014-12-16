@@ -20,7 +20,7 @@ define(function(require) {
     addPolygonHandle: function(parent) {
     	var gizmoHandleBundle = require('gizmo-handle-bundle');
 
-    	var parentCollider = this.parent.findComponents().firstWithProp('collider');
+    	var parentCollider = parent.findComponents().firstWithProp('collider');
     	var handles = [];
 
     	// Add a handle for each vertex of the polygon collider
@@ -31,9 +31,23 @@ define(function(require) {
 			return handles;
     },
 
+    addFixedPolygonHandle: function(parent) {
+    	var gizmoHandleBundle = require('gizmo-handle-bundle');
+
+    	var parentCollider = parent.findComponents().firstWithProp('collider');
+    	var handles = [];
+
+    	// Add a handle for each vertex of the polygon collider
+    	for (var i = 0; i < parentCollider.Points.length; i++) {
+				handles.push(gb.addChildTo(parent, gizmoHandleBundle.getFixedPolygonHandleId(), this.gizmoViewport(), { pointIndex: i }, 'create'));
+			}
+
+			return handles;
+    },
+
     addGizmos: function(object) {
     	var gizmoHandleBundle = require('gizmo-handle-bundle');
-    	
+
     	// Add the Collider Gizmo to the game object if it has a collider
       if (object.findComponents().firstWithProp('collider')) {
       	gb.addComponentTo(object, gizmoHandleBundle.getColliderGizmoId());	

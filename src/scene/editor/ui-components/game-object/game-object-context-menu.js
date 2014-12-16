@@ -23,7 +23,13 @@ define(function(require) {
 		            icon: 'ui-icon-plusthick',
 		            click: function() {
 		            	var setupGameObject = require('setup-editable-game-object');
-		              setupGameObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
+
+		            	// Get the changes on the selected game object gizmo
+		            	var changes = menu.go.findComponents().firstWithType(editorConfig.getColliderGizmoId()).getChanges();
+		            	// Clone the game object
+		              var clone = setupGameObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
+		              // Apply the changes found in the original to the clone
+		              clone.findComponents().firstWithType(editorConfig.getColliderGizmoId()).applyChanges(changes);
 		            }
 		          },
           		{
@@ -59,8 +65,6 @@ define(function(require) {
                       click: function (similarConfigurationId) {
                         // Get a collection of all the game objects currently active in the scene that are similar to the selected game object
 			          				var gos = gb.findGameObjectsOfType(menu.go);
-
-			          				// debugger;
 
 			          				// Replace all the matching game objects with one of the new type
 			          				for (var i = 0; i < gos.length; i++) {
@@ -215,7 +219,7 @@ define(function(require) {
 						var component = go.components[i];
 						
 						// Skip editor only components
-						if (editorConfig.isEditorComponent(component)) continue;
+						if (editorConfig.isEditorComponent(component.typeId)) continue;
 
 						newConfiguration.addComponent(component.typeId, component.Attributes);
 					}
@@ -229,7 +233,7 @@ define(function(require) {
 						var child = go.childs[i];
 
 						// Skip editor only game objects
-						if (editorConfig.isEditorGameObject(child)) continue;
+						if (editorConfig.isEditorGameObject(child.typeId)) continue;
 
 						// Create a new configurations for each child
 						var childNewConfigurationId = createNewConfiguration(go.childs[i]);
