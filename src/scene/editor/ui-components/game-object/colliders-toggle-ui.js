@@ -16,13 +16,7 @@ define(function(require) {
         on: 'Hide Colliders',
         off: 'Show Colliders',
         onChange: function() {
-          if ($(this).prop('checked')) {
-          	gb.toggleColliderDebug(true);
-            gizmoViewport.show();
-          } else {
-            gb.toggleColliderDebug(false);
-            gizmoViewport.hide();
-          }
+          $(this).prop('checked') ? gizmoViewport.show() : gizmoViewport.hide();
         }
       });
     }

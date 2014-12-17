@@ -7,13 +7,13 @@ define(["path-renderer", "path-cache", "draw"], function(PathRenderer, PathCache
 		start: function() {
 			this.width = 10; 
 			this.height = 10;
-			this.name = 'gizmo-handle';
+			this.name = 'gizmo-handle-renderer';
 			this.offset = 'center';
 
 			this._super();
 		},
 		
-		drawPath: function(context) {
+		drawPath: function(context, viewport) {
 			Draw.circle(context, 5, 5, 5, '#ff0000');
 		}
 	});

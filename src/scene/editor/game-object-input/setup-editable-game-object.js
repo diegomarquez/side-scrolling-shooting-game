@@ -4,7 +4,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var gameObjectInputInteraction = require('setup-game-object-input');
   var sceneSerializer = require('scene-serializer');
-  var editorHandles = require('editor-handles');
+  var editorGizmos = require('editor-gizmos');
 
   var SetupEditorObject = require("class").extend({
     init: function() {
@@ -62,7 +62,7 @@ define(function(require) {
       object.start();
 
       // Add all required gizmos
-      editorHandles.addGizmos(object);
+      editorGizmos.addGizmos(object);
 
       gameObjectInputInteraction.setupInteraction(object);      
       sceneSerializer.add(object);

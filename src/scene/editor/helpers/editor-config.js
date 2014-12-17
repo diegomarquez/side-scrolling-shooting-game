@@ -2,7 +2,7 @@ define(function(require) {
   var gb = require('gb');
   var util = require('util');
   
-  var gizmoHandleBundle = require('gizmo-handle-bundle');
+  var gizmoHandleBundle = require('gizmo-bundle');
   var outlineBundle = require('outline-bundle');
   var gridBundle = require('grid-bundle');
 
@@ -20,7 +20,10 @@ define(function(require) {
   	gridBundle.getGridId(), 
   	gizmoHandleBundle.getCircleHandleId(), 
   	gizmoHandleBundle.getPolygonHandleId(),
-  	gizmoHandleBundle.getFixedPolygonHandleId()
+  	gizmoHandleBundle.getFixedPolygonHandleId(),
+  	gizmoHandleBundle.getCircleDisplayId(),
+		gizmoHandleBundle.getPolygonDisplayId(),
+		gizmoHandleBundle.getFixedPolygonDisplayId()
   ];
 
   var EditorConfig = require('class').extend({
@@ -28,6 +31,9 @@ define(function(require) {
 
     getDefaultLayerName: function() { return 'Front'; },
     getOutlineLayerName: function() { return 'Outline'; },
+
+    getDefaultFrontLayerName: function() { return 'Front'; },
+    getDefaultBackLayerName: function() { return 'Back'; },
 
     getDefaultGroupName: function() { return 'First'; },
     

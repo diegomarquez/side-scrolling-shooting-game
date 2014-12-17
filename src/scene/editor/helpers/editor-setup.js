@@ -71,7 +71,7 @@ define(function(require) {
     pools: function() {
       require('outline-bundle').create();
       require('grid-bundle').create();
-      require('gizmo-handle-bundle').create();
+      require('gizmo-bundle').create();
     },
 
     world: function() {
@@ -114,8 +114,9 @@ define(function(require) {
 
       // Setup the gizmo viewport
       var gizmoViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
-            
-      gizmoViewport.addLayer(editorConfig.getDefaultLayerName());
+      
+      gizmoViewport.addLayer(editorConfig.getDefaultBackLayerName());
+      gizmoViewport.addLayer(editorConfig.getDefaultFrontLayerName());
     },
 
     setupViewports: function() {
