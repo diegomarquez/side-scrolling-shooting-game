@@ -12,9 +12,11 @@ define(function(require){
   var game = gb.game;
 
   // Populate the pools
-  // require('ship-bundle').create();
-
   var createScenePlayer = function() {
+    // Populate the pools
+    require('common-bundle').create();
+    require('ship-bundle').create();
+    
     // Detach the canvas container
     canvasContainer.detachCanvas();
     // Create the Scene Player
@@ -28,8 +30,9 @@ define(function(require){
 
   var createSceneEditor = function() {
     // Populate the pools
+    require('common-bundle').create();
     require('ship-bundle').create();
-
+   
     // Detach the canvas container
     canvasContainer.detachCanvas();
     // Create the Scene Editor

@@ -1,7 +1,7 @@
 define(function(require) {	
 	var gb = require('gb');
+	var commonBundle = require('common-bundle');
 
-	var gameObject = require('game-object');
 	var colliderGizmo = require('collider-gizmo');
 	var circleGizmoHandle = require("circle-gizmo-handle");
 	var polygonGizmoHandle = require("polygon-gizmo-handle");
@@ -29,7 +29,6 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool("CircleGizmoHandle", circleGizmoHandle);
 			this.gameObjectPool.createDynamicPool("PolygonGizmoHandle", polygonGizmoHandle);
 			this.gameObjectPool.createDynamicPool("FixedPolygonGizmoHandle", fixedPolygonGizmoHandle);
-			this.gameObjectPool.createDynamicPool("ColliderGizmoDisplay", gameObject);
 
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
 				.args( { skipDebug: true } )
@@ -43,15 +42,15 @@ define(function(require) {
 				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
-			this.gameObjectPool.createConfiguration(this.getCircleDisplayId(), "ColliderGizmoDisplay")
+			this.gameObjectPool.createConfiguration(this.getCircleDisplayId(), commonBundle.getGameObjectPoolId())
 				.args( { skipDebug: true } )
 				.setRenderer('CircleGizmoDisplayRenderer');
 
-			this.gameObjectPool.createConfiguration(this.getPolygonDisplayId(), "ColliderGizmoDisplay")
+			this.gameObjectPool.createConfiguration(this.getPolygonDisplayId(), commonBundle.getGameObjectPoolId())
 				.args( { skipDebug: true } )
 				.setRenderer('PolygonGizmoDisplayRenderer');
 
-			this.gameObjectPool.createConfiguration(this.getFixedPolygonDisplayId(), "ColliderGizmoDisplay")
+			this.gameObjectPool.createConfiguration(this.getFixedPolygonDisplayId(), commonBundle.getGameObjectPoolId())
 				.args( { skipDebug: true } )
 				.setRenderer('FixedPolygonGizmoDisplayRenderer');
 		},

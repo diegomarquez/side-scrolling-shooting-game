@@ -1,34 +1,28 @@
 define(function(require) {	
+	var commonBundle = require('common-bundle');
+
 	var playerShip = require("player-ship"); 
 	var shipRenderer = require("ship-renderer");
-	var circleCollider = require('circle-collider');
-	var polygonCollider = require('polygon-collider');
-	var fixedPolygonCollider = require('fixed-polygon-collider');
 	var vector2D = require('vector-2D');
 
 	var ShipBundle = require("bundle").extend({
 		create: function(args) {	
-			this.componentPool.createPool('circle-collider', circleCollider);
-			this.componentPool.createPool('polygon-collider', polygonCollider);
-			this.componentPool.createPool('fixed-polygon-collider', fixedPolygonCollider);
-
 			this.componentPool.createPool('ship-renderer', shipRenderer);
-			
 			this.gameObjectPool.createDynamicPool('Ship', playerShip);
 			
-			this.componentPool.createConfiguration("ShipColliderCircle", 'circle-collider')
+			this.componentPool.createConfiguration("ShipColliderCircle", commonBundle.getCircleColliderPoolId())
 				.args({
 					id:'shipColliderId', 
 					radius:20
 				});
 			
-			this.componentPool.createConfiguration("ShipColliderPolygon", 'polygon-collider')
+			this.componentPool.createConfiguration("ShipColliderPolygon", commonBundle.getPolygonColliderPoolId())
 				.args({
 					id:'shipColliderId', 
 					points: [ new vector2D(-20, -20), new vector2D(20, -20), new vector2D(20, 20), new vector2D(-20, 20) ]
 				});
 
-			this.componentPool.createConfiguration("ShipColliderFixedPolygon", 'fixed-polygon-collider')
+			this.componentPool.createConfiguration("ShipColliderFixedPolygon", commonBundle.getFixedPolygonColliderPoolId())
 				.args({
 					id:'shipColliderId', 
 					points: [ new vector2D(-20, -20), new vector2D(20, -20), new vector2D(20, 20), new vector2D(-20, 20) ]
@@ -38,6 +32,8 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("PlayerShipCircle", "Ship")
 				.args({
+					scaleX: 2,
+					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderCircle')
@@ -46,6 +42,8 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("PlayerShipPolygon", "Ship")
 				.args({
+					scaleX: 2,
+					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderPolygon')
@@ -53,6 +51,8 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("PlayerShipFixedPolygon", "Ship")
 				.args({
+					scaleX: 2,
+					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderFixedPolygon')

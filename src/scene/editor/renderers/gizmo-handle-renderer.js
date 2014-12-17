@@ -1,4 +1,4 @@
-define(["path-renderer", "path-cache", "draw"], function(PathRenderer, PathCache, Draw) {
+define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 	var GizmoHandleRenderer = PathRenderer.extend({
 		init: function() {
 			this._super();

@@ -26,8 +26,6 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			
 			// Get a position from the matrix of the parent game object
 			p = this.parent.matrix.transformPoint(0, 0, p);
-		
-			debugger;
 
 			// Drawing code
 			context.translate(p.x, p.y);

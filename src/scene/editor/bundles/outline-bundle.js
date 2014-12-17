@@ -1,14 +1,10 @@
 define(function(require) {	
-	var gameObject = require("game-object"); 
-	var pathRenderer = require("path-renderer");
-
+	var commonBundle = require('common-bundle');
 	var viewports = require("viewports");
 
 	var OutlineBundle = require("bundle").extend({
-		create: function(args) {	
-			this.componentPool.createPool("path-renderer", pathRenderer);
-			
-			this.componentPool.createConfiguration("OutlineRenderer", 'path-renderer')
+		create: function(args) {		
+			this.componentPool.createConfiguration("OutlineRenderer", commonBundle.getPathRendererPoolId())
 				.args({
 					skipCache: true, 
 					width: viewports.get(require("editor-config").getMainViewportName()).width,
@@ -29,9 +25,7 @@ define(function(require) {
 					}
 				});
 
-			this.gameObjectPool.createDynamicPool("Outline", gameObject);
-			
-			this.gameObjectPool.createConfiguration("ViewportOutline", "Outline")
+			this.gameObjectPool.createConfiguration("ViewportOutline", commonBundle.getGameObjectPoolId())
 				.args({
 					skipDebug: true,
 					x:0, 
