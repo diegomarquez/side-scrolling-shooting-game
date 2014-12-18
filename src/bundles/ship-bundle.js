@@ -32,8 +32,6 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("PlayerShipCircle", "Ship")
 				.args({
-					scaleX: 2,
-					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderCircle')
@@ -42,8 +40,6 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("PlayerShipPolygon", "Ship")
 				.args({
-					scaleX: 2,
-					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderPolygon')
@@ -51,8 +47,6 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("PlayerShipFixedPolygon", "Ship")
 				.args({
-					scaleX: 2,
-					scaleY: 2,
 					rotation: 45
 				})
 				.addComponent('ShipColliderFixedPolygon')
