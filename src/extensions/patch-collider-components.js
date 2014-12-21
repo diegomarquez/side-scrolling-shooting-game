@@ -15,7 +15,14 @@ define(function(require) {
 
     execute: function() { 
     	Object.defineProperty(circleCollider.prototype, "Attributes", { 
-				get: function() { return { radius: this.Radius } }
+				get: function() { 
+					return { radius: this.Radius } 
+				},
+
+				set: function(value) {
+					this.Radius = value.radius;
+					this.execute(this.CHANGE_RADIUS, value);
+				}
 			});
 
 			Object.defineProperty(circleCollider.prototype, "Radius", { 
@@ -28,7 +35,14 @@ define(function(require) {
 			});
 
 			Object.defineProperty(polygonCollider.prototype, "Attributes", { 
-				get: function() { return { points: this.Points } }
+				get: function() { 
+					return { points: this.Points } 
+				},
+
+				set: function(value) {
+					this.Points = value.points;
+					this.execute(this.CHANGE_POINTS, value);
+				}
 			});
 
 			Object.defineProperty(polygonCollider.prototype, "Points", { 
@@ -41,7 +55,14 @@ define(function(require) {
 			});
 
 			Object.defineProperty(fixedPolygonCollider.prototype, "Attributes", { 
-				get: function() { return { points: this.Points } }
+				get: function() { 
+					return { points: this.Points } 
+				},
+
+				set: function(value) {
+					this.Points = value.points;
+					this.execute(this.CHANGE_POINTS, value);
+				}
 			});
 
 			Object.defineProperty(fixedPolygonCollider.prototype, "Points", { 

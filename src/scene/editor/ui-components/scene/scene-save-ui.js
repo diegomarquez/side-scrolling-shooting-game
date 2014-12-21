@@ -68,13 +68,17 @@ define(function(require) {
   var serializeAndStore = function() { 
     var name = this.SceneName();
 
-    if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
-      $(this).dialog('close');
-    } else {
-      $(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
-    }
+    console.log(sceneSerializer.serialize(name));
 
-    sceneName.set(name);
+    $(this).dialog('close');
+
+    // if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
+    //   $(this).dialog('close');
+    // } else {
+    //   $(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
+    // }
+
+    // sceneName.set(name);
   }
   
   return SceneSave;

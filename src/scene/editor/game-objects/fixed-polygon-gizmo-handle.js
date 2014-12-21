@@ -1,7 +1,5 @@
 define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 	
-	var center = new Vector2D();
-	var handle = new Vector2D();
 	var matrix = null;
 	var transform = {};
 

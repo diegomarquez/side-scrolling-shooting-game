@@ -39,17 +39,71 @@ define(function(require) {
       // Create editor only viewports
       editorSetup.setupViewports();
       
+      // Add game object configurations
+      addConfigurations(gb.goPool, scene.goConfig);
+
+      // Add component configurations
+      addConfigurations(gb.coPool, scene.coConfig);
+      
       // Create Game Objects
       var objects = scene.objects;
 
       for(i = 0; i < objects.length; i++) {
-        var object = setupEditorObject.setup(objects[i].id, objects[i].g, objects[i].v);
+      	var serializedGameObject = objects[i];
 
-        object.x = objects[i].x;
-        object.y = objects[i].y;
+      	// Create a game object
+        var gameObject = setupEditorObject.setup(serializedGameObject.id, serializedGameObject.g, serializedGameObject.v);
+        // Apply scene attributes if any
+        applyGameObjectArguments(gameObject, serializedGameObject.args);
+        // Apply scene attributes to the components if any
+        applyAttributesToComponents(gameObject, serializedGameObject.componentArgs);
+        // Recursively apply attributes to children and their components
+        applyAttributesToChildren(gameObject, serializedGameObject.childrenArgs);
+        
+        // Place the game object in it's position in the world
+        gameObject.x = serializedGameObject.x;
+        gameObject.y = serializedGameObject.y;
       }      
     }
   });
+
+	var addConfigurations = function(pool, config) {
+		if (config) {
+    	for (var i = 0; i < config.length; i++) {
+    		pool.createConfigurationFromObject(config[i]);	
+    	}
+    }
+	}
+
+	var applyAttributes = function(object, args) {
+		if (args && object.Attributes) {
+    	object.Attributes(args);	
+    }
+	}
+
+	var applyAttributesToComponents = function(go, componentArgs) {
+		if (componentArgs) {
+    	for (var k in componentArgs) {    		
+    		applyAttributes(go.findComponents().firstOfType(k), componentArgs[k]);
+    	}	
+    }
+	}
+
+	var applyAttributesToChildren = function(go, childrenArgs) {
+		if (childrenArgs) {
+      for (var k in childrenArgs) {
+      	var child = go.findChildren().firstOfType(k);
+				var childArguments = childrenArgs[k];
+
+				applyAttributes(child, childArguments.args);	
+				applyAttributesToComponents(gameObject, childArguments.componentArgs);		
+
+				if (child.isContainer()) {
+      		applyAttributesToChildren(child, childArguments.childrenArgs)  	
+        }	
+      }
+   	}
+	} 
 
   return new SceneLoader();
 });
