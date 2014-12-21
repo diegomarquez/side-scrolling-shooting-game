@@ -13,34 +13,7 @@ define(function(require) {
     },
 
     setupInteraction: function(go) {
-      go.Dragable = true;
-
-      go.single(go.CONTEXT_MENU, this, function(mouseData) {
-        this.contextMenu.show(mouseData);
-      });
-
-      go.single(go.CLICK, this, function(mouseData) {
-        this.contextMenu.hide();
-      });
-
-      go.single(go.MOUSE_DRAG_START, this, function(mouseData) {
-        mouseData.go.Selected = true;
-      });
-
-      go.single(go.MOUSE_DRAG_END, this, function(mouseData) {
-        mouseData.go.Selected = false;
-      });
-
-      go.single(go.MOUSE_DRAG, this, function(mouseData) {
-        if (snapToGridValue.get()) {
-          // Snap to grid
-          var stepX = gridCellSize.width;
-          var stepY = gridCellSize.height;
-
-          mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
-          mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
-        }
-      });
+    	setUpMouseEvents.call(this, go);
     }
   });
 
@@ -59,6 +32,46 @@ define(function(require) {
       this.selected = value; 
     } 
   });
+
+  var setUpMouseEvents = function(go) {
+  	go.Dragable = true;
+
+    go.single(go.CONTEXT_MENU, this, function(mouseData) {
+      this.contextMenu.show(mouseData);
+    });
+
+    go.single(go.CLICK, this, function(mouseData) {
+      this.contextMenu.hide();
+    });
+
+    go.single(go.MOUSE_DRAG_START, this, function(mouseData) {
+      mouseData.go.Selected = true;
+    });
+
+    go.single(go.MOUSE_DRAG_END, this, function(mouseData) {
+      mouseData.go.Selected = false;
+    });
+
+    go.single(go.MOUSE_DRAG, this, function(mouseData) {
+      if (snapToGridValue.get()) {
+        // Snap to grid logic
+        var stepX = gridCellSize.width;
+        var stepY = gridCellSize.height;
+
+        mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
+        mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
+      }
+    });
+
+    if (go.childs) {
+	  	for (var i = 0; i < go.childs.length; i++) {
+	  		// Editor only game objects are skipped, only legic game only objects need all this event hooking
+	  		if (!editorConfig.isEditorGameObject(go.childs[i])) {
+	  			setUpMouseEvents.call(this, go.childs[i]);	
+	  		}
+	  	}
+    }
+  }
   
   return new GameObjectMouseInteraction();
 });

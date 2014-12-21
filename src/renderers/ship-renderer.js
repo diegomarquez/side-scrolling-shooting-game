@@ -3,7 +3,6 @@ define(["path-renderer", "path-cache", "draw", "vector-2D"], function(PathRender
 		init: function() {
 			this._super();
 
-
 			this.size = 30;
 			this.color = "#FFFFFF";
 	
@@ -43,7 +42,7 @@ define(["path-renderer", "path-cache", "draw", "vector-2D"], function(PathRender
 			
 			this.width = 60;
 			this.height = 70;
-			this.name = "Ship";
+			this.name = "ship-renderer";
 			this.offset = "center";
 		},
 

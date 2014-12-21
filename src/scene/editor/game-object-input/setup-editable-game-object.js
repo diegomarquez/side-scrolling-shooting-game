@@ -54,22 +54,44 @@ define(function(require) {
       var object = gb.getGameObject(goId, group, viewports, null, 'create');
 
       // Override the methods to prevent object initialization
-      // Drawing stays the same 
-      object.editorStart = function() {};
-      object.editorUpdate = function() {};
-
+      doOverridesForEditor(object);
+      
       // Once the needed overrides are done, start the game object
       object.start();
-
+      
       // Add all required gizmos
-      editorGizmos.addGizmos(object);
+      addEditorGizmos(object);
 
-      gameObjectInputInteraction.setupInteraction(object);      
+      // Setup the mouse interactions
+      gameObjectInputInteraction.setupInteraction(object);    
+
+      // Add the object to the serializer
       sceneSerializer.add(object);
 
       return object;
     }
   }
-  
+
+  var doOverridesForEditor = function(object) {
+  	object.editorStart = function() {};
+    object.editorUpdate = function() {};
+
+    if (object.childs) {
+	  	for (var i = 0; i < object.childs.length; i++) {
+	  		doOverridesForEditor(object.childs[i]);
+	  	}
+    }
+  }
+
+  var addEditorGizmos = function(object) {
+  	editorGizmos.addGizmos(object);
+
+  	if (object.childs) {
+	  	for (var i = 0; i < object.childs.length; i++) {
+	  		addEditorGizmos(object.childs[i]);
+	  	}
+    }
+  }
+
   return new SetupEditorObject();
 });

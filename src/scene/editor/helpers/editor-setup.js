@@ -113,7 +113,7 @@ define(function(require) {
       var height = gb.canvas.height;
 
       // Setup the gizmo viewport
-      var gizmoViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
+      var gizmoViewport = editorViewports.add(name, width, height).NoClipping().NoMouseBounded().NoCulling().viewport;
       
       gizmoViewport.addLayer(editorConfig.getDefaultBackLayerName());
       gizmoViewport.addLayer(editorConfig.getDefaultFrontLayerName());

@@ -387,21 +387,26 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
   		for (var j = go.childs.length-1; j >= 0; j--) {
   			var child = go.childs[j];
 
+  			// The child is a container, test it's children recursively
   			if (child.isContainer()) {
-  				// The child is a container, test it's children recursively
   				result = testChildren(mouse, child, viewport);
-  			} else {
-  				// The child is not a container, test for a collision normally
-  				result = mouseVsGameObject(mouse, child, viewport);	
-  			}
+  			}   			
 
   			// Skip game objects which are not drawing themselves
       	if (!child.canDraw) continue;
       	if (!go.getChildOptions(child).draw) continue;
 
-  			// If something is found among the children, return that
 	  		if (result) {
+  				// Something was found among the children, return that
 	  			return result;
+	  		} else {
+	  			// This game object either had no children or nothing was found on them, so the collision detection is performed on it 
+	  			result = mouseVsGameObject(mouse, child, viewport);	
+
+	  			// If a collision is found, return the result
+	  			if (result) {
+	  				return result;
+	  			}
 	  		}		
 			}
   	}
