@@ -9,7 +9,7 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 		start: function() {
 			this.gizmoComponents = [];
 
-			var parentCollider = this.parent.findComponents().firstWithProp('collider');
+			var parentCollider = this.getColliderComponent();
 
 			// Add the components to edit a circle collider
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
@@ -28,7 +28,7 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 		},
 
 		applyChanges: function(changes) {
-			var parentCollider = this.parent.findComponents().firstWithProp('collider');
+			var parentCollider = this.getColliderComponent();
 
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) { parentCollider.Radius = changes; }
 			if (parentCollider.colliderType == CollisionResolver.polygonCollider) { parentCollider.Points = changes; }
@@ -36,11 +36,15 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 		},
 
 		getChanges: function() {
-			var parentCollider = this.parent.findComponents().firstWithProp('collider');
+			var parentCollider = this.getColliderComponent();
 
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) { return parentCollider.Radius; }
 			if (parentCollider.colliderType == CollisionResolver.polygonCollider) { return parentCollider.Points; }
 			if (parentCollider.colliderType == CollisionResolver.fixedPolygonCollider) { return parentCollider.Points; }
+		},
+
+		getColliderComponent: function() {
+			return this.parent.findComponents().firstWithProp('collider');
 		},
 		
 		recycle: function() {

@@ -2,8 +2,8 @@ define(function(require) {
   var gb = require('gb');
   var world = require('world');
   var editorConfig = require('editor-config');
-  var vector2D = require('vector-2D');
   var util = require('util');
+  var attributeComparer = require('attribute-comparer');
 
   var SceneSerializer = require("class").extend({
     init: function() {
@@ -35,9 +35,18 @@ define(function(require) {
         } 
 
         // Serialize Arguments that might have changed during the game objects's life cycle
-       	serializeGameObjectArguments(go, goToSerialize);
+       	var gameObjectArgument = serializeGameObjectArguments(go);
+
+       	if (gameObjectArgument) {
+       		goToSerialize.args = gameObjectArgument;
+       	}
+
        	// Recursively serialize changes to all the children this game object might have
-       	serializeGameObjectChildrenArguments(go, goToSerialize);
+       	var childrenArguments = serializeGameObjectChildrenArguments(go);
+
+       	if (childrenArguments) {
+       		goToSerialize.childrenArgs = childrenArguments;
+       	}
 
         gos.push(goToSerialize);
       }
@@ -130,121 +139,127 @@ define(function(require) {
     return result;
 	}
 
-	var saveChanges = function(object, to, prop) {
-		var changes = checkPropertiesForChanges(object);
+	var saveChangesToObject = function(object, to, prop) {
+		var changes = attributeComparer.getChanges(object);
 
 		if (changes) {
 			to[prop] = changes;
 		}
+	}
+
+	var saveChangesToArray = function(object, array, index) {
+		var changes = attributeComparer.getChanges(object);
+
+		if (changes) {
+			array.push({attributes: changes, index: index});
+		}
 	}	
 
-	var serializeGameObjectArguments = function(go, serializable) {
-		// Save changes done to the game object
-		saveChanges(go, serializable, 'args');
+	var serializeGameObjectArguments = function(go) {
+		var serializableArguments = {};
+
+		// Save changes to the game object if any
+		saveChangesToObject(go, serializableArguments, 'args');
 
 		// Get objects for each component that has recieved changes
 		if (go.components) {
-   		serializable.componentArgs = {};
+   		serializableArguments.componentArgs = {};
 
    		for (var i = 0; i < go.components.length; i++) {
      		var component = go.components[i];     	
-     		// Save changes for each components
-     		saveChanges(component, serializable.componentArgs, component.typeId);	
+
+     		// Create a collection where to store changes, if a game object have several components of the same type, 
+     		// they will be grouped together in the same collection
+     		if (!serializableArguments.componentArgs[component.typeId]) {
+     			serializableArguments.componentArgs[component.typeId] = [];
+     		}
+
+     		// Save changes for each component, if any
+     		saveChangesToArray(component, serializableArguments.componentArgs[component.typeId], i);
      	}	
+
+     	// Delete components keys which had no changes
+     	for (var k in serializableArguments.componentArgs) {
+     		if (serializableArguments.componentArgs[k].length == 0) {
+     			delete serializableArguments.componentArgs[k];
+     		}
+     	}
+
+     	// If the whole componentArgs object ended up with nothing by this point, delete it.
+     	if (Object.keys(serializableArguments.componentArgs).length == 0) {
+     		delete serializableArguments['componentArgs']
+     	}
    	}
+
+   	return serializableArguments;
 	}
 
-	var serializeGameObjectChildrenArguments = function(go, serializable) {
+	var serializeGameObjectChildrenArguments = function(go) {
    	if (go.childs) {
-   		serializable.childrenArgs = {};
+   		var serializableChildArguments = {};
 
    		for (var i = 0; i < go.childs.length; i++) {
    			var child = go.childs[i];
    			var id = child.typeId; 
-   			serializable.childrenArgs[id] = {};
 
-   			serializeGameObjectArguments(child, serializable.childrenArgs[id]);
+   			// This object will hold all the changes that a child of a given type has received
+   			// Changes for childs of the same type are gruped together in the args array
+   			if (!serializableChildArguments[id]) {
+   				serializableChildArguments[id] = {
+   					args: [],
+   					childrenArgs: {}
+   				}
+   			}
+
+   			// Get changes for the child itself
+   			var serializedChild = serializeGameObjectArguments(child);
+
+   			// Store changes only if the child actually got some changes
+   			if (Object.keys(serializedChild).length > 0) {
+   				serializableChildArguments[id].args.push(serializedChild);	
+   			}
 
    			// If a child is a container itself, all of it's children need to be serialized aswell
    			if (child.isContainer()) {
-   				serializeGameObjectChildrenArguments(child, serializable.childrenArgs[id]);
+   				// This is a recursive loop, all empty data containers are removed by the assignChildArguments method
+   				assignChildArguments(serializableChildArguments[id].childrenArgs, serializeGameObjectChildrenArguments(child));
    			}
    		}
+
+   		// After everythin is complete, get rid of all objects which ended up empty, be them objects or arrays.
+   		// The final result is an object which only has meaningful data
+   		return cleanUpChildArguments(serializableChildArguments);
    	}
 	}
 
-	var checkPropertiesForChanges = function(object) {
-		var changes = {};
-
-		// Objects that don't implement the necessary interface, are asummed to not store any changes
-		if (!object.Attributes) 
-			return null;
-
-		// Loop through the properties that can change
-		for (var k in object.Attributes) {
-			var attribute = object.Attributes[k];
-			var objectProperty = object.args[k];
-
-			var attributeIsObject = util.isObject(attribute);
-			var propertyIsObject = util.isObject(objectProperty);
-			var attributeIsArray = util.isArray(attribute);
-			var propertyIsArray = util.isArray(objectProperty);
-			var attributeIsFunction = util.isFunction(attribute);
-			var propertyIsFunction = util.isFunction(objectProperty);
-
-			// If any of the values is a function, skip it
-			if (attributeIsFunction || propertyIsFunction) {
-				continue;
+	var assignChildArguments = function(to, args) {
+		for (var k in args) {
+			if (args[k].length == 0) {
+				delete args[k];
 			}
-
-			// If the attribute to check is any sort of collection...
-			if ((attributeIsObject && propertyIsObject) || (attributeIsArray && propertyIsArray) ) {
-				// Check if the collections are equal value by value
-				if (!areCollectionsEqual(attribute, objectProperty)) {
-					// If they are not store the attribute
-					changes[k] = attribute;
-				}
-			}
-
-			// Properties that are not Objects or Arrays are compared by value, if there is a difference they stored for serialization
-			if (!attributeIsObject && !attributeIsArray && !propertyIsObject && !propertyIsArray) {				
-				if (!areEqual(attribute, objectProperty)) {
-					changes[k] = attribute;
-				}	
-			}		
 		}
 
-		// Return something only if there were some changes
-		if (Object.keys(changes).length > 0) {
-			return changes;
-		}
-
-		return null;
+		to = args;
 	}
 
-	var areCollectionsEqual = function(first, second) {
-		if (Object.keys(first).length != Object.keys(second).length) {
-			return false;
-		}
+	var cleanUpChildArguments = function(childArgs) {
+		for (var k in childArgs) {
+			var a = childArgs[k];
 
-		for (var k in first) {
-			if (!areEqual(first[k], second[k])) {
-				return false;
+			if (a.args.length == 0) {
+				delete a['args'];
+			}
+
+			if (Object.keys(a.childrenArgs).length == 0) {
+				delete a['childrenArgs'];
+			}
+
+			if (Object.keys(a).length == 0) {
+				delete childArgs[k];
 			}
 		}
 
-		return true;
-	}
-
-	var areEqual = function(first, second) {
-		// Test special comparisons first
-		// Vector 2D
-		if (vector2D.isVector(first) && vector2D.isVector(second)) {
-			return first.equal(second);		
-		}
-
-		// Default case, objects are just compared by value
-		return first == second;
+		return childArgs;
 	}
 
   return new SceneSerializer();

@@ -2,6 +2,7 @@ define(function(require) {
   var gb = require('gb');
   var editorConfig = require('editor-config');
   var mainViewport = require('main-viewport');
+  var attributeComparer = require('attribute-comparer');
   var menuUI = require('menu');
  
   var GameObjectContextMenu = require('ui-component').extend({
@@ -201,13 +202,63 @@ define(function(require) {
 	    	return result;
 	    }
 
-	    var createNewConfiguration = function(go) {          				
+	    var getNewConfigurationName = function (go) {
 				// Remove the generated part of the name if any
 				var nameRoot = go.typeId.split('->')[0]; 
 				// Get count of Game Objects with a similar name
 				var count = getSimilarGameObjectConfigurationCount(nameRoot);
 				// Generate the new configuration name
-      	var newConfigurationId = nameRoot + '->' + count;
+      	return nameRoot + '->' + count;
+			}
+
+			var hasChanges = function(go) {
+				// In the mean time this only works with the collider component, 
+				// because it is the only thing that can actually be editted right now
+
+				var colliderGizmo = go.findComponents().firstWithType(editorConfig.getColliderGizmoId());
+      	var colliderComponent = colliderGizmo.getColliderComponent();
+      	
+      	return attributeComparer.getChanges(colliderComponent);
+			}
+
+	    var createNewConfiguration = function(go) {  
+	    	var childConfigurations = {
+					configurations: [],
+					hasNew: false
+				};
+
+	    	// If the game object is a container and it has children...
+				if (go.childs) {
+					// Check if any of the children has any changes and therefore needs a new configuration
+
+					for (var i = 0; i < go.childs.length; i++) {
+						var child = go.childs[i];
+
+						// Skip editor only game objects
+						if (editorConfig.isEditorGameObject(child.typeId)) continue;
+
+						// Create a new configurations for each child
+						// This is recursive so children which in turn have children will also get new configurations
+						var newChildConfigurationId = createNewConfiguration(go.childs[i]);
+						
+						// Was a new configuration created ? 
+						if (newChildConfigurationId) {							
+							childConfigurations.configurations.push({ id: newChildConfigurationId, args: go.childs[i].args });	 
+							childConfigurations.hasNew = true;
+						} else {
+							childConfigurations.configurations.push({ id: go.childs[i].typeId, args: go.childs[i].args });
+						}																	
+					}
+				} 
+
+				// No new child configurations needed and no changes on itself, means this game object does not need a new configuration
+				if (!childConfigurations.hasNew && !hasChanges(go)) {
+					return null;
+				}
+			
+				// Generate the new configuration name
+       	var newConfigurationId = getNewConfigurationName(go);
+
       	// Create a new configuration
       	var newConfiguration = gb.goPool.createConfiguration(newConfigurationId, go.poolId);
 				// Copy over the game object arguments to the new configuration
@@ -225,21 +276,10 @@ define(function(require) {
 					}
 				}
 
-				// If the game object is a container and it has children...
-				if (go.isContainer() && go.childs) {
-					// Add them to the new configuration
-					
-					for (var i = 0; i < go.childs.length; i++) {
-						var child = go.childs[i];
-
-						// Skip editor only game objects
-						if (editorConfig.isEditorGameObject(child.typeId)) continue;
-
-						// Create a new configurations for each child
-						var childNewConfigurationId = createNewConfiguration(go.childs[i]);
-						// Add the child to the new configuration
-						newConfiguration.addChild(childNewConfigurationId, go.childs[i].args);											
-					}
+				// Add the child configurations
+				for (var i = 0; i < childConfigurations.configurations.length; i++) {
+					var configuration = childConfigurations.configurations[i];
+					newConfiguration.addChild(configuration.id, configuration.args);
 				}
 
 				// Add the renderer to the new configuration
@@ -247,9 +287,13 @@ define(function(require) {
 
 				// Return the id of the new confifguration
 				return newConfigurationId;
-	    }
+	   	}
 
-	    var replaceGameObject = function(go, newConfigurationId) {
+		  var replaceGameObject = function(go, newConfigurationId) {
+	    	// If the new configuration is null, it means that nothing was created because it wasn't needed
+	    	// Skip the replacement logic completely then 
+	    	if (!newConfigurationId) return;
+
 	    	var group = go.getUpdateGroup(); 
 				var viewports = JSON.parse(JSON.stringify(go.getViewportList()));
 	    	var position = { x: go.x, y: go.y };
@@ -262,17 +306,17 @@ define(function(require) {
 	    	setupGameObject.setup(newConfigurationId, group, viewports, position);
 	    }
 
-      var isInViewport = function(go, viewportName) {
-        for (var i = 0; i < go.getViewportList().length; i++) {
-          var vo = go.getViewportList()[i];
+	    var isInViewport = function(go, viewportName) {
+	      for (var i = 0; i < go.getViewportList().length; i++) {
+	        var vo = go.getViewportList()[i];
 
-          if (vo.viewport === viewportName) {
-            return true;
-          }
-        }
+	        if (vo.viewport === viewportName) {
+	          return true;
+	        }
+	      }
 
-        return false;
-      }
+	      return false;
+	    }
 
       var menu = {
         menu: contextMenu,

@@ -35,7 +35,6 @@ define(["path-renderer", "draw", "vector-2D"], function(PathRenderer, Draw, Vect
 			}
 
 			context.closePath();
-
 		}
 	});
 
