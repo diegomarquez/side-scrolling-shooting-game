@@ -20,8 +20,7 @@ define(function(require) {
 				},
 
 				set: function(value) {
-					this.Radius = value.radius;
-					this.execute(this.CHANGE_RADIUS, value);
+					this.Radius = value.radius;	
 				}
 			});
 
@@ -41,7 +40,6 @@ define(function(require) {
 
 				set: function(value) {
 					this.Points = value.points;
-					this.execute(this.CHANGE_POINTS, value);
 				}
 			});
 
@@ -61,7 +59,6 @@ define(function(require) {
 
 				set: function(value) {
 					this.Points = value.points;
-					this.execute(this.CHANGE_POINTS, value);
 				}
 			});
 

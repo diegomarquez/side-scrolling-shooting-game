@@ -3,6 +3,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
   var mainViewport = require('main-viewport');
   var attributeComparer = require('attribute-comparer');
+  var util = require('util');
   var menuUI = require('menu');
  
   var GameObjectContextMenu = require('ui-component').extend({
@@ -24,13 +25,9 @@ define(function(require) {
 		            icon: 'ui-icon-plusthick',
 		            click: function() {
 		            	var setupGameObject = require('setup-editable-game-object');
-
-		            	// Get the changes on the selected game object gizmo
-		            	var changes = menu.go.findComponents().firstWithType(editorConfig.getColliderGizmoId()).getChanges();
 		            	// Clone the game object
 		              var clone = setupGameObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
-		              // Apply the changes found in the original to the clone
-		              clone.findComponents().firstWithType(editorConfig.getColliderGizmoId()).applyChanges(changes);
+		              require('attribute-assigner').assignFrom(menu.go, clone);
 		            }
 		          },
           		{
@@ -46,7 +43,7 @@ define(function(require) {
                       icon: 'ui-icon-bullet',
                       disable: similarConfigurationId == menu.go.typeId,
                       click: function (similarConfigurationId) {
-                        replaceGameObject(menu.go, similarConfigurationId);
+                      	copyChangesFromConfiguration(menu.go, similarConfigurationId);
                       }
                     }
                   });
@@ -69,7 +66,7 @@ define(function(require) {
 
 			          				// Replace all the matching game objects with one of the new type
 			          				for (var i = 0; i < gos.length; i++) {
-			          					replaceGameObject(gos[i], similarConfigurationId);
+			          					copyChangesFromConfiguration(gos[i], similarConfigurationId);
 			          				}
                       }
                     }
@@ -80,24 +77,11 @@ define(function(require) {
           			name: 'New Type',
           			icon: 'ui-icon-plusthick',
           			click: function() {
-          				var newConfigurationId = createNewConfiguration(menu.go);
-          				replaceGameObject(menu.go, newConfigurationId);
+         					// Create a new type from the game object that was clicked on
+         					// New types for child game objects will be created as needed
+          				replaceGameObject(menu.go, createNewConfiguration(menu.go, true));
           			}
-          		},
-          		{
-          			name: 'New type to similar',
-          			icon: 'ui-icon-copy',
-          			click: function() {
-          				// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
-          				var gos = gb.findGameObjectsOfType(menu.go);
-          				// Create the new type
-          				var newConfigurationId = createNewConfiguration(menu.go);
-          				// Replace all the matching game objects with one of the new type
-          				for (var i = 0; i < gos.length; i++) {
-          					replaceGameObject(gos[i], newConfigurationId);
-          				}
-          			}
-          		},
+          		}
           	]
           },
           {
@@ -221,7 +205,7 @@ define(function(require) {
       	return attributeComparer.getChanges(colliderComponent);
 			}
 
-	    var createNewConfiguration = function(go) {  
+	    var createNewConfiguration = function(go, forceCreation) {  
 	    	var childConfigurations = {
 					configurations: [],
 					hasNew: false
@@ -243,16 +227,25 @@ define(function(require) {
 						
 						// Was a new configuration created ? 
 						if (newChildConfigurationId) {							
-							childConfigurations.configurations.push({ id: newChildConfigurationId, args: go.childs[i].args });	 
+							childConfigurations.configurations.push({ 
+								child: go.childs[i], 
+								id: newChildConfigurationId, 
+								args: go.childs[i].args 
+							});	 
+							
 							childConfigurations.hasNew = true;
 						} else {
-							childConfigurations.configurations.push({ id: go.childs[i].typeId, args: go.childs[i].args });
+							childConfigurations.configurations.push({ 
+								child: go.childs[i], 
+								id: go.childs[i].typeId, 
+								args: go.childs[i].args 
+							});
 						}																	
 					}
 				} 
 
 				// No new child configurations needed and no changes on itself, means this game object does not need a new configuration
-				if (!childConfigurations.hasNew && !hasChanges(go)) {
+				if (!childConfigurations.hasNew && !hasChanges(go) && !forceCreation) {
 					return null;
 				}
 			
@@ -279,7 +272,9 @@ define(function(require) {
 				// Add the child configurations
 				for (var i = 0; i < childConfigurations.configurations.length; i++) {
 					var configuration = childConfigurations.configurations[i];
-					newConfiguration.addChild(configuration.id, configuration.args);
+					var mergedArguments = util.shallow_merge(configuration.args, { x: configuration.child.x, y: configuration.child.y });
+
+					newConfiguration.addChild(configuration.id, mergedArguments);
 				}
 
 				// Add the renderer to the new configuration
@@ -291,20 +286,21 @@ define(function(require) {
 
 		  var replaceGameObject = function(go, newConfigurationId) {
 	    	// If the new configuration is null, it means that nothing was created because it wasn't needed
-	    	// Skip the replacement logic completely then 
-	    	if (!newConfigurationId) return;
-
-	    	var group = go.getUpdateGroup(); 
-				var viewports = JSON.parse(JSON.stringify(go.getViewportList()));
-	    	var position = { x: go.x, y: go.y };
-
+	    	if (!newConfigurationId) return;    	
+	    	// Add the new object in the place of the old one
+	    	require('setup-editable-game-object').setupWithGameObject(newConfigurationId, go);
 	    	// Remove the old game object	    	
 				gb.reclaimer.claim(go);
-
-				var setupGameObject = require('setup-editable-game-object');
-	    	// Add the new object in the place of the old one
-	    	setupGameObject.setup(newConfigurationId, group, viewports, position);
 	    }
+
+	    var copyChangesFromConfiguration = function(go, newConfigurationId) {
+				// Create a new game object with the new configuration id to copy attributes from
+				var newGo = require('setup-editable-game-object').setupWithGameObject(newConfigurationId, go);
+				// Copy attributes recursively from the new game object into the selected one
+				require('attribute-assigner').assignFrom(newGo, go);
+        // Get rid of the temporary game object
+        gb.reclaimer.claim(newGo);
+			}
 
 	    var isInViewport = function(go, viewportName) {
 	      for (var i = 0; i < go.getViewportList().length; i++) {
