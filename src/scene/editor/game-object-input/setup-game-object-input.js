@@ -65,8 +65,8 @@ define(function(require) {
 
     if (go.childs) {
 	  	for (var i = 0; i < go.childs.length; i++) {
-	  		// Editor only game objects are skipped, only legic game only objects need all this event hooking
-	  		if (!editorConfig.isEditorGameObject(go.childs[i])) {
+	  		// Editor only game objects are skipped, only logic game only objects need all this event hooking
+	  		if (!editorConfig.isEditorGameObject(go.childs[i].typeId)) {
 	  			setUpMouseEvents.call(this, go.childs[i]);	
 	  		}
 	  	}

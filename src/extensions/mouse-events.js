@@ -52,7 +52,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
           // Prevent the menu from appearing
           event.preventDefault();
 
-          currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);
+          currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);	
 
           // Stop the dragging sequence
           stopDrag(event, currentMouseDownData);
