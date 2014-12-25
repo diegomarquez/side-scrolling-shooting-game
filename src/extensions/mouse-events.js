@@ -302,7 +302,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
       if (!viewport.isVisible()) continue;
 
       // Work only with viewports configured to interect with the mouse and only if the event occured inside the viewport
-      if (viewport.MouseEnabled && viewport.isPointInside(localX, localY)) {
+      // If the viewport is configured to not pay attention it's bounds, basically all clicks on the canvas are processed
+      if (viewport.MouseEnabled && (!viewport.MouseBounded || viewport.isPointInside(localX, localY))) {
         // Convert the mouse position to local viewport coordinates
         viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 
         
