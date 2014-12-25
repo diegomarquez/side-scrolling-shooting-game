@@ -226,7 +226,9 @@ define(function(require) {
 						var newChildConfigurationId = createNewConfiguration(go.childs[i]);
 						
 						// Was a new configuration created ? 
-						if (newChildConfigurationId) {							
+						if (newChildConfigurationId) {			
+							// TODO: This should be merging attributes and the Arguments property if available
+
 							childConfigurations.configurations.push({ 
 								child: go.childs[i], 
 								id: newChildConfigurationId, 
