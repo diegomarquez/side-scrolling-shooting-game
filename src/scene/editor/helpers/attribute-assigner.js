@@ -36,6 +36,9 @@ define(function(require) {
 	
 					toChild.Attributes = fromChild.Attributes;
 
+					toChild.x = fromChild.x;
+					toChild.y = fromChild.y;
+
 					if (toChild.childs && fromChild.childs) {
 						this.assignFrom(fromChild, toChild);
 					}
