@@ -24,9 +24,8 @@ define(function(require) {
 		            name: 'Clone',
 		            icon: 'ui-icon-plusthick',
 		            click: function() {
-		            	var setupGameObject = require('setup-editable-game-object');
 		            	// Clone the game object
-		              var clone = setupGameObject.setupWithViewport(menu.go.typeId, menu.go.getUpdateGroup(), menu.go.getViewportList(), mainViewport.get());
+		            	var clone = require('setup-editable-game-object').setupWithGameObject(menu.go.typeId, menu.go);
 		              require('attribute-assigner').assignFrom(menu.go, clone);
 		            }
 		          },
