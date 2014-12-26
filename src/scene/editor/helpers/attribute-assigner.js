@@ -1,4 +1,6 @@
 define(function(require) {
+	var editorConfig = require('editor-config');
+
   var AttributeAssigner = require('class').extend({
     init: function() {
     	
@@ -19,6 +21,9 @@ define(function(require) {
 					// Both components must exists
 					if (!fromComponent || !toComponent) continue;
 
+					// Skip Editor Components
+					if (editorConfig.isEditorComponent(fromComponent.typeId) || editorConfig.isEditorComponent(toComponent.typeId)) continue;
+
 					if (fromComponent.Attributes && toComponent.Attributes) {
 						toComponent.Attributes = fromComponent.Attributes;
 					}
@@ -33,7 +38,10 @@ define(function(require) {
 				
 					// Both children must exist
 					if (!fromChild || !toChild) continue;
-	
+		
+					// Skip Editor Game Objects
+					if (editorConfig.isEditorGameObject(fromChild.typeId) || editorConfig.isEditorGameObject(toChild.typeId)) continue;
+
 					toChild.Attributes = fromChild.Attributes;
 
 					toChild.x = fromChild.x;

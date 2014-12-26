@@ -53,6 +53,10 @@ define(["game-object"], function(GameObject) {
 
     hasStructuralChanges: function() {
     	return this.structuralChanged;
+    },
+
+    setStructuralChanges: function() {
+    	this.structuralChanged = true;
     }
   });
 

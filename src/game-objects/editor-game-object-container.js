@@ -63,6 +63,10 @@ define(["game-object-container", "editor-config"], function(GameObjectContainer,
 
     hasStructuralChanges: function() {
     	return this.structuralChanged;
+    },
+
+    setStructuralChanges: function() {
+    	this.structuralChanged = true;
     }
   });
 
