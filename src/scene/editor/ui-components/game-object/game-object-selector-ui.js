@@ -2,7 +2,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
 
   var wrapper = require('wrap-in-div');
-  var dropdown = require('dropdown-single-remove');
+  var dropdown = require('dropdown-nested');
 
   var gb = require('gb');
   var editorDelegates = require('editor-delegates');
@@ -18,29 +18,17 @@ define(function(require) {
         defaultMessage: 'Choose a Game Object',
         selectedMessage: 'Selected Game Object:',
         data: function() {      
-          return editorConfig.getGameObjects();
-        },
-        onRemove: function(configurationId) {
-        	gb.reclaimer.clearGameObjectConfiguration(configurationId);    	
-        },
-        canBeRemoved: function(value) {
-        	return value.match(/->/)
+          return editorConfig.getGameObjectsNesting();
         }
       });
 
-      editorDelegates.add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
-      	this.gameObjectSelectorUI.refresh();
-      });
-
-      editorDelegates.add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configurationId) {
+      editorDelegates.add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
       	this.gameObjectSelectorUI.refresh();
       });
 
       return wrapper.wrap(this.gameObjectSelectorUI.html);
     },
   });
-
-
 
   return GameObjectSelector;
 });

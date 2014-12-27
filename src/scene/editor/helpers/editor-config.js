@@ -60,9 +60,43 @@ define(function(require) {
 
       for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
       	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
-      };
+      }
 
       return data;
+    },
+
+    getGameObjectsNesting: function() {
+      var data = gb.goPool.getConfigurationTypes();
+
+      for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
+      	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
+      }
+
+      var result = [];
+
+      for (var i = 0; i < data.length; i++) {
+      	result.push(this.getGameObjectNesting(data[i]));
+      }
+
+      return result;
+    },
+
+    getGameObjectNesting: function(configurationId) {
+    	var configuration = gb.goPool.getConfigurationObject(configurationId);
+
+    	var result = {
+    		id: configurationId,
+    	};
+
+    	if (configuration.childs) {
+    		result.children = []
+
+    		for (var i = 0; i < configuration.childs.length; i++) {
+    			result.children.push(this.getGameObjectNesting(configuration.childs[i].childId));
+    		}
+    	}
+
+    	return result;
     },
 
     isMainViewport: function(viewport) {
