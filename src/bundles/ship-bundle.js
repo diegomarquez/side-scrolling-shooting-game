@@ -43,7 +43,8 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("PlayerShipOption", "ShipOption")
 				.addComponent("OptionColliderCircle")
-				.setRenderer("ShipOptionRenderer");
+				.setRenderer("ShipOptionRenderer")
+				.childOnly();
 
 			this.gameObjectPool.createConfiguration("PlayerShipCircle", "Ship")
 				.args({

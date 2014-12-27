@@ -56,7 +56,7 @@ define(function(require) {
     },
 
     getGameObjects: function() {
-      var data = gb.goPool.getConfigurationTypes();
+      var data = gb.goPool.getConfigurationTypes({filterChilds: true});
 
       for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
       	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
@@ -66,11 +66,7 @@ define(function(require) {
     },
 
     getGameObjectsNesting: function() {
-      var data = gb.goPool.getConfigurationTypes();
-
-      for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
-      	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
-      }
+      var data = this.getGameObjects();
 
       var result = [];
 

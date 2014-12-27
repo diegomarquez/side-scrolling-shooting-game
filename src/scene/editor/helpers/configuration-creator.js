@@ -24,7 +24,7 @@ define(function(require) {
 
 					// Create a new configurations for each child
 					// This is recursive so children which in turn have children will also get new configurations
-					var newChildConfigurationResult = this.createFromGameObject(go.childs[i], util.shallow_merge(options, { force: false }));
+					var newChildConfigurationResult = this.createFromGameObject(go.childs[i], util.shallow_merge(options, { isChildOnly: true, force: false }));
 					
 					if (newChildConfigurationResult) {			
 						// TODO: This should be merging attributes and the Arguments property if available
@@ -76,6 +76,11 @@ define(function(require) {
 
 			// Add the renderer to the new configuration
 			newConfiguration.setRenderer(go.renderer.typeId, go.renderer.args);
+
+			// Set the child only flag for configurations which are being created solely to be children of others
+			if (options.isChildOnly) {
+				newConfiguration.childOnly();	
+			}
 
 			if (options.getChildIds) {
 				return {
