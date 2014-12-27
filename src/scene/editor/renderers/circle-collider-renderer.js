@@ -9,9 +9,8 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		start: function() {
 			this.skipCache = true;
 
-			this.width = 1; 
-			this.height = 1;
 			this.name = 'circle-collider-renderer';
+			this.offset = 'center';
 
 			this._super();
 		},
@@ -30,6 +29,14 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 			// Restore original context
 			context.restore();
+		},
+
+		rendererWidth: function() { 
+			return (this.parent.parentCollider.Radius*2) * this.scaleX; 
+		},
+		
+		rendererHeight: function() { 
+			return (this.parent.parentCollider.Radius*2) * this.scaleY; 
 		}
 	});
 

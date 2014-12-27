@@ -9,8 +9,6 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		start: function() {
 			this.skipCache = true;
 
-			this.width = 1; 
-			this.height = 1;
 			this.name = 'fixed-polygon-collider-renderer';
 
 			this._super();
@@ -33,8 +31,85 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 			// Restore original context
 			context.restore();
+		},
+
+		rendererWidth: function() { 
+			return getPolygonSize(this.parent.parentCollider.Points, 'width') * this.scaleX;
+		},
+		
+		rendererHeight: function() { 
+			return getPolygonSize(this.parent.parentCollider.Points, 'height') * this.scaleY;
+		},
+
+		rendererOffsetX: function() { 
+			return getOffset(this.parent.parentCollider.Points, 'x') * this.scaleX;
+		},
+
+		rendererOffsetY: function() { 
+			return getOffset(this.parent.parentCollider.Points, 'y') * this.scaleY;
+		},
+
+		debug_draw: function(context, viewport, draw, gb) {
+			if (!gb.rendererDebug) return;
+
+			context.save();
+			context.beginPath();
+			
+			context.strokeStyle = this.debugColor;
+			context.lineWidth = 1;
+
+			// Top Left 
+			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY(), draw, 'moveTo');
+			// Top Right
+			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY(), draw, 'lineTo');
+			// Bottom Right
+			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY() + this.rendererHeight(), draw, 'lineTo');
+			// Bottom Left
+			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY() + this.rendererHeight(), draw, 'lineTo');
+
+			context.closePath();
+
+			context.stroke();
+			context.restore();
 		}
 	});
+
+	var d = null;
+
+	var drawLineAndPoint = function(context, offsetX, offsetY, draw, lineMethod) {
+		d = this.parent.matrix.decompose(d);
+
+		context.save();
+		context.translate(d.x, d.y)
+		context[lineMethod](offsetX, offsetY);
+		context.restore();
+	}
+
+	var getOffset = function (points, axis) {
+		var min = points[0][axis];
+    var max = points[0][axis];
+
+    for (var i=1; i < points.length; i++) {
+      min = Math.min(min, points[i][axis]);
+      max = Math.max(max, points[i][axis]);
+    }
+
+    return min;
+	}
+
+	var getPolygonSize = function (points, axis) {
+		axis = axis == 'width' ? 'x' : 'y'; 
+
+	  var min = points[0][axis];
+    var max = points[0][axis];
+
+    for (var i=1; i < points.length; i++) {
+      min = Math.min(min, points[i][axis]);
+      max = Math.max(max, points[i][axis]);
+    }
+
+    return max - min;
+	}
 
 	return PolygonColliderRenderer;
 });

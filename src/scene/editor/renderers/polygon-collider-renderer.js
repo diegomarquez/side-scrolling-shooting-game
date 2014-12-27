@@ -10,8 +10,6 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		start: function() {
 			this.skipCache = true;
 
-			this.width = 1; 
-			this.height = 1;
 			this.name = 'polygon-collider-renderer';
 
 			this._super();
@@ -34,10 +32,50 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 			// Restore original context
 			context.restore();
+		},
+
+		rendererWidth: function() { 
+			return getPolygonSize(this.parent.parentCollider.Points, 'width') * this.scaleX;
+		},
+		
+		rendererHeight: function() { 
+			return getPolygonSize(this.parent.parentCollider.Points, 'height') * this.scaleY;
+		},
+
+		rendererOffsetX: function() { 
+			return getOffset(this.parent.parentCollider.Points, 'x') * this.scaleX;
+		},
+
+		rendererOffsetY: function() { 
+			return getOffset(this.parent.parentCollider.Points, 'y') * this.scaleY;
 		}
 	});
 
+	var getOffset = function (points, axis) {
+		var min = points[0][axis];
+    var max = points[0][axis];
+
+    for (var i=1; i < points.length; i++) {
+      min = Math.min(min, points[i][axis]);
+      max = Math.max(max, points[i][axis]);
+    }
+
+    return min;
+	}
+
+	var getPolygonSize = function (points, axis) {
+		axis = axis == 'width' ? 'x' : 'y'; 
+
+	  var min = points[0][axis];
+    var max = points[0][axis];
+
+    for (var i=1; i < points.length; i++) {
+      min = Math.min(min, points[i][axis]);
+      max = Math.max(max, points[i][axis]);
+    }
+
+    return max - min;
+	}
+
 	return PolygonColliderRenderer;
 });
-
-
