@@ -23,7 +23,9 @@ define(function(require) {
         attachStaticToParent: function(parent, parentMenu) {
           this.dynamic = false;
           this.parentMenu = parentMenu;
-        
+        	this.parentMenu.hideSubMenues();
+          this.parentMenu.subMenues.push(this);
+
           attach(parent, this.html);
         },
 
@@ -254,7 +256,7 @@ define(function(require) {
 
     if (Object.prototype.toString.call(options.options) == '[object Function]') {
       $(optionsElement).on('click', function (event) {
-        var dynamicSubMenu = self.create(options);        
+        var dynamicSubMenu = self.create(options);
         dynamicSubMenu.attachDynamicToParent(this, getMenuController());
       });
 

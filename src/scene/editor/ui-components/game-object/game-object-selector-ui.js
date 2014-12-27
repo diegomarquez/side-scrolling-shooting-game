@@ -26,6 +26,10 @@ define(function(require) {
       	this.gameObjectSelectorUI.refresh();
       });
 
+      editorDelegates.add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configuration) {
+      	this.gameObjectSelectorUI.refresh();
+      });
+
       return wrapper.wrap(this.gameObjectSelectorUI.html);
     },
   });

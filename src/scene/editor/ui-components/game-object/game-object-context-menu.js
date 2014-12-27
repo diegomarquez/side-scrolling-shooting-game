@@ -18,56 +18,19 @@ define(function(require) {
         options: [
         	{
           	name: 'Create',
-          	icon: 'ui-icon-wrench',
+          	icon: 'ui-icon-plusthick',
 
           	options: [
           		{
 		            name: 'Clone',
-		            icon: 'ui-icon-plusthick',
+		            icon: 'ui-icon-bullet',
 		            click: function() {
 		            	gameObjectCloner.clone(menu.go);
 		            }
 		          },
-          		{
-          			name: 'Replace with',
-          			icon: 'ui-icon-transferthick-e-w',
-
-          			options: function() {
-                  return editorConfig.getGameObjects().map(function (configurationId) {
-                    return {
-                      name: configurationId,
-                      icon: 'ui-icon-bullet',
-                      click: function (configurationId) {
-                      	replaceGameObject(menu.go, configurationId);
-                      }
-                    }
-                  });
-                }
-          		},
-          		{
-          			name: 'Replace all with',
-          			icon: 'ui-icon-transferthick-e-w',
-          			options: function() {
-                  return editorConfig.getGameObjects().map(function (configurationId) {
-                    return {
-                      name: configurationId,
-                      icon: 'ui-icon-bullet',
-                      click: function (configurationId) {
-                        // Get a collection of all the game objects currently active in the scene that are similar to the selected game object
-			          				var gos = gb.findGameObjectsOfType(menu.go);
-
-			          				// Replace all the matching game objects with one of the new type
-			          				for (var i = 0; i < gos.length; i++) {
-			          					replaceGameObject(gos[i], configurationId);
-			          				}
-                      }
-                    }
-                  });
-                }
-          		},
-          		{
-          			name: 'New Type',
-          			icon: 'ui-icon-plusthick',
+		          {
+          			name: 'Type',
+          			icon: 'ui-icon-bullet',
           			click: function() {         					
          					// Create a new configuration for the game object that was clicked on
          					var newConfigurationId = configurationCreator.createFromGameObject(menu.go, {force: true});
@@ -75,6 +38,50 @@ define(function(require) {
           				replaceGameObject(menu.go, newConfigurationId);	
           			}
           		}
+          	]
+          },
+          {
+          	name: 'Replace', 
+          	icon: 'ui-icon-transferthick-e-w',
+
+          	options: [
+	          	{
+	        			name: 'This',
+	        			icon: 'ui-icon-bullet',
+
+	        			options: function() {
+	                return editorConfig.getGameObjects().map(function (configurationId) {
+	                  return {
+	                    name: configurationId,
+	                    icon: 'ui-icon-bullet',
+	                    click: function (configurationId) {
+	                    	replaceGameObject(menu.go, configurationId);
+	                    }
+	                  }
+	                });
+	              }
+	        		},
+	        		{
+	        			name: 'All',
+	        			icon: 'ui-icon-bullet',
+	        			options: function() {
+	                return editorConfig.getGameObjects().map(function (configurationId) {
+	                  return {
+	                    name: configurationId,
+	                    icon: 'ui-icon-bullet',
+	                    click: function (configurationId) {
+	                      // Get a collection of all the game objects currently active in the scene that are similar to the selected game object
+			          				var gos = gb.findGameObjectsOfType(menu.go);
+
+			          				// Replace all the matching game objects with one of the new type
+			          				for (var i = 0; i < gos.length; i++) {
+			          					replaceGameObject(gos[i], configurationId);
+			          				}
+	                    }
+	                  }
+	                });
+	              }
+	        		}
           	]
           },
           {
@@ -152,8 +159,46 @@ define(function(require) {
           {
             name: 'Scrap',
             icon: 'ui-icon-trash',
-            click: function() {
-              gb.reclaimer.claim(menu.go);
+
+            options: function() {
+            	var scrapOptions = [];
+
+            	scrapOptions.push({
+          			name: 'This',
+          			icon: 'ui-icon-bullet',
+          			click: function() {
+          				// Remove the selected game object
+          				gb.reclaimer.claim(menu.go);		
+          			}
+          		});
+
+          		scrapOptions.push({
+          			name: 'All',
+          			icon: 'ui-icon-bullet',
+          			click: function() {
+          				// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
+          				var gos = gb.findGameObjectsOfType(menu.go);
+
+          				// Remove all the matching game objects
+          				for (var i = 0; i < gos.length; i++) {
+          					gb.reclaimer.claim(gos[i]);
+          				}		
+          			}
+          		});
+
+          		if (menu.go.typeId.match('->')) {
+          			scrapOptions.push({
+	          			name: 'Type',
+	          			icon: 'ui-icon-bullet',
+	          			click: function() {
+	          				// Delete the configuration of the selected game object and delete all the game objects with the same configuration
+	          				// Including itself
+	          				gb.reclaimer.clearGameObjectConfiguration(menu.go.typeId);
+	          			}
+	          		});
+          		}
+
+            	return scrapOptions;
             }
           }
         ]
