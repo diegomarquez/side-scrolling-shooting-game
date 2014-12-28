@@ -100,23 +100,15 @@ define(function(require) {
     },
 
     isEditorGameObject: function(id) {
-    	for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
-      	if (id == EDITOR_ONLY_GAME_OBJECTS[i]) {
-      		return true;
-      	}
-      }
-
-      return false;
+    	return checkExistance(id, EDITOR_ONLY_GAME_OBJECTS);
     },
 
     isEditorComponent: function(id) {
-    	for (var i = 0; i < EDITOR_ONLY_COMPONENTS.length; i++) {
-      	if (id == EDITOR_ONLY_COMPONENTS[i]) {
-      		return true;
-      	}
-      }
+    	return checkExistance(id, EDITOR_ONLY_COMPONENTS);
+    },
 
-    	return false;
+    isEditorViewport: function(id) {
+    	return checkExistance(id, EDITOR_ONLY_VIEWPORTS);
     },
 
     getViewportLayers: function(viewport) {
@@ -151,6 +143,16 @@ define(function(require) {
       }.bind(this));
     }
   });
+
+	var checkExistance = function(element, collection) {
+		for (var i = 0; i < collection.length; i++) {
+    	if (element == collection[i]) {
+    		return true;
+    	}
+    }
+
+  	return false;
+	}
 
   return new EditorConfig();
 });

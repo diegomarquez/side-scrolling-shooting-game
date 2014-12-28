@@ -90,14 +90,14 @@ define(function(require) {
       // Add a viewport UI component when a viewport is added
       editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
         // The grid viewport should never be added to the UI
-        if (v.name != editorSetup.config().getGridViewportName()) {
+        if (!editorSetup.config().isEditorViewport(v.name)) {
           this.viewportsUI.add(v);
         }
       });
 
       // Remove the UI component from it's parent when a viewport is removed
       editorDelegates.add(gb.viewports, gb.viewports.REMOVE, this, function (v) {
-        if (v.name != editorSetup.config().getGridViewportName()) {
+        if (!editorSetup.config().isEditorViewport(v.name)) {
         	this.viewportsUI.remove(v);
       	}
       });

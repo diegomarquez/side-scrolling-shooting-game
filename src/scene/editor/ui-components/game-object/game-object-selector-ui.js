@@ -22,6 +22,10 @@ define(function(require) {
         }
       });
 
+      editorDelegates.add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
+      	this.gameObjectSelectorUI.refresh();
+      });
+
       editorDelegates.add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
       	this.gameObjectSelectorUI.refresh();
       });

@@ -99,8 +99,6 @@ define(function(require) {
         }
       }
 
-      debugger;
-
       // Remove empty objects and null properties during the serialization
       return JSON.stringify(scene, function (key, value) {
       	if (util.isObject(value)) {
@@ -232,7 +230,7 @@ define(function(require) {
    			if (!serializableChildArguments[id]) {
    				serializableChildArguments[id] = {
    					gameObjectArgs: [],
-   					childrenArgs: {}
+   					children: {}
    				}
    			}
 
@@ -245,7 +243,7 @@ define(function(require) {
    			// If a child is a container itself, all of it's children need to be serialized aswell
    			if (child.isContainer()) {
    				// This is a recursive loop, all empty data containers are removed by the assignChildArguments method
-   				assignChildArguments(serializableChildArguments[id].childrenArgs, serializeGameObjectChildren(child));
+   				assignChildArguments(serializableChildArguments[id].children, serializeGameObjectChildren(child));
    			}
    		}
 
@@ -307,7 +305,7 @@ define(function(require) {
    			if (!serializableChildArguments[id]) {
    				serializableChildArguments[id] = {
    					gameObjectArgs: [],
-   					childrenArgs: {}
+   					children: {}
    				}
    			}
 
@@ -323,7 +321,7 @@ define(function(require) {
    			// If a child is a container itself, all of it's children need to be serialized aswell
    			if (child.isContainer()) {
    				// This is a recursive loop, all empty data containers are removed by the assignChildArguments method
-   				assignChildArguments(serializableChildArguments[id].childrenArgs, serializeGameObjectChildrenDifference(child));
+   				assignChildArguments(serializableChildArguments[id].children, serializeGameObjectChildrenDifference(child));
    			}
    		}
 
@@ -351,8 +349,8 @@ define(function(require) {
 				delete a['gameObjectArgs'];
 			}
 
-			if (Object.keys(a.childrenArgs).length == 0) {
-				delete a['childrenArgs'];
+			if (Object.keys(a.children).length == 0) {
+				delete a['children'];
 			}
 
 			if (Object.keys(a).length == 0) {

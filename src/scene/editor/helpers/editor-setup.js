@@ -19,8 +19,15 @@ define(function(require) {
       this.world();
       this.groups();
       this.mainViewport();
-      this.setupViewports();  
+
       this.pools();
+
+      this.display();
+    },
+
+    display: function() {
+    	this.setupViewports();  
+      this.setupGameObjects();
     },
 
     end: function() {
@@ -105,6 +112,9 @@ define(function(require) {
       var gridViewport = editorViewports.add(name, width, height).NoClipping().NoCulling().viewport;
       
       gridViewport.addLayer(editorConfig.getDefaultLayerName());
+
+      // Hidden by default
+      gridViewport.hide();
     },
 
     gizmoViewport: function() {
@@ -117,11 +127,21 @@ define(function(require) {
       
       gizmoViewport.addLayer(editorConfig.getDefaultBackLayerName());
       gizmoViewport.addLayer(editorConfig.getDefaultFrontLayerName());
+      
+      // Hidden by default
+      gizmoViewport.hide();
     },
 
     setupViewports: function() {
     	this.gridViewport();
       this.gizmoViewport();
+    },
+
+    setupGameObjects: function() {
+    	var gridBundle = require('grid-bundle');
+
+    	// Add Grid
+      gb.add(gridBundle.getGridId(), editorConfig.getDefaultGroupName(), [{viewport:editorConfig.getGridViewportName(), layer:editorConfig.getDefaultLayerName()}]);
     }
   });
 

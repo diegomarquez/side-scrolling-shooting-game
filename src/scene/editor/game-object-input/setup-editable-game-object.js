@@ -11,17 +11,8 @@ define(function(require) {
       
     },
 
-    setup: function(goId, group, viewports, pos) {
-      var object = createObject(goId, group, viewports);
-
-      if (object) {
-      	if (pos) {
-      		object.x = pos.x;
-	      	object.y = pos.y;	
-      	}
-
-	      return object;	
-      }
+    setup: function(goId, group, viewports, args) {
+      return createObject(goId, group, viewports, args);
     },
 
     setupWithGameObject: function(goId, go) {
@@ -33,7 +24,7 @@ define(function(require) {
     		object = createObject(goId, group, JSON.parse(JSON.stringify(go.getViewportList())));
     	} else {
     		// Game object with out an update group are child to some other object, so to setup a proper clone, it needs to be added to the parent
-    		object = createChildObject(goId, go);    	
+    		object = createChildObject(goId, go.parent);    	
     	}
 
       if (object) {
@@ -53,14 +44,22 @@ define(function(require) {
 
         return object;
       }   
-    }
+    },
+
+    setupChild: function(childGoId, parent) {
+    	return createChildObject(childGoId, parent);
+    },
+
+    addGizmos: function(go) {
+    	addEditorGizmos(go);
+    } 
   });
 
-  var createObject = function(goId, group, viewports) {
+  var createObject = function(goId, group, viewports, args) {
     if (goId != 'Nothing' && group != 'Nothing' && viewports.length > 0) {
       
       // Get a game object with out starting it
-      var object = gb.getGameObject(goId, group, viewports, null, 'create');
+      var object = gb.getGameObject(goId, group, viewports, args, 'create');
 
       // Do all the stuff a game object needs in the editor
       setupGameObject(object);
@@ -73,7 +72,7 @@ define(function(require) {
   }
 
   var createChildObject = function(goId, go) {
-  	var child = gb.addChildTo(go.parent, goId, null, null, 'create', false);
+  	var child = gb.addChildTo(go, goId, null, null, 'create', false);
   	
   	// Do all the stuff a game object needs in the editor
   	setupGameObject(child);
