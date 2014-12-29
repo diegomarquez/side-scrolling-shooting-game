@@ -126,18 +126,16 @@ define(function(require) {
 			return true;
 		}
 
+		if (go.args.x != go.x || go.args.y != go.y) {
+			return true;
+		}
+
 		// In the mean time this only works with the collider component, 
 		// because it is the only thing that can actually be editted right now
 		var colliderGizmo = go.findComponents().firstWithType(editorConfig.getColliderGizmoId());
   	var colliderComponent = colliderGizmo.getColliderComponent();
 
-  	var changes = require('attribute-comparer').getChanges(colliderComponent);
-  
-  	if (changes) {
-  			return true;
-  	}
-
-  	return false;
+  	return require('attribute-comparer').getChanges(colliderComponent);
 	}
 
 	var storeChildConfiguration = function(collection, child, id, isNew) {

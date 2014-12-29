@@ -68,6 +68,10 @@ define(function(require) {
   var serializeAndStore = function() { 
     var name = this.SceneName();
 
+    // console.log(sceneSerializer.serialize(name));
+
+    // $(this).dialog('close');
+
     if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
       $(this).dialog('close');
     } else {
