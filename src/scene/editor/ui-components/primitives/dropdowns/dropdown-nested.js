@@ -65,7 +65,7 @@ define(function(require) {
 
         $(option).find('span').on('click', function (event) {
         	event.stopImmediatePropagation();
-        		
+
         	$(this).parent().parent().find('li').find('div').remove();
         	$(this).parent().data('appendChildren')();
         });
@@ -95,7 +95,7 @@ define(function(require) {
         	nestedChild.append(getArrowIcon());
         }
 
-				var childContent = this.createNestedOptions(child, nestedChild);
+				var childContent = this.createNestedOptions(child, nestedChild, options);
 
 				nestedChild.append(childContent);
 				$(nestedOption).find('ul').append(nestedChild);
