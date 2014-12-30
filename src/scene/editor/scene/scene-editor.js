@@ -38,6 +38,7 @@ define(function(require) {
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.viewportSelectorSimpleUI = new (require('viewport-selector-simple-ui'));
       this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
+      this.gameObjectRemoveUI = new (require('game-object-remove-ui'));
       
       // Bottom Right Components
       this.viewportsUI = new (require('viewport-selector-ui'));
@@ -82,6 +83,8 @@ define(function(require) {
       this.editorRegionsController.appendToBottomLeft(this.viewportSelectorSimpleUI.create());
       // Game Object Creator
       this.editorRegionsController.appendToBottomLeft(this.gameObjectCreatorUI.create());
+      // Button to remove all Game Objects from the scene
+      this.editorRegionsController.appendToBottomLeft(this.gameObjectRemoveUI.create());
 
       // Bottom Right Region
       this.editorRegionsController.appendToBottomRight(this.viewportCreateUI.create());
