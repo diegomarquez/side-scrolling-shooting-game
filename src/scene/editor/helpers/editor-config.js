@@ -55,8 +55,10 @@ define(function(require) {
     	return gb.viewports.get(this.getGridViewportName());
     },
 
-    getGameObjects: function() {
-      var data = gb.goPool.getConfigurationTypes({filterChilds: true});
+    getGameObjects: function(options) {
+    	options = options || {filterChilds: true};
+
+      var data = gb.goPool.getConfigurationTypes(options);
 
       for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
       	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);

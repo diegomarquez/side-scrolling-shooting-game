@@ -49,8 +49,10 @@ define(function(require) {
 	        			name: 'This',
 	        			icon: 'ui-icon-bullet',
 
+	        			
+
 	        			options: function() {
-	                return editorConfig.getGameObjects().map(function (configurationId) {
+	                return editorConfig.getGameObjects({filterChilds: false}).map(function (configurationId) {
 	                  return {
 	                    name: configurationId,
 	                    icon: 'ui-icon-bullet',
@@ -65,7 +67,7 @@ define(function(require) {
 	        			name: 'All',
 	        			icon: 'ui-icon-bullet',
 	        			options: function() {
-	                return editorConfig.getGameObjects().map(function (configurationId) {
+	                return editorConfig.getGameObjects({filterChilds: false}).map(function (configurationId) {
 	                  return {
 	                    name: configurationId,
 	                    icon: 'ui-icon-bullet',
