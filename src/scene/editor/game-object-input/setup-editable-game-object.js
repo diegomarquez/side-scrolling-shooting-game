@@ -17,14 +17,11 @@ define(function(require) {
 
     setupWithGameObject: function(goId, go) {
     	var object;
-    	var group = go.getUpdateGroup();
 
-    	if (group) {
-    		// Game objects with an update group, are at the top level so a clone can be made with all of it's properties
-    		object = createObject(goId, group, JSON.parse(JSON.stringify(go.getViewportList())));
+    	if (go.isChild()) {
+    		object = createChildObject(goId, go.parent);
     	} else {
-    		// Game object with out an update group are child to some other object, so to setup a proper clone, it needs to be added to the parent
-    		object = createChildObject(goId, go.parent);    	
+    		object = createObject(goId, go.getUpdateGroup(), JSON.parse(JSON.stringify(go.getViewportList())));
     	}
 
       if (object) {

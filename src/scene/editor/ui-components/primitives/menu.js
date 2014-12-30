@@ -34,7 +34,7 @@ define(function(require) {
           this.parentMenu = parentMenu;
           this.parentMenu.hideSubMenues();
           this.parentMenu.subMenues.push(this);
-
+          
           attach(parent, this.html);
         },
 
@@ -46,6 +46,8 @@ define(function(require) {
           } else {
             this.hideSubMenues();
           }
+
+          menu.update();
 
           self.offset({ 
             left: x, 
@@ -134,9 +136,16 @@ define(function(require) {
 
     return {
       list: list,
+      
       subMenues: result.subMenues.filter(function(subMenu) {
         return subMenu;
-      })
+      }),
+
+      update: function() {
+      	for (var i = 0; i < result.elements.length; i++) {
+      		setEntryState(result.elements[i], options.options[i]);
+      	}
+      }
     };
   }
 
@@ -153,7 +162,7 @@ define(function(require) {
 
       setupMenuEntry.call(this, optionsElement, currentOptions);
 
-      if (!currentOptions.disable) {
+      if (!$(optionsElement).data('stateDisabled') ) {
         if (currentOptions.options) {
           var subMenu = setupSubMenuEntryClick.call(this, optionsElement, currentOptions, getMenuController);
 
@@ -183,7 +192,7 @@ define(function(require) {
 
       setupMenuEntry.call(this, optionsElement, currentOptions);
 
-      if (!currentOptions.disable) {
+      if (!$(optionsElement).data('stateDisabled') ) {
         if (currentOptions.options) {
           var subMenu = setupSubMenuEntryClick.call(this, optionsElement, currentOptions, getMenuController);
 
@@ -217,27 +226,27 @@ define(function(require) {
     });
 
     optionsElement.innerHTML = optionText;
+    
     $(optionsElement).append(icon);
-
     $(optionsElement).attr('value', optionText);
-
     $(optionsElement).addClass('ui-corner-all');
 
-    if (options.disable) {
-      $(optionsElement).addClass('ui-state-disabled');
-      $(optionsElement).addClass('ui-state-default');
-    } else {
-      $(optionsElement).addClass('ui-state-default');
-
-      $(optionsElement).on('mouseover', function() {
-        $(this).addClass('ui-state-hover');
-      });
-
-      $(optionsElement).on('mouseout', function() {
-        $(this).removeClass('ui-state-hover');
-      });
-    }
+    setEntryState(optionsElement, options);
   };
+
+  var setupMenuEntryClick = function(optionsElement, click, getMenuController) {
+    $(optionsElement).on('click', function (event) {
+    	if ($(this).data('stateDisabled')) 
+    		return;
+
+      if (click) {
+        click($(this).attr('value'));
+      }
+
+      getMenuController().hide();
+      getMenuController().hideParentMenu();
+    });
+  }
 
   var setupSubMenuEntryClick = function(optionsElement, options, getMenuController) {
     var iconSubMenu = $(document.createElement('span'));
@@ -256,6 +265,9 @@ define(function(require) {
 
     if (Object.prototype.toString.call(options.options) == '[object Function]') {
       $(optionsElement).on('click', function (event) {
+      	if ($(this).data('stateDisabled')) 
+   				return;
+
         var dynamicSubMenu = self.create(options);
         dynamicSubMenu.attachDynamicToParent(this, getMenuController());
       });
@@ -265,23 +277,49 @@ define(function(require) {
       var subMenu = this.create(options);
 
       $(optionsElement).on('click', function (event) {
+      	if ($(this).data('stateDisabled')) 
+   				return;
+
         subMenu.attachStaticToParent(this, getMenuController());
       });
       
       return subMenu;
     }
-  };
+  }
 
-  var setupMenuEntryClick = function(optionsElement, click, getMenuController) {
-    $(optionsElement).on('click', function (event) {
-      if (click) {
-        click($(this).attr('value'));
-      }
+  var setEntryState = function(optionsElement, options) {
+  	$(optionsElement).off('mouseover');
+    $(optionsElement).off('mouseout');
 
-      getMenuController().hide();
-      getMenuController().hideParentMenu();
-    });
-  };
+    if (!$(optionsElement).hasClass('ui-state-default')) {
+    	$(optionsElement).addClass('ui-state-default');
+    }
+
+    $(optionsElement).removeClass('ui-state-disabled');
+   	
+   	var disable;
+    if (Object.prototype.toString.call(options.disable) == '[object Function]') {
+    	disable = options.disable();
+    } else {
+    	disable = options.disable;
+    }
+
+  	if (disable) {
+      $(optionsElement).addClass('ui-state-disabled');
+    } else {
+      $(optionsElement).addClass('ui-state-default');
+
+      $(optionsElement).on('mouseover', function() {
+        $(this).addClass('ui-state-hover');
+      });
+
+      $(optionsElement).on('mouseout', function() {
+        $(this).removeClass('ui-state-hover');
+      });
+    }
+
+    $(optionsElement).data('stateDisabled', disable);
+  }
 
   var attach = function(parent, child) {
     $(child).appendTo('body').position({

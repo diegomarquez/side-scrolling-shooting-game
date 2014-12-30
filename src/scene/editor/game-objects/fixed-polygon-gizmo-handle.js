@@ -11,6 +11,8 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 		},
 
 		added: function() { 
+			this._super();
+			
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
 
 			adjustForRotation(

@@ -7,7 +7,9 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 			this.pointIndex = null;
 		},
 
-		added: function() { 
+		added: function() {
+			this._super();
+		 
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
 
 			this.x = parentCollider.Points[this.pointIndex].x;

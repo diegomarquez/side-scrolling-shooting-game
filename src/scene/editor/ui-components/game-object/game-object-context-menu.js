@@ -49,8 +49,6 @@ define(function(require) {
 	        			name: 'This',
 	        			icon: 'ui-icon-bullet',
 
-	        			
-
 	        			options: function() {
 	                return editorConfig.getGameObjects({filterChilds: false}).map(function (configurationId) {
 	                  return {
@@ -89,11 +87,20 @@ define(function(require) {
           {
             name: 'Viewports',
             icon: 'ui-icon-wrench',
+            
+            disable: function() { 
+            	if (menu) {
+            		return menu.go.isChild(); 
+            	}
+
+            	return false;
+            },
 
             options: [
               {
                 name: 'Add To',
                 icon: 'ui-icon-plusthick',
+
                 options: function() {
                   var viewports = editorConfig.getViewports().map(function(viewport) { return viewport.name; });
 
@@ -138,25 +145,25 @@ define(function(require) {
                 click: function () {
                   menu.v.removeGameObject(menu.l, menu.go);
                 }
-              }
+              },
+              {
+		            name: 'Change layer',
+		            icon: 'ui-icon-transferthick-e-w',
+		            
+		            options: function() {
+		              return editorConfig.getViewportLayers(menu.v).map(function(layerName) {
+		                return {
+		                  name: layerName,
+		                  icon: 'ui-icon-bullet',
+		                  disable: menu.l == layerName,
+		                  click: function (newLayer) {
+		                    menu.v.moveGameObject(menu.l, newLayer, menu.go);
+		                  }
+		                }
+		              });
+		            }
+		          }
             ]
-          },
-          {
-            name: 'Change layer',
-            icon: 'ui-icon-transferthick-e-w',
-            
-            options: function() {
-              return editorConfig.getViewportLayers(menu.v).map(function(layerName) {
-                return {
-                  name: layerName,
-                  icon: 'ui-icon-bullet',
-                  disable: menu.l == layerName,
-                  click: function (newLayer) {
-                    menu.v.moveGameObject(menu.l, newLayer, menu.go);
-                  }
-                }
-              });
-            }
           },
           {
             name: 'Scrap',
@@ -245,6 +252,10 @@ define(function(require) {
         },
 
         hide: function () {
+        	this.go = null;
+ 	       	this.v = null;
+        	this.l = null;
+
           this.menu.hide();
           this.removeHideEvents();
         },
