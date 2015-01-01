@@ -12,9 +12,20 @@ define(function(require) {
         on: 'Hide Colliders',
         off: 'Show Colliders',
         onChange: function() {
-      		var gizmoViewport = gb.viewports.get(editorConfig.getGizmoViewportName());
-          
-          $(this).prop('checked') ? gizmoViewport.show() : gizmoViewport.hide();
+        	var checked = $(this).prop('checked');
+        	var viewports = editorConfig.getViewports();
+
+        	for (var i = 0; i < viewports.length; i++) {
+        		var viewport = viewports[i];
+
+        		if (checked) { 
+        			viewport.showLayer(editorConfig.getGizmoFrontLayerName());
+        			viewport.showLayer(editorConfig.getGizmoBackLayerName());
+        		} else {
+        			viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
+        			viewport.hideLayer(editorConfig.getGizmoBackLayerName());
+        		}
+        	}     
         }
       });
     }

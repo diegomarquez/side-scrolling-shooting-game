@@ -101,9 +101,11 @@ define(function(require) {
 
       mainViewport.addLayer(editorConfig.getDefaultLayerName());
       mainViewport.addLayer(editorConfig.getOutlineLayerName());
-      
       mainViewport.addLayer(editorConfig.getGizmoBackLayerName());
       mainViewport.addLayer(editorConfig.getGizmoFrontLayerName());
+
+      mainViewport.hideLayer(editorConfig.getGizmoFrontLayerName());
+      mainViewport.hideLayer(editorConfig.getGizmoBackLayerName());
     },
 
     gridViewport: function() {

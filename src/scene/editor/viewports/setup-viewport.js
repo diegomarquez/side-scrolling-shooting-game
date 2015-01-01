@@ -16,6 +16,9 @@ define(function(require) {
       viewport.addLayer(editorConfig.getGizmoBackLayerName());
       viewport.addLayer(editorConfig.getGizmoFrontLayerName());
 
+      viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
+      viewport.hideLayer(editorConfig.getGizmoBackLayerName());
+
       return viewport;
     },
 
