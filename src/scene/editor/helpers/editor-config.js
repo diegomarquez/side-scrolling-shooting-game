@@ -119,7 +119,7 @@ define(function(require) {
     getViewportLayers: function(viewport) {
       return viewport.getLayers()
 	      .filter(function(layer) { 
-	        return layer.name != this.getOutlineLayerName(); 
+	      	return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1; 
 	      }.bind(this))
 	      .map(function(layer) {
 	        return layer.name;
