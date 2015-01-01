@@ -9,7 +9,7 @@ define(function(require) {
   var GRID_WIDTH = 12;
   var GRID_HEIGHT = 12;
 
-  var EDITOR_ONLY_VIEWPORTS = ['Grid', 'Gizmo'];
+  var EDITOR_ONLY_VIEWPORTS = ['Grid'];
 
   var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoFront', 'GizmoBack']
 
@@ -43,7 +43,6 @@ define(function(require) {
     
     getMainViewportName: function() { return 'Main'; },
     getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
-    getGizmoViewportName: function() { return EDITOR_ONLY_VIEWPORTS[1]; },
 
     getColliderGizmoId: function() { return EDITOR_ONLY_COMPONENTS[0]; },
 

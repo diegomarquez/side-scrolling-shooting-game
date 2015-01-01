@@ -122,24 +122,8 @@ define(function(require) {
       gridViewport.hide();
     },
 
-    gizmoViewport: function() {
-    	var name = editorConfig.getGizmoViewportName();
-    	var width = gb.canvas.width;
-      var height = gb.canvas.height;
-
-      // Setup the gizmo viewport
-      var gizmoViewport = editorViewports.add(name, width, height).NoClipping().NoMouseBounded().NoCulling().viewport;
-      
-      gizmoViewport.addLayer(editorConfig.getDefaultBackLayerName());
-      gizmoViewport.addLayer(editorConfig.getDefaultFrontLayerName());
-      
-      // Hidden by default
-      gizmoViewport.hide();
-    },
-
     setupViewports: function() {
     	this.gridViewport();
-      this.gizmoViewport();
     },
 
     setupGameObjects: function() {
