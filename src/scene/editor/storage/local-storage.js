@@ -13,19 +13,19 @@ define(function(require) {
       }
     },
 
-    setLevel: function (key, value) {
+    setScene: function (key, value) {
       return setItem.call(this, 'scene_' + key, value);
     },
 
-    getLevel: function (key, value) {
+    getScene: function (key, value) {
       return getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
     },
 
-    removeLevel: function (key) {
+    removeScene: function (key) {
       removeItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
     },
 
-    getAllLevels: function() {
+    getAllScenes: function() {
       available.call(this);
 
       return Object.keys(localStorage).filter(function(key) {
@@ -35,13 +35,13 @@ define(function(require) {
         });
     },
 
-    clearLevels: function () {
+    clearScenes: function () {
       available.call(this);
 
-      var levels = this.getAllLevels();
+      var levels = this.getAllScenes();
 
       for (var i = 0; i < levels.length; i++) {
-        this.removeLevel.call(this, levels[i]);
+        this.removeScene.call(this, levels[i]);
       };
     },
 

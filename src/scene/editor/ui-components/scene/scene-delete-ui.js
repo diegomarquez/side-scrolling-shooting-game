@@ -15,18 +15,18 @@ define(function(require) {
         modal: true,
         
         data: function () {
-          return localStorageWrapper.getAllLevels()
+          return localStorageWrapper.getAllScenes();
         },
 
         buttons: {
           Delete: function () {
-            localStorageWrapper.removeLevel(this.SelectedOption());
+            localStorageWrapper.removeScene(this.SelectedOption());
             
             $(this).dialog('close');
           },
 
           "Delete All": function () {
-            localStorageWrapper.clearLevels();
+            localStorageWrapper.clearScenes();
 
             $(this).dialog('close');
           }

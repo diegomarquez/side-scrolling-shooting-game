@@ -16,12 +16,12 @@ define(function(require) {
         modal: true,
         
         data: function () {
-          return localStorageWrapper.getAllLevels();
+          return localStorageWrapper.getAllScenes();
         },
 
         buttons: {
           Open: function () {
-            var scene = localStorageWrapper.getLevel(this.SelectedOption());
+            var scene = localStorageWrapper.getScene(this.SelectedOption());
 
             sceneLoader.load(JSON.parse(scene));
 

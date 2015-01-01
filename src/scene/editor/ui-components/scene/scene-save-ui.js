@@ -63,7 +63,7 @@ define(function(require) {
             validations: [
               {
                 check: function() { 
-                  return !localStorageWrapper.getLevel(this.SceneName()); 
+                  return !localStorageWrapper.getScene(this.SceneName()); 
                 },
                 tip: "To overwrite the old scene click the 'Update' button"
               }
@@ -102,7 +102,7 @@ define(function(require) {
   var serializeAndStore = function() { 
     var name = this.SceneName();
 
-    if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
+    if (localStorageWrapper.setScene(name, sceneSerializer.serialize(name))) {
       $(this).dialog('close');
     } else {
       $(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
