@@ -108,14 +108,13 @@ define(function(require) {
                     return {
                       name: viewportName,
                       icon: 'ui-icon-bullet',
-                      disable: isInViewport(menu.go, viewportName),
+                      
+                      disable: function() {
+                      	return isInViewport(menu.go, viewportName) || !gb.viewports.get(viewportName).layerExists(menu.l);	
+                      },
+                      
                       click: function (newViewport) {
-                        var success = gb.viewports.get(newViewport).addGameObject(menu.l, menu.go);
-
-                        // TODO: Give this feedback properly
-                        if (!success) {
-                          console.log('Destination Viewport must have a layer named ' + menu.l);
-                        }
+                        gb.viewports.get(newViewport).addGameObject(menu.l, menu.go);
                       }
                     }
                   });

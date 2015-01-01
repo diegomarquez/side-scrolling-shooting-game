@@ -27,7 +27,6 @@ define(function(require) {
 					var newChildConfigurationResult = this.createFromGameObject(go.childs[i], util.shallow_merge(options, { isChildOnly: true, force: false }));
 					
 					if (newChildConfigurationResult) {			
-						// TODO: This should be merging attributes and the Arguments property if available
 						if (options.getChildIds) {
 							storeChildConfiguration(childConfigurations.configurations, go.childs[i], newChildConfigurationResult.configurationId, true);
 							childConfigurations.hasNew = true;
