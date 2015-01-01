@@ -47,7 +47,7 @@ define(function(require) {
 
           message.toSuccess('Game object created successfully!');
           message.appendTo($('#game-object-create-button-wrapper'));
-              
+
           setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
         }
       });

@@ -10,21 +10,34 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 			this.gizmoComponents = [];
 
 			var parentCollider = this.getColliderComponent();
+			var go = this.parent;
 
 			// Add the components to edit a circle collider
 			if (parentCollider.colliderType == CollisionResolver.circleCollider) {
-				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addCircleColliderGizmo(this.parent));
+				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addCircleColliderGizmo(go));
 			}
 
 			// Add the components to edit a polygon collider
 			if (parentCollider.colliderType == CollisionResolver.polygonCollider) {
-				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addPolygonColliderGizmo(this.parent));
+				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addPolygonColliderGizmo(go));
 			}
 
 			// Add the components to edit a fixed polygon collider
 			if (parentCollider.colliderType == CollisionResolver.fixedPolygonCollider) {	
-				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addFixedPolygonColliderGizmo(this.parent));
+				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addFixedPolygonColliderGizmo(go));
 			}
+
+			// When ever the parent game object is added to a new viewport 
+			// add the things the component created to the required viewports 
+			go.on(go.ADD_TO_VIEWPORT, this, function(v) { 
+				EditorGizmos.addGizmosToViewports(go, this.gizmoComponents, v);
+			});
+
+			// When ever the parent game object is removed from a new viewport 
+			// remove the things the component created from the required viewports 
+			go.on(go.REMOVE_FROM_VIEWPORT, this, function(v) { 
+				EditorGizmos.removeGizmosFromViewports(go, this.gizmoComponents, v);
+			});
 		},
 
 		applyChanges: function(changes) {
@@ -48,7 +61,9 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 		},
 		
 		recycle: function() {
-			while(this.gizmoComponents.length) { Gb.reclaimer.claim(this.gizmoComponents.pop()); }
+			while(this.gizmoComponents.length) { 
+				Gb.reclaimer.claim(this.gizmoComponents.pop()); 
+			}
 
 			this.gizmoComponents = null;
 		}

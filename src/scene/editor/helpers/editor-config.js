@@ -11,6 +11,8 @@ define(function(require) {
 
   var EDITOR_ONLY_VIEWPORTS = ['Grid', 'Gizmo'];
 
+  var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoFront', 'GizmoBack']
+
   var EDITOR_ONLY_COMPONENTS = [
   	gizmoHandleBundle.getColliderGizmoId()
   ]
@@ -30,7 +32,9 @@ define(function(require) {
     init: function() {},
 
     getDefaultLayerName: function() { return 'Front'; },
-    getOutlineLayerName: function() { return 'Outline'; },
+    getOutlineLayerName: function() { return EDITOR_ONLY_LAYERS[0]; },
+    getGizmoFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
+    getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
 
     getDefaultFrontLayerName: function() { return 'Front'; },
     getDefaultBackLayerName: function() { return 'Back'; },
@@ -133,7 +137,7 @@ define(function(require) {
       }
 
       var layers = v.getLayers().filter(function(layer) { 
-        return layer.name != this.getOutlineLayerName(); 
+        return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1; 
       }.bind(this));
 
       return layers.pop().name;

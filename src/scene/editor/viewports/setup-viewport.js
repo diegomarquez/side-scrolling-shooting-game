@@ -13,6 +13,8 @@ define(function(require) {
 
       viewport.addLayer(editorConfig.getDefaultLayerName());
       viewport.addLayer(editorConfig.getOutlineLayerName());
+      viewport.addLayer(editorConfig.getGizmoBackLayerName());
+      viewport.addLayer(editorConfig.getGizmoFrontLayerName());
 
       return viewport;
     },

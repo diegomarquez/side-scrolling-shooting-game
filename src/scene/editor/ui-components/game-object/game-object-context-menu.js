@@ -114,7 +114,7 @@ define(function(require) {
 
                         // TODO: Give this feedback properly
                         if (!success) {
-                          console.log('Destination Viewport must have a layer named' + menu.l);
+                          console.log('Destination Viewport must have a layer named ' + menu.l);
                         }
                       }
                     }
