@@ -29,6 +29,34 @@ define(function(require) {
             ]
           },
           { 
+            name: 'Remote', 
+            value: 'http://localhost:3000',
+            validations: [
+              {
+                check: function(remote) { 
+							    return validateURL(remote); 	
+                },
+                tip: "Remote url is not valid"
+              },
+              {
+                check: function(remote) { 
+							    var isValid = false;
+
+							    $.ajax({
+							      url: remote,
+							      type: "GET",
+							      async: false,
+							      success: function() { isValid = true; },
+							      error: function() { isValid = false; }
+							    });
+
+							    return isValid; 	
+                },
+                tip: "Remote is not available"
+              }
+            ]
+          },
+          { 
             name: 'Scene Already Exists', 
             value: '',
             hidden: true,
@@ -50,12 +78,18 @@ define(function(require) {
 
           Update: function () {            
             serializeAndStore.call(this);
+          },
+
+          Upload: function () {            
+            $.post(this.Remote(), sceneSerializer.serialize(this.SceneName()));
+						$(this).dialog('close');
           }
         },
 
         validateOnAction: {
           'Save': ['Scene Name', 'Scene Already Exists'],
-          'Update': ['Scene Name'] 
+          'Update': ['Scene Name'],
+          'Upload': ['Scene Name', 'Remote'] 
         }
       });
     },
@@ -68,10 +102,6 @@ define(function(require) {
   var serializeAndStore = function() { 
     var name = this.SceneName();
 
-    // console.log(sceneSerializer.serialize(name));
-
-    // $(this).dialog('close');
-
     if (localStorageWrapper.setLevel(name, sceneSerializer.serialize(name))) {
       $(this).dialog('close');
     } else {
@@ -80,6 +110,17 @@ define(function(require) {
 
     sceneName.set(name);
   }
+
+  validateURL = function(url) {
+    var parser = document.createElement('a');
+    
+    try {
+      parser.href = url;
+      return !!parser.hostname;
+    } catch (e) {
+      return false;
+    }
+	}
   
   return SceneSave;
 });
