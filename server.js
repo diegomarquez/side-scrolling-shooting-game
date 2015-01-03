@@ -1,4 +1,5 @@
 var connect = require('connect');
+var connectRoute = require('connect-route');
 var http = require('http');
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -12,10 +13,14 @@ var app = connect();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/', function(req, res) {
-	if(req.method == "POST") {
-		// Store a scene
-		var body = '';
+app.use(connectRoute(function (router) {
+  router.get('/', function (req, res, next) {
+  	res.writeHead(200, { 'Content-Type': 'text/html' });
+  	res.end('Hi!');  
+  });
+
+  router.post('/', function (req, res, next) {
+  	var body = '';
 
 		req.on('data', function(data) {
 			body += data;
@@ -38,14 +43,29 @@ app.use('/', function(req, res) {
 
 	    res.end();
 	  });
-	} else {
-		// Respond saying hi
-	  res.writeHead(200, { 'Content-Type': 'text/html' });
-	  res.end('I am here');  
-	}	
-});
+  });
+
+  router.get('/scenes', function (req, res, next) {
+  	fs.exists("scenes/", function () {
+  		fs.readdir("scenes/", function (err, files) {
+				res.writeHead(200, { 'Content-Type': 'application/json' });
+				res.end(JSON.stringify(files));
+			});
+  	}); 
+  });
+
+  router.get('/scenes/:file', function (req, res, next) {
+  	var path = "scenes/" + req.params.file;
+
+  	fs.exists(path, function () {
+  		fs.readFile(path, function (err, data) {
+  			res.writeHead(200, { 'Content-Type': 'text/plain' });
+  			res.end(data);
+  		});
+  	});
+  });
+}));
 
 http.createServer(app).listen(3000)
 
 console.log('Listening on port 3000');
-
