@@ -1,7 +1,6 @@
 define(function(require) {
   var localStorageWrapper = require('local-storage');
   var sceneLoader = require('scene-loader');
-  // var dialogDropdownUI = require('dialog-dropdown');
 
   var dialogDropdownUI = require('dialog-modular');
   

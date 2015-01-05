@@ -191,8 +191,8 @@ module.exports = function(grunt) {
     'create-data-module': {
       target: {
         files: [
-          { src: [generatedDir + 'asset-map.json'], dest: p.framework + '/src/' },
-          { src: [configDir + 'font-data.json'], dest: p.framework + '/src/' }
+          { src: [generatedDir + 'asset-map.json'], dest: 'src/' },
+          { src: [configDir + 'font-data.json'], dest: 'src/' }
         ]
       }
     },
