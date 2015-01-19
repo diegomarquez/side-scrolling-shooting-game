@@ -15,8 +15,12 @@ define(function(require) {
 
     execute: function() { 
     	Object.defineProperty(circleCollider.prototype, "Attributes", { 
+    		configurable: true,
+
 				get: function() { 
-					return { radius: this.Radius } 
+					return { 
+						radius: this.Radius 
+					} 
 				},
 
 				set: function(value) {
@@ -25,7 +29,11 @@ define(function(require) {
 			});
 
 			Object.defineProperty(circleCollider.prototype, "Radius", { 
-				get: function() { return this.collider.r; },
+				configurable: true,
+
+				get: function() { 
+					return this.collider.r; 
+				},
 
 				set: function(value) {
 					this.collider.r = value;
@@ -34,8 +42,12 @@ define(function(require) {
 			});
 
 			Object.defineProperty(polygonCollider.prototype, "Attributes", { 
+				configurable: true,
+
 				get: function() { 
-					return { points: this.Points } 
+					return { 
+						points: this.Points 
+					} 
 				},
 
 				set: function(value) {
@@ -44,7 +56,11 @@ define(function(require) {
 			});
 
 			Object.defineProperty(polygonCollider.prototype, "Points", { 
-				get: function() { return this.pointsCopy; },
+				configurable: true,
+
+				get: function() { 
+					return this.pointsCopy; 
+				},
 
 				set: function(value) {
 					this.pointsCopy = value;
@@ -53,8 +69,12 @@ define(function(require) {
 			});
 
 			Object.defineProperty(fixedPolygonCollider.prototype, "Attributes", { 
+				configurable: true,
+
 				get: function() { 
-					return { points: this.Points } 
+					return { 
+						points: this.Points 
+					} 
 				},
 
 				set: function(value) {
@@ -63,7 +83,11 @@ define(function(require) {
 			});
 
 			Object.defineProperty(fixedPolygonCollider.prototype, "Points", { 
-				get: function() { return this.pointsCopy; },
+				configurable: true,
+
+				get: function() { 
+					return this.pointsCopy; 
+				},
 
 				set: function(value) {
 					this.pointsCopy = value;
@@ -71,9 +95,29 @@ define(function(require) {
 				} 
 			});
     	
-    	Object.defineProperty(circleCollider.prototype, "CHANGE_RADIUS", { get: function() { return 'change_radius'; } });
-			Object.defineProperty(polygonCollider.prototype, "CHANGE_POINTS", { get: function() { return 'change_points'; } });
-			Object.defineProperty(fixedPolygonCollider.prototype, "CHANGE_POINTS", { get: function() { return 'change_points'; } });
+    	Object.defineProperty(circleCollider.prototype, "CHANGE_RADIUS", { 
+    		configurable: true,
+
+    		get: function() { 
+    			return 'change_radius'; 
+    		} 
+    	});
+
+			Object.defineProperty(polygonCollider.prototype, "CHANGE_POINTS", { 
+				configurable: true,
+
+				get: function() { 
+					return 'change_points'; 
+				} 
+			});
+
+			Object.defineProperty(fixedPolygonCollider.prototype, "CHANGE_POINTS", { 
+				configurable: true,
+
+				get: function() { 
+					return 'change_points'; 
+				} 
+			});
     },
 
 		destroy: function() {
