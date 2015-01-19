@@ -13,6 +13,11 @@ define(function(require){
 
   // Populate the pools
   var createScenePlayer = function() {
+    game.remove_extension(require("activity-display"));
+    game.remove_extension(require("mouse-events"));
+    game.remove_extension(require("fit-canvas-in-region"));
+    game.remove_extension(require("patch-collider-components"));
+
     // Populate the pools
     require('common-bundle').create();
     require('ship-bundle').create();
@@ -21,11 +26,6 @@ define(function(require){
     canvasContainer.detachCanvas();
     // Create the Scene Player
     scenePlayer.create();
-
-    game.remove_extension(require("activity-display"));
-    game.remove_extension(require("mouse-events"));
-    game.remove_extension(require("fit-canvas-in-region"));
-    game.remove_extension(require("patch-collider-components"));
   }
 
   var createSceneEditor = function() {
@@ -47,12 +47,12 @@ define(function(require){
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
   	// Create the scene player
-  	// createScenePlayer();
+  	createScenePlayer();
   	// Open the loader
-    // loaderContainer.open();
+    loaderContainer.open();
     
-    createSceneEditor(); 
-    loaderContainer.hide();
+    // createSceneEditor(); 
+    // loaderContainer.hide();
   });
 
   // When the scene player exits...
