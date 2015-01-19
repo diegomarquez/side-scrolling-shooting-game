@@ -3,20 +3,32 @@ define(function(require) {
   var world = require('world');
   
   var EditorDelegates = require('class').extend({
-    init: function() {},
+    init: function() {
+    	this.delegates = [];
+    },
 
     add: function(object, delegateName, scope, callback) {
       object.on(delegateName, scope, callback, false, false, false, 'editor-delegate');
+
+      storeDelegate(object, this.delegates);
     },
 
     clean: function() {
-      gb.groups.levelCleanUp('editor-delegate');
-      gb.viewports.levelCleanUp('editor-delegate');
-      gb.goPool.levelCleanUp('editor-delegate');
-      gb.coPool.levelCleanUp('editor-delegate');
-      world.levelCleanUp('editor-delegate');
+    	while (this.delegates.length) {
+    		this.delegates.pop().levelCleanUp('editor-delegate');	
+    	}
     }
   });
+
+  var storeDelegate = function(delegate, collection) {
+  	for (var i = 0; i < collection.length; i++) {
+    	if (collection[i] === delegate) {
+    		return;
+    	}
+    }	
+
+    collection.push(delegate);
+  }
 
   return new EditorDelegates();
 });
