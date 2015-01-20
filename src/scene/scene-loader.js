@@ -1,88 +1,97 @@
 define(function(require) {
 
   var gb = require('gb');
-  var world = require('world');
-  var editorSetup = require('editor-setup');
-  var editorViewports = require('editor-viewports');
-  var setupEditorObject = require('setup-editable-game-object');
-  var sceneName = require('scene-name');
-
+ 
   var SceneLoader = require("class").extend({
     init: function() {},
 
     load: function(scene) {
-      // Clear all previous content
-      editorSetup.clear();
+      this.cleanUp();
+      this.sceneName(scene);
+      this.world(scene);
+      this.groups(scene);
+      this.viewports(scene);
+      this.configurations(scene);
+      this.addGameObjects(scene);
+    },
 
-      // Set the scene name in the UI
-      sceneName.set(scene.name);
+    cleanUp: function () {
 
-      // Set the world dimentions
-      world.setWidth(scene.world.width);
-      world.setHeight(scene.world.height);
+    },
 
-      // Create Update Groups
-      var groups = scene.groups;
+    sceneName: function (scene) {
+
+    },
+
+    world: function (scene) {
+
+    },
+
+    groups: function (scene) {
+    	var groups = scene.groups;
 
       for(var i = 0; i < groups.length; i++) {
         gb.groups.add(groups[i]);
       } 
+    },
 
-      // Create Serialized Viewports
-      var viewports = scene.viewports;
+    viewports: function (scene) {
 
-      for(var i = 0; i < viewports.length; i++) {
-      	editorViewports.add(viewports[i]).NoClipping().NoCulling().NoMouseBounded();
-      }
+    },
 
-      // Create editor only objects, viewports and game objects
-      editorSetup.display();
-      
-      // Add game object configurations
+    configurations: function(scene) {
+    	// Add game object configurations
       addConfigurations(gb.goPool, scene.goConfig);
-
       // Add component configurations
       addConfigurations(gb.coPool, scene.coConfig);
+    },
 
-      // Create Game Objects
-      var objects = scene.objects;
+    getGameObject: function (serializedGameObject) {
+
+    },
+
+    addChildGameObject: function (childId, go) {
+
+    },
+
+    decorateGameObject: function (go) {
+
+    },
+
+    addGameObjects: function(scene) {
+    	var objects = scene.objects;
 
       for(i = 0; i < objects.length; i++) {
       	var serializedGameObject = objects[i];
       
       	// Create a new game object from the serialized data
-      	var gameObject = getGameObject(serializedGameObject);
+      	var gameObject = this.getGameObject(serializedGameObject);
 
       	// If any structural changes, modify the game object to look like the serialized data
-      	applyStructuralChanges(gameObject, serializedGameObject.hasStructuralChanges, serializedGameObject.properties);
+      	applyStructuralChanges.call(this, gameObject, serializedGameObject.hasStructuralChanges, serializedGameObject.properties);
      	 	// Apply serialized component attributes
-      	applyAttributesToComponents(gameObject, getComponentArgs(serializedGameObject.properties));
+      	applyAttributesToComponents.call(this, gameObject, this.getComponentArgs(serializedGameObject.properties));
         // Recursively apply arguments to children and attributes to their components
-        applyAttributesToChildren(gameObject, getChildrenArgs(serializedGameObject.properties));
+        applyAttributesToChildren.call(this, gameObject, this.getChildrenArgs(serializedGameObject.properties));
                
         // Place the game object in it's position in the world
         gameObject.x = serializedGameObject.x;
         gameObject.y = serializedGameObject.y;
-      }      
-    }
+      } 
+    },
+
+    getComponentArgs: function(properties) {
+			return properties ? properties.componentArgs : null;
+		},
+
+		getGameObjectArgs: function(properties) {
+			return properties ? properties.args : null;
+		},
+
+		getChildrenArgs: function(properties) {
+			return properties ? properties.children : null;
+		},
   });
-
-	var getComponentArgs = function(properties) {
-		return properties ? properties.componentArgs : null;
-	}
-
-	var getGameObjectArgs = function(properties) {
-		return properties ? properties.args : null;
-	}
-
-	var getChildrenArgs = function(properties) {
-		return properties ? properties.children : null;
-	}
-
-	var getGameObject = function(serializedGameObject) {
-  	// Create a game object and apply serialized arguments
-    return setupEditorObject.setup(serializedGameObject.id, serializedGameObject.g, serializedGameObject.v, getGameObjectArgs(serializedGameObject));
-	}
 
 	var applyStructuralChanges = function(go, hasStructuralChanges, properties) {
 		if (hasStructuralChanges) {
@@ -91,12 +100,11 @@ define(function(require) {
   		gb.reclaimer.claimChildren(go);
 
   		// Add the serialized components
-  		addComponentsToGameObject(go, getComponentArgs(properties));
+  		addComponentsToGameObject.call(this, go, this.getComponentArgs(properties));
   		// Recursively add the serialized children
-			addChildrenToGameObject(go, getChildrenArgs(properties));
+			addChildrenToGameObject.call(this, go, this.getChildrenArgs(properties));
   		
-  		// Add the editor gizmos, everything was just removed, so this need to be added back
-  		setupEditorObject.addGizmos(go);
+			this.decorateGameObject(go)
   	}
 	}
 
@@ -117,7 +125,7 @@ define(function(require) {
 				// Add a new component to the game object
 				var component = gb.addComponentTo(go, k);
 				// Apply serialized attributes to the component
-  			applyAttributes(component, serializedComponent.attributes); 
+  			applyAttributes.call(this, component, serializedComponent.attributes); 
   		}
   	}
 	}
@@ -136,19 +144,18 @@ define(function(require) {
 				var componentsArgs = allChildProperties.componentArgs;
 				var childrenArgs = allChildProperties.children;
 
-				// Add the child to the game object and take care of adding all the editor gizmos
-				var childGo = setupEditorObject.setupChild(childId, go);
+				var childGo = this.addChildGameObject(childId, go)
 
 				// If any structural changes, modify the game object to look like the serialized data
-      	applyStructuralChanges(childGo, allChildProperties.hasStructuralChanges, allChildProperties);		
+      	applyStructuralChanges.call(this, childGo, allChildProperties.hasStructuralChanges, allChildProperties);		
 				// Apply serialized arguments to child game object
-				applyAttributes(childGo, childArgs);
+				applyAttributes.call(this, childGo, childArgs);
 				// Apply serialized arguments to child components
-				applyAttributesToComponents(childGo, componentsArgs);
+				applyAttributesToComponents.call(this, childGo, componentsArgs);
 				
 				// If there are any children, apply initialization arguments and component attributes recursively
 				if (childrenArgs) {
-					applyAttributesToChildren(childGo, childrenArgs);
+					applyAttributesToChildren.call(this, childGo, childrenArgs);
 				}	
 			}
 		}
@@ -212,5 +219,5 @@ define(function(require) {
     }
 	} 
 
-  return new SceneLoader();
+  return SceneLoader;
 });

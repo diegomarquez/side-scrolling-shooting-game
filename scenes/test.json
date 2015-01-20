@@ -1,1 +1,152 @@
-{"name":"TEST","objects":[{"id":"PlayerShipCircle","g":"First","v":[{"viewport":"Main","layer":"Front"}],"x":312,"y":185,"properties":{"args":{"x":312,"y":185},"componentArgs":{"ShipColliderCircle":[{"attributes":{"radius":43.34029246747468},"indexInParent":0}]},"children":{"PlayerShipOption":[{"args":{"x":-50,"y":-50},"componentArgs":{"OptionColliderCircle":[{"attributes":{"radius":35.32668604370616},"indexInParent":0}]},"indexInParent":0,"hasStructuralChanges":false},{"args":{"x":50,"y":-50},"indexInParent":1,"hasStructuralChanges":false},{"args":{"x":50,"y":50},"indexInParent":2,"hasStructuralChanges":false},{"args":{"x":-50,"y":50},"indexInParent":3,"hasStructuralChanges":false}]}},"hasStructuralChanges":false},{"id":"PlayerShipPolygon","g":"First","v":[{"viewport":"Main","layer":"Front"}],"x":113,"y":174,"properties":{"args":{"x":113,"y":174},"componentArgs":{"ShipColliderPolygon":[{"attributes":{"points":[{"x":-20,"y":-20},{"x":47.577164466275356,"y":-43.33452377915607},{"x":20,"y":20},{"x":-20,"y":20}]},"indexInParent":0}]}},"hasStructuralChanges":false}],"groups":["First"],"viewports":[{"name":"Main","width":400,"height":300,"offsetX":0,"offsetY":0,"scaleX":1,"scaleY":1,"stroke":{"width":1,"color":"#4E91F0"},"worldFit":false,"layers":["Front"]}],"world":{"width":400,"height":300}}
+{
+  "name": "TEST",
+  "objects": [
+    {
+      "id": "PlayerShipCircle",
+      "g": "First",
+      "v": [
+        {
+          "viewport": "Main",
+          "layer": "Front"
+        }
+      ],
+      "x": 312,
+      "y": 185,
+      "properties": {
+        "args": {
+          "x": 312,
+          "y": 185
+        },
+        "componentArgs": {
+          "ShipColliderCircle": [
+            {
+              "attributes": {
+                "radius": 43.34029246747468
+              },
+              "indexInParent": 0
+            }
+          ]
+        },
+        "children": {
+          "PlayerShipOption": [
+            {
+              "args": {
+                "x": -50,
+                "y": -50
+              },
+              "componentArgs": {
+                "OptionColliderCircle": [
+                  {
+                    "attributes": {
+                      "radius": 35.32668604370616
+                    },
+                    "indexInParent": 0
+                  }
+                ]
+              },
+              "indexInParent": 0,
+              "hasStructuralChanges": false
+            },
+            {
+              "args": {
+                "x": 50,
+                "y": -50
+              },
+              "indexInParent": 1,
+              "hasStructuralChanges": false
+            },
+            {
+              "args": {
+                "x": 50,
+                "y": 50
+              },
+              "indexInParent": 2,
+              "hasStructuralChanges": false
+            },
+            {
+              "args": {
+                "x": -50,
+                "y": 50
+              },
+              "indexInParent": 3,
+              "hasStructuralChanges": false
+            }
+          ]
+        }
+      },
+      "hasStructuralChanges": false
+    },
+    {
+      "id": "PlayerShipPolygon",
+      "g": "First",
+      "v": [
+        {
+          "viewport": "Main",
+          "layer": "Front"
+        }
+      ],
+      "x": 113,
+      "y": 174,
+      "properties": {
+        "args": {
+          "x": 113,
+          "y": 174
+        },
+        "componentArgs": {
+          "ShipColliderPolygon": [
+            {
+              "attributes": {
+                "points": [
+                  {
+                    "x": -20,
+                    "y": -20
+                  },
+                  {
+                    "x": 47.577164466275356,
+                    "y": -43.33452377915607
+                  },
+                  {
+                    "x": 20,
+                    "y": 20
+                  },
+                  {
+                    "x": -20,
+                    "y": 20
+                  }
+                ]
+              },
+              "indexInParent": 0
+            }
+          ]
+        }
+      },
+      "hasStructuralChanges": false
+    }
+  ],
+  "groups": [
+    "First"
+  ],
+  "viewports": [
+    {
+      "name": "Main",
+      "width": 400,
+      "height": 300,
+      "offsetX": 0,
+      "offsetY": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "stroke": {
+        "width": 1,
+        "color": "#4E91F0"
+      },
+      "worldFit": false,
+      "layers": [
+        "Front"
+      ]
+    }
+  ],
+  "world": {
+    "width": 400,
+    "height": 300
+  }
+}

@@ -11,12 +11,13 @@ define(function(require){
   // Storing some references to avoid excesive typing
   var game = gb.game;
 
+  game.add_extension(require("patch-collider-components"));
+
   // Populate the pools
   var createScenePlayer = function() {
     game.remove_extension(require("activity-display"));
     game.remove_extension(require("mouse-events"));
     game.remove_extension(require("fit-canvas-in-region"));
-    game.remove_extension(require("patch-collider-components"));
 
     // Populate the pools
     require('common-bundle').create();
@@ -41,7 +42,6 @@ define(function(require){
     game.add_extension(require("activity-display"), { hide: true });
     game.add_extension(require("mouse-events"));
     game.add_extension(require("fit-canvas-in-region"));
-    game.add_extension(require("patch-collider-components"));
   }
   
   // This is the main initialization function

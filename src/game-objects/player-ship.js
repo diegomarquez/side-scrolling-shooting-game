@@ -11,12 +11,12 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     editorStart: function() {
-      Keyboard.onKeyDown(Keyboard.A, this, function() {
-        var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
+      // Keyboard.onKeyDown(Keyboard.A, this, function() {
+      //   var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
 
-        bullet.x = this.X + 20;
-        bullet.y = this.Y;
-      });
+      //   bullet.x = this.X + 20;
+      //   bullet.y = this.Y;
+      // });
     },
 
     editorUpdate: function(delta) {
