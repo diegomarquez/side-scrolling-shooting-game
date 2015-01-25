@@ -3,8 +3,6 @@ define(function(require) {
   var gb = require('gb');
   var world = require('world');
 
-  debugger;
-
   var PlayerSceneLoader = require("scene-loader").extend({
     init: function() {},
 

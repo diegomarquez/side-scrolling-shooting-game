@@ -22,7 +22,11 @@ define(function(require){
     // Populate the pools
     require('common-bundle').create();
     require('ship-bundle').create();
-    
+    require('cannon-bundle').create();
+    require('bullets-bundle').create();
+    require('obstacle-bundle').create();
+    require('boss-bundle').create();
+
     // Detach the canvas container
     canvasContainer.detachCanvas();
     // Create the Scene Player
@@ -33,6 +37,10 @@ define(function(require){
     // Populate the pools
     require('common-bundle').create();
     require('ship-bundle').create();
+    require('cannon-bundle').create();
+    require('bullets-bundle').create();
+    require('obstacle-bundle').create();
+    require('boss-bundle').create();
    
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -47,12 +55,12 @@ define(function(require){
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
   	// Create the scene player
-  	createScenePlayer();
+  	// createScenePlayer();
   	// Open the loader
-    loaderContainer.open();
+    // loaderContainer.open();
     
-    // createSceneEditor(); 
-    // loaderContainer.hide();
+    createSceneEditor(); 
+    loaderContainer.hide();
   });
 
   // When the scene player exits...
