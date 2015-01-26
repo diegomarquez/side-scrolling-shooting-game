@@ -38,11 +38,11 @@ define(["path-renderer", "path-cache", "draw", "util"], function(PathRenderer, P
 			Draw.rectangle(context, 0, this.basePosition, this.baseWidth, this.baseHeight, null, '#FFFFFF', 1, 1);
 
 			for (var i = 0; i < this.cableCount; i++) {
-				drawCable.call(this, context, Util.rand_i(this.cableRange.min, this.cableRange.max), true);	
+				drawCable.call(this, context, Util.rand_i(this.cableRange.min, this.cableRange.max/2), false);	
 			}
 
 			for (var i = 0; i < this.cableCount; i++) {
-				drawCable.call(this, context, Util.rand_i(this.cableRange.min, this.cableRange.max), false);	
+				drawCable.call(this, context, Util.rand_i(this.cableRange.max/2, this.cableRange.max), true);	
 			}
 
       context.restore();

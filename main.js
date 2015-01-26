@@ -55,11 +55,48 @@ define(function(require){
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
   	// Create the scene player
-  	// createScenePlayer();
+  	createScenePlayer();
   	// Open the loader
     // loaderContainer.open();
-    
-    createSceneEditor(); 
+
+    gb.groups.add("First");
+    var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
+    mainViewport.addLayer("Front");
+
+    var ship = gb.create('PlayerShipPolygon', 'First', [{viewport: 'Main', layer: 'Front'}]);
+
+    ship.x = 200;
+    ship.y = 150;
+
+    var cannon = gb.create('Cannon_0', 'First', [{viewport: 'Main', layer: 'Front'}], {
+    	target: ship
+    });
+
+    cannon.x = 100;
+    cannon.y = 100;
+
+    cannon = gb.create('Cannon_90', 'First', [{viewport: 'Main', layer: 'Front'}], {
+    	target: ship
+    });
+
+    cannon.x = 300;
+    cannon.y = 100;
+
+    cannon = gb.create('Cannon_180', 'First', [{viewport: 'Main', layer: 'Front'}], {
+    	target: ship
+    });
+
+    cannon.x = 100;
+    cannon.y = 250;
+
+    cannon = gb.create('Cannon_270', 'First', [{viewport: 'Main', layer: 'Front'}], {
+    	target: ship
+    });
+
+    cannon.x = 300;
+    cannon.y = 250;
+
+    // createSceneEditor(); 
     loaderContainer.hide();
   });
 

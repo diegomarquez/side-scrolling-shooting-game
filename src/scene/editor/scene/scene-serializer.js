@@ -303,7 +303,8 @@ define(function(require) {
    			// Store changes only if the child actually got some changes
    			if (Object.keys(serializedChild).length > 0) {
    				serializedChild.indexInParent = childIndex;
-   				serializedChild.hasStructuralChanges = child.hasStructuralChanges();
+					serializedChild.hasStructuralChanges = child.hasStructuralChanges();
+   				 
    				// Store the child changes as well as the index in the parent
    				serializableChildArguments[id].push(serializedChild);	
    			}
