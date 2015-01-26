@@ -9,7 +9,6 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
       this.width = 22;
       this.height = 5;
 
-      // this.offsetX = -this.width/2;
       this.offsetY = -this.height/2;
       
       this.name = 'CanonShooter';

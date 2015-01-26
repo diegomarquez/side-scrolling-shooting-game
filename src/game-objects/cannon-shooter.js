@@ -1,4 +1,4 @@
-define(["editor-game-object-container"], function(GameObject) {
+define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 	var targetDecompose = {};
 	var targetMatrix = null;
 
@@ -11,14 +11,15 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     editorStart: function() {
-      
+      this.timer = 0;
+      this.bullets = 5;
     },
 
     editorUpdate: function(delta) {
-    	targetMatrix = this.parent.target.getMatrix(targetMatrix)
+    	targetMatrix = this.parent.target.getMatrix(targetMatrix);
     	targetDecompose = targetMatrix.decompose(targetDecompose);
 
-    	selfMatrix = this.getMatrix(selfMatrix)
+    	selfMatrix = this.getMatrix(selfMatrix);
     	selfDecompose = selfMatrix.decompose(selfDecompose);
     	
     	var deltaX = targetDecompose.x - selfDecompose.x;
@@ -33,7 +34,22 @@ define(["editor-game-object-container"], function(GameObject) {
 
       if (this.rotation < -150) {
       	this.rotation = -150;
-      }	
+      }
+
+      this.timer++;
+
+    	if (this.timer % 200 == 0) {
+
+    		if (this.bullets > 0) {
+    			Gb.create('CannonBullet', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+			    	angle: selfMatrix.decompose(selfDecompose).rotation,
+			    	x: this.parent.x,
+			    	y: this.parent.y
+			    });	
+
+			    this.bullets--;
+    		}
+    	}	
     }
   });
 
