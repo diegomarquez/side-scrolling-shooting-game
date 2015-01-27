@@ -8,6 +8,8 @@ define(function(require){
   var sceneEditor = require('scene-editor');
   var scenePlayer = require('scene-player');
 
+  var keyboard = require('keyboard');
+
   // Storing some references to avoid excesive typing
   var game = gb.game;
 
@@ -95,6 +97,14 @@ define(function(require){
 
     cannon.x = 300;
     cannon.y = 250;
+
+    keyboard.onKeyDown(keyboard.A, this, function() {
+    	mainViewport.x += 10;
+    });
+
+    keyboard.onKeyDown(keyboard.D, this, function() {
+    	mainViewport.x -= 10;
+    });
 
     // createSceneEditor(); 
     loaderContainer.hide();

@@ -16,6 +16,7 @@ define(function(require) {
 			
 			this.componentPool.createConfiguration("CannonBaseRenderer", 'cannon-base-renderer');
 			this.componentPool.createConfiguration("CannonShooterRenderer", 'cannon-shooter-renderer');
+			this.componentPool.createConfiguration("ActivateCannonShooterOnView", commonBundle.getActivateOnViewPoolId());
 			
 			this.gameObjectPool.createDynamicPool('CannonBase', cannonBase);
 			this.gameObjectPool.createPool('CannonShooter', cannonShooter);
@@ -26,24 +27,28 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("Cannon_0", "CannonBase")
 				.args( { rotation: 0 })
 				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateCannonShooterOnView')
 				.addChild('CannonShooter')
 				.setRenderer("CannonBaseRenderer");
 
 			this.gameObjectPool.createConfiguration("Cannon_90", "CannonBase")
 				.args( { rotation: 90 })
 				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateCannonShooterOnView')
 				.addChild('CannonShooter')
 				.setRenderer("CannonBaseRenderer");
 
 			this.gameObjectPool.createConfiguration("Cannon_180", "CannonBase")
 				.args( { rotation: 180 })
 				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateCannonShooterOnView')
 				.addChild('CannonShooter')
 				.setRenderer("CannonBaseRenderer");
 
 			this.gameObjectPool.createConfiguration("Cannon_270", "CannonBase")
 				.args( { rotation: 270 })
 				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateCannonShooterOnView')
 				.addChild('CannonShooter')
 				.setRenderer("CannonBaseRenderer");
 		},

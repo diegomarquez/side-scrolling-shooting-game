@@ -12,6 +12,8 @@ define(function(require) {
 
 			createGameObjectPool.call(this, function() { return require('game-object') });
 			createGameObjectPool.call(this, function() { return require('game-object-container') });
+
+			createComponentPool.call(this, function() { return require('activate-on-view') });
 		}
 	});
 

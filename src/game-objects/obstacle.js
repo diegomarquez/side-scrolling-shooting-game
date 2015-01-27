@@ -1,4 +1,4 @@
-define(["editor-game-object-container"], function(GameObject) {
+define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
   var Obstacle = GameObject.extend({
     init: function() {
       this._super();
@@ -9,7 +9,7 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     editorUpdate: function(delta) {
-      
+    	
     },
 
     onCollide: function(other) {
