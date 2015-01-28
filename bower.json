@@ -10,7 +10,8 @@
     "bootstrap-toggle": "~2.0.0",
     "bootstrap": "~3.3.1",
     "almond": "~0.3.0",
-    "jquery.transit": "~0.9.12"
+    "jquery.transit": "~0.9.12",
+    "jscrollpane": "~2.0.20"
   },
   "ignore": [
     "**/.*",

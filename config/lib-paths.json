@@ -5,5 +5,7 @@
 	"jquery-selectBoxIt": "./lib/jquery.selectBoxIt/src/javascripts/jquery.selectBoxIt",
 	"jquery-transit": "./lib/jquery.transit/jquery.transit",
 	"bootstrap": "./lib/bootstrap/dist/js/bootstrap",
-	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle"
+	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle",
+	"jscrollpane": "./lib/jscrollpane/script/jquery.jscrollpane",
+	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel"
 }

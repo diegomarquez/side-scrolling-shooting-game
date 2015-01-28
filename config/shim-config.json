@@ -12,6 +12,10 @@
     "deps": ["jquery"]
   },
 
+  "jscrollpane": {
+    "deps": ["jquery", "jquery-mousewheel"]
+  },
+
   "bootstrap": {
     "deps": ["jquery", "jquery-ui"]
   },

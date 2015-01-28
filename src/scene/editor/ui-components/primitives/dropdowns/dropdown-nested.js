@@ -1,13 +1,20 @@
 define(function(require) {
 	var wrapper = require('wrap-in-div');
 
+
+
   var DropdownNested = require('dropdown-base').extend({
     init: function() {
       
     },
 
     setupUI: function(container, contentContainer, options) {
+    	$(contentContainer).css({
+    		height: 305,
+    		overflow: 'auto'
+    	});
 
+    	$(contentContainer).jScrollPane({showArrows: true});
     },
 
     createOptions: function(options) {
@@ -66,16 +73,21 @@ define(function(require) {
         $(option).find('span').on('click', function (event) {
         	event.stopImmediatePropagation();
 
-        	$(this).parent().parent().find('li').find('div').remove();
+        	$($(contentContainer).data('nestedOptions')).remove();
         	$(this).parent().data('appendChildren')();
         });
       }
     },
 
     removeMenu: function(element) {
+    	$($(element).data('nestedOptions')).remove();
     	$(element).remove();
+
       this.resetContentState();
       this.refreshContent();
+
+      $(element).removeData('nestedOptions');
+      $(element).jScrollPane().data('jsp').destroy();
     },
 
     createNestedOptions: function(data, parent, options) {
@@ -112,11 +124,17 @@ define(function(require) {
 
 				self.setupOptionEvents(nestedChildren, self.getContainer(), self.getContentContainer(), options);
 
-				$(nestedOption).appendTo(parent).position({
+				if (!$(self.getContentContainer()).data('nestedOptions')) {
+					$(self.getContentContainer()).data('nestedOptions', []);	
+				}
+				
+				$(self.getContentContainer()).data('nestedOptions').push(nestedOption);
+
+				$(nestedOption).appendTo('body').position({
 				  my: 'left top',
 				  at: 'right+5 top-2',
 				  of: parent
-				});  
+				});
 			});
 		}
   });

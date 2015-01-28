@@ -6,6 +6,8 @@ define(function(require) {
   require('bootstrap');
   require('bootstrap-toogle');
 
+  require('jscrollpane');
+
   $.fn.button.noConflict();
 
   var gb = require('gb');
