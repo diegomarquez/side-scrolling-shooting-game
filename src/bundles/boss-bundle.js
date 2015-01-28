@@ -35,23 +35,23 @@ define(function(require) {
 					scaleY: 0.3
 				});
 
-			this.gameObjectPool.createConfiguration("Biohazard_Icon", "Boss_1_Icon")
+			this.gameObjectPool.createConfiguration("biohazard-icon", "Boss_1_Icon")
 				.setRenderer("BiohazardIcon_Renderer")
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("Boss_1_Cables", "Boss_1_Cables")
+			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
 				.addComponent("Boss_1_Cables_Collider")
 				.setRenderer("Boss_1_Cables_Renderer")
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("Boss_1", "Boss_1")
-				.addChild("Boss_1_Cables", {rotation: 0})
-				.addChild("Boss_1_Cables", {rotation: 0})
-				.addChild("Boss_1_Cables", {rotation: 0})
-				.addChild("Boss_1_Cables", {rotation: 180})
-				.addChild("Boss_1_Cables", {rotation: 180})
-				.addChild("Boss_1_Cables", {rotation: 180})
-				.addChild("Biohazard_Icon")
+			this.gameObjectPool.createConfiguration("boss-1", "Boss_1")
+				.addChild("boss-1-cables", {rotation: 0})
+				.addChild("boss-1-cables", {rotation: 0})
+				.addChild("boss-1-cables", {rotation: 0})
+				.addChild("boss-1-cables", {rotation: 180})
+				.addChild("boss-1-cables", {rotation: 180})
+				.addChild("boss-1-cables", {rotation: 180})
+				.addChild("biohazard-icon")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer");	
 		},

@@ -24,11 +24,11 @@ define(function(require) {
 			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
 			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer')
 			
-			this.gameObjectPool.createConfiguration("PlayerBullet", "Bullet")
+			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");
 
-			this.gameObjectPool.createConfiguration("CannonBullet", "CannonBullet")
+			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
 				.addComponent("CannonBulletCollider")
 				.setRenderer("CannonBulletRender");
 		},

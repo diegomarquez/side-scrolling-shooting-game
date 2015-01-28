@@ -28,28 +28,23 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("ObstacleRender", 'obstacle-renderer');
 
-			this.gameObjectPool.createConfiguration("Obstacle_4", "Obstacle")
+			this.gameObjectPool.createConfiguration("obstacle-4", "Obstacle")
 				.addComponent("ObstacleCollider4")
 				.addComponent("ActivateObstancleOnView")
 				.setRenderer("ObstacleRender");
 			
-			this.gameObjectPool.createConfiguration("Obstacle_5", "Obstacle")
+			this.gameObjectPool.createConfiguration("obstacle-5", "Obstacle")
 				.addComponent("ObstacleCollider5")
 				.addComponent("ActivateObstancleOnView")
 				.setRenderer("ObstacleRender");
 			
-			this.gameObjectPool.createConfiguration("Obstacle_6", "Obstacle")
+			this.gameObjectPool.createConfiguration("obstacle-6", "Obstacle")
 				.addComponent("ObstacleCollider6")
 				.addComponent("ActivateObstancleOnView")
 				.setRenderer("ObstacleRender");
 			
-			this.gameObjectPool.createConfiguration("Obstacle_7", "Obstacle")
+			this.gameObjectPool.createConfiguration("obstacle-7", "Obstacle")
 				.addComponent("ObstacleCollider7")
-				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
-			
-			this.gameObjectPool.createConfiguration("Obstacle_8", "Obstacle")
-				.addComponent("ObstacleCollider8")
 				.addComponent("ActivateObstancleOnView")
 				.setRenderer("ObstacleRender");
 		},

@@ -18,7 +18,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
 			
-			this.gameObjectPool.createConfiguration("PlayerShipCircle", "Ship")
+			this.gameObjectPool.createConfiguration("player-ship", "Ship")
 				.args({
 					rotation: 90
 				})		
