@@ -11,7 +11,8 @@
     "bootstrap": "~3.3.1",
     "almond": "~0.3.0",
     "jquery.transit": "~0.9.12",
-    "jscrollpane": "~2.0.20"
+    "jscrollpane": "~2.0.20",
+    "gsap": "~1.15.1"
   },
   "ignore": [
     "**/.*",

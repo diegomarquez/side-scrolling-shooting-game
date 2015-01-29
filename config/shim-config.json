@@ -16,6 +16,11 @@
     "deps": ["jquery", "jquery-mousewheel"]
   },
 
+	"timelinelite": {
+		"exports": "TimelineLite",
+		"deps": ["tweenlite"],
+	},
+
   "bootstrap": {
     "deps": ["jquery", "jquery-ui"]
   },

@@ -1,8 +1,6 @@
 define(function(require) {
 	var wrapper = require('wrap-in-div');
 
-
-
   var DropdownNested = require('dropdown-base').extend({
     init: function() {
       
@@ -12,6 +10,10 @@ define(function(require) {
     	$(contentContainer).css({
     		height: 305,
     		overflow: 'auto'
+    	});
+
+    	$(contentContainer).find('ul').css({
+    		'margin-right': 13
     	});
 
     	$(contentContainer).jScrollPane({showArrows: true});

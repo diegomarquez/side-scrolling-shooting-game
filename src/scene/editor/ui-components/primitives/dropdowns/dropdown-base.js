@@ -108,10 +108,9 @@ define(function(require) {
 
     createContentContainer: function() {
       var ul = document.createElement('ul');
-      $(ul).addClass('ui-widget-content');
 
       return wrapper.wrap(ul, {
-        classNames: ['ui-corner-all', 'drop-down-menu', 'ui-widget']
+        classNames: ['ui-corner-all', 'drop-down-menu', 'ui-widget-content']
       });
     },
 

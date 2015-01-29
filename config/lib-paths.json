@@ -7,5 +7,7 @@
 	"bootstrap": "./lib/bootstrap/dist/js/bootstrap",
 	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle",
 	"jscrollpane": "./lib/jscrollpane/script/jquery.jscrollpane",
-	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel"
+	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel",
+	"tweenlite": "./lib/gsap/src/uncompressed/TweenLite",
+	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite"
 }
