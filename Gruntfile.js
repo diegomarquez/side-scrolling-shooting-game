@@ -281,7 +281,8 @@ module.exports = function(grunt) {
     		},
 
         files: [
-          { src: 'http://fonts.googleapis.com/css?family=Exo:400,700' }
+          { src: 'http://fonts.googleapis.com/css?family=Exo:400,700' },
+          { src: 'http://fonts.googleapis.com/css?family=Russo+One' }
         ]
       }
     }  

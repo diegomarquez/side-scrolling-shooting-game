@@ -32,6 +32,8 @@ module.exports = function(grunt) {
 			grunt.file.delete(cssFilePath, {force: true});
 		}
 
+		var totalRequests = this.files.length * userAgents.length;
+
   	this.files.forEach(function(file) {
   		userAgents.forEach(function(userAgent) {
   			http.get(getRequestOptions(file.orig.src[0], userAgent), function(res) {
@@ -45,8 +47,6 @@ module.exports = function(grunt) {
 				  });
 
 				  res.on('end', function () {				
-				  	var fontFileDownloads = [];
-
 				  	// Append the results from the requests into a file
 						appendToCssOutputFile.call(grunt, cssFilePath, body);
 
@@ -54,27 +54,43 @@ module.exports = function(grunt) {
 						matchCaptureGroups(regexp, body, function(name, extension, url) {
 							// Pair remote url with local one to replace them later
 							generatedFileNames.push({
+								name: name,
+								extension: extension,
 								localUrl: getFontFilename(relativeFontsDir, name, extension),
 								remoteUrl: url
-							});
-
-							// Download font files
-						  fontFileDownloads.push(downloadFontFile(destinationDir, name, extension, url, function() {
-								var result = fontFileDownloads.filter(function(controller) { 
-									return !controller.complete;
-								});						  		
-
-								if (result.length == 0) {
-									replaceRemoteUrlsWithLocal.call(grunt, cssFilePath, generatedFileNames);
-									done(true);
-								}
-						  }));
+							});	
 						});
+
+						if (totalRequests > 1) {
+							totalRequests--;
+						} else {
+							downloadFonts(generatedFileNames, destinationDir, cssFilePath, grunt, done);
+						}
 				  });
   			});
   		});
   	});
 	});
+}
+
+downloadFonts = function(urls, dest, cssPath, grunt, done) {
+	var totalDownloads = urls.length;
+
+	for (var i = 0; i < urls.length; i++) {
+		var local = urls[i].localUrl;
+		var remote = urls[i].remoteUrl;
+		var name = urls[i].name;
+		var extension = urls[i].extension;
+
+		downloadFontFile(dest, name, extension, remote, function() {						  		
+			if (totalDownloads > 1) {
+				totalDownloads--;
+			} else {
+				replaceRemoteUrlsWithLocal.call(grunt, cssPath, urls);
+				done(true);
+			}
+	  });
+	}  
 }
 
 getRequestOptions = function(u, userAgent) {
@@ -105,19 +121,12 @@ matchCaptureGroups = function(regexp, body, matchCallback) {
 downloadFontFile = function(dest, name, extension, url, complete) {
 	var file = fs.createWriteStream(getFontFilename(dest, name, extension));
 	
-	var controller = { 
-		complete: false
-	}
-
 	var callback = function(response) {
 		response.pipe(file);
-		controller.complete = true;
 		complete();
 	}
 
   http.get(url, callback);
-
-	return controller;
 }
 
 appendToCssOutputFile = function(cssFilePath, body) {

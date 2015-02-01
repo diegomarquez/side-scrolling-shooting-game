@@ -28,6 +28,7 @@ define(function(require){
     require('bullets-bundle').create();
     require('obstacle-bundle').create();
     require('boss-bundle').create();
+    require('splash-bundle').create();
 
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -43,6 +44,7 @@ define(function(require){
     require('bullets-bundle').create();
     require('obstacle-bundle').create();
     require('boss-bundle').create();
+    require('splash-bundle').create();
    
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -64,6 +66,12 @@ define(function(require){
     // gb.groups.add("First");
     // var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
     // mainViewport.addLayer("Front");
+
+    // loaderContainer.once(loaderContainer.OPEN, this, function() {
+    // 	gb.create('Title', 'First', [{viewport: 'Main', layer: 'Front'}]);
+    // });
+
+    
 
     // var ship = gb.create('PlayerShipPolygon', 'First', [{viewport: 'Main', layer: 'Front'}]);
 

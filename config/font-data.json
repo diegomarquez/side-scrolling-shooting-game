@@ -1,11 +1,11 @@
 {
 	// Refer to [Web font loader](https://github.com/typekit/webfontloader) for details on how it should look like.
 	// This assumes you will be using [Google Fonts](https://www.google.com/fonts), but there are other options
-	data: {
-		// google: {
-		// 	families: []
-		// },
-	},
+	// data: {
+	// 	google: {
+	// 		families: []
+	// 	},
+	// },
 
 	// Set a version of [Web font loader](https://github.com/typekit/webfontloader) to download from 
 	// [Google](https://developers.google.com/speed/libraries/devguide#webfont)
