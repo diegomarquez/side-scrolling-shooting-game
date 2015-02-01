@@ -95,6 +95,16 @@ define(function(require) {
   	object.editorStart = function() {};
     object.editorUpdate = function() {};
 
+    if (object.components) {
+    	for (var i = 0; i < object.components.length; i++) {
+	  		var component = object.components[i];
+
+	  		component.editorStart = function() {};
+	  		component.editorAdded = function() {};
+	  		component.editorUpdate = function() {};
+	  	}
+    }
+
     if (object.childs) {
 	  	for (var i = 0; i < object.childs.length; i++) {
 	  		doOverridesForEditor(object.childs[i]);

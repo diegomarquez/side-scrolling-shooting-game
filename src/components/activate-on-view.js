@@ -1,14 +1,14 @@
-define(["component", "gb"], function(Component, Gb) {
-	var ActivateOnView = Component.extend({
+define(["editor-component", "gb"], function(EditorComponent, Gb) {
+	var ActivateOnView = EditorComponent.extend({
 		init: function() {
 			this._super();
 		},
 
-		start: function() {
+		editorStart: function(parent) {
 			this.onView = false;
 		},
 
-		added: function() {
+		editorAdded: function(parent) {
 			this.parentStart = this.parent.editorStart;
 			this.parentUpdate = this.parent.editorUpdate;
 
@@ -16,7 +16,7 @@ define(["component", "gb"], function(Component, Gb) {
     	this.parent.editorUpdate = function() {};
 		},
 
-		update: function(delta) {
+		editorUpdate: function(delta) {
 			if (!this.onView && this.parent.getViewportVisibility('Main')) {
 
 				this.parent.editorStart = this.parentStart;
