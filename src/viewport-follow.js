@@ -15,16 +15,16 @@ define(function(require) {
 			this.viewportGameObjectPairs = {};
 		},
 
-		setFollow: function(name, go) {
-			this.viewportGameObjectPairs[name] = {
-				viewport: require("viewports").get(name),
+		setFollow: function(viewportName, go) {
+			this.viewportGameObjectPairs[viewportName] = {
+				viewport: require("viewports").get(viewportName),
 				go: go
 			};
 		},
 
 		update: function(delta) {
-			for (var name in this.viewportGameObjectPairs) {
-				pair = this.viewportGameObjectPairs[name];
+			for (var viewportName in this.viewportGameObjectPairs) {
+				pair = this.viewportGameObjectPairs[viewportName];
 
 				p = pair.go.getTransform(p, m, getMatrixOptions);
 

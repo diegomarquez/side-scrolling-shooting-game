@@ -16,9 +16,14 @@
     "deps": ["jquery", "jquery-mousewheel"]
   },
 
+  "tweenlite": {
+		"exports": "Tweenlite",
+		"deps": ["ease"],
+	},
+
 	"timelinelite": {
 		"exports": "TimelineLite",
-		"deps": ["tweenlite"],
+		"deps": ["tweenlite", "ease"],
 	},
 
   "bootstrap": {

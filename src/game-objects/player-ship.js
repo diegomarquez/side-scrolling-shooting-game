@@ -8,20 +8,28 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
       this.viewportOffsetX = 0;
       this.viewportOffsetY = 0;
+
+      this.block = true;
+
+      this.bulletsViewport = [{viewport:'Main', layer:'Front'}];
     },
 
     editorStart: function() {
-      // Keyboard.onKeyDown(Keyboard.A, this, function() {
-      //   var bullet = Gb.add('PlayerBullet', 'First', 'MainMiniFront');
+      Keyboard.onKeyDown(Keyboard.A, this, function() {
+        if (this.block) return;
 
-      //   bullet.x = this.X + 20;
-      //   bullet.y = this.Y;
-      // });
+        var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
+
+        bullet.x = this.X + 20;
+        bullet.y = this.Y;
+      });
     },
 
     editorUpdate: function(delta) {
+    	if (this.block) return;
+
       // Auto scrolling
-      // this.x += 0.5;
+      this.x += this.speed/4 * delta;
 
       // Movement independant of the viewport
       if (Keyboard.isKeyDown(Keyboard.GAME_LEFT)) {
@@ -43,8 +51,15 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
     onCollide: function(other) {
 
-    }
+    },
 
+    blockControls: function() {
+    	this.block = true;
+    },
+
+    unblockControls: function() {
+    	this.block = false;
+    }
   });
 
   return PlayerShip;

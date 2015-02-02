@@ -10,6 +10,8 @@ define(function(require){
 
   var keyboard = require('keyboard');
 
+  var viewportFollow = require('viewport-follow');
+
   // Storing some references to avoid excesive typing
   var game = gb.game;
 
@@ -29,6 +31,7 @@ define(function(require){
     require('obstacle-bundle').create();
     require('boss-bundle').create();
     require('splash-bundle').create();
+    require('start-message-bundle').create();
 
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -44,7 +47,6 @@ define(function(require){
     require('bullets-bundle').create();
     require('obstacle-bundle').create();
     require('boss-bundle').create();
-    require('splash-bundle').create();
    
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -59,63 +61,12 @@ define(function(require){
   // This is the main initialization function
   game.on(game.CREATE, this, function() {
   	// Create the scene player
-  	// createScenePlayer();
+  	createScenePlayer();
   	// Open the loader
-    // loaderContainer.open();
+    loaderContainer.open();
 
-    // gb.groups.add("First");
-    // var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
-    // mainViewport.addLayer("Front");
-
-    // loaderContainer.once(loaderContainer.OPEN, this, function() {
-    // 	gb.create('Title', 'First', [{viewport: 'Main', layer: 'Front'}]);
-    // });
-
-    
-
-    // var ship = gb.create('PlayerShipPolygon', 'First', [{viewport: 'Main', layer: 'Front'}]);
-
-    // ship.x = 200;
-    // ship.y = 150;
-
-    // var cannon = gb.create('Cannon_0', 'First', [{viewport: 'Main', layer: 'Front'}], {
-    // 	target: ship
-    // });
-
-    // cannon.x = 100;
-    // cannon.y = 100;
-
-    // cannon = gb.create('Cannon_90', 'First', [{viewport: 'Main', layer: 'Front'}], {
-    // 	target: ship
-    // });
-
-    // cannon.x = 300;
-    // cannon.y = 100;
-
-    // cannon = gb.create('Cannon_180', 'First', [{viewport: 'Main', layer: 'Front'}], {
-    // 	target: ship
-    // });
-
-    // cannon.x = 100;
-    // cannon.y = 250;
-
-    // cannon = gb.create('Cannon_270', 'First', [{viewport: 'Main', layer: 'Front'}], {
-    // 	target: ship
-    // });
-
-    // cannon.x = 300;
-    // cannon.y = 250;
-
-    // keyboard.onKeyDown(keyboard.A, this, function() {
-    // 	mainViewport.x += 10;
-    // });
-
-    // keyboard.onKeyDown(keyboard.D, this, function() {
-    // 	mainViewport.x -= 10;
-    // });
-
-    createSceneEditor(); 
-    loaderContainer.hide();
+    // createSceneEditor(); 
+    // loaderContainer.hide();
   });
 
   // When the scene player exits...
@@ -147,7 +98,9 @@ define(function(require){
   });
   
   // This is the main update loop
-  // game.on(game.UPDATE, this, function() {});
+  game.on(game.UPDATE, this, function (delta) {
+  	viewportFollow.update(delta);
+  });
 
   // This is the main setup that kicks off the whole thing
   // Notice how it needs to find a '#main' and '#game' in the document

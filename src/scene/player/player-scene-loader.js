@@ -7,9 +7,6 @@ define(function(require) {
     init: function() {},
 
     cleanUp: function () {
-    	gb.toggleDebug(true);
-    	gb.toggleColliderDebug(true);
-
       // Clear all previous content
       gb.reclaimer.clearAllObjectsFromPools();
       // Remove all update groups

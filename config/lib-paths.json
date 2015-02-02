@@ -9,5 +9,6 @@
 	"jscrollpane": "./lib/jscrollpane/script/jquery.jscrollpane",
 	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel",
 	"tweenlite": "./lib/gsap/src/uncompressed/TweenLite",
-	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite"
+	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite",
+	"ease": "./lib/gsap/src/uncompressed/easing/EasePack"
 }
