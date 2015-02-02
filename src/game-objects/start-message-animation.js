@@ -12,7 +12,10 @@ define(["game-object", "gb", "timelinelite"], function(GameObject, Gb, TimelineL
     	this.tl = new TimelineLite({ 
     		onComplete: function() {
     			Gb.reclaimer.claim(this);
-    			this.onComplete();
+    			
+    			if (this.onComplete) {
+						this.onComplete();	
+					}
     		}.bind(this)
     	});
 

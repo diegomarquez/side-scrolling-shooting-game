@@ -16,7 +16,15 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
     	this.edit = Gb.create('Edit', 'First', viewports, { x: Gb.canvas.width/2 + 100, y: 600 });
 
     	this.tl = new TimelineLite({
-    		onComplete: this.onComplete
+    		onComplete: function() {
+    			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
+					Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+					Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+
+					if (this.onComplete) {
+						this.onComplete();	
+					}
+    		}.bind(this) 
     	});
 
 			this.tl.to(this.fly, 0.5, { x: Gb.canvas.width/2});
@@ -29,46 +37,50 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
 			this.tl.play();
 
-			var children = this.edit.findChildren().allWithType("MarkerArrow");
-
-			for (var i = 0; i < children.length; i++) {
-				children[i].hide();
-			}
-
-			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, function() {
-				this.onLeftPress(this.play, this.edit);
-			});
-
-			Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, function() {
-				this.onRightPress(this.play, this.edit);
-			});
+			this.onLeftPress();			
     }, 
 
-    onLeftPress: function(play, edit) {
-    	var children = play.findChildren().allWithType("MarkerArrow");
+    onLeftPress: function() {
+    	var children = this.play.findChildren().allWithType("MarkerArrow");
+
+    	this.play.selected = true;
+    	this.edit.selected = false;
 
 			for (var i = 0; i < children.length; i++) {
 				children[i].show();
 			}
 
-			var children = edit.findChildren().allWithType("MarkerArrow");
+			var children = this.edit.findChildren().allWithType("MarkerArrow");
 
 			for (var i = 0; i < children.length; i++) {
 				children[i].hide();
 			}
     },
 
-    onRightPress: function(play, edit) {
-    	var children = play.findChildren().allWithType("MarkerArrow");
+    onRightPress: function() {
+    	var children = this.play.findChildren().allWithType("MarkerArrow");
+
+    	this.play.selected = false;
+    	this.edit.selected = true;
 
 			for (var i = 0; i < children.length; i++) {
 				children[i].hide();
 			}
 
-			var children = edit.findChildren().allWithType("MarkerArrow");
+			var children = this.edit.findChildren().allWithType("MarkerArrow");
 
 			for (var i = 0; i < children.length; i++) {
 				children[i].show();
+			}
+    },
+
+    onOptionSelected: function() {
+    	if (this.play.selected) {
+				this.onPlay();
+			}
+
+			if (this.edit.selected) {
+				this.onEdit();
 			}
     },
 
@@ -77,6 +89,7 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+    	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	Gb.reclaimer.claim(this.fly);
     	Gb.reclaimer.claim(this.shoot);

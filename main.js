@@ -22,6 +22,8 @@ define(function(require){
     game.remove_extension(require("activity-display"));
     game.remove_extension(require("mouse-events"));
     game.remove_extension(require("fit-canvas-in-region"));
+    
+    game.add_extension(require("center-canvas"));
 
     // Populate the pools
     require('common-bundle').create();
@@ -40,6 +42,8 @@ define(function(require){
   }
 
   var createSceneEditor = function() {
+  	game.remove_extension(require("center-canvas"));
+
     // Populate the pools
     require('common-bundle').create();
     require('ship-bundle').create();
