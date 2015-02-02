@@ -24,6 +24,12 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 					if (this.onComplete) {
 						this.onComplete();	
 					}
+    		}.bind(this),
+
+    		onReverseComplete: function() {
+    			if (this.onExitComplete) {
+						this.onExitComplete();	
+					}
     		}.bind(this) 
     	});
 
@@ -39,6 +45,14 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
 			this.onLeftPress();			
     }, 
+
+    reverse: function() {
+    	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
+    	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+    	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+
+    	this.tl.reverse();
+    },
 
     onLeftPress: function() {
     	var children = this.play.findChildren().allWithType("MarkerArrow");
