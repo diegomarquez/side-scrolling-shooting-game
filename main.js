@@ -9,8 +9,8 @@ define(function(require){
   var scenePlayer = require('scene-player');
 
   var keyboard = require('keyboard');
-
   var viewportFollow = require('viewport-follow');
+  var collisionResolver = require('collision-resolver');
 
   // Storing some references to avoid excesive typing
   var game = gb.game;
@@ -20,6 +20,7 @@ define(function(require){
   // Populate the pools
   var createScenePlayer = function() {
     game.remove_extension(require("activity-display"));
+    game.remove_extension(require("logger"));
     game.remove_extension(require("mouse-events"));
     game.remove_extension(require("fit-canvas-in-region"));
     
@@ -35,6 +36,8 @@ define(function(require){
     require('splash-bundle').create();
     require('start-message-bundle').create();
 
+    collisionResolver.addCollisionPair('shipColliderId', 'obstacleColliderId');
+
     // Detach the canvas container
     canvasContainer.detachCanvas();
     // Create the Scene Player
@@ -42,6 +45,8 @@ define(function(require){
   }
 
   var createSceneEditor = function() {
+  	collisionResolver.removeCollisionPair('shipColliderId', 'obstacleColliderId');
+
   	game.remove_extension(require("center-canvas"));
 
     // Populate the pools
@@ -58,6 +63,7 @@ define(function(require){
     sceneEditor.create();
 
     game.add_extension(require("activity-display"), { hide: true });
+    game.add_extension(require("logger"), { hide: true });
     game.add_extension(require("mouse-events"));
     game.add_extension(require("fit-canvas-in-region"));
   }

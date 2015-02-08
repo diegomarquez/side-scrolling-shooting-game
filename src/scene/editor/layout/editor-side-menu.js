@@ -157,6 +157,7 @@ define(function(require) {
         'glyphicon-eye-open', 
         function() {  
         	gb.game.get_extension(require('activity-display')).toggle();
+        	gb.game.get_extension(require('logger')).toggle();
         }.bind(this)
       ));
 

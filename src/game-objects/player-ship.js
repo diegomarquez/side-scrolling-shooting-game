@@ -50,7 +50,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     onCollide: function(other) {
-
+    	console.log(other.typeId);
     },
 
     blockControls: function() {

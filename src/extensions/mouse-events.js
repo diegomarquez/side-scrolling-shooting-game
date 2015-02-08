@@ -454,7 +454,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
            go.isRegistered(go.MOUSE_DRAG_END) || 
            go.isRegistered(go.MOUSE_DRAG)
   }
-   
+
   Object.defineProperty(GameObject.prototype, "CLICK", { get: function() { return 'click'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_DOWN", { get: function() { return 'mousedown'; } });
   Object.defineProperty(GameObject.prototype, "MOUSE_UP", { get: function() { return 'mouseup'; } });

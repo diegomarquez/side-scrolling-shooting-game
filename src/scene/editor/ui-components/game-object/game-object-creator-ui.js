@@ -1,6 +1,7 @@
 define(function(require) {
   var wrapper = require('wrap-in-div');
   var button = require('button'); 
+  var gb = require('gb');
 
   var setupEditorObject = require('setup-editable-game-object');
 
@@ -36,17 +37,20 @@ define(function(require) {
           if (goName == 'Nothing' || goName == '' || !goName) {
             message.toError('No game object has been selected');
             message.appendTo($('#game-object-create-button-wrapper'));
+            gb.game.get_extension(require('logger')).error('No game object has been selected');
             return;
           }
 
           if (!viewports || viewports.length == 0) {
             message.toError('No viewports have been selected');
             message.appendTo($('#game-object-create-button-wrapper'));
+            gb.game.get_extension(require('logger')).error('No viewports have been selected');
             return;
           }
 
           message.toSuccess('Game object created successfully!');
           message.appendTo($('#game-object-create-button-wrapper'));
+          gb.game.get_extension(require('logger')).success('Game object created successfully!');
 
           setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
         }

@@ -16,6 +16,12 @@ define(function(require) {
 					radius:20
 				});
 
+			this.componentPool.createConfiguration("ShipColliderPolygon", commonBundle.getPolygonColliderPoolId())
+				.args({
+					id:'shipColliderId', 
+					points: [{x: -20, y: -20}, {x: 20, y: -20}, {x: 20, y: 20}, {x: -20, y: 20}]
+				});
+
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
 			
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")

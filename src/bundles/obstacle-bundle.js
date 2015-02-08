@@ -4,7 +4,7 @@ define(function(require) {
 	var obstacle = require("obstacle");
 	var obstacleRenderer = require('obstacle-renderer');
 
-	var Bullets = require("bundle").extend({
+	var Obstacles = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createPool('obstacle-renderer', obstacleRenderer);
 			this.componentPool.createConfiguration("ActivateObstancleOnView", commonBundle.getActivateOnViewPoolId());
@@ -54,7 +54,7 @@ define(function(require) {
 		var result = [];
 		var step = (Math.PI * 2)/vertexes;
 
-		for (var i = 0; i < vertexes; i++) {
+		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
 			point.x = Math.sin(step*i) * radius; 
@@ -66,5 +66,5 @@ define(function(require) {
 		return result;
 	}
 
-	return new Bullets();
+	return new Obstacles();
 });
