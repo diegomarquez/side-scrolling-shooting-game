@@ -2,7 +2,7 @@ define(function(require) {
   var gb = require('gb');
   var util = require('util');
   
-  var gizmoHandleBundle = require('gizmo-bundle');
+  var gizmoBundle = require('gizmo-bundle');
   var outlineBundle = require('outline-bundle');
   var gridBundle = require('grid-bundle');
 
@@ -11,21 +11,24 @@ define(function(require) {
 
   var EDITOR_ONLY_VIEWPORTS = ['Grid'];
 
-  var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoFront', 'GizmoBack']
+  var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoFront', 'GizmoMiddle', 'GizmoBack'];
 
   var EDITOR_ONLY_COMPONENTS = [
-  	gizmoHandleBundle.getColliderGizmoId()
+  	gizmoBundle.getColliderGizmoId(),
+  	gizmoBundle.getIconGizmoId()
   ]
 
   var EDITOR_ONLY_GAME_OBJECTS = [
   	outlineBundle.getOutlineId(), 
   	gridBundle.getGridId(), 
-  	gizmoHandleBundle.getCircleHandleId(), 
-  	gizmoHandleBundle.getPolygonHandleId(),
-  	gizmoHandleBundle.getFixedPolygonHandleId(),
-  	gizmoHandleBundle.getCircleDisplayId(),
-		gizmoHandleBundle.getPolygonDisplayId(),
-		gizmoHandleBundle.getFixedPolygonDisplayId()
+  	gizmoBundle.getCircleHandleId(), 
+  	gizmoBundle.getPolygonHandleId(),
+  	gizmoBundle.getFixedPolygonHandleId(),
+  	gizmoBundle.getCircleDisplayId(),
+		gizmoBundle.getPolygonDisplayId(),
+		gizmoBundle.getFixedPolygonDisplayId(),
+		gizmoBundle.getScrollStopperId(),
+  	gizmoBundle.getBossWarningId()
   ];
 
   var EditorConfig = require('class').extend({
@@ -34,9 +37,11 @@ define(function(require) {
     getDefaultLayerName: function() { return 'Front'; },
     getOutlineLayerName: function() { return EDITOR_ONLY_LAYERS[0]; },
     getGizmoFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
-    getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
+    getGizmoMiddleLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
+    getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
 
     getDefaultFrontLayerName: function() { return 'Front'; },
+    getDefaultMiddleLayerName: function() { return 'Middle'; },
     getDefaultBackLayerName: function() { return 'Back'; },
 
     getDefaultGroupName: function() { return 'First'; },

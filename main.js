@@ -35,6 +35,7 @@ define(function(require){
     require('boss-bundle').create();
     require('splash-bundle').create();
     require('start-message-bundle').create();
+    require('control-objects-bundle').create();
 
     collisionResolver.addCollisionPair('shipColliderId', 'obstacleColliderId');
 
@@ -56,6 +57,7 @@ define(function(require){
     require('bullets-bundle').create();
     require('obstacle-bundle').create();
     require('boss-bundle').create();
+    require('control-objects-bundle').create();
    
     // Detach the canvas container
     canvasContainer.detachCanvas();

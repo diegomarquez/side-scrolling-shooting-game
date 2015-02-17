@@ -19,11 +19,11 @@ define(function(require) {
         		var viewport = viewports[i];
 
         		if (checked) { 
+        			viewport.showLayer(editorConfig.getGizmoMiddleLayerName());
         			viewport.showLayer(editorConfig.getGizmoFrontLayerName());
-        			viewport.showLayer(editorConfig.getGizmoBackLayerName());
         		} else {
+        			viewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
         			viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
-        			viewport.hideLayer(editorConfig.getGizmoBackLayerName());
         		}
         	}     
         }

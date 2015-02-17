@@ -6,11 +6,13 @@ define(function(require) {
 	var circleGizmoHandle = require("circle-gizmo-handle");
 	var polygonGizmoHandle = require("polygon-gizmo-handle");
 	var fixedPolygonGizmoHandle = require("fixed-polygon-gizmo-handle");
-	
 	var gizmoHandleRenderer = require("gizmo-handle-renderer");
 	var circleColliderRenderer = require('circle-collider-renderer');
 	var polygonColliderRenderer = require('polygon-collider-renderer');
 	var fixedPolygonColliderRenderer = require('fixed-polygon-collider-renderer');
+
+	var iconGizmo = require('icon-gizmo');
+	var iconGizmoHandle = require('icon-gizmo-handle');
 
 	var Gizmo = require("bundle").extend({
 		create: function(args) {	
@@ -26,9 +28,30 @@ define(function(require) {
 			this.componentPool.createConfiguration("PolygonGizmoDisplayRenderer", "polygon-collider-renderer");
 			this.componentPool.createConfiguration("FixedPolygonGizmoDisplayRenderer", "fixed-polygon-collider-renderer");
 
+			this.componentPool.createPool("icon-gizmo", iconGizmo);
+			this.componentPool.createConfiguration("IconGizmo", "icon-gizmo");
+			this.componentPool.createConfiguration("ScrollStopperGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['FLAG.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("BossWarningGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['WARNING.PNG'],
+				offset:'center'
+			});
+
 			this.gameObjectPool.createDynamicPool("CircleGizmoHandle", circleGizmoHandle);
 			this.gameObjectPool.createDynamicPool("PolygonGizmoHandle", polygonGizmoHandle);
 			this.gameObjectPool.createDynamicPool("FixedPolygonGizmoHandle", fixedPolygonGizmoHandle);
+			this.gameObjectPool.createDynamicPool("IconGizmoHandle", iconGizmoHandle);
+			
+			this.gameObjectPool.createConfiguration("ScrollStopperGizmo", "IconGizmoHandle")
+				.args( { skipDebug: true } )
+				.setRenderer('ScrollStopperGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("BossWarningGizmo", "IconGizmoHandle")
+				.args( { skipDebug: true } )
+				.setRenderer('BossWarningGizmoRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
 				.args( { skipDebug: true } )
@@ -55,33 +78,19 @@ define(function(require) {
 				.setRenderer('FixedPolygonGizmoDisplayRenderer');
 		},
 
-		getCircleHandleId: function () {
-			return "CircleHandle";
-		},
+		getColliderGizmoId: function () { return "ColliderGizmo"; },
+		getIconGizmoId: function () { return "IconGizmo"; },
 
-		getPolygonHandleId: function () {
-			return "PolygonHandle";
-		},
+		getCircleHandleId: function () { return "CircleHandle"; },
+		getPolygonHandleId: function () { return "PolygonHandle"; },
+		getFixedPolygonHandleId: function () { return "FixedPolygonHandle"; },
+		
+		getCircleDisplayId: function () { return "CircleColliderDisplay"; },
+		getPolygonDisplayId: function () { return "PolygonColliderDisplay"; },
+		getFixedPolygonDisplayId: function () { return "FixedPolygonColliderDisplay"; },
 
-		getFixedPolygonHandleId: function () {
-			return "FixedPolygonHandle";
-		},
-
-		getColliderGizmoId: function () {
-			return "ColliderGizmo";
-		},
-
-		getCircleDisplayId: function () {
-			return "CircleColliderDisplay";
-		},
-
-		getPolygonDisplayId: function () {
-			return "PolygonColliderDisplay";
-		},
-
-		getFixedPolygonDisplayId: function () {
-			return "FixedPolygonColliderDisplay";
-		},
+		getScrollStopperId: function () { return "ScrollStopperGizmo"; },
+		getBossWarningId: function () { return "BossWarningGizmo"; },
 	});
 
 	return new Gizmo();

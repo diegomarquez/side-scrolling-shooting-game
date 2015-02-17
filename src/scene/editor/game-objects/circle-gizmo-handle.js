@@ -6,8 +6,6 @@ define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
 	var CircleGizmoHandle = GameObject.extend({		
 		init: function() {
 			this._super();
-
-			this.pointIndex = null;
 		},
 
 		added: function() { 

@@ -61,6 +61,8 @@ define(["game-object"], function(GameObject) {
   });
 
   var registerComponentChanges = function(component) {
+  	if (!component) return;
+
   	if (this.started && !EditorConfig.isEditorComponent(component.typeId)) {
   		this.structuralChanged = true;	
   	}

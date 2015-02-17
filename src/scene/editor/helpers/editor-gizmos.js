@@ -6,16 +6,16 @@ define(function(require) {
     init: function() {
     	this.gizmoOptions = util.cache(function() {
   			var editorConfig = require('editor-config');
-  			var gizmoHandleBundle = require('gizmo-bundle');
+  			var gizmoBundle = require('gizmo-bundle');
   			
   			return {
   				viewports: {
-  					handles: function(viewports) {
+  					icons: function(viewports) {
   						var result = [];
 
   						for (var i = 0; i < viewports.length; i++) {
   						 	var v = viewports[i];
-  						 	result.push({ viewport:v.viewport, layer:editorConfig.getGizmoFrontLayerName() });
+  						 	result.push({ viewport:v.viewport, layer:editorConfig.getGizmoBackLayerName() });
   						}
 
   						return result;
@@ -26,23 +26,58 @@ define(function(require) {
 
   						for (var i = 0; i < viewports.length; i++) {
   						 	var v = viewports[i];
-  						 	result.push({ viewport:v.viewport, layer:editorConfig.getGizmoBackLayerName() });
+  						 	result.push({ viewport:v.viewport, layer:editorConfig.getGizmoMiddleLayerName() });
   						 }
 
   						 return result;
+  					},
+
+  					handles: function(viewports) {
+  						var result = [];
+
+  						for (var i = 0; i < viewports.length; i++) {
+  						 	var v = viewports[i];
+  						 	result.push({ viewport:v.viewport, layer:editorConfig.getGizmoFrontLayerName() });
+  						}
+
+  						return result;
   					}
   				},
+
+  				getIconId: function(parent) {
+  					if (parent.typeId == "ScrollStopper") {
+  						return gizmoBundle.getScrollStopperId();
+  					}
+
+  					if (parent.typeId == "BossWarning") {
+  						return gizmoBundle.getBossWarningId();
+  					} 
+  				},
+
   				ids: {
-  					circleHandle: gizmoHandleBundle.getCircleHandleId(),
-  					circleDisplay: gizmoHandleBundle.getCircleDisplayId(),
-  					polygonHandle: gizmoHandleBundle.getPolygonHandleId(),
-  					polygonDisplay: gizmoHandleBundle.getPolygonDisplayId(),
-  					fixedPolygonHandle: gizmoHandleBundle.getFixedPolygonHandleId(),
-  					fixedPolygonDisplay: gizmoHandleBundle.getFixedPolygonDisplayId(),
-  					colliderGizmo: gizmoHandleBundle.getColliderGizmoId()
+  					circleHandle: gizmoBundle.getCircleHandleId(),
+  					circleDisplay: gizmoBundle.getCircleDisplayId(),
+  					polygonHandle: gizmoBundle.getPolygonHandleId(),
+  					polygonDisplay: gizmoBundle.getPolygonDisplayId(),
+  					fixedPolygonHandle: gizmoBundle.getFixedPolygonHandleId(),
+  					fixedPolygonDisplay: gizmoBundle.getFixedPolygonDisplayId(),
+  					colliderGizmo: gizmoBundle.getColliderGizmoId(),
+  					iconGizmo: gizmoBundle.getIconGizmoId()
   				}
   			}
   		}, this);
+    },
+
+    addIconGizmo: function(parent) {
+    	var objects = [];
+
+    	var options = this.gizmoOptions();
+    	var viewports = parent.getViewportList();
+
+    	// Add the icon gizmo
+    	objects.push(gb.addChildTo(parent, options.getIconId(parent), options.viewports.icons(viewports), null, 'create'));
+    	
+    	return objects;
     },
 
     addCircleColliderGizmo: function(parent) {
@@ -127,6 +162,11 @@ define(function(require) {
     	// Add the Collider Gizmo to the game object if it has a collider
       if (object.findComponents().firstWithProp('collider')) {
       	gb.addComponentTo(object, options.ids.colliderGizmo);	
+      }
+
+      // Add the Icon Gizmo if the game object has no renderer
+      if (!object.renderer) {
+      	gb.addComponentTo(object, options.ids.iconGizmo);	
       }
     }
   });

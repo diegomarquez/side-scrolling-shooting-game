@@ -71,12 +71,16 @@ define(["game-object-container", "editor-config"], function(GameObjectContainer,
   });
 
   var registerChildChanges = function(child) {
+  	if (!child) return;
+
   	if (this.started && !EditorConfig.isEditorGameObject(child.typeId)) {
   		this.structuralChanged = true;	
   	}
   }
 
   var registerComponentChanges = function(component) {
+  	if (!component) return;
+
   	if (this.started && !EditorConfig.isEditorComponent(component.typeId)) {
   		this.structuralChanged = true;	
   	}
