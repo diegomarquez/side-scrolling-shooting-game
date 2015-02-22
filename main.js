@@ -34,7 +34,7 @@ define(function(require){
     require('obstacle-bundle').create();
     require('boss-bundle').create();
     require('splash-bundle').create();
-    require('start-message-bundle').create();
+    require('messages-bundle').create();
     require('control-objects-bundle').create();
 
     collisionResolver.addCollisionPair('shipColliderId', 'obstacleColliderId');
