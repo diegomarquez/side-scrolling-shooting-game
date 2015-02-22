@@ -84,6 +84,7 @@ define(function(require) {
           'Open Local': function () {
             var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
             sceneLoader.load(JSON.parse(scene));
+            sceneLoader.layout();
             $(this).dialog('close');
           },
 
@@ -95,6 +96,7 @@ define(function(require) {
 				      type: "GET",
 				      success: function(scene) { 
 				      	sceneLoader.load(JSON.parse(scene));
+            		sceneLoader.layout();
             		$(self).dialog('close');	
 				      }
 				    }); 

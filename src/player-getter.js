@@ -6,9 +6,12 @@ define(function(require) {
 			this.viewportGameObjectPairs = {};
 		},
 
-		get: function() {
+		get: function(x, y) {
 			if (!this.player) { 
-				this.player = gb.create('player-ship', 'First', [{viewport: 'Main', layer: 'Front'}]);		
+				this.player = gb.create('player-ship', 'First', [{viewport: 'Main', layer: 'Front'}], {
+        	viewportOffsetX: x,
+        	viewportOffsetY: y 
+        });		
 
 				this.player.once(this.player.RECYCLE, this, function() {
 					this.player = null;

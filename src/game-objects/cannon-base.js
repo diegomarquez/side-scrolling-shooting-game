@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "plater-getter"], function(GameObject, PlayerGetter) {
+define(["editor-game-object-container", "player-getter"], function(GameObject, PlayerGetter) {
   var Cannon = GameObject.extend({
     init: function() {
       this._super();

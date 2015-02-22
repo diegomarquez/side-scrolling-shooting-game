@@ -12,7 +12,10 @@ define(function(require) {
       this.groups(scene);
       this.viewports(scene);
       this.configurations(scene);
-      this.addGameObjects(scene);
+       
+      this.layout = function() {
+      	this.addGameObjects(scene);
+      }.bind(this)
     },
 
     cleanUp: function () {
