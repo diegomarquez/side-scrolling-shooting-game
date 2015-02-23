@@ -11,7 +11,7 @@ define(function(require) {
 
   var EDITOR_ONLY_VIEWPORTS = ['Grid'];
 
-  var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoFront', 'GizmoMiddle', 'GizmoBack'];
+  var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoCloseFront', 'GizmoFront', 'GizmoMiddle', 'GizmoBack', 'GizmoFarBack'];
 
   var EDITOR_ONLY_COMPONENTS = [
   	gizmoBundle.getColliderGizmoId(),
@@ -24,9 +24,11 @@ define(function(require) {
   	gizmoBundle.getCircleHandleId(), 
   	gizmoBundle.getPolygonHandleId(),
   	gizmoBundle.getFixedPolygonHandleId(),
+  	gizmoBundle.getRotationHandleId(),
   	gizmoBundle.getCircleDisplayId(),
 		gizmoBundle.getPolygonDisplayId(),
 		gizmoBundle.getFixedPolygonDisplayId(),
+		gizmoBundle.getRotationDisplayId(),
 		gizmoBundle.getScrollStopperId(),
   	gizmoBundle.getBossWarningId()
   ];
@@ -36,9 +38,11 @@ define(function(require) {
 
     getDefaultLayerName: function() { return 'Front'; },
     getOutlineLayerName: function() { return EDITOR_ONLY_LAYERS[0]; },
-    getGizmoFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
-    getGizmoMiddleLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
-    getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
+    getGizmoCloseFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
+    getGizmoFrontLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
+    getGizmoMiddleLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
+    getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[4]; },
+    getGizmoFarBackLayerName: function() { return EDITOR_ONLY_LAYERS[5]; },
 
     getDefaultFrontLayerName: function() { return 'Front'; },
     getDefaultMiddleLayerName: function() { return 'Middle'; },

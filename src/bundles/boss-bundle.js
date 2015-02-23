@@ -11,6 +11,8 @@ define(function(require) {
 
 	var Bullets = require("bundle").extend({
 		create: function(args) {			
+			this.componentPool.createConfiguration("Activate_Boss_On_View", commonBundle.getActivateOnViewPoolId());
+
 			this.componentPool.createPool('boss-1-renderer', boss1Renderer);
 			this.componentPool.createPool('boss-1-cables-renderer', boss1CablesRenderer);
 			
@@ -41,6 +43,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
 				.addComponent("Boss_1_Cables_Collider")
+				.addComponent("Activate_Boss_On_View")
 				.setRenderer("Boss_1_Cables_Renderer")
 				.childOnly();
 
@@ -52,6 +55,7 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180})
 				.addChild("boss-1-cables", {rotation: 180})
 				.addChild("biohazard-icon")
+				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer");	
 		},
@@ -61,7 +65,7 @@ define(function(require) {
 		var result = [];
 		var step = (Math.PI * 2)/vertexes;
 
-		for (var i = 0; i < vertexes; i++) {
+		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
 			point.x = Math.sin(step*i) * radius; 

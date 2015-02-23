@@ -13,12 +13,17 @@ define(function(require) {
 
       viewport.addLayer(editorConfig.getDefaultLayerName());
       viewport.addLayer(editorConfig.getOutlineLayerName());
+      
+      viewport.addLayer(editorConfig.getGizmoFarBackLayerName());
       viewport.addLayer(editorConfig.getGizmoBackLayerName());
       viewport.addLayer(editorConfig.getGizmoMiddleLayerName());
       viewport.addLayer(editorConfig.getGizmoFrontLayerName());
+      viewport.addLayer(editorConfig.getGizmoCloseFrontLayerName());
 
       viewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
       viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
+      viewport.hideLayer(editorConfig.getGizmoCloseFrontLayerName());
+      viewport.hideLayer(editorConfig.getGizmoFarBackLayerName());
 
       return viewport;
     },

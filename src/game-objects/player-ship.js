@@ -51,25 +51,34 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     onCollide: function(other) {
-    	console.log(other.typeId);
+    	
     },
 
     blockControls: function() {
     	this.block = true;
+    	this.execute(this.BLOCK);
     },
 
     unblockControls: function() {
     	this.block = false;
+    	this.execute(this.UNBLOCK);
     },
 
     move: function() {
     	this.forwardSpeed = 200;
+    	this.execute(this.MOVE);
     },
 
     stop: function() {
     	this.forwardSpeed = 0;
-    }
+    	this.execute(this.STOP);
+    },
   });
+
+	Object.defineProperty(PlayerShip.prototype, "MOVE", { get: function() { return 'move'; } });
+	Object.defineProperty(PlayerShip.prototype, "STOP", { get: function() { return 'stop'; } });
+	Object.defineProperty(PlayerShip.prototype, "BLOCK", { get: function() { return 'stop'; } });
+	Object.defineProperty(PlayerShip.prototype, "UNBLOCK", { get: function() { return 'stop'; } });
 
   return PlayerShip;
 });

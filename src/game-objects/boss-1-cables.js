@@ -12,6 +12,10 @@ define(["editor-game-object-container"], function(GameObject) {
       
     },
 
+    onBossStart: function() {
+   
+    },
+
     onCollide: function(other) {
 
     }

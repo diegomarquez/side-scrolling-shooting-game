@@ -114,7 +114,7 @@ define(function(require) {
 
   var addEditorGizmos = function(object) {
   	editorGizmos.addGizmos(object);
-
+  	
   	if (object.childs) {
 	  	for (var i = 0; i < object.childs.length; i++) {
 	  		addEditorGizmos(object.childs[i]);

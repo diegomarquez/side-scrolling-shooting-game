@@ -101,12 +101,17 @@ define(function(require) {
 
       mainViewport.addLayer(editorConfig.getDefaultLayerName());
       mainViewport.addLayer(editorConfig.getOutlineLayerName());
+
+      mainViewport.addLayer(editorConfig.getGizmoFarBackLayerName());
       mainViewport.addLayer(editorConfig.getGizmoBackLayerName());
       mainViewport.addLayer(editorConfig.getGizmoMiddleLayerName());
       mainViewport.addLayer(editorConfig.getGizmoFrontLayerName());
+      mainViewport.addLayer(editorConfig.getGizmoCloseFrontLayerName());
 
       mainViewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
       mainViewport.hideLayer(editorConfig.getGizmoFrontLayerName());
+      mainViewport.hideLayer(editorConfig.getGizmoCloseFrontLayerName());
+      mainViewport.hideLayer(editorConfig.getGizmoFarBackLayerName());
     },
 
     gridViewport: function() {
