@@ -56,8 +56,9 @@ define(function(require) {
     	var options = this.gizmoOptions();
     	var viewports = parent.getViewportList();
 
-    	// Add the icon gizmo
-    	objects.push(gb.addChildTo(parent, options.getIconId(parent), options.viewports.icons(viewports), null, 'create'));
+    	var go = gb.addChildTo(parent, options.getIconId(parent), options.viewports.icons(viewports), null, 'create');
+    	go.gizmoType = "Icon";
+    	objects.push(go);
     	
     	return objects;
     },
@@ -68,10 +69,14 @@ define(function(require) {
     	var options = this.gizmoOptions();
     	var viewports = parent.getViewportList();
 
-    	// Add the rotation gizmo handle
-    	objects.push(gb.addChildTo(parent, options.ids.rotationHandle, options.viewports.rotationHandles(viewports), null, 'create'));
-    	// Add the rotation gizmo displayer
-    	objects.push(gb.addChildTo(parent, options.ids.rotationDisplay, options.viewports.rotationDisplayers(viewports), null, 'create'));
+    	var handle = gb.addChildTo(parent, options.ids.rotationHandle, options.viewports.rotationHandles(viewports), null, 'create');
+    	var display = gb.addChildTo(parent, options.ids.rotationDisplay, options.viewports.rotationDisplayers(viewports), null, 'create'); 
+
+    	handle.gizmoType = "RotationHandle";
+    	display.gizmoType = "RotationDisplay"; 
+
+    	objects.push(handle);
+    	objects.push(display);
     	
     	return objects;
     },
@@ -84,10 +89,14 @@ define(function(require) {
 
     	var viewports = parent.getViewportList();
 
-    	// Add the circle handle for editing
-    	objects.push(gb.addChildTo(parent, options.ids.circleHandle, options.viewports.colliderHandles(viewports), null, 'create'));
-    	// Add the circle collider displayer 
-    	objects.push(gb.addChildTo(parent, options.ids.circleDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create'));
+    	var handle = gb.addChildTo(parent, options.ids.circleHandle, options.viewports.colliderHandles(viewports), null, 'create');
+    	var display = gb.addChildTo(parent, options.ids.circleDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create'); 
+
+    	handle.gizmoType = "ColliderHandle";
+    	display.gizmoType = "ColliderDisplay";
+
+    	objects.push(handle);
+    	objects.push(display);
     	
     	return objects;  
     },
@@ -102,11 +111,15 @@ define(function(require) {
 
     	// Add a handle for each vertex of the polygon collider
     	for (var i = 0; i < parentCollider.Points.length; i++) {
-				objects.push(gb.addChildTo(parent, options.ids.polygonHandle, options.viewports.colliderHandles(viewports), { pointIndex: i }, 'create'));
+    		var handle = gb.addChildTo(parent, options.ids.polygonHandle, options.viewports.colliderHandles(viewports), { pointIndex: i }, 'create');
+    		handle.gizmoType = "ColliderHandle";
+				objects.push(handle);
 			}
 
 			// Add the polygon collider displayer
-			objects.push(gb.addChildTo(parent, options.ids.polygonDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create'));
+			var display = gb.addChildTo(parent, options.ids.polygonDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create');
+			display.gizmoType = "ColliderDisplay";
+			objects.push(display);
 
 			return objects;
     },
@@ -121,11 +134,15 @@ define(function(require) {
 
     	// Add a handle for each vertex of the polygon collider
     	for (var i = 0; i < parentCollider.Points.length; i++) {
-				objects.push(gb.addChildTo(parent, options.ids.fixedPolygonHandle, options.viewports.colliderHandles(viewports), { pointIndex: i }, 'create'));
+    		var handle = gb.addChildTo(parent, options.ids.fixedPolygonHandle, options.viewports.colliderHandles(viewports), { pointIndex: i }, 'create');
+				handle.gizmoType = "ColliderHandle";
+				objects.push(handle);
 			}
 
 			// Add the fixed polygon collider displayer
-			objects.push(gb.addChildTo(parent, options.ids.fixedPolygonDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create'));
+			var display = gb.addChildTo(parent, options.ids.fixedPolygonDisplay, options.viewports.colliderDisplayers(viewports), { parentCollider: parentCollider }, 'create'); 
+			display.gizmoType = "ColliderDisplay";
+			objects.push(display);
 
 			return objects;
     },
@@ -136,9 +153,25 @@ define(function(require) {
 			for (var i = 0; i < gizmoComponents.length; i++) {
     		var go = gizmoComponents[i];
 
-    		// Fixear esto para que contemple los distintos tipos de Gizmos, ahora hay 3 distintos
-    		gb.addToViewports(go, options.viewports.colliderHandles(viewports));
-    		gb.addToViewports(go, options.viewports.colliderDisplayers(viewports));
+    		if (go.gizmoType == "ColliderHandle") {
+    			gb.addToViewports(go, options.viewports.colliderHandles(viewports));
+    		}
+
+    		if (go.gizmoType == "ColliderDisplay") {
+    			gb.addToViewports(go, options.viewports.colliderDisplayers(viewports));
+    		}
+
+    		if (go.gizmoType == "RotationHandle") {
+    			gb.addToViewports(go, options.viewports.rotationHandles(viewports));
+    		}
+
+    		if (go.gizmoType == "RotationDisplay") {
+    			gb.addToViewports(go, options.viewports.rotationDisplayers(viewports));
+    		}
+
+    		if (go.gizmoType == "Icon") {
+    			gb.addToViewports(go, options.viewports.icons(viewports));
+    		}
     	}
 		},
 
@@ -148,10 +181,25 @@ define(function(require) {
     	for (var i = 0; i < gizmoComponents.length; i++) {
     		var go = gizmoComponents[i];
 
-    		// Fixear esto para que contemple los distintos tipos de Gizmos, ahora hay 3 distintos
+    		if (go.gizmoType == "ColliderHandle") {
+    			gb.removeFromViewports(go, options.viewports.colliderHandles(viewports));
+    		}
 
-    		gb.removeFromViewports(go, options.viewports.colliderHandles(viewports));
-    		gb.removeFromViewports(go, options.viewports.colliderDisplayers(viewports));
+    		if (go.gizmoType == "ColliderDisplay") {
+    			gb.removeFromViewports(go, options.viewports.colliderDisplayers(viewports));
+    		}
+
+    		if (go.gizmoType == "RotationHandle") {
+    			gb.removeFromViewports(go, options.viewports.rotationHandles(viewports));
+    		}
+
+    		if (go.gizmoType == "RotationDisplay") {
+    			gb.removeFromViewports(go, options.viewports.rotationDisplayers(viewports));
+    		}
+
+    		if (go.gizmoType == "Icon") {
+    			gb.removeFromViewports(go, options.viewports.icons(viewports));
+    		}
     	}
     },
 
