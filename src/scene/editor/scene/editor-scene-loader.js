@@ -36,7 +36,7 @@ define(function(require) {
     },
 
     getGameObject: function (serializedGameObject) {
-    	return setupEditorObject.setup(serializedGameObject.id, serializedGameObject.g, serializedGameObject.v, this.getGameObjectArgs(serializedGameObject));
+    	return setupEditorObject.setup(serializedGameObject.id, serializedGameObject.g, serializedGameObject.v, this.getGameObjectArgs(serializedGameObject.properties));
     },
 
     addChildGameObject: function (childId, parent) {

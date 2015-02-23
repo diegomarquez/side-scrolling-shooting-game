@@ -15,7 +15,8 @@ define(function(require) {
 
   var EDITOR_ONLY_COMPONENTS = [
   	gizmoBundle.getColliderGizmoId(),
-  	gizmoBundle.getIconGizmoId()
+  	gizmoBundle.getIconGizmoId(),
+  	gizmoBundle.getRotationGizmoId()
   ]
 
   var EDITOR_ONLY_GAME_OBJECTS = [

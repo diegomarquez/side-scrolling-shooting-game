@@ -136,8 +136,8 @@ define(function(require) {
 	}
 
 	var saveAllPropertiesToObject = function(object, to, prop) {
-		if (object.x !== undefined && object.y !== undefined) {
-			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y });
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
+			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation });
 		} else {
 			to[prop] = util.shallow_merge_many(object.args, object.Attributes);
 		}
@@ -146,10 +146,10 @@ define(function(require) {
 	var saveAllPropertiesToArray = function(object, array, index) {
 		var attributes; 
 
-		if (object.x !== undefined && object.y !== undefined) {
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
 			attributes = util.shallow_merge_many(object.args, object.Attributes);
 		} else {
-			attributes = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y });	
+			attributes = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation });	
 		}
 
 		array.push({attributes: attributes, indexInParent: index});
@@ -162,12 +162,13 @@ define(function(require) {
 			to[prop] = changes;
 		}
 
-		if (object.x !== undefined && object.y !== undefined) {
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
 			if (!to[prop]) 
 				to[prop] = {};
 
 			to[prop].x = object.x;
 			to[prop].y = object.y;
+			to[prop].rotation = object.rotation;
 		}
 	}
 

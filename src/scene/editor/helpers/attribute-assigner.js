@@ -46,6 +46,7 @@ define(function(require) {
 
 					toChild.x = fromChild.x;
 					toChild.y = fromChild.y;
+					toChild.rotation = fromChild.rotation;
 
 					if (toChild.childs && fromChild.childs) {
 						this.assignFrom(fromChild, toChild);
