@@ -26,7 +26,7 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")
 				.args({
-					rotation: 45
+					rotation: 90
 				})		
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");

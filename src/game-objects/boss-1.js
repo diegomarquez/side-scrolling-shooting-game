@@ -19,12 +19,14 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
       		cables[i].onBossStart();
       	}
 
-      	var cannons = Root.findChildren().recurse().allWithType("boss-1-cannons");
+      	var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
 
       	// Signal boss cannos to start
-      	for (var i=0; i < cables.length; i++) {
+      	for (var i=0; i < cannons.length; i++) {
       		cannons[i].onBossStart();
       	}
+
+      	console.log('Boss Start');
 
       	this.editorUpdate = lastEditorUpdate
       });

@@ -1,11 +1,11 @@
-define(["editor-game-object-container"], function(GameObject) {
-  var BasicBullet = GameObject.extend({
+define(["editor-game-object-container", "player-getter"], function(GameObject, PlayerGetter) {
+  var Cannon = GameObject.extend({
     init: function() {
       this._super();
     },
 
     editorStart: function() {
-      
+			this.target = PlayerGetter.get();     
     },
 
     editorUpdate: function(delta) {
@@ -13,7 +13,7 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     onBossStart: function() {
-   		console.log('Boss Cable Start');
+    	console.log('Boss Cannon Start');
     },
 
     onCollide: function(other) {
@@ -21,6 +21,5 @@ define(["editor-game-object-container"], function(GameObject) {
     }
   });
 
-  return BasicBullet;
+  return Cannon;
 });
-
