@@ -19,7 +19,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     },
 
     onCollide: function(other) {
-
+    	Reclaimer.claim(this);
     }
   });
 

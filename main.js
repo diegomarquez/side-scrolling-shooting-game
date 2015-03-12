@@ -38,6 +38,7 @@ define(function(require){
     require('control-objects-bundle').create();
 
     collisionResolver.addCollisionPair('shipColliderId', 'obstacleColliderId');
+    collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
 
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -47,6 +48,7 @@ define(function(require){
 
   var createSceneEditor = function() {
   	collisionResolver.removeCollisionPair('shipColliderId', 'obstacleColliderId');
+  	collisionResolver.removeCollisionPair('basicBulletColliderId', 'bossColliderId');
 
   	game.remove_extension(require("center-canvas"));
 

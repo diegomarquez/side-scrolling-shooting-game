@@ -9,7 +9,7 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     editorUpdate: function(delta) {
-      
+    	
     },
 
     onBossStart: function() {

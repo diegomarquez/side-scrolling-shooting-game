@@ -62,14 +62,16 @@ define(["path-renderer", "path-cache", "draw", "util"], function(PathRenderer, P
 			{ x: 0, y: 0 },
 			{ x: left, y: top },
 			{ x: right, y: top },
-			{ x: left, y: top }
+			{ x: left, y: top },
+			{ x: right, y: top },
 		], null, "#FFFFFF", 1, 1, side, false);
 
 		Draw.realtiveQuadraticPolygonAuto(context, xPos + this.cableThickness/2, this.cableStartHeight - this.baseHeight, this.cableRadius, [
 			{ x: 0, y: 0},
 			{ x: left, y: top },
 			{ x: right, y: top },
-			{ x: left, y: top }
+			{ x: left, y: top },
+			{ x: right, y: top },
 		], null, "#FFFFFF", 1, 1, side, false);
 	}
 
