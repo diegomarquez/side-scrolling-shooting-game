@@ -5,7 +5,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     },
 
     editorStart: function() {
-    	this.life = 25000;
+    	this.life = 50000;
     	this.speed = 100;
 
     	this.x = this.x + Math.cos(this.angle * (Math.PI/180)) * 20; 
