@@ -5,7 +5,7 @@ define(function(require) {
 		create: function(args) {	
 			this.componentPool.createPool('cannon-base-renderer', require('cannon-base-renderer'));
 			this.componentPool.createPool('cannon-shooter-renderer', require('cannon-shooter-renderer'));
-			
+
 			this.componentPool.createConfiguration("CannonBaseCollider", commonBundle.getCircleColliderPoolId())
 				.args({id:'cannonColliderId', radius:20});
 			
@@ -19,7 +19,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("cannon-shooter", "CannonShooter")
 				.args({ 
-					rate: 350, 
+					rate: 150, 
 					bullets: 5,
 					burstAmount: 1,
 				})

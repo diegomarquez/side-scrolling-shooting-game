@@ -13,7 +13,7 @@ define(function(require) {
     },
 
     begin: function() {
-      gb.toggleDebug();
+      gb.toggleDebug(true);
 
       this.clear();
       this.world();
@@ -48,7 +48,7 @@ define(function(require) {
       mainContainer.toggle();
 
       // Turn global debug setting off
-      gb.toggleDebug();
+      gb.toggleDebug(false);
       // Remove all editor related delegates
       editorDelegates.clean();
       // Claim all Game Objects and clean up the pools from instances

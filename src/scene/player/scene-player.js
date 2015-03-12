@@ -15,9 +15,6 @@ define(function(require) {
 		},
 
 		create: function() {
-			gb.debug = true;
-     	gb.colliderDebug = true;
-
 			// Setup display for the splash screen
 			gb.groups.add("First");
     	var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
@@ -74,19 +71,22 @@ define(function(require) {
 			loaderContainer.remove(loaderContainer.TRANSITION, this, this.doSplash);
     	loaderContainer.remove(loaderContainer.OPEN, this, this.doSplash);
 
-			gb.reclaimer.claim(this.splash);
-
     	// Clean up jquery UI
       $(this.mainContainer).toggle();
-      // $(this.startButton).button('destroy');
-      // $(this.editorButton).button('destroy');
-    	// Destroy all of this objects references
+      
+      // Claim all Game Objects and clean up the pools from instances
+      gb.reclaimer.clearAllObjectsFromPools();
+      // Remove all update groups
+      gb.groups.removeAll();
+      // Remove all Viewports
+      gb.viewports.removeAll();
+      // Destroy the pools
+      gb.reclaimer.clearAllPools();
+
     	this._super();
     	// Remove the editor container from the DOM
       // This should take care of any lingering references to events
       $('#main-player-container').remove();
-
-      this.splash = null;
     }
 	});
 

@@ -11,7 +11,8 @@ define(function(require) {
         on: 'Hide Centers',
         off: 'Show Centers',
         onChange: function() {
-          gb.toggleGameObjectDebug( $(this).prop('checked') );
+        	var checked = $(this).prop('checked');
+          gb.toggleGameObjectDebug(checked);
         }
       });
     }

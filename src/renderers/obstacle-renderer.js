@@ -1,5 +1,5 @@
 define(["path-renderer", "draw"], function(PathRenderer, Draw) {
-	var p = null;
+	var m = null;
 
 	var ObstacleRenderer = PathRenderer.extend({
 		init: function() {
@@ -15,20 +15,18 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		},
 		
 		drawPath: function(context, viewport) {
+			m = this.parent.matrix;
+
 			// Store current context
 			context.save();
 			// Reset transformation
 			context.setTransform(1, 0, 0, 1, 0, 0);			
 			// Apply transformations for the current [viewport](@@viewport@@)
 			viewport.transformContext(context);
-			
-			// Get a position from the matrix of the parent game object
-			p = this.parent.matrix.transformPoint(0, 0, p);
-
+			// Applying transformations of parent
+			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
 			// Drawing code
-			context.translate(p.x, p.y);
 			Draw.polygon(context, 0, 0, this.parent.findComponents().firstWithProp('collider').Points, null, "#FFFFFF", 2);
-
 			// Restore original context
 			context.restore();
 		},

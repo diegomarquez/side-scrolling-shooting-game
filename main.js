@@ -37,9 +37,11 @@ define(function(require){
     require('messages-bundle').create();
     require('control-objects-bundle').create();
 
-    collisionResolver.addCollisionPair('shipColliderId', 'obstacleColliderId');
     collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
-
+    collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
+    collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
+    collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
+    
     // Detach the canvas container
     canvasContainer.detachCanvas();
     // Create the Scene Player
@@ -47,8 +49,10 @@ define(function(require){
   }
 
   var createSceneEditor = function() {
-  	collisionResolver.removeCollisionPair('shipColliderId', 'obstacleColliderId');
   	collisionResolver.removeCollisionPair('basicBulletColliderId', 'bossColliderId');
+  	collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
+  	collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
+  	collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
 
   	game.remove_extension(require("center-canvas"));
 

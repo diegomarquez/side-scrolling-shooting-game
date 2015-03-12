@@ -11,40 +11,21 @@ define(function(require) {
 
 			this.gameObjectPool.createDynamicPool('Obstacle', obstacle);
 			
+			this.componentPool.createConfiguration("ObstacleCollider3", commonBundle.getPolygonColliderPoolId())
+				.args({ id:'obstacleColliderId', points: getPolygon(3, 20) });
+
 			this.componentPool.createConfiguration("ObstacleCollider4", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'obstacleColliderId', points: getPolygon(4, 20) });
 
-			this.componentPool.createConfiguration("ObstacleCollider5", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'obstacleColliderId', points: getPolygon(5, 20) });
-
-			this.componentPool.createConfiguration("ObstacleCollider6", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'obstacleColliderId', points: getPolygon(6, 20) });
-
-			this.componentPool.createConfiguration("ObstacleCollider7", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'obstacleColliderId', points: getPolygon(7, 20) });
-
-			this.componentPool.createConfiguration("ObstacleCollider8", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'obstacleColliderId', points: getPolygon(8, 20) });
-
 			this.componentPool.createConfiguration("ObstacleRender", 'obstacle-renderer');
+
+			this.gameObjectPool.createConfiguration("obstacle-3", "Obstacle")
+				.addComponent("ObstacleCollider3")
+				.addComponent("ActivateObstancleOnView")
+				.setRenderer("ObstacleRender");
 
 			this.gameObjectPool.createConfiguration("obstacle-4", "Obstacle")
 				.addComponent("ObstacleCollider4")
-				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
-			
-			this.gameObjectPool.createConfiguration("obstacle-5", "Obstacle")
-				.addComponent("ObstacleCollider5")
-				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
-			
-			this.gameObjectPool.createConfiguration("obstacle-6", "Obstacle")
-				.addComponent("ObstacleCollider6")
-				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
-			
-			this.gameObjectPool.createConfiguration("obstacle-7", "Obstacle")
-				.addComponent("ObstacleCollider7")
 				.addComponent("ActivateObstancleOnView")
 				.setRenderer("ObstacleRender");
 		},
