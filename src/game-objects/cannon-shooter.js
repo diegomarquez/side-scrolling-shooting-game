@@ -30,6 +30,8 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 
       this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
      	this.rotation = this.rotation % 360;
+
+     	this.rateVariation = Math.floor(20 + (Math.random() * 50));
     },
 
     editorUpdate: function(delta) {
@@ -46,9 +48,12 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
     		this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
       	this.rotation = this.rotation % 360;
 
+      	// Prevent update until the cannon has been started
+      	if (!this.parent.started) return;
+
     		this.shootTimer++;
 
-    		if (this.shootTimer % this.rate == 0) {
+    		if (this.shootTimer % (this.rate + this.rateVariation) == 0) {
     			if (this.bulletCount > 0 || this.bullets == -1) {
 	    			this.bursting = true;	
 	    			this.burtsTimer = 0;
