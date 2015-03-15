@@ -1,7 +1,10 @@
-define(["editor-game-object-container", "player-getter", "root"], function(GameObject, PlayerGetter, Root) {
+define(["editor-game-object-container", "player-getter", "root", "reclaimer"], function(GameObject, PlayerGetter, Root, Reclaimer) {
   var Boss_1 = GameObject.extend({
     init: function() {
       this._super();
+
+      this.health = 40;
+      this.started = false;
     },
 
     editorStart: function() {
@@ -26,9 +29,9 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
       		cannons[i].onBossStart();
       	}
 
-      	console.log('Boss Start');
+      	this.editorUpdate = lastEditorUpdate;
 
-      	this.editorUpdate = lastEditorUpdate
+      	this.started = true;
       });
     },
 
@@ -37,7 +40,21 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
     },
 
     onCollide: function(other) {
+    	if (this.started) {
+    		if (this.health > 0) {
+    			this.health--;	
+    		} else {
+    			var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
 
+    			for (var i=0; i < cannons.length; i++) {
+      			Reclaimer.mark(cannons[i]);
+      		}
+
+      		Reclaimer.mark(this);
+
+      		PlayerGetter.get().move();
+    		}
+    	}
     }
   });
 

@@ -16,7 +16,7 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('CannonBullet', cannonBullet);
 			
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
-				.args({id:'basicBulletColliderId', radius:20});
+				.args({id:'basicBulletColliderId', radius:10});
 
 			this.componentPool.createConfiguration("CannonBulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({id:'cannonBulletColliderId', radius:10});

@@ -19,9 +19,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     },
 
     onCollide: function(other) {
-    	console.log('Bullet collided with ' + other.typeId);
-
-    	Reclaimer.claim(this);
+    	Reclaimer.mark(this);
     }
   });
 

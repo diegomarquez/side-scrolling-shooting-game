@@ -12,6 +12,7 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
     editorUpdate: function(delta) {
       if (Math.floor(this.mainViewport.x + this.X) <= 0) {
       	this.player.stop();
+      	Gb.reclaimer.mark(this);
       }
     }
   });
