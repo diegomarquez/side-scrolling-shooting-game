@@ -9,11 +9,11 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     editorUpdate: function(delta) {
-    	
+
     },
 
     onBossStart: function() {
-   		console.log('Boss Cable Start');
+   		
     },
 
     onCollide: function(other) {

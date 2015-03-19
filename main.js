@@ -36,6 +36,7 @@ define(function(require){
     require('splash-bundle').create();
     require('messages-bundle').create();
     require('control-objects-bundle').create();
+    require('items-bundle').create();
 
     // Collision pairs setup
     collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
@@ -46,6 +47,7 @@ define(function(require){
     collisionResolver.addCollisionPair('obstacleColliderId', 'basicBulletColliderId');
     
     collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
+    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');    
 
     // Detach the canvas container
     canvasContainer.detachCanvas();
@@ -63,6 +65,7 @@ define(function(require){
   	collisionResolver.removeCollisionPair('obstacleColliderId', 'basicBulletColliderId');
   	
   	collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
+  	collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
 
   	game.remove_extension(require("center-canvas"));
 
@@ -70,10 +73,10 @@ define(function(require){
     require('common-bundle').create();
     require('ship-bundle').create();
     require('cannon-bundle').create();
-    require('bullets-bundle').create();
     require('obstacle-bundle').create();
     require('boss-bundle').create();
     require('control-objects-bundle').create();
+    require('items-bundle').create();
    
     // Detach the canvas container
     canvasContainer.detachCanvas();
