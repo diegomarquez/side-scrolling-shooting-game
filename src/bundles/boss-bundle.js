@@ -27,7 +27,15 @@ define(function(require) {
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
 			this.componentPool.createConfiguration("Boss_1_Renderer", 'boss-1-renderer');
-			this.componentPool.createConfiguration("Boss_1_Cables_Renderer", 'boss-1-cables-renderer');
+			this.componentPool.createConfiguration("Boss_1_Cables_Renderer", 'boss-1-cables-renderer')
+				.args({
+					segments: 5
+				});
+
+			this.componentPool.createConfiguration("Boss_1_Cables_Damage_Renderer", 'boss-1-cables-renderer')
+				.args({
+					segments: 2
+				});
 
 			this.componentPool.createConfiguration("BiohazardIcon_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({
@@ -42,6 +50,10 @@ define(function(require) {
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
+				.args({ 
+					damageRendererId: "Boss_1_Cables_Damage_Renderer",
+					colliderId: "Boss_1_Cables_Collider" 
+				})
 				.addComponent("Boss_1_Cables_Collider")
 				.addComponent("Activate_Boss_On_View")
 				.setRenderer("Boss_1_Cables_Renderer")

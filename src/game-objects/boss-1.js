@@ -4,7 +4,7 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
       this._super();
 
       this.health = 40;
-      this.started = false;
+      this.cableCount = null;
     },
 
     editorStart: function() {
@@ -17,9 +17,12 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
       player.once(player.STOP, this, function() {      	
       	var cables = this.findChildren().allWithType("boss-1-cables");
 
+      	this.cableCount = cables.length;
+
       	// Signal boss weak spots to start
-      	for (var i=0; i < cables.length; i++) {
+      	for (var i=0; i < this.cableCount; i++) {
       		cables[i].onBossStart();
+      		cables[i].on(cables[i].DAMAGE, this, this.onDamage);
       	}
 
       	var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
@@ -30,8 +33,6 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
       	}
 
       	this.editorUpdate = lastEditorUpdate;
-
-      	this.started = true;
       });
     },
 
@@ -39,8 +40,12 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
     	    	
     },
 
+    onDamage: function (cable) {
+    	this.cableCount--;
+    },
+
     onCollide: function(other) {
-    	if (this.started) {
+    	if (this.cableCount !== null && this.cableCount <= 0) {
     		if (this.health > 0) {
     			this.health--;	
     		} else {

@@ -1,4 +1,7 @@
 define(["path-renderer", "path-cache", "draw", "util"], function(PathRenderer, PathCache, Draw, Util) {
+  
+	var rendererCount = 0;
+
   var Boss1CablesRenderer = PathRenderer.extend({
     init: function() {
       this._super();
@@ -24,8 +27,10 @@ define(["path-renderer", "path-cache", "draw", "util"], function(PathRenderer, P
 				max: this.baseWidth - ((this.baseWidth/10)*2) 
 			}
 
-			this.name = 'Boss1CablesRenderer' + Util.rand_i(0, 7);
+			this.name = this.typeId + rendererCount;
 			this.offset = 'center';
+
+			rendererCount++;
 
 			this._super();
 		},
@@ -58,21 +63,20 @@ define(["path-renderer", "path-cache", "draw", "util"], function(PathRenderer, P
 		var right = Util.rand_i(5, 10);
 		var top = Util.rand_i(-20, -15);
 
-		Draw.realtiveQuadraticPolygonAuto(context, xPos - this.cableThickness/2, this.cableStartHeight - this.baseHeight, this.cableRadius, [
-			{ x: 0, y: 0 },
-			{ x: left, y: top },
-			{ x: right, y: top },
-			{ x: left, y: top },
-			{ x: right, y: top },
-		], null, "#FFFFFF", 1, 1, side, false);
+		var segments = [];
 
-		Draw.realtiveQuadraticPolygonAuto(context, xPos + this.cableThickness/2, this.cableStartHeight - this.baseHeight, this.cableRadius, [
-			{ x: 0, y: 0},
-			{ x: left, y: top },
-			{ x: right, y: top },
-			{ x: left, y: top },
-			{ x: right, y: top },
-		], null, "#FFFFFF", 1, 1, side, false);
+		segments.push({ x: 0, y: 0 });
+
+		for (var i = 0; i < this.segments; i++) {
+			if (i % 2 == 0) {
+				segments.push({ x: left, y: top });
+			} else {
+				segments.push({ x: right, y: top });
+			}
+		}
+
+		Draw.realtiveQuadraticPolygonAuto(context, xPos - this.cableThickness/2, this.cableStartHeight - this.baseHeight, this.cableRadius, segments, null, "#FFFFFF", 1, 1, side, false);
+		Draw.realtiveQuadraticPolygonAuto(context, xPos + this.cableThickness/2, this.cableStartHeight - this.baseHeight, this.cableRadius, segments, null, "#FFFFFF", 1, 1, side, false);
 	}
 
   return Boss1CablesRenderer;
