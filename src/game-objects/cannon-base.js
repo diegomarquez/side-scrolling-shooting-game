@@ -1,11 +1,12 @@
-define(["editor-game-object-container"], function(GameObject) {
+define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
   var Cannon = GameObject.extend({
     init: function() {
       this._super();
     },
 
     editorStart: function() {
-			this.started = true;     
+			     
+			this.health = 5;
     },
 
     editorUpdate: function(delta) {
@@ -13,7 +14,11 @@ define(["editor-game-object-container"], function(GameObject) {
     },
 
     onCollide: function(other) {
-
+  		if (this.health > 0) {
+  			this.health--;	
+  		} else {
+  			Reclaimer.mark(this);	    			
+  		}
     }
   });
 

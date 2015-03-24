@@ -27,7 +27,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       		// Change renderer 
       		Gb.setRendererTo(this, this.damageRendererId);
       		// Remove collision component
-      		this.removeComponent(this.findComponents().firstWithType(this.colliderId))
+      		this.removeComponent(this.findComponents().firstWithType(this.colliderId));
       		// Notify
       		this.execute(this.DAMAGE);
     		}

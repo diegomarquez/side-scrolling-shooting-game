@@ -11,6 +11,8 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
     },
 
     editorStart: function() {
+    	this.damaged = false;
+
       this.shootTimer = 0;
       this.burtsTimer = 0;
 
@@ -32,9 +34,23 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
      	this.rotation = this.rotation % 360;
 
      	this.rateVariation = Math.floor(20 + (Math.random() * 50));
+
+     	this.parent.on(this.parent.DAMAGE, this, function() {
+     		this.damaged = true;
+	    	this.shootTimer = 0;
+	      this.burtsTimer = 0;
+	      this.bursting = false;
+	      this.currentBurstCount = 0;
+     	});
+
+     	this.parent.on(this.parent.REPAIR, this, function() {
+     		this.damaged = false;
+     	});
     },
 
     editorUpdate: function(delta) {
+    	if (this.damaged) return;
+
     	targetMatrix = this.target.getMatrix(targetMatrix);
     	targetDecompose = targetMatrix.decompose(targetDecompose);
 
