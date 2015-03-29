@@ -10,6 +10,7 @@ define(function(require) {
     init: function() {
     	this._super();
 
+    	this.state = this.CLOSED;
 			this.loader = $('#loader-wrapper');
     },
 
@@ -36,6 +37,8 @@ define(function(require) {
 	    	$('.section-right').transition({ delay: 0, right: '0px', x: '100%', complete: function() {
 	    		// Remove the loader
 	    		this.detachLoader();
+	    		// Set the state of the loader to OPEN
+	    		this.state = this.OPEN;
 	    		// Trigger a delegate to do things once the animation is complete
 	    		this.execute(e);
 	    	}.bind(this)}, TRANSITION_DURATION);
@@ -49,6 +52,8 @@ define(function(require) {
     	// Trigger close animation
     	$('.section-left').transition({ left: '-50%', x: '100%'}, TRANSITION_DURATION);
     	$('.section-right').transition({ right: '-50%', x: '-100%', complete: function() {
+    		// Set the state of the loader to CLOSED
+    		this.state = this.CLOSED;
 	    	// Trigger CLOSE delegate when completed to do stuff while everything is hidden
 		  	this.execute(this.CLOSE);
 
@@ -66,12 +71,23 @@ define(function(require) {
 
     hide: function() {
     	this.loader.hide();
+    },
+
+    isClosed: function() {
+    	return this.state == this.CLOSED;
+    },
+
+    isOpen: function() {
+    	return this.state == this.OPEN;
     }
   });
 
-  Object.defineProperty(LoaderContainer.prototype, "OPEN", { get: function() { return 'open'; } });
+  
   Object.defineProperty(LoaderContainer.prototype, "CLOSE", { get: function() { return 'close'; } });
   Object.defineProperty(LoaderContainer.prototype, "TRANSITION", { get: function() { return 'transition'; } });
+
+  Object.defineProperty(LoaderContainer.prototype, "CLOSED", { get: function() { return 'closed'; } });
+  Object.defineProperty(LoaderContainer.prototype, "OPEN", { get: function() { return 'open'; } });
 
   return new LoaderContainer();
 });

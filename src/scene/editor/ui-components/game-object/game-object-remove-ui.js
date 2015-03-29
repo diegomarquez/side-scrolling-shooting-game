@@ -13,7 +13,7 @@ define(function(require) {
         id: 'game-object-remove-button',
         label: 'Remove all Game Objects',
         onClick: function(event) {
-          gb.reclaimer.clearAllObjectsFromPools();
+          gb.reclaimer.clearAllObjectsFromPools().now();
         }
       });
 

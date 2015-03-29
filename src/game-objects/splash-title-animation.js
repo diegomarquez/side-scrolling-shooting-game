@@ -21,15 +21,11 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 					Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
 					Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
-					if (this.onComplete) {
-						this.onComplete();	
-					}
+					this.execute(this.ENTER);
     		}.bind(this),
 
     		onReverseComplete: function() {
-    			if (this.onExitComplete) {
-						this.onExitComplete();	
-					}
+    			this.execute(this.PLAY);
     		}.bind(this) 
     	});
 
@@ -90,11 +86,11 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
     onOptionSelected: function() {
     	if (this.play.selected) {
-				this.onPlay();
+    		this.reverse();
 			}
 
 			if (this.edit.selected) {
-				this.onEdit();
+				this.execute(this.EDIT);
 			}
     },
 
@@ -104,13 +100,6 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
-
-    	Gb.reclaimer.claim(this.fly);
-    	Gb.reclaimer.claim(this.shoot);
-    	Gb.reclaimer.claim(this.die);
-    	Gb.reclaimer.claim(this.loop);
-    	Gb.reclaimer.claim(this.play);
-    	Gb.reclaimer.claim(this.edit);
 
     	this.tl.kill();
 
@@ -123,6 +112,10 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
     	this.edit = null;
     }
   });
+
+	Object.defineProperty(Title.prototype, "ENTER", { get: function() { return 'enter'; } });
+	Object.defineProperty(Title.prototype, "PLAY", { get: function() { return 'play'; } });
+	Object.defineProperty(Title.prototype, "EDIT", { get: function() { return 'edit'; } });
 
   return Title;
 });

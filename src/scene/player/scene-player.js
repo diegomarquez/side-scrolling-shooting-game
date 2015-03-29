@@ -5,7 +5,7 @@ define(function(require) {
 	var playerLoader = require('player-scene-loader');
 	var loaderContainer = require('loader-container');
 	var viewportFollow = require('viewport-follow');
-	var playerGetter = require('player-getter')
+	var playerGetter = require('player-getter');
 
 	require('tweenlite');
 
