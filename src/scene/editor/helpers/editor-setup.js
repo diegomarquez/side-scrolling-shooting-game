@@ -41,18 +41,10 @@ define(function(require) {
     },
 
     exit: function() {
-      var mainContainer = $('#main-editor-container');
-      // Hide the main editor container by setting it's display property to none
-      // Everything is still there to be destroyed but hidden and not taking part of the page layout
-      mainContainer.toggle();
       // Turn global debug setting off
       gb.toggleDebug(false);
       // Remove all editor related delegates
       editorDelegates.clean();
-      // Clear all objects
-      this.clear();
-      // Destroy the pools
-      gb.reclaimer.clearAllPools().now();
       // Destroy toggles
       $('input[editor-toggle]').bootstrapToggle('destroy');
       // Remove left over dialogs

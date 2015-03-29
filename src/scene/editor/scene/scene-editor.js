@@ -125,7 +125,6 @@ define(function(require) {
     }, 
 
     cleanUp: function() {
-    	// Execute editor clean up
     	editorSetup.exit();
     	// Destroy all of this objects references
     	this._super();

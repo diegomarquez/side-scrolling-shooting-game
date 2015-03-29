@@ -2,12 +2,8 @@ define(function(require) {
 	var stateMachineFactory = require("state-machine");
 	var gb = require("gb");
 	var collisionResolver = require('collision-resolver');
-
-	var playerLoader = require('player-scene-loader');
 	var viewportFollow = require('viewport-follow');
-	var playerGetter = require('player-getter');
-
-	require('tweenlite');
+	var scenePlayer = require('scene-player');
 
   return function (name) {
     var state = stateMachineFactory.createState(this, name);
@@ -41,27 +37,11 @@ define(function(require) {
     });
 
 		state.addStartAction(function (args) {
-			// Load a scene
-      // Setup the scene
-      playerLoader.load(JSON.parse(require('local-storage').getScene("TEST_BOSS")))
-      // Add the player ship to the scene
-			var player = playerGetter.get(gb.canvas.width/2 - 300, gb.canvas.height/2);
-			// Block the player controls
-      player.blockControls();
-      // Add the scene game objects
-      playerLoader.layout();
+			scenePlayer.create();
 
-      TweenLite.to(player, 3, { viewportOffsetX: gb.canvas.width/2 - 150, onComplete: function() {
-      	gb.create('StartMessage', 'First', [{viewport: 'Main', layer: 'Front'}], {
-      		onComplete: function() {
-        		// Unblock controls when the start message is gone
-         		player.unblockControls();
-
-        		// Set the main viewport to follow the player movement
-        		viewportFollow.setFollow('Main', player);
-        	}
-        });	
-      }});
+			scenePlayer.once(scenePlayer.EXIT, this, function () {
+				state.execute(state.PREVIOUS, { nextInitArgs:null, lastCompleteArgs: null });
+			});
 		});
 
 		state.addUpdateAction(function (delta) {
@@ -83,9 +63,10 @@ define(function(require) {
 	  	
 	  	collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
 	  	collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
-    });
 
-    Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });
+	  	// Clean up the scene player    	
+		  scenePlayer.cleanUp();
+    });
 
     return state;
   };
