@@ -4,11 +4,10 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       this._super();
 
       this.health = 40;
-      this.started = false;
     },
 
     editorStart: function() {
-      
+      this.bossStarted = false;
     },
 
     editorUpdate: function(delta) {
@@ -16,11 +15,11 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     },
 
     onBossStart: function() {
-   		this.started = true;
+   		this.bossStarted = true;
     },
 
     onCollide: function(other) {
-    	if (this.started) {
+    	if (this.bossStarted) {
     		if (this.health > 0) {
     			this.health--;	
     		} else {

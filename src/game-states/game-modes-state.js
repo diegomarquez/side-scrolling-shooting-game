@@ -26,6 +26,7 @@ define(function(require) {
     		var scenePlayer = currentStateMachine.get("scene_player_state");
 
     		stageOverview.once(stageOverview.BACK, this, function() {
+    			currentStateMachine.finish();	
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
 
@@ -42,6 +43,7 @@ define(function(require) {
     		var sceneEditor = currentStateMachine.get("scene_editor_state");
 
     		sceneEditor.once(sceneEditor.BACK, this, function() {
+    			currentStateMachine.finish();
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
     	}

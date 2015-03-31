@@ -4,6 +4,8 @@ define(function(require) {
 	var collisionResolver = require('collision-resolver');
 	var viewportFollow = require('viewport-follow');
 	var scenePlayer = require('scene-player');
+	var levelStorage = require('level-storage');
+	var loaderContainer = require('loader-container');
 
   return function (name) {
     var state = stateMachineFactory.createState(this, name);
@@ -36,12 +38,24 @@ define(function(require) {
 	    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
     });
 
-		state.addStartAction(function (args) {
-			scenePlayer.create();
+		state.addStartAction(function () {
+			var level = levelStorage.getLowestIncompleteLevel();
 
+			// When the scene is completed successfully
 			scenePlayer.once(scenePlayer.EXIT, this, function () {
-				state.execute(state.PREVIOUS, { nextInitArgs:null, lastCompleteArgs: null });
+				// Save to local storage
+				levelStorage.completeLevel(level);
+				// Go back to the overview state
+				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 			});
+
+			// Wait for the loader to complete a transition before playing the scene
+			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
+				scenePlayer.start();	
+			});
+
+			// Load the scene
+			scenePlayer.create(level);
 		});
 
 		state.addUpdateAction(function (delta) {

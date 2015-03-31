@@ -29,7 +29,9 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
 
       	// Signal boss cannos to start
       	for (var i=0; i < cannons.length; i++) {
-      		cannons[i].onBossStart();
+      		if (cannons[i].getViewportVisibility('Main')) {
+      			cannons[i].onBossStart();	
+      		}
       	}
 
       	this.editorUpdate = lastEditorUpdate;
@@ -52,7 +54,9 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
     			var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
 
     			for (var i=0; i < cannons.length; i++) {
-      			Reclaimer.mark(cannons[i]);
+    				if (cannons[i].getViewportVisibility('Main')) {
+      				Reclaimer.mark(cannons[i]);
+      			}
       		}
 
       		Reclaimer.mark(this);

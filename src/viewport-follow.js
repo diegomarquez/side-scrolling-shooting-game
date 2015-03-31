@@ -20,6 +20,10 @@ define(function(require) {
 				viewport: require("viewports").get(viewportName),
 				go: go
 			};
+
+			go.once(go.RECYCLE, this, function () {
+				delete this.viewportGameObjectPairs[viewportName];
+			});
 		},
 
 		update: function(delta) {

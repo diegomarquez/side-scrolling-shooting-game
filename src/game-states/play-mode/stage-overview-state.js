@@ -1,6 +1,7 @@
 define(function(require) {
 	var stateMachineFactory = require("state-machine");
 	var gb = require("gb");
+	var loaderContainer = require('loader-container');
 
   return function (name) {
     var state = stateMachineFactory.createState(this, name);
@@ -23,21 +24,30 @@ define(function(require) {
 	    var stageOverview = gb.create('StageOverview', 'First', [ { viewport: 'Main', layer: 'Front' } ]);
 
 	    // If the 'back' option is selected, go to the previous state
-	    stageOverview.on(stageOverview.BACK, this, function() {
+	    stageOverview.on(stageOverview.BACK_EXIT, this, function() {
 	    	state.execute(state.BACK);
-	    });
+	    }); 
 
 	    // If the 'start' option is selected, go to the scene player state
-	    stageOverview.on(stageOverview.START, this, function() {
-  			state.execute(state.NEXT, { nextInitArgs:0, lastCompleteArgs: null });
+	    stageOverview.on(stageOverview.START_SELECTED, this, function() {
+	    	loaderContainer.transition();
   		});
+
+  		loaderContainer.once(loaderContainer.CLOSE, this, nextState);
     });
 
     state.addCompleteAction(function (args) {
+    	// Remove loader events
+    	loaderContainer.remove(loaderContainer.CLOSE, this, nextState);
+
       // Signal that pools and the instances they hold should be cleared
     	gb.reclaimer.clearAllObjectsFromPools().now();
     	gb.reclaimer.clearAllPools().now();
     });
+
+    var nextState = function() {
+    	state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null });
+    }
 
     Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });
 

@@ -29,10 +29,10 @@ define(function(require) {
       available.call(this);
 
       return Object.keys(localStorage).filter(function(key) {
-          return key.search(/^scene_/) != -1;
-        }).map(function(key) {
-          return key.replace(/^scene_/, '');
-        });
+        return key.search(/^scene_/) != -1;
+      }).map(function(key) {
+        return key.replace(/^scene_/, '');
+      });
     },
 
     clearScenes: function () {
@@ -47,8 +47,25 @@ define(function(require) {
 
     clear: function () {
       available.call(this);
-
       localStorage.clear();
+    },
+
+    completeLevel: function(key) {
+    	setItem.call(this, key + '-complete-flag', true);
+    },
+
+    resetCompletedLevels: function() {
+    	available.call(this);
+
+      return Object.keys(localStorage).filter(function(key) {
+        return key.search(/-complete-flag$/) != -1;
+      }).forEach(function(key, index, array) {
+      	array[index] = false;
+      });
+    },
+
+    isLevelComplete: function(key) {
+    	return getItem.call(this, key + '-complete-flag');
     }
   });
 

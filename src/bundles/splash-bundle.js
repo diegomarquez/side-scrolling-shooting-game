@@ -47,9 +47,9 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Play", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -30 })
+				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -35 })
 				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 30 })
+				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 35 })
 				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'play-button',
@@ -57,14 +57,15 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					text: 'Play',
 					font: 'Russo One',
+					padding: 3,
 					size: 45,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("Edit", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -30 })
+				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -35 })
 				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 30 })
+				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 35 })
 				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'edit-button',
@@ -72,6 +73,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					text: 'Edit',
 					font: 'Russo One',
+					padding: 3,
 					size: 45,
 					offset: 'center'
 				});

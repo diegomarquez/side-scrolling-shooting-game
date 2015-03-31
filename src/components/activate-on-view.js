@@ -16,17 +16,27 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.parentStart = this.parent.editorStart;
 			this.parentUpdate = this.parent.editorUpdate;
 
-			this.parent.editorStart = function() {};
-    	this.parent.editorUpdate = function() {};
+			if (!this.parent.saveEditorStart) {
+				this.parent.saveEditorStart = this.parent.editorStart;
+				this.parent.editorStart = function() {}
+			}
+
+			if (!this.parent.saveEditorUpdate) {
+				this.parent.saveEditorUpdate = this.parent.editorUpdate;
+				this.parent.editorUpdate = function() {}
+			}
 		},
 
 		editorUpdate: function(delta) {
 			if (!this.onView && this.parent.getViewportVisibility('Main')) {
-				this.parent.editorStart = this.parentStart;
-    		this.parent.editorUpdate = this.parentUpdate;
+				this.parent.editorStart = this.parent.saveEditorStart;
+    		this.parent.editorUpdate = this.parent.saveEditorUpdate;
 
-    		this.parent.editorStart();
+    		if (!this.parent.activatedOnView) {
+    			this.parent.editorStart();	
+    		}
 
+    		this.parent.activatedOnView = true;
     		this.onView = true;
     	}
 

@@ -1,4 +1,4 @@
-define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, Gb, TimelineLite, Keyboard) {
+define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], function(GameObject, Gb, TimelineLite, Keyboard, LevelStorage) {
   var StageOverview = GameObject.extend({
     init: function() {
       this._super();
@@ -7,11 +7,16 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
     start: function() {
     	var viewports = [{viewport: 'Main', layer: 'Front'}];
 
-    	this.stages = Gb.create('Stages', 'First', viewports, { x: -300, y: 20 });
-
+    	this.stages = Gb.create('Stages', 'First', viewports, { x: -300, y: 50 });
+    	this.stageProgress = Gb.create('StageProgress', 'First', viewports, { x: -300, y: 170 });
     	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 100, y: 600 });
     	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 100, y: 600 });
-
+    	
+    	var markerIndex = LevelStorage.getLowestIncompleteLevelIndex() + 1;
+    	var marker = this.stageProgress.findChildren().firstWithType('StageMarker' + markerIndex);
+    	this.playerShipMarker = Gb.create('PlayerMarker', 'First', viewports, { x: marker.X, y: marker.Y - 50 });
+    	this.stageProgress.add(this.playerShipMarker);
+    	
     	this.tl = new TimelineLite({
     		onComplete: function() {
     			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
@@ -23,25 +28,24 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
     		onReverseComplete: function() {
     			if (this.backOption.selected) {
-						this.execute(this.BACK);
+						this.execute(this.BACK_EXIT);
 						return;
 					}
 
 					if (this.startOption.selected) {
-						this.execute(this.START);
+						this.execute(this.START_EXIT);
 						return;
 					}
     		}.bind(this) 
     	});
 
 			this.tl.to(this.stages, 0.5, { x: Gb.canvas.width/2});
-
-			this.tl.to(this.backOption, 0.5, { y: 250 });
-			this.tl.to(this.startOption, 0.5, { y: 250 });
+			this.tl.to(this.stageProgress, 0.5, { x: Gb.canvas.width/2 - 115 });
+			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: 250 }, 0);
 
 			this.tl.play();
 
-			this.onLeftPress();			
+			this.onRightPress();			
     }, 
 
     reverse: function() {
@@ -88,6 +92,16 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 
     onOptionSelected: function() {
     	this.reverse();
+
+    	if (this.backOption.selected) {
+				this.execute(this.BACK_SELECTED);
+				return;
+			}
+
+			if (this.startOption.selected) {
+				this.execute(this.START_SELECTED);
+				return;
+			}
     },
 
     recycle: function() {
@@ -100,14 +114,19 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
     	this.tl.kill();
 
     	this.tl = null;
+    	this.stages = null;
     	this.backOption = null;
     	this.startOption = null;
+    	this.stageProgress = null;
+    	this.playerShipMarker = null;
     }
   });
 
 	Object.defineProperty(StageOverview.prototype, "ENTER", { get: function() { return 'enter'; } });
-	Object.defineProperty(StageOverview.prototype, "BACK", { get: function() { return 'play'; } });
-	Object.defineProperty(StageOverview.prototype, "START", { get: function() { return 'edit'; } });
+	Object.defineProperty(StageOverview.prototype, "BACK_SELECTED", { get: function() { return 'back_selected'; } });
+	Object.defineProperty(StageOverview.prototype, "START_SELECTED", { get: function() { return 'start_selected'; } });
+	Object.defineProperty(StageOverview.prototype, "BACK_EXIT", { get: function() { return 'back_exit'; } });
+	Object.defineProperty(StageOverview.prototype, "START_EXIT", { get: function() { return 'start_exit'; } });
 
   return StageOverview;
 });

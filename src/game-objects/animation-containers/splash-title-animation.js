@@ -34,8 +34,7 @@ define(["game-object", "gb", "timelinelite", "keyboard"], function(GameObject, G
 			this.tl.to(this.die, 0.5, { x: Gb.canvas.width/2});
 			this.tl.to(this.loop, 0.5, { x: Gb.canvas.width/2 - 50 });
 
-			this.tl.to(this.play, 0.5, { y: 250 });
-			this.tl.to(this.edit, 0.5, { y: 250 });
+			this.tl.staggerTo([this.play, this.edit], 0.5, { y: 250 }, 0);
 
 			this.tl.play();
 

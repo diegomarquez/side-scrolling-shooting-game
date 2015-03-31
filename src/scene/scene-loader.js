@@ -66,7 +66,7 @@ define(function(require) {
 
       for(i = 0; i < objects.length; i++) {
       	var serializedGameObject = objects[i];
-      
+
       	// Create a new game object from the serialized data
       	var gameObject = this.getGameObject(serializedGameObject);
 

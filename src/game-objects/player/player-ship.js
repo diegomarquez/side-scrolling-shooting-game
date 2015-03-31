@@ -16,14 +16,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     editorStart: function() {
-      Keyboard.onKeyDown(Keyboard.A, this, function() {
-        if (this.block) return;
-
-        var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
-
-        bullet.x = this.X + 20;
-        bullet.y = this.Y;
-      });
+      Keyboard.onKeyDown(Keyboard.A, this, fire);
     },
 
     editorUpdate: function(delta) {
@@ -54,6 +47,11 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     	
     },
 
+    recycle: function() {
+    	this._super();
+    	Keyboard.removeKeyDown(Keyboard.A, this, fire);
+    },
+
     blockControls: function() {
     	this.block = true;
     	this.execute(this.BLOCK);
@@ -72,8 +70,17 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     stop: function() {
     	this.forwardSpeed = 0;
     	this.execute(this.STOP);
-    },
+    }
   });
+
+	var fire = function() {
+		if (this.block) return;
+
+    var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
+
+    bullet.x = this.X + 20;
+    bullet.y = this.Y;
+	}
 
 	Object.defineProperty(PlayerShip.prototype, "MOVE", { get: function() { return 'move'; } });
 	Object.defineProperty(PlayerShip.prototype, "STOP", { get: function() { return 'stop'; } });

@@ -42,7 +42,7 @@ define(function(require) {
     },
 
     addChildGameObject: function (childId, parent) {
-			return gb.addChildTo(go, childId, null, null, 'create');
+			return gb.addChildTo(parent, childId, null, null, 'create');
     },
 
     decorateGameObject: function (go) {

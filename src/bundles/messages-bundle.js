@@ -30,12 +30,28 @@ define(function(require) {
 					size: 55,
 					offset: 'center'
 				});
+
+			this.componentPool.createConfiguration("CompleteMessageRenderer", commonBundle.getTextRendererPoolId())
+				.args({
+					name: 'complete-message',
+					text: 'Complete!',
+					fillColor: "#FF0000",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					lineWidth: 2,
+					size: 55,
+					offset: 'center'
+				});
 			
 			this.gameObjectPool.createConfiguration("StartMessageText", commonBundle.getGameObjectPoolId())
 				.setRenderer("StartMessageRenderer");
 
 			this.gameObjectPool.createConfiguration("WarningMessageText", commonBundle.getGameObjectPoolId())
 				.setRenderer("WarningMessageRenderer");
+
+			this.gameObjectPool.createConfiguration("CompleteMessageText", commonBundle.getGameObjectPoolId())
+				.setRenderer("CompleteMessageRenderer");
 
 			this.gameObjectPool.createConfiguration("StartMessage", 'SideMessageAnimation')
 				.args({
@@ -45,6 +61,11 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("WarningMessage", 'SideMessageAnimation')
 				.args({
 					textGameObject: "WarningMessageText"
+				});
+
+			this.gameObjectPool.createConfiguration("CompleteMessage", 'SideMessageAnimation')
+				.args({
+					textGameObject: "CompleteMessageText"
 				});
 		},
 	});
