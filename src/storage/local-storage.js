@@ -35,6 +35,11 @@ define(function(require) {
       });
     },
 
+    getScenesCount: function() {
+      available.call(this);
+      return this.getAllScenes().length;
+    },
+
     clearScenes: function () {
       available.call(this);
 

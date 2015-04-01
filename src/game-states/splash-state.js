@@ -83,7 +83,11 @@ define(function(require) {
 		    });
 
 		    loaderContainer.transition();
-  		}); 	
+  		});
+
+  		splash.on(splash.CUSTOM, this, function() {
+  			state.execute(state.NEXT, { nextInitArgs:'custom-mode', lastCompleteArgs: 'custom-mode' });
+  		}); 
     }
 
     return state;

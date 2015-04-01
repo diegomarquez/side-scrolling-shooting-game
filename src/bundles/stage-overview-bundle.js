@@ -81,9 +81,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Back", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -35 })
 				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 35 })
 				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'back-button',
@@ -97,9 +95,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Start", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 0,   x: 0, y: -35 })
 				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 180, x: 0, y: 35 })
 				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'start-button',
