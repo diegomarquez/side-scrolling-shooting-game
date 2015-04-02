@@ -7,6 +7,7 @@ define(function(require) {
 	var viewportFollow = require('viewport-follow');
 	var playerGetter = require('player-getter');
 	var keyboard = require('keyboard');
+	var collisionResolver = require('collision-resolver');
 
 	require('tweenlite');
 
@@ -18,6 +19,28 @@ define(function(require) {
 		},
 
 		create: function(sceneData) {
+			// Setup pools for the scene player
+    	require('common-bundle').create();
+    	require('ship-bundle').create();
+    	require('cannon-bundle').create();
+    	require('bullets-bundle').create();
+    	require('obstacle-bundle').create();
+    	require('boss-bundle').create();
+    	require('messages-bundle').create();
+    	require('control-objects-bundle').create();
+    	require('items-bundle').create(); 
+
+    	// Collision pairs setup
+    	collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
+	    collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
+	    
+	    collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
+	    collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
+	    collisionResolver.addCollisionPair('obstacleColliderId', 'basicBulletColliderId');
+	    
+	    collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
+	    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
+
 			// Wrap the canvas into a div only if the div is not already there
 	    if (!document.getElementById('main-player-container')) {
 	    	this.mainContainer = document.createElement('div');
@@ -98,6 +121,17 @@ define(function(require) {
 		},
 
 		cleanUp: function() {
+			// Collision pairs removal
+	  	collisionResolver.removeCollisionPair('basicBulletColliderId', 'bossColliderId');
+	  	collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
+	  	
+	  	collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
+	  	collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
+	  	collisionResolver.removeCollisionPair('obstacleColliderId', 'basicBulletColliderId');
+	  	
+	  	collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
+	  	collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
+
 			// Save the canvas for later use
     	canvasContainer.detachCanvas();
       
