@@ -4,7 +4,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     init: function() {
       this._super();
 
-      this.speed = 200;
+      this.speed = 50;
       this.forwardSpeed = this.speed;
 
       this.viewportOffsetX = 0;
@@ -23,7 +23,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     	if (this.block) return;
 
       // Auto scrolling
-      this.x += this.forwardSpeed/4 * delta;
+      this.x += this.forwardSpeed * delta;
 
       // Movement independant of the viewport
       if (Keyboard.isKeyDown(Keyboard.GAME_LEFT)) {
@@ -63,7 +63,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     move: function() {
-    	this.forwardSpeed = 200;
+    	this.forwardSpeed = 50;
     	this.execute(this.MOVE);
     },
 
