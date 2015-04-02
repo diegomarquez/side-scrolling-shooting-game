@@ -1,6 +1,8 @@
 define(function(require) {
 	var stateMachineFactory = require("state-machine");
+	
 	var gb = require("gb");
+	var levelStorage = require("level-storage");
 
 	// Built in levels state machine
 	var playerStateMachine = stateMachineFactory.createFixedStateMachine();
@@ -12,6 +14,7 @@ define(function(require) {
 	var editorStateMachine = stateMachineFactory.createFixedStateMachine();
 
 	editorStateMachine.add((require("scene-editor-state"))("scene_editor_state"));
+	editorStateMachine.add((require("scene-editor-preview-state"))("scene_editor_preview_state"));
 
 	// Custom levels state machine
 	var customStateMachine = stateMachineFactory.createFixedStateMachine();
@@ -31,29 +34,34 @@ define(function(require) {
     		currentStateMachine.start();
 
     		var stageOverview = currentStateMachine.get("stage_overview_state");
-    		var scenePlayer = currentStateMachine.get("scene_player_state");
+    		// var scenePlayer = currentStateMachine.get("scene_player_state");
 
     		stageOverview.once(stageOverview.BACK, this, function() {
     			currentStateMachine.finish();	
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
 
-    		scenePlayer.once(scenePlayer.BACK, this, function() {
-    			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		});
+    		// scenePlayer.once(scenePlayer.BACK, this, function() {
+    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+    		// });
     	}
 
     	if (args == "edit-mode") {
     		currentStateMachine = editorStateMachine;
 
-    		currentStateMachine.start();
+    		currentStateMachine.start(levelStorage.getLevel(0));
 
     		var sceneEditor = currentStateMachine.get("scene_editor_state");
+    		var sceneEditorPreview = currentStateMachine.get("scene_editor_preview_state");
 
     		sceneEditor.once(sceneEditor.BACK, this, function() {
     			currentStateMachine.finish();
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
+
+    		// sceneEditorPreview.once(sceneEditorPreview.BACK, this, function() {
+    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+    		// });
     	}
 
     	if (args == "custom-mode") {
@@ -62,16 +70,16 @@ define(function(require) {
     		currentStateMachine.start();
 
     		var customStageSelect = currentStateMachine.get("custom_stage_select_state");
-    		var customSceneplayer = currentStateMachine.get("custom_scene_player_state");
+    		// var customSceneplayer = currentStateMachine.get("custom_scene_player_state");
 
     		customStageSelect.once(customStageSelect.BACK, this, function() {
     			currentStateMachine.finish();
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
 
-    		customSceneplayer.once(customSceneplayer.BACK, this, function() {
-    			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		});
+    		// customSceneplayer.once(customSceneplayer.BACK, this, function() {
+    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+    		// });
     	}
     });
 

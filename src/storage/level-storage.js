@@ -12,6 +12,10 @@ define(function(require) {
 			this._super();
 		},
 
+		getLevel: function(index) {
+			return levels[index].get();
+		},
+
 		completeLevel: function(level) {
 			localStorageWrapper.completeLevel(level['name']);
 		},

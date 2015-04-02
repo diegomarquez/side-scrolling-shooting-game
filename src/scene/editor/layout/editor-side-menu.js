@@ -110,6 +110,22 @@ define(function(require) {
 
       items.push(createDivider());
 
+      items.push(createTitleItem('Preview'));
+
+      items.push(createOptionItem(
+        'Play', 
+        'glyphicon-play-circle', 
+        function() { 
+        	var storage = require('local-storage');
+        	var serializer = require('scene-serializer');
+
+        	storage.setPreviewScene(serializer.serialize('PREVIEW'));
+        	this.execute(this.PREVIEW); 
+        }.bind(this)
+      ));
+
+      items.push(createDivider());
+
       items.push(createTitleItem('Sections'));
 
       items.push(createRegionOptionItem('Canvas', 'glyphicon-question-sign', this.canvasTooltipContent.html.outerHTML ,function (event) {
@@ -258,6 +274,7 @@ define(function(require) {
   }
 
   Object.defineProperty(EditorSideMenu.prototype, "EXIT", { get: function() { return 'exit'; } });
+  Object.defineProperty(EditorSideMenu.prototype, "PREVIEW", { get: function() { return 'preview'; } });
 
   return EditorSideMenu;
 });

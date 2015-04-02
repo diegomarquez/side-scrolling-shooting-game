@@ -1,4 +1,6 @@
 define(function(require) {
+	var previewScene = null;
+
   var LocalStorage = require('delegate').extend({
     init: function () {
       try {
@@ -19,6 +21,14 @@ define(function(require) {
 
     getScene: function (key, value) {
       return getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
+    },
+
+    setPreviewScene: function(preview) {
+    	previewScene = preview;
+    },
+
+    getPreviewScene: function() {
+    	return previewScene
     },
 
     removeScene: function (key) {

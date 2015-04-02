@@ -16,13 +16,14 @@ define(function(require) {
   var editorDelegates = require('editor-delegates');
   var world = require('world');
   var canvasContainer = require('canvas-container');
+  var sceneLoader = require('editor-scene-loader');
 
   var SceneEditor = require("ui-component").extend({
     init: function() {
       this._super();
     },
 
-    create: function() {      
+    create: function(initialScene) {      
       // Create all the objects needed
       // Main Layout
       this.editorSideMenu = new (require('editor-side-menu'));
@@ -116,12 +117,20 @@ define(function(require) {
         });
       });
 
-      this.editorSideMenu.on(this.editorSideMenu.EXIT, this, function() {
+      editorDelegates.add(this.editorSideMenu, this.editorSideMenu.EXIT, this, function() {
       	this.execute(this.EXIT);
+      });
+
+      editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
+      	this.execute(this.PREVIEW);
       });
 
       // Finalize the setup of the editor
       editorSetup.end();
+
+      // Set up the initial scene
+      sceneLoader.load(initialScene);
+      sceneLoader.layout();
     }, 
 
     cleanUp: function() {
@@ -135,6 +144,7 @@ define(function(require) {
   });
 
   Object.defineProperty(SceneEditor.prototype, "EXIT", { get: function() { return 'exit'; } });
+  Object.defineProperty(SceneEditor.prototype, "PREVIEW", { get: function() { return 'preview'; } });
 
   return new SceneEditor();
 });

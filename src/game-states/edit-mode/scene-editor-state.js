@@ -27,9 +27,9 @@ define(function(require) {
 	    require('items-bundle').create(); 
     });
 
-    state.addStartAction(function (args) {
+    state.addStartAction(function (initialScene) {
     	canvasContainer.detachCanvas();
-    	sceneEditor.create();
+    	sceneEditor.create(initialScene);
 
     	// When the scene editor exits
 		  sceneEditor.once(sceneEditor.EXIT, this, function() {
@@ -42,6 +42,17 @@ define(function(require) {
 		    	completeActions();  	
 		    	// Signal the state is complete
 		    	state.execute(state.BACK); 	 
+		    });
+		  });
+
+		  // When the scene editor exits
+		  sceneEditor.once(sceneEditor.PREVIEW, this, function() {
+		  	// Trigger a loader transition
+		    loaderContainer.transition();
+
+		    // When the loader closes
+		    loaderContainer.once(loaderContainer.CLOSE, this, function() {
+		    	state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null }); 	 
 		    });
 		  });
     });

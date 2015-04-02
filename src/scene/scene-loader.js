@@ -1,20 +1,31 @@
 define(function(require) {
 
   var gb = require('gb');
- 
+ 	var util = require('util');
+
   var SceneLoader = require("class").extend({
     init: function() {},
 
     load: function(scene) {
+    	var s;
+
+    	if (util.isString(scene)) {
+    		s = JSON.parse(scene);
+    	}
+
+    	if (util.isObject(scene)) {
+    		s = scene;
+    	}
+
       this.cleanUp();
-      this.sceneName(scene);
-      this.world(scene);
-      this.groups(scene);
-      this.viewports(scene);
-      this.configurations(scene);
+      this.sceneName(s);
+      this.world(s);
+      this.groups(s);
+      this.viewports(s);
+      this.configurations(s);
        
       this.layout = function() {
-      	this.addGameObjects(scene);
+      	this.addGameObjects(s);
       }.bind(this)
     },
 
