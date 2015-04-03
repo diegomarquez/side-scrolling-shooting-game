@@ -3,6 +3,8 @@ define(function(require) {
 	var keyboard = require('keyboard');
 	var collisionResolver = require('collision-resolver');
 
+	require('timelinelite');
+
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
 			this._super();
@@ -82,7 +84,7 @@ define(function(require) {
 
 		create: function(sceneData) {
 			this.viewports = [{viewport: 'Main', layer: 'Front'}];
-			
+
 			this.container()
 			this.pools();
 			this.setCollisionPairs();
@@ -122,6 +124,8 @@ define(function(require) {
 			this.removeKeyboardEvents();
 			// Remove the canvas container from the DOM 
 			this.removeContainer();
+			// Kill any tweens that are still running when the scene player is being destroyed
+			TimelineLite.exportRoot().kill();
 			// Clear as much references as posible
 			this._super();
 		}
