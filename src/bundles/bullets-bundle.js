@@ -6,6 +6,8 @@ define(function(require) {
 
 	var cannonBullet = require("cannon-bullet");
 	var cannonBulletRenderer = require('cannon-bullet-renderer');
+
+	var particleBundle = require('particles-bundle');
 	
 	var Bullets = require("bundle").extend({
 		create: function(args) {			
@@ -24,7 +26,10 @@ define(function(require) {
 			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
 			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer')
 			
+			
+
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
+				.addComponent(particleBundle.getStraightParticleGeneratorId())
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");
 

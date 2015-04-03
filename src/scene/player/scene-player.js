@@ -12,6 +12,7 @@ define(function(require) {
 
 		pools: function() {
     	require('common-bundle').create();
+    	require('particles-bundle').create();
     	require('ship-bundle').create();
     	require('cannon-bundle').create();
     	require('bullets-bundle').create();
