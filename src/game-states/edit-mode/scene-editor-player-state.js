@@ -3,7 +3,7 @@ define(function(require) {
 	
 	var gb = require("gb");
 	var viewportFollow = require('viewport-follow');
-	var scenePlayer = require('scene-player');
+	var scenePlayer = require('preview-scene-player');
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
 
@@ -19,7 +19,7 @@ define(function(require) {
 	    gb.game.add_extension(require("center-canvas"));
     });
 
-		state.addStartAction(function () {
+		state.addStartAction(function (args) {
 			var previewScene = JSON.parse(localStorageWrapper.getPreviewScene());
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
@@ -39,8 +39,6 @@ define(function(require) {
 
 			// Load the scene
 			scenePlayer.create(previewScene);
-			// Decorate the scene player container
-			scenePlayer.decorateContainer('Scene Preview', 'Press "ESC" key to exit');
 		});
 
 		state.addUpdateAction(function (delta) {

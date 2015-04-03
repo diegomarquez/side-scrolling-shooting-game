@@ -14,7 +14,7 @@ define(function(require) {
 	var editorStateMachine = stateMachineFactory.createFixedStateMachine();
 
 	editorStateMachine.add((require("scene-editor-state"))("scene_editor_state"));
-	editorStateMachine.add((require("scene-editor-preview-state"))("scene_editor_preview_state"));
+	editorStateMachine.add((require("scene-editor-player-state"))("scene_editor_player_state"));
 
 	// Custom levels state machine
 	var customStateMachine = stateMachineFactory.createFixedStateMachine();
@@ -52,7 +52,7 @@ define(function(require) {
     		currentStateMachine.start(levelStorage.getLevel(0));
 
     		var sceneEditor = currentStateMachine.get("scene_editor_state");
-    		var sceneEditorPreview = currentStateMachine.get("scene_editor_preview_state");
+    		var sceneEditorPreview = currentStateMachine.get("scene_editor_player_state");
 
     		sceneEditor.once(sceneEditor.BACK, this, function() {
     			currentStateMachine.finish();

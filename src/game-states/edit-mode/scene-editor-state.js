@@ -45,7 +45,7 @@ define(function(require) {
 		    });
 		  });
 
-		  // When the scene editor exits
+		  // When the preview button is clicked
 		  sceneEditor.once(sceneEditor.PREVIEW, this, function() {
 		  	// Trigger a loader transition
 		    loaderContainer.transition();

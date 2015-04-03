@@ -3,7 +3,7 @@ define(function(require) {
 	
 	var gb = require("gb");
 	var viewportFollow = require('viewport-follow');
-	var scenePlayer = require('scene-player');
+	var scenePlayer = require('game-scene-player');
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
 
