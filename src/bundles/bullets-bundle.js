@@ -36,11 +36,12 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent(particleBundle.getStraightParticleGeneratorId())
+				.addComponent(particleBundle.getCollisionParticleGenerator_2Id())
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
-				.addComponent(particleBundle.getCollisionParticleGeneratorId())
+				.addComponent(particleBundle.getCollisionParticleGenerator_1Id())
 				.addComponent("CannonBulletCollider")
 				.setRenderer("CannonBulletRender");
 		},

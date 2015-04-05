@@ -25,11 +25,21 @@ define(function(require) {
 					]
 				})
 
-			this.componentPool.createConfiguration(this.getCollisionParticleGeneratorId(), 'particle-collision-generator')
+			this.componentPool.createConfiguration(this.getCollisionParticleGenerator_1Id(), 'particle-collision-generator')
 				.args({
 					particleType: 'StraightParticle_2',
 					particleAmount: 40,
 					radius: 10,
+					startingPositionTransformation: [
+						require('circle-generation')
+					]
+				})
+
+			this.componentPool.createConfiguration(this.getCollisionParticleGenerator_2Id(), 'particle-collision-generator')
+				.args({
+					particleType: 'StraightParticle_3',
+					particleAmount: 10,
+					radius: 5,
 					startingPositionTransformation: [
 						require('circle-generation')
 					]
@@ -68,15 +78,10 @@ define(function(require) {
 						_get: function() {
 							return util.rand_f(0.3, 0.8);
 						}	
-					},
-					angle: {
-						_get: function() {
-							return 180;
-						}	
 					}
 				})
-				.addComponent("StraightMovementAngle");
-				.addComponent("ClaimOnLifeDepleted");
+				.addComponent("StraightMovementAngle")
+				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("WhiteSquareParticle");
 
 			this.gameObjectPool.createConfiguration("StraightParticle_2", commonBundle.getGameObjectPoolId())
@@ -100,14 +105,45 @@ define(function(require) {
 				.addComponent("StraightMovementVector")
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("RedSquareParticle");
+
+			this.gameObjectPool.createConfiguration("StraightParticle_3", commonBundle.getGameObjectPoolId())
+				.args({ 
+					speed: {
+						_get: function() {
+							return util.rand_i(150, 200);
+						} 
+					},
+					spread: {
+						_get: function() {
+							return util.rand_i(-45, 45);
+						}	
+					}, 
+					angle: {
+						_get: function() {
+							return 180;
+						}	
+					},
+					life: {
+						_get: function() {
+							return util.rand_f(30, 60);
+						}	
+					}
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("ClaimOnLifeDepleted")
+				.setRenderer("WhiteSquareParticle");
 		},
 
 		getStraightParticleGeneratorId: function() {
 			return 'StraightParticleGenerator';
 		},
 
-		getCollisionParticleGeneratorId: function() {
-			return 'CollisionParticleGenerator';
+		getCollisionParticleGenerator_1Id: function() {
+			return 'CollisionParticleGenerator1';
+		},
+
+		getCollisionParticleGenerator_2Id: function() {
+			return 'CollisionParticleGenerator2';
 		}
 	});
 
