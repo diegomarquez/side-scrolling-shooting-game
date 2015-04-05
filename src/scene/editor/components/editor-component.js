@@ -4,30 +4,30 @@ define(["component"], function(Component) {
       this._super();
     },
 
-    start: function(parent) {
+    start: function (parent) {
       this._super();
-      this.editorStart();
+      this.editorStart(parent);
     },
 
-    added: function(parent) {
+    added: function (parent) {
     	this._super(parent);
-    	this.editorAdded();
+    	this.editorAdded(parent);
     },
 
-    update: function(delta) {
+    update: function (delta) {
     	this._super(delta);
     	this.editorUpdate(delta);
     },
 
-    editorStart: function() {
+    editorStart: function (parent) {
     	
     },
 
-    editorAdded: function() {
+    editorAdded: function (parent) {
     	
     },
 
-    editorUpdate: function(delta) {
+    editorUpdate: function (delta) {
 
     },
   });

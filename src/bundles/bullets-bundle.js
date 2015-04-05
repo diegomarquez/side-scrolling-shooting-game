@@ -18,22 +18,29 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('CannonBullet', cannonBullet);
 			
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
-				.args({id:'basicBulletColliderId', radius:10});
+				.args({ 
+					id:'basicBulletColliderId', 
+					radius:10, 
+					getResponse: true
+				});
 
 			this.componentPool.createConfiguration("CannonBulletCollider", commonBundle.getCircleColliderPoolId())
-				.args({id:'cannonBulletColliderId', radius:10});
+				.args({
+					id:'cannonBulletColliderId', 
+					radius:10,
+					getResponse: true
+				});
 			
 			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
 			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer')
 			
-			
-
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent(particleBundle.getStraightParticleGeneratorId())
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
+				.addComponent(particleBundle.getCollisionParticleGeneratorId())
 				.addComponent("CannonBulletCollider")
 				.setRenderer("CannonBulletRender");
 		},

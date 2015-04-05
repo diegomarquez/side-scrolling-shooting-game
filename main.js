@@ -13,6 +13,9 @@ define(function(require){
   game.add_extension(require("timers-control"));
   game.add_extension(require("tweens-control"));
 
+  // gb.toggleDebug(true);
+  // gb.toggleGameObjectDebug(true);
+
   var stateMachineFactory = require('state-machine');
   var mainStateMachine = stateMachineFactory.createFixedStateMachine(); 
 
