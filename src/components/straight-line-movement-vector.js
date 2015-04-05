@@ -13,8 +13,8 @@ define(["editor-component"], function(EditorComponent) {
 				a += this.parent.spread;
 			}
 
-    	this.vecX = Math.cos(a * (Math.PI/180));
-    	this.vecY = Math.sin(a * (Math.PI/180));
+    	this.vecX = Math.cos(a * (Math.PI/180)) * (this.direction || 1);
+    	this.vecY = Math.sin(a * (Math.PI/180)) * (this.direction || 1);
 				
 			this.speed = this.parent.speed;		
 		},

@@ -68,7 +68,10 @@ define(function(require) {
 				});
 
 			this.componentPool.createConfiguration("StraightMovementAngle", 'straight-line-movement-angle');
-			this.componentPool.createConfiguration("StraightMovementVector", 'straight-line-movement-vector');
+			this.componentPool.createConfiguration("StraightMovementVectorReverse", 'straight-line-movement-vector')
+				.args({
+					direction: -1
+				});
 			this.componentPool.createConfiguration("ClaimOnLifeDepleted", 'claim-on-life-depleted');
 			
 			this.gameObjectPool.createConfiguration("StraightParticle_1", commonBundle.getGameObjectPoolId())
@@ -102,7 +105,7 @@ define(function(require) {
 						}	
 					}
 				})
-				.addComponent("StraightMovementVector")
+				.addComponent("StraightMovementVectorReverse")
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("RedSquareParticle");
 
@@ -118,18 +121,13 @@ define(function(require) {
 							return util.rand_i(-45, 45);
 						}	
 					}, 
-					angle: {
-						_get: function() {
-							return 180;
-						}	
-					},
 					life: {
 						_get: function() {
 							return util.rand_f(30, 60);
 						}	
 					}
 				})
-				.addComponent("StraightMovementAngle")
+				.addComponent("StraightMovementVectorReverse")
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("WhiteSquareParticle");
 		},
