@@ -9,6 +9,8 @@ define(function(require) {
 			createComponentPool.call(this, function() { return require('path-renderer') });
 			createComponentPool.call(this, function() { return require('bitmap-renderer') });
 			createComponentPool.call(this, function() { return require('text-renderer') });
+			createComponentPool.call(this, function() { return require('animation-path-renderer') });
+			createComponentPool.call(this, function() { return require('animations-path-renderer') });
 
 			createGameObjectPool.call(this, function() { return require('game-object') });
 			createGameObjectPool.call(this, function() { return require('game-object-container') });

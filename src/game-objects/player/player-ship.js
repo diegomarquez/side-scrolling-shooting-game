@@ -17,6 +17,16 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
     editorStart: function() {
       Keyboard.onKeyDown(Keyboard.A, this, fire);
+
+      var exhaust = this.findChildren().firstWithType("Exhaust");
+
+      Keyboard.onKeyDown(Keyboard.S, this, function() {
+      	exhaust.renderer.play('threeColors');
+      }, 'animations');
+
+      Keyboard.onKeyDown(Keyboard.D, this, function() {
+      	exhaust.renderer.play('twoColors');
+      }, 'animations');
     },
 
     editorUpdate: function(delta) {
@@ -50,6 +60,8 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     recycle: function() {
     	this._super();
     	Keyboard.removeKeyDown(Keyboard.A, this, fire);
+
+    	Keyboard.levelCleanUp('animations');
     },
 
     blockControls: function() {
