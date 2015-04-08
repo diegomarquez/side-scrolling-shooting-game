@@ -16,17 +16,44 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     editorStart: function() {
-      Keyboard.onKeyDown(Keyboard.A, this, fire);
+      Keyboard.onKeyDown(Keyboard.A, this, function() {
+      	if (this.block) return;
 
-      var exhaust = this.findChildren().firstWithType("Exhaust");
+		    var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
 
-      Keyboard.onKeyDown(Keyboard.S, this, function() {
-      	exhaust.renderer.play('threeColors');
-      }, 'animations');
+		    bullet.x = this.X + 20;
+		    bullet.y = this.Y;
+      }, 'player-ship-keyboard');
 
-      Keyboard.onKeyDown(Keyboard.D, this, function() {
-      	exhaust.renderer.play('twoColors');
-      }, 'animations');
+      this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
+      this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
+      this.largeExhausts = this.findChildren().allWithType("LargeExhaust");
+
+      this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
+      	exhaust.turnOn();
+      });
+
+      Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, function() {
+      	smallExhausts.call(this);
+      }, 'player-ship-keyboard');
+
+      Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, function() {
+      	largeExhausts.call(this);
+      }, 'player-ship-keyboard');
+
+      Keyboard.onKeyUp(Keyboard.GAME_RIGHT, this, function() {
+      	mediumExhausts.call(this);
+      }, 'player-ship-keyboard');
+
+      Keyboard.onKeyUp(Keyboard.GAME_LEFT, this, function() {
+      	mediumExhausts.call(this);
+      }, 'player-ship-keyboard');
+
+      this.largeExhausts.forEach(function(exhaust) {
+      	exhaust.hide();
+      });
+
+      smallExhausts.call(this);
     },
 
     editorUpdate: function(delta) {
@@ -59,12 +86,11 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
     recycle: function() {
     	this._super();
-    	Keyboard.removeKeyDown(Keyboard.A, this, fire);
-
-    	Keyboard.levelCleanUp('animations');
+    	Keyboard.levelCleanUp('player-ship-keyboard');
     },
 
     blockControls: function() {
+    	noExhaust.call(this);
     	this.block = true;
     	this.execute(this.BLOCK);
     },
@@ -72,6 +98,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     unblockControls: function() {
     	this.block = false;
     	this.execute(this.UNBLOCK);
+    	mediumExhausts.call(this);
     },
 
     move: function() {
@@ -80,18 +107,72 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     stop: function() {
+    	smallExhausts.call(this);
     	this.forwardSpeed = 0;
     	this.execute(this.STOP);
     }
   });
 
-	var fire = function() {
-		if (this.block) return;
+	var noExhaust = function() {
+		this.smallExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
 
-    var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
+    this.mediumExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
 
-    bullet.x = this.X + 20;
-    bullet.y = this.Y;
+    this.largeExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+	}
+
+	var smallExhausts = function() {
+		if (this.block || this.forwardSpeed == 0) return;
+
+		this.smallExhausts.forEach(function (exhaust) {
+    	exhaust.show();
+    });
+
+    this.mediumExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+
+    this.largeExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+	}
+
+	var mediumExhausts = function() {
+		if (this.block || this.forwardSpeed == 0) return;
+
+		this.smallExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+
+    this.mediumExhausts.forEach(function (exhaust) {
+    	exhaust.show();
+    });
+
+    this.largeExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+	}
+
+	var largeExhausts = function() {
+		if (this.block || this.forwardSpeed == 0) return;
+
+		this.smallExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+
+    this.mediumExhausts.forEach(function (exhaust) {
+    	exhaust.hide();
+    });
+
+    this.largeExhausts.forEach(function (exhaust) {
+    	exhaust.show();
+    });
 	}
 
 	Object.defineProperty(PlayerShip.prototype, "MOVE", { get: function() { return 'move'; } });

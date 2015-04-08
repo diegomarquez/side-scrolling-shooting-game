@@ -1,13 +1,13 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
-	var draw = require('draw');
 
 	var ShipBundle = require("bundle").extend({
 		create: function(args) {	
 			this.componentPool.createPool('ship-renderer', require("ship-renderer"));
+			this.componentPool.createPool('exhaust-renderer', require("exhaust-renderer"));
 
-			
 			this.gameObjectPool.createDynamicPool('Ship', require("player-ship"));
+			this.gameObjectPool.createDynamicPool('Exhaust', require("exhaust"));
 
 			this.componentPool.createConfiguration("ShipColliderCircle", commonBundle.getCircleColliderPoolId())
 				.args({
@@ -16,51 +16,32 @@ define(function(require) {
 				});
 
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
-
-			this.componentPool.createConfiguration("ExhaustRenderer", commonBundle.getAnimationsPathRendererPoolId())
-				.args({
-					width: 70,
-					height: 30,
-					name: 'exhaust',
-					offset: 'center',
-					frameDelay: 0.1,
-					framePaths: [
-						function(context) {
-							draw.rectangle(context, 0, 0, 70, 30, "#FF0000", null, 1);
-						},
-						function(context) {
-							draw.rectangle(context, 0, 0, 70, 30, "#00FF00", null, 1);
-						},
-						function(context) {
-							draw.rectangle(context, 0, 0, 70, 30, "#0000FF", null, 1);
-						},
-						function(context) {
-							draw.rectangle(context, 0, 0, 70, 30, "#FFFFFF", null, 1);
-						},
-						function(context) {
-							draw.rectangle(context, 0, 0, 70, 30, "#00FFFF", null, 1);
-						}
-					],
-					startingLabel: 'threeColors',
-					labels: {
-						'threeColors': {
-							loop: true,	
-							frames: [0, 1, 2],
-						},
-						'twoColors': {
-							frames: [3, 4],
-						}
-					}
-				});
+			this.componentPool.createConfiguration("ExhaustRenderer", 'exhaust-renderer');
 			
-			this.gameObjectPool.createConfiguration("Exhaust", commonBundle.getGameObjectPoolId())
+			this.gameObjectPool.createConfiguration("SmallExhaust", "Exhaust")
+				.setRenderer("ExhaustRenderer");
+
+			this.gameObjectPool.createConfiguration("MediumExhaust", "Exhaust")
+				.setRenderer("ExhaustRenderer");
+
+			this.gameObjectPool.createConfiguration("LargeExhaust", "Exhaust")
 				.setRenderer("ExhaustRenderer");
 
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")
 				.args({
 					rotation: 90
 				})
-				.addChild('Exhaust', { x: -50, y: 0 })		
+				.addChild('SmallExhaust', { x: -11, y: 21, rotation: -45, scaleX: 0.2, scaleY: 0.4 })
+				.addChild('SmallExhaust', { x: 0, y: 30, rotation: -90, scaleX: 0.4, scaleY: 0.4 })
+				.addChild('SmallExhaust', { x: 10, y: 20, rotation: -135, scaleX: 0.2, scaleY: 0.4 })
+
+				.addChild('MediumExhaust', { x: -11, y: 23, rotation: -45, scaleX: 0.5, scaleY: 0.5 })
+				.addChild('MediumExhaust', { x: 0, y: 35, rotation: -90, scaleX: 0.8, scaleY: 0.8 })
+				.addChild('MediumExhaust', { x: 15, y: 24, rotation: -135, scaleX: 0.5, scaleY: 0.5 })
+
+				.addChild('LargeExhaust', { x: -20, y: 29, rotation: -45, scaleX: 0.8, scaleY: 0.8 })
+				.addChild('LargeExhaust', { x: 0, y: 41, rotation: -90, scaleX: 0.9, scaleY: 0.9 })
+				.addChild('LargeExhaust', { x: 20, y: 30, rotation: -135, scaleX: 0.8, scaleY: 0.8 })		
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
 		},
