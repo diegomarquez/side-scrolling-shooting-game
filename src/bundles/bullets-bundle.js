@@ -32,16 +32,16 @@ define(function(require) {
 				});
 			
 			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
-			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer')
-			
+			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer');
+
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
-				.addComponent(particleBundle.getStraightParticleGeneratorId())
-				.addComponent(particleBundle.getCollisionParticleGenerator_2Id())
+				.addComponent(particleBundle.getPlayerBulletTrailingParticlesId())
+				.addComponent(particleBundle.getPlayerBulletCollisionParticlesId())
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
-				.addComponent(particleBundle.getCollisionParticleGenerator_1Id())
+				.addComponent(particleBundle.getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
 				.setRenderer("CannonBulletRender");
 		},

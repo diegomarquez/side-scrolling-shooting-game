@@ -20,7 +20,7 @@ define(function(require) {
 
     	// Setup pools for the scene player state
     	require('common-bundle').create();
-    	require('ship-bundle').create();
+    	require('particles-bundle').create();
 	    require('cannon-bundle').create();
 	    require('obstacle-bundle').create();
 	    require('boss-bundle').create();

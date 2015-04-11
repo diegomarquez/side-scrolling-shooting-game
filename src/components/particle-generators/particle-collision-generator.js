@@ -9,7 +9,7 @@ define(["particle-generator"], function(ParticleGenerator) {
 
 			parent.once(parent.COLLIDE, this, function (other, response) {
 				ParticleGenerator.args['vector'] = response.overlapV;
-				this.createParticles();
+				this.spray();
 			});
 		},
 

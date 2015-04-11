@@ -1,5 +1,6 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
+	var particleBundle = require('particles-bundle');
 	var gb = require('gb');
 
 	var boss1 = require("boss-1");
@@ -56,6 +57,9 @@ define(function(require) {
 				})
 				.addComponent("Boss_1_Cables_Collider")
 				.addComponent("Activate_Boss_On_View")
+				.addComponent(particleBundle.getBossDamageParticles_1_Id())
+				.addComponent(particleBundle.getBossDamageParticles_2_Id())
+				.addComponent(particleBundle.getBossDamageParticles_3_Id())
 				.setRenderer("Boss_1_Cables_Renderer")
 				.childOnly();
 
