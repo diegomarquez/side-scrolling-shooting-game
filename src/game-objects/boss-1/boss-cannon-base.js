@@ -4,6 +4,18 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
       this._super();
     },
 
+    start: function() {
+    	this._super();
+
+    	// Reference to all the particle systems
+    	this.particleGenerators = this.findComponents().allWithType('particle-generator');
+
+    	// Disable particle sistems
+      this.particleGenerators.forEach(function(generator) {
+      	generator.disable();
+      });
+    },
+
     editorStart: function() {
 			this.started = false;
 			this.health = 20;
@@ -32,6 +44,12 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
     		if (this.health > 0) {
     			this.health--;	
     		} else {
+
+    			// Enable particle sistems
+    			this.particleGenerators.forEach(function(generator) {
+		      	generator.enable();
+		      });
+
     			// Disable the collider component
     			this.findComponents().firstWithProp('collider').disable();
       		// Notify Damage
@@ -46,6 +64,11 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
 		      	this.health = 20; 
 		      	// Enable the collider component
     				this.findComponents().firstWithProp('collider').enable();
+    				// Disable particle sistems
+    				this.particleGenerators.forEach(function(generator) {
+			      	generator.disable();
+			      });
+
       			// Notify Repair
       			this.execute(this.REPAIR);
 		      }, true);    			
