@@ -40,17 +40,23 @@ define(function(require) {
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("cannon-0", "CannonBase")
+				.args({
+					destroyExplosions: effetcsBundle.getMediumExplosionsEffectId()
+				})
 				.addComponent('CannonBaseCollider')
-				.addComponent(effetcsBundle.getExplosionsEffectId())
 				.addComponent('ActivateCannonShooterOnView')
 				.addChild('cannon-shooter')
 				.setRenderer("CannonBaseRenderer");
 
 			this.gameObjectPool.createConfiguration("boss-cannon", "BossCannonBase")
+				.args({
+					damageExplosions: effetcsBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					] 
+				})
 				.addComponent('CannonBaseCollider')
-				.addComponent(effetcsBundle.getExplosionsEffectId())
-				.addComponent(particleBundle.getCannonDamageParticles_1_Id())
-				.addComponent(particleBundle.getCannonDamageParticles_2_Id())
 				.addComponent('ActivateCannonShooterOnView')
 				.addChild('boss-cannon-shooter')
 				.setRenderer("CannonBaseRenderer");

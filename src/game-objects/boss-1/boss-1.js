@@ -1,10 +1,12 @@
-define(["editor-game-object-container", "player-getter", "root", "reclaimer"], function(GameObject, PlayerGetter, Root, Reclaimer) {
+define(["editor-game-object-container", "player-getter", "root", "gb"], function(GameObject, PlayerGetter, Root, Gb) {
   var Boss_1 = GameObject.extend({
     init: function() {
       this._super();
 
       this.health = 40;
       this.cableCount = null;
+      this.destroyEffect = null;
+      this.colliderId = null;
     },
 
     editorStart: function() {
@@ -51,17 +53,27 @@ define(["editor-game-object-container", "player-getter", "root", "reclaimer"], f
     		if (this.health > 0) {
     			this.health--;	
     		} else {
-    			var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
+    			var explosionsGenerator = Gb.addComponentTo(this, this.destroyEffect);
 
-    			for (var i=0; i < cannons.length; i++) {
-    				if (cannons[i].getViewportVisibility('Main')) {
-      				Reclaimer.mark(cannons[i]);
+    			// Remove collision component
+      		this.removeComponent(this.findComponents().firstWithType(this.colliderId));
+
+	  			// When the explosion generator is finished, hide the cannon
+	    		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
+	     	  	// Do something to to hide properly the removal of the boss
+	     	 	});  
+
+					Root.findChildren().recurse().allWithType("boss-cannon").forEach(function (cannon) {
+      			if (cannon.getViewportVisibility('Main')) {
+							cannon.onBossDestroy();
       			}
-      		}
+      		});
 
-      		Reclaimer.mark(this);
-
-      		PlayerGetter.get().move();
+	     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+	      	explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+	      		Gb.reclaimer.mark(this);
+	      		PlayerGetter.get().move();
+	      	});
     		}
     	}
     }

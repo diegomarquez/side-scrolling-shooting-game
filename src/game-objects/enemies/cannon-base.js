@@ -1,29 +1,9 @@
-define(["editor-game-object-container", "reclaimer", "effects-bundle"], function(GameObject, Reclaimer, EffectsBundle) {
+define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
   var Cannon = GameObject.extend({
     init: function() {
       this._super();
-    },
 
-    start: function() {
-    	this._super();
-
-    	// Reference to the explosions generator
-    	this.explosionsGenerators = this.findComponents().allWithType(EffectsBundle.getExplosionsEffectId());
-
-    	// Disable effects sistems
-    	this.explosionsGenerators.forEach(function(generator) {
-      	generator.disable();
-      });
-
-    	// When the explosion generator is finished, hide the cannon
-    	this.explosionsGenerators[0].once(this.explosionsGenerators[0].STOP_CREATION, this, function() {
-      	this.hide(true).not().allWithType(EffectsBundle.getExplosionsId());
-      }); 
-    	
-    	// When the last explosion is done with it's animation, mark the cannon for recycling
-      this.explosionsGenerators[0].once(this.explosionsGenerators[0].STOP_AND_ALL_RECYCLED, this, function() {
-      	Reclaimer.mark(this);
-      });
+      this.destroyExplosions = null;
     },
 
     editorStart: function() {
@@ -38,16 +18,23 @@ define(["editor-game-object-container", "reclaimer", "effects-bundle"], function
   		if (this.health > 0) {
   			this.health--;	
   		} else {
+  			var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 
-				// Enable effects sistems
-	    	this.explosionsGenerators.forEach(function(generator) {
-	      	generator.enable();
-	      });  
+  			// When the explosion generator is finished, hide the cannon
+    		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
+     	  	this.hide(true).not().allWithType(explosionsGenerator.objectType);
+     	 	});  
 
-	      this.execute(this.DAMAGE);
+     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+      	explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+      		Gb.reclaimer.mark(this);
+      	});
 
-	      // Disable the collider component
+      	// Disable the collider component
     		this.findComponents().firstWithProp('collider').disable();
+
+      	// Notify damage
+	      this.execute(this.DAMAGE);
   		}
     }
   });

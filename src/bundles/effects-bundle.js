@@ -4,9 +4,20 @@ define(function(require) {
 			this.componentPool.createPool("round-explosion-renderer", require("round-explosion-renderer"));
 			this.componentPool.createPool('child-explosions-generator', require('child-tracking-generator'));
 
-			this.componentPool.createConfiguration(this.getExplosionsEffectId(), 'child-explosions-generator')
+			this.componentPool.createConfiguration(this.getSmallExplosionsEffectId(), 'child-explosions-generator')
 				.args({
-					objectType: 'Explosion',
+					objectType: 'SmallExplosion',
+					sprayDelay: 0.03,
+					amountPerSpray: 2,
+					maxAmountToSpray: 150,
+					startingPositionTransformation: [
+						require('rectangle-generation')(60, 75)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getMediumExplosionsEffectId(), 'child-explosions-generator')
+				.args({
+					objectType: 'MediumExplosion',
 					sprayDelay: 0.03,
 					amountPerSpray: 1,
 					maxAmountToSpray: 13,
@@ -22,7 +33,14 @@ define(function(require) {
 
 			this.gameObjectPool.createDynamicPool("Explosion", require("explosion"));
 
-			this.gameObjectPool.createConfiguration(this.getExplosionsId(), "Explosion")
+			this.gameObjectPool.createConfiguration(this.getSmallExplosionsId(), "Explosion")
+				.args({ 
+					scaleX: 0.5, 
+					scaleY: 0.5
+				})
+				.setRenderer("ExplosionRenderer");
+
+			this.gameObjectPool.createConfiguration(this.getMediumExplosionsId(), "Explosion")
 				.args({ 
 					scaleX: 0.9, 
 					scaleY: 0.9
@@ -30,12 +48,20 @@ define(function(require) {
 				.setRenderer("ExplosionRenderer");
 		},
 
-		getExplosionsEffectId: function() {
-			return "ExplosionsEffect";
+		getSmallExplosionsEffectId: function() {
+			return "SmallExplosionsEffect";
 		},
 
-		getExplosionsId: function() {
-			return "Explosion";
+		getMediumExplosionsEffectId: function() {
+			return "MediumExplosionsEffect";
+		},
+
+		getSmallExplosionsId: function() {
+			return "SmallExplosion";
+		},
+
+		getMediumExplosionsId: function() {
+			return "MediumExplosion";
 		}
 	});
 

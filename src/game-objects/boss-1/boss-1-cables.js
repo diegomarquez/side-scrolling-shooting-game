@@ -1,19 +1,16 @@
-define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
+define(["editor-game-object-container", "gb", "effects-bundle", "particles-bundle"], function(GameObject, Gb, EffectsBundle, ParticlesBundle) {
   var BossCable = GameObject.extend({
     init: function() {
       this._super();
 
       this.health = 40;
+      this.destroyEffect = null;
+      destroyParticles = null;
+
     },
 
     start: function() {
     	this._super();
-
-    	this.particleGenerators = this.findComponents().allWithType('child-particle-generator');
-
-      this.particleGenerators.forEach(function(generator) {
-      	generator.disable();
-      });
     },
 
     editorStart: function() {
@@ -33,10 +30,9 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     		if (this.health > 0) {
     			this.health--;	
     		} else {
-    			// Enable the generator for the damage particles
-    			this.particleGenerators.forEach(function(generator) {
-		      	generator.enable();
-		      });
+    			// Add the effects components
+    			Gb.addComponentTo(this, this.destroyEffect);
+    			Gb.addComponentsTo(this, this.destroyParticles);
 
       		// Change renderer 
       		Gb.setRendererTo(this, this.damageRendererId);

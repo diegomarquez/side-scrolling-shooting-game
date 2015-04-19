@@ -1,32 +1,11 @@
-define(["editor-game-object-container", "timer-factory", "particles-bundle", "effects-bundle"], 
-	function(GameObject, TimerFactory, ParticlesBundle, EffectsBundle) {
+define(["editor-game-object-container", "gb", "timer-factory"], function(GameObject, Gb, TimerFactory) {
 
   var BossCannon = GameObject.extend({
     init: function() {
       this._super();
-    },
 
-    start: function() {
-    	this._super();
-
-    	// Reference to all explosion generators
-    	this.explosionsGenerators = this.findComponents().allWithType(EffectsBundle.getExplosionsEffectId());
-
-    	// Reference to all the particle systems
-    	this.particleGenerators = this.findComponents().all(function (c) {
-    		return c.typeId === ParticlesBundle.getCannonDamageParticles_1_Id() || 
-    					 c.typeId === ParticlesBundle.getCannonDamageParticles_2_Id()
-    	});
-
-    	// Disable effects sistems
-    	this.explosionsGenerators.forEach(function(generator) {
-      	generator.disable();
-      });
-
-    	// Disable particle sistems
-      this.particleGenerators.forEach(function(generator) {
-      	generator.disable();
-      });
+      this.damageExplosions = null;
+      this.damageParticles = null;
     },
 
     editorStart: function() {
@@ -52,21 +31,32 @@ define(["editor-game-object-container", "timer-factory", "particles-bundle", "ef
     	this.started = true;
     },
 
+    onBossDestroy: function() {
+    	this.repairTimer.stop();
+
+    	this.findComponents().firstWithProp('collider').disable();
+
+    	var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+
+    	// When the explosion generator is finished, hide the cannon
+  		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
+   	  	this.hide(true).not().allWithType(explosionsGenerator.objectType);
+   	 	});
+
+   	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+    	explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+    		Gb.reclaimer.mark(this);
+    	});
+    },
+
     onCollide: function(other) {
     	if (this.started) {
     		if (this.health > 0) {
     			this.health--;	
     		} else {
-
-    			// Enable Effects sistems
-    			this.explosionsGenerators.forEach(function(generator) {
-      			generator.enable();
-      		});
-
-    			// Enable particle sistems
-    			this.particleGenerators.forEach(function(generator) {
-		      	generator.enable();
-		      });
+    			// Add the effects components
+    			var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+    			var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
 
     			// Disable the collider component
     			this.findComponents().firstWithProp('collider').disable();
@@ -83,15 +73,9 @@ define(["editor-game-object-container", "timer-factory", "particles-bundle", "ef
 		      	// Enable the collider component
     				this.findComponents().firstWithProp('collider').enable();
 
-    				// Disable effects sistems
-    				this.explosionsGenerators.forEach(function(generator) {
-      				generator.disable();
-      			});
-
-    				// Disable particle sistems
-    				this.particleGenerators.forEach(function(generator) {
-			      	generator.disable();
-			      });
+    				// Remove the effects components
+    				this.removeComponent(explosionsGenerator);
+    				this.removeComponents(particleGenerators);
 
       			// Notify Repair
       			this.execute(this.REPAIR);

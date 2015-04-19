@@ -1,6 +1,7 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
 	var particleBundle = require('particles-bundle');
+	var effectsBundle = require('effects-bundle');
 	var gb = require('gb');
 
 	var boss1 = require("boss-1");
@@ -53,17 +54,24 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
 				.args({ 
 					damageRendererId: "Boss_1_Cables_Damage_Renderer",
-					colliderId: "Boss_1_Cables_Collider" 
+					colliderId: "Boss_1_Cables_Collider",
+					destroyEffect: effectsBundle.getMediumExplosionsEffectId(),
+					destroyParticles: [
+						particleBundle.getBossDamageParticles_1_Id(),
+						particleBundle.getBossDamageParticles_2_Id(),
+						particleBundle.getBossDamageParticles_3_Id()
+					]
 				})
 				.addComponent("Boss_1_Cables_Collider")
 				.addComponent("Activate_Boss_On_View")
-				.addComponent(particleBundle.getBossDamageParticles_1_Id())
-				.addComponent(particleBundle.getBossDamageParticles_2_Id())
-				.addComponent(particleBundle.getBossDamageParticles_3_Id())
 				.setRenderer("Boss_1_Cables_Renderer")
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-1", "Boss_1")
+				.args({
+					destroyEffect: effectsBundle.getSmallExplosionsEffectId(),
+					colliderId: "Boss_1_Collider"
+				})
 				.addChild("boss-1-cables", {rotation: 0})
 				.addChild("boss-1-cables", {rotation: 0})
 				.addChild("boss-1-cables", {rotation: 0})
