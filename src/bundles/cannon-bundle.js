@@ -1,7 +1,7 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
-	var particleBundle = require('particles-bundle');
-	var effetcsBundle = require('effects-bundle');
+	var particleBundle = require('particle-generator-bundle');
+	var explosionBundle = require('explosion-generator-bundle');
 
 	var Bullets = require("bundle").extend({
 		create: function(args) {	
@@ -41,7 +41,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("cannon-0", "CannonBase")
 				.args({
-					destroyExplosions: effetcsBundle.getMediumExplosionsEffectId()
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateCannonShooterOnView')
@@ -50,7 +50,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("boss-cannon", "BossCannonBase")
 				.args({
-					damageExplosions: effetcsBundle.getMediumExplosionsEffectId(),
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					damageParticles: [
 						particleBundle.getCannonDamageParticles_1_Id(),
 						particleBundle.getCannonDamageParticles_2_Id()

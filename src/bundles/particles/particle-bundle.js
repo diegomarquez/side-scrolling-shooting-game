@@ -1,104 +1,15 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
 	var draw = require('draw');
-	var util = require('util');
 
 	var Particles = require("bundle").extend({
-		create: function(args) {			
-			this.componentPool.createPool('particle-generator', require('game-object-generator'));
-			this.componentPool.createPool('child-particle-generator', require('child-generator'));
-			this.componentPool.createPool('particle-collision-generator', require('on-collision-game-object-generator'));
-			
+		create: function(args) {						
 			this.componentPool.createPool('movement-angle', require('movement-angle'));
 			this.componentPool.createPool('angle-modifier', require('angle-modifier'));
 			this.componentPool.createPool('cosine-angle-modifier', require('cosine-angle-modifier'));
 			this.componentPool.createPool('straight-line-movement-angle', require('straight-line-movement-angle'));
 			this.componentPool.createPool('straight-line-movement-vector', require('straight-line-movement-vector'));
 			this.componentPool.createPool('claim-on-life-depleted', require('claim-on-life-depleted'));
-
-			this.componentPool.createConfiguration(this.getPlayerBulletTrailingParticlesId(), 'particle-generator')
-				.args({
-					objectType: 'StraightParticle_1',
-					sprayDelay: 0.02,
-					amountPerSpray: 5,
-					startingPositionTransformation: [
-						require('offset-generation')(-20, 0),
-						require('line-generation')({ x: 0, y: -10 }, { x: 0, y: 10 })
-					]
-				});
-
-			this.componentPool.createConfiguration(this.getCannonBulletCollisionParticlesId(), 'particle-collision-generator')
-				.args({
-					objectType: 'StraightParticle_2',
-					amountPerSpray: 40,
-					startingPositionTransformation: [
-						require('circle-generation')(10)
-					]
-				});
-
-			this.componentPool.createConfiguration(this.getPlayerBulletCollisionParticlesId(), 'particle-collision-generator')
-				.args({
-					objectType: 'StraightParticle_3',
-					amountPerSpray: 10,
-					startingPositionTransformation: [
-						require('circle-generation')(5)
-					]
-				});
-
-			this.componentPool.createConfiguration(this.getBossDamageParticles_1_Id(), 'child-particle-generator')
-				.args({
-					objectType: 'ArchingParticle_1',
-					amountPerSpray: 10,
-					sprayDelay: 4,
-					startingPositionTransformation: [
-						require('offset-generation')(-7, -7),
-						require('rectangle-generation')(5, 5)
-					]
-				}); 
-
-			this.componentPool.createConfiguration(this.getBossDamageParticles_2_Id(), 'child-particle-generator')
-				.args({
-					objectType: 'ArchingParticle_1',
-					amountPerSpray: 10,
-					sprayDelay: 3,
-					startingPositionTransformation: [
-						require('offset-generation')(-7, 7),
-						require('rectangle-generation')(5, 5)
-					]
-				}); 
-
-			this.componentPool.createConfiguration(this.getBossDamageParticles_3_Id(), 'child-particle-generator')
-				.args({
-					objectType: 'ArchingParticle_2',
-					amountPerSpray: 10,
-					sprayDelay: 5,
-					startingPositionTransformation: [
-						require('offset-generation')(10, 5),
-						require('rectangle-generation')(5, 5)
-					]
-				});
-
-			this.componentPool.createConfiguration(this.getCannonDamageParticles_1_Id(), 'child-particle-generator')
-				.args({
-					objectType: 'CosineParticle_1',
-					amountPerSpray: 1,
-					sprayDelay: 0.2,
-					startingPositionTransformation: [
-						require('offset-generation')(0, -10),
-						require('rectangle-generation')(20, 10)
-					]
-				})
-
-			this.componentPool.createConfiguration(this.getCannonDamageParticles_2_Id(), 'child-particle-generator')
-				.args({
-					objectType: 'CosineParticle_2',
-					amountPerSpray: 1,
-					sprayDelay: 0.4,
-					startingPositionTransformation: [
-						require('offset-generation')(0, 0),
-						require('rectangle-generation')(20, 10)
-					]
-				}) 
 
 			this.componentPool.createConfiguration("WhiteSquareParticle", commonBundle.getPathRendererPoolId())
 				.args({
@@ -264,36 +175,32 @@ define(function(require) {
 				.setRenderer("SmokeSquareParticle_2");
 		},
 
-		getPlayerBulletTrailingParticlesId: function() {
-			return 'TrailingParticleGenerator';
+		getStraightParticle_1_Id: function() {
+			return "StraightParticle_1"
 		},
 
-		getCannonBulletCollisionParticlesId: function() {
-			return 'CannonBulletCollisionParticleGenerator';
+		getStraightParticle_2_Id: function() {
+			return "StraightParticle_2"
 		},
 
-		getPlayerBulletCollisionParticlesId: function() {
-			return 'PlayerBulletCollisionParticleGenerator2';
+		getStraightParticle_3_Id: function() {
+			return "StraightParticle_3"
 		},
 
-		getBossDamageParticles_1_Id: function() {
-			return 'BossDamageParticleGenerator1';
+		getArchingParticle_1_Id: function() {
+			return "ArchingParticle_1";
 		},
 
-		getBossDamageParticles_2_Id: function() {
-			return 'BossDamageParticleGenerator2';
+		getArchingParticle_2_Id: function() {
+			return "ArchingParticle_2";
 		},
 
-		getBossDamageParticles_3_Id: function() {
-			return 'BossDamageParticleGenerator3';
+		getCosineParticle_1_Id: function() {
+			return "CosineParticle_1";
 		},
 
-		getCannonDamageParticles_1_Id: function() {
-			return 'CannonDamageParticleGenerator1';
-		},
-
-		getCannonDamageParticles_2_Id: function() {
-			return 'CannonDamageParticleGenerator2';
+		getCosineParticle_2_Id: function() {
+			return "CosineParticle_2";
 		}
 	});
 

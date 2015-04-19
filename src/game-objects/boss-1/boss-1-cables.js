@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "gb", "effects-bundle", "particles-bundle"], function(GameObject, Gb, EffectsBundle, ParticlesBundle) {
+define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
   var BossCable = GameObject.extend({
     init: function() {
       this._super();

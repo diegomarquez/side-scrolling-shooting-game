@@ -7,7 +7,7 @@ define(function(require) {
 	var cannonBullet = require("cannon-bullet");
 	var cannonBulletRenderer = require('cannon-bullet-renderer');
 
-	var particleBundle = require('particles-bundle');
+	var particleBundle = require('particle-generator-bundle');
 	
 	var Bullets = require("bundle").extend({
 		create: function(args) {			
