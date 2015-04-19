@@ -201,8 +201,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 		var cosAngle = Math.cos(rotation);
 		var sinAngle = Math.sin(rotation);
 
-		adjustedCoordinates.x = (x * cosAngle) - (y * sinAngle);
-		adjustedCoordinates.y = (x * sinAngle) + (y * cosAngle);
+		adjustedCoordinates.x = ((x * cosAngle) - (y * sinAngle));
+		adjustedCoordinates.y = ((x * sinAngle) + (y * cosAngle));
 
 		return adjustedCoordinates;
   }
@@ -237,9 +237,11 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
         return;
       }
 
+      var r = mouseData.go.parent.matrix.decompose(t);
+
       // Get difference between last and current mouse position
-      deltaX = event.pageX - lastX; 
-      deltaY = event.pageY - lastY;
+      deltaX = (event.pageX - lastX) / r.scaleX; 
+      deltaY = (event.pageY - lastY) / r.scaleY;
 
       // Save mouse last position
       lastX = event.pageX;
@@ -422,10 +424,12 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
     if (r && isRegistered(go) && go.getViewportVisibility(viewport.name)) {
       m = go.matrix;
 
-      rOffsetX = r.rendererOffsetX();
-      rOffsetY = r.rendererOffsetY();
-      rWidth = r.rendererWidth();
-      rHeight = r.rendererHeight();
+      var d = go.matrix.decompose(t);
+
+      rOffsetX = r.rendererOffsetX() / d.scaleX;
+      rOffsetY = r.rendererOffsetY() / d.scaleY;
+      rWidth = r.rendererWidth() / d.scaleX;
+      rHeight = r.rendererHeight() / d.scaleY;
       
       // Fill in the data of a temporary polygon collider to test against the mouse coordinates
       gameObjectCollider.points[0] = m.transformPoint(rOffsetX, rOffsetY, p1);
