@@ -16,6 +16,8 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.parentStart = this.parent.editorStart;
 			this.parentUpdate = this.parent.editorUpdate;
 
+			this.parent.activatedOnView = false;
+
 			if (!this.parent.saveEditorStart) {
 				this.parent.saveEditorStart = this.parent.editorStart;
 				this.parent.editorStart = function() {}
@@ -38,6 +40,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
     		this.parent.activatedOnView = true;
     		this.onView = true;
+
+    		this.parent.saveEditorStart = null;
+				this.parent.saveEditorUpdate = null;
     	}
 
     	if (this.onView && !this.parent.getViewportVisibility('Main')) { 

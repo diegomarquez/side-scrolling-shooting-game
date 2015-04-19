@@ -1,6 +1,7 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
 	var particleBundle = require('particles-bundle');
+	var effetcsBundle = require('effects-bundle');
 
 	var Bullets = require("bundle").extend({
 		create: function(args) {	
@@ -40,12 +41,14 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("cannon-0", "CannonBase")
 				.addComponent('CannonBaseCollider')
+				.addComponent(effetcsBundle.getExplosionsEffectId())
 				.addComponent('ActivateCannonShooterOnView')
 				.addChild('cannon-shooter')
 				.setRenderer("CannonBaseRenderer");
 
 			this.gameObjectPool.createConfiguration("boss-cannon", "BossCannonBase")
 				.addComponent('CannonBaseCollider')
+				.addComponent(effetcsBundle.getExplosionsEffectId())
 				.addComponent(particleBundle.getCannonDamageParticles_1_Id())
 				.addComponent(particleBundle.getCannonDamageParticles_2_Id())
 				.addComponent('ActivateCannonShooterOnView')

@@ -10,7 +10,7 @@ define(["component"], function(Component) {
 		},
 
 		start: function() {
-			this.counter = Math.random() * 360;
+			this.counter = this.initCount();
 			this.angleOffset = this.angleOffset || 90;
 			this.angleOffset = (Math.PI/180) * this.angleOffset;
 			this.step = (Math.PI/180) / this.amplitude;

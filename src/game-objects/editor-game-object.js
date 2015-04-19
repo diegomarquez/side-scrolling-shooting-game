@@ -1,4 +1,4 @@
-define(["game-object"], function(GameObject) {
+define(["game-object", "editor-config"], function(GameObject, EditorConfig) {
   var EditorGameObject = GameObject.extend({
     init: function() {
       this._super();

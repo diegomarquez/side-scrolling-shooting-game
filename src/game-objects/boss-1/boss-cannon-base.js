@@ -1,4 +1,6 @@
-define(["editor-game-object-container", "timer-factory"], function(GameObject, TimerFactory) {
+define(["editor-game-object-container", "timer-factory", "particles-bundle", "effects-bundle"], 
+	function(GameObject, TimerFactory, ParticlesBundle, EffectsBundle) {
+
   var BossCannon = GameObject.extend({
     init: function() {
       this._super();
@@ -7,8 +9,19 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
     start: function() {
     	this._super();
 
+    	// Reference to all explosion generators
+    	this.explosionsGenerators = this.findComponents().allWithType(EffectsBundle.getExplosionsEffectId());
+
     	// Reference to all the particle systems
-    	this.particleGenerators = this.findComponents().allWithType('particle-generator');
+    	this.particleGenerators = this.findComponents().all(function (c) {
+    		return c.typeId === ParticlesBundle.getCannonDamageParticles_1_Id() || 
+    					 c.typeId === ParticlesBundle.getCannonDamageParticles_2_Id()
+    	});
+
+    	// Disable effects sistems
+    	this.explosionsGenerators.forEach(function(generator) {
+      	generator.disable();
+      });
 
     	// Disable particle sistems
       this.particleGenerators.forEach(function(generator) {
@@ -45,6 +58,11 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
     			this.health--;	
     		} else {
 
+    			// Enable Effects sistems
+    			this.explosionsGenerators.forEach(function(generator) {
+      			generator.enable();
+      		});
+
     			// Enable particle sistems
     			this.particleGenerators.forEach(function(generator) {
 		      	generator.enable();
@@ -64,6 +82,12 @@ define(["editor-game-object-container", "timer-factory"], function(GameObject, T
 		      	this.health = 20; 
 		      	// Enable the collider component
     				this.findComponents().firstWithProp('collider').enable();
+
+    				// Disable effects sistems
+    				this.explosionsGenerators.forEach(function(generator) {
+      				generator.disable();
+      			});
+
     				// Disable particle sistems
     				this.particleGenerators.forEach(function(generator) {
 			      	generator.disable();

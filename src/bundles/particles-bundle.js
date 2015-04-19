@@ -5,8 +5,10 @@ define(function(require) {
 
 	var Particles = require("bundle").extend({
 		create: function(args) {			
-			this.componentPool.createPool('particle-generator', require('particle-generator'));
-			this.componentPool.createPool('particle-collision-generator', require('particle-collision-generator'));
+			this.componentPool.createPool('particle-generator', require('game-object-generator'));
+			this.componentPool.createPool('child-particle-generator', require('child-generator'));
+			this.componentPool.createPool('particle-collision-generator', require('on-collision-game-object-generator'));
+			
 			this.componentPool.createPool('movement-angle', require('movement-angle'));
 			this.componentPool.createPool('angle-modifier', require('angle-modifier'));
 			this.componentPool.createPool('cosine-angle-modifier', require('cosine-angle-modifier'));
@@ -16,87 +18,82 @@ define(function(require) {
 
 			this.componentPool.createConfiguration(this.getPlayerBulletTrailingParticlesId(), 'particle-generator')
 				.args({
-					particleType: 'StraightParticle_1',
-					particleDelay: 0.02,
-					particleAmount: 5,
+					objectType: 'StraightParticle_1',
+					sprayDelay: 0.02,
+					amountPerSpray: 5,
 					startingPositionTransformation: [
 						require('offset-generation')(-20, 0),
 						require('line-generation')({ x: 0, y: -10 }, { x: 0, y: 10 })
 					]
-				})
+				});
 
 			this.componentPool.createConfiguration(this.getCannonBulletCollisionParticlesId(), 'particle-collision-generator')
 				.args({
-					particleType: 'StraightParticle_2',
-					particleAmount: 40,
+					objectType: 'StraightParticle_2',
+					amountPerSpray: 40,
 					startingPositionTransformation: [
 						require('circle-generation')(10)
 					]
-				})
+				});
 
 			this.componentPool.createConfiguration(this.getPlayerBulletCollisionParticlesId(), 'particle-collision-generator')
 				.args({
-					particleType: 'StraightParticle_3',
-					particleAmount: 10,
+					objectType: 'StraightParticle_3',
+					amountPerSpray: 10,
 					startingPositionTransformation: [
 						require('circle-generation')(5)
 					]
-				})
+				});
 
-			this.componentPool.createConfiguration(this.getBossDamageParticles_1_Id(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getBossDamageParticles_1_Id(), 'child-particle-generator')
 				.args({
-					particleType: 'ArchingParticle_1',
-					particleAmount: 10,
-					particleDelay: 4,
-					addAsChildren: true,
+					objectType: 'ArchingParticle_1',
+					amountPerSpray: 10,
+					sprayDelay: 4,
 					startingPositionTransformation: [
 						require('offset-generation')(-7, -7),
 						require('rectangle-generation')(5, 5)
 					]
-				}) 
+				}); 
 
-			this.componentPool.createConfiguration(this.getBossDamageParticles_2_Id(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getBossDamageParticles_2_Id(), 'child-particle-generator')
 				.args({
-					particleType: 'ArchingParticle_1',
-					particleAmount: 10,
-					particleDelay: 3,
-					addAsChildren: true,
+					objectType: 'ArchingParticle_1',
+					amountPerSpray: 10,
+					sprayDelay: 3,
 					startingPositionTransformation: [
 						require('offset-generation')(-7, 7),
 						require('rectangle-generation')(5, 5)
 					]
-				}) 
+				}); 
 
-			this.componentPool.createConfiguration(this.getBossDamageParticles_3_Id(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getBossDamageParticles_3_Id(), 'child-particle-generator')
 				.args({
-					particleType: 'ArchingParticle_2',
-					particleAmount: 10,
-					particleDelay: 5,
-					addAsChildren: true,
+					objectType: 'ArchingParticle_2',
+					amountPerSpray: 10,
+					sprayDelay: 5,
 					startingPositionTransformation: [
 						require('offset-generation')(10, 5),
 						require('rectangle-generation')(5, 5)
 					]
-				})
+				});
 
-			this.componentPool.createConfiguration(this.getCannonDamageParticles_1_Id(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getCannonDamageParticles_1_Id(), 'child-particle-generator')
 				.args({
-					particleType: 'CosineParticle_1',
-					particleAmount: 1,
-					particleDelay: 0.2,
-					addAsChildren: true,
+					objectType: 'CosineParticle_1',
+					amountPerSpray: 1,
+					sprayDelay: 0.2,
 					startingPositionTransformation: [
 						require('offset-generation')(0, -10),
 						require('rectangle-generation')(20, 10)
 					]
 				})
 
-			this.componentPool.createConfiguration(this.getCannonDamageParticles_2_Id(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getCannonDamageParticles_2_Id(), 'child-particle-generator')
 				.args({
-					particleType: 'CosineParticle_2',
-					particleAmount: 1,
-					particleDelay: 0.4,
-					addAsChildren: true,
+					objectType: 'CosineParticle_2',
+					amountPerSpray: 1,
+					sprayDelay: 0.4,
 					startingPositionTransformation: [
 						require('offset-generation')(0, 0),
 						require('rectangle-generation')(20, 10)
@@ -182,7 +179,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("StraightParticle_2", 'particle')
 				.args({ 
-					speedRange: { min: 10, max: 250 },
+					speedRange: { min: 250, max: 250 },
 					spreadRange: { min: -20, max: 20 },
 					lifeRange: { min: 30, max: 60 }
 				})
@@ -238,7 +235,10 @@ define(function(require) {
 				.addComponent("CosineAngleModifier", {
 					period: 5,
 					amplitude: 0.5,
-					angleOffset: 90
+					angleOffset: 90,
+					initCount: function() {
+						return Math.random() * 360; 
+					}
 				})
 				.addComponent("MovementAngle")
 				.addComponent("ClaimOnLifeDepleted")
@@ -254,7 +254,10 @@ define(function(require) {
 				.addComponent("CosineAngleModifier", {
 					period: 3,
 					amplitude: 1,
-					angleOffset: 90
+					angleOffset: 90,
+					initCount: function() {
+						return Math.random() * 360; 
+					}
 				})
 				.addComponent("MovementAngle")
 				.addComponent("ClaimOnLifeDepleted")

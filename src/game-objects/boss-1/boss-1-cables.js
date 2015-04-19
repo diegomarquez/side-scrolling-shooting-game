@@ -9,7 +9,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     start: function() {
     	this._super();
 
-    	this.particleGenerators = this.findComponents().allWithType('particle-generator');
+    	this.particleGenerators = this.findComponents().allWithType('child-particle-generator');
 
       this.particleGenerators.forEach(function(generator) {
       	generator.disable();
