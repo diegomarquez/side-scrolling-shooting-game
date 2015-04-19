@@ -56,6 +56,10 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			context.strokeStyle = this.debugColor;
 			context.lineWidth = 1;
 
+			m = this.parent.matrix;
+			// Applying transformations of parent
+			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
+
 			// Top Left 
 			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY(), draw, 'moveTo');
 			// Top Right
@@ -72,13 +76,8 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		}
 	});
 
-	var d = null;
-
 	var drawLineAndPoint = function(context, offsetX, offsetY, draw, lineMethod) {
-		d = this.parent.matrix.decompose(d);
-
 		context.save();
-		context.translate(d.x, d.y)
 		context[lineMethod](offsetX, offsetY);
 		context.restore();
 	}
