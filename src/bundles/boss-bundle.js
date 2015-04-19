@@ -42,12 +42,14 @@ define(function(require) {
 			this.componentPool.createConfiguration("BiohazardIcon_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["BIOHAZARD.PNG"],
-					offset: 'center',
-					scaleX: 0.3,
-					scaleY: 0.3
+					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("biohazard-icon", "Boss_1_Icon")
+				.args({
+					scaleX: 0.4,
+					scaleY: 0.4
+				})
 				.setRenderer("BiohazardIcon_Renderer")
 				.childOnly();
 
