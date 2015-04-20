@@ -32,11 +32,11 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		},
 
 		rendererWidth: function() { 
-			return (this.parent.parentCollider.Radius*2) * this.scaleX; 
+			return (this.parent.parentCollider.Radius*2); 
 		},
 		
 		rendererHeight: function() { 
-			return (this.parent.parentCollider.Radius*2) * this.scaleY; 
+			return (this.parent.parentCollider.Radius*2); 
 		}
 	});
 

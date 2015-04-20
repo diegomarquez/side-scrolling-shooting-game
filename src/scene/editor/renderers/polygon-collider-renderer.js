@@ -35,19 +35,19 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		},
 
 		rendererWidth: function() { 
-			return getPolygonSize(this.parent.parentCollider.Points, 'width') * this.scaleX;
+			return getPolygonSize(this.parent.parentCollider.Points, 'width');
 		},
 		
 		rendererHeight: function() { 
-			return getPolygonSize(this.parent.parentCollider.Points, 'height') * this.scaleY;
+			return getPolygonSize(this.parent.parentCollider.Points, 'height');
 		},
 
 		rendererOffsetX: function() { 
-			return getOffset(this.parent.parentCollider.Points, 'x') * this.scaleX;
+			return getOffset(this.parent.parentCollider.Points, 'x');
 		},
 
 		rendererOffsetY: function() { 
-			return getOffset(this.parent.parentCollider.Points, 'y') * this.scaleY;
+			return getOffset(this.parent.parentCollider.Points, 'y');
 		}
 	});
 
