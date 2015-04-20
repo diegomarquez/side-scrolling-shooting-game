@@ -73,10 +73,10 @@ define(function(require) {
     },
 
     addGameObjects: function(scene) {
-    	var objects = scene.objects;
+    	if (!scene.objects) return;
 
-      for(i = 0; i < objects.length; i++) {
-      	var serializedGameObject = objects[i];
+      for(i = 0; i < scene.objects.length; i++) {
+      	var serializedGameObject = scene.objects[i];
 
       	// Create a new game object from the serialized data
       	var gameObject = this.getGameObject(serializedGameObject);
