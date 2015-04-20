@@ -69,7 +69,7 @@ define(function(require) {
     },
 
     getGameObjects: function(options) {
-    	options = options || {filterChilds: true};
+    	options = options || { filterChilds: true };
 
       var data = gb.goPool.getConfigurationTypes(options);
 
@@ -78,36 +78,6 @@ define(function(require) {
       }
 
       return data;
-    },
-
-    getGameObjectsNesting: function() {
-      var data = this.getGameObjects();
-
-      var result = [];
-
-      for (var i = 0; i < data.length; i++) {
-      	result.push(this.getGameObjectNesting(data[i]));
-      }
-
-      return result;
-    },
-
-    getGameObjectNesting: function(configurationId) {
-    	var configuration = gb.goPool.getConfigurationObject(configurationId);
-
-    	var result = {
-    		id: configurationId,
-    	};
-
-    	if (configuration.childs) {
-    		result.children = []
-
-    		for (var i = 0; i < configuration.childs.length; i++) {
-    			result.children.push(this.getGameObjectNesting(configuration.childs[i].childId));
-    		}
-    	}
-
-    	return result;
     },
 
     isMainViewport: function(viewport) {

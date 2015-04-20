@@ -2,7 +2,7 @@ define(function(require) {
   var editorConfig = require('editor-config');
 
   var wrapper = require('wrap-in-div');
-  var dropdown = require('dropdown-nested');
+  var dropdown = require('dropdown-scroll');
 
   var gb = require('gb');
   var editorDelegates = require('editor-delegates');
@@ -18,7 +18,7 @@ define(function(require) {
         defaultMessage: 'Choose a Game Object',
         selectedMessage: 'Selected Game Object:',
         data: function() {      
-          return editorConfig.getGameObjectsNesting();
+          return editorConfig.getGameObjects({ filterChilds: false });
         }
       });
 
