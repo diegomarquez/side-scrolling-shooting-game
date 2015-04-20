@@ -32,19 +32,19 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		},
 
 		rendererWidth: function() { 
-			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'width') * this.scaleX;
+			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'width');
 		},
 		
 		rendererHeight: function() { 
-			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'height') * this.scaleY;
+			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'height');
 		},
 
 		rendererOffsetX: function() { 
-			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'x') * this.scaleX;
+			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'x');
 		},
 
 		rendererOffsetY: function() { 
-			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'y') * this.scaleY;
+			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'y');
 		},
 
 		debug_draw: function(context, viewport, draw, gb) {
