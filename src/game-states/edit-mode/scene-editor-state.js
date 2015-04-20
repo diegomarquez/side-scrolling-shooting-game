@@ -22,11 +22,11 @@ define(function(require) {
     	require('common-bundle').create();
     	require('explosion-generator-bundle').create();
     	require('particle-generator-bundle').create();
-	    require('cannon-bundle').create();
 	    require('obstacle-bundle').create();
+	    require('cannon-bundle').create();
 	    require('boss-bundle').create();
+	    require('items-bundle').create();
 	    require('control-objects-bundle').create();
-	    require('items-bundle').create(); 
     });
 
     state.addStartAction(function (initialScene) {
