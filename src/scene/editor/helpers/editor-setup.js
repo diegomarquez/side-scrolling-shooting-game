@@ -40,6 +40,11 @@ define(function(require) {
       $('input[editor-toggle]').bootstrapToggle();
     },
 
+    reset: function() {
+    	// Reset all the toggles
+    	$('input[editor-toggle]').bootstrapToggle('off');  
+    },
+
     exit: function() {
       // Turn global debug setting off
       gb.toggleDebug(false);

@@ -131,6 +131,11 @@ define(function(require) {
       // Set up the initial scene
       sceneLoader.load(initialScene);
       sceneLoader.layout();
+
+      // Reset things that need reseting when a new scene is loaded
+      editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
+    		editorSetup.reset();
+      });
     }, 
 
     cleanUp: function() {

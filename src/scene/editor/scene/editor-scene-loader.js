@@ -8,7 +8,9 @@ define(function(require) {
   var sceneName = require('scene-name');
 
   var EditorSceneLoader = require("scene-loader").extend({
-    init: function() {},
+    init: function() {
+    	this._super();
+    },
 
     cleanUp: function () {
     	editorSetup.clear();

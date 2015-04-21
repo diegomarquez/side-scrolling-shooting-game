@@ -4,7 +4,9 @@ define(function(require) {
   var world = require('world');
 
   var PlayerSceneLoader = require("scene-loader").extend({
-    init: function() {},
+    init: function() {
+    	this._super();
+    },
 
     cleanUp: function () {
       // Clear all previous content

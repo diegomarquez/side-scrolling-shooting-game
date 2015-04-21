@@ -3,8 +3,10 @@ define(function(require) {
   var gb = require('gb');
  	var util = require('util');
 
-  var SceneLoader = require("class").extend({
-    init: function() {},
+  var SceneLoader = require("delegate").extend({
+    init: function() {
+    	this._super();
+    },
 
     load: function(scene) {
     	var s;
@@ -26,6 +28,7 @@ define(function(require) {
        
       this.layout = function() {
       	this.addGameObjects(s);
+      	this.execute(this.LOAD_COMPLETE);
       }.bind(this)
     },
 
@@ -232,6 +235,8 @@ define(function(require) {
 			}
     }
 	} 
+
+	Object.defineProperty(SceneLoader.prototype, "LOAD_COMPLETE", { get: function() { return 'load_complete'; } });
 
   return SceneLoader;
 });
