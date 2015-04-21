@@ -1,4 +1,4 @@
-define(["game-object", "gb", "matrix-3x3"], function(GameObject, Gb, Matrix) {
+define(["game-object", "matrix-3x3", "snap-to-grid-value"], function(GameObject, Matrix, SnapToGridValue) {
 	
 	var r = {};
 	var m = new Matrix();
@@ -11,6 +11,17 @@ define(["game-object", "gb", "matrix-3x3"], function(GameObject, Gb, Matrix) {
 		added: function() { 
 			this._super();
 
+			var stepX = 400/12;
+			var stepY = 300/12;
+
+	    this.on(this.MOUSE_DRAG, this, function(mouseData) {
+	    	if (SnapToGridValue.get()) {
+	        // Snap to grid logic
+	        mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
+       	 	mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
+	      }
+      });
+
       this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
       	r = this.getTransform(r, m);
 
@@ -19,6 +30,8 @@ define(["game-object", "gb", "matrix-3x3"], function(GameObject, Gb, Matrix) {
 
       	this.x = 0;
       	this.y = 0;
+
+      	console.log("STOP DRAG");
       });
 		},
 
