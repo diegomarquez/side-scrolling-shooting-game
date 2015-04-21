@@ -100,7 +100,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
         }
 
         // Stop the dragging sequence
-        stopDrag(event, mouseUpData);
+        stopDrag(event, currentMouseDownData);
         // Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
         currentMouseDownData = null;
       }
