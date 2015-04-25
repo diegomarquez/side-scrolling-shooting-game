@@ -3,8 +3,6 @@ define(function(require) {
 	var keyboard = require('keyboard');
 	var collisionResolver = require('collision-resolver');
 
-	require('timelinelite');
-
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
 			this._super();
