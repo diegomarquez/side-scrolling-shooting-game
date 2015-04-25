@@ -10,7 +10,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
       this.viewportOffsetX = 0;
       this.viewportOffsetY = 0;
 
-      this.block = true;
+      this.block = false;
 
       this.bulletsViewport = [{viewport:'Main', layer:'Front'}];
     },
@@ -77,7 +77,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     },
 
     blockControls: function() {
-    	noExhaust.call(this);
+    	smallExhausts.call(this);
     	this.block = true;
     	this.execute(this.BLOCK);
     },
