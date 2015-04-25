@@ -1,4 +1,4 @@
-define(["polik"], function(GameObject, Polik) {
+define(function (require) {
 	
 	var matrix = null;
 	var transform = {};
