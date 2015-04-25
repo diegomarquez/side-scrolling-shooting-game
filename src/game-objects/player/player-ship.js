@@ -27,31 +27,18 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
       this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
       this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
-      this.largeExhausts = this.findChildren().allWithType("LargeExhaust");
 
       this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
       	exhaust.turnOn();
       });
 
-      Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, function() {
-      	smallExhausts.call(this);
-      }, 'player-ship-keyboard');
-
       Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, function() {
-      	largeExhausts.call(this);
+      	mediumExhausts.call(this);	
       }, 'player-ship-keyboard');
 
       Keyboard.onKeyUp(Keyboard.GAME_RIGHT, this, function() {
-      	mediumExhausts.call(this);
+      	smallExhausts.call(this);
       }, 'player-ship-keyboard');
-
-      Keyboard.onKeyUp(Keyboard.GAME_LEFT, this, function() {
-      	mediumExhausts.call(this);
-      }, 'player-ship-keyboard');
-
-      this.largeExhausts.forEach(function(exhaust) {
-      	exhaust.hide();
-      });
 
       smallExhausts.call(this);
     },
@@ -98,7 +85,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     unblockControls: function() {
     	this.block = false;
     	this.execute(this.UNBLOCK);
-    	mediumExhausts.call(this);
+    	smallExhausts.call(this);
     },
 
     move: function() {
@@ -121,10 +108,6 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     this.mediumExhausts.forEach(function (exhaust) {
     	exhaust.hide();
     });
-
-    this.largeExhausts.forEach(function (exhaust) {
-    	exhaust.hide();
-    });
 	}
 
 	var smallExhausts = function() {
@@ -137,10 +120,6 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     this.mediumExhausts.forEach(function (exhaust) {
     	exhaust.hide();
     });
-
-    this.largeExhausts.forEach(function (exhaust) {
-    	exhaust.hide();
-    });
 	}
 
 	var mediumExhausts = function() {
@@ -151,26 +130,6 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
     });
 
     this.mediumExhausts.forEach(function (exhaust) {
-    	exhaust.show();
-    });
-
-    this.largeExhausts.forEach(function (exhaust) {
-    	exhaust.hide();
-    });
-	}
-
-	var largeExhausts = function() {
-		if (this.block || this.forwardSpeed == 0) return;
-
-		this.smallExhausts.forEach(function (exhaust) {
-    	exhaust.hide();
-    });
-
-    this.mediumExhausts.forEach(function (exhaust) {
-    	exhaust.hide();
-    });
-
-    this.largeExhausts.forEach(function (exhaust) {
     	exhaust.show();
     });
 	}

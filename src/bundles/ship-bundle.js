@@ -24,9 +24,6 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("MediumExhaust", "Exhaust")
 				.setRenderer("ExhaustRenderer");
 
-			this.gameObjectPool.createConfiguration("LargeExhaust", "Exhaust")
-				.setRenderer("ExhaustRenderer");
-
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")
 				.args({
 					rotation: 90
@@ -34,14 +31,9 @@ define(function(require) {
 				.addChild('SmallExhaust', { x: -11, y: 21, rotation: -45, scaleX: 0.2, scaleY: 0.4 })
 				.addChild('SmallExhaust', { x: 0, y: 30, rotation: -90, scaleX: 0.4, scaleY: 0.4 })
 				.addChild('SmallExhaust', { x: 10, y: 20, rotation: -135, scaleX: 0.2, scaleY: 0.4 })
-
 				.addChild('MediumExhaust', { x: -11, y: 23, rotation: -45, scaleX: 0.5, scaleY: 0.5 })
 				.addChild('MediumExhaust', { x: 0, y: 35, rotation: -90, scaleX: 0.8, scaleY: 0.8 })
-				.addChild('MediumExhaust', { x: 15, y: 24, rotation: -135, scaleX: 0.5, scaleY: 0.5 })
-
-				.addChild('LargeExhaust', { x: -20, y: 29, rotation: -45, scaleX: 0.8, scaleY: 0.8 })
-				.addChild('LargeExhaust', { x: 0, y: 41, rotation: -90, scaleX: 0.9, scaleY: 0.9 })
-				.addChild('LargeExhaust', { x: 20, y: 30, rotation: -135, scaleX: 0.8, scaleY: 0.8 })		
+				.addChild('MediumExhaust', { x: 15, y: 24, rotation: -135, scaleX: 0.5, scaleY: 0.5 })		
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
 		},
