@@ -1,25 +1,39 @@
-define(["game-object", "matrix-3x3", "snap-to-grid-value"], function(GameObject, Matrix, SnapToGridValue) {
+define(function (require) {
 	
 	var r = {};
-	var m = new Matrix();
+	var m = null;
+	var startOffsetX = null;
+	var startOffsetY = null;
+	var stepX = null;
+	var stepY = null;
 
-	var IconGizmoHandle = GameObject.extend({		
+	var IconGizmoHandle = require("game-object").extend({		
 		init: function() {
 			this._super();
+
+			m = new (require("matrix-3x3"))();
 		},
 
 		added: function() { 
 			this._super();
 
-			var stepX = 400/12;
-			var stepY = 300/12;
+			this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
+	    	stepX = require("editor-config").getGridCellSize().width;
+				stepY = require("editor-config").getGridCellSize().height;
+
+	    	if (require("snap-to-grid-value").get()) {
+	    		r = this.getTransform(r, m);
+	        
+	        startOffsetX = (r.x - (r.x % stepX)) - r.x;
+	        startOffsetY = (r.y - (r.y % stepY)) - r.y;
+	      }
+      });
 
 	    this.on(this.MOUSE_DRAG, this, function(mouseData) {
-	    	if (SnapToGridValue.get()) {
-	        // Snap to grid logic
-	        mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
-       	 	mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);
-	      }
+				if (require("snap-to-grid-value").get()) {
+					mouseData.go.x = startOffsetX + (mouseData.go.X - (mouseData.go.X % stepX));
+       		mouseData.go.y = startOffsetY + (mouseData.go.Y - (mouseData.go.Y % stepY));
+       	}
       });
 
       this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
@@ -30,8 +44,6 @@ define(["game-object", "matrix-3x3", "snap-to-grid-value"], function(GameObject,
 
       	this.x = 0;
       	this.y = 0;
-
-      	console.log("STOP DRAG");
       });
 		},
 

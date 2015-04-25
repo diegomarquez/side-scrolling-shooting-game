@@ -1,9 +1,13 @@
-define(["game-object", "gb", "vector-2D", "polik"], function(GameObject, Gb, Vector2D, Polik) {
+define(["polik"], function(GameObject, Polik) {
 	
 	var matrix = null;
 	var transform = {};
+	var stepX = null;
+	var stepY = null;
+	var startOffsetX = null;
+	var startOffsetY = null;
 
-	var FixedPolygonGizmoHandle = GameObject.extend({		
+	var FixedPolygonGizmoHandle = require("game-object").extend({		
 		init: function() {
 			this._super();
 
@@ -26,6 +30,16 @@ define(["game-object", "gb", "vector-2D", "polik"], function(GameObject, Gb, Vec
 			var startX, startY;
 
   		this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
+  			stepX = require("editor-config").getGridCellSize().width;
+				stepY = require("editor-config").getGridCellSize().height;
+
+  			if (require("snap-to-grid-value").get()) {
+	    		r = this.parent.getTransform(r, m);
+
+	        startOffsetX = (r.x - (r.x % stepX)) - r.x;
+	        startOffsetY = (r.y - (r.y % stepY)) - r.y;
+	      }
+
     		startX = parentCollider.Points[this.pointIndex].x;
     		startY = parentCollider.Points[this.pointIndex].y;
       });
@@ -38,12 +52,19 @@ define(["game-object", "gb", "vector-2D", "polik"], function(GameObject, Gb, Vec
 					parentCollider.Points[this.pointIndex],
 					1
       	);
+
+      	if (require("snap-to-grid-value").get()) {
+       		mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
+       		mouseData.go.y = startOffsetY + (stepY * Math.round(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
+       	}
       });
 
       this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
-      	var convertedPoints = Polik.convertCoordinates(parentCollider.Points);
+      	var polik = require("polik");
 
-      	if (!Polik.IsConvex(convertedPoints) || !Polik.IsSimple(convertedPoints)) {
+      	var convertedPoints = polik.convertCoordinates(parentCollider.Points);
+
+      	if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
       		parentCollider.Points[this.pointIndex].x = startX;
  	   			parentCollider.Points[this.pointIndex].y = startY;
 

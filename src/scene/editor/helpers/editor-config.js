@@ -1,38 +1,14 @@
 define(function(require) {
-  var gb = require('gb');
-  var util = require('util');
-  
-  var gizmoBundle = require('gizmo-bundle');
-  var outlineBundle = require('outline-bundle');
-  var gridBundle = require('grid-bundle');
-
   var GRID_WIDTH = 12;
   var GRID_HEIGHT = 12;
-
   var EDITOR_ONLY_VIEWPORTS = ['Grid'];
-
   var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoCloseFront', 'GizmoFront', 'GizmoMiddle', 'GizmoBack', 'GizmoFarBack'];
+  
+  var editorOnlyComponents = null;
+  var editorOnlyGameObjects = null;
 
-  var EDITOR_ONLY_COMPONENTS = [
-  	gizmoBundle.getColliderGizmoId(),
-  	gizmoBundle.getIconGizmoId(),
-  	gizmoBundle.getRotationGizmoId()
-  ]
-
-  var EDITOR_ONLY_GAME_OBJECTS = [
-  	outlineBundle.getOutlineId(), 
-  	gridBundle.getGridId(), 
-  	gizmoBundle.getCircleHandleId(), 
-  	gizmoBundle.getPolygonHandleId(),
-  	gizmoBundle.getFixedPolygonHandleId(),
-  	gizmoBundle.getRotationHandleId(),
-  	gizmoBundle.getCircleDisplayId(),
-		gizmoBundle.getPolygonDisplayId(),
-		gizmoBundle.getFixedPolygonDisplayId(),
-		gizmoBundle.getRotationDisplayId(),
-		gizmoBundle.getScrollStopperId(),
-  	gizmoBundle.getBossWarningId()
-  ];
+  var cachedGridSize = { width: GRID_WIDTH, height: GRID_HEIGHT };
+  var cachedGridCellSize = { width: null, height: null };
 
   var EditorConfig = require('class').extend({
     init: function() {},
@@ -54,27 +30,38 @@ define(function(require) {
     getMainViewportName: function() { return 'Main'; },
     getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
 
-    getColliderGizmoId: function() { return EDITOR_ONLY_COMPONENTS[0]; },
+    getColliderGizmoId: function() { return this.getEditorOnlyComponents()[0]; },
 
     getGridSize: function() {
-      return { width: GRID_WIDTH, height:GRID_HEIGHT };
+      return cachedGridSize;
     },
 
     getGridCellSize: function() {
-      return { width: gb.canvas.width / GRID_WIDTH, height:gb.canvas.height / GRID_HEIGHT };
+    	if (cachedGridCellSize.width && cachedGridCellSize.height) {
+    		return cachedGridCellSize;
+    	}
+
+    	var gb = require('gb');
+
+  		cachedGridCellSize.width = gb.canvas.width / GRID_WIDTH;
+    	cachedGridCellSize.height = gb.canvas.height / GRID_HEIGHT;	    	
+
+    	return cachedGridCellSize;
     },
 
     getGridViewport: function() {
-    	return gb.viewports.get(this.getGridViewportName());
+    	return require('gb').viewports.get(this.getGridViewportName());
     },
 
     getGameObjects: function(options) {
     	options = options || { filterChilds: true };
 
-      var data = gb.goPool.getConfigurationTypes(options);
+      var data = require('gb').goPool.getConfigurationTypes(options);
 
-      for (var i = 0; i < EDITOR_ONLY_GAME_OBJECTS.length; i++) {
-      	data.splice(data.indexOf(EDITOR_ONLY_GAME_OBJECTS[i]), 1);
+      var editorOnlyGameObjects = this.getEditorOnlyGameObjects();
+
+      for (var i = 0; i < editorOnlyGameObjects.length; i++) {
+      	data.splice(data.indexOf(editorOnlyGameObjects[i]), 1);
       }
 
       return data;
@@ -85,11 +72,11 @@ define(function(require) {
     },
 
     isEditorGameObject: function(id) {
-    	return checkExistance(id, EDITOR_ONLY_GAME_OBJECTS);
+    	return checkExistance(id, this.getEditorOnlyGameObjects());
     },
 
     isEditorComponent: function(id) {
-    	return checkExistance(id, EDITOR_ONLY_COMPONENTS);
+    	return checkExistance(id, this.getEditorOnlyComponents());
     },
 
     isEditorViewport: function(id) {
@@ -110,7 +97,7 @@ define(function(require) {
       var v;
 
       if (typeof viewport === 'string') {
-        v = gb.viewports.get(viewport);
+        v = require('gb').viewports.get(viewport);
       } else {
         v = viewport;
       }
@@ -123,9 +110,54 @@ define(function(require) {
     },
 
     getViewports: function() {
-      return gb.viewports.allAsArray().filter(function(viewport) { 
+      return require('gb').viewports.allAsArray().filter(function(viewport) { 
       	return EDITOR_ONLY_VIEWPORTS.indexOf(viewport.name) == -1;
       }.bind(this));
+    },
+
+    getEditorOnlyComponents: function() {
+		  if (editorOnlyComponents) {
+    		return editorOnlyComponents;
+    	}
+
+    	var gizmoBundle = require('gizmo-bundle');
+  		var outlineBundle = require('outline-bundle');
+  		var gridBundle = require('grid-bundle');
+
+  		editorOnlyComponents = [
+		  	gizmoBundle.getColliderGizmoId(),
+		  	gizmoBundle.getIconGizmoId(),
+		  	gizmoBundle.getRotationGizmoId()
+		  ]
+
+		  return editorOnlyComponents;
+    },
+
+    getEditorOnlyGameObjects: function() {
+    	if (editorOnlyGameObjects) {
+    		return editorOnlyGameObjects;
+    	}
+
+    	var gizmoBundle = require('gizmo-bundle');
+  		var outlineBundle = require('outline-bundle');
+  		var gridBundle = require('grid-bundle');
+
+  		editorOnlyGameObjects = [
+		  	outlineBundle.getOutlineId(), 
+		  	gridBundle.getGridId(), 
+		  	gizmoBundle.getCircleHandleId(), 
+		  	gizmoBundle.getPolygonHandleId(),
+		  	gizmoBundle.getFixedPolygonHandleId(),
+		  	gizmoBundle.getRotationHandleId(),
+		  	gizmoBundle.getCircleDisplayId(),
+				gizmoBundle.getPolygonDisplayId(),
+				gizmoBundle.getFixedPolygonDisplayId(),
+				gizmoBundle.getRotationDisplayId(),
+				gizmoBundle.getScrollStopperId(),
+		  	gizmoBundle.getBossWarningId()
+		  ]
+
+		  return editorOnlyGameObjects;    	
     }
   });
 

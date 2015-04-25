@@ -1,10 +1,19 @@
-define(["game-object", "gb", "vector-2D", "polik"], function(GameObject, Gb, Vector2D, Polik) {
+define(function (require) {
 
-	var PolygonGizmoHandle = GameObject.extend({		
+	var m = null;
+	var r = {};
+	var stepX = null;
+	var stepY = null;
+	var startOffsetX = null;
+	var startOffsetY = null;
+
+	var PolygonGizmoHandle = require("game-object").extend({		
 		init: function() {
 			this._super();
 
 			this.pointIndex = null;
+
+			m = new (require("matrix-3x3"))();
 		},
 
 		added: function() {
@@ -18,26 +27,43 @@ define(["game-object", "gb", "vector-2D", "polik"], function(GameObject, Gb, Vec
    		var startX, startY;
 
   		this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
+  			stepX = require("editor-config").getGridCellSize().width;
+				stepY = require("editor-config").getGridCellSize().height;
+
+  			if (require("snap-to-grid-value").get()) {
+	    		r = this.parent.getTransform(r, m);
+
+	        startOffsetX = (r.x - (r.x % stepX)) - r.x;
+	        startOffsetY = (r.y - (r.y % stepY)) - r.y;
+	      }
+	      
     		startX = parentCollider.Points[this.pointIndex].x;
     		startY = parentCollider.Points[this.pointIndex].y;
       });
 
       this.on(this.MOUSE_DRAG, this, function(mouseData) {
-    		parentCollider.Points[this.pointIndex].x = mouseData.go.x;
-    		parentCollider.Points[this.pointIndex].y = mouseData.go.y;
+      	if (require("snap-to-grid-value").get()) {
+       		mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
+       		mouseData.go.y = startOffsetY + (stepY * Math.round(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
+       	}
+
+    		parentCollider.Points[this.pointIndex].x = mouseData.go.X;
+    		parentCollider.Points[this.pointIndex].y = mouseData.go.Y;
       });
 
       this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
-      	var convertedPoints = Polik.convertCoordinates(parentCollider.Points);
+      	var polik = require("polik");
 
-      	if (!Polik.IsConvex(convertedPoints) || !Polik.IsSimple(convertedPoints)) {
+      	var convertedPoints = polik.convertCoordinates(parentCollider.Points);
+
+      	if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
       		parentCollider.Points[this.pointIndex].x = startX;
  	   			parentCollider.Points[this.pointIndex].y = startY;
 
  	   			this.x = startX;
  	   			this.y = startY;
 
- 	   			Gb.game.get_extension(require('logger')).error("Collider polygon is not valid");
+ 	   			require("gb").game.get_extension(require('logger')).error("Collider polygon is not valid");
       	}
       });
 
