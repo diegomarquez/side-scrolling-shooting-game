@@ -31,13 +31,13 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 			// add the things the component created to the required viewports 
 			go.on(go.ADD_TO_VIEWPORT, this, function(v) { 
 				EditorGizmos.addGizmosToViewports(go, this.gizmoComponents, v);
-			});
+			}, false, false, false, 'collider-gizmo');
 
 			// When ever the parent game object is removed from a new viewport 
 			// remove the things the component created from the required viewports 
 			go.on(go.REMOVE_FROM_VIEWPORT, this, function(v) { 
 				EditorGizmos.removeGizmosFromViewports(go, this.gizmoComponents, v);
-			});
+			}, false, false, false, 'collider-gizmo');
 		},
 
 		applyChanges: function(changes) {
@@ -60,7 +60,9 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 			return this.parent.findComponents().firstWithProp('collider');
 		},
 		
-		recycle: function() {
+		recycle: function (parent) {
+			parent.levelCleanUp('collider-gizmo');
+
 			while(this.gizmoComponents.length) { 
 				Gb.reclaimer.claim(this.gizmoComponents.pop()); 
 			}
