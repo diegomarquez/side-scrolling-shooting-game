@@ -12,8 +12,24 @@ define(function(require) {
 			this._super();
 		},
 
+		getLevelNames: function() {
+			return levels.map(function(level) {
+		    	return level.get()['name'].toUpperCase();
+		    });
+		},
+
 		getLevel: function(index) {
 			return levels[index].get();
+		},
+
+		getLevelFromName: function(name) {
+			for (var i = 0; i < levels.length; i++) {
+				var level = levels[i].get();
+
+				if (level['name'] === name.toLowerCase()) {
+					return level;
+				}
+			}
 		},
 
 		completeLevel: function(level) {

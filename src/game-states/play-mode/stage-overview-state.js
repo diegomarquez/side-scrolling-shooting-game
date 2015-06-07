@@ -9,7 +9,7 @@ define(function(require) {
     state.addStartAction(function (args) {
     	// Clear update groups and viewports before doing anything else
     	gb.groups.removeAll();
-      gb.viewports.removeAll();
+      	gb.viewports.removeAll();
 
     	// Setup groups and viewports for the splash screen
     	gb.groups.add("First");
@@ -40,7 +40,7 @@ define(function(require) {
     	// Remove loader events
     	loaderContainer.remove(loaderContainer.CLOSE, this, nextState);
 
-      // Signal that pools and the instances they hold should be cleared
+      	// Signal that pools and the instances they hold should be cleared
     	gb.reclaimer.clearAllObjectsFromPools().now();
     	gb.reclaimer.clearAllPools().now();
     });
