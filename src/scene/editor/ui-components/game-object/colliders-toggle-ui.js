@@ -1,35 +1,64 @@
 define(function(require) {
-  var toggle = require('toggle');
-  var gb = require('gb');
-  var editorConfig = require('editor-config');
+	var toggle = require('toggle');
+	var gb = require('gb');
+	var editorConfig = require('editor-config');
 
-  var CollidersToggle = require('ui-component').extend({
-    init: function() {},
+	var CollidersToggle = require('ui-component').extend({
+		init: function() {},
 
-    create: function() {      
-      return toggle.create({
-        id: 'colliders-toggle-button',
-        on: 'Hide Colliders',
-        off: 'Show Colliders',
-        onChange: function() {
-        	var checked = $(this).prop('checked');
-        	var viewports = editorConfig.getViewports();
+		create: function() {      
+			return toggle.create({
+				id: 'colliders-toggle-button',
+				on: 'Hide Colliders',
+				off: 'Show Colliders',
+				onChange: function() {					
+					if ($(this).prop('checked')) {
+						CollidersToggle.showAllColliderLayers();
+						CollidersToggle.showAllColliderLayersGameObjects();
+					} else {
+						CollidersToggle.hideAllColliderLayers();
+						CollidersToggle.hideAllColliderLayersGameObjects();
+					}
+				}
+			});
+		}
+	});
 
-        	for (var i = 0; i < viewports.length; i++) {
-        		var viewport = viewports[i];
+	CollidersToggle.showAllColliderLayers = function() {
+		var viewports = editorConfig.getViewports();
 
-        		if (checked) { 
-        			viewport.showLayer(editorConfig.getGizmoMiddleLayerName());
-        			viewport.showLayer(editorConfig.getGizmoFrontLayerName());
-        		} else {
-        			viewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
-        			viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
-        		}
-        	}     
-        }
-      });
-    }
-  });
+		for (var i = 0; i < viewports.length; i++) {	
+			viewports[i].showLayer(editorConfig.getGizmoMiddleLayerName());
+			viewports[i].showLayer(editorConfig.getGizmoFrontLayerName());
+		}
+	}
 
-  return CollidersToggle;
+	CollidersToggle.showAllColliderLayersGameObjects = function() {
+		var viewports = editorConfig.getViewports();
+
+		for (var i = 0; i < viewports.length; i++) {
+			viewports[i].getLayer(editorConfig.getGizmoMiddleLayerName()).showGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoFrontLayerName()).showGameObjects();
+		}
+	}
+
+	CollidersToggle.hideAllColliderLayers = function() {
+		var viewports = editorConfig.getViewports();
+
+		for (var i = 0; i < viewports.length; i++) {
+			viewports[i].hideLayer(editorConfig.getGizmoMiddleLayerName());
+			viewports[i].hideLayer(editorConfig.getGizmoFrontLayerName());
+		}
+	}
+
+	CollidersToggle.hideAllColliderLayersGameObjects = function() {
+		var viewports = editorConfig.getViewports();
+
+		for (var i = 0; i < viewports.length; i++) {
+			viewports[i].getLayer(editorConfig.getGizmoMiddleLayerName()).hideGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoFrontLayerName()).hideGameObjects();
+		}
+	}
+	
+	return CollidersToggle;
 });

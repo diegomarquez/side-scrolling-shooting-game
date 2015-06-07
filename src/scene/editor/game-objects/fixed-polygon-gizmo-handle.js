@@ -29,55 +29,55 @@ define(function (require) {
 
 			var startX, startY;
 
-  		this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
-  			stepX = require("editor-config").getGridCellSize().width;
+			this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
+				stepX = require("editor-config").getGridCellSize().width;
 				stepY = require("editor-config").getGridCellSize().height;
 
-  			if (require("snap-to-grid-value").get()) {
-	    		r = this.parent.getTransform(r, m);
+				if (require("snap-to-grid-value").get()) {
+					r = this.parent.getTransform(r, m);
 
-	        startOffsetX = (r.x - (r.x % stepX)) - r.x;
-	        startOffsetY = (r.y - (r.y % stepY)) - r.y;
-	      }
+					startOffsetX = (r.x - (r.x % stepX)) - r.x;
+					startOffsetY = (r.y - (r.y % stepY)) - r.y;
+				}
 
-    		startX = parentCollider.Points[this.pointIndex].x;
-    		startY = parentCollider.Points[this.pointIndex].y;
-      });
+				startX = parentCollider.Points[this.pointIndex].x;
+				startY = parentCollider.Points[this.pointIndex].y;
+			});
 
-      this.on(this.MOUSE_DRAG, this, function(mouseData) {
-      	adjustForRotation(
-      		this.parent,
-      		mouseData.go.x,
+			this.on(this.MOUSE_DRAG, this, function(mouseData) {
+				adjustForRotation(
+					this.parent,
+					mouseData.go.x,
 					mouseData.go.y,
 					parentCollider.Points[this.pointIndex],
 					1
-      	);
+				);
 
-      	if (require("snap-to-grid-value").get()) {
-       		mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
-       		mouseData.go.y = startOffsetY + (stepY * Math.round(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
-       	}
-      });
+				if (require("snap-to-grid-value").get()) {
+					mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
+					mouseData.go.y = startOffsetY + (stepY * Math.round(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
+				}
+			});
 
-      this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
-      	var polik = require("polik");
+			this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
+				var polik = require("polik");
 
-      	var convertedPoints = polik.convertCoordinates(parentCollider.Points);
+				var convertedPoints = polik.convertCoordinates(parentCollider.Points);
 
-      	if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
-      		parentCollider.Points[this.pointIndex].x = startX;
- 	   			parentCollider.Points[this.pointIndex].y = startY;
+				if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
+					parentCollider.Points[this.pointIndex].x = startX;
+					parentCollider.Points[this.pointIndex].y = startY;
 
- 	   			this.x = startX;
- 	   			this.y = startY;
+					this.x = startX;
+					this.y = startY;
 
- 	   			Gb.game.get_extension(require('logger')).error("Collider polygon is not valid");
-      	}
-      });
+					Gb.game.get_extension(require('logger')).error("Collider polygon is not valid");
+				}
+			});
 
-      parentCollider.on(parentCollider.CHANGE_POINTS, this, function(points) {
-      	this.x = points[this.pointIndex].x;
-   			this.y = points[this.pointIndex].y;
+			parentCollider.on(parentCollider.CHANGE_POINTS, this, function(points) {
+				this.x = points[this.pointIndex].x;
+				this.y = points[this.pointIndex].y;
 			});
 		},
 

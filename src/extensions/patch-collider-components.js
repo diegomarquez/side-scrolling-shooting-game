@@ -1,21 +1,21 @@
 define(function(require) {
-  var gb = require('gb');
-  var circleCollider = require('circle-collider');
-  var polygonCollider = require('polygon-collider');
-  var fixedPolygonCollider = require('fixed-polygon-collider');
+	var gb = require('gb');
+	var circleCollider = require('circle-collider');
+	var polygonCollider = require('polygon-collider');
+	var fixedPolygonCollider = require('fixed-polygon-collider');
 
-  var PatchColliderComponents = require('extension').extend({
-  	init: function() {
+	var PatchColliderComponents = require('extension').extend({
+		init: function() {
  
-  	},
+		},
 
-    type: function() {
-      return gb.game.CREATE;
-    },
+		type: function() {
+			return gb.game.CREATE;
+		},
 
-    execute: function() { 
-    	Object.defineProperty(circleCollider.prototype, "Attributes", { 
-    		configurable: true,
+		execute: function() { 
+			Object.defineProperty(circleCollider.prototype, "Attributes", { 
+				configurable: true,
 
 				get: function() { 
 					return { 
@@ -24,7 +24,7 @@ define(function(require) {
 				},
 
 				set: function(value) {
-					this.Radius = value.radius;	
+					this.Radius = value.radius; 
 				}
 			});
 
@@ -94,14 +94,14 @@ define(function(require) {
 					this.execute(this.CHANGE_POINTS, value);
 				} 
 			});
-    	
-    	Object.defineProperty(circleCollider.prototype, "CHANGE_RADIUS", { 
-    		configurable: true,
+			
+			Object.defineProperty(circleCollider.prototype, "CHANGE_RADIUS", { 
+				configurable: true,
 
-    		get: function() { 
-    			return 'change_radius'; 
-    		} 
-    	});
+				get: function() { 
+					return 'change_radius'; 
+				} 
+			});
 
 			Object.defineProperty(polygonCollider.prototype, "CHANGE_POINTS", { 
 				configurable: true,
@@ -118,25 +118,25 @@ define(function(require) {
 					return 'change_points'; 
 				} 
 			});
-    },
+		},
 
 		destroy: function() {
 			delete circleCollider.prototype.Attributes;
 			delete circleCollider.prototype.Radius;
-    	
-    	delete polygonCollider.prototype.Attributes;
-    	delete polygonCollider.prototype.Points;
+		
+			delete polygonCollider.prototype.Attributes;
+			delete polygonCollider.prototype.Points;
 
-    	delete fixedPolygonCollider.prototype.Attributes;
-    	delete fixedPolygonCollider.prototype.Points;
+			delete fixedPolygonCollider.prototype.Attributes;
+			delete fixedPolygonCollider.prototype.Points;
 
-    	delete circleCollider.prototype.CHANGE_RADIUS;
-    	delete polygonCollider.prototype.CHANGE_POINTS;
-    	delete fixedPolygonCollider.prototype.CHANGE_POINTS;
+			delete circleCollider.prototype.CHANGE_RADIUS;
+			delete polygonCollider.prototype.CHANGE_POINTS;
+			delete fixedPolygonCollider.prototype.CHANGE_POINTS;
 		}    
-  });
+	});
 
-  return PatchColliderComponents;
+	return PatchColliderComponents;
 });
 
 

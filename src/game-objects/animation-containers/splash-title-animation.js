@@ -125,28 +125,28 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
 		var option = this[this.options[optionIndex]];
 
-  	var children = option.findChildren().allWithType("MarkerArrow");
+	  	var children = option.findChildren().allWithType("MarkerArrow");
 
-  	option.selected = true;
+	  	option.selected = true;
 
 		for (var i = 0; i < children.length; i++) {
 			children[i].show();
 		}
-  }
+  	}
 
 	var hideAllHighLight = function() {
-  	for (var i = 0; i < this.options.length; i++) {
-  		var option = this[this.options[i]];
+  		for (var i = 0; i < this.options.length; i++) {
+	  		var option = this[this.options[i]];
 
-  		option.selected = false;
+	  		option.selected = false;
 
-  		var children = option.findChildren().allWithType("MarkerArrow");
+	  		var children = option.findChildren().allWithType("MarkerArrow");
 
-  		for (var j = 0; j < children.length; j++) {
+	  		for (var j = 0; j < children.length; j++) {
 				children[j].hide();
 			}
+  		}
   	}
-  }
 
 	Object.defineProperty(Title.prototype, "ENTER", { get: function() { return 'enter'; } });
 	Object.defineProperty(Title.prototype, "PLAY", { get: function() { return 'play'; } });

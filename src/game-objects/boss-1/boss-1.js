@@ -17,6 +17,8 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
     	this.editorUpdate = function() {};
 
       player.once(player.STOP, this, function() {      	
+      	debugger;
+
       	var cables = this.findChildren().allWithType("boss-1-cables");
 
       	this.cableCount = cables.length;
