@@ -134,7 +134,7 @@ define(function(require) {
 
       // Reset things that need reseting when a new scene is loaded
       editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
-    		editorSetup.reset();
+		editorSetup.reset();
       });
     }, 
 

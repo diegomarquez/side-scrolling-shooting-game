@@ -129,19 +129,19 @@ define(function(require) {
       items.push(createTitleItem('Sections'));
 
       items.push(createRegionOptionItem('Canvas', 'glyphicon-question-sign', this.canvasTooltipContent.html.outerHTML ,function (event) {
-        editorRegions.get().getTopLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
+        toogleDisplay(editorRegions.get().getTopLeftContainer()[0]);
       }));
       
       items.push(createRegionOptionItem('Misc. Settings', 'glyphicon-question-sign', this.settingsTooltipContent.html.outerHTML, function (event) {
-        editorRegions.get().getTopRightContainer().effect("highlight", {color: '#FFD180'}, 500);
+        toogleDisplay(editorRegions.get().getTopRightContainer()[0]);
       }));
       
       items.push(createRegionOptionItem('Game Objects', 'glyphicon-question-sign', this.gameObjectsTooltipContent.html.outerHTML, function (event) {
-        editorRegions.get().getBottomLeftContainer().effect("highlight", {color: '#FFD180'}, 500);
+        toogleDisplay(editorRegions.get().getBottomLeftContainer()[0]);
       }));
       
       items.push(createRegionOptionItem('Viewports', 'glyphicon-question-sign', this.viewportsTooltipContent.html.outerHTML, function (event) {
-        editorRegions.get().getBottomRightContainer().effect("highlight", {color: '#FFD180'}, 500);
+        toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
       }));
 
       items.push(createDivider());
@@ -271,6 +271,14 @@ define(function(require) {
     li.innerHTML = content;
 
     return li;
+  }
+
+  var toogleDisplay = function(element) {
+    if (element.style.display == '') {
+    	element.style.display = 'none';
+    } else {
+    	element.style.display = '';	
+    }
   }
 
   Object.defineProperty(EditorSideMenu.prototype, "EXIT", { get: function() { return 'exit'; } });
