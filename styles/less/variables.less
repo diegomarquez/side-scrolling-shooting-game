@@ -1,4 +1,5 @@
-@editor-primary-color: lighten(#222222, 10%);
+@editor-background-color: #222222;
+@editor-primary-color: lighten(@editor-background-color, 10%);
 @editor-primary-color-dark: darken(@editor-primary-color, 5%);
 @editor-primary-color-light: lighten(@editor-primary-color, 5%);
 
@@ -29,6 +30,9 @@
 
 @editor-button-danger: #d9534f;
 @editor-button-danger-border: darken(@editor-button-danger, 5%);
+
+@editor-scroll-bar-size: 8px;
+@editor-scroll-bar-track-color: #777777;
 
 @bootstrap-fonts-path: "../assets/fonts/";
 @jquery-ui-images-path:"../assets/images";

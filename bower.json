@@ -12,7 +12,8 @@
     "almond": "~0.3.0",
     "jquery.transit": "~0.9.12",
     "jscrollpane": "~2.0.20",
-    "gsap": "~1.15.1"
+    "gsap": "~1.15.1",
+    "less.js": "~2.5.1"
   },
   "ignore": [
     "**/.*",

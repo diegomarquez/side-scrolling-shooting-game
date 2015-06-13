@@ -1,44 +1,14 @@
-.scroll-bar() {
-	position: absolute;
-	
-	border: 0px solid transparent;
-	margin: 1px;
+#main::-webkit-scrollbar-thumb {
+ 	background: @editor-button-primary;
+ 	border: 1px solid white;
+ 	border-radius: 10px;
 }
 
-#canvas-horizontal-scroll-bar { 
-	.scroll-bar; 
-
-	left: 0;
-	bottom: 0;
+#main::-webkit-scrollbar-track {
+    background: @editor-scroll-bar-track-color;
 }
 
-#canvas-vertical-scroll-bar { 
-	.scroll-bar; 
-
-	right: 0;
-	top: 0;
-}
-
-/*Override jQuery UI slider defaults*/
-.ui-slider {
-	overflow: hidden;
-
-	.ui-slider-handle {
-		position: absolute;
-		z-index: 2;
-		width: 1.2em;
-		height: 1.2em;
-		cursor: default;
-		-ms-touch-action: none;
-		touch-action: none;
-		padding: 0;
-		margin: 0;
-		background-color: @editor-button-primary;
-	  	border-color: @editor-button-primary-border;
-
-		&:hover {
-			background-color: lighten(@editor-button-primary, 5%);
- 			border-color: lighten(@editor-button-primary-border, 5%);		
-		}
-	}
+#main::-webkit-scrollbar {
+ 	width: @editor-scroll-bar-size;
+ 	height: @editor-scroll-bar-size;
 }
