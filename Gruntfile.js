@@ -254,7 +254,8 @@ module.exports = function(grunt) {
         files: [
           { src: [generatedDir + 'asset-map.json'], dest: 'src/' },
           { src: [configDir + 'font-data.json'], dest: 'src/' },
-          { src: 'scenes/**/*.json', dest: 'src/data/' }
+          { src: 'scenes/**/*.json', dest: 'src/data/' },
+          { src: 'styles/less/variables.less', dest: 'src/data/', writeMode: 'string', removeWhiteSpace: true }
         ]
       }
     },

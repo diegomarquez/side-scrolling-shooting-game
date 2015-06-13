@@ -7,14 +7,29 @@ module.exports = function(grunt) {
 
 			var glob = file.src;
 			var dest = file.dest;
+			var writeMode = file.writeMode;
+			var removeWhiteSpace = file.removeWhiteSpace;
 
 			for (var j=0; j < glob.length; j++) {
 			 	var src = glob[j];
 
+			 	var data;
+
+			 	if (writeMode == 'string') {
+			 		data = "'" + grunt.file.read(src) + "'";
+			 	}
+			 	else {
+			 		data = grunt.file.read(src);
+			 	}
+
+			 	if (removeWhiteSpace) {
+			 		data = data.replace(/\s/g, '');
+			 	}
+
 				// Process the template 
 				var r = grunt.template.process(grunt.file.read('tasks/templates/data-module-template.txt'), { 
 					data: { 		
-						data: grunt.file.read(src)
+						data: data
 					}
 				});
 				
@@ -25,11 +40,10 @@ module.exports = function(grunt) {
 
 				// Delete the file if it already exists
 				if (grunt.file.isFile(name)) {
-		      grunt.file.delete(name, {force: true});  
-		    }
+		     		grunt.file.delete(name, {force: true});  
+		    	}
 
-		    // Write the file
-		    grunt.file.write(name, r);	
+		    	grunt.file.write(name, r);	
 			}			
 		};
 	});
