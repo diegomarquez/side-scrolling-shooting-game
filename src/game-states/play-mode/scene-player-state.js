@@ -7,14 +7,14 @@ define(function(require) {
 	var levelStorage = require('level-storage');
 	var loaderContainer = require('loader-container');
 
-  return function (name) {
-    var state = stateMachineFactory.createState(this, name);
+	return function (name) {
+		var state = stateMachineFactory.createState(this, name);
 
-    state.addStartAction(function (args) {
-    	// Clear update groups and viewports before doing anything else
-    	gb.groups.removeAll();
-      gb.viewports.removeAll();
-    });
+		state.addStartAction(function (args) {
+			// Clear update groups and viewports before doing anything else
+			gb.groups.removeAll();
+			gb.viewports.removeAll();
+		});
 
 		state.addStartAction(function () {
 			var level = levelStorage.getLowestIncompleteLevel();
@@ -29,7 +29,7 @@ define(function(require) {
 
 			// Wait for the loader to complete a transition before playing the scene
 			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
-				scenePlayer.start();	
+				scenePlayer.start();  
 			});
 
 			// Load the scene
@@ -40,17 +40,17 @@ define(function(require) {
 			viewportFollow.update(delta);
 		});
 
-    state.addCompleteAction(function (args) {
-      // Signal that pools and the instances they hold should be cleared
-    	gb.reclaimer.clearAllObjectsFromPools().now();
-    	gb.reclaimer.clearAllPools().now();
+		state.addCompleteAction(function (args) {
+			// Signal that pools and the instances they hold should be cleared
+			gb.reclaimer.clearAllObjectsFromPools().now();
+			gb.reclaimer.clearAllPools().now();
 
-	  	// Clean up the scene player    	
-		  scenePlayer.cleanUp();
-    });
+			// Clean up the scene player      
+			scenePlayer.cleanUp();
+		});
 
-    return state;
-  };
+		return state;
+	};
 });   
 
-  
+	
