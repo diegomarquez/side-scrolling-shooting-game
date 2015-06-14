@@ -20,7 +20,7 @@ define(function(require) {
 
 			this.onResize = function() {
 				gb.game.WIDTH = main.parentNode.parentNode.clientWidth - 8;
-				gb.game.HEIGHT = main.parentNode.parentNode.clientHeight;
+				gb.game.HEIGHT = main.parentNode.parentNode.clientHeight - 8;
 			}
 
 			this.onResize();

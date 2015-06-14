@@ -22,7 +22,7 @@ define(function(require) {
 
     world: function (scene) {
     	world.setWidth(scene.world.width);
-      world.setHeight(scene.world.height);
+      	world.setHeight(scene.world.height);
     },
 
     viewports: function (scene) {

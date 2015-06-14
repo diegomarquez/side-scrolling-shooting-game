@@ -1,5 +1,4 @@
 define(function(require) {
-	var scrollBar = require('scroll-bar');
 	var gb = require('gb');
 	var world = require('world');
 	var editorConfig = require('editor-config');
@@ -8,120 +7,132 @@ define(function(require) {
 
 	var CanvasScrollBars = require('ui-component').extend({
 		init: function() {
+			this._super();
 
+			var self = this;
+
+			var getGridCellSize = editorConfig.getGridCellSize();
+
+			this.onScroll = function (event) {
+				var viewport = gb.viewports.get(editorConfig.getMainViewportName());
+				var left = event.target.scrollLeft;
+				var top = event.target.scrollTop;
+
+				gb.canvas.style.left = left;
+				viewport.X = -left;
+				
+				gb.canvas.style.top = top;
+				viewport.Y = -top;
+
+				require('grid-bundle').setGridOffsetX(left % getGridCellSize.width);
+				require('grid-bundle').setGridOffsetY(top % getGridCellSize.height);
+			}
 		},
 
 		create: function() {
-			var main = document.querySelector('#main');
+			var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 
-			main.style.overflowX = 'scroll';
-			main.style.overflowY = 'scroll';
+			gb.canvas.style.position = 'absolute';
+			gb.canvas.style.left = '0px';
+			gb.canvas.style.top = '0px';
 
 			var scrollContainer = document.createElement('div');
-
+			scrollContainer.id = 'scroller';
 			scrollContainer.style.position = 'absolute';
 			scrollContainer.style.top = '0px';
 			scrollContainer.style.left = '0px';
 			scrollContainer.style.pointerEvents = 'none';
 			
-			main.appendChild(scrollContainer);
-
-			// var canvas = canvasContainer.getCanvasContainer();
-			// var viewport = gb.viewports.get(editorConfig.getMainViewportName());
-			// var getGridCellSize = editorConfig.getGridCellSize();
-
-			// this.verticalScrollBar = new scrollBar().create(function() {
-			// 	return {
-			// 		id: 'canvas-vertical-scroll-bar',
-			// 		value: clampAtCero(world.getHeight(), viewport.height),
-			// 		min: 0,
-			// 		max: clampAtCero(world.getHeight(), viewport.height),
-			// 		step: getGridCellSize.height,
-			// 		orientation: 'vertical',
-			// 		height: viewport.height,
-			// 		contentHeight: world.getHeight(),
-			// 		style: {
-			// 			height: (gb.canvas.height - 13) + 'px'
-			// 		},
-			// 		onSlide: function(event, ui) {
-			// 			viewport.Y = -(clampAtCero(world.getHeight(), viewport.height) - ui.value);
-			// 		} 
-			// 	}
-			// });
-
-			// this.horizontalScrollBar = new scrollBar().create(function() {
-			// 	return {
-			// 		id: 'canvas-horizontal-scroll-bar', 
-			// 		value: 0,
-			// 		min: 0,
-			// 		max: clampAtCero(world.getWidth(), viewport.width),
-			// 		step: getGridCellSize.width,
-			// 		orientation: 'horizontal',
-			// 		width: viewport.width,
-			// 		contentWidth: world.getWidth(),
-			// 		style: {
-			// 			width: (gb.canvas.width - 14) + 'px'
-			// 		},
-			// 		onSlide: function(event, ui) {
-			// 			viewport.X = -ui.value;
-			// 		}
-			// 	} 
-			// });
+			var main = document.querySelector('#main');
+			main.style.overflowX = 'scroll';
+			main.style.overflowY = 'scroll';
+			main.appendChild(scrollContainer);			
+			main.addEventListener('scroll', this.onScroll);
 
 			// Stuff to do when a new 'Main' viewport is added. AKA, load a new scene
-			// editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
-			// 	// Make sure the following is only done when it is detected that a viewport with name 'Main' was added
-			// 	if (v.name == editorConfig.getMainViewportName()) {
-			// 		// Update the viewport reference
-			// 		viewport = v;
-			// 		// Reset scroll bars position          
-			// 		this.horizontalScrollBar.slider('value', 0);
-			// 		this.verticalScrollBar.slider('value', 0);
-			// 	}
-			// });
+			editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
+				// Make sure the following is only done when it is detected that a viewport with name 'Main' was added
+				if (v.name == editorConfig.getMainViewportName()) {
+					// Update the viewport reference
+					viewport = v;
+					viewport.X = 0;
+					viewport.Y = 0;
+
+					main.scrollLeft = 0;
+					main.scrollTop = 0;
+					
+					gb.canvas.style.left = '0px';
+					gb.canvas.style.top = '0px';
+					
+					var diff = (world.getWidth() - gb.game.WIDTH);
+					scrollContainer.style.width = diff > 0 ? gb.game.WIDTH + diff : gb.game.WIDTH;
+
+					diff = (world.getHeight() - gb.game.HEIGHT);
+					scrollContainer.style.height = diff > 0 ? gb.game.HEIGHT + diff : gb.game.HEIGHT;
+				}
+			});
 
 			editorDelegates.add(world, world.CHANGE_WIDTH, this, function (width) {				
-				var diff = (width - gb.game.WIDTH);
-				
-				if (diff > 0) {
-					scrollContainer.style.width = gb.game.WIDTH + diff;
-				} else {
-					scrollContainer.style.width = gb.game.WIDTH;
-				}
+				updateScrollWidth(scrollContainer, main, width, gb.game.WIDTH);
 			});
 
 			editorDelegates.add(world, world.CHANGE_HEIGHT, this, function (height) {
-				var diff = (height - gb.game.HEIGHT);
-				
-				if (diff > 0) {
-					scrollContainer.style.height = gb.game.HEIGHT + diff;
-				} else {
-					scrollContainer.style.height = gb.game.HEIGHT;
-				}
+				updateScrollHeight(scrollContainer, main, height, gb.game.HEIGHT);
 			});
 
-			// Adjust the viewport offset when the world decreases and the scrollbar is at it's maximum value
-			// editorDelegates.add(world, world.CHANGE_HEIGHT_DECREASE, this, function (value) {
-			// 	if(this.verticalScrollBar.isAtMaxEdge()) {
-			// 		viewport.Y += this.verticalScrollBar.option('step');
-			// 	}
-			// });
-
-			// editorDelegates.add(world, world.CHANGE_WIDTH_DECREASE, this, function (value) {
-			// 	if(this.horizontalScrollBar.isAtMaxEdge()) {
-			// 		viewport.X += this.horizontalScrollBar.option('step');
-			// 	}
-			// });
-
 			editorDelegates.add(gb.game, gb.game.CHANGE_WIDTH, this, function (width) {
-				scrollContainer.style.width = width;
+				updateScrollWidth(scrollContainer, main, world.getWidth(), width);
 			});
 
 			editorDelegates.add(gb.game, gb.game.CHANGE_HEIGHT, this, function (height) {
-				scrollContainer.style.height = height;
+				updateScrollHeight(scrollContainer, main, world.getHeight(), height);
 			});
+		},
+
+		destroy: function() {
+			main = document.querySelector('#main');
+			main.style.overflowX = '';
+			main.style.overflowY = '';
+			main.removeChild(document.querySelector('#scroller'));
+			main.removeEventListener('scroll', this.onScroll);
+
+			gb.canvas.style.position = '';
+			gb.canvas.style.left = '';
+			gb.canvas.style.top = '';
 		}
 	});
+
+	var updateScrollWidth = function (scroller, canvasContainer, worldWidth, canvasWidth) {
+		var diff = (worldWidth - canvasWidth);
+
+		if (diff > 0) {
+			scroller.style.width = canvasWidth + diff;
+		} else {
+			scroller.style.width = canvasWidth;
+		}
+
+		diff = parseInt(scroller.style.width) - main.scrollWidth;
+
+		if (diff < 0) {
+			canvasContainer.scrollLeft += diff;
+		}
+	}
+
+	var updateScrollHeight = function (scroller, canvasContainer, worldHeight, canvasHeight) {
+		var diff = (worldHeight - canvasHeight);
+
+		if (diff > 0) {
+			scroller.style.height = canvasHeight + diff;
+		} else {
+			scroller.style.height = canvasHeight;
+		}
+
+		diff = parseInt(scroller.style.height) - main.scrollWidth;
+
+		if (diff < 0) {
+			canvasContainer.scrollTop += diff;
+		}
+	}
 
 	return CanvasScrollBars;
 });
