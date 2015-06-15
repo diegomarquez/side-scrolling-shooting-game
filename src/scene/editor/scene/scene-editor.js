@@ -139,6 +139,9 @@ define(function(require) {
     }, 
 
     cleanUp: function() {
+    	// Destroy viewport related dialogs
+    	require('viewport-editor-ui').destroy();
+
     	editorSetup.exit();
     	// Destroy all of this objects references
     	this._super();

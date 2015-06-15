@@ -192,7 +192,7 @@ define(function(require) {
     },
 
     destroy: function() {
-      $(dialog).dialog('destroy').remove();
+      $(this.dialog).dialog('destroy').remove();
     }
   });
 
