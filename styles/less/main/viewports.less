@@ -51,14 +51,18 @@
 
 .viewport-checkboxes {
 	width: 100%;
-	display: table;
 	margin-bottom: 4px;
+
+	display: flex;
+	flex-flow: row nowrap;
 
 	.editor-box-sizing;
 }
 
 .viewport-checkboxes > div {
-    display: table-row;
+	flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .viewport-checkboxes > div > input {
@@ -66,7 +70,7 @@
 }
 
 .viewport-checkboxes > div > label {
-    display: table-cell;
+    flex: 1;
 }
 
 /*jQuery UI override*/
