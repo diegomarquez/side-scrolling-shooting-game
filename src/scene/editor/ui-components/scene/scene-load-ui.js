@@ -2,7 +2,7 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 	var sceneLoader = require('editor-scene-loader');
 
-	var dialogDropdownUI = require('dialog-modular');
+	var dialogTabbedModular = require('dialog-tabbed-modular');
 	
 	var dialogTextField = require('dialog-text-field');
 	var dialogDropdownField = require('dialog-dropdown-field');
@@ -10,130 +10,158 @@ define(function(require) {
 
 	var SceneLoad = require('ui-component').extend({
 		init: function() {
-			this.loadSceneDialog = new dialogDropdownUI().create({
+			this.loadSceneDialog = new dialogTabbedModular().create({
 				id: 'load-scene-dialog',
 				title: 'Open a scene',
-				tip: 'Choose a scene to open from the dropdown',
+				tip: 'Choose a scene to open from a dropdown',
 				autoOpen: false,
 				height: 'auto',
 				width: 'auto',
 				minWidth: 300,
 				modal: true,
 
-				fields: [
-					new dialogDropdownField({
-						name: 'Local Scene Selector',
-						data: function() {
-							return localStorageWrapper.getAllScenes();
-						}
-					}),
-					new dialogDropdownField({
-						name: 'Built Scene Selector',
-						data: function() {
-							return require('level-storage').getLevelNames();
-						}
-					}),
-					new dialogDropdownField({
-						name: 'Remote Scene Selector',
-						data: function() {
-							return [];
-						}
-					}),
-					new dialogTextField({
-						name: 'Remote Input',
-						value: 'http://localhost:3000/scenes',
-						validations: [ 
-							{
-								check: function(remote) {
-									return this.RemoteSceneSelector();
-								},
-								
-								tip: "Remote scene selector is empty"
-							}
-						]
-					}),
-					new dialogHiddenField({
-						name: 'Remote Availability',
-						validations: [
-							{
-								check: function() {
-									$.ajax({
-											url: this.RemoteInput(),
-											type: "GET",
-											async: false,
-											success: function() { isValid = true; },
-											error: function() { isValid = false; }
-										});
+				tabs: [
+					{
+						name: 'Local Scenes',
 
-										return isValid;   
-								 },
+						fields: [
+							new dialogDropdownField({
+								name: 'Local Scene Selector',
+								data: function() {
+									return localStorageWrapper.getAllScenes();
+								}
+							})
+						],
 
-								 tip: "Remote is not available"
-							}
-						]
-					}),
-					new dialogHiddenField({
-						name: 'Remote Url Validity',
-						validations: [
-							{
-								check: function() { 
-									return validateURL(this.RemoteInput());   
-								},
-								
-								tip: "Remote url is not valid"
-							}
-						]
-					}) 
-				],
-
-				buttons: {
-					'Open Local': function () {
-						var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
-						sceneLoader.load(JSON.parse(scene));
-						sceneLoader.layout();
-						$(this).dialog('close');
-					},
-
-					'Open Built': function () {
-						var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
-						sceneLoader.load(scene);
-						sceneLoader.layout();
-						$(this).dialog('close');
-					},
-
-					'Open Remote': function () {
-						var self = this;
-
-						$.ajax({
-							url: this.RemoteInput() + "/" + this.RemoteSceneSelector(),
-							type: "GET",
-							success: function(scene) { 
+						buttons: {
+							'Open Local': function () {
+								var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
 								sceneLoader.load(JSON.parse(scene));
 								sceneLoader.layout();
-								$(self).dialog('close');  
+								$(this).dialog('close');
 							}
-						}); 
+						},
+
+						validateOnAction: {
+							'Open Local': []
+						}	
 					},
+					{
+						name: 'Remote Scenes',	
 
-					'Get Remote Scenes': function() {           
-						var self = this;
+						fields: [
+							new dialogDropdownField({
+								name: 'Remote Scene Selector',
+								data: function() {
+									return [];
+								}
+							}),
+							new dialogTextField({
+								name: 'Remote Input',
+								value: 'http://localhost:3000/scenes',
+								validations: [ 
+									{
+										check: function(remote) {
+											return this.RemoteSceneSelector();
+										},
+										
+										tip: "Remote scene selector is empty"
+									}
+								]
+							}),
+							new dialogHiddenField({
+								name: 'Remote Availability',
+								validations: [
+									{
+										check: function() {
+											$.ajax({
+													url: this.RemoteInput(),
+													type: "GET",
+													async: false,
+													success: function() { isValid = true; },
+													error: function() { isValid = false; }
+												});
 
-						$.ajax({
-							url: this.RemoteInput(),
-							type: "GET",
-							success: function(data) { 
-								self.dialog('option').updateField('Remote Scene Selector', data);
+												return isValid;   
+										 },
+
+										 tip: "Remote is not available"
+									}
+								]
+							}),
+							new dialogHiddenField({
+								name: 'Remote Url Validity',
+								validations: [
+									{
+										check: function() { 
+											return validateURL(this.RemoteInput());   
+										},
+										
+										tip: "Remote url is not valid"
+									}
+								]
+							})
+						],
+
+						buttons: {
+							'Open Remote': function () {
+								var self = this;
+
+								$.ajax({
+									url: this.RemoteInput() + "/" + this.RemoteSceneSelector(),
+									type: "GET",
+									success: function(scene) { 
+										sceneLoader.load(JSON.parse(scene));
+										sceneLoader.layout();
+										$(self).dialog('close');  
+									}
+								}); 
+							},
+
+							'Get Remote Scenes': function() {           
+								var self = this;
+
+								$.ajax({
+									url: this.RemoteInput(),
+									type: "GET",
+									success: function(data) { 
+										self.dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', data);
+									}
+								});
 							}
-						});
-					}
-				},
+						},
 
-				validateOnAction: {
-					'Open Local': [],
-					'Open Built': [],
-					'Open Remote': ['Remote Input', 'Remote Url Validity', 'Remote Availability'],
-					'Get Remote Scenes': ['Remote Url Validity', 'Remote Availability']
-				}
+						validateOnAction: {
+							'Open Remote': ['Remote Input', 'Remote Url Validity', 'Remote Availability'],
+							'Get Remote Scenes': ['Remote Url Validity', 'Remote Availability']
+						}
+					},
+					{
+						name: 'Built-In Scenes',
+						
+						fields: [
+							new dialogDropdownField({
+								name: 'Built Scene Selector',
+								data: function() {
+									return require('level-storage').getLevelNames();
+								}
+							})
+						],
+						
+						buttons: {
+							'Open Built-In': function () {
+								var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
+								sceneLoader.load(scene);
+								sceneLoader.layout();
+								$(this).dialog('close');
+							}
+						},
+
+						validateOnAction: {
+							'Open Built-In': []
+						}
+					}
+				]
 			});
 		},
 

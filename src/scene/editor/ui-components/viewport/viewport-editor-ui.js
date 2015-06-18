@@ -233,7 +233,7 @@ define(function(require) {
 			autoOpen: false,
 			height: 'auto',
 			width: 'auto',
-			minWidth: 300,
+			minWidth: 350,
 			modal: true,
 			viewport: null,
 			fields: [

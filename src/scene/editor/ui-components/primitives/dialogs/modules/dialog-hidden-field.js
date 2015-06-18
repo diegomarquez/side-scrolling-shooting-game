@@ -1,42 +1,42 @@
 define(function(require) {
 	var wrapper = require('wrap-in-div');
 
-  var DialogHiddenField = require('class').extend({
-    init: function(options) {
-    	this.options = options;
-    },
+	var DialogHiddenField = require('class').extend({
+		init: function(options) {
+			this.options = options;
+		},
 
-    name: function() {
-    	return this.options.name;
-    },
+		name: function() {
+			return this.options.name;
+		},
 
-    html: function() {
-    	return this.h;
-    },
+		html: function() {
+			return this.h;
+		},
 
-    validations: function() {
-    	return this.options.validations;
-    },
+		validations: function() {
+			return this.options.validations;
+		},
 
-    create: function() {
-      this.h = document.createElement('div');
-      this.h.style.display = 'none';
-    },
+		create: function() {
+			this.h = document.createElement('div');
+			this.h.style.display = 'none';
+		},
 
-    open: function() {},
+		open: function() {},
 
-    reset: function() {},
+		reset: function() {},
 
-    valueGetter: function() {
-    	return function() {
-    		return null;
-    	}
-    },
+		valueGetter: function() {
+			return function() {
+				return null;
+			}
+		},
 
-    applyFeedback: function() {},
+		applyFeedback: function() {},
 
-	  resetFeedback: function() {}
-  });
+		resetFeedback: function() {}
+	});
 
-  return DialogHiddenField;
+	return DialogHiddenField;
 });
