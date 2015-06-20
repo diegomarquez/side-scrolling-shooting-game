@@ -71,7 +71,11 @@ define(function (require) {
 					this.x = startX;
 					this.y = startY;
 
-					Gb.game.get_extension(require('logger')).error("Collider polygon is not valid");
+					var logger = require("gb").game.get_extension(require('logger'));
+
+					logger.error("Collider polygon is not valid");
+					logger.show();
+					setTimeout(logger.hide, 3000);
 				}
 			});
 
