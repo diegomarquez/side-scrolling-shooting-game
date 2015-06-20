@@ -145,7 +145,8 @@ define(function(require) {
 			$(this.buttonUI).button();
 
 			return wrapper.wrap([this.buttonUI], {
-				id: 'viewport-creator'
+				id: 'viewport-creator',
+				classNames: ['well', 'well-small']
 			});
 		},
 

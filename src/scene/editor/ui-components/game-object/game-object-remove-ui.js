@@ -1,34 +1,48 @@
 define(function(require) {
-  var gb = require('gb');
-  var wrapper = require('wrap-in-div');
-  var button = require('button'); 
+	var gb = require('gb');
+	var wrapper = require('wrap-in-div');
+	var button = require('button'); 
+	var toggle = require('toggle');
 
-  var GameObjectCreator = require('ui-component').extend({
-    init: function() {
-      this.element = null;      
-    },
+	var GameObjectCreator = require('ui-component').extend({
+		init: function() {
+			this.element = null;
+			this.toggle = null;
+		},
 
-    create: function(options) {
-      this.element = new button().create({
-        id: 'game-object-remove-button',
-        label: 'Remove all Game Objects',
-        onClick: function(event) {
-          gb.reclaimer.clearAllObjectsFromPools().now();
-        }
-      });
+		create: function(options) {
+			this.element = new button().create({
+				id: 'game-object-remove-button',
+				label: 'Remove all Game Objects',
+				onClick: function(event) {
+					gb.reclaimer.clearAllObjectsFromPools().now();
+					$('#remove-toggle-button input').bootstrapToggle('off');
+				}
+			});
 
-      $(this.element).button();
+			var buttonElement = this.element;
 
-      return wrapper.wrap(this.element, {
-        id: 'game-object-remove-button-wrapper',
-        classNames: ['well', 'well-small']
-      });
-    },
+			$(buttonElement).button();
 
-    destroy: function() {
-      $(this.element).button('destroy');      
-    }
-  });
+			this.toggle = toggle.create({
+				id: 'remove-toggle-button',
+				on: ' ',
+				off: ' ', 
+				onChange: function() {
+					$(buttonElement).button('option', 'disabled', !$(this).prop('checked'));
+				}
+			});
 
-  return GameObjectCreator;
+			return wrapper.wrap([this.element, this.toggle], {
+				id: 'game-object-remove-button-wrapper',
+				classNames: ['well', 'well-small']
+			});
+		},
+
+		destroy: function() {
+			$(this.element).button('destroy');      
+		}
+	});
+
+	return GameObjectCreator;
 });

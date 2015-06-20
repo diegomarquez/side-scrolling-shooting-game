@@ -1,15 +1,31 @@
+.wrapper() {
+	margin: 5px;
+}
+
 .block-button() {
 	width: 100%;
 
 	button {
 		width: 100%;
 		text-align: left;
+		font-weight: bold;
+		font-size: 1.3em;
 	}	
+}
+
+.span-button() {
+	width: 100%;
+		
+	span {
+		text-align: left;
+		font-weight: bold;
+		font-size: 1.3em;			
+	}
 }
 
 .editor-toggle {
 	width: 100%;
-	margin-bottom: 5px;
+	margin: 5px;
 
 	&:last-child {
 		margin-bottom: 0px;		
@@ -25,38 +41,77 @@
 // World edit
 #world-edit {
 	width: 100%;
-	margin-top: 5px; 
+	padding-top: 5px; 
+
+	.editor-box-sizing;
 
 	#world-size-container {
 		margin: 0px;
 	}
 }
 
+
 // Game object selection dropdown
-#game-object-selector {
-	.block-button;
+#game-object-selector-wrapper {
+	.wrapper;
+
+	#game-object-selector {
+		.block-button;
+	}
 }
 
 // Viewport selection dropdown
-#viewport-selector-simple {
-	margin-top: 5px;
+#viewport-selector-simple-wrapper {
+	.wrapper;	
 
-	.block-button;
+	#viewport-selector-simple {
+		.block-button;
+	}
 }
 
 // Game Object create button
 #game-object-create-button-wrapper {
-	margin-top: 5px;
+	.wrapper;
 
 	#game-object-create-button {
-		.block-button;
+		.span-button();
 	}	
 }
 
 #game-object-remove-button-wrapper {
-	margin-top: 5px;
+	.wrapper;
+
+	display: flex;
 
 	#game-object-remove-button {
-		.block-button;
-	}	
+		flex: 4;
+		margin-right: 5px;
+
+		.span-button();
+
+		&:not(.ui-state-disabled):hover {
+			background-color: @editor-error-color-background;
+			border-color: @editor-error-color-border;
+		}
+	}
+
+	#remove-toggle-button {
+		display: flex;
+		flex-flow: column nowrap;
+		flex: 1;
+		margin: 0;
+
+		.toggle {
+			flex: 1;
+		}
+
+		.btn-primary {
+			background-color: @editor-error-color-background;
+			border-color: @editor-error-color-border;
+		}
+
+		.toggle-handle {
+			width: 50%;
+		}
+	}
 }

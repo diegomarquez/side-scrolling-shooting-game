@@ -1,73 +1,71 @@
 define(function(require) {
-  var wrapper = require('wrap-in-div');
-  var button = require('button'); 
-  var gb = require('gb');
+	var wrapper = require('wrap-in-div');
+	var button = require('button'); 
+	var gb = require('gb');
 
-  var setupEditorObject = require('setup-editable-game-object');
+	var setupEditorObject = require('setup-editable-game-object');
 
-  var activeViewports = require('active-viewports');
-  var selectedGameObject = require('selected-game-object');
-  var selectedGroup = require('selected-group');
-  var mainViewport = require('main-viewport');
+	var activeViewports = require('active-viewports');
+	var selectedGameObject = require('selected-game-object');
+	var selectedGroup = require('selected-group');
+	var mainViewport = require('main-viewport');
 
-  var statusMessage = require('create-status-message');
+	var GameObjectCreator = require('ui-component').extend({
+		init: function() {
+			this.element = null;
+		},
 
-  var GameObjectCreator = require('ui-component').extend({
-    init: function() {
-      this.element = null;
-      this.message = null;
-    },
+		create: function(options) {
+			this.element = new button().create({
+				id: 'game-object-create-button',
+				label: 'Create Game Object',
+				onClick: function(event) {
+					var goName = selectedGameObject.get();
+					var group = selectedGroup.get();
+					var viewports = activeViewports.get();
+					var mainViewportName = mainViewport.get();
 
-    create: function(options) {
-      this.message = statusMessage.createErrorMessage();
+					if (goName == 'Nothing' || goName == '' || !goName) {
+						gb.game.get_extension(require('logger')).error('No game object has been selected');
+						return;
+					}
 
-      var message = this.message;
+					if (!viewports || viewports.length == 0) {
+						gb.game.get_extension(require('logger')).error('No viewports have been selected');
+						return;
+					}
 
-      this.element = new button().create({
-        id: 'game-object-create-button',
-        label: 'Create Game Object',
-        onClick: function(event) {
-          message.remove();
-          
-          var goName = selectedGameObject.get();
-          var group = selectedGroup.get();
-          var viewports = activeViewports.get();
-          var mainViewportName = mainViewport.get();
+					gb.game.get_extension(require('logger')).success('Game object created successfully!');
 
-          if (goName == 'Nothing' || goName == '' || !goName) {
-            message.toError('No game object has been selected');
-            message.appendTo($('#game-object-create-button-wrapper'));
-            gb.game.get_extension(require('logger')).error('No game object has been selected');
-            return;
-          }
+					setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
+				}
+			});
 
-          if (!viewports || viewports.length == 0) {
-            message.toError('No viewports have been selected');
-            message.appendTo($('#game-object-create-button-wrapper'));
-            gb.game.get_extension(require('logger')).error('No viewports have been selected');
-            return;
-          }
+			$(this.element).button();
 
-          message.toSuccess('Game object created successfully!');
-          message.appendTo($('#game-object-create-button-wrapper'));
-          gb.game.get_extension(require('logger')).success('Game object created successfully!');
+			$(this.element).find('span').css({
+				'flex': 1 
+			});
 
-          setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
-        }
-      });
+			$(this.element).css({
+				'display': 'flex',
+				'flex-flow': 'row nowrap'
+			});
 
-      $(this.element).button();
+			var iconSpan = document.createElement('span');
+			iconSpan.className = 'glyphicon glyphicon-plus';
+			$(this.element).append(iconSpan);
 
-      return wrapper.wrap(this.element, {
-        id: 'game-object-create-button-wrapper',
-        classNames: ['well', 'well-small']
-      });
-    },
+			return wrapper.wrap(this.element, {
+				id: 'game-object-create-button-wrapper',
+				classNames: ['well', 'well-small']
+			});
+		},
 
-    destroy: function() {
-      $(this.element).button('destroy');      
-    }
-  });
+		destroy: function() {
+			$(this.element).button('destroy');      
+		}
+	});
 
-  return GameObjectCreator;
+	return GameObjectCreator;
 });
