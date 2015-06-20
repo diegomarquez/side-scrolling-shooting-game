@@ -27,11 +27,17 @@ define(function(require) {
 
 					if (goName == 'Nothing' || goName == '' || !goName) {
 						gb.game.get_extension(require('logger')).error('No game object has been selected');
+						gb.game.get_extension(require('logger')).show();
+
+						setTimeout(gb.game.get_extension(require('logger')).hide, 3000);
 						return;
 					}
 
 					if (!viewports || viewports.length == 0) {
 						gb.game.get_extension(require('logger')).error('No viewports have been selected');
+						gb.game.get_extension(require('logger')).show();
+
+						setTimeout(gb.game.get_extension(require('logger')).hide, 3000);
 						return;
 					}
 

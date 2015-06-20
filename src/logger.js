@@ -45,6 +45,14 @@ define(function(require) {
 			}
 		},
 
+		show: function() {
+			document.getElementById('logger-info-container').style.display = 'block';
+		},
+
+		hide: function() {
+			document.getElementById('logger-info-container').style.display = 'none';
+		},
+
 		success: function(message) {
 			var infoContainer = document.getElementById('logger-info-container');
 
