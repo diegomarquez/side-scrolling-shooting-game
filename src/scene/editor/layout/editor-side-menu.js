@@ -128,21 +128,45 @@ define(function(require) {
 
 			items.push(createTitleItem('Sections'));
 
-			items.push(createRegionOptionItem('Canvas', 'glyphicon-question-sign', this.canvasTooltipContent.html.outerHTML, function (event) {
-				// toogleDisplay(editorRegions.get().getTopLeftContainer()[0]);
-			}));
+			items.push(createRegionOptionItem(
+				'Canvas', 
+				'glyphicon-question-sign', 
+				this.canvasTooltipContent.html.outerHTML, 
+				editorRegions.get().getTopLeft()[0],
+				function (event) {
+					// toogleDisplay(editorRegions.get().getTopLeftContainer()[0]);
+				}
+			));
 			
-			items.push(createRegionOptionItem('Misc. Settings', 'glyphicon-question-sign', this.settingsTooltipContent.html.outerHTML, function (event) {
-				toogleDisplay(editorRegions.get().getTopRightContainer()[0]);
-			}));
+			items.push(createRegionOptionItem(
+				'Misc. Settings', 
+				'glyphicon-question-sign', 
+				this.settingsTooltipContent.html.outerHTML, 
+				editorRegions.get().getTopRight()[0],
+				function (event) {
+					toogleDisplay(editorRegions.get().getTopRightContainer()[0]);
+				}
+			));
 			
-			items.push(createRegionOptionItem('Game Objects', 'glyphicon-question-sign', this.gameObjectsTooltipContent.html.outerHTML, function (event) {
-				toogleDisplay(editorRegions.get().getBottomLeftContainer()[0]);
-			}));
+			items.push(createRegionOptionItem(
+				'Game Objects', 
+				'glyphicon-question-sign', 
+				this.gameObjectsTooltipContent.html.outerHTML, 
+				editorRegions.get().getBottomLeft()[0],
+				function (event) {
+					toogleDisplay(editorRegions.get().getBottomLeftContainer()[0]);
+				}
+			));
 			
-			items.push(createRegionOptionItem('Viewports', 'glyphicon-question-sign', this.viewportsTooltipContent.html.outerHTML, function (event) {
-				toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
-			}));
+			items.push(createRegionOptionItem(
+				'Viewports', 
+				'glyphicon-question-sign', 
+				this.viewportsTooltipContent.html.outerHTML, 
+				editorRegions.get().getBottomRight()[0],
+				function (event) {
+					toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
+				}
+			));
 
 			items.push(createDivider());
 
@@ -237,7 +261,7 @@ define(function(require) {
 		return li;
 	}
 
-	var createRegionOptionItem = function(title, iconName, description, onClick) {
+	var createRegionOptionItem = function(title, iconName, description, relatedRegionElement, onClick) {
 		var li = createOptionItem(title, iconName, onClick);
 
 		var a = $(li).find('.side-menu-icon');
@@ -258,10 +282,18 @@ define(function(require) {
 			a.popover('show');
 		});
 
-		$(li).on('mouseleave', function() {
+		$(a).on('mouseleave', function() {
 			a.popover('destroy');
 		});
-		
+
+		$(li).on('mouseenter', function() {
+			relatedRegionElement.style.border = '1px solid #f0ad4e'; 
+		});
+
+		$(li).on('mouseleave', function() {
+			relatedRegionElement.style.border = '';
+		});
+
 		return li;
 	}
 
@@ -306,6 +338,8 @@ define(function(require) {
 		if (toggledCount == 4) {
 			$('.region').css({ width: '50%', height: '50%'});
 		}
+
+		gb.game.get_extension(require('fit-canvas-in-region')).fit();
 	}
 
 	Object.defineProperty(EditorSideMenu.prototype, "EXIT", { get: function() { return 'exit'; } });

@@ -1,6 +1,8 @@
 define(function(require) {
 	var gb = require('gb');
 
+	var main = document.getElementById('main');
+
 	var FitCanvasInRegion = require('extension').extend({
 		init: function() {
 			this.onResize = null;
@@ -13,28 +15,25 @@ define(function(require) {
 		},
 
 		execute: function() { 
-			var main = document.getElementById('main');
-
 			this.originalWidth = gb.game.WIDTH;
 			this.originalHeight = gb.game.HEIGHT;
 
-			this.onResize = function() {
-				gb.game.WIDTH = main.parentNode.parentNode.clientWidth - 8;
-				gb.game.HEIGHT = main.parentNode.parentNode.clientHeight - 8;
-			}
+			this.fit();
 
-			this.onResize();
+			window.addEventListener('resize', this.fit, false);
+		},
 
-			window.addEventListener('resize', this.onResize, false);
+		fit: function() {
+			gb.game.WIDTH = main.parentNode.parentNode.clientWidth - 8;
+			gb.game.HEIGHT = main.parentNode.parentNode.clientHeight - 8;
 		},
 
 		destroy: function() {
-			window.removeEventListener('resize', this.onResize, false);
+			window.removeEventListener('resize', this.fit, false);
 
 			gb.game.WIDTH = this.originalWidth;
 			gb.game.HEIGHT = this.originalHeight;
 
-			this.onResize = null;
 			this.originalWidth = null;
 			this.originalHeight = null;
 
