@@ -130,7 +130,9 @@ define(function(require) {
 
 			items.push(createRegionOptionItem(
 				'Canvas', 
-				'glyphicon-question-sign', 
+				'glyphicon-question-sign',
+				null,
+				null, 
 				this.canvasTooltipContent.html.outerHTML, 
 				editorRegions.get().getTopLeft()[0],
 				function (event) {
@@ -140,7 +142,9 @@ define(function(require) {
 			
 			items.push(createRegionOptionItem(
 				'Misc. Settings', 
-				'glyphicon-question-sign', 
+				'glyphicon-question-sign',
+				'glyphicon-eye-open',
+				'glyphicon-eye-close',
 				this.settingsTooltipContent.html.outerHTML, 
 				editorRegions.get().getTopRight()[0],
 				function (event) {
@@ -150,7 +154,9 @@ define(function(require) {
 			
 			items.push(createRegionOptionItem(
 				'Game Objects', 
-				'glyphicon-question-sign', 
+				'glyphicon-question-sign',
+				'glyphicon-eye-open',
+				'glyphicon-eye-close', 
 				this.gameObjectsTooltipContent.html.outerHTML, 
 				editorRegions.get().getBottomLeft()[0],
 				function (event) {
@@ -160,7 +166,9 @@ define(function(require) {
 			
 			items.push(createRegionOptionItem(
 				'Viewports', 
-				'glyphicon-question-sign', 
+				'glyphicon-question-sign',
+				'glyphicon-eye-open',
+				'glyphicon-eye-close', 
 				this.viewportsTooltipContent.html.outerHTML, 
 				editorRegions.get().getBottomRight()[0],
 				function (event) {
@@ -192,17 +200,19 @@ define(function(require) {
 			items.push(createDivider());
 			items.push(createTitleItem('Misc.'));
 
-			items.push(createOptionItem(
+			items.push(createToggleOptionItem(
 				'Activity Display', 
-				'glyphicon-eye-open', 
+				'glyphicon-eye-close',
+				'glyphicon-eye-open',
 				function() {  
 					gb.game.get_extension(require('activity-display')).toggle();
 				}.bind(this)
 			));
 
-			items.push(createOptionItem(
+			items.push(createToggleOptionItem(
 				'Log', 
-				'glyphicon-eye-open', 
+				'glyphicon-eye-close',
+				'glyphicon-eye-open',
 				function() {  
 					gb.game.get_extension(require('logger')).toggle();
 				}.bind(this)
@@ -254,6 +264,7 @@ define(function(require) {
 	 
 		var icon = document.createElement('span');
 		$(icon).addClass('side-menu-icon');
+		$(icon).addClass('main-side-menu-icon');
 		$(icon).addClass('glyphicon icon-white');
 		$(icon).addClass(iconName);
 		$(a).append(icon);
@@ -261,10 +272,60 @@ define(function(require) {
 		return li;
 	}
 
-	var createRegionOptionItem = function(title, iconName, description, relatedRegionElement, onClick) {
-		var li = createOptionItem(title, iconName, onClick);
+	var createToggleOptionItem = function(content, onIcon, offIcon, onClick) {
+		var li = createOptionItem(content, onIcon, function() {
+			onClick();	
 
-		var a = $(li).find('.side-menu-icon');
+			$(li).find('.side-menu-icon').toggle();
+		}); 
+
+		var iconAnchor = $(li).find('a');
+		var off = document.createElement('span');
+		
+		$(off).addClass('side-menu-icon');
+		$(off).addClass('glyphicon icon-white');
+		$(off).addClass(offIcon);
+		
+		off.style.display = 'none';
+		
+		$(iconAnchor).append(off);
+
+		return li;
+	}
+
+	var createRegionOptionItem = function(title, iconName, onIcon, offIcon, description, relatedRegionElement, onClick) {
+		var li = createOptionItem(title, iconName, function() {
+			onClick();	
+
+			if (onIcon && offIcon) {
+				$(li).find('.secondary-side-menu-icon').toggle();					
+			}
+		}); 
+
+		var iconAnchor = $(li).find('a');
+		var on, off;
+
+		if (onIcon && offIcon) {
+			on = document.createElement('span');
+
+			$(on).addClass('side-menu-icon');
+			$(on).addClass('secondary-side-menu-icon');
+			$(on).addClass('glyphicon icon-white');
+			$(on).addClass(onIcon);
+			$(iconAnchor).append(on);
+
+			off = document.createElement('span');
+			
+			$(off).addClass('side-menu-icon');
+			$(off).addClass('secondary-side-menu-icon');
+			$(off).addClass('glyphicon icon-white');
+			$(off).addClass(offIcon);
+			off.style.display = 'none';
+			
+			$(iconAnchor).append(off);
+		}
+
+		var a = $(li).find('.main-side-menu-icon');
 		
 		a.attr('data-toogle', 'popover');
 		a.attr('data-placement', 'right');
