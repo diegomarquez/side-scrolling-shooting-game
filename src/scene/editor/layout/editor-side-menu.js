@@ -248,7 +248,7 @@ define(function(require) {
 		a.attr('title', title);
 		a.attr('data-content', description);
 
-		$(li).on('mouseenter', function() {  
+		$(a).on('mouseenter', function() {  
 			a.popover({
 				container: 'body'
 			}).on("show.bs.popover", function() {

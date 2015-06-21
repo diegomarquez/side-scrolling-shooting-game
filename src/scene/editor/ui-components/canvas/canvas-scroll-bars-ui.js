@@ -11,8 +11,6 @@ define(function(require) {
 
 			var self = this;
 
-			var getGridCellSize = editorConfig.getGridCellSize();
-
 			this.onScroll = function (event) {
 				var viewport = gb.viewports.get(editorConfig.getMainViewportName());
 				var left = event.target.scrollLeft;
@@ -24,8 +22,8 @@ define(function(require) {
 				gb.canvas.style.top = top;
 				viewport.Y = -top;
 
-				require('grid-bundle').setGridOffsetX(left % getGridCellSize.width);
-				require('grid-bundle').setGridOffsetY(top % getGridCellSize.height);
+				require('grid-bundle').setOffsetX(left);
+				require('grid-bundle').setOffsetY(top);
 			}
 		},
 

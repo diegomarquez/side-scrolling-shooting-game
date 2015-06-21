@@ -5,10 +5,16 @@ define(function(require) {
 
 	var offsetX = 0;
 	var offsetY = 0;
+	var screenOffsetX = 0;
+	var screenOffsetY = 0;
+
+	var initCanvasWidth = gb.canvas.width;
+	var initCanvasHeight = gb.canvas.height;
 
 	var GridBundle = require("bundle").extend({
 		create: function(args) {  
-			var step = require('editor-config').getGridCellSize();
+			var step = require('editor-config').getGridCellSize();		
+			var dashPattern = [2];
 
 			this.componentPool.createConfiguration("GridRenderer", commonBundle.getPathRendererPoolId())
 				.args({
@@ -31,28 +37,80 @@ define(function(require) {
 
 						context.translate(0.5 - offsetX, 0.5 - offsetY);
 						context.globalAlpha = 0.5;
+						context.lineWidth = 1;
+						context.strokeStyle = "#FFFFFF";
+						context.setLineDash(dashPattern);
+
 						context.beginPath();
-						
-						for (var i = 1; i < Math.ceil(step.width) + 1; i++) {
-							var posX = step.width * i;
-									
+				
+						var count = 0;
+
+						while (true) {
+							var posX = step.width * count;
+							count++;
+
+							if (posX > gb.canvas.width + step.width)
+								break;
+
 							context.moveTo(posX, 0);
-							context.lineTo(posX, gb.canvas.height + step.height); 
+							context.lineTo(posX, gb.canvas.height + step.height);
 						}
 
-						for (var i = 1; i < Math.ceil(step.height) + 1; i++) {
-							var posY = step.height * i;
+						count = 0;
+
+						while (true) {
+							var posY = step.height * count;
+							count++;
+
+							if (posY > gb.canvas.height + step.height)
+								break;
 
 							context.moveTo(0, posY);
-							context.lineTo(gb.canvas.width + step.width, posY);  
+							context.lineTo(gb.canvas.width + step.width, posY);
 						}
 
-						context.lineWidth = 1;
-						context.strokeStyle = "#f0ad4e";
-						context.stroke();         
+						context.stroke();
 						context.closePath();
-						
 						context.restore();
+
+						context.save();
+
+						context.translate(-screenOffsetX + 0.5, -screenOffsetY + 0.5);
+						context.lineWidth = 2;
+						context.strokeStyle = "#f0ad4e";
+
+						context.beginPath();
+				
+						count = 0;
+
+						while (true) {
+							posX = initCanvasWidth * count;
+							count++;
+
+							if (posX > gb.canvas.width + initCanvasWidth)
+								break;
+
+							context.moveTo(posX, 0);
+							context.lineTo(posX, gb.canvas.height + initCanvasHeight);
+						}
+
+						count = 0;
+
+						while (true) {
+							posY = initCanvasHeight * count;
+							count++;
+
+							if (posY > gb.canvas.height + initCanvasHeight)
+								break;
+						
+							context.moveTo(0, posY);
+							context.lineTo(gb.canvas.width + initCanvasWidth, posY);
+						}
+
+						context.stroke();
+						context.closePath();
+
+						context.restore();						
 					}
 				});
 			
@@ -61,12 +119,14 @@ define(function(require) {
 				.setRenderer('GridRenderer');
 		},
 
-		setGridOffsetX: function(value) {
-			offsetX = value;
+		setOffsetX: function(value) {
+			offsetX = value % require('editor-config').getGridCellSize().width;
+			screenOffsetY = value % initCanvasWidth;
 		},
 
-		setGridOffsetY: function(value) {
-			offsetY = value;
+		setOffsetY: function(value) {
+			offsetY = value % require('editor-config').getGridCellSize().height;
+			screenOffsetY = value % initCanvasHeight;
 		},
 
 		getGridId: function () {
