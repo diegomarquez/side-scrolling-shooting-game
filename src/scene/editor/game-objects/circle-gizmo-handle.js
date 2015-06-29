@@ -1,9 +1,9 @@
-define(["game-object", "gb", "vector-2D"], function(GameObject, Gb, Vector2D) {
+define(["fixed-gizmo-handle", "gb", "vector-2D"], function(GizmoHandle, Gb, Vector2D) {
 	
 	var center = new Vector2D();
 	var handle = new Vector2D();
 
-	var CircleGizmoHandle = GameObject.extend({		
+	var CircleGizmoHandle = GizmoHandle.extend({		
 		init: function() {
 			this._super();
 		},

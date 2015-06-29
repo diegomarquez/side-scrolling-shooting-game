@@ -7,7 +7,7 @@ define(function (require) {
 	var stepX = null;
 	var stepY = null;
 
-	var IconGizmoHandle = require("game-object").extend({		
+	var IconGizmoHandle = require("gizmo-handle").extend({		
 		init: function() {
 			this._super();
 

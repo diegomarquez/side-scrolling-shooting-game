@@ -25,14 +25,13 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Apply transformations for the current [viewport](@@viewport@@)
 			viewport.transformContext(context);
 			// Get parent game object transformation matrix
-			m = this.parent.matrix;
+			m = this.parent.getMatrix();
 			// Drawing code
 			context.transform(1, 0, 0, 1, m.tx, m.ty);
+			context.translate(-this.rendererOffsetX() + 0.5, -this.rendererOffsetY() + 0.5);
 
-			context.translate(-this.rendererOffsetX(), -this.rendererOffsetY());
-
-			Draw.rectangle(context, -10, -10, 10, 10, null, '#f0ad4e', 2);
-			Draw.rectangle(context, -6.25, -6.25, 2.5, 2.5, '#f0ad4e', '#f0ad4e', 1);
+			Draw.rectangle(context, -10, -10, 10, 10, null, '#f0ad4e', 1);
+			Draw.rectangle(context, -6, -6, 2, 2, '#f0ad4e', '#f0ad4e', 1);
 
 			context.restore();
 		}

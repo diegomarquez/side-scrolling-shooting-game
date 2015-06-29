@@ -15,6 +15,20 @@ define(function() {
 		return result;
 	}
 
+	PolyK.convertCoordinates2 = function(p) {
+		var result = [];
+
+		result.push(p[0].x);
+		result.push(p[0].y * -1);
+
+		for (var i=1; i < p.length; i++) {
+			result.push(p[i].x);
+			result.push(p[i].y * -1);
+		}
+
+		return result;
+	}
+
 	PolyK.IsSimple = function(p) {
 		var n = p.length>>1;
 		if(n<4) return true;
@@ -49,8 +63,10 @@ define(function() {
 		var l = p.length - 4;
 		for(var i=0; i<l; i+=2)
 			if(!PolyK._convex(p[i], p[i+1], p[i+2], p[i+3], p[i+4], p[i+5])) return false;
+		
 		if(!PolyK._convex(p[l  ], p[l+1], p[l+2], p[l+3], p[0], p[1])) return false;
 		if(!PolyK._convex(p[l+2], p[l+3], p[0  ], p[1  ], p[2], p[3])) return false;
+		
 		return true;
 	}
 

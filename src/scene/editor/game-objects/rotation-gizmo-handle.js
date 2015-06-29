@@ -5,7 +5,7 @@ define(function (require) {
 	var selfTransform = {};
 	var parentTransform = {};
 
-	var RotationGizmoHandle = require("game-object").extend({		
+	var RotationGizmoHandle = require("fixed-gizmo-handle").extend({		
 		init: function() {
 			this._super();
 		},

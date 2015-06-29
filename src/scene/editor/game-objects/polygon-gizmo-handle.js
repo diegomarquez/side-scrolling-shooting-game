@@ -7,7 +7,7 @@ define(function (require) {
 	var startOffsetX = null;
 	var startOffsetY = null;
 
-	var PolygonGizmoHandle = require("game-object").extend({		
+	var PolygonGizmoHandle = require("gizmo-handle").extend({		
 		init: function() {
 			this._super();
 

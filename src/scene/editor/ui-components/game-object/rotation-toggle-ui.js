@@ -28,8 +28,8 @@ define(function(require) {
 		var viewports = editorConfig.getViewports();
 
 		for (var i = 0; i < viewports.length; i++) {  
-			viewports[i].showLayer(editorConfig.getGizmoFarBackLayerName());
-			viewports[i].showLayer(editorConfig.getGizmoCloseFrontLayerName());
+			viewports[i].showLayer(editorConfig.getGizmoRotationBackLayerName());
+			viewports[i].showLayer(editorConfig.getGizmoRotationFrontLayerName());
 		}
 	}
 
@@ -37,8 +37,8 @@ define(function(require) {
 		var viewports = editorConfig.getViewports();
 
 		for (var i = 0; i < viewports.length; i++) {
-			viewports[i].getLayer(editorConfig.getGizmoFarBackLayerName()).showGameObjects();
-			viewports[i].getLayer(editorConfig.getGizmoCloseFrontLayerName()).showGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoRotationBackLayerName()).showGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoRotationFrontLayerName()).showGameObjects();
 		}
 	}
 
@@ -46,8 +46,8 @@ define(function(require) {
 		var viewports = editorConfig.getViewports();
 
 		for (var i = 0; i < viewports.length; i++) {
-			viewports[i].hideLayer(editorConfig.getGizmoFarBackLayerName());
-			viewports[i].hideLayer(editorConfig.getGizmoCloseFrontLayerName());
+			viewports[i].hideLayer(editorConfig.getGizmoRotationBackLayerName());
+			viewports[i].hideLayer(editorConfig.getGizmoRotationFrontLayerName());
 		}
 	}
 
@@ -55,8 +55,8 @@ define(function(require) {
 		var viewports = editorConfig.getViewports();
 
 		for (var i = 0; i < viewports.length; i++) {
-			viewports[i].getLayer(editorConfig.getGizmoFarBackLayerName()).hideGameObjects();
-			viewports[i].getLayer(editorConfig.getGizmoCloseFrontLayerName()).hideGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoRotationBackLayerName()).hideGameObjects();
+			viewports[i].getLayer(editorConfig.getGizmoRotationFrontLayerName()).hideGameObjects();
 		}
 	}
 

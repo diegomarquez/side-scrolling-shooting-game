@@ -18,7 +18,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Store current context
 			context.save();
 			// Reset transformation
-			context.setTransform(1, 0, 0, 1, 0, 0);			
+			context.setTransform(1, 0, 0, 1, 0, 0);     
 			// Apply transformations for the current [viewport](@@viewport@@)
 			viewport.transformContext(context);
 			
@@ -77,7 +77,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 	var d = null;
 
 	var drawLineAndPoint = function(context, offsetX, offsetY, draw, lineMethod) {
-		d = this.parent.matrix.decompose(d);
+		d = this.parent.getMatrix().decompose(d);
 
 		context.save();
 		context.translate(d.x, d.y)
@@ -87,28 +87,28 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 	var getOffset = function (points, axis) {
 		var min = points[0][axis];
-    var max = points[0][axis];
+		var max = points[0][axis];
 
-    for (var i=1; i < points.length; i++) {
-      min = Math.min(min, points[i][axis]);
-      max = Math.max(max, points[i][axis]);
-    }
+		for (var i=1; i < points.length; i++) {
+			min = Math.min(min, points[i][axis]);
+			max = Math.max(max, points[i][axis]);
+		}
 
-    return min;
+		return min;
 	}
 
 	var getPolygonSize = function (points, axis) {
 		axis = axis == 'width' ? 'x' : 'y'; 
 
-	  var min = points[0][axis];
-    var max = points[0][axis];
+		var min = points[0][axis];
+		var max = points[0][axis];
 
-    for (var i=1; i < points.length; i++) {
-      min = Math.min(min, points[i][axis]);
-      max = Math.max(max, points[i][axis]);
-    }
+		for (var i=1; i < points.length; i++) {
+			min = Math.min(min, points[i][axis]);
+			max = Math.max(max, points[i][axis]);
+		}
 
-    return max - min;
+		return max - min;
 	}
 
 	return PolygonColliderRenderer;

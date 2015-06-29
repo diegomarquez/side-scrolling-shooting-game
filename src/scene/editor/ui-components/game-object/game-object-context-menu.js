@@ -235,6 +235,17 @@ define(function(require) {
 										return editorConfig.isRotationGizmoGameObject(child.typeId);
 									});
 								}
+							},
+							{
+								name: 'Scale',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									require('scale-toggle-ui').showAllScaleLayers();
+									
+									menu.go.toggleVisibility(true).recurse().ommitSelf().all(function (child) {
+										return editorConfig.isScaleGizmoGameObject(child.typeId);
+									});
+								}
 							}
 						]
 					}

@@ -2,7 +2,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 	var m = null;
 	var t = {};
 
-	var RotationDisplayRenderer = PathRenderer.extend({
+	var ScaleDisplayRenderer = PathRenderer.extend({
 		init: function() {
 			this._super();
 		},
@@ -10,7 +10,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		start: function() {
 			this.skipCache = true;
 
-			this.name = 'rotation-display-renderer';
+			this.name = 'scale-display-renderer';
 
 			this._super();
 		},
@@ -24,14 +24,14 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			viewport.transformContext(context);
 			
 			context.beginPath();
-			context.strokeStyle = "#FF0000";
+			context.strokeStyle = "#0000FF";
 			context.lineWidth = 2;
 			
 			m = this.parent.getMatrix();
 			t = m.decompose(t);
 			context.moveTo(t.x, t.y);
 
-			m = this.parent.parent.findChildren().firstWithType("RotationGizmoHandle").getMatrix();		
+			m = this.parent.parent.findChildren().firstWithType("ScaleGizmoHandle").getMatrix();
 			t = m.decompose(t);
 			context.lineTo(t.x, t.y);
 	
@@ -50,5 +50,5 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		}
 	});
 
-	return RotationDisplayRenderer;
+	return ScaleDisplayRenderer;
 });

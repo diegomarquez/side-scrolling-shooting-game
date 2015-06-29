@@ -21,11 +21,16 @@ define(function(require) {
 
 	  			return {
 	  				viewports: {
-	  					icons: function(viewports) { return getViewports(viewports, editorConfig.getGizmoBackLayerName()); },
-	  					colliderDisplayers: function(viewports) { return getViewports(viewports, editorConfig.getGizmoMiddleLayerName()); },
-	  					colliderHandles: function(viewports) { return getViewports(viewports, editorConfig.getGizmoFrontLayerName()); },
-	  					rotationDisplayers: function(viewports) { return getViewports(viewports, editorConfig.getGizmoFarBackLayerName()); },
-	  					rotationHandles: function(viewports) { return getViewports(viewports, editorConfig.getGizmoCloseFrontLayerName()); }
+	  					icons: function(viewports) { return getViewports(viewports, editorConfig.getGizmoIconFrontLayerName()); },
+	  					
+	  					colliderDisplayers: function(viewports) { return getViewports(viewports, editorConfig.getGizmoCollidersBackLayerName()); },
+	  					colliderHandles: function(viewports) { return getViewports(viewports, editorConfig.getGizmoCollidersFrontLayerName()); },
+	  					
+	  					rotationDisplayers: function(viewports) { return getViewports(viewports, editorConfig.getGizmoRotationBackLayerName()); },
+	  					rotationHandles: function(viewports) { return getViewports(viewports, editorConfig.getGizmoRotationFrontLayerName()); },
+
+	  					scaleDisplayers: function(viewports) { return getViewports(viewports, editorConfig.getGizmoScaleBackLayerName()); },
+	  					scaleHandles: function(viewports) { return getViewports(viewports, editorConfig.getGizmoScaleFrontLayerName()); }
 	  				},
 
 	  				getIconId: function(parent) {
@@ -34,20 +39,49 @@ define(function(require) {
 	  				},
 
 	  				ids: {
-	  					circleHandle: gizmoBundle.getCircleHandleId(),
-	  					circleDisplay: gizmoBundle.getCircleDisplayId(),
-	  					polygonHandle: gizmoBundle.getPolygonHandleId(),
-	  					polygonDisplay: gizmoBundle.getPolygonDisplayId(),
-	  					fixedPolygonHandle: gizmoBundle.getFixedPolygonHandleId(),
-	  					fixedPolygonDisplay: gizmoBundle.getFixedPolygonDisplayId(),
 	  					colliderGizmo: gizmoBundle.getColliderGizmoId(),
 	  					iconGizmo: gizmoBundle.getIconGizmoId(),
 	  					rotationGizmo: gizmoBundle.getRotationGizmoId(),
+	  					scaleGizmo: gizmoBundle.getScaleGizmoId(),
+
+	  					circleHandle: gizmoBundle.getCircleHandleId(),
+	  					circleDisplay: gizmoBundle.getCircleDisplayId(),
+	  					
+	  					polygonHandle: gizmoBundle.getPolygonHandleId(),
+	  					polygonDisplay: gizmoBundle.getPolygonDisplayId(),
+	  					
+	  					fixedPolygonHandle: gizmoBundle.getFixedPolygonHandleId(),
+	  					fixedPolygonDisplay: gizmoBundle.getFixedPolygonDisplayId(),
+	  						  					
 	  					rotationHandle: gizmoBundle.getRotationHandleId(),
-	  					rotationDisplay: gizmoBundle.getRotationDisplayId()
+	  					rotationDisplay: gizmoBundle.getRotationDisplayId(),
+
+	  					scaleHandle: gizmoBundle.getScaleHandleId(),
+	  					scaleDisplay: gizmoBundle.getScaleDisplayId()
 	  				}
 	  			}
 	  		}, this);
+	    },
+
+	    addScaleGizmo: function(parent) {
+	    	var options = this.gizmoOptions();
+	    	var objects = [];
+
+	    	var viewports = parent.getViewportList();
+
+			var handle = gb.addChildTo(parent, options.ids.scaleHandle, options.viewports.scaleHandles(viewports), null, 'create');
+			var display = gb.addChildTo(parent, options.ids.scaleDisplay, options.viewports.scaleDisplayers(viewports), null, 'create');
+
+			handle.gizmoType = "ScaleHandle";
+			display.gizmoType = "ScaleDisplay";
+			
+			handle.hide();
+			display.hide();
+
+			objects.push(handle);
+			objects.push(display);
+
+			return objects;
 	    },
 
 	    addIconGizmo: function(parent) {
@@ -184,6 +218,14 @@ define(function(require) {
 					gb.addToViewports(go, options.viewports.rotationDisplayers(viewports));
 				}
 
+				if (go.gizmoType == "ScaleHandle") {
+					gb.addToViewports(go, options.viewports.scaleHandles(viewports));
+				}
+
+				if (go.gizmoType == "ScaleDisplay") {
+					gb.addToViewports(go, options.viewports.scaleDisplayers(viewports));
+				}
+
 				if (go.gizmoType == "Icon") {
 					gb.addToViewports(go, options.viewports.icons(viewports));
 				}
@@ -212,6 +254,14 @@ define(function(require) {
 	    			gb.removeFromViewports(go, options.viewports.rotationDisplayers(viewports));
 	    		}
 
+	    		if (go.gizmoType == "ScaleHandle") {
+					gb.removeFromViewports(go, options.viewports.scaleHandles(viewports));
+				}
+
+				if (go.gizmoType == "ScaleDisplay") {
+					gb.removeFromViewports(go, options.viewports.scaleDisplayers(viewports));
+				}
+
 	    		if (go.gizmoType == "Icon") {
 	    			gb.removeFromViewports(go, options.viewports.icons(viewports));
 	    		}
@@ -239,6 +289,11 @@ define(function(require) {
 			// Add the Rotation Gizmo if the game object has a renderer
 			if (object.renderer) {
 				gb.addComponentTo(object, options.ids.rotationGizmo);	
+			}
+
+			// Add the Scale Gizmo if the game object has a renderer
+			if (object.renderer) {
+				gb.addComponentTo(object, options.ids.scaleGizmo);	
 			}
 		}
 

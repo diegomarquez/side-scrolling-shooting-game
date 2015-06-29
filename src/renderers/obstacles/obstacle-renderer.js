@@ -20,7 +20,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Store current context
 			context.save();
 			// Reset transformation
-			context.setTransform(1, 0, 0, 1, 0, 0);			
+			context.setTransform(1, 0, 0, 1, 0, 0);     
 			// Apply transformations for the current [viewport](@@viewport@@)
 			viewport.transformContext(context);
 			// Applying transformations of parent
@@ -59,15 +59,16 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			m = this.parent.matrix;
 			// Applying transformations of parent
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
+			context.translate(-0.5, -0.5);
 
 			// Top Left 
-			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY(), draw, 'moveTo');
+			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY(), 'moveTo');
 			// Top Right
-			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY(), draw, 'lineTo');
+			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY(), 'lineTo');
 			// Bottom Right
-			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY() + this.rendererHeight(), draw, 'lineTo');
+			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY() + this.rendererHeight(), 'lineTo');
 			// Bottom Left
-			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY() + this.rendererHeight(), draw, 'lineTo');
+			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY() + this.rendererHeight(), 'lineTo');
 
 			context.closePath();
 
@@ -76,36 +77,36 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		}
 	});
 
-	var drawLineAndPoint = function(context, offsetX, offsetY, draw, lineMethod) {
+	var drawLineAndPoint = function(context, offsetX, offsetY, lineMethod) {
 		context.save();
-		context[lineMethod](offsetX, offsetY);
+		context[lineMethod](Math.round(offsetX), Math.round(offsetY));
 		context.restore();
 	}
 
 	var getOffset = function (points, axis) {
 		var min = points[0][axis];
-    var max = points[0][axis];
+		var max = points[0][axis];
 
-    for (var i=1; i < points.length; i++) {
-      min = Math.min(min, points[i][axis]);
-      max = Math.max(max, points[i][axis]);
-    }
+		for (var i=1; i < points.length; i++) {
+			min = Math.min(min, points[i][axis]);
+			max = Math.max(max, points[i][axis]);
+		}
 
-    return min;
+		return min;
 	}
 
 	var getPolygonSize = function (points, axis) {
 		axis = axis == 'width' ? 'x' : 'y'; 
 
-	  var min = points[0][axis];
-    var max = points[0][axis];
+		var min = points[0][axis];
+		var max = points[0][axis];
 
-    for (var i=1; i < points.length; i++) {
-      min = Math.min(min, points[i][axis]);
-      max = Math.max(max, points[i][axis]);
-    }
+		for (var i=1; i < points.length; i++) {
+			min = Math.min(min, points[i][axis]);
+			max = Math.max(max, points[i][axis]);
+		}
 
-    return max - min;
+		return max - min;
 	}
 
 	return ObstacleRenderer;

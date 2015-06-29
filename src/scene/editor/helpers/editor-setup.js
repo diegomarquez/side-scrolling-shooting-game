@@ -92,16 +92,20 @@ define(function(require) {
 			mainViewport.addLayer(editorConfig.getDefaultLayerName());
 			mainViewport.addLayer(editorConfig.getOutlineLayerName());
 
-			mainViewport.addLayer(editorConfig.getGizmoFarBackLayerName());
-			mainViewport.addLayer(editorConfig.getGizmoBackLayerName());
-			mainViewport.addLayer(editorConfig.getGizmoMiddleLayerName());
-			mainViewport.addLayer(editorConfig.getGizmoFrontLayerName());
-			mainViewport.addLayer(editorConfig.getGizmoCloseFrontLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoCollidersBackLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoCollidersFrontLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoRotationBackLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoRotationFrontLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoScaleBackLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoScaleFrontLayerName());
+			mainViewport.addLayer(editorConfig.getGizmoIconFrontLayerName());
 
-			mainViewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
-			mainViewport.hideLayer(editorConfig.getGizmoFrontLayerName());
-			mainViewport.hideLayer(editorConfig.getGizmoCloseFrontLayerName());
-			mainViewport.hideLayer(editorConfig.getGizmoFarBackLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoCollidersBackLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoCollidersFrontLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoRotationBackLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoRotationFrontLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoScaleBackLayerName());
+			mainViewport.hideLayer(editorConfig.getGizmoScaleFrontLayerName());
 		},
 
 		gridViewport: function() {

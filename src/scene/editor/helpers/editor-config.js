@@ -2,12 +2,22 @@ define(function(require) {
 	var GRID_WIDTH = 12;
 	var GRID_HEIGHT = 12;
 	var EDITOR_ONLY_VIEWPORTS = ['Grid'];
-	var EDITOR_ONLY_LAYERS = ['Outline', 'GizmoCloseFront', 'GizmoFront', 'GizmoMiddle', 'GizmoBack', 'GizmoFarBack'];
+	var EDITOR_ONLY_LAYERS = [
+		'Outline', 
+		'GizmoIconFront', 
+		'GizmoCollidersBack', 
+		'GizmoCollidersFront', 
+		'GizmoRotationBack', 
+		'GizmoRotationFront', 
+		'GizmoScaleFront', 
+		'GizmoScaleBack'
+	];
 	
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
 	var colliderGizmoGameObjects = null;
 	var rotationGizmoGameObjects = null;
+	var scaleGizmoGameObjects = null;
 
 	var cachedGridSize = { width: GRID_WIDTH, height: GRID_HEIGHT };
 	var cachedGridCellSize = { width: null, height: null };
@@ -17,11 +27,19 @@ define(function(require) {
 
 		getDefaultLayerName: function() { return 'Front'; },
 		getOutlineLayerName: function() { return EDITOR_ONLY_LAYERS[0]; },
-		getGizmoCloseFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
-		getGizmoFrontLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
-		getGizmoMiddleLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
-		getGizmoBackLayerName: function() { return EDITOR_ONLY_LAYERS[4]; },
-		getGizmoFarBackLayerName: function() { return EDITOR_ONLY_LAYERS[5]; },
+
+		// Gizmo Layers
+		getGizmoIconFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
+		
+		getGizmoCollidersBackLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
+		getGizmoCollidersFrontLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
+		
+		getGizmoRotationBackLayerName: function() { return EDITOR_ONLY_LAYERS[4]; },
+		getGizmoRotationFrontLayerName: function() { return EDITOR_ONLY_LAYERS[5]; },
+		
+		getGizmoScaleBackLayerName: function() { return EDITOR_ONLY_LAYERS[6]; },
+		getGizmoScaleFrontLayerName: function() { return EDITOR_ONLY_LAYERS[7]; },
+		// Gizmo Layers
 
 		getDefaultFrontLayerName: function() { return 'Front'; },
 		getDefaultMiddleLayerName: function() { return 'Middle'; },
@@ -33,6 +51,9 @@ define(function(require) {
 		getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
 
 		getColliderGizmoId: function() { return this.getEditorOnlyComponents()[0]; },
+		getIconGizmoId: function() { return this.getEditorOnlyComponents()[1]; },
+		getRotatioGizmoId: function() { return this.getEditorOnlyComponents()[2]; },
+		getScaleGizmoId: function() { return this.getEditorOnlyComponents()[3]; },
 
 		getGridSize: function() {
 			return cachedGridSize;
@@ -83,6 +104,10 @@ define(function(require) {
 
 		isRotationGizmoGameObject: function(id) {
 			return checkExistance(id, this.getRotationGizmoGameObjects());
+		},
+
+		isScaleGizmoGameObject: function(id) {
+			return checkExistance(id, this.getScaleGizmoGameObjects());
 		},
 
 		isEditorComponent: function(id) {
@@ -137,7 +162,8 @@ define(function(require) {
 			editorOnlyComponents = [
 				gizmoBundle.getColliderGizmoId(),
 				gizmoBundle.getIconGizmoId(),
-				gizmoBundle.getRotationGizmoId()
+				gizmoBundle.getRotationGizmoId(),
+				gizmoBundle.getScaleGizmoId(),
 			]
 
 			return editorOnlyComponents;
@@ -161,6 +187,7 @@ define(function(require) {
 
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getColliderGizmoGameObjects());
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getRotationGizmoGameObjects());
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getScaleGizmoGameObjects());
 
 			return editorOnlyGameObjects;     
 		},
@@ -197,6 +224,21 @@ define(function(require) {
 			];
 
 			return rotationGizmoGameObjects;
+		},
+
+		getScaleGizmoGameObjects: function() {
+			if (scaleGizmoGameObjects) {
+				return scaleGizmoGameObjects;
+			}
+
+			var gizmoBundle = require('gizmo-bundle');
+
+			scaleGizmoGameObjects = [
+				gizmoBundle.getScaleHandleId(),
+				gizmoBundle.getScaleDisplayId()
+			];
+
+			return scaleGizmoGameObjects;
 		}
 	});
 

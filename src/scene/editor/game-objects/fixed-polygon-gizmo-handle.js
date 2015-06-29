@@ -7,7 +7,7 @@ define(function (require) {
 	var startOffsetX = null;
 	var startOffsetY = null;
 
-	var FixedPolygonGizmoHandle = require("game-object").extend({		
+	var FixedPolygonGizmoHandle = require("fixed-gizmo-handle").extend({		
 		init: function() {
 			this._super();
 
@@ -45,13 +45,8 @@ define(function (require) {
 			});
 
 			this.on(this.MOUSE_DRAG, this, function(mouseData) {
-				adjustForRotation(
-					this.parent,
-					mouseData.go.x,
-					mouseData.go.y,
-					parentCollider.Points[this.pointIndex],
-					1
-				);
+				parentCollider.Points[this.pointIndex].x = mouseData.go.x;
+				parentCollider.Points[this.pointIndex].y = mouseData.go.y;
 
 				if (require("snap-to-grid-value").get()) {
 					mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
@@ -62,7 +57,7 @@ define(function (require) {
 			this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
 				var polik = require("polik");
 
-				var convertedPoints = polik.convertCoordinates(parentCollider.Points);
+				var convertedPoints = polik.convertCoordinates2(parentCollider.Points);
 
 				if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
 					parentCollider.Points[this.pointIndex].x = startX;
@@ -93,7 +88,7 @@ define(function (require) {
 	});
 
 	var adjustForRotation = function(go, x, y, r, sign) {
-		matrix = go.getMatrix(matrix);
+		matrix = go.getMatrix();
 
 		var rotation = (matrix.decompose(transform).rotation * sign) * (Math.PI / 180);
 		var cosAngle = Math.cos(rotation);

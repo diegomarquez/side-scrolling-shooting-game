@@ -75,7 +75,7 @@ define(function(require) {
 
 						context.save();
 
-						context.translate(-screenOffsetX + 0.5, -screenOffsetY + 0.5);
+						context.translate(-screenOffsetX, -screenOffsetY);
 						context.lineWidth = 2;
 						context.strokeStyle = "#f0ad4e";
 

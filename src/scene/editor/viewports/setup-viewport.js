@@ -1,54 +1,58 @@
 define(function(require) {
-  
-  var gb = require('gb');
-  var editorConfig = require('editor-config');
-  var outlineBundle = require('outline-bundle');
-  var viewportOutline = require('viewport-outline');
+	
+	var gb = require('gb');
+	var editorConfig = require('editor-config');
+	var outlineBundle = require('outline-bundle');
+	var viewportOutline = require('viewport-outline');
 
-  var SetupViewport = require('class').extend({
-    init: function() {},
+	var SetupViewport = require('class').extend({
+		init: function() {},
 
-    setup: function(viewportName) {      
-      var viewport = gb.viewports.get(viewportName);
+		setup: function(viewportName) {      
+			var viewport = gb.viewports.get(viewportName);
 
-      viewport.addLayer(editorConfig.getDefaultLayerName());
-      viewport.addLayer(editorConfig.getOutlineLayerName());
-      
-      viewport.addLayer(editorConfig.getGizmoFarBackLayerName());
-      viewport.addLayer(editorConfig.getGizmoBackLayerName());
-      viewport.addLayer(editorConfig.getGizmoMiddleLayerName());
-      viewport.addLayer(editorConfig.getGizmoFrontLayerName());
-      viewport.addLayer(editorConfig.getGizmoCloseFrontLayerName());
+			viewport.addLayer(editorConfig.getDefaultLayerName());
+			viewport.addLayer(editorConfig.getOutlineLayerName());
 
-      viewport.hideLayer(editorConfig.getGizmoMiddleLayerName());
-      viewport.hideLayer(editorConfig.getGizmoFrontLayerName());
-      viewport.hideLayer(editorConfig.getGizmoCloseFrontLayerName());
-      viewport.hideLayer(editorConfig.getGizmoFarBackLayerName());
+			viewport.addLayer(editorConfig.getGizmoCollidersBackLayerName());
+			viewport.addLayer(editorConfig.getGizmoCollidersFrontLayerName());
+			viewport.addLayer(editorConfig.getGizmoRotationBackLayerName());
+			viewport.addLayer(editorConfig.getGizmoRotationFrontLayerName());
+			viewport.addLayer(editorConfig.getGizmoScaleBackLayerName());
+			viewport.addLayer(editorConfig.getGizmoScaleFrontLayerName());
+			viewport.addLayer(editorConfig.getGizmoIconFrontLayerName());
 
-      return viewport;
-    },
+			viewport.hideLayer(editorConfig.getGizmoCollidersBackLayerName());
+			viewport.hideLayer(editorConfig.getGizmoCollidersFrontLayerName());
+			viewport.hideLayer(editorConfig.getGizmoRotationBackLayerName());
+			viewport.hideLayer(editorConfig.getGizmoRotationFrontLayerName());
+			viewport.hideLayer(editorConfig.getGizmoScaleBackLayerName());
+			viewport.hideLayer(editorConfig.getGizmoScaleFrontLayerName());
 
-    addOutline: function(viewportName) {
-      viewportOutline.add({
-        viewportName: viewportName,
-        gameObjectId: outlineBundle.getOutlineId(),
-        updateGroup: editorConfig.getDefaultGroupName(),
-        viewports: [
-          {
-            viewport: viewportName, 
-            layer: editorConfig.getOutlineLayerName()
-          }
-        ],
-        gameObjectArguments: {
-          viewport: gb.viewports.get(viewportName)
-        } 
-      });
-    },
+			return viewport;
+		},
 
-    removeOutline: function(viewportName) {
-      viewportOutline.remove(viewportName);
-    }
-  });
+		addOutline: function(viewportName) {
+			viewportOutline.add({
+				viewportName: viewportName,
+				gameObjectId: outlineBundle.getOutlineId(),
+				updateGroup: editorConfig.getDefaultGroupName(),
+				viewports: [
+					{
+						viewport: viewportName, 
+						layer: editorConfig.getOutlineLayerName()
+					}
+				],
+				gameObjectArguments: {
+					viewport: gb.viewports.get(viewportName)
+				} 
+			});
+		},
 
-  return new SetupViewport;
+		removeOutline: function(viewportName) {
+			viewportOutline.remove(viewportName);
+		}
+	});
+
+	return new SetupViewport;
 });

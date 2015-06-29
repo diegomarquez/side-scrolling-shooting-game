@@ -11,7 +11,7 @@ define(function(require) {
 	var boss1Renderer = require('boss-1-renderer');
 	var boss1CablesRenderer = require('boss-1-cables-renderer');
 
-	var Bullets = require("bundle").extend({
+	var Boss = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createConfiguration("Activate_Boss_On_View", commonBundle.getActivateOnViewPoolId());
 
@@ -26,6 +26,9 @@ define(function(require) {
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
 			this.componentPool.createConfiguration("Boss_1_Cables_Collider", commonBundle.getPolygonColliderPoolId())
+				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
+
+			this.componentPool.createConfiguration("Icon_Collider", commonBundle.getFixedPolygonColliderPoolId())
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
 			this.componentPool.createConfiguration("Boss_1_Renderer", 'boss-1-renderer');
@@ -50,6 +53,7 @@ define(function(require) {
 					scaleX: 0.4,
 					scaleY: 0.4
 				})
+				.addComponent("Icon_Collider")
 				.setRenderer("BiohazardIcon_Renderer")
 				.childOnly();
 
@@ -89,13 +93,13 @@ define(function(require) {
 
 	var getPolygon = function(vertexes, radius) {
 		var result = [];
-		var step = (Math.PI * 2)/vertexes;
+		var step = (Math.PI * 2) / vertexes;
 
 		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
-			point.x = Math.sin(step*i) * radius; 
-			point.y = Math.cos(step*i) * radius;
+			point.x = Math.cos(step*i) * radius; 
+			point.y = Math.sin(step*i) * radius;
 
 			result.push(point);
 		}
@@ -103,5 +107,5 @@ define(function(require) {
 		return result;
 	}
 
-	return new Bullets();
+	return new Boss();
 });
