@@ -7,20 +7,6 @@ define(function() {
 		result.push(p[0].x);
 		result.push(p[0].y * -1);
 
-		for (var i=p.length-1; i > 0; i--) {
-			result.push(p[i].x);
-			result.push(p[i].y * -1);
-		}
-
-		return result;
-	}
-
-	PolyK.convertCoordinates2 = function(p) {
-		var result = [];
-
-		result.push(p[0].x);
-		result.push(p[0].y * -1);
-
 		for (var i=1; i < p.length; i++) {
 			result.push(p[i].x);
 			result.push(p[i].y * -1);

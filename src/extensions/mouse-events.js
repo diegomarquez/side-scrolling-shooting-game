@@ -211,7 +211,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 		
 		var initX, initY;
 
-		if (mouseData.go.needsDraggingAdjustment) {
+		if (!mouseData.go.isIndependantWhenDragging) {
 			adjustedCoordinates = adjustToParentRotationMatrix(
 				mouseData.go.parent.getMatrix(), 
 				mouseData.go.X, 
@@ -246,7 +246,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			}
 
 			// Get difference between last and current mouse position
-			if (mouseData.go.needsDraggingAdjustment) {
+			if (!mouseData.go.isIndependantWhenDragging) {
 				var r = mouseData.go.parent.matrix.decompose(t);
 
 		      	deltaX = (event.pageX - lastX) / r.scaleX; 
@@ -265,7 +265,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			totalDeltaX += deltaX;
 			totalDeltaY += deltaY;
 
-			if (mouseData.go.needsDraggingAdjustment) {
+			if (!mouseData.go.isIndependantWhenDragging) {
 				// Account for the rotation of the parent when dragging
 				adjustedCoordinates = adjustToParentRotationMatrix(
 					mouseData.go.parent.getMatrix(), 

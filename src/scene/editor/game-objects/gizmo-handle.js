@@ -3,7 +3,6 @@ define(["game-object"], function(GameObject) {
 	var GizmoHandle = GameObject.extend({		
 		init: function() {
 			this._super();
-			this.needsDraggingAdjustment = true;
 		},
 
 		getMatrix: function() {

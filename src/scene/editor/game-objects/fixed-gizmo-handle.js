@@ -3,6 +3,8 @@ define(["game-object"], function(GameObject) {
 	var FixedGizmoHandle = GameObject.extend({		
 		init: function() {
 			this._super();
+
+			this.isIndependantWhenDragging = true;
 		},
 
 		getMatrix: function() {

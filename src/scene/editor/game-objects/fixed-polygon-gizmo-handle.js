@@ -57,7 +57,7 @@ define(function (require) {
 			this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
 				var polik = require("polik");
 
-				var convertedPoints = polik.convertCoordinates2(parentCollider.Points);
+				var convertedPoints = polik.convertCoordinates(parentCollider.Points);
 
 				if (!polik.IsConvex(convertedPoints) || !polik.IsSimple(convertedPoints)) {
 					parentCollider.Points[this.pointIndex].x = startX;

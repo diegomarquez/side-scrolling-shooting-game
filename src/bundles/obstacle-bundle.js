@@ -33,13 +33,13 @@ define(function(require) {
 
 	var getPolygon = function(vertexes, radius) {
 		var result = [];
-		var step = (Math.PI * 2)/vertexes;
+		var step = (Math.PI * 2) / vertexes;
 
 		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
-			point.x = Math.sin(step*i) * radius; 
-			point.y = Math.cos(step*i) * radius;
+			point.x = Math.cos(step*i) * radius; 
+			point.y = Math.sin(step*i) * radius;
 
 			result.push(point);
 		}
