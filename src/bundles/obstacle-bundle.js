@@ -38,8 +38,8 @@ define(function(require) {
 		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
-			point.x = Math.cos(step*i) * radius; 
-			point.y = Math.sin(step*i) * radius;
+			point.x = Math.sin(step*i) * radius; 
+			point.y = Math.cos(step*i) * radius;
 
 			result.push(point);
 		}
