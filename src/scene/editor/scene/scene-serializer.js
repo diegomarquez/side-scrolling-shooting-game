@@ -136,8 +136,8 @@ define(function(require) {
 	}
 
 	var saveAllPropertiesToObject = function(object, to, prop) {
-		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
-			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation });
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
+			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation, scaleX: object.scaleX, scaleY: object.scaleY });
 		} else {
 			to[prop] = util.shallow_merge_many(object.args, object.Attributes);
 		}
@@ -146,10 +146,10 @@ define(function(require) {
 	var saveAllPropertiesToArray = function(object, array, index) {
 		var attributes; 
 
-		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
 			attributes = util.shallow_merge_many(object.args, object.Attributes);
 		} else {
-			attributes = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation });	
+			attributes = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation, scaleX: object.scaleX, scaleY: object.scaleY });	
 		}
 
 		array.push({attributes: attributes, indexInParent: index});
@@ -162,13 +162,15 @@ define(function(require) {
 			to[prop] = changes;
 		}
 
-		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined) {
+		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
 			if (!to[prop]) 
 				to[prop] = {};
 
 			to[prop].x = object.x;
 			to[prop].y = object.y;
 			to[prop].rotation = object.rotation;
+			to[prop].scaleX = object.scaleX;
+			to[prop].scaleY = object.scaleY;
 		}
 	}
 
