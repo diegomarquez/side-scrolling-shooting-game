@@ -5,6 +5,8 @@ define(function (require) {
 	var selfTransform = {};
 	var parentTransform = {};
 
+	var util = require('util');
+
 	var ScaleGizmoHandle = require("fixed-gizmo-handle").extend({		
 		init: function() {
 			this._super();
@@ -14,7 +16,7 @@ define(function (require) {
 			this._super();
 
 			this.x = 0;
-			this.y = 0;
+			this.y = 50;
 
 			this.startDistance = 0;
 			this.currentDistance = 0;
@@ -51,8 +53,9 @@ define(function (require) {
 				var deltaY = (selfTransform.y - parentTransform.y);
 
 				this.currentDistance = Math.round(Math.sqrt(deltaX*deltaX + deltaY*deltaY));
+				this.increment = (this.currentDistance - this.startDistance);
 
-				this.increment = (this.currentDistance - this.startDistance) * (1/100);
+				this.increment = util.map(this.increment, 0, this.startDistance, 0, this.startScaleX); 
 
 				this.parent.scaleX = this.startScaleX + this.increment;
 				this.parent.scaleY = this.startScaleY + this.increment;
