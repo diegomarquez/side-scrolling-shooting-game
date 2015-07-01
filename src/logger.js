@@ -1,6 +1,16 @@
 define(function(require) {
 	var gb = require('gb');
 
+	var displayElement = document.createElement('div');
+
+	var scroll = function() {
+		var x = 5 + gb.game.mainContainer.scrollLeft;
+		var y = gb.canvas.clientTop + 5 + gb.game.mainContainer.scrollTop;
+
+		displayElement.style.top = y + 'px';
+		displayElement.style.left = x + 'px';
+	}
+
 	var Logger = require('extension').extend({
 		init: function() {},
 
@@ -15,12 +25,12 @@ define(function(require) {
 				hide = args.hide || false;
 			}
 
-			displayElement = document.createElement('div');
 			displayElement.id = 'logger';
 			displayElement.style.position = 'absolute';
 			displayElement.style.top = (gb.canvas.clientTop + 5).toString() + 'px';
 			displayElement.style.left = '5' + 'px';
 			displayElement.style.pointerEvents = 'none';
+			displayElement.style.whiteSpace = 'nowrap';
 
 			var infoContainer = document.createElement('div');
 			infoContainer.id = 'logger-info-container';
@@ -36,21 +46,18 @@ define(function(require) {
 		},
 
 		toggle: function() {
-			var infoContainer = document.getElementById('logger-info-container');
-
-			if (infoContainer.style.display == 'block') {
-				infoContainer.style.display = 'none';
-			} else {
-				infoContainer.style.display = 'block';
-			}
+			document.getElementById('logger-info-container').style.display == 'block' ? this.hide() : this.show();
 		},
 
 		show: function() {
 			document.getElementById('logger-info-container').style.display = 'block';
+			gb.game.mainContainer.addEventListener('scroll', scroll);
+			scroll();
 		},
 
 		hide: function() {
 			document.getElementById('logger-info-container').style.display = 'none';
+			gb.game.mainContainer.removeEventListener('scroll', scroll);
 		},
 
 		success: function(message) {
