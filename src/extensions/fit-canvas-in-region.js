@@ -25,7 +25,7 @@ define(function(require) {
 
 		fit: function() {
 			gb.game.WIDTH = gb.canvas.parentNode.clientWidth;
-			gb.game.HEIGHT = gb.canvas.parentNode.clientHeight - 8;
+			gb.game.HEIGHT = gb.canvas.parentNode.clientHeight;
 		},
 
 		destroy: function() {
