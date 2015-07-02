@@ -1,7 +1,7 @@
 define(function (require) {
 	
 	var r = {};
-	var m = null;
+	var m = new (require("matrix-3x3"))();
 	var startOffsetX = null;
 	var startOffsetY = null;
 	var stepX = null;
@@ -10,8 +10,6 @@ define(function (require) {
 	var IconGizmoHandle = require("gizmo-handle").extend({		
 		init: function() {
 			this._super();
-
-			m = new (require("matrix-3x3"))();
 		},
 
 		added: function() { 

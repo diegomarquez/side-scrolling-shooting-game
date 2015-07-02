@@ -1,12 +1,13 @@
 define(function (require) {
 	
-	var matrix = null;
 	var transform = {};
+	var m = new (require("matrix-3x3"))();
+	var r = {};
 	var stepX = null;
 	var stepY = null;
 	var startOffsetX = null;
 	var startOffsetY = null;
-
+		
 	var FixedPolygonGizmoHandle = require("fixed-gizmo-handle").extend({		
 		init: function() {
 			this._super();
@@ -30,8 +31,8 @@ define(function (require) {
 			var startX, startY;
 
 			this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
-				stepX = require("editor-config").getGridCellSize().width;
-				stepY = require("editor-config").getGridCellSize().height;
+				stepX = Number(require("editor-config").getGridCellSize().width.toFixed(2));
+				stepY = Number(require("editor-config").getGridCellSize().height.toFixed(2));
 
 				if (require("snap-to-grid-value").get()) {
 					r = this.parent.getTransform(r, m);
@@ -45,13 +46,13 @@ define(function (require) {
 			});
 
 			this.on(this.MOUSE_DRAG, this, function(mouseData) {
+				if (require("snap-to-grid-value").get()) {
+					mouseData.go.x = startOffsetX + (stepX * Math.floor(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
+					mouseData.go.y = startOffsetY + (stepY * Math.floor(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
+				}
+
 				parentCollider.Points[this.pointIndex].x = mouseData.go.x;
 				parentCollider.Points[this.pointIndex].y = mouseData.go.y;
-
-				if (require("snap-to-grid-value").get()) {
-					mouseData.go.x = startOffsetX + (stepX * Math.round(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
-					mouseData.go.y = startOffsetY + (stepY * Math.round(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));
-				}
 			});
 
 			this.on(this.MOUSE_DRAG_END, this, function(mouseData) {
@@ -88,9 +89,7 @@ define(function (require) {
 	});
 
 	var adjustForRotation = function(go, x, y, r, sign) {
-		matrix = go.getMatrix();
-
-		var rotation = (matrix.decompose(transform).rotation * sign) * (Math.PI / 180);
+		var rotation = (go.getMatrix().decompose(transform).rotation * sign) * (Math.PI / 180);
 		var cosAngle = Math.cos(rotation);
 		var sinAngle = Math.sin(rotation);
 
