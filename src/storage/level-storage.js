@@ -19,12 +19,12 @@ define(function(require) {
 		},
 
 		getLevel: function(index) {
-			return levels[index].get();
+			return JSON.parse(JSON.stringify(levels[index].get()));
 		},
 
 		getLevelFromName: function(name) {
 			for (var i = 0; i < levels.length; i++) {
-				var level = levels[i].get();
+				var level = this.getLevel(i);
 
 				if (level['name'] === name.toLowerCase()) {
 					return level;
