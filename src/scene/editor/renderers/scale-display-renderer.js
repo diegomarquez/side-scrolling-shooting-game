@@ -1,6 +1,8 @@
-define(["path-renderer", "draw"], function(PathRenderer, Draw) {
+define(["path-renderer", "draw", "vector-2D"], function(PathRenderer, Draw, Vector2D) {
 	var m = null;
 	var t = {};
+
+	var center = new Vector2D();
 
 	var ScaleDisplayRenderer = PathRenderer.extend({
 		init: function() {
@@ -13,6 +15,8 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			this.name = 'scale-display-renderer';
 
 			this._super();
+
+			this.handle = this.parent.parent.findChildren().firstWithType("ScaleGizmoHandle");
 		},
 		
 		drawPath: function(context, viewport) {
@@ -31,7 +35,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			t = m.decompose(t);
 			context.moveTo(t.x, t.y);
 
-			m = this.parent.parent.findChildren().firstWithType("ScaleGizmoHandle").getMatrix();
+			m = this.handle.getMatrix();		
 			t = m.decompose(t);
 			context.lineTo(t.x, t.y);
 	
@@ -41,12 +45,12 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			context.restore();
 		},
 
-		rendererWidth: function() { 
-			return 1000;
+		rendererWidth: function() {
+			return this.handle.x / this.handle.parent.getMatrix().decompose(t).scaleX;
 		},
 		
 		rendererHeight: function() { 
-			return 1000;
+			return this.handle.y / this.handle.parent.getMatrix().decompose(t).scaleY;
 		}
 	});
 

@@ -98,11 +98,11 @@ define(function(require) {
 				.setRenderer('FixedPolygonGizmoDisplayRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getRotationDisplayId(), commonBundle.getGameObjectPoolId())
-				.args( { skipDebug: true } )
+				.args( { skipDebug: false } )
 				.setRenderer('RotationDisplayRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getScaleDisplayId(), commonBundle.getGameObjectPoolId())
-				.args( { skipDebug: true } )
+				.args( { skipDebug: false } )
 				.setRenderer('ScaleDisplayRenderer');
 		},
 
