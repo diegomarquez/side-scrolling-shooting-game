@@ -65,23 +65,23 @@ define(function(require) {
 
 			// Handle configurations
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getPolygonHandleId(), "PolygonGizmoHandle")
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getFixedPolygonHandleId(), "FixedPolygonGizmoHandle")
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getRotationHandleId(), "RotationGizmoHandle")
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getScaleHandleId(), "ScaleGizmoHandle")
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('GizmoHandleRenderer');
 
 			// Gizmo display configurations
@@ -98,11 +98,11 @@ define(function(require) {
 				.setRenderer('FixedPolygonGizmoDisplayRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getRotationDisplayId(), commonBundle.getGameObjectPoolId())
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('RotationDisplayRenderer');
 
 			this.gameObjectPool.createConfiguration(this.getScaleDisplayId(), commonBundle.getGameObjectPoolId())
-				.args( { skipDebug: false } )
+				.args( { skipDebug: true } )
 				.setRenderer('ScaleDisplayRenderer');
 		},
 

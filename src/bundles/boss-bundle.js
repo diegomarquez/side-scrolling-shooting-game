@@ -28,9 +28,6 @@ define(function(require) {
 			this.componentPool.createConfiguration("Boss_1_Cables_Collider", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
-			this.componentPool.createConfiguration("Icon_Collider", commonBundle.getFixedPolygonColliderPoolId())
-				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
-
 			this.componentPool.createConfiguration("Boss_1_Renderer", 'boss-1-renderer');
 			this.componentPool.createConfiguration("Boss_1_Cables_Renderer", 'boss-1-cables-renderer')
 				.args({
@@ -52,9 +49,7 @@ define(function(require) {
 				.args({
 					scaleX: 0.4,
 					scaleY: 0.4
-				})
-				.addComponent("Icon_Collider")
-				.setRenderer("BiohazardIcon_Renderer")
+				}
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
