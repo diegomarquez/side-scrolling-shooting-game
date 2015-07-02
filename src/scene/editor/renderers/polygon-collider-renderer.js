@@ -24,11 +24,11 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			viewport.transformContext(context);
 			
 			// Get parent game object transformation matrix
-			m = this.parent.matrix;
+			m = this.parent.getMatrix();
 
 			// Drawing code
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
-			Draw.polygon(context, 0, 0, this.parent.parentCollider.Points, null, "#00FF00", 2);
+			Draw.polygon(context, 0, 0, this.parent.parentCollider.Points, null, "#00FF00", 2/m.a);
 
 			// Restore original context
 			context.restore();

@@ -15,7 +15,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		},
 		
 		drawPath: function(context, viewport) {
-			m = this.parent.matrix;
+			m = this.parent.getMatrix();
 
 			// Store current context
 			context.save();
@@ -26,7 +26,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Applying transformations of parent
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
 			// Drawing code
-			Draw.polygon(context, 0, 0, this.parent.findComponents().firstWithProp('collider').Points, null, "#FFFFFF", 2);
+			Draw.polygon(context, 0, 0, this.parent.findComponents().firstWithProp('collider').Points, null, "#FFFFFF", 2/m.a);
 			// Restore original context
 			context.restore();
 		},
