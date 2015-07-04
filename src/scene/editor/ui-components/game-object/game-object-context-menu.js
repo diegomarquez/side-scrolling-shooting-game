@@ -7,12 +7,16 @@ define(function(require) {
 	var configurationCreator = require('configuration-creator');
 	var gameObjectCloner = require('game-object-cloner');
 
+	var newTypeDialog = require('new-type-dialog');
+
 	var GameObjectContextMenu = require('ui-component').extend({
 		init: function() {
-			
+			this.newTypeDialog = null;			
 		},
 
 		create: function() {
+			var self = this;
+
 			var contextMenu = (new menuUI()).create({
 				id: 'game-object-context-menu',
 				options: [
@@ -31,11 +35,25 @@ define(function(require) {
 							{
 								name: 'Type',
 								icon: 'ui-icon-bullet',
-								click: function() {                   
-									// Create a new configuration for the game object that was clicked on
-									var newConfigurationId = configurationCreator.createFromGameObject(menu.go, {force: true});
-									// Replace the original with a new one created with the new configuration
-									replaceGameObject(menu.go, newConfigurationId); 
+								click: function() {
+									self.newTypeDialog = new newTypeDialog();
+
+									var go = menu.go;
+
+									// Show the dialog to edit the new configuratio's name
+									self.newTypeDialog.open(configurationCreator.getNewConfigurationName(go), function(configurationName) {
+										// Create a new configuration for the game object that was clicked on
+										configurationCreator.createFromGameObject(
+											go, 
+											{
+												force: true, 
+												configurationId: configurationName
+											}
+										);
+										// Replace the original with a new one created with the new configuration
+										replaceGameObject(go, configurationName);
+									});
+
 								}
 							}
 						]
@@ -194,7 +212,7 @@ define(function(require) {
 								}
 							});
 
-							if (menu.go.typeId.match('->')) {
+							if (gb.goPool.isConfigurationCustom(menu.go.typeId)) {
 								scrapOptions.push({
 									name: 'Type',
 									icon: 'ui-icon-bullet',

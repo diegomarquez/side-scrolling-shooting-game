@@ -7,14 +7,14 @@ define(function(require){
   var game = gb.game;
 
   game.add_extension(require("patch-collider-components"));
+  game.add_extension(require("patch-game-object-configuration"));
+  game.add_extension(require("patch-game-object-pool"));
+
   game.add_extension(require("pause"));
   game.add_extension(require("resume"));
   game.add_extension(require("sound-control"));
   game.add_extension(require("timers-control"));
   game.add_extension(require("tweens-control"));
-
-  // gb.toggleDebug(true);
-  // gb.toggleGameObjectDebug(true);
 
   var stateMachineFactory = require('state-machine');
   var mainStateMachine = stateMachineFactory.createFixedStateMachine(); 

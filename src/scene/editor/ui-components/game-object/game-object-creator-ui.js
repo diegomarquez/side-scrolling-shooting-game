@@ -33,6 +33,14 @@ define(function(require) {
 						return;
 					}
 
+					if (!gb.goPool.configurationExists(goName)) {
+						gb.game.get_extension(require('logger')).error('Game object type does not exist');
+						gb.game.get_extension(require('logger')).show();
+
+						setTimeout(gb.game.get_extension(require('logger')).hide, 3000);
+						return;
+					}
+
 					if (!viewports || viewports.length == 0) {
 						gb.game.get_extension(require('logger')).error('No viewports have been selected');
 						gb.game.get_extension(require('logger')).show();

@@ -48,7 +48,9 @@ define(function(require) {
 		},
 
 		update: function(value) {
+			var input = $(this.html()).find('input');
 
+			input[0].value = value;
 		},
 
 		valueGetter: function() {

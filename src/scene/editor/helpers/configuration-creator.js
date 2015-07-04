@@ -3,16 +3,16 @@ define(function(require) {
 	var util = require('util');
 	var editorConfig = require('editor-config');
 
-  var ConfigurationCreator = require('class').extend({
-    init: function() {
-    	
-    },
+	var ConfigurationCreator = require('class').extend({
+		init: function() {
+			
+		},
 
-    createFromGameObject: function(go, options) {
-    	options = options || {};
-    	var childConfigurations = { configurations: [], hasNew: false };
+		createFromGameObject: function(go, options) {
+			options = options || {};
+			var childConfigurations = { configurations: [], hasNew: false };
 
-    	// If the game object is a container and it has children...
+			// If the game object is a container and it has children...
 			if (go.childs) {
 				// Check if any of the children has any changes and therefore needs a new configuration
 
@@ -26,17 +26,17 @@ define(function(require) {
 					// This is recursive so children which in turn have children will also get new configurations
 					var newChildConfigurationResult = this.createFromGameObject(go.childs[i], util.shallow_merge(options, { isChildOnly: true, force: false }));
 					
-					if (newChildConfigurationResult) {			
+					if (newChildConfigurationResult) {      
 						if (options.getChildIds) {
 							storeChildConfiguration(childConfigurations.configurations, go.childs[i], newChildConfigurationResult.configurationId, true);
 							childConfigurations.hasNew = true;
 						} else {
-							storeChildConfiguration(childConfigurations.configurations, go.childs[i], newChildConfigurationResult, true);	
-							childConfigurations.hasNew = true;	
+							storeChildConfiguration(childConfigurations.configurations, go.childs[i], newChildConfigurationResult, true); 
+							childConfigurations.hasNew = true;  
 						}
 					} else {
 						storeChildConfiguration(childConfigurations.configurations, go.childs[i], go.childs[i].typeId, false);
-					}																	
+					}                                 
 				}
 			} 
 
@@ -45,11 +45,22 @@ define(function(require) {
 				return null;
 			}
 		
-			// Generate the new configuration name
-     	var newConfigurationId = getNewConfigurationName(go);
+			var newConfigurationId;
 
-    	// Create a new configuration
-    	var newConfiguration = gb.goPool.createConfiguration(newConfigurationId, go.poolId);
+			if (options.configurationId) {
+				// Use a specified Id
+				newConfigurationId = options.configurationId;
+			} else {
+				// Generate the new configuration name
+				newConfigurationId = this.getNewConfigurationName(go);
+			}
+
+			// Create a new configuration
+			var newConfiguration = gb.goPool.createConfiguration(newConfigurationId, go.poolId);
+
+			// All the configurations created by this module are marked as custom
+			newConfiguration.custom();
+
 			// Copy over the game object arguments to the new configuration
 			newConfiguration.args(go.args);
 
@@ -78,7 +89,7 @@ define(function(require) {
 
 			// Set the child only flag for configurations which are being created solely to be children of others
 			if (options.isChildOnly) {
-				newConfiguration.childOnly();	
+				newConfiguration.childOnly(); 
 			}
 
 			if (options.getChildIds) {
@@ -90,56 +101,51 @@ define(function(require) {
 				}
 			} else {
 				// Return the id of the new confifguration
-				return newConfigurationId;	
+				return newConfigurationId;  
 			}
+		},
+
+		getNewConfigurationName: function (go) {
+			var configurationTypes = gb.goPool.getConfigurationTypes();
+
+			var result = 0;
+			
+			var newName = 'New ' + go.typeId.replace(/New /g, '');
+			newName = newName.replace(/\([^(]*$/, '');
+
+			var newNameResult = newName;
+
+			for (var i = 0; i < configurationTypes.length; i++) {
+				if (configurationTypes[i].match(newName)) {
+					result++;
+					newNameResult =  newName + ' (' + result.toString() + ')';
+				}
+			}
+
+			return newNameResult;
 		}
-  });
-
-	var getSimilarGameObjectConfigurationCount = function(id) {
-		var configurationTypes = gb.goPool.getConfigurationTypes();
-
-  	var nameRoot = id.split('->')[0];
-
-  	var result = 0;
-
-  	for (var i = 0; i < configurationTypes.length; i++) {
-  		if (configurationTypes[i].search(nameRoot) != -1) {
-  			result++;
-  		}
-  	}
-
-  	return result;
-  }
-
-	var getNewConfigurationName = function (go) {
-		// Remove the generated part of the name if any
-		var nameRoot = go.typeId.split('->')[0]; 
-		// Get count of Game Objects with a similar name
-		var count = getSimilarGameObjectConfigurationCount(nameRoot);
-		// Generate the new configuration name
-  	return nameRoot + '->' + count;
-	}
+	});
 
 	var hasChanges = function(go) {
 		if (go.hasStructuralChanges()) {
 			return true;
 		}
 
-		if (go.args.x != go.x || go.args.y != go.y) {
+		if (go.args.x != go.x || go.args.y != go.y || go.args.rotation != go.rotation || go.args.scaleX != go.scaleX || go.args.scaleY != go.scaleY) {
 			return true;
 		}
 
 		// In the mean time this only works with the collider component, 
 		// because it is the only thing that can actually be editted right now
 		var colliderGizmo = go.findComponents().firstWithType(editorConfig.getColliderGizmoId());
-  	var colliderComponent = colliderGizmo.getColliderComponent();
+		var colliderComponent = colliderGizmo.getColliderComponent();
 
-  	return require('attribute-comparer').getChanges(colliderComponent);
+		return require('attribute-comparer').getChanges(colliderComponent);
 	}
 
 	var storeChildConfiguration = function(collection, child, id, isNew) {
 		collection.push({ child: child, id: id, args: child.args, isNew: isNew});
 	}
 
-  return new ConfigurationCreator();
+	return new ConfigurationCreator();
 });

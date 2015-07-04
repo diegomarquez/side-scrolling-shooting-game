@@ -49,7 +49,8 @@ define(function(require) {
 				.args({
 					scaleX: 0.4,
 					scaleY: 0.4
-				}
+				})
+				.setRenderer('BiohazardIcon_Renderer')
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")

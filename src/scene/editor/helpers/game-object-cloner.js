@@ -1,27 +1,27 @@
 define(function(require) {
 	var gb = require('gb');
 
-  var GameObjectCloner = require('class').extend({
-    init: function() {
-    	
-    },
+	var GameObjectCloner = require('class').extend({
+		init: function() {
+			
+		},
 
-    clone: function(go) {
-    	if (go.hasStructuralChanges()) {
-    		// Game objects with changes on their child structure need a little bit of extra work to be cloned
-    		complexClone(go);
-    	} else {
-    		// Game Object with no changes on their child structure are easy to clone
-		    simpleClone(go);
-    	}
+		clone: function(go) {
+			if (go.hasStructuralChanges()) {
+				// Game objects with changes on their child structure need a little bit of extra work to be cloned
+				complexClone(go);
+			} else {
+				// Game Object with no changes on their child structure are easy to clone
+				simpleClone(go);
+			}
 		}
-  });
+	});
 
 	var simpleClone = function(from) {
 		// Create the clone
 		var clone = require('setup-editable-game-object').setupWithGameObject(from.typeId, from);
-    // Apply all the editable attributes and position from the original into the clone
-    require('attribute-assigner').assignFrom(from, clone);
+		// Apply all the editable attributes and position from the original into the clone
+		require('attribute-assigner').assignFrom(from, clone);
 	}
 
 	var complexClone = function(from) {
@@ -40,14 +40,14 @@ define(function(require) {
 		// Set the structural changes flag in the clone
 		clone.setStructuralChanges();
 
-	 	// Delete the temporary configurations created to do the clone 
-	 	gb.goPool.clearConfiguration(newConfigurationResult.configurationId);
+		// Delete the temporary configurations created to do the clone 
+		gb.goPool.clearConfiguration(newConfigurationResult.configurationId);
 
-	 	if (newConfigurationResult.childConfigurationIds) {
-	 		for (var i=0; i < newConfigurationResult.childConfigurationIds.length; i++) {
-	 			gb.goPool.clearConfiguration(newConfigurationResult.childConfigurationIds[i]);
-	 		}
-	 	}
+		if (newConfigurationResult.childConfigurationIds) {
+			for (var i=0; i < newConfigurationResult.childConfigurationIds.length; i++) {
+				gb.goPool.clearConfiguration(newConfigurationResult.childConfigurationIds[i]);
+			}
+		}
 	}
 
 	var replaceTypeIds = function(from, to) {
@@ -66,5 +66,5 @@ define(function(require) {
 		}
 	}
 
-  return new GameObjectCloner();
+	return new GameObjectCloner();
 });
