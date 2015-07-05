@@ -79,6 +79,8 @@ define(function(require) {
 				label: options().defaultMessage,
 				
 				onClick: function(event) {
+					this.refreshContent();
+
 					$('body').append(contentContainer());
 
 					this.setupUI($(container()), $(contentContainer()), options());
@@ -187,6 +189,7 @@ define(function(require) {
 
 		removeMenu: function(element) {
 			$(element).remove();
+			this.refreshContent();
 			this.resetContentState();
 		},
 

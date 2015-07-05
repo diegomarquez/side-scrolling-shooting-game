@@ -27,9 +27,15 @@ define(function(require) {
 
 		reset: function() {},
 
+		update: function(value) {
+			this.options.value = value;;
+		},
+
 		valueGetter: function() {
+			var self = this;
+
 			return function() {
-				return null;
+				return self.options.value;
 			}
 		},
 

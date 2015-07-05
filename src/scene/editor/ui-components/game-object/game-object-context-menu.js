@@ -8,10 +8,12 @@ define(function(require) {
 	var gameObjectCloner = require('game-object-cloner');
 
 	var newTypeDialog = require('new-type-dialog');
+	var editTypeDialog = require('edit-type-dialog');
 
 	var GameObjectContextMenu = require('ui-component').extend({
 		init: function() {
-			this.newTypeDialog = null;			
+			this.newTypeDialog = null;	
+			this.editTypeDialog = null;		
 		},
 
 		create: function() {
@@ -53,7 +55,6 @@ define(function(require) {
 										// Replace the original with a new one created with the new configuration
 										replaceGameObject(go, configurationName);
 									});
-
 								}
 							}
 						]
@@ -231,10 +232,12 @@ define(function(require) {
 						name: 'Edit',
 						icon: 'ui-icon-wrench',
 
-						options: [
-							{
+						options: function() {
+							var editOptions = [];
+
+							editOptions.push({
 								name: 'Collider',
-								icon: 'ui-icon-bullet',
+								icon: 'ui-icon-radio-off',
 								click: function() {
 									require('colliders-toggle-ui').showAllColliderLayers();
 
@@ -242,10 +245,11 @@ define(function(require) {
 										return editorConfig.isColliderGizmoGameObject(child.typeId);
 									});
 								}
-							},
-							{
+							});
+
+							editOptions.push({
 								name: 'Rotation',
-								icon: 'ui-icon-bullet',
+								icon: 'ui-icon-arrowrefresh-1-w',
 								click: function() {
 									require('rotation-toggle-ui').showAllRotationLayers();
 									
@@ -253,10 +257,11 @@ define(function(require) {
 										return editorConfig.isRotationGizmoGameObject(child.typeId);
 									});
 								}
-							},
-							{
+							});
+
+							editOptions.push({
 								name: 'Scale',
-								icon: 'ui-icon-bullet',
+								icon: 'ui-icon-arrow-2-se-nw',
 								click: function() {
 									require('scale-toggle-ui').showAllScaleLayers();
 									
@@ -264,8 +269,27 @@ define(function(require) {
 										return editorConfig.isScaleGizmoGameObject(child.typeId);
 									});
 								}
+							});
+
+							if (gb.goPool.isConfigurationCustom(menu.go.typeId)) {
+								editOptions.push({
+									name: 'Type',
+									icon: 'ui-icon-bullet',
+									click: function() {
+										self.editTypeDialog = new editTypeDialog();
+
+										// Show the dialog to edit the new configuratio's name
+										self.editTypeDialog.open(menu.go.typeId);
+
+										self.editTypeDialog.on('edit', this, function (newConfigurationName, oldConfigurationName) {
+											gb.goPool.updateConfigurationId(oldConfigurationName, newConfigurationName);
+										});
+									}
+								});
 							}
-						]
+
+							return editOptions;
+						}
 					}
 				]
 			});

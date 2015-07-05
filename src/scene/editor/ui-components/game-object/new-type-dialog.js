@@ -61,8 +61,8 @@ define(function(require) {
 			$('#new-type-dialog').on("dialogclose", function() {
 				$('#new-type-dialog').dialog('destroy').remove();
 
-				this.newTypeDialog = null;
-				this.onClose - null;
+				self.newTypeDialog = null;
+				self.onClose - null;
 			});
 		},
 
