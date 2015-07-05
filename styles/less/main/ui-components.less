@@ -23,9 +23,34 @@
 	}
 }
 
-.editor-toggle {
-	width: 100%;
+#grid-control-buttons {
+	flex: 1;
+	display: flex;
+	flex-flow: row wrap;
 	margin: 5px;
+
+	& > label {
+		display: block;
+		flex-basis: 100%;
+	}
+}
+
+#game-object-control-buttons {
+	flex: 1;
+	display: flex;
+	flex-flow: row wrap;
+	margin: 5px;
+
+	& > label {
+		display: block;
+		flex-basis: 100%;
+	}
+}
+
+.editor-toggle {
+	flex-basis: 50%;
+
+	padding: 5px;
 
 	&:last-child {
 		margin-bottom: 0px;		
@@ -38,10 +63,14 @@
 	}
 }
 
+#world-edit-wrapper {
+	flex: 1;
+	margin: 5px;
+}
+
 // World edit
 #world-edit {
 	width: 100%;
-	padding-top: 5px; 
 
 	.editor-box-sizing;
 

@@ -41,7 +41,7 @@ define(function(require) {
         this.sizeUI.controller.Y('value', height);
       });
 
-      return wrapper.wrap(wrapper.wrap([this.sizeUI.html], { id: 'world-edit'}));
+      return wrapper.wrap(wrapper.wrap([this.sizeUI.html], { id: 'world-edit'}), { id: 'world-edit-wrapper'});
     }
   });
 
