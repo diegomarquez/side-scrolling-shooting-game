@@ -22,15 +22,17 @@ define(function(require) {
 					if (options.filterChilds) {
 						if (!this.configurations[k].isChildOnly()) {
 							r.push(k);
-							continue;
 						} 
+
+						continue;
 					}
 
 					if (options.customOnly) {
 						if (this.configurations[k].isCustom()) {
 							r.push(k);
-							continue;
 						} 
+
+						continue;
 					}
 
 					r.push(k);

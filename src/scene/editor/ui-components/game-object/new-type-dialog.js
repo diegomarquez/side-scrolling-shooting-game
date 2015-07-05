@@ -34,7 +34,7 @@ define(function(require) {
 							},
 							{
 								check: function(typeName) { 
-									return !gb.goPool.configurationExists(typeName); 
+									return !gb.goPool.configurationExists(typeName.trim()); 
 								},
 								
 								tip: "Type name already exists"
@@ -46,7 +46,7 @@ define(function(require) {
 				buttons: {
 					'Create Type': function () {
 						if (self.onClose) {
-							self.onClose(this.TypeName());	
+							self.onClose(this.TypeName().trim());	
 						}
 
 						$(this).dialog('close');

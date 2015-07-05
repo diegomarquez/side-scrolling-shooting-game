@@ -77,7 +77,7 @@ define(function(require) {
 		},
 
 		getGameObjects: function(options) {
-			options = options || { filterChilds: true };
+			options = options || { filterChilds: true, customOnly: false };
 
 			var data = require('gb').goPool.getConfigurationTypes(options);
 

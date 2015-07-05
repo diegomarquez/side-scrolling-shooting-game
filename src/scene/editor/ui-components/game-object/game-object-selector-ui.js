@@ -18,6 +18,7 @@ define(function(require) {
 				icon: 'chevron-down',
 				defaultMessage: 'Choose a Game Object',
 				selectedMessage: 'Selected Game Object:',
+				selector: true,
 				data: function() {      
 					return editorConfig.getGameObjects({ filterChilds: false });
 				}

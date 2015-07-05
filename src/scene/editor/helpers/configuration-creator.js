@@ -110,8 +110,7 @@ define(function(require) {
 
 			var result = 0;
 			
-			var newName = 'New ' + go.typeId.replace(/New /g, '');
-			newName = newName.replace(/\([^(]*$/, '');
+			newName = go.typeId.replace(/\([^(]*$/, '').trim();
 
 			var newNameResult = newName;
 

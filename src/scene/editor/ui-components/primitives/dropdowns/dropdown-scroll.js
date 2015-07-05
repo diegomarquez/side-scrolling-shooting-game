@@ -8,14 +8,20 @@ define(function(require) {
 
 		setupUI: function(container, contentContainer, options) {
 			$(contentContainer).css({
-				height: 305
-			});
-
-			$(contentContainer).find('ul').css({
-				'margin-right': 13
+				'max-height': 305
 			});
 
 			$(contentContainer).jScrollPane({showArrows: true});
+
+			if (parseFloat($(contentContainer).css('height')) < 305) {
+				$(contentContainer).find('ul').css({
+					'width': ''
+				});	
+			} else {
+				$(contentContainer).find('ul').css({
+					'width': 'auto'
+				});
+			}
 		},
 
 		setupOptionEvents: function(optionElements, container, contentContainer, options) {
@@ -36,9 +42,17 @@ define(function(require) {
 					$(this).removeClass('ui-state-hover');
 
 					var value = $(this).attr('value');
-
-					mainButton.innerHTML = options.selectedMessage + " " + value;
 					$(container).attr('value', value);
+
+					if (options.selector) {
+						mainButton.innerHTML = options.selectedMessage + " " + value;
+					}
+
+					if (options.buttons) {
+						if (options.onClick) {
+							options.onClick(value);
+						}
+					}
 
 					self.removeMenu(contentContainer);
 				});

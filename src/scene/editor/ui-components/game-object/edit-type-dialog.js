@@ -6,10 +6,33 @@ define(function(require) {
 	var dialogHiddenField = require('dialog-hidden-field');
 
 	var EditTypeDialog = require('ui-component').extend({
-		init: function() {
+		init: function(editButton, deleteButton) {
 			this._super();
 
 			var self = this;
+
+			var buttons = {};
+			var validateActions = {};
+
+			if (editButton) {
+				buttons['Edit'] = function () {
+					self.execute('edit', [this.TypeName().trim(), this.InitialName().trim()], 'apply');
+					self.hardCleanUp();
+					$(this).dialog('close');
+				}
+
+				validateActions['Edit'] = ['Type Name'];
+			}
+
+			if (deleteButton) {
+				buttons['Delete'] = function () {
+					self.execute('delete', this.InitialName().trim());
+					self.hardCleanUp();
+					$(this).dialog('close');
+				}
+
+				validateActions['Delete'] = [];
+			}
 
 			this.editTypeDialog = new dialogModular().create({
 				id: 'edit-type-dialog',
@@ -34,8 +57,8 @@ define(function(require) {
 								tip: "Type name can not be empty"
 							},
 							{
-								check: function(typeName) { 
-									return !gb.goPool.configurationExists(typeName); 
+								check: function(typeName) {
+									return !gb.goPool.configurationExists(typeName.trim());
 								},
 								
 								tip: "Type name already exists"
@@ -50,29 +73,21 @@ define(function(require) {
 					})
 				],
 
-				buttons: {
-					'Edit': function () {
-						self.execute('edit', [this.TypeName(), this.InitialName()], 'apply');
-						self.hardCleanUp();
-						$(this).dialog('close');
-					}
-				},
+				buttons: buttons,
 
-				validateOnAction: {
-					'Edit': ['Type Name']
-				}
+				validateOnAction: validateActions
 			});
 
 			$('#edit-type-dialog').on("dialogclose", function() {
 				$('#edit-type-dialog').dialog('destroy').remove();
-
 				self.editTypeDialog = null;
-				self.onClose - null;
 			});
 		},
 
 		open: function(currentTypeName) {
 			$(this.editTypeDialog).dialog('option').updateField('Type Name', currentTypeName);
+			$(this.editTypeDialog).dialog('option').updateField('Initial Name', currentTypeName);
+			
 			return $(this.editTypeDialog).dialog('open');
 		}
 	});

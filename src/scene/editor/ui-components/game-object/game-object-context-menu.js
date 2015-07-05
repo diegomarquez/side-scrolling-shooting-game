@@ -276,7 +276,7 @@ define(function(require) {
 									name: 'Type',
 									icon: 'ui-icon-bullet',
 									click: function() {
-										self.editTypeDialog = new editTypeDialog();
+										self.editTypeDialog = new editTypeDialog(true, false);
 
 										// Show the dialog to edit the new configuratio's name
 										self.editTypeDialog.open(menu.go.typeId);

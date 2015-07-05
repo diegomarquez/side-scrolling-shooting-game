@@ -41,6 +41,7 @@ define(function(require) {
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
       this.viewportSelectorSimpleUI = new (require('viewport-selector-simple-ui'));
       this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
+      this.customTypesEditorUI = new (require('edit-custom-types-ui'));
       this.gameObjectRemoveUI = new (require('game-object-remove-ui'));
       
       // Bottom Right Components
@@ -86,6 +87,9 @@ define(function(require) {
       this.editorRegionsController.appendToBottomLeft(this.viewportSelectorSimpleUI.create());
       // Game Object Creator
       this.editorRegionsController.appendToBottomLeft(this.gameObjectCreatorUI.create());
+      // Custom Types editor
+      this.editorRegionsController.appendToBottomLeft(this.customTypesEditorUI.create());
+
       // Button to remove all Game Objects from the scene
       this.editorRegionsController.appendToBottomLeft(this.gameObjectRemoveUI.create());
 

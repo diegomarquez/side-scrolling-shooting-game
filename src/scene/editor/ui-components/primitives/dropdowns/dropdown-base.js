@@ -56,6 +56,12 @@ define(function(require) {
 				refresh: function() { 
 					this.refreshContent(); 
 				}.bind(this),
+				disable: function() {
+					$(this.getMainUI()).button('option', 'disabled', true);
+				}.bind(this),
+				enable: function() {
+					$(this.getMainUI()).button('option', 'disabled', false);
+				}.bind(this),
 				destroy: function() {
 					clickedOutside.unregister('dropdown-' + options.id);
 				}
