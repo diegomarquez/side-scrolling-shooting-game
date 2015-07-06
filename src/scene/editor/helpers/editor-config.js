@@ -182,7 +182,9 @@ define(function(require) {
 				outlineBundle.getOutlineId(), 
 				gridBundle.getGridId(),
 				gizmoBundle.getScrollStopperId(),
-				gizmoBundle.getBossWarningId()
+				gizmoBundle.getBossWarningId(),
+				gizmoBundle.getDirectionId(),
+				gizmoBundle.getStartPositionId()
 			]
 
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getColliderGizmoGameObjects());

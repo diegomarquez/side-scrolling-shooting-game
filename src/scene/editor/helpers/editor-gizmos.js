@@ -34,8 +34,34 @@ define(function(require) {
 	  				},
 
 	  				getIconId: function(parent) {
-	  					if (parent.typeId == "ScrollStopper") { return gizmoBundle.getScrollStopperId(); }
-	  					if (parent.typeId == "BossWarning") { return gizmoBundle.getBossWarningId(); } 
+
+	  					if (parent.typeId == 'ScrollStopper') { 
+	  						return gizmoBundle.getScrollStopperId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'BossWarning') { 
+	  						return gizmoBundle.getBossWarningId(); 
+	  					}
+
+	  					if (parent.typeId == 'DirectionRight') { 
+	  						return gizmoBundle.getDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'DirectionUp') { 
+	  						return gizmoBundle.getDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'DirectionLeft') { 
+	  						return gizmoBundle.getDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'DirectionDown') { 
+	  						return gizmoBundle.getDirectionId(); 
+	  					}
+
+	  					if (parent.typeId == 'StartPosition') { 
+	  						return gizmoBundle.getStartPositionId(); 
+	  					} 
 	  				},
 
 	  				ids: {

@@ -32,6 +32,16 @@ define(function(require) {
 				offset:'center'
 			});
 
+			this.componentPool.createConfiguration("DirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['ARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("StartPositionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['CHECKEREDFLAG.PNG'],
+				offset:'center'
+			});
+
 			// Rotation
 			this.componentPool.createPool("rotation-gizmo", require('rotation-gizmo'));
 			this.componentPool.createPool("rotation-display-renderer", require('rotation-display-renderer'));
@@ -56,12 +66,16 @@ define(function(require) {
 			
 			// Icon Configurations
 			this.gameObjectPool.createConfiguration("ScrollStopperGizmo", "IconGizmoHandle")
-				.args( { skipDebug: true } )
 				.setRenderer('ScrollStopperGizmoRenderer');
 
 			this.gameObjectPool.createConfiguration("BossWarningGizmo", "IconGizmoHandle")
-				.args( { skipDebug: true } )
 				.setRenderer('BossWarningGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("DirectionGizmo", "IconGizmoHandle")
+				.setRenderer('DirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("StartPositionGizmo", "IconGizmoHandle")
+				.setRenderer('StartPositionGizmoRenderer');
 
 			// Handle configurations
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
@@ -124,7 +138,10 @@ define(function(require) {
 		getScaleDisplayId: function () { return "ScaleDisplay"; },
 
 		getScrollStopperId: function () { return "ScrollStopperGizmo"; },
-		getBossWarningId: function () { return "BossWarningGizmo"; }
+		getBossWarningId: function () { return "BossWarningGizmo"; },
+		getDirectionId: function () { return "DirectionGizmo"; },
+		getStartPositionId: function () { return "StartPositionGizmo"; }
+		
 	});
 
 	return new Gizmo();

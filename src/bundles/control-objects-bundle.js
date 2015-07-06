@@ -7,12 +7,41 @@ define(function(require) {
 
 			this.gameObjectPool.createDynamicPool("ScrollStopper", require('scroll-stopper'));
 			this.gameObjectPool.createDynamicPool("BossWarning", require('boss-warning'));
+			this.gameObjectPool.createDynamicPool("DirectionSetter", require('direction-setter'));
+			this.gameObjectPool.createDynamicPool("StartPosition", require('start-position'));
 			
-			this.gameObjectPool.createConfiguration("ScrollStopper", 'ScrollStopper')
+			this.gameObjectPool.createConfiguration("ScrollStopper", "ScrollStopper")
 				.addComponent("ActivateControlOnView");
-			this.gameObjectPool.createConfiguration("BossWarning", 'BossWarning')
+			this.gameObjectPool.createConfiguration("BossWarning", "BossWarning")
 				.addComponent("ActivateControlOnView");
-		},
+
+			this.gameObjectPool.createConfiguration("DirectionRight", "DirectionSetter")
+				.args({
+					rotation: 0
+				})
+				.addComponent("ActivateControlOnView");
+			
+			this.gameObjectPool.createConfiguration("DirectionUp", "DirectionSetter")
+				.args({
+					rotation: 270
+				})
+				.addComponent("ActivateControlOnView");
+			
+			this.gameObjectPool.createConfiguration("DirectionLeft", "DirectionSetter")
+				.args({
+					rotation: 180
+				})
+				.addComponent("ActivateControlOnView");
+			
+			this.gameObjectPool.createConfiguration("DirectionDown", "DirectionSetter")
+				.args({
+					rotation: 90
+				})
+				.addComponent("ActivateControlOnView");
+
+			this.gameObjectPool.createConfiguration("StartPosition", "StartPosition")
+				.addComponent("ActivateControlOnView");
+		}
 	});
 
 	return new ControlObjectsBundle();

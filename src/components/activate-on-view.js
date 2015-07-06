@@ -32,26 +32,26 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 		editorUpdate: function(delta) {
 			if (!this.onView && this.parent.getViewportVisibility('Main')) {
 				this.parent.editorStart = this.parent.saveEditorStart;
-    		this.parent.editorUpdate = this.parent.saveEditorUpdate;
+    			this.parent.editorUpdate = this.parent.saveEditorUpdate;
 
-    		if (!this.parent.activatedOnView) {
-    			this.parent.editorStart();	
+    			if (!this.parent.activatedOnView) {
+    				this.parent.editorStart();	
+    			}
+
+    			this.parent.activatedOnView = true;
+    			this.onView = true;
+
+    			this.parent.saveEditorStart = null;
+				this.parent.saveEditorUpdate = null;
     		}
 
-    		this.parent.activatedOnView = true;
-    		this.onView = true;
-
-    		this.parent.saveEditorStart = null;
-				this.parent.saveEditorUpdate = null;
-    	}
-
-    	if (this.onView && !this.parent.getViewportVisibility('Main')) { 
+    		if (this.onView && !this.parent.getViewportVisibility('Main')) { 
 				p = this.parent.matrix.transformPoint(0, 0, p);
     		
-    		if (Math.floor(this.mainViewport.x + p.x) <= 0) {
-    			Gb.reclaimer.mark(this.parent);   				
-    		}    		
-    	}
+    			if (Math.floor(this.mainViewport.x + p.x) <= 0) {
+    				Gb.reclaimer.mark(this.parent);   				
+    			}    		
+    		}
 		}
 	});
 
