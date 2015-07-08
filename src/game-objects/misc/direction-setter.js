@@ -6,8 +6,8 @@ define(function(require) {
 		},
 
 		editorStart: function() {
-			this.mainViewport = Gb.viewports.get("Main");
-			this.player = PlayerGetter.get();
+			this.mainViewport = require('gb').viewports.get("Main");
+			this.player = require('player-getter').get();
 
 			this.halfWidth = require('gb').canvas.width/2;
 			this.halfHeight = require('gb').canvas.height/2;
