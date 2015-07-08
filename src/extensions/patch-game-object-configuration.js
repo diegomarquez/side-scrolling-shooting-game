@@ -1,6 +1,7 @@
 define(function(require) {
 	var gb = require('gb');
 	var gameObjectConfiguration = require('game-object-configuration');
+	var componentConfiguration = require('component-configuration');
 	
 	var PatchGameObjectConfiguration = require('extension').extend({
 		init: function() {
@@ -44,6 +45,28 @@ define(function(require) {
 			gameObjectConfiguration.prototype.isCustom = function() {
 				return this.customConfig;
 			}
+
+			/**
+			 * --------------------------------
+			 */
+		
+			Object.defineProperty(componentConfiguration.prototype, "childConfig", { 
+				configurable: true,
+				value: false
+			});
+
+			componentConfiguration.prototype.isChild = function() {
+				return false;
+			}
+
+			Object.defineProperty(componentConfiguration.prototype, "customConfig", { 
+				configurable: true,
+				value: false			
+			});
+
+			componentConfiguration.prototype.isCustom = function() {
+				return false;
+			}
 		},
 
 		destroy: function() {
@@ -54,6 +77,12 @@ define(function(require) {
 			delete gameObjectConfiguration.prototype.customConfig;
 			delete gameObjectConfiguration.prototype.custom;
 			delete gameObjectConfiguration.prototype.isCustom;
+
+			delete componentConfiguration.prototype.childConfig;
+			delete componentConfiguration.prototype.isChild;
+
+			delete componentConfiguration.prototype.customConfig;
+			delete componentConfiguration.prototype.isCustom;
 		}    
 	});
 

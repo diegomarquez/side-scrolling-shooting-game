@@ -87,6 +87,7 @@ define(function(require) {
 			}
 
 			// Remove empty objects and null properties during the serialization
+			// Also remove complex objects that don't need to be serialized
 			return JSON.stringify(scene, function (key, value) {
 				if (util.isObject(value)) {
 					// Filter out objects with no properties

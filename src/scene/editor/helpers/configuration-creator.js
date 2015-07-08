@@ -61,8 +61,15 @@ define(function(require) {
 			// All the configurations created by this module are marked as custom
 			newConfiguration.custom();
 
-			// Copy over the game object arguments to the new configuration
-			newConfiguration.args(go.args);
+			// Copy over the game object arguments to the new configuration and merge basic transform properties from the 
+			// original object
+			newConfiguration.args(util.shallow_merge(go.args, { 
+				x: go.x, 
+				y: go.y,
+				rotation: go.rotation,
+				scaleX: go.scaleX,
+				scaleY: go.scaleY
+			}));
 
 			// Add components to the new configuration if there are any components to be added
 			if (go.components) {
@@ -79,7 +86,13 @@ define(function(require) {
 			// Add the child configurations
 			for (var i = 0; i < childConfigurations.configurations.length; i++) {
 				var configuration = childConfigurations.configurations[i];
-				var mergedArguments = util.shallow_merge(configuration.args, { x: configuration.child.x, y: configuration.child.y });
+				var mergedArguments = util.shallow_merge(configuration.args, { 
+					x: configuration.child.x, 
+					y: configuration.child.y,
+					rotation: configuration.child.rotation,
+					scaleX: configuration.child.scaleX,
+					scaleY: configuration.child.scaleY
+				});
 
 				newConfiguration.addChild(configuration.id, mergedArguments);
 			}
