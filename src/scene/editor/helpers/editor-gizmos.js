@@ -44,19 +44,19 @@ define(function(require) {
 	  					}
 
 	  					if (parent.typeId == 'DirectionRight') { 
-	  						return gizmoBundle.getDirectionId(); 
+	  						return gizmoBundle.getRightDirectionId(); 
 	  					}
 	  					
 	  					if (parent.typeId == 'DirectionUp') { 
-	  						return gizmoBundle.getDirectionId(); 
+	  						return gizmoBundle.getUpDirectionId(); 
 	  					}
 	  					
 	  					if (parent.typeId == 'DirectionLeft') { 
-	  						return gizmoBundle.getDirectionId(); 
+	  						return gizmoBundle.getLeftDirectionId(); 
 	  					}
 	  					
 	  					if (parent.typeId == 'DirectionDown') { 
-	  						return gizmoBundle.getDirectionId(); 
+	  						return gizmoBundle.getDownDirectionId(); 
 	  					}
 
 	  					if (parent.typeId == 'StartPosition') { 

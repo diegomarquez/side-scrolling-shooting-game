@@ -3,6 +3,8 @@ define(function(require) {
 	var DirectionSetter = require("editor-game-object-container").extend({
 		init: function() {
 			this._super();
+
+			this.direction = '';
 		},
 
 		editorStart: function() {
@@ -18,45 +20,27 @@ define(function(require) {
 
 			if (d == 'right') {
 				if (Math.floor(this.mainViewport.x + this.X) <= this.halfWidth) {
-					this.setPlayerDirection();
+					this.player.move(this.direction);
 				}
 			}
 
 			if (d == 'left') {
 				if (Math.floor(this.mainViewport.x - this.X) >= this.halfWidth) {
-					this.setPlayerDirection();
+					this.player.move(this.direction);
 				}
 			}
 
 			if (d == 'up') {
 				if (Math.floor(this.mainViewport.y - this.Y) >= this.halfHeight) {
-					this.setPlayerDirection();
+					this.player.move(this.direction);
 				}
 			}
 
 			if (d == 'down') {
 				if (Math.floor(this.mainViewport.y + this.Y) <= this.halfHeight) {
-					this.setPlayerDirection();
+					this.player.move(this.direction);
 				}
 			}
-		},
-
-		setPlayerDirection: function() {
-			if (this.rotation == 0) {
-				this.player.move('right');
-			}
-
-			if (this.rotation == 90) {
-				this.player.move('down');
-			}
-
-			if (this.rotation == 180) {
-				this.player.move('left');
-			}
-
-			if (this.rotation == 270) {
-				this.player.move('up');
-			}	
 		}
 	});
 

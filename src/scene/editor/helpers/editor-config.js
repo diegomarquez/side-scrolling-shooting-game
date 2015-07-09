@@ -179,11 +179,14 @@ define(function(require) {
 			var gridBundle = require('grid-bundle');
 
 			editorOnlyGameObjects = [
-				outlineBundle.getOutlineId(), 
+				outlineBundle.getOutlineId(),
 				gridBundle.getGridId(),
 				gizmoBundle.getScrollStopperId(),
 				gizmoBundle.getBossWarningId(),
-				gizmoBundle.getDirectionId(),
+				gizmoBundle.getRightDirectionId(),
+				gizmoBundle.getLeftDirectionId(),
+				gizmoBundle.getUpDirectionId(),
+				gizmoBundle.getDownDirectionId(),
 				gizmoBundle.getStartPositionId()
 			]
 
@@ -191,7 +194,7 @@ define(function(require) {
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getRotationGizmoGameObjects());
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getScaleGizmoGameObjects());
 
-			return editorOnlyGameObjects;     
+			return editorOnlyGameObjects;
 		},
 
 		getColliderGizmoGameObjects: function() {

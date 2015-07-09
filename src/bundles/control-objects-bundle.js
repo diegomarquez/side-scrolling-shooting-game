@@ -17,25 +17,25 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("DirectionRight", "DirectionSetter")
 				.args({
-					rotation: 0
+					direction: 'right'
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("DirectionUp", "DirectionSetter")
 				.args({
-					rotation: 270
+					direction: 'up'
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("DirectionLeft", "DirectionSetter")
 				.args({
-					rotation: 180
+					direction: 'left'
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("DirectionDown", "DirectionSetter")
 				.args({
-					rotation: 90
+					direction: 'down'
 				})
 				.addComponent("ActivateControlOnView");
 

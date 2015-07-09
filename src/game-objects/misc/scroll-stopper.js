@@ -24,14 +24,14 @@ define(function(require) {
 			}
 
 			if (d == 'left') {
-				if (Math.floor(this.mainViewport.x - this.X) >= this.halfWidth) {
+				if (Math.floor(this.mainViewport.x + this.X) >= this.halfWidth) {
 					this.player.stop();
 					require('gb').reclaimer.mark(this);
 				}
 			}
 
 			if (d == 'up') {
-				if (Math.floor(this.mainViewport.y - this.Y) >= this.halfHeight) {
+				if (Math.floor(this.mainViewport.y + this.Y) >= this.halfHeight) {
 					this.player.stop();
 					require('gb').reclaimer.mark(this);
 				}

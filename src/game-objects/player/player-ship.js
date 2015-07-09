@@ -21,24 +21,23 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			if (this.block) return;
 
 			var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
-
-			bullet.x = this.X + 20;
-			bullet.y = this.Y;
+				bullet.x = this.X + 20;
+				bullet.y = this.Y;
 			}, 'player-ship-keyboard');
 
-			this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
-			this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
+				this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
+				this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
 
-			this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
-			exhaust.turnOn();
+				this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
+				exhaust.turnOn();
 			});
 
 			Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, function() {
-			mediumExhausts.call(this);  
+				mediumExhausts.call(this);  
 			}, 'player-ship-keyboard');
 
 			Keyboard.onKeyUp(Keyboard.GAME_RIGHT, this, function() {
-			smallExhausts.call(this);
+				smallExhausts.call(this);
 			}, 'player-ship-keyboard');
 
 			smallExhausts.call(this);
@@ -53,7 +52,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			}
 
 			if (this.direction == 'left') {
-				this.x += this.forwardSpeed/4 * delta;
+				this.x -= this.forwardSpeed/4 * delta;
 			}
 
 			if (this.direction == 'up') {

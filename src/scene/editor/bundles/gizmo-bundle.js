@@ -32,8 +32,23 @@ define(function(require) {
 				offset:'center'
 			});
 
-			this.componentPool.createConfiguration("DirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
-				path: gb.assetMap()['ARROW.PNG'],
+			this.componentPool.createConfiguration("RightDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['RIGHTARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("LeftDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['LEFTARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("UpDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['UPARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("DownDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['DOWNARROW.PNG'],
 				offset:'center'
 			});
 
@@ -71,8 +86,17 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("BossWarningGizmo", "IconGizmoHandle")
 				.setRenderer('BossWarningGizmoRenderer');
 
-			this.gameObjectPool.createConfiguration("DirectionGizmo", "IconGizmoHandle")
-				.setRenderer('DirectionGizmoRenderer');
+			this.gameObjectPool.createConfiguration("RightDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('RightDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("LeftDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('LeftDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("UpDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('UpDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("DownDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('DownDirectionGizmoRenderer');
 
 			this.gameObjectPool.createConfiguration("StartPositionGizmo", "IconGizmoHandle")
 				.setRenderer('StartPositionGizmoRenderer');
@@ -139,7 +163,10 @@ define(function(require) {
 
 		getScrollStopperId: function () { return "ScrollStopperGizmo"; },
 		getBossWarningId: function () { return "BossWarningGizmo"; },
-		getDirectionId: function () { return "DirectionGizmo"; },
+		getRightDirectionId: function () { return "RightDirectionGizmo"; },
+		getLeftDirectionId: function () { return "LeftDirectionGizmo"; },
+		getUpDirectionId: function () { return "UpDirectionGizmo"; },
+		getDownDirectionId: function () { return "DownDirectionGizmo"; },
 		getStartPositionId: function () { return "StartPositionGizmo"; }
 		
 	});
