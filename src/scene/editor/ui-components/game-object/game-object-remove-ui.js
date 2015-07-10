@@ -16,6 +16,9 @@ define(function(require) {
 				label: 'Remove all Game Objects',
 				onClick: function(event) {
 					gb.reclaimer.clearAllObjectsFromPools().now();
+					// Re-Create editor specific game objects
+					require('editor-setup').setupGameObjects();
+
 					$('#remove-toggle-button input').bootstrapToggle('off');
 				}
 			});
@@ -23,6 +26,19 @@ define(function(require) {
 			var buttonElement = this.element;
 
 			$(buttonElement).button();
+
+			$(buttonElement).find('span').css({
+				'flex': 1
+			});
+
+			$(buttonElement).css({
+				'display': 'flex',
+				'flex-flow': 'row nowrap'
+			});
+
+			var iconSpan = document.createElement('span');
+			iconSpan.className = 'glyphicon glyphicon-trash';
+			$(buttonElement).append(iconSpan);
 
 			this.toggle = toggle.create({
 				id: 'remove-toggle-button',
