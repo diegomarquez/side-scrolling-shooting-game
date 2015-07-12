@@ -9,55 +9,55 @@ define(function(require) {
 		},
 
 		pools: function() {
-    	require('common-bundle').create();
-    	require('explosion-bundle').create();
-    	require('explosion-generator-bundle').create();
-    	require('particle-generator-bundle').create();
-    	require('particle-bundle').create();
-    	require('ship-bundle').create();
-    	require('cannon-bundle').create();
-    	require('bullets-bundle').create();
-    	require('obstacle-bundle').create();
-    	require('boss-bundle').create();
-    	require('messages-bundle').create();
-    	require('control-objects-bundle').create();
-    	require('items-bundle').create(); 
+	    	require('common-bundle').create();
+	    	require('explosion-bundle').create();
+	    	require('explosion-generator-bundle').create();
+	    	require('particle-generator-bundle').create();
+	    	require('particle-bundle').create();
+	    	require('ship-bundle').create();
+	    	require('cannon-bundle').create();
+	    	require('bullets-bundle').create();
+	    	require('obstacle-bundle').create();
+	    	require('boss-bundle').create();
+	    	require('messages-bundle').create();
+	    	require('control-objects-bundle').create();
+	    	require('items-bundle').create(); 
 		},
 
 		setCollisionPairs: function() {
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
-	    collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
-	    
-	    collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
-	    collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
-	    collisionResolver.addCollisionPair('obstacleColliderId', 'basicBulletColliderId');
-	    
-	    collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
-	    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
+		    collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
+		    
+		    collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
+		    collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
+		    collisionResolver.addCollisionPair('obstacleColliderId', 'basicBulletColliderId');
+		    
+		    collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
+		    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
 		},
 
 		removeCollisionPairs: function() {
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'bossColliderId');
-	    collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
-	    
-	    collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
-	    collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
-	    collisionResolver.removeCollisionPair('obstacleColliderId', 'basicBulletColliderId');
-	    
-	    collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
-	    collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
+		    collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
+		    
+		    collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
+		    collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
+		    collisionResolver.removeCollisionPair('obstacleColliderId', 'basicBulletColliderId');
+		    
+		    collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
+		    collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
 		},
 
 		container: function() {
-	    this.mainContainer = document.getElementById('main-player-container');
+		    this.mainContainer = document.getElementById('main-player-container');
 
-	    if (!this.mainContainer) {
-	    	this.mainContainer = document.createElement('div');
+		    if (!this.mainContainer) {
+		    	this.mainContainer = document.createElement('div');
 				this.mainContainer.id = 'main-player-container';
 				document.body.appendChild(this.mainContainer);
 				canvasContainer.detachCanvas();
 				this.mainContainer.appendChild(canvasContainer.getCanvasContainer());	
-	    }
+		    }
 		},
 
 		requiredViewports: function() {
@@ -73,7 +73,7 @@ define(function(require) {
 		},
 
 		removeKeyboardEvents: function() {
-      keyboard.removeKeyDown(keyboard.ESC, this, escape);
+      		keyboard.removeKeyDown(keyboard.ESC, this, escape);
 		},
 
 		setCompleteEvents: function() {

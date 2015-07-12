@@ -15,8 +15,8 @@ define(function(require) {
 		},
 
 		removeContainer: function() {		
-    	canvasContainer.detachCanvas();	
-      $(this.mainContainer).remove();
+    		canvasContainer.detachCanvas();	
+     	 	$(this.mainContainer).remove();
 		},
 	});
 

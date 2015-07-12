@@ -39,8 +39,7 @@ define(function(require) {
 				})
 				.addComponent("ActivateControlOnView");
 
-			this.gameObjectPool.createConfiguration("StartPosition", "StartPosition")
-				.addComponent("ActivateControlOnView");
+			this.gameObjectPool.createConfiguration("StartPosition", "StartPosition");
 		}
 	});
 

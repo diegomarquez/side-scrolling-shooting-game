@@ -1,24 +1,26 @@
 define(function(require) {
 
+	var reclaimer = require('reclaimer');
+
 	var StartPosition = require("editor-game-object-container").extend({
 		init: function() {
 			this._super();
 		},
 
 		editorStart: function() {
-			// this.mainViewport = Gb.viewports.get("Main");
-			// this.player = PlayerGetter.get();
+			this.player = require("player-getter").get();
+
+			this.player.x = this.x;
+			this.player.y = this.y;
+
+			var mainViewport = require('viewports').get('Main');
+
+			mainViewport.x = -this.x;
+			mainViewport.y = -this.y;
 		},
 
-		// draw: function(context, viewport) {
-		// 	this._super(context, viewport);
-		// },
-
 		editorUpdate: function(delta) {
-			// if (Math.floor(this.mainViewport.x + this.X) <= 0) {
-			//  this.player.stop();
-			//  Gb.reclaimer.mark(this);
-			// }
+			reclaimer.mark(this);
 		}
 	});
 

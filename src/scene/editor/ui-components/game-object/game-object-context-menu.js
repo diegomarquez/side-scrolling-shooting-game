@@ -184,7 +184,7 @@ define(function(require) {
 						]
 					},
 					{
-						name: 'Scrap',
+						name: 'Remove',
 						icon: 'ui-icon-trash',
 
 						options: function() {
