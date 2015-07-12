@@ -26,9 +26,9 @@ define(function(require) {
 
       if (object) {
       	object.x = go.x;
-	      object.y = go.y;      
+	    object.y = go.y;      
 
-	      return object;	
+	    return object;	
       }
     },
 

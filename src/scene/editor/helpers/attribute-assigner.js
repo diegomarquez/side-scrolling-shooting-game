@@ -9,7 +9,7 @@ define(function(require) {
     assignFrom: function(from, to) {
 			// Assing the attributes from a game object to another one
     	if (to.Attributes && from.Attributes) {
-    		to.Attributes = from.Attributes;	
+    		to.Attributes = JSON.parse(JSON.stringify(from.Attributes));
     	}
 
     	// Assign the attributes of each component from a game object to another one
@@ -25,7 +25,7 @@ define(function(require) {
 				if (editorConfig.isEditorComponent(fromComponent.typeId) || editorConfig.isEditorComponent(toComponent.typeId)) continue;
 
 				if (fromComponent.Attributes && toComponent.Attributes) {
-					toComponent.Attributes = fromComponent.Attributes;
+					toComponent.Attributes = JSON.parse(JSON.stringify(fromComponent.Attributes));
 				}
 			}
     	}
