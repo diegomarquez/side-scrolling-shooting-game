@@ -1,126 +1,131 @@
 define(function(require) {
 
-  var gb = require('gb');
-  var editorConfig = require('editor-config');
-  var gameObjectInputInteraction = require('setup-game-object-input');
-  var sceneSerializer = require('scene-serializer');
-  var editorGizmos = require('editor-gizmos');
+	var gb = require('gb');
+	var editorConfig = require('editor-config');
+	var gameObjectInputInteraction = require('setup-game-object-input');
+	var sceneSerializer = require('scene-serializer');
+	var editorGizmos = require('editor-gizmos');
 
-  var SetupEditorObject = require("class").extend({
-    init: function() {
-      
-    },
+	var SetupEditorObject = require("delegate").extend({
+		init: function() {
+			this._super();
+		},
 
-    setup: function(goId, group, viewports, args) {
-      return createObject(goId, group, viewports, args);
-    },
+		setup: function(goId, group, viewports, args) {
+			return createObject(goId, group, viewports, args);
+		},
 
-    setupWithGameObject: function(goId, go) {
-    	var object;
+		setupWithGameObject: function(goId, go) {
+			var object;
 
-    	if (go.isChild()) {
-    		object = createChildObject(goId, go.parent);
-    	} else {
-    		object = createObject(goId, go.getUpdateGroup(), JSON.parse(JSON.stringify(go.getViewportList())));
-    	}
+			if (go.isChild()) {
+				object = createChildObject(goId, go.parent);
+			} else {
+				object = createObject(goId, go.getUpdateGroup(), JSON.parse(JSON.stringify(go.getViewportList())));
+			}
 
-      if (object) {
-      	object.x = go.x;
-	    object.y = go.y;      
+			if (object) {
+				object.x = go.x;
+				object.y = go.y;      
 
-	    return object;	
-      }
-    },
+				this.execute(this.GAME_OBJECT_ADDED, object);
 
-    setupWithViewport: function(goId, group, viewports, mainViewport) {
-      var object = createObject(goId, group, viewports);
+				return object;  
+			}
+		},
 
-      if (object) {
-        object.x = -mainViewport.x + mainViewport.Width/2;
-        object.y = -mainViewport.y + mainViewport.Height/2;
+		setupWithViewport: function(goId, group, viewports, mainViewport) {
+			var object = createObject(goId, group, viewports);
 
-        return object;
-      }   
-    },
+			if (object) {
+				object.x = -mainViewport.x + mainViewport.Width/2;
+				object.y = -mainViewport.y + mainViewport.Height/2;
 
-    setupChild: function(childGoId, parent) {
-    	return createChildObject(childGoId, parent);
-    },
+				this.execute(this.GAME_OBJECT_ADDED, object);
 
-    addGizmos: function(go) {
-    	addEditorGizmos(go);
-    } 
-  });
+				return object;
+			}   
+		},
 
-  var createObject = function(goId, group, viewports, args) {
-    if (goId != 'Nothing' && group != 'Nothing' && viewports.length > 0) {
-      
-      // Get a game object with out starting it
-      var object = gb.getGameObject(goId, group, viewports, args, 'create');
+		setupChild: function(childGoId, parent) {
+			return createChildObject(childGoId, parent);
+		},
 
-      // Do all the stuff a game object needs in the editor
-      setupGameObject(object);
+		addGizmos: function(go) {
+			addEditorGizmos(go);
+		} 
+	});
 
-      // Add the object to the serializer
-      sceneSerializer.add(object);
+	var createObject = function(goId, group, viewports, args) {
+		if (goId != 'Nothing' && group != 'Nothing' && viewports.length > 0) {
+			// Get a game object with out starting it
+			var object = gb.getGameObject(goId, group, viewports, args, 'create');
 
-      return object;
-    }
-  }
+			// Do all the stuff a game object needs in the editor
+			setupGameObject(object);
 
-  var createChildObject = function(goId, go) {
-  	var child = gb.addChildTo(go, goId, null, null, 'create', false);
-  	
-  	// Do all the stuff a game object needs in the editor
-  	setupGameObject(child);
+			// Add the object to the serializer
+			sceneSerializer.add(object);
 
-  	return child;
-  }
+			return object;
+		}
+	}
 
-  var setupGameObject = function(object) {
-  	// Override the methods to prevent object initialization
-    doOverridesForEditor(object);
+	var createChildObject = function(goId, go) {
+		var child = gb.addChildTo(go, goId, null, null, 'create', false);
+		
+		// Do all the stuff a game object needs in the editor
+		setupGameObject(child);
 
-    // Once the needed overrides are done, start the game object
-    object.start()
+		return child;
+	}
 
-    // Add all required gizmos
-    addEditorGizmos(object);
+	var setupGameObject = function(object) {
+		// Override the methods to prevent object initialization
+		doOverridesForEditor(object);
 
-    // Setup the mouse interactions
-    gameObjectInputInteraction.setupInteraction(object);
-  }
+		// Once the needed overrides are done, start the game object
+		object.start()
 
-  var doOverridesForEditor = function(object) {
-  	object.editorStart = function() {};
-    object.editorUpdate = function() {};
+		// Add all required gizmos
+		addEditorGizmos(object);
 
-    if (object.components) {
-    	for (var i = 0; i < object.components.length; i++) {
-	  		var component = object.components[i];
+		// Setup the mouse interactions
+		gameObjectInputInteraction.setupInteraction(object);
+	}
 
-	  		component.editorStart = function() {};
-	  		component.editorAdded = function() {};
-	  		component.editorUpdate = function() {};
-	  	}
-    }
+	var doOverridesForEditor = function(object) {
+		object.editorStart = function() {};
+		object.editorUpdate = function() {};
 
-    if (object.childs) {
-	  	for (var i = 0; i < object.childs.length; i++) {
-	  		doOverridesForEditor(object.childs[i]);
-	  	}
-    }
-  }
+		if (object.components) {
+			for (var i = 0; i < object.components.length; i++) {
+				var component = object.components[i];
 
-  var addEditorGizmos = function(object) {
-  	editorGizmos.addGizmos(object);
-  	
-  	if (object.childs) {
-	  	for (var i = 0; i < object.childs.length; i++) {
-	  		addEditorGizmos(object.childs[i]);
-	  	}
-    }
-  }
+				component.editorStart = function() {};
+				component.editorAdded = function() {};
+				component.editorUpdate = function() {};
+			}
+		}
 
-  return new SetupEditorObject();
+		if (object.childs) {
+			for (var i = 0; i < object.childs.length; i++) {
+				doOverridesForEditor(object.childs[i]);
+			}
+		}
+	}
+
+	var addEditorGizmos = function(object) {
+		editorGizmos.addGizmos(object);
+		
+		if (object.childs) {
+			for (var i = 0; i < object.childs.length; i++) {
+				addEditorGizmos(object.childs[i]);
+			}
+		}
+	}
+
+	Object.defineProperty(SetupEditorObject.prototype, 'GAME_OBJECT_ADDED', { get: function() { return 'game-object-added'; } });
+
+	return new SetupEditorObject();
 });

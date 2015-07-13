@@ -15,9 +15,12 @@ define(function(require) {
 	
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
+	var controlObjects = null;
+	var controlGizmoGameObjects = null;
 	var colliderGizmoGameObjects = null;
 	var rotationGizmoGameObjects = null;
 	var scaleGizmoGameObjects = null;
+
 
 	var cachedGridSize = { width: GRID_WIDTH, height: GRID_HEIGHT };
 	var cachedGridCellSize = { width: null, height: null };
@@ -77,7 +80,7 @@ define(function(require) {
 		},
 
 		getGameObjects: function(options) {
-			options = options || { filterChilds: true, customOnly: false };
+			options = options || { filterChilds: true, customOnly: false, };
 
 			var data = require('gb').goPool.getConfigurationTypes(options);
 
@@ -87,7 +90,21 @@ define(function(require) {
 				data.splice(data.indexOf(editorOnlyGameObjects[i]), 1);
 			}
 
-			return data;
+			var self = this;
+
+			return data.filter(function (id) {
+				return !self.isControlObject(id);
+			});
+		},
+
+		getControlObjects: function() {
+			var data = require('gb').goPool.getConfigurationTypes({ filterChilds: true, customOnly: false, });
+
+			var self = this;
+
+			return data.filter(function (id) {
+				return self.isControlObject(id);
+			});
 		},
 
 		isMainViewport: function(viewport) {
@@ -96,6 +113,14 @@ define(function(require) {
 
 		isEditorGameObject: function(id) {
 			return checkExistance(id, this.getEditorOnlyGameObjects());
+		},
+
+		isControlObject: function(id) {
+			return checkExistance(id, this.getControlObjects());
+		},
+
+		isControlObjectGizmo: function(id) {
+			return checkExistance(id, this.getControlGizmoObjects());
 		},
 
 		isColliderGizmoGameObject: function(id) {
@@ -174,13 +199,45 @@ define(function(require) {
 				return editorOnlyGameObjects;
 			}
 
-			var gizmoBundle = require('gizmo-bundle');
-			var outlineBundle = require('outline-bundle');
-			var gridBundle = require('grid-bundle');
-
 			editorOnlyGameObjects = [
-				outlineBundle.getOutlineId(),
-				gridBundle.getGridId(),
+				require('outline-bundle').getOutlineId(),
+				require('grid-bundle').getGridId(),			
+			]
+
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getControlGizmoObjects());
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getColliderGizmoGameObjects());
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getRotationGizmoGameObjects());
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getScaleGizmoGameObjects());
+
+			return editorOnlyGameObjects;
+		},
+
+		getControlObjects: function() {
+			if (controlObjects) {
+				return controlObjects;
+			}
+
+			controlObjects = [
+				'ScrollStopper',
+				'BossWarning',		
+				'DirectionRight',
+				'DirectionLeft',
+				'DirectionUp',
+				'DirectionDown',
+				'StartPosition'
+			];
+
+			return controlObjects;
+		},
+
+		getControlGizmoObjects: function() {
+			if (controlGizmoGameObjects) {
+				return controlGizmoGameObjects;
+			}
+
+			var gizmoBundle = require('gizmo-bundle');
+
+			controlGizmoGameObjects = [
 				gizmoBundle.getScrollStopperId(),
 				gizmoBundle.getBossWarningId(),
 				gizmoBundle.getRightDirectionId(),
@@ -188,13 +245,9 @@ define(function(require) {
 				gizmoBundle.getUpDirectionId(),
 				gizmoBundle.getDownDirectionId(),
 				gizmoBundle.getStartPositionId()
-			]
+			];
 
-			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getColliderGizmoGameObjects());
-			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getRotationGizmoGameObjects());
-			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getScaleGizmoGameObjects());
-
-			return editorOnlyGameObjects;
+			return controlGizmoGameObjects;
 		},
 
 		getColliderGizmoGameObjects: function() {

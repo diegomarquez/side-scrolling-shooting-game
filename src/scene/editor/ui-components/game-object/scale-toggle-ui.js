@@ -3,6 +3,8 @@ define(function(require) {
 	var gb = require('gb');
 	var editorConfig = require('editor-config');
 
+	var isOn = false;
+
 	var ScaleToggle = require('ui-component').extend({
 		init: function() {},
 
@@ -12,7 +14,9 @@ define(function(require) {
 				on: 'Hide Scale Handles',
 				off: 'Show Scale Handles',
 				onChange: function() {
-					if ($(this).prop('checked')) {
+					isOn = $(this).prop('checked');
+
+					if (isOn) {
 						ScaleToggle.showAllScaleLayers();
 						ScaleToggle.showAllScaleLayersGameObjects();
 					} else {
@@ -23,6 +27,10 @@ define(function(require) {
 			});
 		}
 	});
+
+	ScaleToggle.isOn = function() {
+		return isOn;
+	}
 
 	ScaleToggle.showAllScaleLayers = function() {
 		var viewports = editorConfig.getViewports();

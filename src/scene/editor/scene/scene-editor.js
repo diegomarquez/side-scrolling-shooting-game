@@ -39,7 +39,7 @@ define(function(require) {
       
       // Bottom Left Components
       this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
-      this.viewportSelectorSimpleUI = new (require('viewport-selector-simple-ui'));
+      this.controlObjectSelectorUI = new (require('control-objects-selector-ui'));
       this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
       this.customTypesEditorUI = new (require('edit-custom-types-ui'));
       this.gameObjectRemoveUI = new (require('game-object-remove-ui'));
@@ -83,8 +83,8 @@ define(function(require) {
       // Bottom Left Region
       // Game Object Selector
       this.editorRegionsController.appendToBottomLeft(this.gameObjectSelectorUI.create());
-      // Viewport Selector 
-      this.editorRegionsController.appendToBottomLeft(this.viewportSelectorSimpleUI.create());
+      // Control Objects Selector
+      this.editorRegionsController.appendToBottomLeft(this.controlObjectSelectorUI.create());
       // Game Object Creator
       this.editorRegionsController.appendToBottomLeft(this.gameObjectCreatorUI.create());
       // Custom Types editor

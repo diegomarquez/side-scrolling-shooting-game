@@ -8,7 +8,7 @@ define(function(require) {
 
 		setupUI: function(container, contentContainer, options) {
 			$(contentContainer).css({
-				'max-height': 305
+				'max-height': options.height || 305 
 			});
 
 			$(contentContainer).jScrollPane({showArrows: true});

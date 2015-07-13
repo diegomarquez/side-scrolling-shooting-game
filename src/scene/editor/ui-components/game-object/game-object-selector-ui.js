@@ -17,7 +17,7 @@ define(function(require) {
 				id: 'game-object-selector',
 				icon: 'chevron-down',
 				defaultMessage: 'Choose a Game Object',
-				selectedMessage: 'Selected Game Object:',
+				selectedMessage: '',
 				selector: true,
 				data: function() {      
 					return editorConfig.getGameObjects({ filterChilds: false });

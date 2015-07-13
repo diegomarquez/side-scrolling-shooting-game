@@ -5,7 +5,7 @@ define(function(require) {
     init: function() {},
 
     get: function() {
-      var selectedViewports = $('#viewport-selector-simple').attr('value');
+      var selectedViewports = 'Main';
 
       if (!selectedViewports) return;
 

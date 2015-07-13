@@ -3,6 +3,8 @@ define(function(require) {
 	var gb = require('gb');
 	var editorConfig = require('editor-config');
 
+	var isOn = false;
+
 	var CollidersToggle = require('ui-component').extend({
 		init: function() {},
 
@@ -12,7 +14,9 @@ define(function(require) {
 				on: 'Hide Colliders',
 				off: 'Show Colliders',
 				onChange: function() {					
-					if ($(this).prop('checked')) {
+					isOn = $(this).prop('checked');
+
+					if (isOn) {
 						CollidersToggle.showAllColliderLayers();
 						CollidersToggle.showAllColliderLayersGameObjects();
 					} else {
@@ -23,6 +27,10 @@ define(function(require) {
 			});
 		}
 	});
+
+	CollidersToggle.isOn = function() {
+		return isOn;
+	}
 
 	CollidersToggle.showAllColliderLayers = function() {
 		var viewports = editorConfig.getViewports();

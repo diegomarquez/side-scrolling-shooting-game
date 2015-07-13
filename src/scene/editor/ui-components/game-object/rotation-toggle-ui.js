@@ -3,6 +3,8 @@ define(function(require) {
 	var gb = require('gb');
 	var editorConfig = require('editor-config');
 
+	var isOn = false;
+
 	var RotationToggle = require('ui-component').extend({
 		init: function() {},
 
@@ -12,7 +14,9 @@ define(function(require) {
 				on: 'Hide Rotation Handles',
 				off: 'Show Rotation Handles',
 				onChange: function() {
-					if ($(this).prop('checked')) {
+					isOn = $(this).prop('checked');
+
+					if (isOn) {
 						RotationToggle.showAllRotationLayers();
 						RotationToggle.showAllRotationLayersGameObjects();
 					} else {
@@ -23,6 +27,10 @@ define(function(require) {
 			});
 		}
 	});
+
+	RotationToggle.isOn = function() {
+		return isOn;
+	}
 
 	RotationToggle.showAllRotationLayers = function() {
 		var viewports = editorConfig.getViewports();
