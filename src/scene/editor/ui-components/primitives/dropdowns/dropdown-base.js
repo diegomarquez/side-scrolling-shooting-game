@@ -13,12 +13,14 @@ define(function(require) {
 
 		create: function(options) {
 			// Methods to get the parts of the UI in child classes
-			this.getOptions = function() { return options; }.bind(this)
-			this.getContainer = function() { return this.container; }.bind(this)
-			this.getContentContainer = function() { return this.contentContainer; }.bind(this)
-			this.getOptionElements = function() { return this.optionElements; }.bind(this)
-			this.getMainUI = function() { return this.mainUI; }.bind(this)
+			this.getOptions = function() { return options; }.bind(this);
+			this.getContainer = function() { return this.container; }.bind(this);
+			this.getContentContainer = function() { return this.contentContainer; }.bind(this);
+			this.getOptionElements = function() { return this.optionElements; }.bind(this);
+			this.getMainUI = function() { return this.mainUI; }.bind(this);
 			
+			this.showEvent = null;
+
 			// Create the main components
 			this.mainUI = this.createMainUI(
 				function() { return this.getOptions(); }.bind(this),
@@ -56,12 +58,24 @@ define(function(require) {
 				refresh: function() { 
 					this.refreshContent(); 
 				}.bind(this),
+
+				getOptions: function() {
+					return this.getOptions();
+				}.bind(this),
+
+				show: function(event) {
+					this.showEvent = event;
+					$(this.getMainUI()).trigger('click');
+				}.bind(this),
+
 				disable: function() {
 					$(this.getMainUI()).button('option', 'disabled', true);
 				}.bind(this),
+				
 				enable: function() {
 					$(this.getMainUI()).button('option', 'disabled', false);
 				}.bind(this),
+				
 				destroy: function() {
 					clickedOutside.unregister('dropdown-' + options.id);
 				}
@@ -85,14 +99,18 @@ define(function(require) {
 				label: options().defaultMessage,
 				
 				onClick: function(event) {
+					event = this.showEvent || event; 
+
 					this.refreshContent();
 
 					$('body').append(contentContainer());
 
 					this.setupUI($(container()), $(contentContainer()), options());
 					this.setupOptionEvents(optionElements(), container(), contentContainer(), options());
-	 
+
 					fitInViewport.fit(contentContainer(), mouseCoordinates.get(event));
+
+					this.showEvent = null;
 				}.bind(this)
 			});
 

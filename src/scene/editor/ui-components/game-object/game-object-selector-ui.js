@@ -1,42 +1,60 @@
 define(function(require) {
-	var editorConfig = require('editor-config');
-
-	var wrapper = require('wrap-in-div');
-	var dropdown = require('dropdown-scroll');
-
 	var gb = require('gb');
-	var editorDelegates = require('editor-delegates');
 
 	var GameObjectSelector = require('ui-component').extend({
 		init: function() {
 			this.gameObjectSelectorUI = null;
 		},
 
+		toButtons: function() {
+			this.gameObjectSelectorUI.getOptions().selector = false;
+			this.gameObjectSelectorUI.getOptions().buttons = true;
+		},
+
+		show: function(event) {
+			this.gameObjectSelectorUI.show(event);
+		},
+
 		create: function() {
-			this.gameObjectSelectorUI = new dropdown().create({
+			var self = this;
+
+			this.gameObjectSelectorUI = new (require('dropdown-scroll'))().create({
 				id: 'game-object-selector',
 				icon: 'chevron-down',
 				defaultMessage: 'Choose a Game Object',
 				selectedMessage: '',
 				selector: true,
 				data: function() {      
-					return editorConfig.getGameObjects({ filterChilds: false });
+					return require('editor-config').getGameObjects({ filterChilds: false });
+				},
+				onClick: function(gameObjectName) {
+					self.gameObjectSelectorUI.getOptions().selector = true;
+					self.gameObjectSelectorUI.getOptions().buttons = false;
+
+					gb.game.get_extension(require('logger')).success('Game object created successfully!');
+					
+					require('setup-editable-game-object').setupWithViewport(
+						gameObjectName,
+						'First',
+						[{viewport: 'Main', layer: 'Front'}],
+						require('main-viewport').get()
+					);
 				}
 			});
 
-			editorDelegates.add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
 				this.gameObjectSelectorUI.refresh();
 			});
 
-			editorDelegates.add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
 				this.gameObjectSelectorUI.refresh();
 			});
 
-			editorDelegates.add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configuration) {
 				this.gameObjectSelectorUI.refresh();
 			});
 
-			return wrapper.wrap(this.gameObjectSelectorUI.html, {
+			return require('wrap-in-div').wrap(this.gameObjectSelectorUI.html, {
 				id: 'game-object-selector-wrapper',
 				classNames: ['well', 'well-small']
 			});

@@ -27,14 +27,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 	Object.defineProperty(Mouse.prototype, "NOTHING_CLICKED_ON_CANVAS", { get: function() { return 'nothing_clicked_on_canvas'; } });
 	Object.defineProperty(Mouse.prototype, "CLICKED_OUTSIDE_CANVAS", { get: function() { return 'clicked_outside_canvas'; } });
+	Object.defineProperty(Mouse.prototype, "CANVAS_CONTEXT_MENU", { get: function() { return 'canvas_context_menu'; } });
 
 	var MouseEvents = Extension.extend({
 		init: function() {
-				this.onContextMenu = null;
-				this.onMouseDown = null;
-				this.onMouseUp = null;
-				this.onMouseOut = null;
-				this.documentMouseUp = null;
+			this.onContextMenu = null;
+			this.onMouseDown = null;
+			this.onMouseUp = null;
+			this.onMouseOut = null;
+			this.documentMouseUp = null;
 		},
 
 		type: function() {
@@ -45,18 +46,22 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Reference to the last object that executed a delegate on the MOUSE_DOWN event
 			var currentMouseDownData = null;
 
-				this.onContextMenu = function (event) {
+			this.onContextMenu = function (event) {
+				
+				// Prevent the menu from appearing
+				event.preventDefault();
+
 				// If a game bbject was clicked on when triggering the context menu event
 				if (currentMouseDownData) {
-					// Prevent the menu from appearing
-					event.preventDefault();
-
 					currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);  
 
 					// Stop the dragging sequence
 					stopDrag(event, currentMouseDownData);
 					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
 					currentMouseDownData = null;
+				} else {
+					// Override the default context menu
+					Gb.Mouse.execute(Gb.Mouse.CANVAS_CONTEXT_MENU, event);					
 				}
 			}
 
@@ -129,6 +134,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Any click outside the Canvas triggers a NOTHING_CLICKED event
 			// Clicks on elements which are covering the canvas don't trigger this event
 			document.body.addEventListener('mouseup', this.documentMouseUp);
+
+			debugger;
 
 			// Global mouse events delegate
 			Gb.Mouse = new Mouse();

@@ -1,12 +1,6 @@
 define(function(require) {
-	var editorConfig = require('editor-config');
-
-	var wrapper = require('wrap-in-div');
-	var dropdown = require('dropdown-scroll');
 
 	var gb = require('gb');
-	var editorDelegates = require('editor-delegates');
-	var editTypeDialog = require('edit-type-dialog');
 
 	var CustomGameObjectSelector = require('ui-component').extend({
 		init: function() {
@@ -14,10 +8,14 @@ define(function(require) {
 			this.editTypeDialog = null;
 		},
 
+		show: function(event) {
+			this.customTypeSelector.show(event);
+		},
+
 		create: function() {
 			var self = this;
 
-			this.customTypeSelector = new dropdown().create({
+			this.customTypeSelector = new (require('dropdown-scroll'))().create({
 				id: 'custom-game-object-selector',
 				icon: 'chevron-down',
 				defaultMessage: 'Edit Custom Types',
@@ -26,7 +24,7 @@ define(function(require) {
 					return gb.goPool.getConfigurationTypes({ customOnly: true });
 				},
 				onClick: function(value) {
-					self.editTypeDialog = new editTypeDialog(true, true);
+					self.editTypeDialog = new (require('edit-type-dialog'))(true, true);
 
 					// Show the dialog to edit the new configuratio's name
 					self.editTypeDialog.open(value);
@@ -43,16 +41,16 @@ define(function(require) {
 
 			this.customTypeSelector.disable()
 			
-			editorDelegates.add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.CREATE_CONFIGURATION, this, function (configuration) {
 				this.customTypeSelector.refresh();
 				this.customTypeSelector.enable();
 			});
 
-			editorDelegates.add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.UPDATE_CONFIGURATION, this, function (configuration) {
 				this.customTypeSelector.refresh();
 			});
 
-			editorDelegates.add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configuration) {
+			require('editor-delegates').add(gb.goPool, gb.goPool.CLEAR_CONFIGURATION, this, function (configuration) {
 				this.customTypeSelector.refresh();
 
 				if (gb.goPool.getConfigurationTypes({ customOnly: true }).length == 0) {
@@ -60,7 +58,7 @@ define(function(require) {
 				}
 			});
 
-			return wrapper.wrap(this.customTypeSelector.html, {
+			return require('wrap-in-div').wrap(this.customTypeSelector.html, {
 				id: 'custom-game-object-selector-wrapper',
 				classNames: ['well', 'well-small']
 			});
