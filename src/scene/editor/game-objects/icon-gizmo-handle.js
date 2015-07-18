@@ -7,6 +7,8 @@ define(function (require) {
 	var stepX = null;
 	var stepY = null;
 
+	var contextMenu = new (require('control-object-context-menu'))().create();
+
 	var IconGizmoHandle = require("game-object").extend({		
 		init: function() {
 			this._super();
@@ -43,6 +45,10 @@ define(function (require) {
 				this.x = 0;
 				this.y = 0;
 			});
+
+			this.on(this.CONTEXT_MENU, this, function(mouseData) {
+     			contextMenu.show(mouseData);
+    		});
 		},
 
 		start: function() {
