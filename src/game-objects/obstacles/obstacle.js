@@ -12,6 +12,10 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     	
     },
 
+    deActivate: function() {
+
+    },
+
     onCollide: function(other) {
 
     }

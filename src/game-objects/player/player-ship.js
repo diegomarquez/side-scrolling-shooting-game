@@ -90,6 +90,10 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			Keyboard.levelCleanUp('player-ship-keyboard');
 		},
 
+		isBlocked: function() {
+			return this.block;
+		},
+
 		blockControls: function() {
 			smallExhausts.call(this);
 			this.block = true;

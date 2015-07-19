@@ -9,10 +9,10 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
     },
 
     editorStart: function() {
-			this.started = false;
-			this.health = 20;
+		this.started = false;
+		this.health = 20;
 
-      TimerFactory.get(this, 'repairTimer', 'repairTimer');
+      	TimerFactory.get(this, 'repairTimer', 'repairTimer');
     },
 
     editorUpdate: function(delta) {

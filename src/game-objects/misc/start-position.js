@@ -21,7 +21,11 @@ define(function(require) {
 
 		editorUpdate: function(delta) {
 			reclaimer.mark(this);
-		}
+		},
+
+		deActivate: function() {
+
+    	}
 	});
 
 	return StartPosition;

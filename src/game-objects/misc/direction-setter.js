@@ -25,13 +25,13 @@ define(function(require) {
 			}
 
 			if (d == 'left') {
-				if (Math.floor(this.mainViewport.x - this.X) >= this.halfWidth) {
+				if (Math.floor(this.mainViewport.x + this.X) >= this.halfWidth) {
 					this.player.move(this.direction);
 				}
 			}
 
 			if (d == 'up') {
-				if (Math.floor(this.mainViewport.y - this.Y) >= this.halfHeight) {
+				if (Math.floor(this.mainViewport.y + this.Y) >= this.halfHeight) {
 					this.player.move(this.direction);
 				}
 			}
@@ -41,7 +41,11 @@ define(function(require) {
 					this.player.move(this.direction);
 				}
 			}
-		}
+		},
+
+		deActivate: function() {
+
+    	}
 	});
 
 	return DirectionSetter;

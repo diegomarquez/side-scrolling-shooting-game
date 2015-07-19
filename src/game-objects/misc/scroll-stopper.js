@@ -43,7 +43,11 @@ define(function(require) {
 					require('gb').reclaimer.mark(this);	
 				}
 			}
-		}
+		},
+
+		deActivate: function() {
+
+    	}
 	});
 
 	return ScrollStopper;

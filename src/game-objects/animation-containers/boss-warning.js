@@ -10,6 +10,10 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       });
     },
 
+    deActivate: function() {
+
+    },
+
     editorUpdate: function(delta) {
       
     }

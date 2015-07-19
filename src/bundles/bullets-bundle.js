@@ -35,7 +35,6 @@ define(function(require) {
 			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer');
 
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
-				.addComponent(particleBundle.getPlayerBulletTrailingParticlesId())
 				.addComponent(particleBundle.getPlayerBulletCollisionParticlesId())
 				.addComponent("BulletCollider")
 				.setRenderer("BulletRender");

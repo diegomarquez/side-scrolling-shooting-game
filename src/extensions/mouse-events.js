@@ -135,8 +135,6 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Clicks on elements which are covering the canvas don't trigger this event
 			document.body.addEventListener('mouseup', this.documentMouseUp);
 
-			debugger;
-
 			// Global mouse events delegate
 			Gb.Mouse = new Mouse();
 		},
