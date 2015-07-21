@@ -10,18 +10,15 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.options = [];
 
     	this.fly = Gb.create('Fly', 'First', viewports, { x: -300, y: 20 });
-    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -300, y: 70 });
-    	this.die = Gb.create('Die', 'First', viewports, { x: -300, y: 120 });
-    	this.loop = Gb.create('LoopArrow', 'First', viewports, { x: -300, y: 38 });
+    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -300, y: 100 });
+    	this.die = Gb.create('Die', 'First', viewports, { x: -300, y: 180 });
+    	this.loop = Gb.create('LoopArrow', 'First', viewports, { x: -300, y: 43 });
 
-    	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: 600 });
-    	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: 600 });
-
-    	this.play = Gb.create('Play', 'First', viewports, { x: Gb.canvas.width/2, y: 600 });
-    	this.edit = Gb.create('Edit', 'First', viewports, { x: Gb.canvas.width/2, y: 630 });
+    	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 });
+    	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 });
     	
     	if (LocalStorage.getScenesCount() > 0) {
-    		this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: 660 });			
+    		this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 160 });			
     	}
 
     	this.tl = new TimelineLite({
@@ -43,12 +40,12 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     		}.bind(this) 
     	});
 
-		this.tl.to(this.fly, 0.5, { x: Gb.canvas.width/2});
-		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2});
-		this.tl.to(this.die, 0.5, { x: Gb.canvas.width/2});
-		this.tl.to(this.loop, 0.5, { x: Gb.canvas.width/2 - 50 });
+		this.tl.to(this.fly, 0.5, { x: Gb.canvas.width - 300 });
+		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width  - 300 });
+		this.tl.to(this.die, 0.5, { x: Gb.canvas.width - 300 });
+		this.tl.to(this.loop, 0.5, { x: Gb.canvas.width - 400 });
 
-		this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=380' }, 0);
+		this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);
 
 		this.tl.play();
 

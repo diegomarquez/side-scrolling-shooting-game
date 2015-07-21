@@ -23,7 +23,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
-					size: 55
+					size: 90
 				});
 
 			this.gameObjectPool.createConfiguration("Shoot", commonBundle.getGameObjectPoolId())
@@ -33,7 +33,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					text: 'Shoot',
 					font: 'Russo One',
-					size: 55
+					size: 90
 				});
 
 			this.gameObjectPool.createConfiguration("Die", commonBundle.getGameObjectPoolId())
@@ -43,7 +43,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					text: 'Die',
 					font: 'Russo One',
-					size: 55
+					size: 90
 				});
 
 			this.gameObjectPool.createConfiguration("Play", commonBundle.getGameObjectContainerPoolId())
@@ -56,7 +56,7 @@ define(function(require) {
 					text: 'Play',
 					font: 'Russo One',
 					padding: 5,
-					size: 25,
+					size: 45,
 					offset: 'center'
 				});
 
@@ -70,13 +70,13 @@ define(function(require) {
 					text: 'Edit',
 					font: 'Russo One',
 					padding: 5,
-					size: 25,
+					size: 45,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("PlayCustom", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 120, y: 0 })
-				.addChild("MarkerArrow", { rotation: 270, x: -120, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90,  x: 170, y: 0 })
+				.addChild("MarkerArrow", { rotation: 270, x: -170, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'play-custom-button',
 					fillColor: "none",
@@ -84,7 +84,7 @@ define(function(require) {
 					text: 'Play Custom',
 					font: 'Russo One',
 					padding: 5,
-					size: 25,
+					size: 45,
 					offset: 'center'
 				});
 

@@ -3,11 +3,11 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 		init: function() {
 			this._super();
 
-			this.paddingTop = 10;
+			this.paddingTop = 12;
 			this.paddingLeft = 5;
 
-			this.width = 48;
-			this.height = 123;
+			this.width = 102;
+			this.height = 204;
 			this.name = "loop-arrow";
 
 			this.arrowWidth = (this.width - (this.paddingLeft*2)) * (3/4);
@@ -21,9 +21,9 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 			this._super();
 
 			TimerFactory.get(this, 'lineTimer', 'lineTimer');
-      this.lineTimer.configure({ delay: 200, repeatCount:-1, removeOnComplete:false});
+      		this.lineTimer.configure({ delay: 200, repeatCount:-1, removeOnComplete:false});
 
-      this.lineTimer.start();
+      		this.lineTimer.start();
 
 			this.lineTimer.on('repeate', function(repeatCount) {
 				if (!this.squares) return;
@@ -63,15 +63,15 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 				for (var i=5-1; i >= 0; i--) {
 					this.squares.push(function (i, left, top) {
 						return function () {
-							Draw.rectangle(context, left + 2 + (6*i) + i, top + 2 + (6*14) + 14, 6, 6, "#FFFFFF", null, 1, true);
+							Draw.rectangle(context, left + 4 + (16*i) + i, top + 2 + (16*10) + 10, 16, 16, "#FFFFFF", null, 1, true);
 						}
 					}(i, this.paddingLeft, this.paddingTop));	
 				}
 
-				for (var i=15-1; i >= 0; i--) {
+				for (var i=11-1; i >= 0; i--) {
 					this.squares.push(function (i, left, top) {
 						return function () {
-							Draw.rectangle(context, left + 2, top + 2 + (6*i) + i, 6, 6, "#FFFFFF", null, 1, true);	
+							Draw.rectangle(context, left + 4, top + 2 + (16*i) + i, 16, 16, "#FFFFFF", null, 1, true);	
 						}
 					}(i, this.paddingLeft, this.paddingTop));	
 				}
@@ -79,10 +79,10 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 				for (var i=0; i < 5; i++) {
 					this.squares.push(function (i, left, top) {
 						return function () {
-							Draw.rectangle(context, left + 2 + (6*i) + i, top + 2 + (6*0) + 0, 6, 6, "#FFFFFF", null, 1, true);		
+							Draw.rectangle(context, left + 4 + (16*i) + i, top + 2 + (16*0) + 0, 16, 16, "#FFFFFF", null, 1, true);		
 						}
-					}(i, this.paddingLeft, this.paddingTop));	
-				}	
+					}(i, this.paddingLeft, this.paddingTop));
+				}
 			}
 
 			context.restore();
