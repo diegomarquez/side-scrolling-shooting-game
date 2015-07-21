@@ -136,7 +136,7 @@ define(function(require) {
 				this.canvasTooltipContent.html.outerHTML, 
 				editorRegions.get().getTopLeft()[0],
 				function (event) {
-					// toogleDisplay(editorRegions.get().getTopLeftContainer()[0]);
+					
 				}
 			));
 			
@@ -164,17 +164,21 @@ define(function(require) {
 				}
 			));
 			
-			items.push(createRegionOptionItem(
-				'Viewports', 
-				'glyphicon-question-sign',
-				'glyphicon-eye-open',
-				'glyphicon-eye-close', 
-				this.viewportsTooltipContent.html.outerHTML, 
-				editorRegions.get().getBottomRight()[0],
-				function (event) {
-					toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
-				}
-			));
+			if (require('mode').isAdvanced()) {
+				items.push(createRegionOptionItem(
+					'Viewports', 
+					'glyphicon-question-sign',
+					'glyphicon-eye-open',
+					'glyphicon-eye-close', 
+					this.viewportsTooltipContent.html.outerHTML, 
+					editorRegions.get().getBottomRight()[0],
+					function (event) {
+						toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
+					}
+				));
+			} else {
+				toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
+			}
 
 			items.push(createDivider());
 
@@ -200,14 +204,16 @@ define(function(require) {
 			items.push(createDivider());
 			items.push(createTitleItem('Misc.'));
 
-			items.push(createToggleOptionItem(
-				'Activity Display', 
-				'glyphicon-eye-close',
-				'glyphicon-eye-open',
-				function() {  
-					gb.game.get_extension(require('activity-display')).toggle();
-				}.bind(this)
-			));
+			if (require('mode').isAdvanced()) {
+				items.push(createToggleOptionItem(
+					'Activity Display', 
+					'glyphicon-eye-close',
+					'glyphicon-eye-open',
+					function() {  
+						gb.game.get_extension(require('activity-display')).toggle();
+					}.bind(this)
+				));
+			}
 
 			items.push(createToggleOptionItem(
 				'Log', 
@@ -400,7 +406,9 @@ define(function(require) {
 			$('.region').css({ width: '50%', height: '50%'});
 		}
 
-		gb.game.get_extension(require('fit-canvas-in-region')).fit();
+		if (gb.game.get_extension(require('fit-canvas-in-region'))) {
+			gb.game.get_extension(require('fit-canvas-in-region')).fit();	
+		}
 	}
 
 	Object.defineProperty(EditorSideMenu.prototype, "EXIT", { get: function() { return 'exit'; } });

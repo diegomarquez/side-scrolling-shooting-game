@@ -107,9 +107,13 @@ define(function(require) {
 						name: 'Viewports',
 						icon: 'ui-icon-wrench',
 						
+						omit: function() {
+							return require('mode').isBasic();
+						},
+
 						disable: function() { 
 							if (menu) {
-								return menu.go.isChild(); 
+								return menu.go.isChild();
 							}
 
 							return false;

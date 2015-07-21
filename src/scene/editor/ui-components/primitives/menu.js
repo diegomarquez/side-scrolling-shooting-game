@@ -284,6 +284,13 @@ define(function(require) {
 	}
 
 	var setEntryState = function(optionsElement, options) {
+
+		if (Object.prototype.toString.call(options.omit) == '[object Function]') {
+			optionsElement.style.display = options.omit() ? 'none' : 'block';
+		} else {
+			optionsElement.style.display = 'block';
+		}
+
 		$(optionsElement).off('mouseover');
 		$(optionsElement).off('mouseout');
 

@@ -27,33 +27,33 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.tl = new TimelineLite({
     		onComplete: function() {
     			Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-					Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
-					Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+				Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+				Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
-					this.execute(this.ENTER);
+				this.execute(this.ENTER);
     		}.bind(this),
 
     		onReverseComplete: function() {
     			if (this.play.selected) {
-		    		this.execute(this.PLAY);
-					} 
-					else if (this.custom.selected) {
-						this.execute(this.CUSTOM);
-					}
+	    			this.execute(this.PLAY);
+				} 
+				else if (this.custom.selected) {
+					this.execute(this.CUSTOM);
+				}
     		}.bind(this) 
     	});
 
-			this.tl.to(this.fly, 0.5, { x: Gb.canvas.width/2});
-			this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2});
-			this.tl.to(this.die, 0.5, { x: Gb.canvas.width/2});
-			this.tl.to(this.loop, 0.5, { x: Gb.canvas.width/2 - 50 });
+		this.tl.to(this.fly, 0.5, { x: Gb.canvas.width/2});
+		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2});
+		this.tl.to(this.die, 0.5, { x: Gb.canvas.width/2});
+		this.tl.to(this.loop, 0.5, { x: Gb.canvas.width/2 - 50 });
 
-			this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=380' }, 0);
+		this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=380' }, 0);
 
-			this.tl.play();
+		this.tl.play();
 
-			this.currentOption = 0;
-			highLightOption.call(this, this.currentOption);
+		this.currentOption = 0;
+		highLightOption.call(this, this.currentOption);
     }, 
 
     addOption: function(varName, objectName, viewports, args) {
@@ -88,16 +88,20 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
     onOptionSelected: function() {
     	if (this.play.selected) {
-    		this.reverse();
-			}
+			this.reverse();
+		}
 
-			if (this.edit.selected) {
-				this.execute(this.EDIT);
+		if (this.edit.selected) {
+			if (Keyboard.isKeyDown(Keyboard.CTRL) && Keyboard.isKeyDown(Keyboard.ALT)) {
+				this.execute(this.EDIT, true);
+			} else {
+				this.execute(this.EDIT, false);	
 			}
+		}
 
-			if (this.custom.selected) {
-				this.reverse();
-			}
+		if (this.custom.selected) {
+			this.reverse();
+		}
     },
 
     recycle: function() {
@@ -153,6 +157,6 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 	Object.defineProperty(Title.prototype, "CUSTOM", { get: function() { return 'custom'; } });
 	Object.defineProperty(Title.prototype, "EDIT", { get: function() { return 'edit'; } });
 
-  return Title;
+	return Title;
 });
 
