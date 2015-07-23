@@ -3,7 +3,7 @@ define(["path-renderer", "path-cache", "draw", "vector-2D"], function(PathRender
 		init: function() {
 			this._super();
 
-			this.size = 15;
+			this.size = 30;
 			this.color = "#FFFFFF";
 	
 			this.exhaustOffset    = this.size*0.3;

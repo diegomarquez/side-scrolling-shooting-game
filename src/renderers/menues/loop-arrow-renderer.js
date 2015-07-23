@@ -3,11 +3,11 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 		init: function() {
 			this._super();
 
-			this.paddingTop = 12;
+			this.paddingTop = 13;
 			this.paddingLeft = 5;
 
 			this.width = 102;
-			this.height = 204;
+			this.height = 205;
 			this.name = "loop-arrow";
 
 			this.arrowWidth = (this.width - (this.paddingLeft*2)) * (3/4);
@@ -45,9 +45,9 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 				{ x: 0, y: -this.arrowHeadWidth/2 },
 				{ x: this.arrowHeadWidth, y: this.arrowHeadWidth },
 				{ x: -this.arrowHeadWidth, y: this.arrowHeadWidth },
-				{ x: 0, y: -this.arrowHeadWidth/2 },
+				{ x: 0, y: -this.arrowHeadWidth/2 - 2 },
 				{ x: - this.arrowWidth + this.arrowHeadWidth, y: 0 },
-				{ x: 0, y: this.innerHeight },
+				{ x: 0, y: this.innerHeight + 3 },
 				{ x: this.arrowWidth, y: 0 },
 				{ x: 0, y: this.arrowHeadWidth },
 				{ x: - this.arrowWidth - this.arrowHeadWidth, y: 0 }

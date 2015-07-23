@@ -3,8 +3,8 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
     init: function() {
       this._super();
 
-      this.width = 350;
-      this.height = 180;
+      this.width = 750;
+      this.height = 360;
       
       this.name = 'custom-stages-menu-renderer';
     },
@@ -19,7 +19,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
       // Border
       Draw.rectangle(context, 0, 0, this.width, this.height, null, '#FFFFFF', 5);
       // Column divider
-      Draw.rectangle(context, 50, 0, 2, this.height, '#FFFFFF', '#FFFFFF', 1);
+      Draw.rectangle(context, 100, 0, 2, this.height, '#FFFFFF', '#FFFFFF', 1);
       // Rows
       Draw.rectangle(context, 0, (this.height/4)*1, this.width, 2, '#FFFFFF', '#FFFFFF', 1);
       Draw.rectangle(context, 0, (this.height/4)*2, this.width, 2, '#FFFFFF', '#FFFFFF', 1);

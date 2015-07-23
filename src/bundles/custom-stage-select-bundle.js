@@ -16,7 +16,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
-					size: 20
+					size: 55
 				});
 
 			this.componentPool.createConfiguration("MarkerArrowRenderer", "MarkerArrowRenderer");
@@ -37,14 +37,14 @@ define(function(require) {
 				.setRenderer("StageNameRenderer", { name: 'stage-name-4' });
 
 			this.gameObjectPool.createConfiguration("CustomStagesMenu", commonBundle.getGameObjectContainerPoolId())
-				.addChild("CurrentStageMarker", { x: 50/2, y: (45*1) - 22.5 })
-				.addChild("CurrentStageMarker", { x: 50/2, y: (45*2) - 22.5 })
-				.addChild("CurrentStageMarker", { x: 50/2, y: (45*3) - 22.5 })
-				.addChild("CurrentStageMarker", { x: 50/2, y: (45*4) - 22.5 })
-				.addChild("StageName1", { x: 60, y: (45*1) - (45*2)/3 - 3 })
-				.addChild("StageName2", { x: 60, y: (45*2) - (45*2)/3 - 3 })
-				.addChild("StageName3", { x: 60, y: (45*3) - (45*2)/3 - 3 })
-				.addChild("StageName4", { x: 60, y: (45*4) - (45*2)/3 - 3 })
+				.addChild("CurrentStageMarker", { x: 100/2, y: (90*1) - 45 })
+				.addChild("CurrentStageMarker", { x: 100/2, y: (90*2) - 45 })
+				.addChild("CurrentStageMarker", { x: 100/2, y: (90*3) - 45 })
+				.addChild("CurrentStageMarker", { x: 100/2, y: (90*4) - 45 })
+				.addChild("StageName1", { x: 120, y: (90*1) - (90*2)/3 - 15 })
+				.addChild("StageName2", { x: 120, y: (90*2) - (90*2)/3 - 15 })
+				.addChild("StageName3", { x: 120, y: (90*3) - (90*2)/3 - 15 })
+				.addChild("StageName4", { x: 120, y: (90*4) - (90*2)/3 - 15 })
 				.setRenderer("CustomStagesMenuRenderer")
 
 			this.gameObjectPool.createConfiguration("MarkerArrow", commonBundle.getGameObjectPoolId())
@@ -58,13 +58,13 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
-					size: 40,
+					size: 90,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("Back", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 80, y: 0 })
-				.addChild("MarkerArrow", { rotation: 270, x: -80, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'back-button',
 					fillColor: "none",
@@ -72,13 +72,13 @@ define(function(require) {
 					text: 'Back',
 					font: 'Russo One',
 					padding: 3,
-					size: 45,
+					size: 55,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("Start", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 80, y: 0 })
-				.addChild("MarkerArrow", { rotation: 270, x: -80, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'start-button',
 					fillColor: "none",
@@ -86,7 +86,7 @@ define(function(require) {
 					text: 'Start',
 					font: 'Russo One',
 					padding: 3,
-					size: 45,
+					size: 55,
 					offset: 'center'
 				});
 

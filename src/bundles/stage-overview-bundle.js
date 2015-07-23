@@ -33,7 +33,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 5,
-					size: 35,
+					size: 50,
 					offset: 'center'
 				});
 
@@ -45,7 +45,7 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 5,
-					size: 35,
+					size: 50,
 					offset: 'center'
 				});
 
@@ -57,16 +57,16 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 5,
-					size: 35,
+					size: 50,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("StageProgress", commonBundle.getGameObjectContainerPoolId())
-				.addChild("StageMarker1", { x: -25, y: 0 })
-				.addChild("StageMarkerArrow", { x: 40, y: 0 })
-				.addChild("StageMarker2", { x: 110, y: 0 })
-				.addChild("StageMarkerArrow", { x: 180, y: 0 })
-				.addChild("StageMarker3", { x: 250, y: 0 })
+				.addChild("StageMarker1", { x: -200, y: 0 })
+				.addChild("StageMarkerArrow", { x: -100, y: 0 })
+				.addChild("StageMarker2", { x: 0, y: 0 })
+				.addChild("StageMarkerArrow", { x: 100, y: 0 })
+				.addChild("StageMarker3", { x: 200, y: 0 })
 
 			this.gameObjectPool.createConfiguration("Stages", commonBundle.getGameObjectPoolId())
 				.setRenderer("TextRenderer", {
@@ -76,13 +76,13 @@ define(function(require) {
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
-					size: 55,
+					size: 90,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("Back", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'back-button',
 					fillColor: "none",
@@ -90,13 +90,13 @@ define(function(require) {
 					text: 'Back',
 					font: 'Russo One',
 					padding: 3,
-					size: 45,
+					size: 55,
 					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration("Start", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 70, y: 0 })
-				.addChild("MarkerArrow", { rotation: 270, x: -70, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'start-button',
 					fillColor: "none",
@@ -104,7 +104,7 @@ define(function(require) {
 					text: 'Start',
 					font: 'Russo One',
 					padding: 3,
-					size: 45,
+					size: 55,
 					offset: 'center'
 				});
 

@@ -7,13 +7,18 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     start: function() {
     	var viewports = [{viewport: 'Main', layer: 'Front'}];
 
-    	this.customStages = Gb.create('CustomStages', 'First', viewports, { x: -300, y: 30 });
-    	this.menu = Gb.create('CustomStagesMenu', 'First', viewports, { x: -400, y: 55 });
-    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 100, y: 600 });
-    	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 100, y: 600 });
+    	this.customStages = Gb.create('CustomStages', 'First', viewports, { x: -300, y: 70 });
+    	
+    	this.menu = Gb.create('CustomStagesMenu', 'First', viewports, { x: -1000, y: 130 });
+    	
+    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 150, y: Gb.canvas.height*2 });
+    	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 150, y: Gb.canvas.height*2 });
     	
     	this.markers = this.menu.findChildren().allWithType('CurrentStageMarker');
-    	this.stageNames = this.menu.findChildren().all(function (c) { return c.typeId.search('StageName') != -1 });
+    	
+    	this.stageNames = this.menu.findChildren().all(function (c) { 
+    		return c.typeId.search('StageName') != -1 
+    	});
 
     	this.tl = new TimelineLite({
     		onComplete: function() {
@@ -41,7 +46,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
 			this.tl.to(this.customStages, 0.5, { x: Gb.canvas.width/2 });
 			this.tl.to(this.menu, 0.5, { x: 25 });
-			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: 265 }, 0);
+			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: Gb.canvas.height - 40 }, 0);
 
 			this.tl.play();
 
@@ -155,7 +160,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-			Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.kill();

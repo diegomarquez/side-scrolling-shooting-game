@@ -7,14 +7,16 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     start: function() {
     	var viewports = [{viewport: 'Main', layer: 'Front'}];
 
-    	this.stages = Gb.create('Stages', 'First', viewports, { x: -300, y: 50 });
-    	this.stageProgress = Gb.create('StageProgress', 'First', viewports, { x: -300, y: 170 });
-    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 100, y: 600 });
-    	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 100, y: 600 });
+    	this.stages = Gb.create('Stages', 'First', viewports, { x: -300, y: 70 });
+    	
+    	this.stageProgress = Gb.create('StageProgress', 'First', viewports, { x: -600, y: Gb.canvas.height/2 + 50 });
+    	
+    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 150, y: Gb.canvas.height*2 });
+    	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 150, y: Gb.canvas.height*2 });
     	
     	var markerIndex = LevelStorage.getLowestIncompleteLevelIndex() + 1;
     	var marker = this.stageProgress.findChildren().firstWithType('StageMarker' + markerIndex);
-    	this.playerShipMarker = Gb.create('PlayerMarker', 'First', viewports, { x: marker.X, y: marker.Y - 50 });
+    	this.playerShipMarker = Gb.create('PlayerMarker', 'First', viewports, { x: marker.X, y: marker.Y - 70 });
     	this.stageProgress.add(this.playerShipMarker);
     	
     	this.tl = new TimelineLite({
@@ -40,8 +42,8 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     	});
 
 			this.tl.to(this.stages, 0.5, { x: Gb.canvas.width/2});
-			this.tl.to(this.stageProgress, 0.5, { x: Gb.canvas.width/2 - 115 });
-			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: 250 }, 0);
+			this.tl.to(this.stageProgress, 0.5, { x: Gb.canvas.width/2});
+			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: Gb.canvas.height - 40 }, 0);
 
 			this.tl.play();
 
