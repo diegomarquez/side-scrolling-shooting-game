@@ -188,6 +188,28 @@ define(function(require) {
 						]
 					},
 					{
+						name: 'Move',
+						icon: 'ui-icon-transferthick-e-w',
+
+						options: [
+							{
+								name: 'To Front',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									menu.v.getLayer(menu.l).moveGameObjectToFront(menu.go);
+								}
+							},
+
+							{
+								name: 'To Back',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									menu.v.getLayer(menu.l).moveGameObjectToBack(menu.go);
+								}
+							}
+						]
+					},
+					{
 						name: 'Remove',
 						icon: 'ui-icon-trash',
 
