@@ -140,7 +140,7 @@ define(function(require) {
 				}
 			));
 			
-			items.push(createRegionOptionItem(
+			var misc = createRegionOptionItem(
 				'Misc. Settings', 
 				'glyphicon-question-sign',
 				'glyphicon-eye-open',
@@ -150,9 +150,11 @@ define(function(require) {
 				function (event) {
 					toogleDisplay(editorRegions.get().getTopRightContainer()[0]);
 				}
-			));
+			);
+
+			items.push(misc);
 			
-			items.push(createRegionOptionItem(
+			var gos = createRegionOptionItem(
 				'Game Objects', 
 				'glyphicon-question-sign',
 				'glyphicon-eye-open',
@@ -162,24 +164,24 @@ define(function(require) {
 				function (event) {
 					toogleDisplay(editorRegions.get().getBottomLeftContainer()[0]);
 				}
-			));
-			
-			if (require('mode').isAdvanced()) {
-				items.push(createRegionOptionItem(
-					'Viewports', 
-					'glyphicon-question-sign',
-					'glyphicon-eye-open',
-					'glyphicon-eye-close', 
-					this.viewportsTooltipContent.html.outerHTML, 
-					editorRegions.get().getBottomRight()[0],
-					function (event) {
-						toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
-					}
-				));
-			} else {
-				toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
-			}
+			)
 
+			items.push(gos);
+
+			var viewports = createRegionOptionItem(
+				'Viewports', 
+				'glyphicon-question-sign',
+				'glyphicon-eye-open',
+				'glyphicon-eye-close', 
+				this.viewportsTooltipContent.html.outerHTML, 
+				editorRegions.get().getBottomRight()[0],
+				function (event) {
+					toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
+				}
+			)
+			
+			items.push(viewports);
+			
 			items.push(createDivider());
 
 			items.push(createTitleItem('Storage'));
@@ -238,7 +240,19 @@ define(function(require) {
 
 			$(ul).append($(items));
 
-			return componentFactory.getController(wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' }));
+			var component = componentFactory.getController(wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' }));
+
+			component.update = function() {
+				if (require('mode').isBasic()) {
+					$(misc).click();
+					$(gos).click();
+					$(viewports).click();
+					
+					viewports.style.display = 'none';
+				}
+			}
+
+			return component;
 		}
 	});
 

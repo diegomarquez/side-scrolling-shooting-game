@@ -153,6 +153,11 @@ define(function(require) {
 			editorDelegates.add(gb.Mouse, gb.Mouse.CANVAS_CONTEXT_MENU, this, function(event) {
 				this.globalContextMenu.show(event.clientX, event.clientY);  
 			});
+
+			// Update the side menu after adding it to the DOM
+			this.editorSideMenuController.update();
+			// Toggle the grid at start
+			this.gridControlsUI.toggleGrid();
 		}, 
 
 		cleanUp: function() {
