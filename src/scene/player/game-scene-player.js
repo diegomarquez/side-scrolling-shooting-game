@@ -17,7 +17,7 @@ define(function(require) {
 		// Load the Scene
 		playerLoader.load(sceneData);
 		// Get a reference to the player ship and block it's controls
-		playerGetter.get(gb.canvas.width/2 - 300, gb.canvas.height/2).blockControls();
+		playerGetter.get(-300, gb.canvas.height/2).blockControls();
 		// Layout all the game objects in the scene
 		playerLoader.layout();
 	},
@@ -57,7 +57,7 @@ define(function(require) {
 		var player = playerGetter.get();
 
 		// Tween the player ship into view
-		TweenLite.to(player, 3, { viewportOffsetX: gb.canvas.width/2 - 150, onComplete: function() {
+		TweenLite.to(player, 3, { viewportOffsetX: 150, onComplete: function() {
 			gb.create('StartMessage', 'First', this.viewports, {
 				onComplete: function() {
 				// Unblock controls when the start message is gone
