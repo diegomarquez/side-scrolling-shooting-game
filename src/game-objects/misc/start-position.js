@@ -1,6 +1,7 @@
 define(function(require) {
 
 	var reclaimer = require('reclaimer');
+	var gb = require('gb');
 
 	var StartPosition = require("editor-game-object-container").extend({
 		init: function() {
@@ -10,13 +11,13 @@ define(function(require) {
 		editorStart: function() {
 			this.player = require("player-getter").get();
 
-			this.player.x = this.x;
-			this.player.y = this.y;
+			this.player.x = gb.canvas.width * Math.floor(this.x/gb.canvas.width);
+			this.player.y = gb.canvas.height * Math.floor(this.y/gb.canvas.height);
 
 			var mainViewport = require('viewports').get('Main');
-
-			mainViewport.x = -this.x;
-			mainViewport.y = -this.y;
+			
+			mainViewport.x = -gb.canvas.width * Math.floor(this.x/gb.canvas.width);;
+			mainViewport.y = -gb.canvas.height * Math.floor(this.y/gb.canvas.height);;
 		},
 
 		editorUpdate: function(delta) {
