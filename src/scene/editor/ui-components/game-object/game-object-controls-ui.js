@@ -76,6 +76,36 @@ define(function(require) {
 				id: 'game-object-control-buttons',
 				classNames: ['well', 'well-small']
 			});
+		},
+
+		toggleColliders: function() {
+			var toggle = $(this.colliders).find('input');
+
+			if(!toggle.prop('checked')) {
+				toggle.bootstrapToggle('on');
+			} else {
+				toggle.bootstrapToggle('off');	
+			}		
+		},
+
+		toggleRotations: function() {
+			var toggle = $(this.rotations).find('input');
+
+			if(!toggle.prop('checked')) {
+				toggle.bootstrapToggle('on');
+			} else {
+				toggle.bootstrapToggle('off');	
+			}		
+		},
+
+		toggleScales: function() {
+			var toggle = $(this.scales).find('input');
+
+			if(!toggle.prop('checked')) {
+				toggle.bootstrapToggle('on');
+			} else {
+				toggle.bootstrapToggle('off');	
+			}		
 		}
 	});
   

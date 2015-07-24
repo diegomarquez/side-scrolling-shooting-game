@@ -144,7 +144,9 @@ define(function(require) {
 			this.globalContextMenu = new (require('global-context-menu'))().create(
 				this.gameObjectSelectorUI, 
 				this.controlObjectSelectorUI,
-				this.customTypesEditorUI
+				this.customTypesEditorUI,
+				this.gridControlsUI,
+				this.gameObjectControlsUI
 			);
 
 			// The context menu that appears when clicking on empty space in the canvas

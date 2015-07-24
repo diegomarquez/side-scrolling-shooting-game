@@ -6,7 +6,7 @@ define(function(require) {
 				
 		},
 
-		create: function(gameObjectSelectorUI, controlObjectSelectorUI, customTypesSelectorUI) {
+		create: function(gameObjectSelectorUI, controlObjectSelectorUI, customTypesSelectorUI, gridControlsUI, gameObjectControlsUI) {
 			var self = this;
 
 			var contextMenu = new (require('menu'))().create({
@@ -36,6 +36,57 @@ define(function(require) {
 						click: function(name, event) {
 							customTypesSelectorUI.show(event);
 						}
+					},
+					{
+						name: 'Grid',
+						icon: 'ui-icon-calculator',
+
+						options: [
+							{
+								name: 'Show/Hide',
+								icon: 'ui-icon-bullet',
+								click: function(name, event) {
+									gridControlsUI.toggleGrid();
+								}
+							},
+							{
+								name: 'Snap',
+								icon: 'ui-icon-bullet',
+								click: function(name, event) {
+									gridControlsUI.toggleSnap();
+								}
+							}
+						]						
+					},
+					{
+						name: 'Game Object',
+						icon: 'ui-icon-wrench',
+
+						options: [
+							{
+								name: 'Colliders',
+								icon: 'ui-icon-radio-off',
+								click: function() {
+									gameObjectControlsUI.toggleColliders();
+								}
+							},
+							
+							{
+								name: 'Rotation',
+								icon: 'ui-icon-arrowrefresh-1-w',
+								click: function() {
+									gameObjectControlsUI.toggleRotations();
+								}
+							},
+
+							{
+								name: 'Scale',
+								icon: 'ui-icon-arrow-2-se-nw',
+								click: function() {
+									gameObjectControlsUI.toggleScales();
+								}
+							}
+						]
 					}
 				]
 			});

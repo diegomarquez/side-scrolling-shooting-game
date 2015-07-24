@@ -122,7 +122,8 @@ define(function(require) {
 		if (viewport.name == editorConfig.getMainViewportName()) {
 			// Options available on Main viewport
 			buttons = [
-				getVisibilityButton
+				getVisibilityButton,
+				getEditButton
 			]
 		} else {
 			// Options available on additional viewports
