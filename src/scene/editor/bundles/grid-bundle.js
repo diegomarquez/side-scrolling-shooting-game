@@ -121,7 +121,7 @@ define(function(require) {
 
 		setOffsetX: function(value) {
 			offsetX = value % require('editor-config').getGridCellSize().width;
-			screenOffsetY = value % initCanvasWidth;
+			screenOffsetX = value % initCanvasWidth;
 		},
 
 		setOffsetY: function(value) {
