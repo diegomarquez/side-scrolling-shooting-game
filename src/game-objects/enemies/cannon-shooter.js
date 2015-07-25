@@ -5,100 +5,100 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 	var selfDecompose = {};
 	var selfMatrix = null;
 
-  var Cannon = GameObject.extend({
-    init: function() {
-      this._super();
-    },
+	var Cannon = GameObject.extend({
+		init: function() {
+			this._super();
+		},
 
-    editorStart: function() {
-    	this.damaged = false;
+		editorStart: function() {
+			this.damaged = false;
 
-      this.shootTimer = 0;
-      this.burtsTimer = 0;
+			this.shootTimer = 0;
+			this.burtsTimer = 0;
 
-      this.bursting = false;
-      this.target = PlayerGetter.get();
-      this.currentBurstCount = 0;
-      this.bulletCount = this.bullets;
+			this.bursting = false;
+			this.target = PlayerGetter.get();
+			this.currentBurstCount = 0;
+			this.bulletCount = this.bullets;
 
-      targetMatrix = this.target.getMatrix(targetMatrix);
-    	targetDecompose = targetMatrix.decompose(targetDecompose);
+			targetMatrix = this.target.getMatrix(targetMatrix);
+			targetDecompose = targetMatrix.decompose(targetDecompose);
 
-    	selfMatrix = this.getMatrix(selfMatrix);
-    	selfDecompose = selfMatrix.decompose(selfDecompose);
-    	
-    	var deltaX = targetDecompose.x - selfDecompose.x;
-    	var deltaY = targetDecompose.y - selfDecompose.y;
+			selfMatrix = this.getMatrix(selfMatrix);
+			selfDecompose = selfMatrix.decompose(selfDecompose);
+			
+			var deltaX = targetDecompose.x - selfDecompose.x;
+			var deltaY = targetDecompose.y - selfDecompose.y;
 
-      this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
-     	this.rotation = this.rotation % 360;
+			this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
+			this.rotation = this.rotation % 360;
 
-     	this.rateVariation = Math.floor(20 + (Math.random() * 50));
+			this.rateVariation = Math.floor(20 + (Math.random() * 50));
 
-     	this.parent.on(this.parent.DAMAGE, this, function() {
-     		this.damaged = true;
-	    	this.shootTimer = 0;
-	      this.burtsTimer = 0;
-	      this.bursting = false;
-	      this.currentBurstCount = 0;
-     	});
+			this.parent.on(this.parent.DAMAGE, this, function() {
+				this.damaged = true;
+				this.shootTimer = 0;
+				this.burtsTimer = 0;
+				this.bursting = false;
+				this.currentBurstCount = 0;
+			});
 
-     	this.parent.on(this.parent.REPAIR, this, function() {
-     		this.damaged = false;
-     	});
-    },
+			this.parent.on(this.parent.REPAIR, this, function() {
+				this.damaged = false;
+			});
+		},
 
-    editorUpdate: function(delta) {
-    	if (this.damaged) return;
+		editorUpdate: function(delta) {
+			if (this.damaged) return;
 
-    	targetMatrix = this.target.getMatrix(targetMatrix);
-    	targetDecompose = targetMatrix.decompose(targetDecompose);
+			targetMatrix = this.target.getMatrix(targetMatrix);
+			targetDecompose = targetMatrix.decompose(targetDecompose);
 
-    	selfMatrix = this.getMatrix(selfMatrix);
-    	selfDecompose = selfMatrix.decompose(selfDecompose);
-    	
-    	var deltaX = targetDecompose.x - selfDecompose.x;
-    	var deltaY = targetDecompose.y - selfDecompose.y;
-      
-    	if (!this.bursting) {
-    		this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
-      	this.rotation = this.rotation % 360;
+			selfMatrix = this.getMatrix(selfMatrix);
+			selfDecompose = selfMatrix.decompose(selfDecompose);
+			
+			var deltaX = targetDecompose.x - selfDecompose.x;
+			var deltaY = targetDecompose.y - selfDecompose.y;
 
-      	// Prevent update until the cannon has been started
-      	if (!this.parent.started) return;
+			this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
+			this.rotation = this.rotation % 360;
 
-    		this.shootTimer++;
+			if (!this.bursting) {
+				// Prevent update until the cannon has been started
+				if (!this.parent.started) return;
 
-    		if (this.shootTimer % (this.rate + this.rateVariation) == 0) {
-    			if (this.bulletCount > 0 || this.bullets == -1) {
-	    			this.bursting = true;	
-	    			this.burtsTimer = 0;
-	    		}	
-    		}
-    	}	
+				this.shootTimer++;
 
-    	if (this.bursting) {
+				if (this.shootTimer % (this.rate + this.rateVariation) == 0) {
+					if (this.bulletCount > 0 || this.bullets == -1) {
+						this.bursting = true;
+						this.burtsTimer = 0;
+					}
+				}
+			}
+
+			if (this.bursting) {
 				this.burtsTimer++;
 
-    		if (this.burtsTimer % 10 == 0) {
-    			if (this.currentBurstCount < this.burstAmount) {
-	    			Gb.create('cannon-bullet', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-				    	angle: selfMatrix.decompose(selfDecompose).rotation,
-				    	x: this.parent.x,
-				    	y: this.parent.y
-				    });
+				if (this.burtsTimer % 10 == 0) {
+					if (this.currentBurstCount < this.burstAmount) {
+						Gb.create('cannon-bullet', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+							angle: selfMatrix.decompose(selfDecompose).rotation,
+							x: this.parent.x,
+							y: this.parent.y
+						});
 
-	    			this.currentBurstCount++;
-	    		} else {
-	    			this.currentBurstCount = 0;
-	    			this.shootTimer = 0;
-	    			this.bursting = false;
-	    			this.bulletCount--;
-	    		}	
-    		}
-    	}
-    }
-  });
+						this.currentBurstCount++;
+					} else {
+						this.currentBurstCount = 0;
+						this.shootTimer = 0;
+						this.bursting = false;
+						this.bulletCount--;
+					}
+				}
+			}
+		}
+	});
 
-  return Cannon;
+	return Cannon;
 });
