@@ -103,15 +103,12 @@ define(function(require) {
 		decorateContainer: function() {
 			var titleContainer = document.createElement('div');
 			var controlsContainer = document.createElement('div');
-			var captionContainer = document.createElement('div');
 
 			titleContainer.id = 'player-title';
 			controlsContainer.id = 'player-controls';
-			captionContainer.id = 'player-caption';
 
 			this.mainContainer.appendChild(titleContainer);
 			this.mainContainer.appendChild(controlsContainer);
-			this.mainContainer.appendChild(captionContainer);
 		},
 
 		removeContainer: function() {			

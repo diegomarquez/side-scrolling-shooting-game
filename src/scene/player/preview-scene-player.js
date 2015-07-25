@@ -11,7 +11,6 @@ define(function(require) {
 
 			document.getElementById('player-title').appendChild(document.createTextNode('Scene Preview'));
 			document.getElementById('player-controls').appendChild(document.createTextNode('Press "ESC" key to exit'));
-			document.getElementById('player-caption').appendChild(document.createTextNode(''));
 		},
 
 		removeContainer: function() {		
