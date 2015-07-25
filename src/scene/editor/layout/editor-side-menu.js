@@ -26,19 +26,15 @@ define(function(require) {
 				items: [
 					{
 						type: 'item',
-						content: 'View the created objects.'
+						content: 'Drag objects with the mouse.'
 					},
 					{
 						type: 'item',
-						content: 'Drag them around the world.'
+						content: 'Right click on objects to show a context menu.'
 					},
 					{
 						type: 'item',
-						content: 'Right click on them for more editing options.'
-					},
-					{
-						type: 'item',
-						content: 'Use the scrollbars to view all the world.'
+						content: 'Right click on empty space to show a global context menu from which to create objects.'
 					}
 				]
 			});
@@ -56,6 +52,10 @@ define(function(require) {
 					},
 					{
 						type: 'item',
+						content: 'Toggle collider, rotation and scale handles on all game objects.'
+					},
+					{
+						type: 'item',
 						content: 'Change the size of the world.'
 					}
 				]
@@ -66,11 +66,15 @@ define(function(require) {
 				items: [
 					{
 						type: 'item',
-						content: 'Choose an object type to create.'
+						content: 'Choose between different objects to create.'
 					},
 					{
 						type: 'item',
-						content: 'Choose the viewports the object will appear in. Drag on the menu to select more than one viewport.'
+						content: "Edit custom types created from an object's context menu."
+					},
+					{
+						type: 'item',
+						content: "Clear all the objects."
 					}
 				]
 			});
@@ -80,20 +84,8 @@ define(function(require) {
 				items: [
 					{
 						type: 'item',
-						content: 'Add new viewports.'
-					},
-					{
-						type: 'item',
-						content: 'Edit them after creation.'
-					},
-					{
-						type: 'item',
-						content: 'Sort them to change drawing order by draggin them in their container.'
-					},
-					{
-						type: 'item',
-						content: 'Add, remove and sort layers of each viewport.'
-					}
+						content: "Do stuff with viewports man."
+					}	
 				]
 			});
 		},
