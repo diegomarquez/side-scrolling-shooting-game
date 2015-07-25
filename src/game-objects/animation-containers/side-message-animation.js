@@ -19,10 +19,10 @@ define(["game-object", "gb", "timelinelite"], function(GameObject, Gb, TimelineL
     		}.bind(this)
     	});
 
-			this.tl.to(this.sideMessage, 1, { x: Gb.canvas.width/2, ease: Back.easeOut });
-			this.tl.to(this.sideMessage, 1, { x: Gb.canvas.width + 300, ease: Back.easeIn }, "+=2");
+		this.tl.to(this.sideMessage, 1, { x: Gb.canvas.width/2, ease: Back.easeOut });
+		this.tl.to(this.sideMessage, 1, { x: Gb.canvas.width + 300, ease: Back.easeIn }, "+=2");
 
-			this.tl.play();
+		this.tl.play();
     }, 
 
     recycle: function() {
