@@ -119,7 +119,7 @@ define(function(require) {
 					var storage = require('local-storage');
 					var serializer = require('scene-serializer');
 
-					storage.setPreviewScene(serializer.serialize('PREVIEW'));
+					storage.setPreviewScene(serializer.serialize(require('scene-name').get()));
 					this.execute(this.PREVIEW); 
 				}.bind(this)
 			));
@@ -243,6 +243,8 @@ define(function(require) {
 			var component = componentFactory.getController(wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' }));
 
 			component.update = function() {
+				toggledCount = 4;
+
 				if (require('mode').isBasic()) {
 					$(misc).click();
 					$(gos).click();
