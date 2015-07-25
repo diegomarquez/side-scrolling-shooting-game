@@ -47,10 +47,10 @@ define(function(require) {
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Do things needed after leaving this state
 					completeActions();      
-					// Signal the state is complete
+					// Signal the state is complete					
 					state.execute(state.BACK);   
-				});
-			});
+				}, 'enter-scene-editor');
+			}, 'enter-scene-editor');
 
 			// When the preview button is clicked
 			sceneEditor.once(sceneEditor.PREVIEW, this, function() {
@@ -60,8 +60,8 @@ define(function(require) {
 				// When the loader closes
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null });   
-				});
-			});
+				}, 'enter-scene-editor');
+			}, 'enter-scene-editor');
 		});
 
 		state.addStartAction(function (args) {
@@ -89,6 +89,10 @@ define(function(require) {
 			// Signal that pools and the instances they hold should be cleared
 			gb.reclaimer.clearAllObjectsFromPools().now();
 			gb.reclaimer.clearAllPools().now();
+
+			// Clear delegates that were never executed
+			loaderContainer.levelCleanUp('enter-scene-editor');
+			sceneEditor.levelCleanUp('enter-scene-editor');
 		}
 
 		Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });
