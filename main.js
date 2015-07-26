@@ -22,8 +22,8 @@ define(function(require){
   mainStateMachine.add((require('splash-state'))('splash_state'));
   mainStateMachine.add((require('game-modes-state'))('game_modes_state'));
 
-  gb.toggleDebug(true);
-  gb.toggleGameObjectDebug(true);
+  // gb.toggleDebug(true);
+  // gb.toggleGameObjectDebug(true);
 
   // This is the main initialization function
   game.on(game.CREATE, this, function() {

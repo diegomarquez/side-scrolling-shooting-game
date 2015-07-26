@@ -70,7 +70,33 @@ define(function(require) {
 		});
 
 		var doSplash = function() {
-			var splash = gb.create('Title', 'First', [ { viewport: 'Main', layer: 'Front' } ]);   
+			// Go straight to the basic editor
+			if (require('query-string').startInEditorBasic()) {
+				require('mode').setBasic();
+
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					state.execute(state.NEXT, { nextInitArgs:'edit-mode', lastCompleteArgs: 'edit-mode' });
+				});
+
+				loaderContainer.transition();
+    			
+    			return;
+			}
+
+			// Go straight to the advanced editor
+			if (require('query-string').startInEditorAdvanced()) {
+    			require('mode').setAdvanced();
+
+    			loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					state.execute(state.NEXT, { nextInitArgs:'edit-mode', lastCompleteArgs: 'edit-mode' });
+				});
+
+				loaderContainer.transition();
+    			
+    			return;
+			}
+
+			var splash = gb.create('Title', 'First', [ { viewport: 'Main', layer: 'Front' } ]);
 
 			splash.on(splash.PLAY, this, function() {
 				state.execute(state.NEXT, { nextInitArgs:'play-mode', lastCompleteArgs: 'play-mode' });

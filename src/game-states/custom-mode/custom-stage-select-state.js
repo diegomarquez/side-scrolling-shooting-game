@@ -39,7 +39,7 @@ define(function(require) {
     });
 
     state.addCompleteAction(function (args) {
-      // Signal that pools and the instances they hold should be cleared
+     	// Signal that pools and the instances they hold should be cleared
     	gb.reclaimer.clearAllObjectsFromPools().now();
     	gb.reclaimer.clearAllPools().now();
     }); 

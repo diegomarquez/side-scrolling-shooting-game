@@ -6,6 +6,12 @@ define(function(require) {
   var TRANSITION_WAIT = 2000;
   var INITIAL_DELAY = 2500;
 
+  if(require('query-string').skipLoader()) {
+  	TRANSITION_DURATION = 1;
+  	TRANSITION_WAIT = 1;
+  	INITIAL_DELAY = 1;
+  }
+
   var LoaderContainer = require("delegate").extend({
     init: function() {
     	this._super();
