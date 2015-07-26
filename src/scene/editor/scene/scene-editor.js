@@ -141,6 +141,8 @@ define(function(require) {
 				editorSetup.reset();
 				// Toggle back on after the reset
 				this.gridControlsUI.toggleGrid();
+				// Toggle back the bounding rectangles
+				this.gameObjectControlsUI.toggleBoundings();
 			});
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(
@@ -160,6 +162,8 @@ define(function(require) {
 			this.editorSideMenuController.update();
 			// Toggle the grid at start
 			this.gridControlsUI.toggleGrid();
+			// Toggle the bounding rectangles on start
+			this.gameObjectControlsUI.toggleBoundings();
 		}, 
 
 		cleanUp: function() {

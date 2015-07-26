@@ -106,6 +106,26 @@ define(function(require) {
 			} else {
 				toggle.bootstrapToggle('off');	
 			}		
+		},
+
+		toggleBoundings: function() {
+			var toggle = $(this.boundings).find('input');
+
+			if(!toggle.prop('checked')) {
+				toggle.bootstrapToggle('on');
+			} else {
+				toggle.bootstrapToggle('off');	
+			}		
+		},
+
+		toggleCenters: function() {
+			var toggle = $(this.centers).find('input');
+
+			if(!toggle.prop('checked')) {
+				toggle.bootstrapToggle('on');
+			} else {
+				toggle.bootstrapToggle('off');	
+			}		
 		}
 	});
   

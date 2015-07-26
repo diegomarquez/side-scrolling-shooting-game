@@ -87,6 +87,28 @@ define(function(require) {
 								}
 							}
 						]
+					},
+					{
+						name: 'Misc.',
+						icon: 'ui-icon-wrench',
+
+						options: [
+							{
+								name: 'Rectangles',
+								icon: 'ui-icon-stop',
+								click: function() {
+									gameObjectControlsUI.toggleBoundings();
+								}
+							},
+							
+							{
+								name: 'Centers',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									gameObjectControlsUI.toggleCenters();
+								}
+							}
+						]
 					}
 				]
 			});
