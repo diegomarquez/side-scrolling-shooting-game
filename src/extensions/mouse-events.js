@@ -46,12 +46,11 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Reference to the last object that executed a delegate on the MOUSE_DOWN event
 			var currentMouseDownData = null;
 
-			this.onContextMenu = function (event) {
-				
+			this.onContextMenu = function (event) {		
 				// Prevent the menu from appearing
 				event.preventDefault();
 
-				// If a game bbject was clicked on when triggering the context menu event
+				// If a game object was clicked on when triggering the context menu event
 				if (currentMouseDownData) {
 					currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);  
 
@@ -65,7 +64,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				}
 			}
 
-			this.onMouseDown = function (event) {
+			this.onMouseDown = function (event) {				
 				var mouseDownData = getTopMostObject(event);
 
 				// Execute delegate only if some mouse data was returned
@@ -105,8 +104,12 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 				// Stop the dragging sequence
 				stopDrag(event, currentMouseDownData);
-				// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
-				currentMouseDownData = null;
+				
+				// If the this is a right click, keep the mouse data because it is going to be used by the context menu handler				
+				if (event.button != 2) {
+					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
+					currentMouseDownData = null;
+				}
 			}
 
 			this.onMouseOut = function (event) {
