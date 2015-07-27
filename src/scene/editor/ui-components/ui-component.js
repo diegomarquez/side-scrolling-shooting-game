@@ -14,8 +14,9 @@ define(function(require) {
 			this.destroy();
 
 			util.iterateObject(this, function(object, propName) {
+
 				if (keepDelegates) {
-					if (propName !== 'callbackList' && propName !== 'list') {
+					if (propName !== 'callbackList' && propName !== 'list' && propName != 'subMenues') {
 						destroyProp(object, propName);	
 					}
 				} else {
@@ -36,7 +37,7 @@ define(function(require) {
 		}
 
 		// Delegate properties are just nulled to avoid 'Maximum call stack reached' error
-		if (name == 'callbackList' || name == 'list') {
+		if (name == 'callbackList' || name == 'list' || name != 'subMenues') {
 			nullProp(object, name);
 			return;
 		}
