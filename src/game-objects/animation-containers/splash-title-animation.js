@@ -45,7 +45,11 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 		this.tl.to(this.die, 0.5, { x: Gb.canvas.width - 300 });
 		this.tl.to(this.loop, 0.5, { x: Gb.canvas.width - 400 });
 
-		this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);
+        if (this.custom) {
+		    this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);
+        } else {
+            this.tl.staggerTo([this.play, this.edit], 0.5, { y: '-=200' }, 0);
+        }
 
 		this.tl.play();
 
