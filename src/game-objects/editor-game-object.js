@@ -24,7 +24,7 @@ define(["game-object", "editor-config"], function(GameObject, EditorConfig) {
 		},
 
 		removeRenderer: function() {
-			registerChildChanges.call(this, this.renderer);
+			registerComponentChanges.call(this, this.renderer);
 			this._super();
 		},
 

@@ -12,7 +12,7 @@ define(["component"], function(Component) {
 
 		update: function(delta) {
 			this.parent.x += Math.cos(this.parent.angle) * delta * this.parent.speed; 
-      this.parent.y += Math.sin(this.parent.angle) * delta * this.parent.speed;
+      		this.parent.y += Math.sin(this.parent.angle) * delta * this.parent.speed;
 		}
 	});
 

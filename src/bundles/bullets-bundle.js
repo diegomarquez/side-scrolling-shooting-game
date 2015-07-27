@@ -29,7 +29,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("LaserCollider", commonBundle.getPolygonColliderPoolId())
 				.args({
-					id:'cannonBulletColliderId',
+					id:'laserBulletColliderId',
 					points: [
 						{ x: 0, y: 0 },
 						{ x: 800, y: 0 },

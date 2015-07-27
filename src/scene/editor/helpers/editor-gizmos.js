@@ -302,6 +302,11 @@ define(function(require) {
 				return;
 			}
 
+			// Non container objects are skipped
+			if (!object.isContainer()) {
+				return;
+			}
+
 			// Add the Collider Gizmo to the game object if it has a collider
 			if (object.findComponents().firstWithProp('collider')) {
 				gb.addComponentTo(object, options.ids.colliderGizmo);	

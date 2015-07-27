@@ -27,25 +27,31 @@ define(function(require) {
 		setCollisionPairs: function() {
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'bossColliderId');
 		    collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
-		    
+		    collisionResolver.addCollisionPair('basicBulletColliderId', 'laserBulletColliderId');
+
 		    collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
 		    collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
 		    collisionResolver.addCollisionPair('obstacleColliderId', 'basicBulletColliderId');
-		    
+		    collisionResolver.addCollisionPair('obstacleColliderId', 'laserBulletColliderId');
+    		    
 		    collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
 		    collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
+		    collisionResolver.addCollisionPair('shipColliderId', 'laserBulletColliderId');
 		},
 
 		removeCollisionPairs: function() {
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'bossColliderId');
 		    collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
-		    
+		    collisionResolver.removeCollisionPair('basicBulletColliderId', 'laserBulletColliderId');
+
 		    collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
 		    collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
 		    collisionResolver.removeCollisionPair('obstacleColliderId', 'basicBulletColliderId');
-		    
+		    collisionResolver.removeCollisionPair('obstacleColliderId', 'laserBulletColliderId');
+
 		    collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
 		    collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
+		    collisionResolver.removeCollisionPair('shipColliderId', 'laserBulletColliderId');
 		},
 
 		container: function() {
