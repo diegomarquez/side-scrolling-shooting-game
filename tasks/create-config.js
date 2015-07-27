@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 	    for(var i=0; i<files.length; i++) {
 	      var base = path.basename(files[i], '.js');
 	      var dir = path.dirname(files[i]);
-	      var p = dir + path.sep + base;
+	      var p = dir + '/' + base;
 	    
 	      paths.push({alias:base, path:p});
 	    }
