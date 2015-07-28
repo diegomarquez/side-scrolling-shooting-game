@@ -134,11 +134,13 @@ define(function(require) {
 
 				addHideEvents: function() {
 					gb.Mouse.on(gb.Mouse.NOTHING_CLICKED_ON_CANVAS, this, this.hideMenu);
+					gb.Mouse.on(gb.Mouse.GAME_OBJECT_CONTEXT_MENU, this, this.hideMenu);
 					gb.Mouse.on(gb.Mouse.CLICKED_OUTSIDE_CANVAS, this, this.checkBelongsThenHide);
 				},
 
 				removeHideEvents: function() {
 					gb.Mouse.remove(gb.Mouse.NOTHING_CLICKED_ON_CANVAS, this, this.hideMenu);
+					gb.Mouse.remove(gb.Mouse.GAME_OBJECT_CONTEXT_MENU, this, this.hideMenu);
 					gb.Mouse.remove(gb.Mouse.CLICKED_OUTSIDE_CANVAS, this, this.checkBelongsThenHide);
 				},
 

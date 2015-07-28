@@ -28,6 +28,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	Object.defineProperty(Mouse.prototype, "NOTHING_CLICKED_ON_CANVAS", { get: function() { return 'nothing_clicked_on_canvas'; } });
 	Object.defineProperty(Mouse.prototype, "CLICKED_OUTSIDE_CANVAS", { get: function() { return 'clicked_outside_canvas'; } });
 	Object.defineProperty(Mouse.prototype, "CANVAS_CONTEXT_MENU", { get: function() { return 'canvas_context_menu'; } });
+	Object.defineProperty(Mouse.prototype, "GAME_OBJECT_CONTEXT_MENU", { get: function() { return 'game_object_context_menu'; } });
 
 	var MouseEvents = Extension.extend({
 		init: function() {
@@ -53,6 +54,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				// If a game object was clicked on when triggering the context menu event
 				if (currentMouseDownData) {
 					currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);  
+
+					// Global event to notify a game object has triggered a context menu
+					Gb.Mouse.execute(Gb.Mouse.GAME_OBJECT_CONTEXT_MENU, currentMouseDownData.go);
 
 					// Stop the dragging sequence
 					stopDrag(event, currentMouseDownData);
