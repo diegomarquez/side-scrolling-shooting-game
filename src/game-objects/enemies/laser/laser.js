@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "reclaimer", "sat"], function(GameObject, Reclaimer, SAT) {
+define(["editor-game-object-container", "gb", "sat"], function(GameObject, Gb, SAT) {
 
 	var step = 5;
 
@@ -22,6 +22,19 @@ define(["editor-game-object-container", "reclaimer", "sat"], function(GameObject
 			
 		},
 
+		recycle: function() {
+			this.collisionPointFound = false;
+			this.collisionDistance = 0;
+
+			this.collisionPoint.x = 0;
+			this.collisionPoint.y = 0;
+
+			this.dirX = 0;
+			this.dirY = 0;
+
+			this._super();
+		},
+
 		onCollide: function(other) {
 			if (other.poolId == 'Obstacle' && !this.collisionPointFound) {
 				this.collisionDistance = 0;
@@ -40,6 +53,14 @@ define(["editor-game-object-container", "reclaimer", "sat"], function(GameObject
 						this.collisionPointFound = true;
 						// Activate the renderer
 						this.renderer.enable();
+
+						var laserHit = Gb.create('LaserHit', this.getUpdateGroup(), this.getViewportList(), {
+							x: this.collisionPoint.x,
+							y: this.collisionPoint.y
+						});
+
+						laserHit.renderer.play();
+
 						return;
 					}
 

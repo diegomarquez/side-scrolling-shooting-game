@@ -14,6 +14,18 @@ define(["editor-game-object-container", "reclaimer", "sat"], function(GameObject
 			this.dirY = 0;
 		},
 
+		recycle: function() {
+			this._super();
+
+			this.collisionPointFound = false;
+			this.collisionPoint.x = 0;
+			this.collisionPoint.y = 0;
+			this.collisionDistance = 0;
+
+			this.dirX = 0;
+			this.dirY = 0;
+		},
+
 		editorStart: function() {		 	
 		 	this.renderer.disable();
 		},

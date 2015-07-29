@@ -3,9 +3,11 @@ define(function() {
 
 	var data = {
 	"BALL.PNG": "assets/images/Ball.png",
+	"BURST.PNG": "assets/images/Burst.png",
 	"CHECKEREDFLAG.PNG": "assets/images/CheckeredFlag.png",
 	"FLAG.PNG": "assets/images/Flag.png",
 	"LASERBASE.PNG": "assets/images/LaserBase.png",
+	"LASERHIT.PNG": "assets/images/LaserHit.png",
 	"LASERTURRET.PNG": "assets/images/LaserTurret.png",
 	"WARNING.PNG": "assets/images/Warning.png",
 	"BIOHAZARD.PNG": "assets/images/biohazard.png",

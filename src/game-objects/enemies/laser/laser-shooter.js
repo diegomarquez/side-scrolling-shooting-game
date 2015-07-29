@@ -29,16 +29,24 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			// });
 			// 
 
-			// var laserStartPosition = this.findChildren().firstWithType("LaserStartPosition");
+			var laserStartPosition = this.findChildren().firstWithType("LaserStartPosition");
 
-			// startPositionMatrix = laserStartPosition.getMatrix(startPositionMatrix);
-			// startPositionDecompose = startPositionMatrix.decompose(startPositionDecompose);
+			startPositionMatrix = laserStartPosition.getMatrix(startPositionMatrix);
+			startPositionDecompose = startPositionMatrix.decompose(startPositionDecompose);
 
-			// Gb.create('laser', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-			// 	rotation: selfDecompose.rotation-90,
-			// 	x: startPositionDecompose.x,
-			// 	y: startPositionDecompose.y
-			// });
+			Gb.create('laser', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+				rotation: selfDecompose.rotation-90,
+				x: startPositionDecompose.x,
+				y: startPositionDecompose.y
+			});
+
+			var laserBurst = Gb.create('LaserBurst', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+				rotation: selfDecompose.rotation,
+				x: startPositionDecompose.x,
+				y: startPositionDecompose.y
+			});
+
+			laserBurst.renderer.play();
 		},
 
 		editorUpdate: function(delta) {

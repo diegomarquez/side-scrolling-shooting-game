@@ -21,7 +21,8 @@ define(function(require) {
 	    	require('boss-bundle').create();
 	    	require('messages-bundle').create();
 	    	require('control-objects-bundle').create();
-	    	require('items-bundle').create(); 
+	    	require('items-bundle').create();
+	    	require('laser-effects-bundle').create();
 		},
 
 		setCollisionPairs: function() {
