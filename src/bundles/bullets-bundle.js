@@ -57,7 +57,7 @@ define(function(require) {
 				.addComponent("CannonBulletCollider")
 				.setRenderer("CannonBulletRender");
 
-			this.gameObjectPool.createConfiguration("laser", "Laser")
+			this.gameObjectPool.createConfiguration("Laser", "Laser")
 				.addComponent("LaserCollider")
 				.addComponent("LaserTwitch")
 				.setRenderer("LaserRender");

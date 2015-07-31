@@ -1,89 +1,89 @@
 define(["editor-game-object-container", "gb", "timer-factory"], function(GameObject, Gb, TimerFactory) {
 
-  var BossCannon = GameObject.extend({
-    init: function() {
-      this._super();
+	var BossCannon = GameObject.extend({
+		init: function() {
+			this._super();
 
-      this.damageExplosions = null;
-      this.damageParticles = null;
-    },
+			this.damageExplosions = null;
+			this.damageParticles = null;
+		},
 
-    editorStart: function() {
-		this.started = false;
-		this.health = 20;
+		editorStart: function() {
+			this.started = false;
+			this.health = 20;
 
-      	TimerFactory.get(this, 'repairTimer', 'repairTimer');
-    },
+			TimerFactory.get(this, 'repairTimer', 'repairTimer');
+		},
 
-    editorUpdate: function(delta) {
-      
-    },
+		editorUpdate: function(delta) {
 
-    recycle: function() {
-    	if (this.repairTimer) {
-    		this.repairTimer.remove();	
-    	}
+		},
 
-    	this._super();
-    },
+		recycle: function() {
+			if (this.repairTimer) {
+				this.repairTimer.remove();	
+			}
 
-    onBossStart: function() {
-    	this.started = true;
-    },
+			this._super();
+		},
 
-    onBossDestroy: function() {
-    	this.repairTimer.stop();
+		onBossStart: function() {
+			this.started = true;
+		},
 
-    	this.findComponents().firstWithProp('collider').disable();
+		onBossDestroy: function() {
+			this.repairTimer.stop();
 
-    	var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+			this.findComponents().firstWithProp('collider').disable();
 
-    	// When the explosion generator is finished, hide the cannon
-  		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-   	  	this.hide(true).not().allWithType(explosionsGenerator.objectType);
-   	 	});
+			var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
 
-   	 	// When the last explosion is done with it's animation, mark the cannon for recycling
-    	explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-    		Gb.reclaimer.mark(this);
-    	});
-    },
+			// When the explosion generator is finished, hide the cannon
+			explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
+				this.hide(true).not().allWithType(explosionsGenerator.objectType);
+			});
 
-    onCollide: function(other) {
-    	if (this.started) {
-    		if (this.health > 0) {
-    			this.health--;	
-    		} else {
-    			// Add the effects components
-    			var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
-    			var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
+			// When the last explosion is done with it's animation, mark the cannon for recycling
+			explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+				Gb.reclaimer.mark(this);
+			});
+		},
 
-    			// Disable the collider component
-    			this.findComponents().firstWithProp('collider').disable();
-      		// Notify Damage
-      		this.execute(this.DAMAGE);
+		onCollide: function(other) {
+			if (this.started) {
+				if (this.health > 0) {
+					this.health--;	
+				} else {
+					// Add the effects components
+					var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+					var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
 
-      		// Start reapir timer
-    			this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
-    			this.repairTimer.start();
+					// Disable the collider component
+					this.findComponents().firstWithProp('collider').disable();
+					// Notify Damage
+					this.execute(this.DAMAGE);
 
-		      this.repairTimer.on(this.repairTimer.COMPLETE, function() {
-		      	// Reset damage
-		      	this.health = 20; 
-		      	// Enable the collider component
-    				this.findComponents().firstWithProp('collider').enable();
+					// Start reapir timer
+					this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
+					this.repairTimer.start();
 
-    				// Remove the effects components
-    				this.removeComponent(explosionsGenerator);
-    				this.removeComponents(particleGenerators);
+					this.repairTimer.on(this.repairTimer.COMPLETE, function() {
+						// Reset damage
+						this.health = 20; 
+						// Enable the collider component
+						this.findComponents().firstWithProp('collider').enable();
 
-      			// Notify Repair
-      			this.execute(this.REPAIR);
-		      }, true);    			
-    		}
-    	}
-    }
-  });
+						// Remove the effects components
+						this.removeComponent(explosionsGenerator);
+						this.removeComponents(particleGenerators);
+
+						// Notify Repair
+						this.execute(this.REPAIR);
+					}, true);    			
+				}
+			}
+		}
+	});
 
   Object.defineProperty(BossCannon.prototype, "DAMAGE", { get: function() { return 'damage'; } });
   Object.defineProperty(BossCannon.prototype, "REPAIR", { get: function() { return 'repair'; } });

@@ -25,7 +25,7 @@ define(function(require) {
 					frameWidth: 64,
 					frameHeight: 64,
 					offset: 'center',
-					frameDelay: 0.08,
+					frameDelay: 0.02,
 					frameCount: 4,
 					path: gb.assetMap()["LASERHIT.PNG"]
 				});

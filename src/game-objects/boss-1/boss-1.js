@@ -19,7 +19,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					cables[i].on(cables[i].DAMAGE, this, this.onDamage);
 				}
 
-				var cannons = Root.findChildren().recurse().allWithType("boss-cannon");
+				var cannons = Root.findChildren().recurse().allWithType("BossCannonBase");
 
 				// Signal boss cannos to start
 				for (var i=0; i < cannons.length; i++) {
@@ -62,7 +62,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					// Do something to to hide properly the removal of the boss
 					});  
 
-					Root.findChildren().recurse().allWithType("boss-cannon").forEach(function (cannon) {
+					Root.findChildren().recurse().allWithType("BossCannonBase").forEach(function (cannon) {
 						if (cannon.getViewportVisibility('Main')) {
 							cannon.onBossDestroy();
 						}

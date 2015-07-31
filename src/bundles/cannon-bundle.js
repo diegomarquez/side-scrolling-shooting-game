@@ -69,6 +69,20 @@ define(function(require) {
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("laser-shooter", "LaserShooter")
+				.args({
+					shootTime: 250,
+					burstTime: 250
+				})
+				.addChild('LaserStartPosition')
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("LaserShooterRenderer")
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-laser-shooter", "LaserShooter")
+				.args({
+					shootTime: 250,
+					burstTime: 250
+				})
 				.addChild('LaserStartPosition')
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("LaserShooterRenderer")
@@ -98,11 +112,24 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("laser-cannon", "LaserBase")
 				.args({
-					// destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('laser-shooter')
+				.setRenderer("LaserBaseRenderer");
+
+			this.gameObjectPool.createConfiguration("boss-laser-cannon", "BossCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					] 
+				})
+				.addComponent('LaserBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('boss-laser-shooter')
 				.setRenderer("LaserBaseRenderer");
 		},
 	});

@@ -3,7 +3,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     init: function() {
       this._super();
 
-      // this.destroyExplosions = null;
+      this.destroyExplosions = null;
     },
 
     editorStart: function() {
@@ -15,27 +15,27 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     },
 
     onCollide: function(other) {
-  		// if (this.health > 0) {
-  		// 	this.health--;	
-  		// } else {
-  		// 	var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
+  		if (this.health > 0) {
+  			this.health--;	
+  		} else {
+  			var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 
-  		// 	// When the explosion generator is finished, hide the cannon
-    // 		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-    //  	  		this.hide(true).not().allWithType(explosionsGenerator.objectType);
-    //  	 	});  
+  			// When the explosion generator is finished, hide the cannon
+    		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
+     	  		this.hide(true).not().allWithType(explosionsGenerator.objectType);
+     	 	});  
 
-    //  	 	// When the last explosion is done with it's animation, mark the cannon for recycling
-    //   		explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-    //   			Gb.reclaimer.mark(this);
-    //   		});
+     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+      		explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+      			Gb.reclaimer.mark(this);
+      		});
 
-    //   		// Disable the collider component
-    // 		this.findComponents().firstWithProp('collider').disable();
+      		// Disable the collider component
+    		this.findComponents().firstWithProp('collider').disable();
 
-    //   		// Notify damage
-	   //    	this.execute(this.DAMAGE);
-  		// }
+      		// Notify damage
+	      	this.execute(this.DAMAGE);
+  		}
     }
   });
 
