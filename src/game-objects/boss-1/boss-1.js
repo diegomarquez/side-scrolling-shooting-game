@@ -19,7 +19,9 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					cables[i].on(cables[i].DAMAGE, this, this.onDamage);
 				}
 
-				var cannons = Root.findChildren().recurse().allWithType("BossCannonBase");
+				var cannons = Root.findChildren().recurse().all(function(child) {
+					return child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase"; 
+				});
 
 				// Signal boss cannos to start
 				for (var i=0; i < cannons.length; i++) {
@@ -49,7 +51,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		onCollide: function(other) {
 			if (this.cableCount !== null && this.cableCount <= 0) {
 				if (this.health > 0) {
-						this.health--;  
+					this.health--;  
 				} 
 				else {
 					var explosionsGenerator = Gb.addComponentTo(this, this.destroyEffect);
@@ -62,11 +64,16 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					// Do something to to hide properly the removal of the boss
 					});  
 
-					Root.findChildren().recurse().allWithType("BossCannonBase").forEach(function (cannon) {
-						if (cannon.getViewportVisibility('Main')) {
-							cannon.onBossDestroy();
-						}
+					var cannons = Root.findChildren().recurse().all(function(child) {
+						return child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase"; 
 					});
+
+					// Signal all cannons that the boss has been destroyed
+					for (var i=0; i < cannons.length; i++) {
+						if (cannons[i].getViewportVisibility('Main')) {
+							cannons[i].onBossDestroy();   
+						}
+					}
 
 					// When the last explosion is done with it's animation, mark the cannon for recycling
 					explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {

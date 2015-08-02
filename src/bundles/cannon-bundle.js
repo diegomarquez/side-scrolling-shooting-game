@@ -53,6 +53,7 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('BossCannonBase', require("boss-cannon-base"));
 			this.gameObjectPool.createDynamicPool('LaserBase', require("laser-base"));
 			this.gameObjectPool.createDynamicPool('DoubleCannonBase', require("double-cannon-base"));
+			this.gameObjectPool.createDynamicPool('BossDoubleCannonBase', require("boss-double-cannon-base"));
 
 			this.gameObjectPool.createPool('CannonShooter', require("cannon-shooter"));
 			this.gameObjectPool.createPool('LaserShooter', require("laser-shooter"));
@@ -145,6 +146,21 @@ define(function(require) {
 				.args({
 					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					completeAnimationsBeforeFire: 4
+				})
+				.addComponent('DoubleBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
+				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
+				.setRenderer("DoubleCannonBaseRenderer");
+
+			this.gameObjectPool.createConfiguration("boss-double-cannon", "BossDoubleCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					],
+					completeAnimationsBeforeFire: 3
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
