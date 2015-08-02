@@ -204,55 +204,12 @@ define(function(require) {
 								name: 'To Back',
 								icon: 'ui-icon-bullet',
 								click: function() {
+									debugger;
+
 									menu.v.getLayer(menu.l).moveGameObjectToBack(menu.go);
 								}
 							}
 						]
-					},
-					{
-						name: 'Remove',
-						icon: 'ui-icon-trash',
-
-						options: function() {
-							var scrapOptions = [];
-
-							scrapOptions.push({
-								name: 'This',
-								icon: 'ui-icon-bullet',
-								click: function() {
-									// Remove the selected game object
-									gb.reclaimer.claim(menu.go);    
-								}
-							});
-
-							scrapOptions.push({
-								name: 'All',
-								icon: 'ui-icon-bullet',
-								click: function() {
-									// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
-									var gos = gb.findGameObjectsOfType(menu.go);
-
-									// Remove all the matching game objects
-									for (var i = 0; i < gos.length; i++) {
-										gb.reclaimer.claim(gos[i]);
-									}   
-								}
-							});
-
-							if (gb.goPool.isConfigurationCustom(menu.go.typeId)) {
-								scrapOptions.push({
-									name: 'Type',
-									icon: 'ui-icon-bullet',
-									click: function() {
-										// Delete the configuration of the selected game object and delete all the game objects with the same configuration
-										// Including itself
-										gb.reclaimer.clearGameObjectConfiguration(menu.go.typeId);
-									}
-								});
-							}
-
-							return scrapOptions;
-						}
 					},
 					{
 						name: 'Edit',
@@ -315,6 +272,51 @@ define(function(require) {
 							}
 
 							return editOptions;
+						}
+					},
+					{
+						name: 'Remove',
+						icon: 'ui-icon-trash',
+
+						options: function() {
+							var scrapOptions = [];
+
+							scrapOptions.push({
+								name: 'This',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									// Remove the selected game object
+									gb.reclaimer.claim(menu.go);    
+								}
+							});
+
+							scrapOptions.push({
+								name: 'All',
+								icon: 'ui-icon-bullet',
+								click: function() {
+									// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
+									var gos = gb.findGameObjectsOfType(menu.go);
+
+									// Remove all the matching game objects
+									for (var i = 0; i < gos.length; i++) {
+										gb.reclaimer.claim(gos[i]);
+									}   
+								}
+							});
+
+							if (gb.goPool.isConfigurationCustom(menu.go.typeId)) {
+								scrapOptions.push({
+									name: 'Type',
+									icon: 'ui-icon-bullet',
+									click: function() {
+										// Delete the configuration of the selected game object and delete all the game objects with the same configuration
+										// Including itself
+										gb.reclaimer.clearGameObjectConfiguration(menu.go.typeId);
+									}
+								});
+							}
+
+							return scrapOptions;
 						}
 					}
 				]

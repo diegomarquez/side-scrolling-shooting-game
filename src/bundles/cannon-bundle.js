@@ -8,6 +8,9 @@ define(function(require) {
 	var Bullets = require("bundle").extend({
 		create: function(args) {	
 			this.componentPool.createConfiguration("ActivateShooterOnView", commonBundle.getActivateOnViewPoolId());
+			
+			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'));
+			this.gameObjectPool.createConfiguration("FirePosition", 'editor-game-object').childOnly();
 
 			this.componentPool.createPool('cannon-base-renderer', require('cannon-base-renderer'));
 			this.componentPool.createPool('cannon-shooter-renderer', require('cannon-shooter-renderer'));
@@ -16,6 +19,9 @@ define(function(require) {
 				.args({id:'cannonColliderId', radius:20});
 
 			this.componentPool.createConfiguration("LaserBaseCollider", commonBundle.getCircleColliderPoolId())
+				.args({id:'cannonColliderId', radius:20});
+
+			this.componentPool.createConfiguration("DoubleBaseCollider", commonBundle.getCircleColliderPoolId())
 				.args({id:'cannonColliderId', radius:20});
 			
 			this.componentPool.createConfiguration("CannonBaseRenderer", 'cannon-base-renderer');
@@ -33,9 +39,20 @@ define(function(require) {
 					offset: 'center',
 				});
 
+			this.componentPool.createConfiguration("DoubleCannonBaseRenderer", commonBundle.getAnimationBitmapRendererPoolId())
+				.args({
+					pingPong: true,
+					frameWidth: 64,
+					frameHeight: 64,
+					frameDelay: 0.2,
+					path: gb.assetMap()["DOUBLECANNON.PNG"],
+					offset: 'center'
+				});
+
 			this.gameObjectPool.createDynamicPool('CannonBase', require("cannon-base"));
 			this.gameObjectPool.createDynamicPool('BossCannonBase', require("boss-cannon-base"));
 			this.gameObjectPool.createDynamicPool('LaserBase', require("laser-base"));
+			this.gameObjectPool.createDynamicPool('DoubleCannonBase', require("double-cannon-base"));
 
 			this.gameObjectPool.createPool('CannonShooter', require("cannon-shooter"));
 			this.gameObjectPool.createPool('LaserShooter', require("laser-shooter"));
@@ -60,20 +77,12 @@ define(function(require) {
 				.setRenderer("CannonShooterRenderer")
 				.childOnly();
 
-			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'))
-
-			this.gameObjectPool.createConfiguration("LaserStartPosition", 'editor-game-object')
-				.args({
-					y: -28
-				})
-				.childOnly();
-
 			this.gameObjectPool.createConfiguration("laser-shooter", "LaserShooter")
 				.args({
 					shootTime: 250,
 					burstTime: 250
 				})
-				.addChild('LaserStartPosition')
+				.addChild('FirePosition', { y: -28 })
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("LaserShooterRenderer")
 				.childOnly();
@@ -83,7 +92,7 @@ define(function(require) {
 					shootTime: 250,
 					burstTime: 250
 				})
-				.addChild('LaserStartPosition')
+				.addChild('FirePosition')
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("LaserShooterRenderer")
 				.childOnly();
@@ -131,6 +140,17 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('boss-laser-shooter')
 				.setRenderer("LaserBaseRenderer");
+
+			this.gameObjectPool.createConfiguration("double-cannon", "DoubleCannonBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					completeAnimationsBeforeFire: 4
+				})
+				.addComponent('DoubleBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
+				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
+				.setRenderer("DoubleCannonBaseRenderer");
 		},
 	});
 

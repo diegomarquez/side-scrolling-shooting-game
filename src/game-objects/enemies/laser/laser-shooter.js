@@ -96,7 +96,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 					this.bursting = true;
 					this.burtsTimer = 0;
 
-					var laserStartPosition = this.findChildren().firstWithType("LaserStartPosition");
+					var laserStartPosition = this.findChildren().firstWithType("FirePosition");
 
 					startPositionMatrix = laserStartPosition.getMatrix(startPositionMatrix);
 					startPositionDecompose = startPositionMatrix.decompose(startPositionDecompose);

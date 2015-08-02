@@ -7,7 +7,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     },
 
     editorStart: function() {
-			this.health = 5;
+		this.health = 5;
     },
 
     editorUpdate: function(delta) {
@@ -15,6 +15,9 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     },
 
     onCollide: function(other) {
+    	if (!this.started)
+    		return;
+
   		if (this.health > 0) {
   			this.health--;	
   		} else {
@@ -26,14 +29,14 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
      	 	});  
 
      	 	// When the last explosion is done with it's animation, mark the cannon for recycling
-      	explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-      		Gb.reclaimer.mark(this);
-      	});
+      		explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+      			Gb.reclaimer.mark(this);
+      		});
 
-      	// Disable the collider component
+      		// Disable the collider component
     		this.findComponents().firstWithProp('collider').disable();
 
-      	// Notify damage
+      		// Notify damage
 	      this.execute(this.DAMAGE);
   		}
     }

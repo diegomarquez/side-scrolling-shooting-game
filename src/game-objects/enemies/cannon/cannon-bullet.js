@@ -8,13 +8,10 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     	this.life = 50000;
     	this.speed = 100;
 
-    	this.x = this.x + Math.cos(this.angle * (Math.PI/180)) * 20; 
-      this.y = this.y + Math.sin(this.angle * (Math.PI/180)) * 20;
+    	this.rotation = this.angle;
     },
 
     editorUpdate: function(delta) {
-      this.rotation += 5;
-
       this.x += Math.cos(this.angle * (Math.PI/180)) * delta * this.speed; 
       this.y += Math.sin(this.angle * (Math.PI/180)) * delta * this.speed; 
 

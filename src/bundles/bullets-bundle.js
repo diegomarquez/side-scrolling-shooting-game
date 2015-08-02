@@ -1,10 +1,10 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
+	var gb = require('gb')
 	
 	var Bullets = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createPool('basic-bullet-renderer', require('basic-bullet-renderer'));
-			this.componentPool.createPool('cannon-bullet-renderer', require('cannon-bullet-renderer'));
 			
 			this.componentPool.createPool('laser-renderer', require('laser-renderer'));
 			this.componentPool.createPool('twich-component', require('twitch'));
@@ -15,8 +15,8 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
-					id:'basicBulletColliderId', 
-					radius:10, 
+					id:'basicBulletColliderId',
+					radius:10,
 					getResponse: true
 				});
 
@@ -44,7 +44,19 @@ define(function(require) {
 				});
 			
 			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
-			this.componentPool.createConfiguration("CannonBulletRender", 'cannon-bullet-renderer');
+			
+			this.componentPool.createConfiguration("RoundBulletRender", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["ROUNDBULLET.PNG"],
+					offset: 'center',
+				});
+			
+			this.componentPool.createConfiguration("ArrowBulletRender", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["ARROWBULLET.PNG"],
+					offset: 'center',
+				});
+
 			this.componentPool.createConfiguration("LaserRender", 'laser-renderer');
 
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
@@ -55,7 +67,12 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
-				.setRenderer("CannonBulletRender");
+				.setRenderer("ArrowBulletRender");
+
+			this.gameObjectPool.createConfiguration("double-cannon-bullet", "CannonBullet")
+				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent("CannonBulletCollider")
+				.setRenderer("RoundBulletRender");
 
 			this.gameObjectPool.createConfiguration("Laser", "Laser")
 				.addComponent("LaserCollider")
