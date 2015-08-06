@@ -68,7 +68,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				}
 			}
 
-			this.onMouseDown = function (event) {				
+			this.onMouseDown = function (event) {
 				var mouseDownData = getTopMostObject(event);
 
 				// Execute delegate only if some mouse data was returned
