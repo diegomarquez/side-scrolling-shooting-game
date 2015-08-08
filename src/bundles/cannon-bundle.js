@@ -234,9 +234,9 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("missile-turret-shooter", "MissileShooter")
 				.args({
-					rate: 150,
-					missiles: 100000,
-					burstAmount: 10,
+					rate: 100,
+					missiles: 100,
+					burstAmount: 3,
 					rotation: 45
 				})
 				.addComponent('ActivateShooterOnView')

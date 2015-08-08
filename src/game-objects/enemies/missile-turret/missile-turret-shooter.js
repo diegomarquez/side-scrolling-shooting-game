@@ -118,13 +118,20 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			if (this.bursting && !this.aiming) {
 				this.burtsTimer++;
 
-				if (this.burtsTimer % 10 == 0) {
+				if (this.burtsTimer % 30 == 0) {
 					if (this.currentBurstCount < this.burstAmount) {
-						// Gb.create('missile', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-						// 	angle: selfMatrix.decompose(selfDecompose).rotation,
-						// 	x: this.parent.x,
-						// 	y: this.parent.y
-						// });
+						var missile = Gb.create('missile', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+							angle: selfMatrix.decompose(selfDecompose).rotation - 180,
+							x: this.parent.x,
+							y: this.parent.y,
+							target: this.target
+						});
+
+						var viewportList = missile.getViewportList();
+
+						for (var i = 0; i < viewportList.length; i++) {
+							Gb.viewports.get(viewportList[i].viewport).getLayer(viewportList[i].layer).moveGameObjectToBack(missile);
+						}
 
 						this.currentBurstCount++;
 					} else {

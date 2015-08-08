@@ -12,6 +12,8 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('Bullet', require("basic-bullet"));
 			this.gameObjectPool.createDynamicPool('CannonBullet', require("cannon-bullet"));
 			this.gameObjectPool.createDynamicPool('Laser', require("laser"));
+			this.gameObjectPool.createDynamicPool('Missile', require("missile"));
+
 
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
@@ -38,23 +40,41 @@ define(function(require) {
 					]
 				});
 
+			this.componentPool.createConfiguration("MissileCollider", commonBundle.getCircleColliderPoolId())
+				.args({
+					id:'missilleColliderId', 
+					radius:5,
+					getResponse: true
+				});
+
 			this.componentPool.createConfiguration("LaserTwitch", 'twich-component')
 				.args({
 					amount: 6,
 				});
 			
-			this.componentPool.createConfiguration("BulletRender", 'basic-bullet-renderer');
+			this.componentPool.createConfiguration("BulletRenderer", 'basic-bullet-renderer');
 			
-			this.componentPool.createConfiguration("RoundBulletRender", commonBundle.getBitmapRendererPoolId())
+			this.componentPool.createConfiguration("RoundBulletRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["ROUNDBULLET.PNG"],
 					offset: 'center',
 				});
 			
-			this.componentPool.createConfiguration("ArrowBulletRender", commonBundle.getBitmapRendererPoolId())
+			this.componentPool.createConfiguration("ArrowBulletRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["ARROWBULLET.PNG"],
 					offset: 'center',
+				});
+
+			this.componentPool.createConfiguration("MissileRenderer", commonBundle.getAnimationBitmapRendererPoolId())
+				.args({
+					pingPong: true,
+					frameWidth: 24,
+					frameHeight: 12,
+					frameCount: 5,
+					frameDelay: 0.05,
+					path: gb.assetMap()["MISSILE.PNG"],
+					offset: 'center'
 				});
 
 			this.componentPool.createConfiguration("LaserRender", 'laser-renderer');
@@ -62,22 +82,27 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent(require('particle-generator-bundle').getPlayerBulletCollisionParticlesId())
 				.addComponent("BulletCollider")
-				.setRenderer("BulletRender");
+				.setRenderer("BulletRenderer");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
-				.setRenderer("ArrowBulletRender");
+				.setRenderer("ArrowBulletRenderer");
 
 			this.gameObjectPool.createConfiguration("double-cannon-bullet", "CannonBullet")
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
-				.setRenderer("RoundBulletRender");
+				.setRenderer("RoundBulletRenderer");
 
 			this.gameObjectPool.createConfiguration("Laser", "Laser")
 				.addComponent("LaserCollider")
 				.addComponent("LaserTwitch")
 				.setRenderer("LaserRender");
+
+			this.gameObjectPool.createConfiguration("missile", "Missile")
+				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent("MissileCollider")
+				.setRenderer("MissileRenderer");
 		},
 	});
 
