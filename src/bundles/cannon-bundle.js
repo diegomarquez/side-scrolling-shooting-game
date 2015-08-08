@@ -257,6 +257,20 @@ define(function(require) {
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer");
 
+			this.gameObjectPool.createConfiguration("boss-missile-turret", "BossCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					] 
+				})
+				.addComponent('MissileTurretCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('missile-turret-shooter', { y: 7 })
+				.addChild('missile-turret-hinge')
+				.setRenderer("MissileTurretBaseRenderer");
+
 			// =============================
 			// =============================
 		}

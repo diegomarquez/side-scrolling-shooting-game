@@ -58,6 +58,27 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 				this.burtsTimer = 0;
 				this.bursting = false;
 				this.currentBurstCount = 0;
+
+				targetMatrix = this.target.getMatrix(targetMatrix);
+				targetDecompose = targetMatrix.decompose(targetDecompose);
+
+				selfMatrix = this.getMatrix(selfMatrix);
+				selfDecompose = selfMatrix.decompose(selfDecompose);
+				
+				var deltaX = targetDecompose.x - selfDecompose.x;
+				var deltaY = targetDecompose.y - selfDecompose.y;
+
+				this.aiming = true;
+				this.newRotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI) + 180;
+				this.newRotation = this.newRotation % 360;
+				
+				var diff = (this.newRotation - this.rotation) % 360;
+
+				if (diff < 0) {
+					diff += 360;
+				}
+
+				this.aimDirection = diff > 180 ? -1 : 1;
 			});
 
 			this.parent.on(this.parent.REPAIR, this, function() {
