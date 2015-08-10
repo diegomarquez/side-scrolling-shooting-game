@@ -18,6 +18,8 @@ define(function(require) {
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
 			this.componentPool.createConfiguration("ExhaustRenderer", 'exhaust-renderer');
 			
+			this.gameObjectPool.createConfiguration("ShootingPosition", commonBundle.getGameObjectPoolId());
+
 			this.gameObjectPool.createConfiguration("SmallExhaust", "Exhaust")
 				.setRenderer("ExhaustRenderer");
 
@@ -28,6 +30,7 @@ define(function(require) {
 				.args({
 					rotation: 90
 				})
+				.addChild('ShootingPosition', { y: -20 })
 				.addChild('SmallExhaust', { x: -11, y: 21, rotation: -45, scaleX: 0.2, scaleY: 0.4 })
 				.addChild('SmallExhaust', { x: 0, y: 30, rotation: -90, scaleX: 0.4, scaleY: 0.4 })
 				.addChild('SmallExhaust', { x: 10, y: 20, rotation: -135, scaleX: 0.2, scaleY: 0.4 })

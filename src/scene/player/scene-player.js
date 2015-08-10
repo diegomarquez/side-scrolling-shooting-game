@@ -41,6 +41,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'missilleColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'directionSetterColliderId');			
 		},
 
 		removeCollisionPairs: function() {
@@ -59,6 +60,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'missilleColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'directionSetterColliderId');
 		},
 
 		container: function() {

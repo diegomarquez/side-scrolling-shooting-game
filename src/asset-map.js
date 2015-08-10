@@ -2,6 +2,7 @@ define(function() {
 	var Data = function() {};
 
 	var data = {
+	"ANIMATEDARROW.PNG": "assets/images/AnimatedArrow.png",
 	"ARROWBULLET.PNG": "assets/images/ArrowBullet.png",
 	"BALL.PNG": "assets/images/Ball.png",
 	"BURST.PNG": "assets/images/Burst.png",

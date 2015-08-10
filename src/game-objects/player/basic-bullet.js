@@ -1,28 +1,33 @@
 define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
-  var BasicBullet = GameObject.extend({
-    init: function() {
-      this._super();
-    },
+	var BasicBullet = GameObject.extend({
+		init: function() {
+			this._super();
 
-    editorStart: function() {
-      this.life = 50;
-    },
+			this.speed = 500;
+			this.life = 50;
+			this.angle = 0;
+		},
 
-    editorUpdate: function(delta) {
-      this.x += 10;
+		editorStart: function() {
+			this.life = 50;
+		},
 
-      if (this.life < 0) {
-       Reclaimer.claim(this);
-      } else {
-       this.life--;
-      }
-    },
+		editorUpdate: function(delta) {
 
-    onCollide: function(other) {
-    	Reclaimer.mark(this);
-    }
-  });
+			this.x += Math.cos(this.angle) * delta * this.speed;
+			this.y += Math.sin(this.angle) * delta * this.speed;
 
-  return BasicBullet;
+			if (this.life < 0) {
+				Reclaimer.claim(this);
+			} else {
+				this.life--;
+			}
+		},
+
+		onCollide: function(other) {
+			Reclaimer.mark(this);
+		}
+	});
+
+	return BasicBullet;
 });
-

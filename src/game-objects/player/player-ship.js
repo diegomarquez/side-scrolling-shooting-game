@@ -1,4 +1,8 @@
-define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectContainer, Keyboard, Gb) {
+define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], function(GameObjectContainer, Keyboard, Gb, Matrix) {
+	
+	var transformResult = {};
+	var matrix = new Matrix();
+
 	var PlayerShip = GameObjectContainer.extend({
 		// Contructor
 		init: function() {
@@ -6,6 +10,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 
 			this.speed = 200;
 			this.forwardSpeed = this.speed;
+			this.angle = 0;
 			this.direction = 'right';
 
 			this.viewportOffsetX = 0;
@@ -14,21 +19,31 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			this.block = false;
 
 			this.bulletsViewport = [{viewport:'Main', layer:'Front'}];
+			this.shootingPosition = null;
 		},
 
 		editorStart: function() {
-			Keyboard.onKeyDown(Keyboard.A, this, function() {
-			if (this.block) return;
+			
+			this.shootingPosition = this.findChildren().firstWithType("ShootingPosition");
 
-			var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
-				bullet.x = this.X + 20;
-				bullet.y = this.Y;
+			Keyboard.onKeyDown(Keyboard.A, this, function() {
+				if (this.block) return;
+
+				this.shootingPosition.getTransform(transformResult, matrix);
+
+				var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
+				
+				bullet.x = transformResult.x;
+				bullet.y = transformResult.y;
+				bullet.angle = this.angle;
+				bullet.rotation = this.rotation - 90;
+
 			}, 'player-ship-keyboard');
 
-				this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
-				this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
+			this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
+			this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
 
-				this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
+			this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
 				exhaust.turnOn();
 			});
 
@@ -47,21 +62,8 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			if (this.block) return;
 
 			// Auto scrolling
-			if (this.direction == 'right') {
-				this.x += this.forwardSpeed/4 * delta;
-			}
-
-			if (this.direction == 'left') {
-				this.x -= this.forwardSpeed/4 * delta;
-			}
-
-			if (this.direction == 'up') {
-				this.y -= this.forwardSpeed/4 * delta;
-			}
-
-			if (this.direction == 'down') {
-				this.y += this.forwardSpeed/4 * delta;
-			}
+			this.x += Math.cos(this.angle) * this.forwardSpeed/4 * delta;
+			this.y += Math.sin(this.angle) * this.forwardSpeed/4 * delta;
 
 			// Movement independant of the viewport
 			if (Keyboard.isKeyDown(Keyboard.GAME_LEFT)) {
@@ -106,9 +108,17 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 			smallExhausts.call(this);
 		},
 
-		move: function(direction) {
-			this.direction = direction || this.direction;
+		move: function(angle) {
 
+			angle = angle % 360;
+
+			if (angle < 0) {
+				angle += 360;
+			}
+
+			this.angle = angle * (Math.PI/180) || 0;
+			this.rotation = (angle + 90);
+			
 			this.forwardSpeed = 200;
 			this.execute(this.MOVE);
 		},
@@ -120,7 +130,7 @@ define(["editor-game-object-container", "keyboard", "gb"], function(GameObjectCo
 		},
 
 		getDirection: function() {
-			return this.direction;
+			return Math.round(this.angle * (180 / Math.PI));
 		}
 	});
 

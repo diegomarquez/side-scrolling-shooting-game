@@ -218,13 +218,17 @@ define(function(require) {
 			}
 
 			controlObjects = [
+				'StartPosition',
 				'ScrollStopper',
 				'BossWarning',		
 				'DirectionRight',
 				'DirectionLeft',
 				'DirectionUp',
-				'DirectionDown',
-				'StartPosition'
+				'DirectionDown',				
+				'ChooseDirectionRight',
+				'ChooseDirectionLeft',
+				'ChooseDirectionUp',
+				'ChooseDirectionDown'
 			];
 
 			return controlObjects;
