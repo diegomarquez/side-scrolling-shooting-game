@@ -10,6 +10,11 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		this.parent.activatedOnView = true;
 		this.parent.saveEditorStart = null;
 		this.parent.saveEditorUpdate = null;
+
+		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
+		
+		if (collisionComponent)
+			collisionComponent.enable();
 	}
 
 	var deActivateParent = function() {
@@ -27,6 +32,11 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 
 		// Set some state
 		this.parent.activatedOnView = false;
+
+		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
+		
+		if (collisionComponent)
+			collisionComponent.disable();
 	}
 
 	var ActivateOnView = EditorComponent.extend({

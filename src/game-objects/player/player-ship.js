@@ -116,7 +116,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 				angle += 360;
 			}
 
-			this.angle = angle * (Math.PI/180) || 0;
+			this.angle = angle * (Math.PI/180) || this.angle;
 			this.rotation = (angle + 90);
 			
 			this.forwardSpeed = 200;

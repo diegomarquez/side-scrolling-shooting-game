@@ -37,7 +37,7 @@ define(function(require) {
 		}
 
 		// Delegate properties are just nulled to avoid 'Maximum call stack reached' error
-		if (name == 'callbackList' || name == 'list' || name != 'subMenues') {
+		if (name == 'callbackList' || name == 'list' || name == 'subMenues') {
 			nullProp(object, name);
 			return;
 		}

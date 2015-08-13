@@ -28,13 +28,31 @@ define(function(require) {
 			
 		},
 
+		show: function() {
+			this._super();
+
+			var collisionComponent = this.findComponents().firstWithProp('collider');
+		
+			if (collisionComponent)
+				collisionComponent.enable();
+		},
+
+		hide: function() {
+			this._super();
+
+			var collisionComponent = this.findComponents().firstWithProp('collider');
+		
+			if (collisionComponent)
+				collisionComponent.disable();
+		},
+
     	onCollide: function(other) {
     		other.move(this.rotation)
 
     		var self = this;
 
     		require('root').findChildren().recurse().all(function(child) {
-				return child.typeId == self.typeId && child.getViewportVisibility('Main'); 
+				return child.poolId == self.poolId && child.getViewportVisibility('Main'); 
 			}).forEach(function(sibling) {
 				sibling.hide();
 			});
