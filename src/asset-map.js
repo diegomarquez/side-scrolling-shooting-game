@@ -24,6 +24,7 @@ define(function() {
 	"MISSILETURRETHINGE.PNG": "assets/images/MissileTurret/MissileTurretHinge.png",
 	"MISSILETURRETSHOOTER.PNG": "assets/images/MissileTurret/MissileTurretShooter.png",
 	"PLAYERBULLET1.PNG": "assets/images/PlayerBullet1.png",
+	"PLAYEREXHAUST.PNG": "assets/images/PlayerExhaust.png",
 	"ROUNDBULLET.PNG": "assets/images/RoundBullet.png",
 	"WARNING.PNG": "assets/images/Warning.png",
 	"BIOHAZARD.PNG": "assets/images/biohazard.png",

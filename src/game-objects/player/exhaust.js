@@ -5,7 +5,7 @@ define(["editor-game-object-container"], function(GameObjectContainer) {
     },
 
     turnOn: function() {
-    	this.renderer.play('exhaust-animation');
+    	this.renderer.play();
     },
     
   });
