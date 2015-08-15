@@ -3,9 +3,7 @@ define(function(require) {
 	var gb = require('gb')
 	
 	var Bullets = require("bundle").extend({
-		create: function(args) {			
-			this.componentPool.createPool('basic-bullet-renderer', require('basic-bullet-renderer'));
-			
+		create: function(args) {						
 			this.componentPool.createPool('laser-renderer', require('laser-renderer'));
 			this.componentPool.createPool('twich-component', require('twitch'));
 
@@ -49,11 +47,20 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("LaserTwitch", 'twich-component')
 				.args({
-					amount: 6,
+					amount: 6
 				});
 			
-			this.componentPool.createConfiguration("BulletRenderer", 'basic-bullet-renderer');
-			
+			this.componentPool.createConfiguration("PlayerBullet1Renderer", commonBundle.getAnimationBitmapRendererPoolId())
+				.args({
+					pingPong: true,
+					frameWidth: 16,
+					frameHeight: 16,
+					frameCount: 2,
+					frameDelay: 0.05,
+					path: gb.assetMap()["PLAYERBULLET1.PNG"],
+					offset: 'center'
+				});
+
 			this.componentPool.createConfiguration("RoundBulletRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["ROUNDBULLET.PNG"],
@@ -82,7 +89,7 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent(require('particle-generator-bundle').getPlayerBulletCollisionParticlesId())
 				.addComponent("BulletCollider")
-				.setRenderer("BulletRenderer");
+				.setRenderer("PlayerBullet1Renderer");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())

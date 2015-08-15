@@ -3,13 +3,14 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 		init: function() {
 			this._super();
 
-			this.speed = 500;
-			this.life = 50;
+			this.speed = 800;
+			this.life = 100;
 			this.angle = 0;
 		},
 
 		editorStart: function() {
 			this.life = 50;
+			this.renderer.play();
 		},
 
 		editorUpdate: function(delta) {
