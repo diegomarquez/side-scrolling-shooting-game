@@ -8,16 +8,11 @@ define(function(require) {
 	var boss1Cables = require("boss-1-cables");
 	var boss1Icon = require("boss-1-icon");
 
-	var boss1Renderer = require('boss-1-renderer');
-	var boss1CablesRenderer = require('boss-1-cables-renderer');
 
 	var Boss = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createConfiguration("Activate_Boss_On_View", commonBundle.getActivateOnViewPoolId());
 
-			this.componentPool.createPool('boss-1-renderer', boss1Renderer);
-			this.componentPool.createPool('boss-1-cables-renderer', boss1CablesRenderer);
-			
 			this.gameObjectPool.createDynamicPool('Boss_1', boss1);
 			this.gameObjectPool.createDynamicPool('Boss_1_Cables', boss1Cables);
 			this.gameObjectPool.createDynamicPool('Boss_1_Icon', boss1Icon);
@@ -28,30 +23,23 @@ define(function(require) {
 			this.componentPool.createConfiguration("Boss_1_Cables_Collider", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
-			this.componentPool.createConfiguration("Boss_1_Renderer", 'boss-1-renderer');
-			this.componentPool.createConfiguration("Boss_1_Cables_Renderer", 'boss-1-cables-renderer')
+			this.componentPool.createConfiguration("Boss_1_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({
-					segments: 5
-				});
-
-			this.componentPool.createConfiguration("Boss_1_Cables_Damage_Renderer", 'boss-1-cables-renderer')
-				.args({
-					segments: 2
-				});
-
-			this.componentPool.createConfiguration("BiohazardIcon_Renderer", commonBundle.getBitmapRendererPoolId())
-				.args({
-					path: gb.assetMap()["BIOHAZARD.PNG"],
+					path: gb.assetMap()["BOSS1BODY.PNG"],
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("biohazard-icon", "Boss_1_Icon")
+			this.componentPool.createConfiguration("Boss_1_Cables_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({
-					scaleX: 0.4,
-					scaleY: 0.4
-				})
-				.setRenderer('BiohazardIcon_Renderer')
-				.childOnly();
+					path: gb.assetMap()["BOSS1CABLE.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_1_Cables_Damage_Renderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS1CABLEDAMAGED.PNG"],
+					offset: 'center'
+				});
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
 				.args({ 
@@ -80,7 +68,6 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180})
 				.addChild("boss-1-cables", {rotation: 180})
 				.addChild("boss-1-cables", {rotation: 180})
-				.addChild("biohazard-icon")
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer");	
