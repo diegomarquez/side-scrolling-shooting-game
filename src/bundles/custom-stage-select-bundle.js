@@ -53,7 +53,7 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("CustomStages", commonBundle.getGameObjectPoolId())
 				.setRenderer("TextRenderer", {
 					name: 'custom-stages-title',
-					text: 'Custom Stages',
+					text: 'Custom Mazes',
 					fillColor: "none",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',

@@ -21,6 +21,8 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			this.currentBurstCount = 0;
 			this.bulletCount = this.bullets;
 
+			this.firePosition = this.findChildren().firstWithType('FirePosition');
+
 			targetMatrix = this.target.getMatrix(targetMatrix);
 			targetDecompose = targetMatrix.decompose(targetDecompose);
 
@@ -82,10 +84,12 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 
 				if (this.burtsTimer % 10 == 0) {
 					if (this.currentBurstCount < this.burstAmount) {
+						selfDecompose = this.firePosition.getMatrix().decompose(selfDecompose);
+						
 						Gb.create('cannon-bullet', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: selfMatrix.decompose(selfDecompose).rotation,
-							x: this.parent.x,
-							y: this.parent.y
+							angle: selfDecompose.rotation,
+							x: selfDecompose.x,
+							y: selfDecompose.y
 						});
 
 						this.currentBurstCount++;

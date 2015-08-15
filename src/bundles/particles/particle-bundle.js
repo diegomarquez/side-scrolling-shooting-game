@@ -29,7 +29,7 @@ define(function(require) {
 					height: 3,
 					offset: 'center',
 					drawPath: function(context) {
-						draw.rectangle(context, 0, 0, this.width, this.height, null, '#333333', 1)
+						draw.rectangle(context, 0, 0, this.width, this.height, null, '#FFFFFF', 1)
 					}
 				});
 
@@ -40,18 +40,7 @@ define(function(require) {
 					height: 5,
 					offset: 'center',
 					drawPath: function(context) {
-						draw.rectangle(context, 0, 0, this.width, this.height, null, '#777777', 1)
-					}
-				});
-
-			this.componentPool.createConfiguration("RedSquareParticle", commonBundle.getPathRendererPoolId())
-				.args({
-					name: 'red-square-particle',
-					width: 2,
-					height: 2,
-					offset: 'center',
-					drawPath: function(context) {
-						draw.rectangle(context, 0, 0, this.width, this.height, null, '#FF0000', 1)
+						draw.rectangle(context, 0, 0, this.width, this.height, null, '#FFFFFF', 1)
 					}
 				});
 
@@ -62,7 +51,7 @@ define(function(require) {
 					height: 4,
 					offset: 'center',
 					drawPath: function(context) {
-						draw.rectangle(context, 0, 0, this.width, this.height, null, '#FFFF00', 1)
+						draw.rectangle(context, 0, 0, this.width, this.height, null, '#FFFFFF', 1)
 					}
 				});
 
@@ -96,7 +85,7 @@ define(function(require) {
 				})
 				.addComponent("StraightMovementVectorReverse")
 				.addComponent("ClaimOnLifeDepleted")
-				.setRenderer("RedSquareParticle");
+				.setRenderer("WhiteSquareParticle");
 
 			this.gameObjectPool.createConfiguration("StraightParticle_3", 'particle')
 				.args({ 

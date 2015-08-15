@@ -20,11 +20,18 @@ define(function(require) {
 			// Cannon
 			// =======================
 			
-			this.componentPool.createPool('cannon-base-renderer', require('cannon-base-renderer'));
-			this.componentPool.createPool('cannon-shooter-renderer', require('cannon-shooter-renderer'));
+			this.componentPool.createConfiguration("CannonBaseRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["CANNONBASE.PNG"],
+					offset: 'center'
+				});
 
-			this.componentPool.createConfiguration("CannonBaseRenderer", 'cannon-base-renderer');
-			this.componentPool.createConfiguration("CannonShooterRenderer", 'cannon-shooter-renderer');
+			this.componentPool.createConfiguration("CannonShooterRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["CANNONSHOOTER.PNG"],
+					offsetX: -5.5,
+					offsetY: -4.5,
+				});
 
 			this.gameObjectPool.createDynamicPool('CannonBase', require("cannon-base"));
 			this.gameObjectPool.createDynamicPool('BossCannonBase', require("boss-cannon-base"));
@@ -43,6 +50,7 @@ define(function(require) {
 					burstAmount: 1
 				})
 				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: 29 , y: 1 })
 				.setRenderer("CannonShooterRenderer")
 				.childOnly();
 
@@ -53,6 +61,7 @@ define(function(require) {
 					burstAmount: 3
 				})
 				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: 29 , y: 1 })
 				.setRenderer("CannonShooterRenderer")
 				.childOnly();
 

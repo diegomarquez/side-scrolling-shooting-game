@@ -6,6 +6,8 @@ define(function() {
 	"ARROWBULLET.PNG": "assets/images/ArrowBullet.png",
 	"BALL.PNG": "assets/images/Ball.png",
 	"BURST.PNG": "assets/images/Burst.png",
+	"CANNONBASE.PNG": "assets/images/Cannon/CannonBase.png",
+	"CANNONSHOOTER.PNG": "assets/images/Cannon/CannonShooter.png",
 	"CHECKEREDFLAG.PNG": "assets/images/CheckeredFlag.png",
 	"DOUBLECANNON.PNG": "assets/images/DoubleCannon.png",
 	"FLAG.PNG": "assets/images/Flag.png",

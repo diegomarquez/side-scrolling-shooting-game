@@ -4,8 +4,7 @@ var fs = require('fs');
 
 var userAgents = [
 	"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-	"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36",
-	""
+	"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36"
 ];
 
 var regexp = new RegExp(/src: local\(\'(.*?)\'\).*?url\((.*?(\.\w+))\)/g);

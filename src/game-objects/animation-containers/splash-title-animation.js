@@ -9,10 +9,8 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
     	this.options = [];
 
-    	this.fly = Gb.create('Fly', 'First', viewports, { x: -300, y: 20 });
-    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -300, y: 100 });
-    	this.die = Gb.create('Die', 'First', viewports, { x: -300, y: 180 });
-    	this.loop = Gb.create('LoopArrow', 'First', viewports, { x: -300, y: 43 });
+    	this.fly = Gb.create('Fly', 'First', viewports, { x: -1000, y: 50 });
+    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -1000, y: 230 });
 
     	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 });
     	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 });
@@ -40,10 +38,8 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     		}.bind(this) 
     	});
 
-		this.tl.to(this.fly, 0.5, { x: Gb.canvas.width - 300 });
-		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width  - 300 });
-		this.tl.to(this.die, 0.5, { x: Gb.canvas.width - 300 });
-		this.tl.to(this.loop, 0.5, { x: Gb.canvas.width - 400 });
+		this.tl.to(this.fly, 0.8, { x: 100 });
+		this.tl.to(this.shoot, 0.8, { x: Gb.canvas.width/2 });
 
         if (this.custom) {
 		    this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);
@@ -117,8 +113,6 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.tl = null;
     	this.fly = null;
     	this.shoot = null;
-    	this.die = null;
-    	this.loop = null;
     	this.play = null;
     	this.edit = null;
     	this.custom = null;
