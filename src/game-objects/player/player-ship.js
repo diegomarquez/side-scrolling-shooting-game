@@ -154,22 +154,20 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 		move: function(angle) {
 
-			if (angle) {
+			if (typeof angle == 'undefined') {
+				angle = (this.rotation-90) * (Math.PI/180);		
+			}
+			else {
 				angle = angle % 360;
 
 				if (angle < 0) {
 					angle += 360;
-				}		
+				}
 			}
-			else {
-				angle = this.rotation * (Math.PI/180);
-			}
-
 
 			this.angle = angle * (Math.PI/180);
 			this.rotation = (angle + 90);
-			
-			
+						
 			this.forwardSpeed = 200;
 			this.execute(this.MOVE);
 		},
