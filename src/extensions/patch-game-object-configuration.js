@@ -46,6 +46,22 @@ define(function(require) {
 				return this.customConfig;
 			}
 
+			Object.defineProperty(gameObjectConfiguration.prototype, "mouseSupport", { 
+				configurable: true,
+				enumerable: true,
+				writable: true,
+				value: true			
+			});
+
+			gameObjectConfiguration.prototype.disableMouseSupport = function() {
+				this.mouseSupport = false;
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.hasMouseSupport = function() {
+				return this.mouseSupport;
+			}
+
 			/**
 			 * --------------------------------
 			 */
@@ -77,6 +93,10 @@ define(function(require) {
 			delete gameObjectConfiguration.prototype.customConfig;
 			delete gameObjectConfiguration.prototype.custom;
 			delete gameObjectConfiguration.prototype.isCustom;
+
+			delete gameObjectConfiguration.prototype.mouseSupport;
+			delete gameObjectConfiguration.prototype.disableMouseSupport;
+			delete gameObjectConfiguration.prototype.hasMouseSupport;
 
 			delete componentConfiguration.prototype.childConfig;
 			delete componentConfiguration.prototype.isChild;

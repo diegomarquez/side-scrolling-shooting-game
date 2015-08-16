@@ -37,6 +37,11 @@ define(function(require) {
 	});
 
 	var setUpMouseEvents = function(go) {
+
+		if (!gb.goPool.getConfigurationObject(go.typeId).hasMouseSupport()) {
+			return;
+		}
+
 		go.Dragable = true;
 
 		go.single(go.CONTEXT_MENU, this, function(mouseData) {

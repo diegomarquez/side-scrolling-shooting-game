@@ -65,6 +65,7 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 29 , y: 1 })
 				.setRenderer("CannonShooterRenderer")
+				.disableMouseSupport()
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-cannon-shooter", "CannonShooter")
@@ -77,6 +78,7 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 57 , y: 1 })
 				.setRenderer("BossCannonShooterRenderer")
+				.disableMouseSupport()
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("cannon-0", "CannonBase")
@@ -277,6 +279,7 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("MissileTurretShooterRenderer")
+				.disableMouseSupport()
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("boss-missile-turret-shooter", "MissileShooter")
@@ -288,10 +291,12 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("BossMissileTurretShooterRenderer")
+				.disableMouseSupport()
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("missile-turret-hinge", "editor-game-object")
 				.setRenderer("MissileTurretHingeRenderer")
+				.disableMouseSupport()
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("missile-turret", "MissileTurretBase")
