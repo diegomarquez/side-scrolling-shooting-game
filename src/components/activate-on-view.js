@@ -11,10 +11,7 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		this.parent.saveEditorStart = null;
 		this.parent.saveEditorUpdate = null;
 
-		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
-		
-		if (collisionComponent)
-			collisionComponent.enable();
+		activateCollider.call(this);
 	}
 
 	var deActivateParent = function() {
@@ -33,10 +30,21 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		// Set some state
 		this.parent.activatedOnView = false;
 
+		deactivateCollider.call(this);	
+	}
+
+	var deactivateCollider = function() {
 		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
 		
 		if (collisionComponent)
 			collisionComponent.disable();
+	}
+
+	var activateCollider = function() {
+		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
+		
+		if (collisionComponent)
+			collisionComponent.enable();
 	}
 
 	var ActivateOnView = EditorComponent.extend({
@@ -64,6 +72,11 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 				// Setup a listener to get notified when the player is unblocked
 				player.on(player.UNBLOCK, this, this.onPlayerUnblock);
 			}.bind(this));
+
+			this.parent.once(this.parent.START, this, function() {
+				// Deactive the parent collider after the parent game object has been started
+				deactivateCollider.call(this);
+			});
 		},
 
 		editorUpdate: function(delta) {
