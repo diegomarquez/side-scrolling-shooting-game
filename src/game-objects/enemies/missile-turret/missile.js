@@ -78,8 +78,7 @@ define(["editor-game-object-container", "reclaimer", "timer-factory"], function(
 			if (this.aimMovement)
 				this.aimMovement.remove();
 
-			this.straightMovement = null;
-			this.aimMovement = null;
+			this._super();
 		},
 
 		editorUpdate: function(delta) {
@@ -131,12 +130,12 @@ define(["editor-game-object-container", "reclaimer", "timer-factory"], function(
 			if (this.life > 0) {
 				this.life -= this.speed;
 			} else {
-				Reclaimer.claim(this);
+				Reclaimer.mark(this);
 			}
 		},
 
 		onCollide: function(other) {
-			Reclaimer.claim(this);
+			Reclaimer.mark(this);
 		}
 	});
 
