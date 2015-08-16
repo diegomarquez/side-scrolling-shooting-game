@@ -31,14 +31,23 @@ define(function(require) {
 					self.gameObjectSelectorUI.getOptions().selector = true;
 					self.gameObjectSelectorUI.getOptions().buttons = false;
 
-					gb.game.get_extension(require('logger')).success('Game object created successfully!');
-					
-					require('setup-editable-game-object').setupWithViewport(
+					if (require('object-counter').canCreate()) {
+						require('object-counter').showErrorFeedback();
+						return;
+					}
+
+					var go = require('setup-editable-game-object').setupWithViewport(
 						gameObjectName,
 						'First',
 						[{viewport: 'Main', layer: 'Front'}],
 						require('main-viewport').get()
 					);
+
+					if (go) {
+						require('object-counter').count(go);
+					}
+
+					gb.game.get_extension(require('logger')).success('Game object created successfully! ' + require('object-counter').toString());
 				}
 			});
 

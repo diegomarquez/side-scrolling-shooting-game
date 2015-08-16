@@ -25,6 +25,11 @@ define(function(require) {
 					var viewports = activeViewports.get();
 					var mainViewportName = mainViewport.get();
 
+					if (require('object-counter').canCreate()) {
+						require('object-counter').showErrorFeedback();
+						return;
+					}
+
 					if (goName == 'Nothing' || goName == '' || !goName) {
 						gb.game.get_extension(require('logger')).error('No game object has been selected');
 						gb.game.get_extension(require('logger')).show();
@@ -49,9 +54,13 @@ define(function(require) {
 						return;
 					}
 
-					gb.game.get_extension(require('logger')).success('Game object created successfully!');
+					var go = setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
 
-					setupEditorObject.setupWithViewport(goName, group, viewports, mainViewportName);
+					if (go) {
+						require('object-counter').count(go);
+					}
+
+					gb.game.get_extension(require('logger')).success('Game object created successfully! ' + require('object-counter').toString());
 				}
 			});
 

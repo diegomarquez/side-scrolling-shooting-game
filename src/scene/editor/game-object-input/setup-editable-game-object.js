@@ -12,7 +12,13 @@ define(function(require) {
 		},
 
 		setup: function(goId, group, viewports, args) {
-			return createObject(goId, group, viewports, args);
+			var object = createObject(goId, group, viewports, args);
+
+			if (object) {
+				this.execute(this.GAME_OBJECT_ADDED, object);
+			}
+
+			return object;
 		},
 
 		setupWithGameObject: function(goId, go) {

@@ -127,7 +127,7 @@ define(function(require) {
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
 				this.execute(this.PREVIEW);
-			});
+			});				
 
 			// Finalize the setup of the editor
 			editorSetup.end();
