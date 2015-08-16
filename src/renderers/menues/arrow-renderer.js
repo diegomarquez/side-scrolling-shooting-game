@@ -18,7 +18,7 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 
       this.colorTimer.start();
 
-      this.color1 = "#FF0000";
+      this.color1 = "#ec751e";
       this.color2 = null;
       this.color = this.color2;
 

@@ -9,7 +9,7 @@ define(function(require) {
 				.args({
 					name: 'start-message',
 					text: 'Get Ready',
-					fillColor: "#FF0000",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
@@ -22,7 +22,7 @@ define(function(require) {
 				.args({
 					name: 'warning-message',
 					text: 'Warning',
-					fillColor: "#FF0000",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
@@ -35,7 +35,7 @@ define(function(require) {
 				.args({
 					name: 'complete-message',
 					text: 'Complete!',
-					fillColor: "#FF0000",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
