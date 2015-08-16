@@ -122,6 +122,12 @@ define(function(require) {
 					offset: 'center'
 				});
 
+			this.componentPool.createConfiguration("BossLaserShooterRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSSLASERTURRET.PNG"],
+					offset: 'center'
+				});
+
 			this.componentPool.createConfiguration("LaserBaseCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
 					id:'cannonColliderId', 
@@ -145,7 +151,7 @@ define(function(require) {
 				})
 				.addChild('FirePosition')
 				.addComponent('ActivateShooterOnView')
-				.setRenderer("LaserShooterRenderer")
+				.setRenderer("BossLaserShooterRenderer")
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("laser-cannon", "LaserBase")

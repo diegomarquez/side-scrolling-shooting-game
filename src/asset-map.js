@@ -10,6 +10,7 @@ define(function() {
 	"BOSS1CABLEDAMAGED.PNG": "assets/images/Boss1CableDamaged.png",
 	"BOSSCANNONBASE.PNG": "assets/images/BossCannon/BossCannonBase.png",
 	"BOSSCANNONSHOOTER.PNG": "assets/images/BossCannon/BossCannonShooter.png",
+	"BOSSLASERTURRET.PNG": "assets/images/BossLaserTurret.png",
 	"BURST.PNG": "assets/images/Burst.png",
 	"CANNONBASE.PNG": "assets/images/Cannon/CannonBase.png",
 	"CANNONSHOOTER.PNG": "assets/images/Cannon/CannonShooter.png",
