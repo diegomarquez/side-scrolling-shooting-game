@@ -47,12 +47,56 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 				exhaust.turnOn();
 			});
 
+			// Right Scrolling
 			Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, function() {
-				mediumExhausts.call(this);  
+				if (this.rotation == 90) {
+					mediumExhausts.call(this);	
+				}				  
 			}, 'player-ship-keyboard');
 
 			Keyboard.onKeyUp(Keyboard.GAME_RIGHT, this, function() {
-				smallExhausts.call(this);
+				if (this.rotation == 90) {
+					smallExhausts.call(this);
+				}
+			}, 'player-ship-keyboard');
+
+			// Left Scrolling
+			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, function() {
+				if (this.rotation == 270) {
+					mediumExhausts.call(this);
+				}  
+			}, 'player-ship-keyboard');
+
+			Keyboard.onKeyUp(Keyboard.GAME_LEFT, this, function() {
+				if (this.rotation == 270) {
+					smallExhausts.call(this);
+				}
+			}, 'player-ship-keyboard');
+
+			// Up Scrolling
+			Keyboard.onKeyDown(Keyboard.GAME_UP, this, function() {
+				if (this.rotation == 0) {
+					mediumExhausts.call(this); 
+				} 
+			}, 'player-ship-keyboard');
+
+			Keyboard.onKeyUp(Keyboard.GAME_UP, this, function() {
+				if (this.rotation == 0) {
+					smallExhausts.call(this);
+				}
+			}, 'player-ship-keyboard');
+
+			// Down Scrolling
+			Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, function() {
+				if (this.rotation == 180) {
+					mediumExhausts.call(this);  
+				}
+			}, 'player-ship-keyboard');
+
+			Keyboard.onKeyUp(Keyboard.GAME_DOWN, this, function() {
+				if (this.rotation == 180) {
+					smallExhausts.call(this);
+				}
 			}, 'player-ship-keyboard');
 
 			smallExhausts.call(this);
@@ -110,14 +154,21 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 		move: function(angle) {
 
-			angle = angle % 360;
+			if (angle) {
+				angle = angle % 360;
 
-			if (angle < 0) {
-				angle += 360;
+				if (angle < 0) {
+					angle += 360;
+				}		
+			}
+			else {
+				angle = this.rotation * (Math.PI/180);
 			}
 
-			this.angle = angle * (Math.PI/180) || this.angle;
+
+			this.angle = angle * (Math.PI/180);
 			this.rotation = (angle + 90);
+			
 			
 			this.forwardSpeed = 200;
 			this.execute(this.MOVE);
