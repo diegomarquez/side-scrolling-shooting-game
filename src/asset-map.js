@@ -20,6 +20,7 @@ define(function() {
 	"LASERBASE.PNG": "assets/images/LaserBase.png",
 	"LASERHIT.PNG": "assets/images/LaserHit.png",
 	"LASERTURRET.PNG": "assets/images/LaserTurret.png",
+	"BOSSMISSILETURRETSHOOTER.PNG": "assets/images/MissileTurret/BossMissileTurretShooter.png",
 	"MISSILE.PNG": "assets/images/MissileTurret/Missile.png",
 	"MISSILETURRETBASE.PNG": "assets/images/MissileTurret/MissileTurretBase.png",
 	"MISSILETURRETHINGE.PNG": "assets/images/MissileTurret/MissileTurretHinge.png",

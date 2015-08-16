@@ -261,6 +261,13 @@ define(function(require) {
 					offsetY: -40
 				});
 
+			this.componentPool.createConfiguration("BossMissileTurretShooterRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSSMISSILETURRETSHOOTER.PNG"],
+					offsetX: -32,
+					offsetY: -40
+				});
+
 			this.gameObjectPool.createConfiguration("missile-turret-shooter", "MissileShooter")
 				.args({
 					rate: 100,
@@ -270,6 +277,17 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("MissileTurretShooterRenderer")
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-missile-turret-shooter", "MissileShooter")
+				.args({
+					rate: 100,
+					missiles: 100,
+					burstAmount: 3,
+					rotation: 45
+				})
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("BossMissileTurretShooterRenderer")
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("missile-turret-hinge", "editor-game-object")
@@ -296,7 +314,7 @@ define(function(require) {
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('missile-turret-shooter', { y: 7 })
+				.addChild('boss-missile-turret-shooter', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer");
 
