@@ -124,6 +124,8 @@ define(function(require) {
 
 			this.mainContainer.appendChild(titleContainer);
 			this.mainContainer.appendChild(controlsContainer);
+
+			document.getElementById('player-controls').appendChild(document.createTextNode('Press "ESC" key to exit'));
 		},
 
 		removeContainer: function() {			

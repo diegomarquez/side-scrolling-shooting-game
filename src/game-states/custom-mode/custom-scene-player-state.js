@@ -17,6 +17,16 @@ define(function(require) {
     });
 
 	state.addStartAction(function (sceneName) {
+		scenePlayer.once(scenePlayer.ESCAPE, this, function () {
+			// Wait for the loader to close before going back to the previous state
+			loaderContainer.once(loaderContainer.CLOSE, this, function() {
+				// Go back to the overview state
+				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+			});
+
+			loaderContainer.transition();
+		});
+
 		// When the scene is completed successfully
 		scenePlayer.once(scenePlayer.EXIT, this, function () {
 			// Go back to the overview state
