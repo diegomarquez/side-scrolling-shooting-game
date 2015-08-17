@@ -21,8 +21,8 @@ define(["editor-game-object-container", "reclaimer", "timer-factory"], function(
 		},
 
 		editorStart: function() {
-			this.life = 50000;
-			this.speed = 100;
+			this.life = 500000;
+			this.speed = 200;
 
 			this.rotation = this.angle;
 

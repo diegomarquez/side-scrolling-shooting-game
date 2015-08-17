@@ -123,7 +123,7 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 						var missile = Gb.create('missile', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 							angle: selfMatrix.decompose(selfDecompose).rotation - 180,
 							x: this.parent.x,
-							y: this.parent.y,
+							y: this.parent.y + 5,
 							target: this.target
 						});
 
