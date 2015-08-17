@@ -10,7 +10,6 @@ define(function(require) {
 			this._super();
 
 			document.getElementById('player-title').appendChild(document.createTextNode('Scene Preview'));
-			document.getElementById('player-controls').appendChild(document.createTextNode('Press "ESC" key to exit'));
 		},
 
 		removeContainer: function() {		

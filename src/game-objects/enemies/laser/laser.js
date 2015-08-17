@@ -14,6 +14,9 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 			this.dirY = 0;
 
 			this.laserHit = null;
+
+			this.collidingObstacles = [];
+			this.collisionDistances = [];
 		},
 
 		editorStart: function() {		 	
@@ -22,6 +25,8 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 
 			this.collisionPoint.x = 0;
 			this.collisionPoint.y = 0;
+
+			this.collisionDistances.length = 0;
 
 			this.dirX = 0;
 			this.dirY = 0;
@@ -65,50 +70,78 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 				this.collisionTimer.remove();
 
 			this.laserHit = null;
+			this.collidingObstacles.length = 0;
 
 			this._super();
 		},
 
 		onCollide: function(other) {
 			if (other.poolId == 'Obstacle' && !this.collisionPointFound) {
-				this.collisionDistance = 0;
+				
+				if (this.collidingObstacles.indexOf(other) == -1) {
+					// Push each new obstacle that the laser is colliding against
+					this.collidingObstacles.push(other);	
+				} else {
 
-				// Get the initial point from which to start testing for a collision
-				this.concatenateMatrix(this.getMatrix()).transformPoint(0, 0, this.collisionPoint);
+					// Once a repeated obstancle is collided agaist, find the closest one of the collection
+				 
+					this.dirX = Math.cos(this.rotation * (Math.PI/180)) * step; 
+				 	this.dirY = Math.sin(this.rotation * (Math.PI/180)) * step;
 
-				this.dirX = Math.cos(this.rotation * (Math.PI/180)) * step; 
-		 		this.dirY = Math.sin(this.rotation * (Math.PI/180)) * step;
+					obstacles: for (var j = 0; j < this.collidingObstacles.length; j++) {
+						
+						var obstacle = this.collidingObstacles[j];
+						var collisionDistance = 0;
 
-		 		var collider = other.findComponents().firstWithProp('collider').collider;
+						// Get the initial point from which to start testing for a collision
+						this.concatenateMatrix(this.getMatrix()).transformPoint(0, 0, this.collisionPoint);
 
-				for (var i = 0; i < this.renderer.rendererWidth()/step; i++) {
+				 		var collider = obstacle.findComponents().firstWithProp('collider').collider;
 
-					if (SAT.pointInPolygon(this.collisionPoint, collider)) {
-						this.collisionPointFound = true;
-						// Activate the renderer
-						this.renderer.enable();
+						for (var i = 0; i < this.renderer.rendererWidth()/step; i++) {
 
-						this.laserHit = Gb.create('LaserHit', this.getUpdateGroup(), this.getViewportList(), {
-							x: this.collisionPoint.x,
-							y: this.collisionPoint.y
-						});
-
-						this.laserHit.renderer.play();
-
-						return;
+							if (SAT.pointInPolygon(this.collisionPoint, collider)) {
+								// Push the result into a collection of distances
+								this.collisionDistances.push(collisionDistance);
+								// Test the next obstacle in the collection
+								continue obstacles;
+							} else {
+								// Move the collision point along the path of the laser
+								this.collisionPoint.x += this.dirX;
+								this.collisionPoint.y += this.dirY;
+								// Increase the distance
+								collisionDistance += step;	
+							}
+						}
 					}
 
-					this.collisionPoint.x += this.dirX;
-					this.collisionPoint.y += this.dirY;
+					// Once all distances have been calculated, find the smallest one
+					this.collisionDistance = Math.min.apply(null, this.collisionDistances);
+					// Mark that a collision point has been found
+					this.collisionPointFound = true;
+					
+					// Activate the laser renderer
+					this.renderer.enable();
 
-					this.collisionDistance += step;
+					// Create the laser hit game object
+					this.laserHit = Gb.create('LaserHit', this.getUpdateGroup(), this.getViewportList(), {
+						x: this.collisionPoint.x,
+						y: this.collisionPoint.y
+					});
+
+					// Start playing the animation of the laser hit game object
+					this.laserHit.renderer.play();
+
 				}
-				
+
+				// Exit the handler
 				return;
 			}
 
 			if (other.typeId == 'player-ship') {
 
+				// Exit the handler
+				return;
 			}
 		}
 	});
