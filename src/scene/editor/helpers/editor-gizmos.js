@@ -297,6 +297,11 @@ define(function(require) {
 	    addGizmos: function(object) {
 			var options = this.gizmoOptions();
 
+			// Objects with out mouse support are skipped
+			if (!gb.goPool.getConfigurationObject(object.typeId).hasMouseSupport()) {
+				return;
+			}
+
 			// Editor only objects are skipped
 			if (require('editor-config').isEditorGameObject(object.typeId)) {
 				return;
