@@ -19,7 +19,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 			this.y += Math.sin(this.angle) * delta * this.speed;
 
 			if (this.life < 0) {
-				Reclaimer.claim(this);
+				Reclaimer.mark(this);
 			} else {
 				this.life--;
 			}

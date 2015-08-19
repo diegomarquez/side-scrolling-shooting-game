@@ -3,12 +3,24 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 	var transformResult = {};
 	var matrix = new Matrix();
 
+	var bulletArguments = {
+		x: 0,
+		y: 0,
+		angle: 0,
+		rotation: 0
+	};
+
+	var bulletsViewport = [{viewport:'Main', layer:'Front'}];
+
 	var PlayerShip = GameObjectContainer.extend({
 		// Contructor
 		init: function() {
 			this._super();
 
 			this.speed = 200;
+			this.hp = 3;
+			this.maxBulletAmount = 1;
+
 			this.forwardSpeed = this.speed;
 			this.angle = 0;
 			this.direction = 'right';
@@ -18,25 +30,91 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 			this.block = false;
 
-			this.bulletsViewport = [{viewport:'Main', layer:'Front'}];
-			this.shootingPosition = null;
+			this.leftShootingPositions = null;
+			this.middleShootingPositions = null;
+			this.rightShootingPositions = null;
 		},
 
 		editorStart: function() {
 			
-			this.shootingPosition = this.findChildren().firstWithType("ShootingPosition");
+			this.speed = 200;
+			this.hp = 3;
+			this.maxBulletAmount = 1;
+
+			this.leftShootingPositions = this.findChildren().first(function (child) {
+				return child.typeId == "ShootingPosition" && child.name == 'left';
+ 			});
+
+ 			this.middleShootingPositions = this.findChildren().first(function (child) {
+				return child.typeId == "ShootingPosition" && child.name == 'middle';
+ 			});
+
+ 			this.rightShootingPositions = this.findChildren().first(function (child) {
+				return child.typeId == "ShootingPosition" && child.name == 'right';
+ 			});
 
 			Keyboard.onKeyDown(Keyboard.A, this, function() {
 				if (this.block) return;
 
-				this.shootingPosition.getTransform(transformResult, matrix);
+				if (this.maxBulletAmount == 1) {
+					this.middleShootingPositions.getTransform(transformResult, matrix);
 
-				var bullet = Gb.add('player-bullet', 'First', this.bulletsViewport);
-				
-				bullet.x = transformResult.x;
-				bullet.y = transformResult.y;
-				bullet.angle = this.angle;
-				bullet.rotation = this.rotation - 90;
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+				}
+
+				if (this.maxBulletAmount == 2) {
+					this.leftShootingPositions.getTransform(transformResult, matrix);
+
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+
+					this.rightShootingPositions.getTransform(transformResult, matrix);
+
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+				}
+
+				if (this.maxBulletAmount == 3) {
+					this.middleShootingPositions.getTransform(transformResult, matrix);
+
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+
+					this.leftShootingPositions.getTransform(transformResult, matrix);
+
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+
+					this.rightShootingPositions.getTransform(transformResult, matrix);
+
+					bulletArguments.x = transformResult.x;
+					bulletArguments.y = transformResult.y;
+					bulletArguments.angle = this.angle;
+					bulletArguments.rotation = this.rotation - 90;
+
+					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+				}
 
 			}, 'player-ship-keyboard');
 
@@ -134,6 +212,10 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		recycle: function() {
 			this._super();
 			Keyboard.levelCleanUp('player-ship-keyboard');
+
+			this.middleShootingPositions = null;
+			this.leftShootingPositions = null;
+			this.rightShootingPositions = null;
 		},
 
 		isBlocked: function() {
@@ -180,6 +262,20 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 		getDirection: function() {
 			return Math.round(this.angle * (180 / Math.PI));
+		},
+
+		powerUp: function() {
+			if (this.maxBulletAmount < 3) {
+				this.maxBulletAmount++;	
+			}
+		},
+
+		speedUp: function() {
+			this.speed += 50;
+		},
+
+		healthUp: function() {
+			this.hp++;
 		}
 	});
 
