@@ -30,6 +30,28 @@ define(["game-object", "util"], function(GameObject, Util) {
 			this._super();
 		},
 
+		draw: function(context, viewport) {
+			if (!this.isTransformed) return;
+
+			context.save();
+
+			var m = this.getMatrix();
+
+			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
+			
+			if (m.alpha != 1) {
+				 context.globalAlpha *= m.alpha;
+			}
+
+			if (m.alpha > 0) {
+				if(this.renderer && this.renderer.isEnabled()) {
+					this.renderer.draw(context, viewport);
+				}
+			}
+
+			context.restore();
+		},
+
 		recycle: function() {
 			this.angle = null;
 			this.speed = null;

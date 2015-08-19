@@ -41,50 +41,54 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
 		spray: function(args) {
 			if (!this.maxAmountToSpray) {
-				create.call(this, args);
+				
+				if (this.isEnabled()) {
+					for (var i=0; i < this.amountPerSpray; i++) {
+						args['x'] = this.parent.X;
+						args['y'] = this.parent.Y;
+
+						if (this.startingPositionTransformation) {
+							for (var j = 0; j < this.startingPositionTransformation.length; j++) {
+								this.startingPositionTransformation[j].call(this, args);
+							}	
+						}
+
+						Gb.create(this.objectType, this.updateGroup, this.viewports, args);
+
+						this.currentSprayCount++;
+					}
+				}
+
 				this.execute(this.SPRAY);	
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
 					this.execute(this.STOP_CREATION);
 				} else {
-					create.call(this, args);
+					
+					if (this.isEnabled()) {
+						for (var i=0; i < this.amountPerSpray; i++) {
+							args['x'] = this.parent.X;
+							args['y'] = this.parent.Y;
+
+							if (this.startingPositionTransformation) {
+								for (var j = 0; j < this.startingPositionTransformation.length; j++) {
+									this.startingPositionTransformation[j].call(this, args);
+								}	
+							}
+
+							Gb.create(this.objectType, this.updateGroup, this.viewports, args);
+
+							this.currentSprayCount++;
+						}
+					}
+					
+
 					this.execute(this.SPRAY);	
 				}	
 			}
 		}
-	});
-
-	var createParticles = function() {
-		if (!this.isEnabled()) return;
-
-		for (var i=0; i < this.particleAmount; i++) {
-			startingPostion.call(this);				
-		}
-	} 
-
-	var create = function(args) {
-		if (!this.isEnabled()) return;
-
-		for (var i=0; i < this.amountPerSpray; i++) {
-			startingPostion.call(this, args);
-
-			Gb.create(this.objectType, this.updateGroup, this.viewports, args);
-
-			this.currentSprayCount++;
-		}
-	} 
-
-	var startingPostion = function(args) {
-		args['x'] = this.parent.X;
-		args['y'] = this.parent.Y;
-
-		if (this.startingPositionTransformation) {
-			for (var i = 0; i < this.startingPositionTransformation.length; i++) {
-				this.startingPositionTransformation[i].call(this, args);
-			}	
-		}
-	}
+	}); 
 
 	GameObjectGenerator.args = {
 		x: null,

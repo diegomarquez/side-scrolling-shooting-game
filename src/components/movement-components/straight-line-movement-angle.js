@@ -9,13 +9,13 @@ define(["component"], function(Component) {
 				this.parent.angle += this.parent.spread;
 			}
 
-    	this.vecX = Math.cos(this.parent.angle);
-    	this.vecY = Math.sin(this.parent.angle);	
+    		this.vecX = Math.cos(this.parent.angle);
+    		this.vecY = Math.sin(this.parent.angle);	
 		},
 
 		update: function(delta) {
 			this.parent.x += this.vecX * delta * this.parent.speed; 
-      this.parent.y += this.vecY * delta * this.parent.speed;
+     	 	this.parent.y += this.vecY * delta * this.parent.speed;
 		}
 	});
 

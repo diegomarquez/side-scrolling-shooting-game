@@ -37,52 +37,67 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
 		spray: function(args) {
 			if (!this.maxAmountToSpray) {
-				create.call(this, args);
+				
+				if (this.isEnabled()) {
+					for (var i=0; i < this.amountPerSpray; i++) {
+						args['x'] = 0;
+						args['y'] = 0;
+
+						if (this.startingPositionTransformation) {
+							for (var j = 0; j < this.startingPositionTransformation.length; j++) {
+								this.startingPositionTransformation[j].call(this, args);
+							}	
+						}
+
+						var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+
+						this.createdObjects.push(go);
+						
+						go.once(go.RECYCLE, this, onRecycle);
+
+						this.currentSprayCount++;
+					}
+				}
+				
 				this.execute(this.SPRAY);	
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
 					this.execute(this.STOP_CREATION);
 				} else {
-					create.call(this, args);
+					
+					if (this.isEnabled()) {
+						for (var i=0; i < this.amountPerSpray; i++) {
+							args['x'] = 0;
+							args['y'] = 0;
+
+							if (this.startingPositionTransformation) {
+								for (var j = 0; j < this.startingPositionTransformation.length; j++) {
+									this.startingPositionTransformation[j].call(this, args);
+								}	
+							}
+
+							var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+
+							this.createdObjects.push(go);
+							
+							go.once(go.RECYCLE, this, onRecycle);
+
+							this.currentSprayCount++;
+						}
+					}
+
 					this.execute(this.SPRAY);	
 				}	
 			}
 		}
-	});
-
-	var create = function(args) {
-		if (!this.isEnabled()) return;
-
-		for (var i=0; i < this.amountPerSpray; i++) {
-			startingPostion.call(this, args);
-
-			var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
-
-			this.createdObjects.push(go);
-			
-			go.once(go.RECYCLE, this, onRecycle);
-
-			this.currentSprayCount++;
-		}
-	} 
+	}); 
 
 	var onRecycle = function(go) {
 		this.createdObjects.splice(this.createdObjects.indexOf(go), 1);
 
 		if (!this.isEnabled() && this.createdObjects.length == 0) {
 			this.execute(this.STOP_AND_ALL_RECYCLED);
-		}
-	}
-
-	var startingPostion = function(args) {
-		args['x'] = 0;
-		args['y'] = 0;
-
-		if (this.startingPositionTransformation) {
-			for (var i = 0; i < this.startingPositionTransformation.length; i++) {
-				this.startingPositionTransformation[i].call(this, args);
-			}	
 		}
 	}
 
