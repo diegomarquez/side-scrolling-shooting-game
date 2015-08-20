@@ -22,12 +22,14 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("obstacle-3", "Obstacle")
 				.addComponent("ObstacleCollider3")
 				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
+				.setRenderer("ObstacleRender")
+				.obstacleCategory();
 
 			this.gameObjectPool.createConfiguration("obstacle-4", "Obstacle")
 				.addComponent("ObstacleCollider4")
 				.addComponent("ActivateObstancleOnView")
-				.setRenderer("ObstacleRender");
+				.setRenderer("ObstacleRender")
+				.obstacleCategory();
 		},
 	});
 

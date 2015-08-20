@@ -80,14 +80,18 @@ define(function(require) {
 		},
 
 		getGameObjects: function(options) {
-			options = options || { filterChilds: true, customOnly: false, };
+			options = options || { filterChilds: true, customOnly: false, objectCategory: null };
 
 			var data = require('gb').goPool.getConfigurationTypes(options);
 
 			var editorOnlyGameObjects = this.getEditorOnlyGameObjects();
 
 			for (var i = 0; i < editorOnlyGameObjects.length; i++) {
-				data.splice(data.indexOf(editorOnlyGameObjects[i]), 1);
+				var index = data.indexOf(editorOnlyGameObjects[i]);
+
+				if (index != -1) {
+					data.splice(index, 1);
+				}
 			}
 
 			var self = this;
@@ -97,8 +101,12 @@ define(function(require) {
 			});
 		},
 
+		getCategoryGameObjects: function(category) {
+			return require('gb').goPool.getConfigurationTypes({ objectCategory: category });
+		},
+
 		getControlObjects: function() {
-			var data = require('gb').goPool.getConfigurationTypes({ filterChilds: true, customOnly: false, });
+			var data = require('gb').goPool.getConfigurationTypes({ filterChilds: true, customOnly: false, objectCategory: null });
 
 			var self = this;
 

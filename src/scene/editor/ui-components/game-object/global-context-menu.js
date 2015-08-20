@@ -13,11 +13,27 @@ define(function(require) {
 				id: 'global-context-menu',
 				options: [
 					{
-						name: 'Add Game Object',
+						name: 'Add Obstacle',
 						icon: 'ui-icon-plusthick',		
 						click: function(name, event) {
 							gameObjectSelectorUI.toButtons();
-							gameObjectSelectorUI.show(event);
+							gameObjectSelectorUI.show(event, 'obstacle');
+						}		
+					},
+					{
+						name: 'Add Enemy',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'enemy');
+						}		
+					},
+					{
+						name: 'Add Item',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'item');
 						}		
 					},
 					{

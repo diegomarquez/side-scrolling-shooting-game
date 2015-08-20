@@ -40,6 +40,7 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("level-item", "LevelItem")
 				.addComponent("LevelItemCircle")
 				.setRenderer("LevelItem_Renderer")
+				.itemCategory();
 
 			this.gameObjectPool.createConfiguration("power-up-item", "PowerUpItem")
 				.args({
@@ -47,6 +48,7 @@ define(function(require) {
 				})
 				.addComponent("LevelItemCircle")
 				.setRenderer("PowerUp_Renderer")
+				.itemCategory();
 
 			this.gameObjectPool.createConfiguration("speed-up-item", "PowerUpItem")
 				.args({
@@ -54,6 +56,7 @@ define(function(require) {
 				})
 				.addComponent("LevelItemCircle")
 				.setRenderer("SpeedUp_Renderer")
+				.itemCategory();
 
 			this.gameObjectPool.createConfiguration("health-up-item", "PowerUpItem")
 				.args({
@@ -61,6 +64,7 @@ define(function(require) {
 				})
 				.addComponent("LevelItemCircle")
 				.setRenderer("HealthUp_Renderer")
+				.itemCategory();
 		},
 	});
 

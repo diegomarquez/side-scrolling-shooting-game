@@ -88,7 +88,8 @@ define(function(require) {
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('cannon-shooter')
-				.setRenderer("CannonBaseRenderer");
+				.setRenderer("CannonBaseRenderer")
+				.enemyCategory();
 
 			this.gameObjectPool.createConfiguration("boss-cannon", "BossCannonBase")
 				.args({
@@ -101,7 +102,8 @@ define(function(require) {
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('boss-cannon-shooter')
-				.setRenderer("BossCannonBaseRenderer");
+				.setRenderer("BossCannonBaseRenderer")
+				.enemyCategory();
 
 			// =============================
 			// =============================
@@ -163,7 +165,8 @@ define(function(require) {
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('laser-shooter')
-				.setRenderer("LaserBaseRenderer");
+				.setRenderer("LaserBaseRenderer")
+				.enemyCategory();
 
 			this.gameObjectPool.createConfiguration("boss-laser-cannon", "BossCannonBase")
 				.args({
@@ -176,7 +179,8 @@ define(function(require) {
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('boss-laser-shooter')
-				.setRenderer("LaserBaseRenderer");
+				.setRenderer("LaserBaseRenderer")
+				.enemyCategory();
 
 			// =============================
 			// =============================
@@ -212,7 +216,8 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
-				.setRenderer("DoubleCannonBaseRenderer");
+				.setRenderer("DoubleCannonBaseRenderer")
+				.enemyCategory();
 
 			this.gameObjectPool.createConfiguration("boss-double-cannon", "BossDoubleCannonBase")
 				.args({
@@ -227,7 +232,8 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
-				.setRenderer("DoubleCannonBaseRenderer");
+				.setRenderer("DoubleCannonBaseRenderer")
+				.enemyCategory();
 
 			// =============================
 			// =============================
@@ -307,7 +313,8 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('missile-turret-shooter', { y: 7 })
 				.addChild('missile-turret-hinge')
-				.setRenderer("MissileTurretBaseRenderer");
+				.setRenderer("MissileTurretBaseRenderer")
+				.enemyCategory();
 
 			this.gameObjectPool.createConfiguration("boss-missile-turret", "BossCannonBase")
 				.args({
@@ -321,7 +328,8 @@ define(function(require) {
 				.addComponent('ActivateShooterOnView')
 				.addChild('boss-missile-turret-shooter', { y: 7 })
 				.addChild('missile-turret-hinge')
-				.setRenderer("MissileTurretBaseRenderer");
+				.setRenderer("MissileTurretBaseRenderer")
+				.enemyCategory();
 
 			// =============================
 			// =============================

@@ -243,6 +243,7 @@ define(function(require) {
 					$(viewports).click();
 					
 					viewports.style.display = 'none';
+					gos.style.display = 'none';
 				}
 			}
 

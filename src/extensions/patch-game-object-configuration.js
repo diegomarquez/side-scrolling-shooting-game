@@ -62,6 +62,43 @@ define(function(require) {
 				return this.mouseSupport;
 			}
 
+			// Object Categories
+			// ============================
+
+			Object.defineProperty(gameObjectConfiguration.prototype, "objectCategory", { 
+				configurable: true,
+				enumerable: true,
+				writable: true,
+				value: 'default'			
+			});
+
+			gameObjectConfiguration.prototype.obstacleCategory = function() {
+				this.objectCategory = 'obstacle';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isObstacle = function() {
+				return this.objectCategory == 'obstacle';
+			}
+
+			gameObjectConfiguration.prototype.enemyCategory = function() {
+				this.objectCategory = 'enemy';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isEnemy = function() {
+				return this.objectCategory == 'enemy';
+			}
+
+			gameObjectConfiguration.prototype.itemCategory = function() {
+				this.objectCategory = 'item';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isItem = function() {
+				return this.objectCategory == 'item';
+			}
+
 			/**
 			 * --------------------------------
 			 */
@@ -97,6 +134,14 @@ define(function(require) {
 			delete gameObjectConfiguration.prototype.mouseSupport;
 			delete gameObjectConfiguration.prototype.disableMouseSupport;
 			delete gameObjectConfiguration.prototype.hasMouseSupport;
+
+			delete gameObjectConfiguration.prototype.objectCategory;
+			delete gameObjectConfiguration.prototype.obstacleCategory;
+			delete gameObjectConfiguration.prototype.isObstacle;
+			delete gameObjectConfiguration.prototype.enemyCategory;
+			delete gameObjectConfiguration.prototype.isEnemy;
+			delete gameObjectConfiguration.prototype.itemCategory;
+			delete gameObjectConfiguration.prototype.isItem;
 
 			delete componentConfiguration.prototype.childConfig;
 			delete componentConfiguration.prototype.isChild;

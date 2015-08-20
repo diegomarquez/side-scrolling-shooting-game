@@ -21,8 +21,37 @@ define(function(require) {
 				var r = [];
 
 				for (var k in this.configurations) {
+					
+					if (options.objectCategory) {
+						if (options.objectCategory == 'obstacle') {
+							if (this.configurations[k].isObstacle()) {
+								r.push(k);
+							} 
+
+							continue;
+						}
+
+						if (options.objectCategory == 'enemy') {
+							if (this.configurations[k].isEnemy()) {
+								r.push(k);
+							} 
+
+							continue;
+						}
+
+						if (options.objectCategory == 'item') {
+							if (this.configurations[k].isItem()) {
+								r.push(k);
+							} 
+
+							continue;
+						}
+					}
+
+
+
 					if (options.filterChilds) {
-						if (!this.configurations[k].isChildOnly()) {
+						if (!this.configurations[k].isChild()) {
 							r.push(k);
 						} 
 
@@ -54,7 +83,7 @@ define(function(require) {
 
 				for (var k in this.configurations) {
 					if (options.filterChilds) {
-						if (!this.configurations[k].isChildOnly()) {
+						if (!this.configurations[k].isChild()) {
 							r.push(k);
 						} 
 

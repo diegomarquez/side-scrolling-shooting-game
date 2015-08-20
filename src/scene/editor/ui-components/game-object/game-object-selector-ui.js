@@ -11,7 +11,14 @@ define(function(require) {
 			this.gameObjectSelectorUI.getOptions().buttons = true;
 		},
 
-		show: function(event) {
+		show: function(event, objectCategory) {
+			this.gameObjectSelectorUI.getOptions().data = function() {
+				return require('editor-config').getCategoryGameObjects(objectCategory);
+			};
+
+			this.gameObjectSelectorUI.refresh();
+
+
 			this.gameObjectSelectorUI.show(event);
 		},
 
@@ -25,7 +32,7 @@ define(function(require) {
 				selectedMessage: '',
 				selector: true,
 				data: function() {      
-					return require('editor-config').getGameObjects({ filterChilds: false });
+					return require('editor-config').getGameObjects({ filterChilds: true });
 				},
 				onClick: function(gameObjectName) {
 					self.gameObjectSelectorUI.getOptions().selector = true;

@@ -8,18 +8,20 @@ define(function(require) {
 
 	var Dropdown = require('ui-component').extend({
 		init: function() {
-
+			this.options = null;
 		},
 
 		create: function(options) {
 			// Methods to get the parts of the UI in child classes
-			this.getOptions = function() { return options; }.bind(this);
+			this.getOptions = function() { return this.options; }.bind(this);
 			this.getContainer = function() { return this.container; }.bind(this);
 			this.getContentContainer = function() { return this.contentContainer; }.bind(this);
 			this.getOptionElements = function() { return this.optionElements; }.bind(this);
 			this.getMainUI = function() { return this.mainUI; }.bind(this);
 			
 			this.showEvent = null;
+
+			this.options = options;
 
 			// Create the main components
 			this.mainUI = this.createMainUI(

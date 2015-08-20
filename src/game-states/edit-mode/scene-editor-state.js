@@ -27,8 +27,6 @@ define(function(require) {
 			require('boss-bundle').create();
 			require('items-bundle').create();
 			require('control-objects-bundle').create();
-
-			require('bullets-bundle').create();
 		});
 
 		state.addStartAction(function (args) {

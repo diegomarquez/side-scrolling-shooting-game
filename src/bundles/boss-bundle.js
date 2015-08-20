@@ -70,7 +70,8 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
-				.setRenderer("Boss_1_Renderer");	
+				.setRenderer("Boss_1_Renderer")
+				.enemyCategory();	
 		},
 	});
 
