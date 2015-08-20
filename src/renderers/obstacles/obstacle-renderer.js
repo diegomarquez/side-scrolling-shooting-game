@@ -4,18 +4,24 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 	var ObstacleRenderer = PathRenderer.extend({
 		init: function() {
 			this._super();
+
+			this.parentColliderPoints = null;
 		},
 
 		start: function() {
 			this.skipCache = true;
 
 			this.name = 'obstacle-renderer';
+			this.parentColliderPoints = null;
 
 			this._super();
 		},
 		
 		drawPath: function(context, viewport) {
 			m = this.parent.getMatrix();
+
+			if (!this.parentColliderPoints)
+				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
 
 			// Store current context
 			context.save();
@@ -26,25 +32,37 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Applying transformations of parent
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
 			// Drawing code
-			Draw.polygon(context, 0, 0, this.parent.findComponents().firstWithProp('collider').Points, null, "#FFFFFF", 2/m.a);
+			Draw.polygon(context, 0, 0, this.parentColliderPoints, null, "#FFFFFF", 2/m.a);
 			// Restore original context
 			context.restore();
 		},
 
 		rendererWidth: function() { 
-			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'width');
+			if (!this.parentColliderPoints)
+				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
+
+			return getPolygonSize(this.parentColliderPoints, 'width');
 		},
 		
 		rendererHeight: function() { 
-			return getPolygonSize(this.parent.findComponents().firstWithProp('collider').Points, 'height');
+			if (!this.parentColliderPoints)
+				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
+
+			return getPolygonSize(this.parentColliderPoints, 'height');
 		},
 
 		rendererOffsetX: function() { 
-			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'x');
+			if (!this.parentColliderPoints)
+				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
+
+			return getOffset(this.parentColliderPoints, 'x');
 		},
 
 		rendererOffsetY: function() { 
-			return getOffset(this.parent.findComponents().firstWithProp('collider').Points, 'y');
+			if (!this.parentColliderPoints)
+				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
+
+			return getOffset(this.parentColliderPoints, 'y');
 		},
 
 		debug_draw: function(context, viewport, draw, gb) {
