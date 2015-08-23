@@ -21,7 +21,6 @@ define(function(require) {
 				var r = [];
 
 				for (var k in this.configurations) {
-					
 					if (options.objectCategory) {
 						if (options.objectCategory == 'obstacle') {
 							if (this.configurations[k].isObstacle()) {
@@ -33,6 +32,34 @@ define(function(require) {
 
 						if (options.objectCategory == 'enemy') {
 							if (this.configurations[k].isEnemy()) {
+
+								if (options.enemyTier) {
+									if (options.enemyTier == 'weak') {
+										if (this.configurations[k].isWeakEnemyTier()) {
+											r.push(k);
+										} 
+
+										continue;
+									}
+
+									if (options.enemyTier == 'strong') {
+										if (this.configurations[k].isStrongEnemyTier()) {
+											r.push(k);
+										} 
+
+										continue;
+									}
+
+									if (options.enemyTier == 'boss') {
+										if (this.configurations[k].isBossEnemyTier()) {
+											r.push(k);
+										} 
+
+										continue;
+									}
+								}
+
+
 								r.push(k);
 							} 
 

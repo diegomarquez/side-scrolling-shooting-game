@@ -9,10 +9,11 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 	    	this.destroyExplosions = null;
 	    	this.completeCount = 0;
 	    	this.completeAnimationsBeforeFire = -1;
+	    	this.bulletType = '';
+	    	this.hp = 0;
 	    },
 
 	    editorStart: function() {
-			this.health = 5;
 			this.renderer.play();
 
 			this.completeCount = 1;
@@ -31,7 +32,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 	    		for (var i = 0; i < firePositions.length; i++) {
 	    			decompose = firePositions[i].getMatrix().decompose(decompose);
 
-	    			Gb.create('double-cannon-bullet', this.getUpdateGroup(), this.getViewportList(), {
+	    			Gb.create(this.bulletType, this.getUpdateGroup(), this.getViewportList(), {
 						angle: this.rotation - 90 + firePositions[i].angle,
 						x: decompose.x,
 						y: decompose.y
@@ -50,8 +51,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 	    	if (!this.started)
     			return;
 
-	  		if (this.health > 0) {
-	  			this.health--;	
+	  		if (this.hp > 0) {
+	  			this.hp--;	
 	  		} else {
 	  			var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 

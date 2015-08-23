@@ -101,8 +101,8 @@ define(function(require) {
 			});
 		},
 
-		getCategoryGameObjects: function(category) {
-			return require('gb').goPool.getConfigurationTypes({ objectCategory: category });
+		getCategoryGameObjects: function(category, enemyTier) {
+			return require('gb').goPool.getConfigurationTypes({ objectCategory: category, enemyTier: enemyTier });
 		},
 
 		getControlObjects: function() {

@@ -16,7 +16,11 @@ define(function(require) {
 						name: 'Remove',
 						icon: 'ui-icon-trash',		
 						click: function(name, event) {
-							gb.reclaimer.mark(menu.go.parent);		
+							if (menu.go.poolId == 'AngleDirectionSetter') {
+								gb.reclaimer.mark(menu.go);
+							} else {
+								gb.reclaimer.mark(menu.go.parent);
+							}
 						}		
 					}
 				]

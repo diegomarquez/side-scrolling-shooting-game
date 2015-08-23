@@ -8,6 +8,8 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 	var Cannon = GameObject.extend({
 		init: function() {
 			this._super();
+
+			this.bulletType = '';
 		},
 
 		editorStart: function() {
@@ -86,7 +88,7 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 					if (this.currentBurstCount < this.burstAmount) {
 						selfDecompose = this.firePosition.getMatrix().decompose(selfDecompose);
 						
-						Gb.create('cannon-bullet', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						Gb.create(this.bulletType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 							angle: selfDecompose.rotation,
 							x: selfDecompose.x,
 							y: selfDecompose.y

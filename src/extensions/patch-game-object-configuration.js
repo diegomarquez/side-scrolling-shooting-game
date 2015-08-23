@@ -99,6 +99,40 @@ define(function(require) {
 				return this.objectCategory == 'item';
 			}
 
+			Object.defineProperty(gameObjectConfiguration.prototype, "enemyTier", { 
+				configurable: true,
+				enumerable: true,
+				writable: true,
+				value: ''			
+			});
+
+			gameObjectConfiguration.prototype.weakEnemyTier = function() {
+				this.enemyTier = 'weak';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isWeakEnemyTier = function() {
+				return this.enemyTier == 'weak';
+			}
+
+			gameObjectConfiguration.prototype.strongEnemyTier = function() {
+				this.enemyTier = 'strong';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isStrongEnemyTier = function() {
+				return this.enemyTier == 'strong';
+			}
+
+			gameObjectConfiguration.prototype.bossEnemyTier = function() {
+				this.enemyTier = 'boss';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isBossEnemyTier = function() {
+				return this.enemyTier == 'boss';
+			}
+
 			/**
 			 * --------------------------------
 			 */
@@ -142,6 +176,14 @@ define(function(require) {
 			delete gameObjectConfiguration.prototype.isEnemy;
 			delete gameObjectConfiguration.prototype.itemCategory;
 			delete gameObjectConfiguration.prototype.isItem;
+
+			delete gameObjectConfiguration.prototype.enemyTier;
+			delete gameObjectConfiguration.prototype.weakEnemyTier;
+			delete gameObjectConfiguration.prototype.isWeakEnemyTier;
+			delete gameObjectConfiguration.prototype.strongEnemyTier;
+			delete gameObjectConfiguration.prototype.isStrongEnemyTier;
+			delete gameObjectConfiguration.prototype.bossEnemyTier;
+			delete gameObjectConfiguration.prototype.isBossEnemyTier;
 
 			delete componentConfiguration.prototype.childConfig;
 			delete componentConfiguration.prototype.isChild;

@@ -11,9 +11,9 @@ define(function(require) {
 			this.gameObjectSelectorUI.getOptions().buttons = true;
 		},
 
-		show: function(event, objectCategory) {
+		show: function(event, objectCategory, enemyTier) {
 			this.gameObjectSelectorUI.getOptions().data = function() {
-				return require('editor-config').getCategoryGameObjects(objectCategory);
+				return require('editor-config').getCategoryGameObjects(objectCategory, enemyTier);
 			};
 
 			this.gameObjectSelectorUI.refresh();

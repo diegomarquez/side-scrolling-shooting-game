@@ -6,9 +6,10 @@ define(function(require) {
 		create: function(args) {						
 			this.componentPool.createPool('laser-renderer', require('laser-renderer'));
 			this.componentPool.createPool('twich-component', require('twitch'));
+			this.componentPool.createPool('rotate-component', require('rotate'));
 
 			this.gameObjectPool.createDynamicPool('Bullet', require("basic-bullet"));
-			this.gameObjectPool.createDynamicPool('CannonBullet', require("cannon-bullet"));
+			this.gameObjectPool.createDynamicPool('CannonBullet', require("cannon-bullet"));			
 			this.gameObjectPool.createDynamicPool('Laser', require("laser"));
 			this.gameObjectPool.createDynamicPool('Missile', require("missile"));
 
@@ -91,12 +92,42 @@ define(function(require) {
 				.addComponent("BulletCollider")
 				.setRenderer("PlayerBullet1Renderer");
 
-			this.gameObjectPool.createConfiguration("cannon-bullet", "CannonBullet")
+			this.gameObjectPool.createConfiguration("cannon-bullet-slow", "CannonBullet")
+				.args({
+					speed: 100
+				})
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
 				.setRenderer("ArrowBulletRenderer");
 
-			this.gameObjectPool.createConfiguration("double-cannon-bullet", "CannonBullet")
+			this.gameObjectPool.createConfiguration("cannon-bullet-fast", "CannonBullet")
+				.args({
+					speed: 220
+				})
+				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent("CannonBulletCollider")
+				.setRenderer("ArrowBulletRenderer");
+
+
+			this.componentPool.createConfiguration("BulletRotate", 'rotate-component')
+				.args({
+					amount: 5
+				});
+
+			this.gameObjectPool.createConfiguration("double-cannon-bullet-slow", "CannonBullet")
+				.args({
+					speed: 250
+				})
+				.addComponent('BulletRotate')
+				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent("CannonBulletCollider")
+				.setRenderer("RoundBulletRenderer");
+
+			this.gameObjectPool.createConfiguration("double-cannon-bullet-fast", "CannonBullet")
+				.args({
+					speed: 270
+				})
+				.addComponent('BulletRotate')
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("CannonBulletCollider")
 				.setRenderer("RoundBulletRenderer");
@@ -106,7 +137,18 @@ define(function(require) {
 				.addComponent("LaserTwitch")
 				.setRenderer("LaserRender");
 
-			this.gameObjectPool.createConfiguration("missile", "Missile")
+			this.gameObjectPool.createConfiguration("missile-slow", "Missile")
+				.args({
+					speed: 100
+				})
+				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent("MissileCollider")
+				.setRenderer("MissileRenderer");
+
+			this.gameObjectPool.createConfiguration("missile-fast", "Missile")
+				.args({
+					speed: 220
+				})
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("MissileCollider")
 				.setRenderer("MissileRenderer");

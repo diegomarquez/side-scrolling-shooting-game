@@ -56,11 +56,14 @@ define(function(require) {
 					radius:20 
 				});
 
-			this.gameObjectPool.createConfiguration("cannon-shooter", "CannonShooter")
+			this.gameObjectPool.createConfiguration("cannon-shooter-0", "CannonShooter")
 				.args({ 
 					rate: 150, 
 					bullets: 5,
-					burstAmount: 1
+					burstAmount: 1,
+					x: 0,
+					y: -2,
+					bulletType: 'cannon-bullet-slow'
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 29 , y: 1 })
@@ -68,12 +71,42 @@ define(function(require) {
 				.disableMouseSupport()
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("boss-cannon-shooter", "CannonShooter")
+			this.gameObjectPool.createConfiguration("cannon-shooter-1", "CannonShooter")
 				.args({ 
-					rate: 200, 
+					rate: 120, 
+					bullets: 8,
+					burstAmount: 1,
+					x: 0,
+					y: -2,
+					bulletType: 'cannon-bullet-fast'
+				})
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: 29 , y: 1 })
+				.setRenderer("CannonShooterRenderer")
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-cannon-shooter-0", "CannonShooter")
+				.args({
+					rate: 200,
+					bullets: -1,
+					burstAmount: 4,
+					y: -15,
+					bulletType: 'cannon-bullet-slow'
+				})
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: 57 , y: 1 })
+				.setRenderer("BossCannonShooterRenderer")
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-cannon-shooter-1", "CannonShooter")
+				.args({
+					rate: 180,
 					bullets: -1,
 					burstAmount: 3,
-					y: -15
+					y: -15,
+					bulletType: 'cannon-bullet-fast'
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 57 , y: 1 })
@@ -83,27 +116,59 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("cannon-0", "CannonBase")
 				.args({
-					destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 5
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('cannon-shooter')
+				.addChild('cannon-shooter-0')
 				.setRenderer("CannonBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration("boss-cannon", "BossCannonBase")
+			this.gameObjectPool.createConfiguration("cannon-1", "CannonBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 8
+				})
+				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('cannon-shooter-1')
+				.setRenderer("CannonBaseRenderer")
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-cannon-0", "BossCannonBase")
 				.args({
 					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					damageParticles: [
 						particleBundle.getCannonDamageParticles_1_Id(),
 						particleBundle.getCannonDamageParticles_2_Id()
-					] 
+					],
+					hp: 15
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('boss-cannon-shooter')
+				.addChild('boss-cannon-shooter-0')
 				.setRenderer("BossCannonBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.bossEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-cannon-1", "BossCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					],
+					hp: 22
+				})
+				.addComponent('CannonBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('boss-cannon-shooter-1')
+				.setRenderer("BossCannonBaseRenderer")
+				.enemyCategory()
+				.bossEnemyTier();
 
 			// =============================
 			// =============================
@@ -138,49 +203,101 @@ define(function(require) {
 					radius:20 
 				});
 
-			this.gameObjectPool.createConfiguration("laser-shooter", "LaserShooter")
+			this.gameObjectPool.createConfiguration("laser-shooter-0", "LaserShooter")
 				.args({
-					shootTime: 250,
-					burstTime: 250
+					shootTime: 300,
+					burstTime: 50
 				})
-				.addChild('FirePosition', { y: -28 })
+				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("LaserShooterRenderer")
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("boss-laser-shooter", "LaserShooter")
+			this.gameObjectPool.createConfiguration("laser-shooter-1", "LaserShooter")
+				.args({
+					shootTime: 200,
+					burstTime: 200
+				})
+				.addChild('FirePosition', { x: 0, y: -28 })
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("LaserShooterRenderer")
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-laser-shooter-0", "LaserShooter")
 				.args({
 					shootTime: 250,
 					burstTime: 250
 				})
-				.addChild('FirePosition')
+				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("BossLaserShooterRenderer")
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("laser-cannon", "LaserBase")
+			this.gameObjectPool.createConfiguration("boss-laser-shooter-1", "LaserShooter")
 				.args({
-					destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
+					shootTime: 250,
+					burstTime: 400
+				})
+				.addChild('FirePosition', { x: 0, y: -28 })
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("BossLaserShooterRenderer")
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("laser-cannon-0", "LaserBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 8
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('laser-shooter')
+				.addChild('laser-shooter-0')
 				.setRenderer("LaserBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration("boss-laser-cannon", "BossCannonBase")
+			this.gameObjectPool.createConfiguration("laser-cannon-1", "LaserBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 10
+				})
+				.addComponent('LaserBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('laser-shooter-1')
+				.setRenderer("LaserBaseRenderer")
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-laser-cannon-0", "BossCannonBase")
 				.args({
 					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					damageParticles: [
 						particleBundle.getCannonDamageParticles_1_Id(),
 						particleBundle.getCannonDamageParticles_2_Id()
-					] 
+					],
+					hp: 15
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('boss-laser-shooter')
+				.addChild('boss-laser-shooter-0')
 				.setRenderer("LaserBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.bossEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-laser-cannon-1", "BossCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					],
+					hp: 22
+				})
+				.addComponent('LaserBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('boss-laser-shooter-1')
+				.setRenderer("LaserBaseRenderer")
+				.enemyCategory()
+				.bossEnemyTier();
 
 			// =============================
 			// =============================
@@ -207,33 +324,73 @@ define(function(require) {
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("double-cannon", "DoubleCannonBase")
+			this.gameObjectPool.createConfiguration("double-cannon-0", "DoubleCannonBase")
 				.args({
 					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
-					completeAnimationsBeforeFire: 4
+					completeAnimationsBeforeFire: 2,
+					bulletType: "double-cannon-bullet-slow",
+					hp: 20
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration("boss-double-cannon", "BossDoubleCannonBase")
+			this.gameObjectPool.createConfiguration("double-cannon-1", "DoubleCannonBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					completeAnimationsBeforeFire: 2,
+					bulletType: "double-cannon-bullet-fast",
+					hp: 25
+				})
+				.addComponent('DoubleBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
+				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
+				.setRenderer("DoubleCannonBaseRenderer")
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-double-cannon-0", "BossDoubleCannonBase")
 				.args({
 					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					damageParticles: [
 						particleBundle.getCannonDamageParticles_1_Id(),
 						particleBundle.getCannonDamageParticles_2_Id()
 					],
-					completeAnimationsBeforeFire: 3
+					completeAnimationsBeforeFire: 1,
+					bulletType: "double-cannon-bullet-slow",
+					hp: 50
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.bossEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-double-cannon-1", "BossDoubleCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					],
+					completeAnimationsBeforeFire: 1,
+					bulletType: "double-cannon-bullet-fast",
+					hp: 70
+				})
+				.addComponent('DoubleBaseCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
+				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
+				.setRenderer("DoubleCannonBaseRenderer")
+				.enemyCategory()
+				.bossEnemyTier();
 
 			// =============================
 			// =============================
@@ -276,24 +433,52 @@ define(function(require) {
 					offsetY: -40
 				});
 
-			this.gameObjectPool.createConfiguration("missile-turret-shooter", "MissileShooter")
+			this.gameObjectPool.createConfiguration("missile-turret-shooter-0", "MissileShooter")
 				.args({
 					rate: 100,
-					missiles: 100,
+					missiles: 6,
 					burstAmount: 3,
-					rotation: 45
+					rotation: 45,
+					missileType: 'missile-slow'
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("MissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("boss-missile-turret-shooter", "MissileShooter")
+			this.gameObjectPool.createConfiguration("missile-turret-shooter-1", "MissileShooter")
 				.args({
-					rate: 100,
-					missiles: 100,
+					rate: 70,
+					missiles: 12,
 					burstAmount: 3,
-					rotation: 45
+					rotation: 45,
+					missileType: 'missile-fast'
+				})
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("MissileTurretShooterRenderer")
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-missile-turret-shooter-0", "MissileShooter")
+				.args({
+					rate: 150,
+					missiles: 500,
+					burstAmount: 4,
+					rotation: 45,
+					missileType: 'missile-slow'
+				})
+				.addComponent('ActivateShooterOnView')
+				.setRenderer("BossMissileTurretShooterRenderer")
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-missile-turret-shooter-1", "MissileShooter")
+				.args({
+					rate: 170,
+					missiles: 500,
+					burstAmount: 5,
+					rotation: 45,
+					missileType: 'missile-fast'
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("BossMissileTurretShooterRenderer")
@@ -305,31 +490,65 @@ define(function(require) {
 				.disableMouseSupport()
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration("missile-turret", "MissileTurretBase")
+			this.gameObjectPool.createConfiguration("missile-turret-0", "MissileTurretBase")
 				.args({
-					destroyExplosions: explosionBundle.getMediumExplosionsEffectId()
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 7
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('missile-turret-shooter', { y: 7 })
+				.addChild('missile-turret-shooter-0', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration("boss-missile-turret", "BossCannonBase")
+			this.gameObjectPool.createConfiguration("missile-turret-1", "MissileTurretBase")
+				.args({
+					destroyExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					hp: 15
+				})
+				.addComponent('MissileTurretCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('missile-turret-shooter-1', { y: 7 })
+				.addChild('missile-turret-hinge')
+				.setRenderer("MissileTurretBaseRenderer")
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-missile-turret-0", "BossCannonBase")
 				.args({
 					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
 					damageParticles: [
 						particleBundle.getCannonDamageParticles_1_Id(),
 						particleBundle.getCannonDamageParticles_2_Id()
-					] 
+					],
+					hp: 20
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
-				.addChild('boss-missile-turret-shooter', { y: 7 })
+				.addChild('boss-missile-turret-shooter-0', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
-				.enemyCategory();
+				.enemyCategory()
+				.bossEnemyTier();
+
+			this.gameObjectPool.createConfiguration("boss-missile-turret-1", "BossCannonBase")
+				.args({
+					damageExplosions: explosionBundle.getMediumExplosionsEffectId(),
+					damageParticles: [
+						particleBundle.getCannonDamageParticles_1_Id(),
+						particleBundle.getCannonDamageParticles_2_Id()
+					],
+					hp: 25
+				})
+				.addComponent('MissileTurretCollider')
+				.addComponent('ActivateShooterOnView')
+				.addChild('boss-missile-turret-shooter-1', { y: 7 })
+				.addChild('missile-turret-hinge')
+				.setRenderer("MissileTurretBaseRenderer")
+				.enemyCategory()
+				.bossEnemyTier();
 
 			// =============================
 			// =============================

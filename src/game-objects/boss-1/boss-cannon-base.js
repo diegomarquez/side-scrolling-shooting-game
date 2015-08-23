@@ -6,11 +6,12 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 
 			this.damageExplosions = null;
 			this.damageParticles = null;
+			this.hp = 1
 		},
 
 		editorStart: function() {
 			this.started = false;
-			this.health = 20;
+			this.initHp = this.hp;
 
 			TimerFactory.get(this, 'repairTimer', 'repairTimer');
 		},
@@ -51,8 +52,8 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 
 		onCollide: function(other) {
 			if (this.started) {
-				if (this.health > 0) {
-					this.health--;	
+				if (this.hp > 0) {
+					this.hp--;	
 				} else {
 					// Add the effects components
 					var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
@@ -69,7 +70,7 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 
 					this.repairTimer.on(this.repairTimer.COMPLETE, function() {
 						// Reset damage
-						this.health = 20; 
+						this.hp = this.initHp; 
 						// Enable the collider component
 						this.findComponents().firstWithProp('collider').enable();
 

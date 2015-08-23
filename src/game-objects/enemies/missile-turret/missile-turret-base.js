@@ -5,10 +5,11 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			this._super();
 
 			this.destroyExplosions = null;
+			this.hp = 0;
 		},
 
 		editorStart: function() {
-			this.health = 15;
+		
 		},
 
 		editorUpdate: function(delta) {
@@ -19,8 +20,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			if (!this.started)
 	    		return;
 
-	  		if (this.health > 0) {
-	  			this.health--;	
+	  		if (this.hp > 0) {
+	  			this.hp--;	
 	  		} else {
 	  			var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 

@@ -22,6 +22,7 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			this.target = null;
 			this.currentBurstCount = 0;
 			this.bulletCount = 0;
+			this.missileType = '';
 		},
 
 		editorStart: function() {
@@ -120,7 +121,7 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 
 				if (this.burtsTimer % 30 == 0) {
 					if (this.currentBurstCount < this.burstAmount) {
-						var missile = Gb.create('missile', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						var missile = Gb.create(this.missileType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 							angle: selfMatrix.decompose(selfDecompose).rotation - 180,
 							x: this.parent.x,
 							y: this.parent.y + 5,

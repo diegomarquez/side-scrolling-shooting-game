@@ -71,7 +71,8 @@ define(function(require) {
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer")
-				.enemyCategory();	
+				.enemyCategory()
+				.bossEnemyTier();	
 		},
 	});
 

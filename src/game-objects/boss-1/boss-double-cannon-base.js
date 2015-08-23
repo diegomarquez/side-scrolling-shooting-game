@@ -10,11 +10,14 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 			this.damageParticles = null;
 			this.completeCount = 0;
 	    	this.completeAnimationsBeforeFire = -1;
+	    	this.bulletType = '';
+	    	this.hp = 0;
+	    	this.initHp = 0;
 		},
 
 		editorStart: function() {
 			this.started = false;
-			this.health = 20;
+			this.initHp = this.hp;
 
 			TimerFactory.get(this, 'repairTimer', 'repairTimer');
 
@@ -33,7 +36,7 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 	    		for (var i = 0; i < firePositions.length; i++) {
 	    			decompose = firePositions[i].getMatrix().decompose(decompose);
 
-	    			Gb.create('double-cannon-bullet', this.getUpdateGroup(), this.getViewportList(), {
+	    			Gb.create(this.bulletType, this.getUpdateGroup(), this.getViewportList(), {
 						angle: this.rotation - 90 + firePositions[i].angle,
 						x: decompose.x,
 						y: decompose.y
@@ -85,8 +88,8 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 				return;
 			}
 			
-			if (this.health > 0) {
-				this.health--;	
+			if (this.hp > 0) {
+				this.hp--;	
 			} else {
 
 				// Add the effects components
@@ -106,7 +109,7 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 					this.renderer.play();
 
 					// Reset damage
-					this.health = 20; 
+					this.hp = this.initHp; 
 					// Enable the collider component
 					this.findComponents().firstWithProp('collider').enable();
 

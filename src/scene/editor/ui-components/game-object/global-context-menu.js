@@ -20,14 +20,34 @@ define(function(require) {
 							gameObjectSelectorUI.show(event, 'obstacle');
 						}		
 					},
+
 					{
-						name: 'Add Enemy',
+						name: 'Add Weak Enemy',
 						icon: 'ui-icon-plusthick',		
 						click: function(name, event) {
 							gameObjectSelectorUI.toButtons();
-							gameObjectSelectorUI.show(event, 'enemy');
+							gameObjectSelectorUI.show(event, 'enemy', 'weak');
 						}		
 					},
+
+					{
+						name: 'Add Strong Enemy',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'enemy', 'strong');
+						}		
+					},
+
+					{
+						name: 'Add Boss Enemy',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'enemy', 'boss');
+						}		
+					},
+
 					{
 						name: 'Add Item',
 						icon: 'ui-icon-plusthick',		
@@ -36,6 +56,7 @@ define(function(require) {
 							gameObjectSelectorUI.show(event, 'item');
 						}		
 					},
+
 					{
 						name: 'Add Control Object',
 						icon: 'ui-icon-plusthick',
@@ -43,6 +64,7 @@ define(function(require) {
 							controlObjectSelectorUI.show(event);
 						}				
 					},
+
 					{
 						name: 'Edit Custom Types',
 						icon: 'ui-icon-pencil',	
@@ -53,6 +75,7 @@ define(function(require) {
 							customTypesSelectorUI.show(event);
 						}
 					},
+
 					{
 						name: 'Grid',
 						icon: 'ui-icon-calculator',
@@ -74,6 +97,7 @@ define(function(require) {
 							}
 						]						
 					},
+
 					{
 						name: 'Game Object',
 						icon: 'ui-icon-wrench',
@@ -104,6 +128,7 @@ define(function(require) {
 							}
 						]
 					},
+					
 					{
 						name: 'Misc.',
 						icon: 'ui-icon-wrench',
