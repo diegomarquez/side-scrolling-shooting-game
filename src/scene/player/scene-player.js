@@ -10,6 +10,7 @@ define(function(require) {
 
 		pools: function() {
 	    	require('common-bundle').create();
+	    	require('hud-bundle').create();
 	    	require('explosion-bundle').create();
 	    	require('explosion-generator-bundle').create();
 	    	require('particle-generator-bundle').create();
@@ -38,6 +39,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('obstacleColliderId', 'missilleColliderId');
 
 			collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'bossColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'missilleColliderId');

@@ -12,6 +12,7 @@ define(function(require) {
 			createComponentPool.call(this, function() { return require('animation-path-renderer') });
 			createComponentPool.call(this, function() { return require('animations-path-renderer') });
 			createComponentPool.call(this, function() { return require('animation-bitmap-renderer') });
+			createComponentPool.call(this, function() { return require('animations-bitmap-renderer') });
 
 			createComponentPool.call(this, function() { return require('activate-on-view') });
 

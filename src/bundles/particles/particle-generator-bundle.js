@@ -8,21 +8,11 @@ define(function(require) {
 			this.componentPool.createPool('child-particle-generator', require('child-generator'));
 			this.componentPool.createPool('particle-collision-generator', require('on-collision-game-object-generator'));
 
-			this.componentPool.createConfiguration(this.getPlayerBulletTrailingParticlesId(), 'particle-generator')
-				.args({
-					objectType: particleBundle.getStraightParticle_1_Id(),
-					sprayDelay: 0.02,
-					amountPerSpray: 5,
-					startingPositionTransformation: [
-						require('offset-generation')(-20, 0),
-						require('line-generation')({ x: 0, y: -10 }, { x: 0, y: 10 })
-					]
-				});
-
 			this.componentPool.createConfiguration(this.getCannonBulletCollisionParticlesId(), 'particle-collision-generator')
 				.args({
 					objectType: particleBundle.getStraightParticle_2_Id(),
 					amountPerSpray: 40,
+					excludeFromCollision: 'player-ship',
 					startingPositionTransformation: [
 						require('circle-generation')(10)
 					]

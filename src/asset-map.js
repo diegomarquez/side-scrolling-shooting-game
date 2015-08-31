@@ -17,6 +17,7 @@ define(function() {
 	"CHECKEREDFLAG.PNG": "assets/images/CheckeredFlag.png",
 	"DOUBLECANNON.PNG": "assets/images/DoubleCannon.png",
 	"FLAG.PNG": "assets/images/Flag.png",
+	"HPMETER.PNG": "assets/images/HPMeter.png",
 	"HEALTHUP.PNG": "assets/images/HealthUp.png",
 	"LASERBASE.PNG": "assets/images/LaserBase.png",
 	"LASERHIT.PNG": "assets/images/LaserHit.png",

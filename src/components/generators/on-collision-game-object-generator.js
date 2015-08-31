@@ -2,6 +2,8 @@ define(["game-object-generator"], function(GameObjectGenerator) {
 	var OnCollisionGameObjectGenerator = GameObjectGenerator.extend({
 		init: function() {
 			this._super();
+
+			this.excludeFromCollision = '';
 		},
 
 		editorStart: function(parent) {
@@ -16,6 +18,10 @@ define(["game-object-generator"], function(GameObjectGenerator) {
 	});
 
 	var onCollide = function (other, response) {
+		
+		if (other.typeId === this.excludeFromCollision)
+			return;
+
 		OnCollisionGameObjectGenerator.args['vector'] = response.overlapV;
 		this.spray(OnCollisionGameObjectGenerator.args);
 	}

@@ -19,6 +19,7 @@ define(function(require) {
 
 		get: function(x, y) {
 			if (!this.player) {
+				
 				this.player = require("gb").create('player-ship', 'First', [{viewport: 'Main', layer: 'Front'}], {
 					viewportOffsetX: x,
 					viewportOffsetY: y

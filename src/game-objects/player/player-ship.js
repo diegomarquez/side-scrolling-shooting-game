@@ -18,7 +18,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 			this._super();
 
 			this.speed = 200;
-			this.hp = 3;
+			this.hp = 5;
 			this.maxBulletAmount = 1;
 
 			this.forwardSpeed = this.speed;
@@ -33,12 +33,14 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 			this.leftShootingPositions = null;
 			this.middleShootingPositions = null;
 			this.rightShootingPositions = null;
+
+			this.damageComponent = null;
 		},
 
 		editorStart: function() {
 			
 			this.speed = 200;
-			this.hp = 3;
+			this.hp = 5;
 			this.maxBulletAmount = 1;
 
 			this.leftShootingPositions = this.findChildren().first(function (child) {
@@ -178,6 +180,9 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 			}, 'player-ship-keyboard');
 
 			smallExhausts.call(this);
+
+			this.damageComponent = this.findComponents().firstWithType('ShipDamage');
+			this.damageComponent.disable();
 		},
 
 		editorUpdate: function(delta) {
@@ -205,8 +210,53 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 			}
 		},
 
-		onCollide: function(other) {
-			
+		onCollide: function(other, response) {
+			switch(other.poolId) {
+				case 'Obstacle':
+					
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+				
+				case 'CannonBullet':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage();
+					}
+						
+
+					break;
+				
+				case 'Laser':
+					
+					break;
+				
+				case 'Missile':
+					
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage();
+					}
+
+					break;
+				
+				case 'Boss_1':
+					
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+				
+				case 'Boss_1_Cables':
+						
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+			}
+
 		},
 
 		recycle: function() {
@@ -266,16 +316,30 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 		powerUp: function() {
 			if (this.maxBulletAmount < 3) {
-				this.maxBulletAmount++;	
+				this.maxBulletAmount++;
 			}
 		},
 
 		speedUp: function() {
-			this.speed += 50;
+			if (this.speed < 300) {
+				this.speed += 50;
+			}
 		},
 
 		healthUp: function() {
-			this.hp++;
+			if (this.hp < 4) {
+				this.hp++;
+
+				this.execute(this.HEALTH_UP, this.hp);
+			}
+		},
+
+		takeDamage: function() {
+			if (this.hp > 0) {
+				this.hp--;
+
+				this.execute(this.HEALTH_DOWN, this.hp);
+			}	
 		}
 	});
 
@@ -317,6 +381,9 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 	Object.defineProperty(PlayerShip.prototype, "STOP", { get: function() { return 'stop'; } });
 	Object.defineProperty(PlayerShip.prototype, "BLOCK", { get: function() { return 'stop'; } });
 	Object.defineProperty(PlayerShip.prototype, "UNBLOCK", { get: function() { return 'stop'; } });
+	
+	Object.defineProperty(PlayerShip.prototype, "HEALTH_UP", { get: function() { return 'health_up'; } });
+	Object.defineProperty(PlayerShip.prototype, "HEALTH_DOWN", { get: function() { return 'health_down'; } });
 
 	return PlayerShip;
 });

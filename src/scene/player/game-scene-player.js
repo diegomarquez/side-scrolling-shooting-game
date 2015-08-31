@@ -16,8 +16,13 @@ define(function(require) {
 	load: function(sceneData) {
 		// Load the Scene
 		playerLoader.load(sceneData);
+		
 		// Get a reference to the player ship and block it's controls
 		playerGetter.get(-300, gb.canvas.height/2).blockControls();
+
+		// Add the HP meter
+		gb.create('HpMeter', 'First', [{viewport: 'Messages', layer: 'Front'}], { x: 0, y: 5 });
+
 		// Layout all the game objects in the scene
 		playerLoader.layout();
 	},

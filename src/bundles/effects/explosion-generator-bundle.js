@@ -4,6 +4,18 @@ define(function(require) {
 	var ExplosionGenerator = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createPool('child-explosions-generator', require('child-tracking-generator'));
+			this.componentPool.createPool('explosions-generator', require('game-object-generator'));
+
+			this.componentPool.createConfiguration(this.getMicroExplosionsEffectId(), 'explosions-generator')
+				.args({
+					objectType: explosionBundle.getMicroExplosionsId(),
+					sprayDelay: 0.03,
+					amountPerSpray: 1,
+					maxAmountToSpray: 10,
+					startingPositionTransformation: [
+						require('rectangle-generation')(20, 20)
+					]
+				});
 
 			this.componentPool.createConfiguration(this.getSmallExplosionsEffectId(), 'child-explosions-generator')
 				.args({
@@ -26,6 +38,10 @@ define(function(require) {
 						require('rectangle-generation')(20, 20)
 					]
 				});
+		},
+
+		getMicroExplosionsEffectId: function() {
+			return "MicroExplosionsEffect";
 		},
 
 		getSmallExplosionsEffectId: function() {

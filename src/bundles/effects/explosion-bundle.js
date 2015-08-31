@@ -10,6 +10,13 @@ define(function(require) {
 
 			this.gameObjectPool.createDynamicPool("Explosion", require("explosion"));
 
+			this.gameObjectPool.createConfiguration(this.getMicroExplosionsId(), "Explosion")
+				.args({ 
+					scaleX: 0.7, 
+					scaleY: 0.7
+				})
+				.setRenderer("ExplosionRenderer");
+
 			this.gameObjectPool.createConfiguration(this.getSmallExplosionsId(), "Explosion")
 				.args({ 
 					scaleX: 0.5, 
@@ -23,6 +30,10 @@ define(function(require) {
 					scaleY: 0.9
 				})
 				.setRenderer("ExplosionRenderer");
+		},
+
+		getMicroExplosionsId: function() {
+			return "MicroExplosion";
 		},
 
 		getSmallExplosionsId: function() {

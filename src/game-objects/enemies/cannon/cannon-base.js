@@ -26,7 +26,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
   			// When the explosion generator is finished, hide the cannon
     		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-     	  	this.hide(true).not().allWithType(explosionsGenerator.objectType);
+     	  		this.hide(true).not().allWithType(explosionsGenerator.objectType);
      	 	});  
 
      	 	// When the last explosion is done with it's animation, mark the cannon for recycling
