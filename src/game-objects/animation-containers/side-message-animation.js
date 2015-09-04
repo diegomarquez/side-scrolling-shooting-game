@@ -7,7 +7,7 @@ define(["game-object", "gb", "timelinelite"], function(GameObject, Gb, TimelineL
     start: function() {
     	var viewports = [{viewport: 'Messages', layer: 'Front'}];
 
-    	this.sideMessage = Gb.create(this.textGameObject, 'First', viewports, { x: -300, y: Gb.canvas.height/2 });
+    	this.sideMessage = Gb.create(this.textGameObject, 'Second', viewports, { x: -300, y: Gb.canvas.height/2 });
 
     	this.tl = new TimelineLite({ 
     		onComplete: function() {

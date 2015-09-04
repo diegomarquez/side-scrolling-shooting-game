@@ -1,4 +1,5 @@
 define(function(require) {
+	var gb = require('gb');
 	var canvasContainer = require('canvas-container');
 	var keyboard = require('keyboard');
 	var collisionResolver = require('collision-resolver');
@@ -78,7 +79,14 @@ define(function(require) {
 		},
 
 		requiredViewports: function() {
+			if (!gb.groups.exists("Second")) {
+				gb.groups.add("Second");	
+			}
 
+			if (!gb.viewports.exists("Messages")) {
+				var messagesViewport = gb.viewports.add('Messages', gb.canvas.width, gb.canvas.height);
+				messagesViewport.addLayer('Front');
+			}
 		},
 
 		load: function(sceneData) {
@@ -108,6 +116,7 @@ define(function(require) {
 			this.pools();
 			this.setCollisionPairs();
 			this.load(sceneData);
+			this.requiredViewports();
 			this.setKeyboardEvents();
 			this.setCompleteEvents();
 			this.decorateContainer();
@@ -154,6 +163,7 @@ define(function(require) {
 	}
 
 	Object.defineProperty(ScenePlayer.prototype, "EXIT", { get: function() { return 'exit'; } });
+	Object.defineProperty(ScenePlayer.prototype, "FAILURE", { get: function() { return 'exit'; } });
 	Object.defineProperty(ScenePlayer.prototype, "ESCAPE", { get: function() { return 'escape'; } });
 
 	return new ScenePlayer();

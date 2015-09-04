@@ -37,6 +37,12 @@ define(function(require) {
 				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 			});
 
+			// When the scene is failed
+			scenePlayer.once(scenePlayer.FAILURE, this, function () {
+				// Go back to the overview state
+				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+			});
+
 			// Wait for the loader to complete a transition before playing the scene
 			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
 				scenePlayer.start();  

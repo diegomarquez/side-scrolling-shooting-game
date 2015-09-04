@@ -7,12 +7,27 @@ define(function(require) {
 		create: function(args) {	
 			this.componentPool.createPool('ship-renderer', require("ship-renderer"));
 			this.componentPool.createPool('exhaust-renderer', require("exhaust-renderer"));
+
 			this.componentPool.createPool('player-damage-feedback', require('player-damage-feedback'));
+			this.componentPool.createPool('player-destroy-feedback', require('player-destroy-feedback'));
+			this.componentPool.createPool('player-explode-feedback', require('player-explode-feedback'));
 
 			this.componentPool.createConfiguration("ShipDamage", 'player-damage-feedback')
 				.args({
 					damageExplosions: explosionBundle.getMicroExplosionsEffectId(),
-					amount: 5
+					amount: 5,
+					enabled: false
+				});
+
+			this.componentPool.createConfiguration("ShipDestroy", 'player-destroy-feedback')
+				.args({
+					enabled: false
+				});
+
+			this.componentPool.createConfiguration("ShipExplode", 'player-explode-feedback')
+				.args({
+					damageExplosions: explosionBundle.getPlayerDestroyExplosionsEffectId(),
+					enabled: false
 				});
 
 			this.gameObjectPool.createDynamicPool('Ship', require("player-ship"));
@@ -65,6 +80,9 @@ define(function(require) {
 				.addChild('MediumExhaust', { x: 21, y: 45, rotation: -122, scaleX: 0.7, scaleY: 0.7 })	
 
 				.addComponent('ShipDamage')
+				.addComponent('ShipDestroy')
+				.addComponent('ShipExplode')
+
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
 		},

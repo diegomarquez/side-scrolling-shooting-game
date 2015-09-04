@@ -16,6 +16,8 @@ define(function(require) {
 
 			// Setup groups and viewports for the splash screen
 			gb.groups.add("First");
+			gb.groups.add("Second");
+			
 			var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
 			mainViewport.addLayer("Front");
 

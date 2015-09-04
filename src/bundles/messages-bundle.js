@@ -43,6 +43,19 @@ define(function(require) {
 					size: 55,
 					offset: 'center'
 				});
+
+			this.componentPool.createConfiguration("FailureMessageRenderer", commonBundle.getTextRendererPoolId())
+				.args({
+					name: 'failure-message',
+					text: 'Failure!',
+					fillColor: "#ec751e",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					lineWidth: 2,
+					size: 55,
+					offset: 'center'
+				});
 			
 			this.gameObjectPool.createConfiguration("StartMessageText", commonBundle.getGameObjectPoolId())
 				.setRenderer("StartMessageRenderer");
@@ -52,6 +65,9 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("CompleteMessageText", commonBundle.getGameObjectPoolId())
 				.setRenderer("CompleteMessageRenderer");
+
+			this.gameObjectPool.createConfiguration("FailureMessageText", commonBundle.getGameObjectPoolId())
+				.setRenderer("FailureMessageRenderer");
 
 			this.gameObjectPool.createConfiguration("StartMessage", 'SideMessageAnimation')
 				.args({
@@ -66,6 +82,11 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("CompleteMessage", 'SideMessageAnimation')
 				.args({
 					textGameObject: "CompleteMessageText"
+				});
+
+			this.gameObjectPool.createConfiguration("FailureMessage", 'SideMessageAnimation')
+				.args({
+					textGameObject: "FailureMessageText"
 				});
 		},
 	});

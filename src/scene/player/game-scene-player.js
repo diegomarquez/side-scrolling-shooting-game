@@ -27,26 +27,39 @@ define(function(require) {
 		playerLoader.layout();
 	},
 
-	requiredViewports: function() {
-		var messagesViewport = gb.viewports.add('Messages', gb.canvas.width, gb.canvas.height);
-		messagesViewport.addLayer('Front');
-	},
-
 	setCompleteEvents: function() {
 		var levelItem = root.findChildren().recurse().firstWithType('LevelItem');
 
+		var player = playerGetter.get();
+
+		player.once(player.DESTROYED, this, function() {
+
+			gb.groups.stop_update('First');
+
+			// Show the fail message
+			gb.create('FailureMessage', 'Second', this.viewports, {
+				onComplete: function() {
+					// Tween the player out of the screen
+					TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
+						// Signal the scene player is done 
+						this.execute(this.FAILURE);
+					}.bind(this)});
+				}.bind(this)
+			});
+		});
+
 		// If there is no level item, skip all the logic
 		if (!levelItem) return;
-
-		var player = playerGetter.get();
 
 		// Picking up the level item triggers the exit sequence
 		levelItem.once('collide', this, function () {
 			// Block the player controls
 			player.blockControls();
 
+			gb.groups.stop_update('First');
+
 			// Show the complete message
-			gb.create('CompleteMessage', 'First', this.viewports, {
+			gb.create('CompleteMessage', 'Second', this.viewports, {
 				onComplete: function() {
 					// Tween the player out of the screen
 					TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
@@ -63,7 +76,7 @@ define(function(require) {
 
 		// Tween the player ship into view
 		TweenLite.to(player, 3, { viewportOffsetX: 150, onComplete: function() {
-			gb.create('StartMessage', 'First', this.viewports, {
+			gb.create('StartMessage', 'Second', this.viewports, {
 				onComplete: function() {
 				// Unblock controls when the start message is gone
 				player.unblockControls();

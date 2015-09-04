@@ -14,6 +14,10 @@ define(['component', 'gb'], function(Component, Gb){
 			this.explosionsGenerator = null;
 		},
 
+		setExplosions: function(id) {
+			this.damageExplosions = id;
+		},
+
 		enable: function() {
 			this._super();
 			
@@ -28,6 +32,8 @@ define(['component', 'gb'], function(Component, Gb){
       			this.disable();
 
       			this.explosionsGenerator = null;
+
+      			this.execute('complete');
       		});
 		},	
 

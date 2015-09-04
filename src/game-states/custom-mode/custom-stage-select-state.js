@@ -9,10 +9,12 @@ define(function(require) {
     state.addStartAction(function (args) {
     	// Clear update groups and viewports before doing anything else
     	gb.groups.removeAll();
-      gb.viewports.removeAll();
+      	gb.viewports.removeAll();
 
     	// Setup groups and viewports for the splash screen
     	gb.groups.add("First");
+    	gb.groups.add("Second");
+
     	var mainViewport = gb.viewports.add("Main", gb.canvas.width, gb.canvas.height, 0, 0);
     	mainViewport.addLayer("Front");
 
