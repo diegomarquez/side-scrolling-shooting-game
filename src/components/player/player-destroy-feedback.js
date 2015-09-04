@@ -5,12 +5,15 @@ define(['component', 'gb'], function(Component, Gb){
 		init: function() {
 			this._super();
 			
-			this.dir = null;
+			this.dirX;
+			this.dirY;
 		},
 
 		setDirection: function(dir) {
-			this.dir = dir;
-			this.dir.scale(2, 2);			
+			dir.scale(2, 2);
+			
+			this.dirX = dir.x;
+			this.dirY = dir.y;
 		},
 
 		enable: function() {
@@ -20,11 +23,13 @@ define(['component', 'gb'], function(Component, Gb){
 		update: function(delta) {
 			this.parent.rotation += 15;
 
-			this.parent.viewportOffsetX -= this.dir.x * delta * 300;
-			this.parent.viewportOffsetY -= this.dir.y * delta * 300;
+			this.parent.viewportOffsetX -= this.dirX * delta * 300;
+			this.parent.viewportOffsetY -= this.dirY * delta * 300;
 
 			if (!this.parent.getViewportVisibility('Main')) {
 				Gb.reclaimer.mark(this.parent);
+				
+				this.execute('complete');
 			}
 		}
 	});

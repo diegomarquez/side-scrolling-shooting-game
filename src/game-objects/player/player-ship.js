@@ -226,6 +226,10 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 					this.execute(this.DESTROYED);
 				}
 			});
+			
+			this.destroyComponent.once('complete', this, function() {
+				this.execute(this.DESTROYED);
+			});
 		},
 
 		editorUpdate: function(delta) {
