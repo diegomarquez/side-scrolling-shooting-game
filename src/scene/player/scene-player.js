@@ -25,6 +25,7 @@ define(function(require) {
 	    	require('control-objects-bundle').create();
 	    	require('items-bundle').create();
 	    	require('laser-effects-bundle').create();
+	    	require('mine-bundle').create();
 		},
 
 		setCollisionPairs: function() {
@@ -32,6 +33,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'cannonColliderId');
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'laserBulletColliderId');
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'missilleColliderId');
+			collisionResolver.addCollisionPair('basicBulletColliderId', 'mineColliderId');
 
 			collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
 			collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
@@ -44,7 +46,8 @@ define(function(require) {
 			collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'missilleColliderId');
-			collisionResolver.addCollisionPair('shipColliderId', 'directionSetterColliderId');			
+			collisionResolver.addCollisionPair('shipColliderId', 'directionSetterColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'mineColliderId');
 		},
 
 		removeCollisionPairs: function() {
@@ -52,6 +55,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'cannonColliderId');
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'laserBulletColliderId');
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'missilleColliderId');
+			collisionResolver.removeCollisionPair('basicBulletColliderId', 'mineColliderId');
 
 			collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
 			collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
@@ -64,6 +68,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'missilleColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'directionSetterColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'mineColliderId');
 		},
 
 		container: function() {

@@ -41,7 +41,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		deActivate: function() {
-			PlayerGetter.get().remove(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
     	},
 
 		onDamage: function (cable) {

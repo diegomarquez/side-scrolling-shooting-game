@@ -4,18 +4,17 @@ define(function(require) {
 	var explosionsBundle = require('explosion-generator-bundle');
 	var gb = require('gb');
 
-	var boss1 = require("boss-1");
-	var boss1Cables = require("boss-1-cables");
-	var boss1Icon = require("boss-1-icon");
-
-
 	var Boss = require("bundle").extend({
 		create: function(args) {			
 			this.componentPool.createConfiguration("Activate_Boss_On_View", commonBundle.getActivateOnViewPoolId());
 
-			this.gameObjectPool.createDynamicPool('Boss_1', boss1);
-			this.gameObjectPool.createDynamicPool('Boss_1_Cables', boss1Cables);
-			this.gameObjectPool.createDynamicPool('Boss_1_Icon', boss1Icon);
+			// Boss 1
+			// =================================
+			// =================================
+
+			this.gameObjectPool.createDynamicPool('Boss_1', require("boss-1"));
+			this.gameObjectPool.createDynamicPool('Boss_1_Cables', require("boss-1-cables"));
+			this.gameObjectPool.createDynamicPool('Boss_1_Icon', require("boss-1-icon"));
 			
 			this.componentPool.createConfiguration("Boss_1_Collider", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
@@ -72,7 +71,85 @@ define(function(require) {
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer")
 				.enemyCategory()
-				.bossEnemyTier();	
+				.bossEnemyTier();
+
+			// Boss 2
+			// =================================
+			// =================================
+			
+			this.gameObjectPool.createDynamicPool('Boss_2_Core', require("boss-2-core"));
+			this.gameObjectPool.createDynamicPool('Boss_2_Body', require("boss-2-body"));
+
+			this.componentPool.createConfiguration("Boss_2_Core_Collider", commonBundle.getPolygonColliderPoolId())
+				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
+
+			this.componentPool.createConfiguration("Boss_2_Body_Collider", commonBundle.getPolygonColliderPoolId())
+				.args({ id:'bossColliderId', points: getPolygon(8, 60) });
+
+			this.componentPool.createConfiguration("Boss_2_Body_Renderer", commonBundle.getAnimationsBitmapRendererPoolId())
+				.args({
+					startingLabel: 'half-open',
+
+					frameWidth: 112,
+					frameHeight: 60,
+					frameDelay: 0.08,
+					frameCount: 11,
+					offset: 'center',
+					path: gb.assetMap()["BOSS2BODY.PNG"],
+
+					labels: {
+						'opened': {
+							loop: false,
+							frames: [10]
+						},
+						'closed': {
+							loop: false,
+							frames: [0]
+						},
+						'opening': {
+							loop: false,
+							frames: [0,1,2,3,4,5,6,7,8,9,10]
+						},
+						'closing': {
+							loop: false,
+							frames: [10,9,8,7,6,5,4,3,2,1,0]
+						},
+						'half-open': {
+							loop: false,
+							frames: [5]
+						}
+					}
+				});
+
+			this.componentPool.createConfiguration("Boss_2_Core_Renderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS2CORE.PNG"],
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("boss-body", "Boss_2_Body")
+				.args({
+					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
+					colliderId: "Boss_2_Body_Collider"
+				})
+				.addComponent("Activate_Boss_On_View")
+				.addComponent("Boss_2_Body_Collider")
+				.setRenderer("Boss_2_Body_Renderer")
+				.enemyCategory()
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-2", "Boss_2_Core")
+				.args({
+					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
+					colliderId: "Boss_2_Core_Collider"
+				})
+				.addComponent("Activate_Boss_On_View")
+				.addComponent("Boss_2_Core_Collider")
+				.addChild('boss-body')
+				.setRenderer("Boss_2_Core_Renderer")
+				.enemyCategory()
+				.bossEnemyTier();
 		},
 	});
 
