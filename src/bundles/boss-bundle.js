@@ -130,7 +130,8 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("boss-body", "Boss_2_Body")
 				.args({
 					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
-					colliderId: "Boss_2_Body_Collider"
+					colliderId: "Boss_2_Body_Collider",
+					laserAttacks: ['x1', 'x2', 'x3']
 				})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_2_Body_Collider")
