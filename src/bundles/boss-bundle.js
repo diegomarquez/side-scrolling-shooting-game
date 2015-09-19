@@ -131,7 +131,8 @@ define(function(require) {
 				.args({
 					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
 					colliderId: "Boss_2_Body_Collider",
-					laserAttacks: ['x1', 'x2', 'x3']
+					laserAttacks: ['x1', 'x2', 'x3'],
+					mineAttacks: ['x3', 'x5']
 				})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_2_Body_Collider")
@@ -140,6 +141,13 @@ define(function(require) {
 				.disableMouseSupport()
 				.childOnly();
 
+			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
+
+			this.componentPool.createConfiguration("BossDestroyExplosions", "DestroyExplosions")
+				.args({
+					effect: explosionsBundle.getSmallExplosionsEffectId()
+				});
+
 			this.gameObjectPool.createConfiguration("boss-2", "Boss_2_Core")
 				.args({
 					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
@@ -147,6 +155,7 @@ define(function(require) {
 				})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_2_Core_Collider")
+				.addComponent("BossDestroyExplosions")
 				.addChild('boss-body')
 				.setRenderer("Boss_2_Core_Renderer")
 				.enemyCategory()

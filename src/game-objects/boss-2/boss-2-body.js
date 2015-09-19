@@ -16,10 +16,13 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.laser1 = null;
 			this.laser2 = null;
 			this.laser3 = null;
-
-			// this.laserAttacks = ['x1', 'x2', 'x3'];
-			// this.mineAttacks = ['dummyx3', 'dummyx5', 'guidedx2', 'guidedx3'];
 			
+			this.mine1 = null;
+			this.mine2 = null;
+			this.mine3 = null;
+			this.mine4 = null;
+			this.mine5 = null;
+
 			this.laserAttacks = null;
 			this.mineAttacks = null;
 
@@ -166,6 +169,10 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.laser1 = null;
 			this.laser2 = null;
 			this.laser3 = null;
+
+			this.clearMines();
+
+			this._super();
 		},
 
 		doLaserAttack: function() {
@@ -228,6 +235,65 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		doMineAttack: function() {
+			selfDecompose = this.getMatrix().decompose(selfDecompose);
+			
+			if (this.mineAttacks[this.mineAttackIndex] == 'x3') {
+
+				this.clearMines();
+
+				this.mine1 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine2 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 + 20) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine3 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 - 20) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+			}
+
+			if (this.mineAttacks[this.mineAttackIndex] == 'x5') {
+
+				this.clearMines();
+
+				this.mine1 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine2 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 + 20) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine3 = Gb.create('boss-mine-long', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 - 20) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine4 = Gb.create('boss-mine-short', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 + 10) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+
+				this.mine5 = Gb.create('boss-mine-short', this.getUpdateGroup(), this.getViewportList(), {
+					angle: (selfDecompose.rotation + 90 - 10) * (Math.PI/180),
+					x: selfDecompose.x,
+					y: selfDecompose.y
+				});
+			}
 
 			this.closeTimer.start();			
 
@@ -236,6 +302,46 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			} else {
 				this.mineAttackIndex = 0;
 			}
+		},
+
+		onBossDestroy: function() {
+			if (this.openTimer)
+				this.openTimer.stop();
+
+			if (this.closeTimer)
+				this.closeTimer.stop();
+
+			if (this.attackTimer)
+				this.attackTimer.stop();
+
+			if (this.laserTimer)
+				this.laserTimer.stop();
+
+			if (this.renderer)
+				this.renderer.pause();
+		},
+
+		clearMines: function() {
+			if (this.mine1)
+				this.mine1.destroyMine();
+			
+			if (this.mine2)
+				this.mine2.destroyMine();
+
+			if (this.mine3)
+				this.mine3.destroyMine();
+
+			if (this.mine4)
+				this.mine4.destroyMine();
+
+			if (this.mine5)
+				this.mine5.destroyMine();
+
+			this.mine1 = null;
+			this.mine2 = null;
+			this.mine3 = null;
+			this.mine4 = null;
+			this.mine5 = null;
 		}
 
 	});

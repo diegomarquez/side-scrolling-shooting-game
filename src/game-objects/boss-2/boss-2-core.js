@@ -3,9 +3,12 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		init: function() {
 			this._super();
 
-			this.health = 40;
-			// this.destroyEffect = null;
-			// this.destroyParticles = null;
+			this.hp = 40;
+
+			this.body = null;
+			this.cannons = null;
+
+			this.otherBosses = null;
 		},
 
 		start: function() {
@@ -13,6 +16,8 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		},
 
 		editorStart: function() {
+			this.hp = 40;
+
 			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
 		},
 
@@ -25,29 +30,82 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		},
 
 		onCollide: function(other) {
+			if (this.hp > 0) {
+				this.hp--;
+			} else {
+				if (this.isActive()) {
+					var collider = this.findComponents().firstWithProp('collider');
+					collider.disable();
+
+					this.execute('destroyed');
+
+					if (this.otherBosses && this.otherBosses.length == 0) {
+						// Signal all cannons that the boss has been destroyed
+						if (this.cannons) {
+							for (var i=0; i < this.cannons.length; i++) {
+								if (this.cannons[i].getViewportVisibility('Main')) {
+									this.cannons[i].onBossDestroy();   
+								}
+							}
+
+							this.cannons.length = 0;
+						}
+					}
+
+					if (this.body.isActive()) {
+						this.body.onBossDestroy();
+					}
+				}
+			}
+		},
+
+		recycle: function() {
+			if (PlayerGetter.exists()) {
+				if (this.otherBosses && this.otherBosses.length == 0) {
+					PlayerGetter.get().move();
+					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+				}
+			}
+
+			this.body = null;
+			this.cannons = null;
+			this.otherBosses = null;
 			
+			this._super();
 		},
 
 		onPlayerStop: function() {
-			var body = this.findChildren().firstWithType("boss-body");
+			this.body = this.findChildren().firstWithType("boss-body");
 
 			// Start the body
-			body.onBossStart();
+			this.body.onBossStart();
 			
-			var cannons = Root.findChildren().recurse().all(function(child) {
-				return child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase"; 
+			this.cannons = Root.findChildren().recurse().all(function(child) {
+				return (child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase") && child.getViewportVisibility('Main'); 
 			});
 
 			// Signal boss cannos to start
-			for (var i=0; i < cannons.length; i++) {
-				if (cannons[i].getViewportVisibility('Main')) {
-					cannons[i].onBossStart();
-				}
+			for (var i=0; i < this.cannons.length; i++) {
+				this.cannons[i].onBossStart();
+			}
+
+			this.otherBosses = null;
+
+			this.otherBosses = Root.findChildren().recurse().all(function(child) {
+				return (child.typeId == "boss-1" || child.typeId == "boss-2") && child.getViewportVisibility('Main'); 
+			});
+
+			if (this.otherBosses) {		
+				for (var i=0; i < this.otherBosses.length; i++) {
+					this.otherBosses[i].once('destroyed', this, function(boss) {
+						if (this.isActive()) {
+							this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
+						}
+					});
+				}	
 			}
 		}
 	});
-
-	// Object.defineProperty(Boss_2_Core.prototype, "DAMAGE", { get: function() { return 'damage'; } });
 
 	return Boss_2_Core;
 });

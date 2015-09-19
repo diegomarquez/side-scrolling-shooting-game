@@ -336,6 +336,18 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 					this.viewportOffsetY -= response.overlapV.y;
 
 					break;
+
+				case 'MineType':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
+
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
 			}
 
 		},

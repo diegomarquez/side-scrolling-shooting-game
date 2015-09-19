@@ -1,26 +1,50 @@
 define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
-  var Mine = GameObject.extend({
-    init: function() {
-      this._super();
-    },
+	var Mine = GameObject.extend({
+		init: function() {
+			this._super();
 
-    editorStart: function() {
-      this.counter = Math.random() * 100;
-      this.startY = this.y;
+			this.hp = 0;
+			this.angle = 0;
+			this.speed = 0;
+			this.moveTime = 0;
+		},
 
-      this.renderer.play();
-    },
+		editorStart: function() {
+			if (this.hp == 0)
+				throw new Error('Mine is missing hp attribute');
 
-    editorUpdate: function(delta) {
-    	this.y = this.startY + Math.cos(this.counter/20) * 10;
-    	this.counter += 100 * delta;
-    },
+			this.renderer.play();
+		},
 
-    onCollide: function(other) {
-    	
-    }
-  });
+		editorUpdate: function(delta) {
 
-  return Mine;
+		},
+
+		onCollide: function(other) {
+			
+			if (other.typeId == 'player-ship') {
+				this.destroyMine();
+
+				return;
+			}
+
+			if (this.hp > 0) {
+				this.hp--;
+			} else {
+				this.destroyMine();
+			}
+		},
+
+		destroyMine: function() {
+			if (this.isActive()) {
+				var collider = this.findComponents().firstWithProp('collider');
+				collider.disable();
+
+				this.execute('destroyed');
+			}
+		}
+	});
+
+	return Mine;
 });
 

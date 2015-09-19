@@ -33,6 +33,10 @@ define(function(require) {
 			}
 
 			return this.player;
+		},
+
+		exists: function() {
+			return !!this.player;
 		}
 	});
 

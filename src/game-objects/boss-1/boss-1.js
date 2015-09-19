@@ -33,6 +33,8 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		editorStart: function() {
+			this.health = 40;
+			
 			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
 		},
 
@@ -56,12 +58,12 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				else {
 					var explosionsGenerator = Gb.addComponentTo(this, this.destroyEffect);
 
-						// Remove collision component
+					// Remove collision component
 					this.removeComponent(this.findComponents().firstWithType(this.colliderId));
 
 					// When the explosion generator is finished, hide the cannon
 					explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-					// Do something to to hide properly the removal of the boss
+						// Do something to to hide properly the removal of the boss
 					});  
 
 					var cannons = Root.findChildren().recurse().all(function(child) {
