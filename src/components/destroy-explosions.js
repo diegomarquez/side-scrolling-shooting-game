@@ -8,7 +8,6 @@ define(["editor-component", "gb"], function(Component, Gb) {
 
 		start: function(parent) {
 			this.parent.once('destroyed', this, function() {
-
 				var explosionsGenerator = Gb.addComponentTo(this.parent, this.effect);
 
 	    		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {

@@ -53,6 +53,35 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 								
 		},
 
+		deActivate: function() {
+			if (this.openTimer)
+				this.openTimer.remove();
+			
+			if (this.attackTimer)
+				this.attackTimer.remove();
+			
+			if (this.closeTimer)
+				this.closeTimer.remove();
+			
+			if (this.laserTimer)
+				this.laserTimer.remove();
+
+			if (this.laser1)
+				Gb.reclaimer.mark(this.laser1);
+			
+			if (this.laser2)
+				Gb.reclaimer.mark(this.laser2);
+
+			if (this.laser3)
+				Gb.reclaimer.mark(this.laser3);
+
+			this.laser1 = null;
+			this.laser2 = null;
+			this.laser3 = null;
+
+			this.clearMines();
+		},
+
 		onBossStart: function() {
 			this.openTimer.configure({ delay: 6000, removeOnComplete:false });
 			this.attackTimer.configure({ delay: 3000, removeOnComplete:false });

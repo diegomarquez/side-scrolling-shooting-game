@@ -84,7 +84,7 @@ define(function(require) {
 				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
 
 			this.componentPool.createConfiguration("Boss_2_Body_Collider", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'bossColliderId', points: getPolygon(8, 60) });
+				.args({ id:'bossColliderId', points: getPolygon(8, 50) });
 
 			this.componentPool.createConfiguration("Boss_2_Body_Renderer", commonBundle.getAnimationsBitmapRendererPoolId())
 				.args({

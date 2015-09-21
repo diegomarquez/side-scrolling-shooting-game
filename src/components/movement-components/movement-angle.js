@@ -14,6 +14,8 @@ define(["component", "timer-factory"], function(Component, TimerFactory) {
 
 				this.moveTimer.on('complete', function() {
 					this.disable();
+
+					this.parent.execute('finish-movement');
 				}, true);
 
 				this.moveTimer.configure({ delay: this.parent.moveTime });

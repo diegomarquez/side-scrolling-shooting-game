@@ -27,6 +27,8 @@ define(function(require) {
 			require('boss-bundle').create();
 			require('items-bundle').create();
 			require('mine-bundle').create();
+			require('generator-bundle').create();
+			require('enemy-ship-bundle').create();
 			require('control-objects-bundle').create();
 		});
 
