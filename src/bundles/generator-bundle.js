@@ -54,16 +54,16 @@ define(function(require) {
 					startingLabel: 'half-open',
 
 					frameWidth: 64,
-					frameHeight: 32,
+					frameHeight: 40,
 					frameDelay: 0.08,
-					frameCount: 8,
+					frameCount: 9,
 					offset: 'center',
 					path: gb.assetMap()["GENERATOR.PNG"],
 
 					labels: {
 						'opened': {
 							loop: false,
-							frames: [7]
+							frames: [8]
 						},
 						'closed': {
 							loop: false,
@@ -71,15 +71,58 @@ define(function(require) {
 						},
 						'opening': {
 							loop: false,
-							frames: [0,1,2,3,4,5,6,7]
+							frames: [0,1,2,3,4,5,6,7,8]
 						},
 						'closing': {
 							loop: false,
-							frames: [7,6,5,4,3,2,1,0]
+							frames: [8,7,6,5,4,3,2,1,0]
 						},
 						'half-open': {
 							loop: false,
 							frames: [4]
+						},
+						'half-open-close': {
+							loop: false,
+							frames: [4,3,2,1,0]
+						}
+					}
+				});
+
+			this.componentPool.createConfiguration("BossGeneratorRenderer", commonBundle.getAnimationsBitmapRendererPoolId())
+				.args({
+					startingLabel: 'half-open',
+
+					frameWidth: 64,
+					frameHeight: 40,
+					frameDelay: 0.08,
+					frameCount: 9,
+					offset: 'center',
+					path: gb.assetMap()["BOSSGENERATOR.PNG"],
+
+					labels: {
+						'opened': {
+							loop: false,
+							frames: [8]
+						},
+						'closed': {
+							loop: false,
+							frames: [0]
+						},
+						'opening': {
+							loop: false,
+							frames: [0,1,2,3,4,5,6,7,8]
+						},
+						'closing': {
+							loop: false,
+							frames: [8,7,6,5,4,3,2,1,0]
+						},
+						'half-open': {
+							loop: false,
+							frames: [4]
+						},
+						'half-open-close': {
+							loop: false,
+							frames: [4,3,2,1,0]
 						}
 					}
 				});
@@ -153,7 +196,7 @@ define(function(require) {
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
+				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.bossEnemyTier();
 
@@ -168,7 +211,7 @@ define(function(require) {
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
+				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.bossEnemyTier();
 
@@ -183,7 +226,7 @@ define(function(require) {
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
+				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.bossEnemyTier();
 
@@ -198,7 +241,7 @@ define(function(require) {
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
+				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.bossEnemyTier();
 		},

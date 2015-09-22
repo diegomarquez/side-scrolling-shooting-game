@@ -13,6 +13,7 @@ define(function() {
 	"BOSS2CORE.PNG": "assets/images/Boss2/Boss2Core.png",
 	"BOSSCANNONBASE.PNG": "assets/images/BossCannon/BossCannonBase.png",
 	"BOSSCANNONSHOOTER.PNG": "assets/images/BossCannon/BossCannonShooter.png",
+	"BOSSGENERATOR.PNG": "assets/images/BossGenerator.png",
 	"BOSSLASERTURRET.PNG": "assets/images/BossLaserTurret.png",
 	"BURST.PNG": "assets/images/Burst.png",
 	"CANNONBASE.PNG": "assets/images/Cannon/CannonBase.png",

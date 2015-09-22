@@ -31,7 +31,7 @@ define(function(require) {
 				.args({
 					frameWidth: 40,
 					frameHeight: 32,
-					frameDelay: 0.05,
+					frameDelay: 0.03,
 					frameCount: 5,
 					pingPong: true,
 					offset: 'center',

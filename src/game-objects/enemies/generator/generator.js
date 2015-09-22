@@ -112,12 +112,18 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		generate: function() {
 			selfDecompose = this.getMatrix().decompose(selfDecompose);
 
-			Gb.create(this.objectType, this.getUpdateGroup(), this.getViewportList(), {
+			var object = Gb.create(this.objectType, this.getUpdateGroup(), this.getViewportList(), {
 				angle: (selfDecompose.rotation - 90) * (Math.PI/180),
 				rotation: (selfDecompose.rotation - 90),
 				x: selfDecompose.x,
 				y: selfDecompose.y
 			});
+
+			var viewportList = object.getViewportList();
+
+			for (var i = 0; i < viewportList.length; i++) {
+				Gb.viewports.get(viewportList[i].viewport).getLayer(viewportList[i].layer).moveGameObjectToBack(object);
+			}
 		}
 
 	});
