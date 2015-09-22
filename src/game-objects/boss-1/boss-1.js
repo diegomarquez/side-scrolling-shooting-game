@@ -20,7 +20,9 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				}
 
 				var cannons = Root.findChildren().recurse().all(function(child) {
-					return child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase"; 
+					return child.poolId == "BossCannonBase" || 
+						   child.poolId == "BossDoubleCannonBase" ||
+						   child.poolId == "BossGeneratorType" 
 				});
 
 				// Signal boss cannos to start
@@ -67,13 +69,15 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					});  
 
 					var cannons = Root.findChildren().recurse().all(function(child) {
-						return child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase"; 
+						return child.poolId == "BossCannonBase" || 
+							   child.poolId == "BossDoubleCannonBase" ||
+							   child.poolId == "BossGeneratorType" 
 					});
 
 					// Signal all cannons that the boss has been destroyed
 					for (var i=0; i < cannons.length; i++) {
 						if (cannons[i].getViewportVisibility('Main')) {
-							cannons[i].onBossDestroy();   
+							cannons[i].onBossDestroy();
 						}
 					}
 

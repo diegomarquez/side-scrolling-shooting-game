@@ -81,7 +81,11 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 			this.body.onBossStart();
 			
 			this.cannons = Root.findChildren().recurse().all(function(child) {
-				return (child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase") && child.getViewportVisibility('Main'); 
+				return (
+					child.poolId == "BossCannonBase" || 
+					child.poolId == "BossDoubleCannonBase" ||
+					child.poolId == "BossGeneratorType"
+				) && child.getViewportVisibility('Main'); 
 			});
 
 			// Signal boss cannos to start

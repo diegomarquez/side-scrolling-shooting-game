@@ -10,7 +10,7 @@ define(["editor-component"], function(Component) {
 
       		this.parent.on('collide', this, function() {
       			if (this.parent.hp > 0) {
-      				this.parent.hp--;	
+      				this.parent.hp--;
       			} else {
       				// Disable the collider on the parent
       				this.parent.findComponents().firstWithProp('collider').disable();
