@@ -49,6 +49,24 @@ define(function(require) {
 					},
 
 					{
+						name: 'Add Weak Boss Helper',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'enemy', 'weak-boss-helper');
+						}		
+					},
+
+					{
+						name: 'Add Strong Boss Helper',
+						icon: 'ui-icon-plusthick',		
+						click: function(name, event) {
+							gameObjectSelectorUI.toButtons();
+							gameObjectSelectorUI.show(event, 'enemy', 'strong-boss-helper');
+						}		
+					},
+
+					{
 						name: 'Add Item',
 						icon: 'ui-icon-plusthick',		
 						click: function(name, event) {

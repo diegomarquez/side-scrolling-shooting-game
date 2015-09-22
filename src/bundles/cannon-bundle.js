@@ -152,7 +152,7 @@ define(function(require) {
 				.addChild('boss-cannon-shooter-0')
 				.setRenderer("BossCannonBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration("boss-cannon-1", "BossCannonBase")
 				.args({
@@ -168,7 +168,7 @@ define(function(require) {
 				.addChild('boss-cannon-shooter-1')
 				.setRenderer("BossCannonBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 
 			// =============================
 			// =============================
@@ -281,7 +281,7 @@ define(function(require) {
 				.addChild('boss-laser-shooter-0')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration("boss-laser-cannon-1", "BossCannonBase")
 				.args({
@@ -297,7 +297,7 @@ define(function(require) {
 				.addChild('boss-laser-shooter-1')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 
 			// =============================
 			// =============================
@@ -371,7 +371,7 @@ define(function(require) {
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration("boss-double-cannon-1", "BossDoubleCannonBase")
 				.args({
@@ -390,7 +390,7 @@ define(function(require) {
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 
 			// =============================
 			// =============================
@@ -531,7 +531,7 @@ define(function(require) {
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration("boss-missile-turret-1", "BossCannonBase")
 				.args({
@@ -548,7 +548,7 @@ define(function(require) {
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 
 			// =============================
 			// =============================

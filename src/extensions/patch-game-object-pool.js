@@ -57,6 +57,22 @@ define(function(require) {
 
 										continue;
 									}
+
+									if (options.enemyTier == 'weak-boss-helper') {
+										if (this.configurations[k].isWeakBossHelperEnemyTier()) {
+											r.push(k);
+										}
+
+										continue;
+									}
+
+									if (options.enemyTier == 'strong-boss-helper') {
+										if (this.configurations[k].isStrongBossHelperEnemyTier()) {
+											r.push(k);
+										} 
+
+										continue;
+									}
 								}
 
 

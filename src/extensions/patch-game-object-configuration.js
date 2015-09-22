@@ -133,6 +133,24 @@ define(function(require) {
 				return this.enemyTier == 'boss';
 			}
 
+			gameObjectConfiguration.prototype.weakBossHelperEnemyTier = function() {
+				this.enemyTier = 'weak-boss-helper';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isWeakBossHelperEnemyTier = function() {
+				return this.enemyTier == 'weak-boss-helper';
+			}
+
+			gameObjectConfiguration.prototype.strongBossHelperEnemyTier = function() {
+				this.enemyTier = 'strong-boss-helper';
+				return this;
+			}
+
+			gameObjectConfiguration.prototype.isStrongBossHelperEnemyTier = function() {
+				return this.enemyTier == 'strong-boss-helper';
+			}
+
 			/**
 			 * --------------------------------
 			 */
@@ -184,6 +202,11 @@ define(function(require) {
 			delete gameObjectConfiguration.prototype.isStrongEnemyTier;
 			delete gameObjectConfiguration.prototype.bossEnemyTier;
 			delete gameObjectConfiguration.prototype.isBossEnemyTier;
+
+			delete gameObjectConfiguration.prototype.weakBossHelperEnemyTier;
+			delete gameObjectConfiguration.prototype.isWeakBossHelperEnemyTier;
+			delete gameObjectConfiguration.prototype.strongBossHelperEnemyTier;
+			delete gameObjectConfiguration.prototype.isStrongBossHelperEnemyTier;
 
 			delete componentConfiguration.prototype.childConfig;
 			delete componentConfiguration.prototype.isChild;

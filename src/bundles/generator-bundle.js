@@ -198,7 +198,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyExplosions')
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration('boss-generator-0-long', 'BossGeneratorType')
 				.args({
@@ -213,7 +213,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyExplosions')
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
-				.bossEnemyTier();
+				.weakBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration('boss-generator-1-short', 'BossGeneratorType')
 				.args({
@@ -228,7 +228,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyExplosions')
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 
 			this.gameObjectPool.createConfiguration('boss-generator-1-long', 'BossGeneratorType')
 				.args({
@@ -243,7 +243,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyExplosions')
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
-				.bossEnemyTier();
+				.strongBossHelperEnemyTier();
 		},
 	});
 
