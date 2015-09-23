@@ -12,8 +12,22 @@ define(["editor-component"], function(Component) {
       			if (this.parent.hp > 0) {
       				this.parent.hp--;
       			} else {
-      				// Disable the collider on the parent
-      				this.parent.findComponents().firstWithProp('collider').disable();
+
+      				// Disable all the components
+      				var components = this.parent.findComponents().not().all(function(component) {
+						return component.poolId == require('common-bundle').getActivateOnViewPoolId();
+					});
+					
+					if (components) {
+						for (var i = 0; i < components.length; i++) {
+							components[i].disable();
+						}
+					}
+
+					if (this.parent.renderer) {
+						this.parent.renderer.disable();
+					}
+
       				// This will trigger explosions in another component
       				this.parent.execute('destroyed');
       			}

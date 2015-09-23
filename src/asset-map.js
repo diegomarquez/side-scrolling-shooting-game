@@ -21,6 +21,7 @@ define(function() {
 	"CHECKEREDFLAG.PNG": "assets/images/CheckeredFlag.png",
 	"DOUBLECANNON.PNG": "assets/images/DoubleCannon.png",
 	"ENEMYSHIP1.PNG": "assets/images/EnemyShip1.png",
+	"ENEMYSHIP2.PNG": "assets/images/EnemyShip2.png",
 	"FLAG.PNG": "assets/images/Flag.png",
 	"GENERATOR.PNG": "assets/images/Generator.png",
 	"HPMETER.PNG": "assets/images/HPMeter.png",

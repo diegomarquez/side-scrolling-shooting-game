@@ -11,7 +11,7 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		this.parent.saveEditorStart = null;
 		this.parent.saveEditorUpdate = null;
 
-		activateCollider.call(this);
+		activateComponents.call(this);
 	}
 
 	var deActivateParent = function() {
@@ -30,21 +30,31 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		// Set some state
 		this.parent.activatedOnView = false;
 
-		deactivateCollider.call(this);	
+		deactivateComponents.call(this);	
 	}
 
-	var deactivateCollider = function() {
-		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
+	var deactivateComponents = function() {
+		var components = this.parent.findComponents().not().all(function(component) {
+			return component.poolId == require('common-bundle').getActivateOnViewPoolId();
+		});
 		
-		if (collisionComponent)
-			collisionComponent.disable();
+		if (components) {
+			for (var i = 0; i < components.length; i++) {
+				components[i].disable();
+			}
+		}
 	}
 
-	var activateCollider = function() {
-		var collisionComponent = this.parent.findComponents().firstWithProp('collider');
+	var activateComponents = function() {
+		var components = this.parent.findComponents().not().all(function(component) {
+			return component.poolId == require('common-bundle').getActivateOnViewPoolId();
+		});
 		
-		if (collisionComponent)
-			collisionComponent.enable();
+		if (components) {
+			for (var i = 0; i < components.length; i++) {
+				components[i].enable();
+			}
+		}
 	}
 
 	var ActivateOnView = EditorComponent.extend({
@@ -54,6 +64,7 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 			// Player is unblocked
 			this.onPlayerUnblock = function() {
 				if (!this.parent.activatedOnView && this.parent.getViewportVisibility('Main')) {
+
 					activateParent.call(this);
 					// Call start on the parent
 					this.parent.editorStart();
@@ -75,7 +86,7 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 
 			this.parent.once(this.parent.START, this, function() {
 				// Deactive the parent collider after the parent game object has been started
-				deactivateCollider.call(this);
+				deactivateComponents.call(this);
 			});
 		},
 

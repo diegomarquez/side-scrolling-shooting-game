@@ -1,10 +1,10 @@
-define(["component", "timer-factory"], function(Component, TimerFactory) {
+define(["editor-component", "timer-factory"], function(Component, TimerFactory) {
 	var MovementAngle = Component.extend({
 		init: function() {
 			this._super();
 		},
 
-		start: function(parent) {
+		editorStart: function(parent) {
 			if (this.parent.spread) {
 				this.parent.angle += this.parent.spread;
 			}
@@ -19,11 +19,11 @@ define(["component", "timer-factory"], function(Component, TimerFactory) {
 				}, true);
 
 				this.moveTimer.configure({ delay: this.parent.moveTime });
-				this.moveTimer.start();			
+				this.moveTimer.start();	
 			}
 		},
 
-		update: function(delta) {
+		editorUpdate: function(delta) {
 			this.parent.x += Math.cos(this.parent.angle) * delta * this.parent.speed; 
       		this.parent.y += Math.sin(this.parent.angle) * delta * this.parent.speed;
 		},

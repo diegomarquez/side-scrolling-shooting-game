@@ -7,6 +7,7 @@ define(function(require) {
 		create: function(args) {			
 			
 			this.gameObjectPool.createDynamicPool('EnemyShip_1_Type', require('enemy-ship-1'));
+			this.gameObjectPool.createDynamicPool('EnemyShip_2_Type', require('enemy-ship-2'));
 
 			this.componentPool.createPool('AngleMovement', require('movement-angle'));
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
@@ -27,7 +28,7 @@ define(function(require) {
 				});
 			this.componentPool.createConfiguration("EnemyShipDestroyOnHpDepleted", "DestroyOnHpDepleted");
 			
-			this.componentPool.createConfiguration("EnemyShipRenderer", commonBundle.getAnimationBitmapRendererPoolId())
+			this.componentPool.createConfiguration("EnemyShip_1_Renderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
 					frameWidth: 40,
 					frameHeight: 32,
@@ -36,6 +37,17 @@ define(function(require) {
 					pingPong: true,
 					offset: 'center',
 					path: gb.assetMap()["ENEMYSHIP1.PNG"]
+				});
+
+			this.componentPool.createConfiguration("EnemyShip_2_Renderer", commonBundle.getAnimationBitmapRendererPoolId())
+				.args({
+					frameWidth: 60,
+					frameHeight: 32,
+					frameDelay: 0.03,
+					frameCount: 6,
+					pingPong: true,
+					offset: 'center',
+					path: gb.assetMap()["ENEMYSHIP2.PNG"]
 				});
 
 			this.gameObjectPool.createConfiguration('generator-enemy-ship-0-short', 'EnemyShip_1_Type')
@@ -49,8 +61,8 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShipRenderer')
-				.childOnly()
+				.setRenderer('EnemyShip_1_Renderer')
+				.childOnly();
 
 			this.gameObjectPool.createConfiguration('generator-enemy-ship-0-long', 'EnemyShip_1_Type')
 				.args({
@@ -63,8 +75,8 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShipRenderer')
-				.childOnly()
+				.setRenderer('EnemyShip_1_Renderer')
+				.childOnly();
 
 			this.gameObjectPool.createConfiguration('generator-enemy-ship-1-short', 'EnemyShip_1_Type')
 				.args({
@@ -77,8 +89,8 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShipRenderer')
-				.childOnly()
+				.setRenderer('EnemyShip_1_Renderer')
+				.childOnly();
 
 			this.gameObjectPool.createConfiguration('generator-enemy-ship-1-long', 'EnemyShip_1_Type')
 				.args({
@@ -91,9 +103,36 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShipRenderer')
-				.childOnly()
+				.setRenderer('EnemyShip_1_Renderer')
+				.childOnly();
 
+			this.gameObjectPool.createConfiguration('straight-line-ship-0', 'EnemyShip_2_Type')
+				.args({
+					hp: 3,
+					speed: 120
+				})
+				.addComponent('EnemyShipCircleCollider')
+				.addComponent('Activate_EnemyShip_On_View')
+				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipDestroyExplosions')
+				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.setRenderer('EnemyShip_2_Renderer')
+				.enemyCategory()
+				.weakEnemyTier();
+
+			this.gameObjectPool.createConfiguration('straight-line-ship-1', 'EnemyShip_2_Type')
+				.args({
+					hp: 5,
+					speed: 150
+				})
+				.addComponent('EnemyShipCircleCollider')
+				.addComponent('Activate_EnemyShip_On_View')
+				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipDestroyExplosions')
+				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.setRenderer('EnemyShip_2_Renderer')
+				.enemyCategory()
+				.strongEnemyTier();
 		},
 	});
 
