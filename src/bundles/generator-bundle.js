@@ -129,7 +129,7 @@ define(function(require) {
 
 			// Generator Configurations
 
-			this.gameObjectPool.createConfiguration('generator-0-short', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-0-short', 'GeneratorType')
 				.args({
 					hp: 3,
 					amount: 3,
@@ -143,7 +143,7 @@ define(function(require) {
 				.enemyCategory()
 				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration('generator-0-long', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-0-long', 'GeneratorType')
 				.args({
 					hp: 3,
 					amount: 3,
@@ -157,7 +157,7 @@ define(function(require) {
 				.enemyCategory()
 				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration('generator-1-short', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-1-short', 'GeneratorType')
 				.args({
 					hp: 30,
 					amount: 4,
@@ -171,7 +171,7 @@ define(function(require) {
 				.enemyCategory()
 				.strongEnemyTier();
 
-			this.gameObjectPool.createConfiguration('generator-1-long', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-1-long', 'GeneratorType')
 				.args({
 					hp: 30,
 					amount: 4,
@@ -185,7 +185,7 @@ define(function(require) {
 				.enemyCategory()
 				.strongEnemyTier();
 
-			this.gameObjectPool.createConfiguration('boss-generator-0-short', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-0-short', 'BossGeneratorType')
 				.args({
 					hp: 10,
 					amount: 3,
@@ -200,7 +200,7 @@ define(function(require) {
 				.enemyCategory()
 				.weakBossHelperEnemyTier();
 
-			this.gameObjectPool.createConfiguration('boss-generator-0-long', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-0-long', 'BossGeneratorType')
 				.args({
 					hp: 15,
 					amount: 3,
@@ -215,7 +215,7 @@ define(function(require) {
 				.enemyCategory()
 				.weakBossHelperEnemyTier();
 
-			this.gameObjectPool.createConfiguration('boss-generator-1-short', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-1-short', 'BossGeneratorType')
 				.args({
 					hp: 10,
 					amount: 4,
@@ -230,7 +230,7 @@ define(function(require) {
 				.enemyCategory()
 				.strongBossHelperEnemyTier();
 
-			this.gameObjectPool.createConfiguration('boss-generator-1-long', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-1-long', 'BossGeneratorType')
 				.args({
 					hp: 15,
 					amount: 4,

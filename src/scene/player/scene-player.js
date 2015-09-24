@@ -28,6 +28,7 @@ define(function(require) {
 	    	require('mine-bundle').create();
 	    	require('generator-bundle').create();
 	    	require('enemy-ship-bundle').create();
+	    	require('blob-bundle').create();
 		},
 
 		setCollisionPairs: function() {
@@ -38,6 +39,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'mineColliderId');
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'generatorColliderId');
 			collisionResolver.addCollisionPair('basicBulletColliderId', 'enemyShipColliderId');
+			collisionResolver.addCollisionPair('basicBulletColliderId', 'blobColliderId');
 
 			collisionResolver.addCollisionPair('obstacleColliderId', 'shipColliderId');
 			collisionResolver.addCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
@@ -55,6 +57,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('shipColliderId', 'mineColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'generatorColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'enemyShipColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'blobColliderId');
 		},
 
 		removeCollisionPairs: function() {
@@ -65,6 +68,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'mineColliderId');
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'generatorColliderId');
 			collisionResolver.removeCollisionPair('basicBulletColliderId', 'enemyShipColliderId');
+			collisionResolver.removeCollisionPair('basicBulletColliderId', 'blobColliderId');
 
 			collisionResolver.removeCollisionPair('obstacleColliderId', 'shipColliderId');
 			collisionResolver.removeCollisionPair('obstacleColliderId', 'cannonBulletColliderId');
@@ -81,6 +85,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('shipColliderId', 'mineColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'generatorColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'enemyShipColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'blobColliderId');
 		},
 
 		container: function() {

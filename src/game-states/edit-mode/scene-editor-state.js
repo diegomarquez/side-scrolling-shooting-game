@@ -29,6 +29,7 @@ define(function(require) {
 			require('mine-bundle').create();
 			require('generator-bundle').create();
 			require('enemy-ship-bundle').create();
+			require('blob-bundle').create();
 			require('control-objects-bundle').create();
 		});
 

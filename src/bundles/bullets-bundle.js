@@ -67,6 +67,12 @@ define(function(require) {
 					path: gb.assetMap()["ROUNDBULLET.PNG"],
 					offset: 'center',
 				});
+
+			this.componentPool.createConfiguration("BlobBulletRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["MINIBLOB.PNG"],
+					offset: 'center',
+				});
 			
 			this.componentPool.createConfiguration("ArrowBulletRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
@@ -152,6 +158,22 @@ define(function(require) {
 				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
 				.addComponent("MissileCollider")
 				.setRenderer("MissileRenderer");
+
+			this.gameObjectPool.createConfiguration("blob-bullet-slow", "CannonBullet")
+				.args({
+					speed: 150
+				})
+				.addComponent('BulletRotate')
+				.addComponent("CannonBulletCollider")
+				.setRenderer("BlobBulletRenderer");
+
+			this.gameObjectPool.createConfiguration("blob-bullet-fast", "CannonBullet")
+				.args({
+					speed: 250
+				})
+				.addComponent('BulletRotate')
+				.addComponent("CannonBulletCollider")
+				.setRenderer("BlobBulletRenderer");
 		},
 	});
 
