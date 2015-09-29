@@ -66,7 +66,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-			Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.reverse();

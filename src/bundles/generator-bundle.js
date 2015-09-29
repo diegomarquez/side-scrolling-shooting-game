@@ -204,7 +204,7 @@ define(function(require) {
 				.args({
 					hp: 15,
 					amount: 3,
-					objectType: 'boss-generator-enemy-ship-0-long'
+					objectType: 'generator-enemy-ship-0-long'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
@@ -219,7 +219,7 @@ define(function(require) {
 				.args({
 					hp: 10,
 					amount: 4,
-					objectType: 'boss-generator-enemy-ship-1-short'
+					objectType: 'generator-enemy-ship-1-short'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
@@ -234,7 +234,7 @@ define(function(require) {
 				.args({
 					hp: 15,
 					amount: 4,
-					objectType: 'boss-generator-enemy-ship-1-long'
+					objectType: 'generator-enemy-ship-1-long'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')

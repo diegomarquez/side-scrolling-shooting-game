@@ -13,6 +13,7 @@ define(function(require) {
 			this.componentPool.createPool('FollowTarget', require('follow-target'));
 
 			this.componentPool.createPool('BlobShrapnel', require('blob-shrapnel'));
+			this.componentPool.createPool('BlobDivide', require('blob-divide'));
 
 			this.componentPool.createConfiguration("BlobCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
@@ -31,6 +32,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("BlobFollowTarget", "FollowTarget");
 
 			this.componentPool.createConfiguration("BlobShrapnel", "BlobShrapnel");
+			this.componentPool.createConfiguration("BlobDivide", "BlobDivide");
 
 			this.componentPool.createConfiguration("BlobRenderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
@@ -69,6 +71,66 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobShrapnel', { objectType: 'blob-bullet-slow', amount: 'x8' })
+				.setRenderer('BlobRenderer')
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration('blob-divide-0', 'BlobType')
+				.args({
+					hp: 10,
+					speed: 20
+				})
+				.addComponent('BlobCircleCollider')
+				.addComponent('Activate_Blob_On_View')
+				.addComponent('BlobDestroyExplosions')
+				.addComponent('BlobDestroyOnHpDepleted')
+				.addComponent('BlobFollowTarget')
+				.addComponent('BlobDivide', { objectType: 'blob-explode-0', amount: 'x2' })
+				.setRenderer('BlobRenderer')
+				.enemyCategory()
+				.weakEnemyTier();
+
+			this.gameObjectPool.createConfiguration('blob-divide-1', 'BlobType')
+				.args({
+					hp: 10,
+					speed: 20
+				})
+				.addComponent('BlobCircleCollider')
+				.addComponent('Activate_Blob_On_View')
+				.addComponent('BlobDestroyExplosions')
+				.addComponent('BlobDestroyOnHpDepleted')
+				.addComponent('BlobFollowTarget')
+				.addComponent('BlobDivide', { objectType: 'blob-explode-1', amount: 'x3' })
+				.setRenderer('BlobRenderer')
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration('blob-divide-2', 'BlobType')
+				.args({
+					hp: 15,
+					speed: 20
+				})
+				.addComponent('BlobCircleCollider')
+				.addComponent('Activate_Blob_On_View')
+				.addComponent('BlobDestroyExplosions')
+				.addComponent('BlobDestroyOnHpDepleted')
+				.addComponent('BlobFollowTarget')
+				.addComponent('BlobDivide', { objectType: 'blob-divide-0', amount: 'x2' })
+				.setRenderer('BlobRenderer')
+				.enemyCategory()
+				.strongEnemyTier();
+
+			this.gameObjectPool.createConfiguration('blob-divide-3', 'BlobType')
+				.args({
+					hp: 15,
+					speed: 20
+				})
+				.addComponent('BlobCircleCollider')
+				.addComponent('Activate_Blob_On_View')
+				.addComponent('BlobDestroyExplosions')
+				.addComponent('BlobDestroyOnHpDepleted')
+				.addComponent('BlobFollowTarget')
+				.addComponent('BlobDivide', { objectType: 'blob-divide-1', amount: 'x3' })
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
