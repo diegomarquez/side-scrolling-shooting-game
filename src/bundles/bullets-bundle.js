@@ -1,5 +1,6 @@
 define(function(require) {	
 	var commonBundle = require('common-bundle');
+	var explosionsBundle = require('explosion-generator-bundle');
 	var gb = require('gb')
 	
 	var Bullets = require("bundle").extend({
@@ -13,6 +14,12 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('Laser', require("laser"));
 			this.gameObjectPool.createDynamicPool('Missile', require("missile"));
 
+			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
+
+			this.componentPool.createConfiguration("BlobBulletDestroyExplosions", "DestroyExplosions")
+				.args({
+					effect: explosionsBundle.getSingleSmallExplosionEffectId()
+				});
 
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
@@ -164,6 +171,7 @@ define(function(require) {
 					speed: 150
 				})
 				.addComponent('BulletRotate')
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("BlobBulletRenderer");
 
@@ -172,6 +180,7 @@ define(function(require) {
 					speed: 250
 				})
 				.addComponent('BulletRotate')
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("BlobBulletRenderer");
 		},

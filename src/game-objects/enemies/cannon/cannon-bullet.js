@@ -19,12 +19,24 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 			if (this.life > 0) {
 				this.life -= this.speed;
 			} else {
-				Reclaimer.mark(this);
+				this.execute('destroyed');
+				
+				this.speed = 0;
+
+				if (!this.findComponents().firstWithType('DestroyExplosions')) {
+					Reclaimer.mark(this);
+				}
 			}
 		},
 
 		onCollide: function(other) {
-			Reclaimer.mark(this);
+			this.execute('destroyed');
+			
+			this.speed = 0;
+			
+			if (!this.findComponents().firstWithType('DestroyExplosions')) {
+				Reclaimer.mark(this);
+			}
 		}
 	});
 

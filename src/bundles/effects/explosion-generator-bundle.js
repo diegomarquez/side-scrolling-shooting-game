@@ -6,6 +6,15 @@ define(function(require) {
 			this.componentPool.createPool('child-explosions-generator', require('child-tracking-generator'));
 			this.componentPool.createPool('explosions-generator', require('game-object-generator'));
 
+			this.componentPool.createConfiguration(this.getSingleSmallExplosionEffectId(), 'child-explosions-generator')
+				.args({
+					objectType: explosionBundle.getSmallExplosionsId(),
+					sprayDelay: 0.03,
+					amountPerSpray: 1,
+					maxAmountToSpray: 1,
+					startingPositionTransformation: []
+				});
+
 			this.componentPool.createConfiguration(this.getPlayerDestroyExplosionsEffectId(), 'explosions-generator')
 				.args({
 					objectType: explosionBundle.getMicroExplosionsId(),
@@ -53,6 +62,10 @@ define(function(require) {
 
 		getPlayerDestroyExplosionsEffectId: function() {
 			return "PlayerDestroyExplosionsEffectId";
+		},
+
+		getSingleSmallExplosionEffectId: function() {
+			return "SingleSmallExplosionsEffect";
 		},
 
 		getMicroExplosionsEffectId: function() {

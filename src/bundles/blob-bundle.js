@@ -22,6 +22,7 @@ define(function(require) {
 				});
 
 			this.componentPool.createConfiguration("Activate_Blob_On_View", commonBundle.getActivateOnViewPoolId());
+			
 			this.componentPool.createConfiguration("BlobDestroyExplosions", "DestroyExplosions")
 				.args({
 					effect: explosionsBundle.getMediumExplosionsEffectId()
