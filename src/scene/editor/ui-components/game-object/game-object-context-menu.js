@@ -60,50 +60,6 @@ define(function(require) {
 						]
 					},
 					{
-						name: 'Replace', 
-						icon: 'ui-icon-transferthick-e-w',
-
-						options: [
-							{
-								name: 'This',
-								icon: 'ui-icon-bullet',
-
-								options: function() {
-									return editorConfig.getGameObjects({filterChilds: false}).map(function (configurationId) {
-										return {
-											name: configurationId,
-											icon: 'ui-icon-bullet',
-											click: function (configurationId) {
-												replaceGameObject(menu.go, configurationId);
-											}
-										}
-									});
-								}
-							},
-							{
-								name: 'All',
-								icon: 'ui-icon-bullet',
-								options: function() {
-									return editorConfig.getGameObjects({filterChilds: false}).map(function (configurationId) {
-										return {
-											name: configurationId,
-											icon: 'ui-icon-bullet',
-											click: function (configurationId) {
-												// Get a collection of all the game objects currently active in the scene that are similar to the selected game object
-												var gos = gb.findGameObjectsOfType(menu.go);
-
-												// Replace all the matching game objects with one of the new type
-												for (var i = 0; i < gos.length; i++) {
-													replaceGameObject(gos[i], configurationId);
-												}
-											}
-										}
-									});
-								}
-							}
-						]
-					},
-					{
 						name: 'Viewports',
 						icon: 'ui-icon-wrench',
 						
