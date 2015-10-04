@@ -160,6 +160,28 @@ define(function(require) {
 				.setRenderer("Boss_2_Core_Renderer")
 				.enemyCategory()
 				.bossEnemyTier();
+
+			// Boss 3
+			// =================================
+			// =================================
+			
+			this.gameObjectPool.createDynamicPool('Boss_3_Body', require("boss-3-body"));
+
+			this.componentPool.createPool('Boss_3_Body_Renderer', require('boss-3-body-renderer'));
+
+			this.componentPool.createConfiguration('Boss_3_Body_Renderer', 'Boss_3_Body_Renderer');
+
+			this.gameObjectPool.createConfiguration("boss-3", "Boss_3_Body")
+				.args({
+					// destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
+					// colliderId: "Boss_2_Body_Collider",
+					// laserAttacks: ['x1', 'x2', 'x3'],
+					// mineAttacks: ['x3', 'x5']
+				})
+				.addComponent("Activate_Boss_On_View")
+				.setRenderer("Boss_3_Body_Renderer")
+				.enemyCategory()
+				.bossEnemyTier();		
 		},
 	});
 

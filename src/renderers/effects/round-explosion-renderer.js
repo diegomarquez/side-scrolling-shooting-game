@@ -9,14 +9,20 @@ define(["animation-path-renderer", "draw"], function (AnimationPathRenderer, Dra
 			this.offset = 'center';
 			this.frameDelay = 0.02;
 
-      this.framePaths = [];
+      		this.framePaths = [];
 
-      var totalFrames = 11;
-     	var radius = this.width/2;
+      		var totalFrames = 11;
+     		var radius = this.width/2;
 
-      for (var i = 0; i <= totalFrames; i++) {
+		    for (var i = 0; i <= totalFrames; i++) {
 				this.framePaths.push(explosionFrame(radius, radius/totalFrames * i, "#FF0000", "#FFFF00"));     	
-      }
+		    }
+		},
+
+		start: function(parent) {
+			this._super(parent);
+
+			this.offset = 'center';
 		}
 	});
 

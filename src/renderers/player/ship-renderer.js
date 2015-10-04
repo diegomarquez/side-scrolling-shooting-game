@@ -46,6 +46,12 @@ define(["path-renderer", "path-cache", "draw", "vector-2D"], function(PathRender
 			this.offset = "center";
 		},
 
+		start: function(parent) {
+			this._super(parent);
+
+			this.offset = "center";
+		},
+
 		drawPath: function(context) {
 			context.strokeStyle = this.color;
 

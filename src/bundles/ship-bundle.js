@@ -6,7 +6,6 @@ define(function(require) {
 	var ShipBundle = require("bundle").extend({
 		create: function(args) {	
 			this.componentPool.createPool('ship-renderer', require("ship-renderer"));
-			this.componentPool.createPool('exhaust-renderer', require("exhaust-renderer"));
 
 			this.componentPool.createPool('player-damage-feedback', require('player-damage-feedback'));
 			this.componentPool.createPool('player-destroy-feedback', require('player-destroy-feedback'));
@@ -52,8 +51,6 @@ define(function(require) {
 					path: gb.assetMap()["PLAYEREXHAUST.PNG"],
 					offset: 'center'
 				});
-
-			this.componentPool.createConfiguration("ExhaustRenderer", 'exhaust-renderer');
 			
 			this.gameObjectPool.createConfiguration("ShootingPosition", commonBundle.getGameObjectPoolId());
 
