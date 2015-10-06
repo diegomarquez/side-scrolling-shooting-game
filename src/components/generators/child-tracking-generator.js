@@ -12,12 +12,14 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.currentSprayCount = null;
 			this.delayTime = null;
 			this.createdObjects = [];
+			this.stopped = false;
 		},
 
 		editorStart: function(parent) {
 			this.delayTime = 0;
 			this.currentSprayCount = 0;
 			this.createdObjects.length = 0;
+			this.stopped = false;
 		},
 
 		editorUpdate: function(delta) {
@@ -29,6 +31,12 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			}
 		},
 
+		stop: function() {
+			this.stopped = true;
+			this.createdObjects.length = 0;
+			this.disable();
+		},
+
 		disable: function() {
 			this._super();
 			this.delayTime = 0;
@@ -36,6 +44,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 		},
 
 		spray: function(args) {
+			if (this.stopped)
+				return;
+
 			if (!this.maxAmountToSpray) {
 				
 				if (this.isEnabled()) {
@@ -59,7 +70,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 					}
 				}
 				
-				this.execute(this.SPRAY);	
+				this.execute(this.SPRAY);
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
@@ -74,7 +85,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							if (this.startingPositionTransformation) {
 								for (var j = 0; j < this.startingPositionTransformation.length; j++) {
 									this.startingPositionTransformation[j].call(this, args);
-								}	
+								}
 							}
 
 							var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
@@ -87,15 +98,22 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 						}
 					}
 
-					this.execute(this.SPRAY);	
+					this.execute(this.SPRAY);
 				}	
 			}
 		}
 	}); 
 
 	var onRecycle = function(go) {
-		this.createdObjects.splice(this.createdObjects.indexOf(go), 1);
+		if (this.stopped)
+			return;
 
+		var index = this.createdObjects.indexOf(go);
+
+		if (index != -1) {
+			this.createdObjects.splice(index, 1);
+		}
+		
 		if (!this.isEnabled() && this.createdObjects.length == 0) {
 			this.execute(this.STOP_AND_ALL_RECYCLED);
 		}

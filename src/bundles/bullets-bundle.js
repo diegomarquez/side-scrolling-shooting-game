@@ -15,11 +15,14 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('Missile', require("missile"));
 
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
+			this.componentPool.createPool('DestroyOnHpDepleted', require('destroy-on-hp-depleted'));
 
 			this.componentPool.createConfiguration("BlobBulletDestroyExplosions", "DestroyExplosions")
 				.args({
 					effect: explosionsBundle.getSingleSmallExplosionEffectId()
 				});
+
+			this.componentPool.createConfiguration("DestroyOnHpDepleted", "DestroyOnHpDepleted");
 
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
@@ -152,17 +155,21 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("missile-slow", "Missile")
 				.args({
-					speed: 100
+					speed: 100,
+					hp: 1
 				})
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
+				.addComponent('DestroyOnHpDepleted')
 				.addComponent("MissileCollider")
 				.setRenderer("MissileRenderer");
 
 			this.gameObjectPool.createConfiguration("missile-fast", "Missile")
 				.args({
-					speed: 220
+					speed: 220,
+					hp: 1
 				})
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
+				.addComponent('DestroyOnHpDepleted')
 				.addComponent("MissileCollider")
 				.setRenderer("MissileRenderer");
 

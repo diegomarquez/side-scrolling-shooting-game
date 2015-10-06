@@ -11,6 +11,8 @@ define(function() {
 	"BOSS1CABLEDAMAGED.PNG": "assets/images/Boss1/Boss1CableDamaged.png",
 	"BOSS2BODY.PNG": "assets/images/Boss2/Boss2Body.png",
 	"BOSS2CORE.PNG": "assets/images/Boss2/Boss2Core.png",
+	"BOSS3INNEREYE.PNG": "assets/images/Boss3/Boss3InnerEye.png",
+	"BOSS3OUTEREYE.PNG": "assets/images/Boss3/Boss3OuterEye.png",
 	"BOSSCANNONBASE.PNG": "assets/images/BossCannon/BossCannonBase.png",
 	"BOSSCANNONSHOOTER.PNG": "assets/images/BossCannon/BossCannonShooter.png",
 	"BOSSGENERATOR.PNG": "assets/images/BossGenerator.png",

@@ -324,8 +324,32 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 					this.viewportOffsetY -= response.overlapV.y;
 
 					break;
-				
+
 				case 'Boss_1_Cables':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
+
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+
+				case 'Boss_2_Body':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
+
+					this.viewportOffsetX -= response.overlapV.x;
+					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+
+				case 'Boss_3_Body':
 
 					if (!this.damageComponent.isEnabled()) {
 						this.damageComponent.enable();

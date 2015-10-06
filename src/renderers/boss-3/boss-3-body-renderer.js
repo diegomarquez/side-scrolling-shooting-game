@@ -49,8 +49,10 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 		];
     },
 
-    start: function() {
-    	
+    start: function(parent) {
+    	this._super(parent);
+
+    	this.offset = 'center';	
     },
 
     update: function(delta) {
@@ -73,10 +75,13 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
     drawPath: function(context) {
 		context.save();
+
+		context.translate(0, 0);
+
 		context.lineJoin = 'round';
 		context.lineCap = 'round';
 
-		Draw.quadraticPolygonAuto(context, 75, 75, this.largeAnchor, this.points, null, '#FFFFFF', 3, 1, true, true);
+		Draw.quadraticPolygonAuto(context, 0, 0, this.largeAnchor, this.points, null, '#FFFFFF', 3, 1, true, true);
 		context.restore();
     }
   });

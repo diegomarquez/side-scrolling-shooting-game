@@ -164,12 +164,40 @@ define(function(require) {
 			// Boss 3
 			// =================================
 			// =================================
-			
+
+			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'));
+			this.gameObjectPool.createConfiguration("FirePosition", 'editor-game-object').childOnly();
+
 			this.gameObjectPool.createDynamicPool('Boss_3_Body', require("boss-3-body"));
 
 			this.componentPool.createPool('Boss_3_Body_Renderer', require('boss-3-body-renderer'));
+			this.componentPool.createPool('Boss_3_Wobble', require('wobble'));
+			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
 
 			this.componentPool.createConfiguration('Boss_3_Body_Renderer', 'Boss_3_Body_Renderer');
+			this.componentPool.createConfiguration('Boss_3_Wobble', 'Boss_3_Wobble')
+				.args({
+					speedX: 1.2,
+					speedY: 1.5,
+					amplitudeX: 0.15,
+					amplitudeY: 0.15
+				});
+
+			this.componentPool.createConfiguration("Boss3DestroyExplosions", "DestroyExplosions")
+				.args({
+					effect: explosionsBundle.getSmallExplosionsEffectId()
+				});
+
+			this.componentPool.createConfiguration("Boss3BodyCollider", commonBundle.getPolygonColliderPoolId())
+				.args({
+					id:'boss3ColliderId',
+					points: [
+						{ x: 75 + 75, y: -75 + 75 },
+						{ x: 75 + 75, y: 75 + 75 },
+						{ x: -75 + 75, y: 75 + 75 },
+						{ x: -75 + 75, y: -75 + 75 }
+					] 
+				});
 
 			this.gameObjectPool.createConfiguration("boss-3", "Boss_3_Body")
 				.args({
@@ -178,10 +206,66 @@ define(function(require) {
 					// laserAttacks: ['x1', 'x2', 'x3'],
 					// mineAttacks: ['x3', 'x5']
 				})
+				.addChild('boss-3-eye')
 				.addComponent("Activate_Boss_On_View")
+				.addComponent("Boss3BodyCollider")
+				.addComponent('Boss3DestroyExplosions')
 				.setRenderer("Boss_3_Body_Renderer")
 				.enemyCategory()
-				.bossEnemyTier();		
+				.bossEnemyTier();
+
+			// Boss 3 Eye
+			// =======================
+			
+			this.componentPool.createConfiguration("OuterEyeRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS3OUTEREYE.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("InnerEyeRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS3INNEREYE.PNG"],
+					offsetX: 0,
+					offsetY: -16
+				});
+
+			this.gameObjectPool.createDynamicPool('Boss3OuterEye', require("cannon-base"));
+			this.gameObjectPool.createPool('Boss3InnerEye', require("cannon-shooter"));
+
+			this.componentPool.createConfiguration("Boss3EyeCollider", commonBundle.getCircleColliderPoolId())
+				.args({
+					id:'cannonColliderId',
+					radius:30 
+				});
+
+			this.gameObjectPool.createConfiguration("boss-3-inner-eye", "Boss3InnerEye")
+				.args({
+					rate: 250,
+					bullets: 1000,
+					burstAmount: 5,
+					bulletType: 'blob-bullet-fast'
+				})
+				.addChild('FirePosition', { x: 16, y: 0})
+				.addComponent('Activate_Boss_On_View')
+				.setRenderer("InnerEyeRenderer")
+				.disableMouseSupport()
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration("boss-3-eye", "Boss3OuterEye")
+				.args({
+					destroyExplosions: explosionsBundle.getMediumExplosionsEffectId(),
+					hp: 35,
+					x: 0,
+					y: 0
+				})
+				.addChild('boss-3-inner-eye')
+				.addComponent('Activate_Boss_On_View')
+				.addComponent('Boss3EyeCollider')
+				.addComponent('Boss_3_Wobble')
+				.setRenderer("OuterEyeRenderer")
+				.disableMouseSupport()
+				.childOnly();	
 		},
 	});
 

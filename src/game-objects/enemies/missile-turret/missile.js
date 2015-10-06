@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "reclaimer", "timer-factory"], function(GameObject, Reclaimer, TimerFactory) {
+define(["editor-game-object-container", "timer-factory"], function(GameObject, TimerFactory) {
 	
 	var targetDecompose = {};
 	var targetMatrix = null;
@@ -21,6 +21,7 @@ define(["editor-game-object-container", "reclaimer", "timer-factory"], function(
 
 			this.life = 0;
 			this.speed = 0;
+			this.hp = 0;
 		},
 
 		editorStart: function() {
@@ -131,13 +132,11 @@ define(["editor-game-object-container", "reclaimer", "timer-factory"], function(
 
 			if (this.life > 0) {
 				this.life -= this.speed;
-			} else {
-				Reclaimer.mark(this);
 			}
 		},
 
 		onCollide: function(other) {
-			Reclaimer.mark(this);
+			this.speed = 0;
 		}
 	});
 

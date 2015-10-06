@@ -7,19 +7,41 @@ define(['editor-component'], function(Component){
 
 			this.counterX = 0;
 			this.counterY = 0;
+
+			this.speedX = 0;
+			this.speedY = 0;
+			
+			this.amplitudeX = 0;
+			this.amplitudeY = 0;
 		},
 
 		editorStart: function() {
-			this.counterX = Math.random() * 100;
-			this.counterY = Math.random() * 100;
+			this.speedX = this.speedX || 1.5;
+			this.speedY = this.speedY || 1.3;
+			
+			this.amplitudeX = this.amplitudeX || 1;
+			this.amplitudeY = this.amplitudeY || 1;
+
+			this.counterX = Math.random() * this.speedX;
+			this.counterY = Math.random() * this.speedY;
 		},
 
 		editorUpdate: function(delta) {
-			this.parent.x -= Math.cos(this.counterX/60);
-			this.parent.y += Math.cos(this.counterY/40);
+			this.parent.x -= Math.cos(this.counterX) * this.amplitudeX;
+			this.parent.y += Math.cos(this.counterY) * this.amplitudeY;
 			
-			this.counterX += 100 * delta;
-			this.counterY += 100 * delta;
+			this.counterX += this.speedX * delta;
+			this.counterY += this.speedY * delta;
+		},
+
+		recycle: function() {
+			this.speedX = 0;
+			this.speedY = 0;
+
+			this.amplitudeX = 0;
+			this.amplitudeY = 0;
+
+			this._super();
 		}
 	});
 

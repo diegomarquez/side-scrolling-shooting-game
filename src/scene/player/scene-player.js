@@ -50,6 +50,7 @@ define(function(require) {
 
 			collisionResolver.addCollisionPair('shipColliderId', 'cannonBulletColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'bossColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'boss3ColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'missilleColliderId');
@@ -78,6 +79,8 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('obstacleColliderId', 'enemyShipColliderId');
 
 			collisionResolver.removeCollisionPair('shipColliderId', 'cannonBulletColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'bossColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'boss3ColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'levelItemColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'laserBulletColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'missilleColliderId');

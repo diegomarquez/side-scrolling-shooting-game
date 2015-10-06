@@ -9,10 +9,9 @@ define(["editor-component"], function(Component) {
 				throw new Error("Parent has no hp, it's either 0 or missing");
 
       		this.parent.on('collide', this, function() {
-      			if (this.parent.hp > 0) {
-      				this.parent.hp--;
-      			} else {
+      			this.parent.hp--;
 
+      			if (this.parent.hp <= 0) {
       				// Disable all the components
       				var components = this.parent.findComponents().not().all(function(component) {
 						return component.poolId == require('common-bundle').getActivateOnViewPoolId();

@@ -5,6 +5,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
       this.destroyExplosions = null;
       this.hp = 1;
+      this.explosionsGenerator = null;
     },
 
     editorStart: function() {
@@ -15,6 +16,18 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       
     },
 
+    regen: function(hp) {
+    	this.hp = hp;
+
+    	this.explosionsGenerator.stop();
+    	this.show(true).not().allWithType(this.explosionsGenerator.objectType);
+    	this.removeComponent(this.explosionsGenerator);
+    	this.findComponents().firstWithProp('collider').enable();
+    	this.explosionsGenerator = null;
+
+    	this.execute('repair');
+    },
+
     onCollide: function(other) {
     	if (!this.started)
     		return;
@@ -22,15 +35,15 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
   		if (this.hp > 0) {
   			this.hp--;	
   		} else {
-  			var explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
+  			this.explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 
   			// When the explosion generator is finished, hide the cannon
-    		explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-     	  		this.hide(true).not().allWithType(explosionsGenerator.objectType);
-     	 	});  
+    		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
+     	  		this.hide(true).not().allWithType(this.explosionsGenerator.objectType);
+     	 	});
 
      	 	// When the last explosion is done with it's animation, mark the cannon for recycling
-      		explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+      		this.explosionsGenerator.once(this.explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
       			Gb.reclaimer.mark(this);
       		});
 
@@ -38,12 +51,13 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     		this.findComponents().firstWithProp('collider').disable();
 
       		// Notify damage
-	      this.execute(this.DAMAGE);
+	      	this.execute(this.DAMAGE);
   		}
     }
   });
 
   Object.defineProperty(Cannon.prototype, "DAMAGE", { get: function() { return 'damage'; } });
+  Object.defineProperty(Cannon.prototype, "REPAIR", { get: function() { return 'repair'; } });
 
   return Cannon;
 });
