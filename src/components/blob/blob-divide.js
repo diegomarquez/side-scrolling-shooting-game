@@ -47,6 +47,39 @@ define(["editor-component", "gb", "tweenlite"], function(Component, Gb, Tweenlit
 					}));
 				}				
 			});
+
+			this.parent.on('damage', this, function() {
+				
+				if (this.amount == 'x2') {
+
+					this.easeBlob(Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						x: this.parent.x,
+						y: this.parent.y
+					}));
+
+					this.easeBlob(Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						x: this.parent.x,
+						y: this.parent.y
+					}));
+				}
+
+				if (this.amount == 'x3') {
+					this.easeBlob(Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						x: this.parent.x,
+						y: this.parent.y
+					}));
+
+					this.easeBlob(Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						x: this.parent.x,
+						y: this.parent.y
+					}));
+
+					this.easeBlob(Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						x: this.parent.x,
+						y: this.parent.y
+					}));
+				}				
+			});
 		},
 
 		easeBlob: function(blob) {

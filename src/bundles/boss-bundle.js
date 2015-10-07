@@ -173,6 +173,8 @@ define(function(require) {
 			this.componentPool.createPool('Boss_3_Body_Renderer', require('boss-3-body-renderer'));
 			this.componentPool.createPool('Boss_3_Wobble', require('wobble'));
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
+			this.componentPool.createPool('FollowTarget', require('follow-target'));
+			this.componentPool.createPool('BlobDivide', require('blob-divide'));
 
 			this.componentPool.createConfiguration('Boss_3_Body_Renderer', 'Boss_3_Body_Renderer');
 			this.componentPool.createConfiguration('Boss_3_Wobble', 'Boss_3_Wobble')
@@ -188,28 +190,30 @@ define(function(require) {
 					effect: explosionsBundle.getSmallExplosionsEffectId()
 				});
 
+			this.componentPool.createConfiguration("BossFollowTarget", "FollowTarget");
+			this.componentPool.createConfiguration("BossDivide", "BlobDivide");
+
 			this.componentPool.createConfiguration("Boss3BodyCollider", commonBundle.getPolygonColliderPoolId())
 				.args({
 					id:'boss3ColliderId',
 					points: [
-						{ x: 75 + 75, y: -75 + 75 },
-						{ x: 75 + 75, y: 75 + 75 },
-						{ x: -75 + 75, y: 75 + 75 },
-						{ x: -75 + 75, y: -75 + 75 }
+						{ x: 75, y: -75 },
+						{ x: 75, y: 75 },
+						{ x: -75, y: 75 },
+						{ x: -75, y: -75 }
 					] 
 				});
 
 			this.gameObjectPool.createConfiguration("boss-3", "Boss_3_Body")
 				.args({
-					// destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
-					// colliderId: "Boss_2_Body_Collider",
-					// laserAttacks: ['x1', 'x2', 'x3'],
-					// mineAttacks: ['x3', 'x5']
+					speed: 20
 				})
 				.addChild('boss-3-eye')
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss3BodyCollider")
 				.addComponent('Boss3DestroyExplosions')
+				.addComponent('BlobFollowTarget')
+				.addComponent('BossDivide', { objectType: 'blob-explode-1', amount: 'x2' })
 				.setRenderer("Boss_3_Body_Renderer")
 				.enemyCategory()
 				.bossEnemyTier();

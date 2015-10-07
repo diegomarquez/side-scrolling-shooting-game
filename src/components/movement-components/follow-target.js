@@ -21,8 +21,13 @@ define(["editor-component"], function(Component) {
 				angle += 2 * Math.PI;
 			}
 
-			this.parent.x += Math.cos(angle) * delta * this.parent.speed; 
-      		this.parent.y += Math.sin(angle) * delta * this.parent.speed;
+			this.parent.vecX = Math.cos(angle);
+			this.parent.vecY = Math.sin(angle);
+
+			this.parent.x += this.parent.vecX * delta * this.parent.speed; 
+      		this.parent.y += this.parent.vecY * delta * this.parent.speed;
+
+
 		}
 	});
 

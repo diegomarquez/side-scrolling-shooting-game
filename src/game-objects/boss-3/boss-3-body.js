@@ -6,6 +6,9 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.hp = 0;
 			this.eye = null;
 			this.cannons = null;
+			this.target = null;
+			this.vecX = 0;
+			this.vecY = 0;
 
 			this.otherBosses = null;
 		},
@@ -21,10 +24,14 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.regenTimer.on('complete', function() {
 				this.eye.regen(40);
 			});
+
+			this.target = PlayerGetter.get();
 		},
 
 		deActivate: function() {
 			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+
+			this.target = null;
     	},
 
 		editorUpdate: function(delta) {
@@ -61,10 +68,15 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 					this.hp--;
 
 					this.regenTimer.start();
+					this.execute('damage');
+
+					TweenLite.to(this, 0.5, { x: '-=' + this.vecX * 40, y: '-=' + this.vecY * 40, ease: Power2.easeOut });
 				} else {
 					if (this.isActive()) {
 						var collider = this.findComponents().firstWithProp('collider');
 						collider.disable();
+
+						this.target = null;
 
 						this.execute('destroyed');
 

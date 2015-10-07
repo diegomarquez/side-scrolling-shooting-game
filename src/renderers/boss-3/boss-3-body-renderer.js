@@ -1,17 +1,17 @@
-define(["path-renderer", "draw"], function(PathRenderer, Draw) {
+define(["editor-component","path-renderer", "player-getter", "draw"], function(EditorComponent, PathRenderer, PlayerGetter, Draw) {
   var Boss_3_Body_Renderer = PathRenderer.extend({
     init: function() {
 		this._super();
 
-		this.width = 150;
-		this.height = 150;
+		this.width = 200;
+		this.height = 200;
 		this.offset = 'center';
 
 		this.name = 'Boss_3_Body';
 		this.skipCache = true;
 		
 		this.horizontalCounter = 0;
-		this.largeAnchor = 0;
+		this.largeAnchor = 20;
 
 		this.pointOffsetX = 0;
 		this.pointOffsetY = 0;
@@ -56,6 +56,10 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
     },
 
     update: function(delta) {
+
+    	if (!PlayerGetter.exists())
+    		return;
+
     	this.largeAnchor = Math.cos(this.horizontalCounter) * 40;
     	this.pointOffsetX = Math.cos(this.horizontalCounter) * (6);
     	this.pointOffsetY = Math.sin(this.horizontalCounter) * (6);
