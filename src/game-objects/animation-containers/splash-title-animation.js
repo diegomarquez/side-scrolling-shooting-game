@@ -96,8 +96,10 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 			}
 		}
 
-		if (this.custom.selected) {
-			this.reverse();
+		if (this.custom) {
+			if (this.custom.selected) {
+				this.reverse();
+			}
 		}
     },
 
