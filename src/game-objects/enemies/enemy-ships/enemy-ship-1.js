@@ -6,7 +6,7 @@ define(["editor-game-object-container", "reclaimer", "player-getter"], function(
 			this.hp = 0;
 			this.angle = 0;
 			this.speed = 0;
-			this.moveTime = 0;
+			this.wayPoints = null;
 		},
 
 		editorStart: function() {
@@ -21,32 +21,11 @@ define(["editor-game-object-container", "reclaimer", "player-getter"], function(
 
 			this.renderer.play();
 
+			this.findComponents().firstWithType('AngleMovement').disable();
+
 			this.once('finish-movement', this, function() {
 
-				var player = PlayerGetter.get();
-				var d = player.getDirection();
-				var angle = 0;
-
-				// Right - Left
-				if (d == 0 || d == 180) {
-					if (this.X <= player.X) {
-						angle = 0;
-					} else {
-						angle = 180;
-					}
-				}
-
-				// Up - Down
-				if (d == 270 || d == 90) {
-					if (this.Y <= player.Y) {
-						angle = 90;
-					} else {
-						angle = 270;
-					}
-				}
-
-				this.angle = angle * (Math.PI/180);
-				this.rotation = angle;
+				this.angle = this.rotation * (Math.PI/180);
 
 				this.findComponents().firstWithType('AngleMovement').enable();
 			});

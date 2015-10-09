@@ -10,6 +10,7 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('EnemyShip_2_Type', require('enemy-ship-2'));
 
 			this.componentPool.createPool('AngleMovement', require('movement-angle'));
+			this.componentPool.createPool('FollowWayPoints', require('follow-way-points'));
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
 			this.componentPool.createPool('DestroyOnHpDepleted', require('destroy-on-hp-depleted'));
 
@@ -22,12 +23,13 @@ define(function(require) {
 			this.componentPool.createConfiguration("Activate_EnemyShip_On_View", commonBundle.getActivateOnViewPoolId());
 			
 			this.componentPool.createConfiguration("EnemyShipAngleMovement", "AngleMovement");
+			this.componentPool.createConfiguration("EnemyShipFollowWayPoints", "FollowWayPoints");
 			this.componentPool.createConfiguration("EnemyShipDestroyExplosions", "DestroyExplosions")
 				.args({
 					effect: explosionsBundle.getMediumExplosionsEffectId()
 				});
 			this.componentPool.createConfiguration("EnemyShipDestroyOnHpDepleted", "DestroyOnHpDepleted");
-			
+
 			this.componentPool.createConfiguration("EnemyShip_1_Renderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
 					frameWidth: 40,
@@ -50,57 +52,29 @@ define(function(require) {
 					path: gb.assetMap()["ENEMYSHIP2.PNG"]
 				});
 
-			this.gameObjectPool.createConfiguration('generator-enemy-ship-0-short', 'EnemyShip_1_Type')
+			this.gameObjectPool.createConfiguration('generator-enemy-ship-0', 'EnemyShip_1_Type')
 				.args({
 					hp: 3,
-					moveTime: 1000,
 					speed: 120
 				})
 				.addComponent('EnemyShipCircleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.setRenderer('EnemyShip_1_Renderer')
 				.childOnly();
 
-			this.gameObjectPool.createConfiguration('generator-enemy-ship-0-long', 'EnemyShip_1_Type')
-				.args({
-					hp: 3,
-					moveTime: 1200,
-					speed: 120
-				})
-				.addComponent('EnemyShipCircleCollider')
-				.addComponent('Activate_EnemyShip_On_View')
-				.addComponent('EnemyShipAngleMovement')
-				.addComponent('EnemyShipDestroyExplosions')
-				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShip_1_Renderer')
-				.childOnly();
-
-			this.gameObjectPool.createConfiguration('generator-enemy-ship-1-short', 'EnemyShip_1_Type')
+			this.gameObjectPool.createConfiguration('generator-enemy-ship-1', 'EnemyShip_1_Type')
 				.args({
 					hp: 5,
-					moveTime: 700,
 					speed: 140
 				})
 				.addComponent('EnemyShipCircleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
-				.addComponent('EnemyShipDestroyExplosions')
-				.addComponent('EnemyShipDestroyOnHpDepleted')
-				.setRenderer('EnemyShip_1_Renderer')
-				.childOnly();
-
-			this.gameObjectPool.createConfiguration('generator-enemy-ship-1-long', 'EnemyShip_1_Type')
-				.args({
-					hp: 5,
-					moveTime: 900,
-					speed: 140
-				})
-				.addComponent('EnemyShipCircleCollider')
-				.addComponent('Activate_EnemyShip_On_View')
-				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.setRenderer('EnemyShip_1_Renderer')
@@ -114,6 +88,7 @@ define(function(require) {
 				.addComponent('EnemyShipCircleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.setRenderer('EnemyShip_2_Renderer')
@@ -128,6 +103,7 @@ define(function(require) {
 				.addComponent('EnemyShipCircleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.setRenderer('EnemyShip_2_Renderer')

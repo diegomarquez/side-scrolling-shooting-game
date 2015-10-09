@@ -1,6 +1,8 @@
-define(["editor-game-object-container", "timer-factory", "util", "gb"], function(GameObject, TimerFactory, Util, Gb) {
+define(["editor-game-object-container", "timer-factory", "util", "matrix-3x3", "gb"], function(GameObject, TimerFactory, Util, Matrix, Gb) {
 	
 	var selfDecompose = {};
+	var r = {};
+	var m = new Matrix();
 
 	var Generator = GameObject.extend({
 		init: function() {
@@ -116,7 +118,12 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 				angle: (selfDecompose.rotation - 90) * (Math.PI/180),
 				rotation: (selfDecompose.rotation - 90),
 				x: selfDecompose.x,
-				y: selfDecompose.y
+				y: selfDecompose.y,
+				wayPoints: this.findChildren().allWithType('GeneratorWayPoint').map(function (child) {
+					child.getTransform(r, m);
+
+					return { x: r.x, y: r.y };
+				})
 			});
 
 			var viewportList = object.getViewportList();

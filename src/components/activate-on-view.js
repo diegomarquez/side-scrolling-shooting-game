@@ -35,7 +35,8 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 
 	var deactivateComponents = function() {
 		var components = this.parent.findComponents().not().all(function(component) {
-			return component.poolId == require('common-bundle').getActivateOnViewPoolId();
+			return component.poolId == require('common-bundle').getActivateOnViewPoolId() ||
+				   component.poolId == 'ConnectSimilar';
 		});
 		
 		if (components) {
@@ -47,7 +48,8 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 
 	var activateComponents = function() {
 		var components = this.parent.findComponents().not().all(function(component) {
-			return component.poolId == require('common-bundle').getActivateOnViewPoolId();
+			return component.poolId == require('common-bundle').getActivateOnViewPoolId() ||
+				   component.poolId == 'ConnectSimilar';
 		});
 		
 		if (components) {

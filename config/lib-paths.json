@@ -10,5 +10,6 @@
 	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel",
 	"tweenlite": "./lib/gsap/src/uncompressed/TweenLite",
 	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite",
+	"bezier": "./lib/gsap/src/uncompressed/plugins/BezierPlugin",
 	"ease": "./lib/gsap/src/uncompressed/easing/EasePack"
 }

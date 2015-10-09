@@ -1,36 +1,36 @@
 {
 	"jquery-ui": {
-	  "export": "$",
-	  "deps": ["jquery"]
+		"export": "$",
+		"deps": ["jquery"]
 	},
 
-  "jquery-selectBoxIt": {
-    "deps": ["jquery", "jquery-ui"]
-  },
+	"jquery-selectBoxIt": {
+		"deps": ["jquery", "jquery-ui"]
+	},
 
-  "jquery-transit": {
-    "deps": ["jquery"]
-  },
+	"jquery-transit": {
+		"deps": ["jquery"]
+	},
 
-  "jscrollpane": {
-    "deps": ["jquery", "jquery-mousewheel"]
-  },
+	"jscrollpane": {
+		"deps": ["jquery", "jquery-mousewheel"]
+	},
 
-  "tweenlite": {
-		"exports": "Tweenlite",
+	"tweenlite": {
+		"exports": "TweenLite",
 		"deps": ["ease"],
 	},
 
 	"timelinelite": {
 		"exports": "TimelineLite",
-		"deps": ["tweenlite", "ease"],
+		"deps": ["tweenlite"],
 	},
 
-  "bootstrap": {
-    "deps": ["jquery", "jquery-ui"]
-  },
+	"bootstrap": {
+		"deps": ["jquery", "jquery-ui"]
+	},
 
-  "bootstrap-toogle": {
-    "deps": ["jquery", "bootstrap"]
-  }
+	"bootstrap-toogle": {
+		"deps": ["jquery", "bootstrap"]
+	}
 }

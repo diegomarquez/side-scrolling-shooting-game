@@ -49,6 +49,32 @@ define(function(require) {
 			this.componentPool.createConfiguration("GeneratorDamageOnHpDepleted", "DamageOnHpDepleted");
 			// ======================
 
+			this.gameObjectPool.createDynamicPool('GeneratorWayPoint', require('generator-way-point'));
+
+			this.componentPool.createPool('AutoHide', require('auto-hide'));
+			this.componentPool.createPool('ConnectSimilar', require('connect-similar-game-objects'));
+
+			this.componentPool.createConfiguration("GeneratorWayPointRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["GENERATORWAYPOINT.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("AutoHide", "AutoHide");
+
+			this.componentPool.createConfiguration("ConnectSimilarGeneratorWayPoints", "ConnectSimilar")
+				.args({
+					objectType: 'GeneratorWayPoint'
+				});
+
+			this.gameObjectPool.createConfiguration('GeneratorWayPoint', 'GeneratorWayPoint')
+				.args({
+					skipDebug: true
+				})
+				.addComponent('AutoHide')
+				.setRenderer('GeneratorWayPointRenderer')
+				.childOnly();
+
 			this.componentPool.createConfiguration("GeneratorRenderer", commonBundle.getAnimationsBitmapRendererPoolId())
 				.args({
 					startingLabel: 'half-open',
@@ -129,118 +155,88 @@ define(function(require) {
 
 			// Generator Configurations
 
-			this.gameObjectPool.createConfiguration('ship-generator-0-short', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-0', 'GeneratorType')
 				.args({
 					hp: 3,
 					amount: 3,
-					objectType: 'generator-enemy-ship-0-short'
+					objectType: 'generator-enemy-ship-0'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
 				.addComponent('GeneratorDestroyOnHpDepleted')
 				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
 				.setRenderer('GeneratorRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
 
-			this.gameObjectPool.createConfiguration('ship-generator-0-long', 'GeneratorType')
-				.args({
-					hp: 3,
-					amount: 3,
-					objectType: 'generator-enemy-ship-0-long'
-				})
-				.addComponent('GeneratorCircleCollider')
-				.addComponent('Activate_Generator_On_View')
-				.addComponent('GeneratorDestroyOnHpDepleted')
-				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
-				.enemyCategory()
-				.weakEnemyTier();
-
-			this.gameObjectPool.createConfiguration('ship-generator-1-short', 'GeneratorType')
+			this.gameObjectPool.createConfiguration('ship-generator-1', 'GeneratorType')
 				.args({
 					hp: 30,
 					amount: 4,
-					objectType: 'generator-enemy-ship-1-short'
+					objectType: 'generator-enemy-ship-1'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
 				.addComponent('GeneratorDestroyOnHpDepleted')
 				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
 				.setRenderer('GeneratorRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
 
-			this.gameObjectPool.createConfiguration('ship-generator-1-long', 'GeneratorType')
-				.args({
-					hp: 30,
-					amount: 4,
-					objectType: 'generator-enemy-ship-1-long'
-				})
-				.addComponent('GeneratorCircleCollider')
-				.addComponent('Activate_Generator_On_View')
-				.addComponent('GeneratorDestroyOnHpDepleted')
-				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('GeneratorRenderer')
-				.enemyCategory()
-				.strongEnemyTier();
-
-			this.gameObjectPool.createConfiguration('boss-ship-generator-0-short', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-0', 'BossGeneratorType')
 				.args({
 					hp: 10,
 					amount: 3,
-					objectType: 'generator-enemy-ship-0-short'
+					objectType: 'generator-enemy-ship-0'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.weakBossHelperEnemyTier();
 
-			this.gameObjectPool.createConfiguration('boss-ship-generator-0-long', 'BossGeneratorType')
-				.args({
-					hp: 15,
-					amount: 3,
-					objectType: 'generator-enemy-ship-0-long'
-				})
-				.addComponent('GeneratorCircleCollider')
-				.addComponent('Activate_Generator_On_View')
-				.addComponent('GeneratorDamageOnHpDepleted')
-				.addComponent('GeneratorDamageExplosions')
-				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('BossGeneratorRenderer')
-				.enemyCategory()
-				.weakBossHelperEnemyTier();
-
-			this.gameObjectPool.createConfiguration('boss-ship-generator-1-short', 'BossGeneratorType')
+			this.gameObjectPool.createConfiguration('boss-ship-generator-1', 'BossGeneratorType')
 				.args({
 					hp: 10,
 					amount: 4,
-					objectType: 'generator-enemy-ship-1-short'
+					objectType: 'generator-enemy-ship-1'
 				})
 				.addComponent('GeneratorCircleCollider')
 				.addComponent('Activate_Generator_On_View')
 				.addComponent('GeneratorDamageOnHpDepleted')
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
-				.setRenderer('BossGeneratorRenderer')
-				.enemyCategory()
-				.strongBossHelperEnemyTier();
-
-			this.gameObjectPool.createConfiguration('boss-ship-generator-1-long', 'BossGeneratorType')
-				.args({
-					hp: 15,
-					amount: 4,
-					objectType: 'generator-enemy-ship-1-long'
-				})
-				.addComponent('GeneratorCircleCollider')
-				.addComponent('Activate_Generator_On_View')
-				.addComponent('GeneratorDamageOnHpDepleted')
-				.addComponent('GeneratorDamageExplosions')
-				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.strongBossHelperEnemyTier();
