@@ -7,6 +7,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 			this.cableCount = null;
 			this.destroyEffect = null;
 			this.colliderId = null;
+			this.cannons = null;
 
 			this.onPlayerStop = function() {
 				var cables = this.findChildren().allWithType("boss-1-cables");
@@ -14,24 +15,41 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				this.cableCount = cables.length;
 
 				// Signal boss weak spots to start
-				for (var i=0; i < this.cableCount; i++) {
+				for (var i = 0; i < this.cableCount; i++) {
 					cables[i].onBossStart();
 					cables[i].on(cables[i].DAMAGE, this, this.onDamage);
 				}
 
-				var cannons = Root.findChildren().recurse().all(function(child) {
-					return child.poolId == "BossCannonBase" || 
-						   child.poolId == "BossDoubleCannonBase" ||
-						   child.poolId == "BossGeneratorType" 
+				// Get all the nearby Boss helpers
+				this.cannons = Root.findChildren().recurse().all(function(child) {
+					return (child.poolId == "BossCannonBase" ||  child.poolId == "BossDoubleCannonBase" || child.poolId == "BossGeneratorType") && child.getViewportVisibility('Main'); 
 				});
 
 				// Signal boss cannos to start
-				for (var i=0; i < cannons.length; i++) {
-					if (cannons[i].getViewportVisibility('Main')) {
-						cannons[i].onBossStart();   
-					}
+				for (var i = 0; i < this.cannons.length; i++) {
+					this.cannons[i].onBossStart();
+				}
+
+				// Get other bosses
+				this.otherBosses = null;
+
+				this.otherBosses = Root.findChildren().recurse().all(function(child) {
+					return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3") && child.getViewportVisibility('Main');
+				});
+
+				// If there are other bosses present, set up a delegate to get informed when they are destroyed
+				if (this.otherBosses) {		
+					for (var i=0; i < this.otherBosses.length; i++) {
+						this.otherBosses[i].once('destroyed', this, function(boss) {
+							if (this.isActive()) {
+								this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
+							}
+						});
+					}	
 				}
 			}
+
+			this.otherBosses = null;
 		},
 
 		editorStart: function() {
@@ -61,33 +79,45 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					var explosionsGenerator = Gb.addComponentTo(this, this.destroyEffect);
 
 					// Remove collision component
-					this.removeComponent(this.findComponents().firstWithType(this.colliderId));
+					this.removeComponent(this.findComponents().firstWithType(this.colliderId));  
 
-					// When the explosion generator is finished, hide the cannon
-					explosionsGenerator.once(explosionsGenerator.STOP_CREATION, this, function() {
-						// Do something to to hide properly the removal of the boss
-					});  
+					// When the last explosion is done with it's animation, check if this is the last boss standing
+					explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+						
+						// Recycle the boss
+						Gb.reclaimer.mark(this);
 
-					var cannons = Root.findChildren().recurse().all(function(child) {
-						return child.poolId == "BossCannonBase" || 
-							   child.poolId == "BossDoubleCannonBase" ||
-							   child.poolId == "BossGeneratorType" 
+						// Check if all bosses have been destroyed to resume scrolling
+						if (this.otherBosses && this.otherBosses.length == 0) {
+							PlayerGetter.get().move();
+							PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+						}
+
 					});
 
-					// Signal all cannons that the boss has been destroyed
-					for (var i=0; i < cannons.length; i++) {
-						if (cannons[i].getViewportVisibility('Main')) {
-							cannons[i].onBossDestroy();
+					// Signal other bosses
+					this.execute('destroyed', this);
+
+					// Check if all bosses have been destroyed
+					if (this.otherBosses && this.otherBosses.length == 0) {
+						// Signal all cannons that all bosses has been destroyed
+						if (this.cannons) {
+							for (var i=0; i < this.cannons.length; i++) {
+								this.cannons[i].onBossDestroy();
+							}
+
+							this.cannons.length = 0;
 						}
 					}
-
-					// When the last explosion is done with it's animation, mark the cannon for recycling
-					explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-						Gb.reclaimer.mark(this);
-						PlayerGetter.get().move();
-					});
 				}
 			}
+		},
+
+		recycle: function() {
+			this.cannons = null;
+			this.otherBosses = null;
+			
+			this._super();
 		}
 	});
 

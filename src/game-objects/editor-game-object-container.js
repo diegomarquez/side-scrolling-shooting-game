@@ -2,6 +2,9 @@ define(["game-object-container", "editor-config"], function(GameObjectContainer,
 	var EditorGameObjectContainer = GameObjectContainer.extend({
 		init: function() {
 			this._super();
+
+			this.started = false;
+			this.structuralChanged = false;
 		},
 
 		reset: function() {

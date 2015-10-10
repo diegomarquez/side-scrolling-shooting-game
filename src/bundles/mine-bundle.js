@@ -20,7 +20,14 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("Activate_Mine_On_View", commonBundle.getActivateOnViewPoolId());
 			this.componentPool.createConfiguration("MineAngleMovement", "AngleMovement");
-			this.componentPool.createConfiguration("MineWobbleMovement", "WobbleMovement");
+			this.componentPool.createConfiguration("MineWobbleMovement", "WobbleMovement")
+				.args({
+					speedX: 1.2,
+					speedY: 1.5,
+					amplitudeX: 0.3,
+					amplitudeY: 0.3
+				});
+
 			this.componentPool.createConfiguration("MineDestroyExplosions", "DestroyExplosions")
 				.args({
 					effect: explosionsBundle.getMediumExplosionsEffectId()
@@ -33,7 +40,8 @@ define(function(require) {
 					frameDelay: 0.1,
 					frameCount: 5,
 					pingPong: true,
-					path: gb.assetMap()["MINE.PNG"]
+					path: gb.assetMap()["MINE.PNG"],
+					offset: 'center'
 				});
 
 			this.gameObjectPool.createConfiguration('mine-0', 'MineType')

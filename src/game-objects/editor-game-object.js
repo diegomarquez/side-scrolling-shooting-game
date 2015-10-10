@@ -2,6 +2,9 @@ define(["game-object", "editor-config"], function(GameObject, EditorConfig) {
 	var EditorGameObject = GameObject.extend({
 		init: function() {
 			this._super();
+
+			this.started = false;
+			this.structuralChanged = false;
 		},
 
 		reset: function() {

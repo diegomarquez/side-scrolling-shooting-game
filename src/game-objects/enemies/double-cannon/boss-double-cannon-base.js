@@ -60,6 +60,9 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 		},
 
 		onBossStart: function() {
+			if (this.started)
+				return;
+			
 			this.started = true;
 			this.renderer.play();
 			this.renderer.on(this.renderer.COMPLETE_BACK, this, this.onCompleteBackAnimation);

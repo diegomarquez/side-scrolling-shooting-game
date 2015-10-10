@@ -24,8 +24,6 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.regenTimer.on('complete', function() {
 				this.eye.regen(40);
 			});
-
-			this.target = PlayerGetter.get();
 		},
 
 		deActivate: function() {
@@ -63,6 +61,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 		onPlayerStop: function() {
 			this.eye = this.findChildren().firstWithType("boss-3-eye");
 			
+			this.target = PlayerGetter.get();
+			
 			this.eye.on('damage', this, function() {
 				if (this.hp > 0) {
 					this.hp--;
@@ -78,7 +78,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 
 						this.target = null;
 
-						this.execute('destroyed');
+						this.execute('destroyed', this);
 
 						if (this.otherBosses && this.otherBosses.length == 0) {
 							// Signal all cannons that the boss has been destroyed

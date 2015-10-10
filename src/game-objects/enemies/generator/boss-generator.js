@@ -13,7 +13,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		editorStart: function() {
-				
+			this.started = false;		
 		},
 
 		deActivate: function() {
@@ -77,6 +77,11 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		onBossStart: function() {
+			if (this.started)
+				return;
+
+			this.started = true;
+
 			if (this.hp == 0)
 				throw new Error('Missing hp');
 
