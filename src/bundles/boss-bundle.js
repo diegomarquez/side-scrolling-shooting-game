@@ -61,12 +61,12 @@ define(function(require) {
 					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
 					colliderId: "Boss_1_Collider"
 				})
-				.addChild("boss-1-cables", {rotation: 0})
-				.addChild("boss-1-cables", {rotation: 0})
-				.addChild("boss-1-cables", {rotation: 0})
-				.addChild("boss-1-cables", {rotation: 180})
-				.addChild("boss-1-cables", {rotation: 180})
-				.addChild("boss-1-cables", {rotation: 180})
+				.addChild("boss-1-cables", {rotation: 0, x: -50, y: -160 })
+				.addChild("boss-1-cables", {rotation: 0, x: 0, y: -160 })
+				.addChild("boss-1-cables", {rotation: 0, x: 50, y: -160})
+				.addChild("boss-1-cables", {rotation: 180, x: -50, y: 160})
+				.addChild("boss-1-cables", {rotation: 180, x: 0, y: 160})
+				.addChild("boss-1-cables", {rotation: 180, x: 50, y: 160})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer")
