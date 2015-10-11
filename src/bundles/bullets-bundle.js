@@ -112,7 +112,7 @@ define(function(require) {
 				.args({
 					speed: 100
 				})
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("ArrowBulletRenderer");
 
@@ -120,7 +120,7 @@ define(function(require) {
 				.args({
 					speed: 220
 				})
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("ArrowBulletRenderer");
 
@@ -135,7 +135,7 @@ define(function(require) {
 					speed: 250
 				})
 				.addComponent('BulletRotate')
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("RoundBulletRenderer");
 
@@ -144,7 +144,7 @@ define(function(require) {
 					speed: 270
 				})
 				.addComponent('BulletRotate')
-				.addComponent(require('particle-generator-bundle').getCannonBulletCollisionParticlesId())
+				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("RoundBulletRenderer");
 
