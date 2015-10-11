@@ -12,6 +12,9 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.fly = Gb.create('Fly', 'First', viewports, { x: -1000, y: 50 });
     	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -1000, y: 230 });
 
+    	this.controls_1 = Gb.create('Controls_1', 'First', viewports, { x: -1000, y: 350 });
+    	this.controls_2 = Gb.create('Controls_2', 'First', viewports, { x: -1000, y: 390 });
+
     	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 });
     	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 });
     	
@@ -40,6 +43,8 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
 		this.tl.to(this.fly, 0.8, { x: 100 });
 		this.tl.to(this.shoot, 0.8, { x: Gb.canvas.width/2 });
+		this.tl.to(this.controls_1, 0.8, { x: Gb.canvas.width/2 });
+		this.tl.to(this.controls_2, 0.8, { x: Gb.canvas.width/2 });
 
         if (this.custom) {
 		    this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);

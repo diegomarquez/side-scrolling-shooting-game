@@ -36,6 +36,28 @@ define(function(require) {
 					size: 120
 				});
 
+			this.gameObjectPool.createConfiguration("Controls_1", commonBundle.getGameObjectPoolId())
+				.setRenderer("TextRenderer", {
+					name: 'splash-controls-1',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					text: 'Press "← ↑ → ↓" to Move',
+					font: 'Russo One',
+					offset: 'center',
+					size: 25
+				});
+
+			this.gameObjectPool.createConfiguration("Controls_2", commonBundle.getGameObjectPoolId())
+				.setRenderer("TextRenderer", {
+					name: 'splash-controls-2',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					text: 'Press "A" to Shoot',
+					font: 'Russo One',
+					offset: 'center',
+					size: 25
+				});
+
 			this.gameObjectPool.createConfiguration("Play", commonBundle.getGameObjectContainerPoolId())
 				.addChild("MarkerArrow", { rotation: 90,  x: 200, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -200, y: 0 })
