@@ -17,10 +17,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
     	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 });
     	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 });
-    	
-    	if (LocalStorage.getScenesCount() > 0) {
-    		this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 160 });			
-    	}
+    	this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 160 });			
 
     	this.tl = new TimelineLite({
     		onComplete: function() {

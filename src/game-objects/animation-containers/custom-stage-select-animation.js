@@ -194,7 +194,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 				this.stageNames[i].renderer.Text = this.scenes[startIndex + i];	
 				this.stageNames[i].validLevel = true;
 			} else {
-				this.stageNames[i].renderer.Text = '---';
+				this.stageNames[i].renderer.Text = 'no data';
 				this.stageNames[i].validLevel = false;
 			}
 		}	
