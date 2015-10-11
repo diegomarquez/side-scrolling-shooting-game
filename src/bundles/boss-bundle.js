@@ -151,7 +151,8 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("boss-2", "Boss_2_Core")
 				.args({
 					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
-					colliderId: "Boss_2_Core_Collider"
+					colliderId: "Boss_2_Core_Collider",
+					skipDebug: true
 				})
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_2_Core_Collider")
@@ -248,7 +249,8 @@ define(function(require) {
 					rate: 250,
 					bullets: 1000,
 					burstAmount: 5,
-					bulletType: 'blob-bullet-fast'
+					bulletType: 'blob-bullet-fast',
+					skipDebug: true
 				})
 				.addChild('FirePosition', { x: 16, y: 0})
 				.addComponent('Activate_Boss_On_View')
@@ -261,7 +263,8 @@ define(function(require) {
 					destroyExplosions: explosionsBundle.getMediumExplosionsEffectId(),
 					hp: 35,
 					x: 0,
-					y: 0
+					y: 0,
+					skipDebug: true
 				})
 				.addChild('boss-3-inner-eye')
 				.addComponent('Activate_Boss_On_View')

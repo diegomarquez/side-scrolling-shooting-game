@@ -63,7 +63,8 @@ define(function(require) {
 					burstAmount: 1,
 					x: 0,
 					y: -2,
-					bulletType: 'cannon-bullet-slow'
+					bulletType: 'cannon-bullet-slow',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 29 , y: 1 })
@@ -78,7 +79,8 @@ define(function(require) {
 					burstAmount: 1,
 					x: 0,
 					y: -2,
-					bulletType: 'cannon-bullet-fast'
+					bulletType: 'cannon-bullet-fast',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 29 , y: 1 })
@@ -92,7 +94,8 @@ define(function(require) {
 					bullets: -1,
 					burstAmount: 4,
 					y: -15,
-					bulletType: 'cannon-bullet-slow'
+					bulletType: 'cannon-bullet-slow',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 57 , y: 1 })
@@ -106,7 +109,8 @@ define(function(require) {
 					bullets: -1,
 					burstAmount: 3,
 					y: -15,
-					bulletType: 'cannon-bullet-fast'
+					bulletType: 'cannon-bullet-fast',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.addChild('FirePosition', { x: 57 , y: 1 })
@@ -439,7 +443,8 @@ define(function(require) {
 					missiles: 6,
 					burstAmount: 3,
 					rotation: 45,
-					missileType: 'missile-slow'
+					missileType: 'missile-slow',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("MissileTurretShooterRenderer")
@@ -452,7 +457,8 @@ define(function(require) {
 					missiles: 12,
 					burstAmount: 3,
 					rotation: 45,
-					missileType: 'missile-fast'
+					missileType: 'missile-fast',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("MissileTurretShooterRenderer")
@@ -465,7 +471,8 @@ define(function(require) {
 					missiles: 500,
 					burstAmount: 4,
 					rotation: 45,
-					missileType: 'missile-slow'
+					missileType: 'missile-slow',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("BossMissileTurretShooterRenderer")
@@ -478,7 +485,8 @@ define(function(require) {
 					missiles: 500,
 					burstAmount: 5,
 					rotation: 45,
-					missileType: 'missile-fast'
+					missileType: 'missile-fast',
+					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
 				.setRenderer("BossMissileTurretShooterRenderer")
@@ -486,6 +494,9 @@ define(function(require) {
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("missile-turret-hinge", "editor-game-object")
+				.args({
+					skipDebug: true
+				})
 				.setRenderer("MissileTurretHingeRenderer")
 				.disableMouseSupport()
 				.childOnly();
