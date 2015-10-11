@@ -161,7 +161,11 @@ define(function(require) {
 			this.mainContainer.appendChild(titleContainer);
 			this.mainContainer.appendChild(controlsContainer);
 
-			document.getElementById('player-controls').appendChild(document.createTextNode('Press "ESC" key to exit'));
+			document.getElementById('player-controls').appendChild(document.createTextNode('ESC to Exit'));
+			document.getElementById('player-controls').appendChild(document.createElement('br'));
+			document.getElementById('player-controls').appendChild(document.createTextNode('Arrows to Move'));
+			document.getElementById('player-controls').appendChild(document.createElement('br'));
+			document.getElementById('player-controls').appendChild(document.createTextNode('A to Shoot'));
 		},
 
 		removeContainer: function() {			
