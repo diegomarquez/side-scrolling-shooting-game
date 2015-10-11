@@ -243,19 +243,23 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 			// Movement independant of the viewport
 			if (Keyboard.isKeyDown(Keyboard.GAME_LEFT)) {
-				this.viewportOffsetX -= this.speed * delta;
+				if ((this.viewportOffsetX - this.speed * delta) > 20)
+					this.viewportOffsetX -= this.speed * delta;
 			}
 
 			if (Keyboard.isKeyDown(Keyboard.GAME_RIGHT)) {
-				this.viewportOffsetX += this.speed * delta;
+				if ((this.viewportOffsetX + this.speed * delta) < Gb.canvas.width-20)
+					this.viewportOffsetX += this.speed * delta;
 			}
 
 			if (Keyboard.isKeyDown(Keyboard.GAME_UP)) {
-				this.viewportOffsetY -= this.speed * delta;
+				if ((this.viewportOffsetY - this.speed * delta) > 20)
+					this.viewportOffsetY -= this.speed * delta;
 			}
 
 			if (Keyboard.isKeyDown(Keyboard.GAME_DOWN)) {
-				this.viewportOffsetY += this.speed * delta;
+				if ((this.viewportOffsetY + this.speed * delta) < Gb.canvas.height-20)
+					this.viewportOffsetY += this.speed * delta;
 			}
 		},
 
