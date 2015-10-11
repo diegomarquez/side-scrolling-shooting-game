@@ -26,6 +26,10 @@ define(function(require) {
 			});
 		},
 
+		unsetFollow: function(viewportName, go) {
+			delete this.viewportGameObjectPairs[viewportName];
+		},
+
 		update: function(delta) {
 			for (var viewportName in this.viewportGameObjectPairs) {
 				pair = this.viewportGameObjectPairs[viewportName];

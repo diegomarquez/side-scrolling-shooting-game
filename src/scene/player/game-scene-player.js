@@ -56,7 +56,17 @@ define(function(require) {
 			// Block the player controls
 			player.blockControls();
 
+			// Stop updating the logic of all the objects in the first group
 			gb.groups.stop_update('First');
+
+			// Stop following the player's ship mvement with the camera
+			viewportFollow.unsetFollow('Main', player);
+
+			// Remove the player's ship from the first update group
+			gb.groups.get('First').remove(player);
+
+			// Put it in the second group so it continues updating.
+			gb.groups.get('Second').add(player);			
 
 			// Show the complete message
 			gb.create('CompleteMessage', 'Second', this.viewports, {
