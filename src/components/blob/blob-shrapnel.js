@@ -19,52 +19,52 @@ define(["editor-component", "gb", "util"], function(Component, Gb, Util) {
 				
 				if (this.amount == 'x8') {
 					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 0,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+						angle: 0,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 90,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 90,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 180,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 180,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 270,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 270,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 45,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 45,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 135,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 135,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 225,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 225,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 
-						Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
-							angle: 315,
-							x: this.parent.x,
-							y: this.parent.y,
-						});
+					Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+						angle: 315,
+						x: this.parent.x,
+						y: this.parent.y,
+					});
 				}
 
 				if (this.amount == 'x4') {

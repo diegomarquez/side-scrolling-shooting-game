@@ -34,7 +34,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				this.otherBosses = null;
 
 				this.otherBosses = Root.findChildren().recurse().all(function(child) {
-					return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3") && child.getViewportVisibility('Main');
+					return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main');
 				});
 
 				// If there are other bosses present, set up a delegate to get informed when they are destroyed

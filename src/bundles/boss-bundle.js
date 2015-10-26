@@ -272,7 +272,98 @@ define(function(require) {
 				.addComponent('Boss_3_Wobble')
 				.setRenderer("OuterEyeRenderer")
 				.disableMouseSupport()
-				.childOnly();	
+				.childOnly();
+
+			// Boss 4 Spider
+			// =======================
+			
+			this.gameObjectPool.createDynamicPool('Boss_4_Body', require("boss-4-body"));
+
+			this.componentPool.createConfiguration("Boss_4_Body_Collider", commonBundle.getPolygonColliderPoolId())
+				.args({ id:'bossColliderId', points: getPolygon(6, 50) });
+
+			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
+			this.componentPool.createPool('MovementAngle', require('movement-angle'));
+			this.componentPool.createPool('CheckOutOfBounds', require('check-out-of-bounds'));
+			this.componentPool.createPool('ShootingPattern', require('shooting-pattern'));
+
+			this.componentPool.createConfiguration("BossDestroyExplosions", "DestroyExplosions")
+				.args({
+					effect: explosionsBundle.getSmallExplosionsEffectId()
+				});
+
+			this.componentPool.createConfiguration("MovementAngle", "MovementAngle");
+			this.componentPool.createConfiguration("CheckOutOfBounds", "CheckOutOfBounds");
+			this.componentPool.createConfiguration("Boss4ShootingPattern", "ShootingPattern")
+				.args({
+					pattern: [
+						{
+							offset: 90,
+							angles: [-20, 0, 20],
+							waitTime: 800
+						},
+						{
+							offset: 90,
+							angles: [-10, 10],
+							waitTime: 800
+						},
+						{
+							offset: 90,
+							angles: [-25, -20, 0, 20, 25],
+							waitTime: 800
+						},
+						{
+							offset: 90,
+							angles: [-10, 10],
+							waitTime: 800
+						},
+						{
+							offset: 90,
+							angles: [-20, 0, 20],
+							waitTime: 800
+						}
+					],
+					objectType: 'cannon-bullet-fast'
+				});
+
+			this.componentPool.createConfiguration("Boss_4_Body_Renderer", commonBundle.getAnimationsBitmapRendererPoolId())
+				.args({
+					startingLabel: 'editor-frame',
+
+					frameWidth: 120,
+					frameHeight: 156,
+					frameDelay: 0.08,
+					frameCount: 5,
+					offset: 'center',
+					path: gb.assetMap()["BOSS4BODY.PNG"],
+
+					labels: {
+						'walking': {
+							loop: true,
+							frames: [0,1,2,3,4]
+						},
+						'editor-frame': {
+							loop: false,
+							frames: [0]
+						}
+					}
+				});
+
+			this.gameObjectPool.createConfiguration("boss-4", "Boss_4_Body")
+				.args({
+					destroyEffect: explosionsBundle.getSmallExplosionsEffectId(),
+					colliderId: "Boss_4_Body_Renderer"
+				})
+				.addComponent("Activate_Boss_On_View")
+				.addComponent("Boss_4_Body_Collider")
+				.addComponent("BossDestroyExplosions")
+				.addComponent("Boss4ShootingPattern")
+				.addComponent("MovementAngle")
+				.addComponent("CheckOutOfBounds")
+				.setRenderer("Boss_4_Body_Renderer")
+				.enemyCategory()
+				.bossEnemyTier(); 
+			
 		},
 	});
 

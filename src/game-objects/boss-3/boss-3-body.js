@@ -113,7 +113,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 
 			this.otherBosses = Root.findChildren().recurse().all(function(child)
 			{
-				return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3") && child.getViewportVisibility('Main'); 
+				return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main'); 
 			});
 
 			if (this.otherBosses) {		

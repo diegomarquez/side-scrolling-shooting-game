@@ -14,6 +14,7 @@ define(function() {
 	"BOSS3INNEREYE.PNG": "assets/images/Boss3/Boss3InnerEye.png",
 	"BOSS3OUTEREYE.PNG": "assets/images/Boss3/Boss3OuterEye.png",
 	"GENERATORWAYPOINT.PNG": "assets/images/Boss3/GeneratorWayPoint.png",
+	"BOSS4BODY.PNG": "assets/images/Boss4/Boss4Body.png",
 	"BOSSCANNONBASE.PNG": "assets/images/BossCannon/BossCannonBase.png",
 	"BOSSCANNONSHOOTER.PNG": "assets/images/BossCannon/BossCannonShooter.png",
 	"BOSSGENERATOR.PNG": "assets/images/BossGenerator.png",
