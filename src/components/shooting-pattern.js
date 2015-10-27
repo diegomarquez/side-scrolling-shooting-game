@@ -31,11 +31,17 @@ define(["editor-component", "gb"], function(Component, Gb) {
 			for (var i = 0; i < p.angles.length; i++) {
 				originDecompose = this.originMatrix.decompose(originDecompose);
 
-				Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+				var object = Gb.create(this.objectType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 					angle: originDecompose.rotation + p.angles[i] + p.offset,
 					x: originDecompose.x,
 					y: originDecompose.y
 				});
+
+				var viewportList = object.getViewportList();
+
+				for (var j = 0; j < viewportList.length; j++) {
+					Gb.viewports.get(viewportList[j].viewport).getLayer(viewportList[j].layer).moveGameObjectToBack(object);
+				}
 			}
 
 			if (this.index < this.pattern.length-1) {

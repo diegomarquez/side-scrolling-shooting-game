@@ -20,6 +20,12 @@ define(function(require) {
 					radius: 10
 				});
 
+			this.componentPool.createConfiguration("EnemySpiderCircleCollider", commonBundle.getCircleColliderPoolId())
+				.args({
+					id: 'enemySpiderColliderId', 
+					radius: 10
+				});
+
 			this.componentPool.createConfiguration("Activate_EnemyShip_On_View", commonBundle.getActivateOnViewPoolId());
 			
 			this.componentPool.createConfiguration("EnemyShipAngleMovement", "AngleMovement");
@@ -52,6 +58,17 @@ define(function(require) {
 					path: gb.assetMap()["ENEMYSHIP2.PNG"]
 				});
 
+			this.componentPool.createConfiguration("Spider_Helper_Renderer", commonBundle.getAnimationBitmapRendererPoolId())
+				.args({
+					frameWidth: 78,
+					frameHeight: 60,
+					frameDelay: 0.03,
+					frameCount: 5,
+					loop: true,
+					offset: 'center',
+					path: gb.assetMap()["SMALLSPIDER.PNG"]
+				});
+
 			this.gameObjectPool.createConfiguration('generator-enemy-ship-0', 'EnemyShip_1_Type')
 				.args({
 					hp: 3,
@@ -78,6 +95,38 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.setRenderer('EnemyShip_1_Renderer')
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration('generator-spider-0', 'EnemyShip_1_Type')
+				.args({
+					hp: 5,
+					speed: 200,
+					scaleX: 0.8,
+					scaleY: 0.8
+				})
+				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('Activate_EnemyShip_On_View')
+				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
+				.addComponent('EnemyShipDestroyExplosions')
+				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.setRenderer('Spider_Helper_Renderer')
+				.childOnly();
+
+			this.gameObjectPool.createConfiguration('generator-spider-1', 'EnemyShip_1_Type')
+				.args({
+					hp: 10,
+					speed: 200,
+					scaleX: 0.8,
+					scaleY: 0.8
+				})
+				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('Activate_EnemyShip_On_View')
+				.addComponent('EnemyShipAngleMovement')
+				.addComponent('EnemyShipFollowWayPoints')
+				.addComponent('EnemyShipDestroyExplosions')
+				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.setRenderer('Spider_Helper_Renderer')
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration('straight-line-ship-0', 'EnemyShip_2_Type')

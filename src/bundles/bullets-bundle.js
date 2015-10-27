@@ -90,6 +90,12 @@ define(function(require) {
 					offset: 'center',
 				});
 
+			this.componentPool.createConfiguration("WebBulletRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["WEBBULLET.PNG"],
+					offset: 'center',
+				});
+
 			this.componentPool.createConfiguration("MissileRenderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
 					pingPong: true,
@@ -190,6 +196,17 @@ define(function(require) {
 				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent("CannonBulletCollider")
 				.setRenderer("BlobBulletRenderer");
+
+			this.gameObjectPool.createConfiguration("boss-4-bullet", "CannonBullet")
+				.args({
+					speed: 180
+				})
+				.addComponent('BulletRotate')
+				.addComponent('BlobBulletDestroyExplosions')
+				.addComponent("CannonBulletCollider")
+				.setRenderer("WebBulletRenderer");
+
+			
 		},
 	});
 

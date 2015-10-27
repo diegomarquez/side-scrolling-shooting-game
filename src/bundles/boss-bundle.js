@@ -279,6 +279,9 @@ define(function(require) {
 			
 			this.gameObjectPool.createDynamicPool('Boss_4_Body', require("boss-4-body"));
 
+			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'));
+			this.gameObjectPool.createConfiguration("FirePosition", 'editor-game-object').childOnly();
+
 			this.componentPool.createConfiguration("Boss_4_Body_Collider", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'bossColliderId', points: getPolygon(6, 50) });
 
@@ -323,7 +326,7 @@ define(function(require) {
 							waitTime: 800
 						}
 					],
-					objectType: 'cannon-bullet-fast'
+					objectType: 'boss-4-bullet'
 				});
 
 			this.componentPool.createConfiguration("Boss_4_Body_Renderer", commonBundle.getAnimationsBitmapRendererPoolId())
@@ -360,6 +363,7 @@ define(function(require) {
 				.addComponent("Boss4ShootingPattern")
 				.addComponent("MovementAngle")
 				.addComponent("CheckOutOfBounds")
+				.addChild("FirePosition", { y: 30 })
 				.setRenderer("Boss_4_Body_Renderer")
 				.enemyCategory()
 				.bossEnemyTier(); 

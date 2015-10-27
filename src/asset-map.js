@@ -44,6 +44,7 @@ define(function() {
 	"PLAYEREXHAUST.PNG": "assets/images/PlayerExhaust.png",
 	"POWERUP.PNG": "assets/images/PowerUp.png",
 	"ROUNDBULLET.PNG": "assets/images/RoundBullet.png",
+	"SMALLSPIDER.PNG": "assets/images/SmallSpider.png",
 	"SPEEDUP.PNG": "assets/images/SpeedUp.png",
 	"WARNING.PNG": "assets/images/Warning.png",
 	"BIOHAZARD.PNG": "assets/images/biohazard.png",
@@ -51,6 +52,7 @@ define(function() {
 	"LEFTARROW.PNG": "assets/images/leftArrow.png",
 	"RIGHTARROW.PNG": "assets/images/rightArrow.png",
 	"UPARROW.PNG": "assets/images/upArrow.png",
+	"WEBBULLET.PNG": "assets/images/webBullet.png",
 	"SPACEINVADERS_FIRE.WAV": "assets/sound/SpaceInvaders_Fire.wav"
 };
 

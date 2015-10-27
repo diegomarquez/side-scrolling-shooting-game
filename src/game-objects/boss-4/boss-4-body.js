@@ -27,7 +27,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.activateOnViewComponent = this.findComponents().firstWithType('Activate_Boss_On_View');
 
 			this.shootingPatternComponent = this.findComponents().firstWithType('Boss4ShootingPattern');
-			this.shootingPatternComponent.setOrigin(this);
+			this.shootingPatternComponent.setOrigin(this.findChildren().firstWithType("FirePosition"));
 			
 			this.angle = (this.rotation + 90) * (Math.PI/180);
 

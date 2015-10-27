@@ -288,6 +288,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 					this.viewportOffsetX -= response.overlapV.x;
 					this.viewportOffsetY -= response.overlapV.y;
+
 					break;
 				
 				case 'CannonBullet':
@@ -298,7 +299,25 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 					}
 
 					break;
-				
+
+				case 'EnemyShip_1_Type':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
+
+					break;
+
+				case 'EnemyShip_2_Type':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
+
+					break;
+
 				case 'Laser':
 
 					if (!this.damageComponent.isEnabled()) {
@@ -365,7 +384,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 					break;
 
-				case 'MineType':
+				case 'Boss_4_Body':
 
 					if (!this.damageComponent.isEnabled()) {
 						this.damageComponent.enable();
@@ -374,6 +393,15 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 
 					this.viewportOffsetX -= response.overlapV.x;
 					this.viewportOffsetY -= response.overlapV.y;
+
+					break;
+
+				case 'MineType':
+
+					if (!this.damageComponent.isEnabled()) {
+						this.damageComponent.enable();
+						this.takeDamage(response.overlapV);
+					}
 
 					break;
 			}

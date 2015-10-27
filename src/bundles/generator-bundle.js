@@ -240,6 +240,50 @@ define(function(require) {
 				.setRenderer('BossGeneratorRenderer')
 				.enemyCategory()
 				.strongBossHelperEnemyTier();
+
+			this.gameObjectPool.createConfiguration('boss-spider-generator-0', 'BossGeneratorType')
+				.args({
+					hp: 10,
+					amount: 5,
+					objectType: 'generator-spider-0'
+				})
+				.addComponent('GeneratorCircleCollider')
+				.addComponent('Activate_Generator_On_View')
+				.addComponent('GeneratorDamageOnHpDepleted')
+				.addComponent('GeneratorDamageExplosions')
+				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
+				.setRenderer('BossGeneratorRenderer')
+				.enemyCategory()
+				.weakBossHelperEnemyTier();
+
+			this.gameObjectPool.createConfiguration('boss-spider-generator-1', 'BossGeneratorType')
+				.args({
+					hp: 10,
+					amount: 5,
+					objectType: 'generator-spider-1'
+				})
+				.addComponent('GeneratorCircleCollider')
+				.addComponent('Activate_Generator_On_View')
+				.addComponent('GeneratorDamageOnHpDepleted')
+				.addComponent('GeneratorDamageExplosions')
+				.addComponent('GeneratorDestroyExplosions')
+				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addChild('GeneratorWayPoint', { y : -20 })
+				.addChild('GeneratorWayPoint', { y : -40 })
+				.addChild('GeneratorWayPoint', { y : -60 })
+				.addChild('GeneratorWayPoint', { y : -80 })
+				.addChild('GeneratorWayPoint', { y : -100 })
+				.addChild('GeneratorWayPoint', { y : -120 })
+				.setRenderer('BossGeneratorRenderer')
+				.enemyCategory()
+				.strongBossHelperEnemyTier();
 		},
 	});
 
