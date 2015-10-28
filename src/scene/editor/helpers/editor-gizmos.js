@@ -35,31 +35,31 @@ define(function(require) {
 
 	  				getIconId: function(parent) {
 
-	  					if (parent.typeId == 'ScrollStopper') { 
+	  					if (parent.typeId == 'scroll-stopper') { 
 	  						return gizmoBundle.getScrollStopperId(); 
 	  					}
 	  					
-	  					if (parent.typeId == 'BossWarning') { 
+	  					if (parent.typeId == 'boss-warning') { 
 	  						return gizmoBundle.getBossWarningId(); 
 	  					}
 
-	  					if (parent.typeId == 'DirectionRight') { 
+	  					if (parent.typeId == 'direction-right') { 
 	  						return gizmoBundle.getRightDirectionId(); 
 	  					}
 	  					
-	  					if (parent.typeId == 'DirectionUp') { 
+	  					if (parent.typeId == 'direction-up') { 
 	  						return gizmoBundle.getUpDirectionId(); 
 	  					}
 	  					
-	  					if (parent.typeId == 'DirectionLeft') { 
+	  					if (parent.typeId == 'direction-left') { 
 	  						return gizmoBundle.getLeftDirectionId(); 
 	  					}
 	  					
-	  					if (parent.typeId == 'DirectionDown') { 
+	  					if (parent.typeId == 'direction-down') { 
 	  						return gizmoBundle.getDownDirectionId(); 
 	  					}
 
-	  					if (parent.typeId == 'StartPosition') { 
+	  					if (parent.typeId == 'start-position') { 
 	  						return gizmoBundle.getStartPositionId(); 
 	  					} 
 	  				},

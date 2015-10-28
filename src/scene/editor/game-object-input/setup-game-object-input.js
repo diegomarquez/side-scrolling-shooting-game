@@ -45,11 +45,11 @@ define(function(require) {
 		go.Dragable = true;
 
 		go.single(go.CONTEXT_MENU, this, function(mouseData) {
-			
+
 			if (editorConfig.isControlObject(mouseData.go.typeId)) {
 				this.controlObjectContextMenu.show(mouseData);
 			}
-			if (editorConfig.isDraggableOnlyObject(mouseData.go.typeId)) {
+			else if (editorConfig.isDraggableOnlyObject(mouseData.go.typeId)) {
 
 			}
 			else {

@@ -28,38 +28,38 @@ define(function(require) {
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("ScrollStopper", "ScrollStopper")
+			this.gameObjectPool.createConfiguration("scroll-stopper", "ScrollStopper")
 				.addComponent("ActivateControlOnView");
-			this.gameObjectPool.createConfiguration("BossWarning", "BossWarning")
+			this.gameObjectPool.createConfiguration("boss-warning", "BossWarning")
 				.addComponent("ActivateControlOnView");
 
-			this.gameObjectPool.createConfiguration("DirectionRight", "DirectionSetter")
+			this.gameObjectPool.createConfiguration("direction-right", "DirectionSetter")
 				.args({
 					angle: 0
 				})
 				.addComponent("ActivateControlOnView");
 			
-			this.gameObjectPool.createConfiguration("DirectionUp", "DirectionSetter")
+			this.gameObjectPool.createConfiguration("direction-up", "DirectionSetter")
 				.args({
 					angle: 270
 				})
 				.addComponent("ActivateControlOnView");
 			
-			this.gameObjectPool.createConfiguration("DirectionLeft", "DirectionSetter")
+			this.gameObjectPool.createConfiguration("direction-left", "DirectionSetter")
 				.args({
 					angle: 180
 				})
 				.addComponent("ActivateControlOnView");
 			
-			this.gameObjectPool.createConfiguration("DirectionDown", "DirectionSetter")
+			this.gameObjectPool.createConfiguration("direction-down", "DirectionSetter")
 				.args({
 					angle: 90
 				})
 				.addComponent("ActivateControlOnView");
 
-			this.gameObjectPool.createConfiguration("StartPosition", "StartPosition");
+			this.gameObjectPool.createConfiguration("start-position", "StartPosition");
 
-			this.gameObjectPool.createConfiguration("ChooseDirectionRight", "AngleDirectionSetter")
+			this.gameObjectPool.createConfiguration("choose-direction-right", "AngleDirectionSetter")
 				.args({ 
 					angle: 0,
 					rotation: 0
@@ -68,7 +68,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AngleDirectionSetterRenderer");
 
-			this.gameObjectPool.createConfiguration("ChooseDirectionUp", "AngleDirectionSetter")
+			this.gameObjectPool.createConfiguration("choose-direction-up", "AngleDirectionSetter")
 				.args({ 
 					angle: 270,
 					rotation: 270
@@ -77,7 +77,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AngleDirectionSetterRenderer");
 
-			this.gameObjectPool.createConfiguration("ChooseDirectionLeft", "AngleDirectionSetter")
+			this.gameObjectPool.createConfiguration("choose-direction-left", "AngleDirectionSetter")
 				.args({ 
 					angle: 180,
 					rotation: 180
@@ -86,7 +86,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AngleDirectionSetterRenderer");
 
-			this.gameObjectPool.createConfiguration("ChooseDirectionDown", "AngleDirectionSetter")
+			this.gameObjectPool.createConfiguration("choose-direction-down", "AngleDirectionSetter")
 				.args({ 
 					angle: 90,
 					rotation: 90
