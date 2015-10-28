@@ -16,6 +16,7 @@ define(function(require) {
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
+	var draggableOnlyObjects = null;
 	var controlGizmoGameObjects = null;
 	var colliderGizmoGameObjects = null;
 	var rotationGizmoGameObjects = null;
@@ -105,16 +106,6 @@ define(function(require) {
 			return require('gb').goPool.getConfigurationTypes({ objectCategory: category, enemyTier: enemyTier });
 		},
 
-		getControlObjects: function() {
-			var data = require('gb').goPool.getConfigurationTypes({ filterChilds: true, customOnly: false, objectCategory: null });
-
-			var self = this;
-
-			return data.filter(function (id) {
-				return self.isControlObject(id);
-			});
-		},
-
 		isMainViewport: function(viewport) {
 			return viewport.name == this.getMainViewportName();
 		},
@@ -125,6 +116,10 @@ define(function(require) {
 
 		isControlObject: function(id) {
 			return checkExistance(id, this.getControlObjects());
+		},
+
+		isDraggableOnlyObject: function(id) {
+			return checkExistance(id, this.getDraggableOnlyObjects());
 		},
 
 		isControlObjectGizmo: function(id) {
@@ -240,6 +235,18 @@ define(function(require) {
 			];
 
 			return controlObjects;
+		},
+
+		getDraggableOnlyObjects: function() {
+			if (draggableOnlyObjects) {
+				return draggableOnlyObjects;
+			}
+
+			draggableOnlyObjects = [
+				'GeneratorWayPoint'
+			];
+
+			return draggableOnlyObjects;
 		},
 
 		getControlGizmoObjects: function() {

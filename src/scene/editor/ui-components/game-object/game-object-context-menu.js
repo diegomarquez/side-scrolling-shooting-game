@@ -160,8 +160,6 @@ define(function(require) {
 								name: 'To Back',
 								icon: 'ui-icon-bullet',
 								click: function() {
-									debugger;
-
 									menu.v.getLayer(menu.l).moveGameObjectToBack(menu.go);
 								}
 							}

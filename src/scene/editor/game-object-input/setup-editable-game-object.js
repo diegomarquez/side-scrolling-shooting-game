@@ -122,6 +122,9 @@ define(function(require) {
 	}
 
 	var addEditorGizmos = function(object) {
+		if (editorConfig.isDraggableOnlyObject(object.typeId))
+			return;
+
 		editorGizmos.addGizmos(object);
 		
 		if (object.childs) {

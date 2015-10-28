@@ -49,11 +49,12 @@ define(function(require) {
 			if (editorConfig.isControlObject(mouseData.go.typeId)) {
 				this.controlObjectContextMenu.show(mouseData);
 			}
+			if (editorConfig.isDraggableOnlyObject(mouseData.go.typeId)) {
+
+			}
 			else {
 				this.contextMenu.show(mouseData);	
 			}
-
-			
 		});
 
 		go.single(go.CLICK, this, function(mouseData) {
