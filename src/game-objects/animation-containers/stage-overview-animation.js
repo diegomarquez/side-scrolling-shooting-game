@@ -7,103 +7,158 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     start: function() {
     	var viewports = [{viewport: 'Main', layer: 'Front'}];
 
-    	this.stages = Gb.create('Stages', 'First', viewports, { x: -300, y: 70 });
+    	this.gridX = 0;
+    	this.gridY = 0;
+
+    	this.stages = Gb.create('StageOverviewTitle', 'First', viewports, { x: Gb.canvas.width/2, y: -200 });
     	
-    	this.stageProgress = Gb.create('StageProgress', 'First', viewports, { x: -600, y: Gb.canvas.height/2 + 50 });
+    	this.topLeft = Gb.create('StageFrame', 'First', viewports, { x: -500, y: Gb.canvas.height/2-110 });
+    	this.bottomLeft = Gb.create('StageFrame', 'First', viewports, { x: -500, y: Gb.canvas.height/2+110 });
+    	this.topRight = Gb.create('StageFrame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2-110 });
+    	this.bottomRight = Gb.create('StageFrame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2+110 });
     	
-    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2 - 150, y: Gb.canvas.height*2 });
-    	this.startOption = Gb.create('Start', 'First', viewports, { x: Gb.canvas.width/2 + 150, y: Gb.canvas.height*2 });
-    	
-    	var markerIndex = LevelStorage.getLowestIncompleteLevelIndex() + 1;
-    	var marker = this.stageProgress.findChildren().firstWithType('StageMarker' + markerIndex);
-    	this.playerShipMarker = Gb.create('PlayerMarker', 'First', viewports, { x: marker.X, y: marker.Y - 70 });
-    	this.stageProgress.add(this.playerShipMarker);
+    	this.topLeft.select();
+
+    	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height*2 });
     	
     	this.tl = new TimelineLite({
     		onComplete: function() {
     			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
-					Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
-					Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+				Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+				Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
+				Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+				
+				Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
-					this.execute(this.ENTER);
+				this.execute(this.ENTER);
     		}.bind(this),
 
     		onReverseComplete: function() {
-    			if (this.backOption.selected) {
-						this.execute(this.BACK_EXIT);
-						return;
-					}
-
-					if (this.startOption.selected) {
-						this.execute(this.START_EXIT);
-						return;
-					}
+				this.execute(this.BACK_EXIT);
     		}.bind(this) 
     	});
 
-			this.tl.to(this.stages, 0.5, { x: Gb.canvas.width/2});
-			this.tl.to(this.stageProgress, 0.5, { x: Gb.canvas.width/2});
-			this.tl.staggerTo([this.backOption, this.startOption], 0.5, { y: Gb.canvas.height - 40 }, 0);
+			this.tl.to(this.stages, 0.5, { y: 50 }, 'title');
+    		this.tl.to(this.topLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+    		this.tl.to(this.bottomLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+    		this.tl.to(this.topRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+    		this.tl.to(this.bottomRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+			this.tl.to(this.backOption, 0.5, { y: Gb.canvas.height - 40 }, 'title');
 
 			this.tl.play();
 
-			this.onRightPress();			
+			this.onLeftPress();			
     }, 
 
     reverse: function() {
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+    	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
+		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.reverse();
     },
 
     onLeftPress: function() {
-    	var children = this.backOption.findChildren().allWithType("MarkerArrow");
+    	this.hideAllOptions();
+		
+		if (this.gridX > 0)
+			this.gridX--;
 
-    	this.backOption.selected = true;
-    	this.startOption.selected = false;
-
-			for (var i = 0; i < children.length; i++) {
-				children[i].show();
-			}
-
-			var children = this.startOption.findChildren().allWithType("MarkerArrow");
-
-			for (var i = 0; i < children.length; i++) {
-				children[i].hide();
-			}
+		this.showSelection();
     },
 
     onRightPress: function() {
+    	this.hideAllOptions();
+
+    	if (this.gridX < 1)
+    		this.gridX++;
+
+    	this.showSelection();
+    },
+
+    onUpPress: function() {
+    	this.hideAllOptions();
+
+    	if (this.gridY > 0)
+    		this.gridY--;
+
+    	this.showSelection();
+    },
+
+    onDownPress: function() {
+    	this.hideAllOptions();
+
+    	if (this.gridY < 2)
+    		this.gridY++;
+
+    	this.showSelection();
+    },
+
+    hideAllOptions: function() {
     	var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
-    	this.backOption.selected = false;
-    	this.startOption.selected = true;
+		for (var i = 0; i < children.length; i++) {
+			children[i].hide();
+		}
+		
+		this.topLeft.unselect();
+    	this.bottomLeft.unselect();
+    	this.topRight.unselect();
+    	this.bottomRight.unselect();
+    },
 
-			for (var i = 0; i < children.length; i++) {
-				children[i].hide();
-			}
+    showSelection: function() {
+    	if (this.gridX == 0 && this.gridY == 0) {
+  			this.topLeft.select();
+  		} else if (this.gridX == 0 && this.gridY == 1) {
+  			this.bottomLeft.select();
+  		} else if (this.gridX == 1 && this.gridY == 0) {
+  			this.topRight.select();
+  		} else if (this.gridX == 1 && this.gridY == 1) {
+  			this.bottomRight.select();
+  		} else {
+  			var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
-			var children = this.startOption.findChildren().allWithType("MarkerArrow");
-
-			for (var i = 0; i < children.length; i++) {
+  			for (var i = 0; i < children.length; i++) {
 				children[i].show();
 			}
+  		}
+    },
+
+    executeExitDelegate: function() {
+    	if (this.gridX == 0 && this.gridY == 0) {
+
+  		} else if (this.gridX == 0 && this.gridY == 1) {
+
+  		} else if (this.gridX == 1 && this.gridY == 0) {
+
+  		} else if (this.gridX == 1 && this.gridY == 1) {
+
+  		} else {
+  			this.execute(this.BACK_EXIT);	
+  		}
+    },
+
+    executeStartSelectedDelegate: function() {
+    	if (this.gridX == 0 && this.gridY == 0) {
+  			this.execute(this.START_SELECTED, 0);
+  		} else if (this.gridX == 0 && this.gridY == 1) {
+  			this.execute(this.START_SELECTED, 1);
+  		} else if (this.gridX == 1 && this.gridY == 0) {
+  			this.execute(this.START_SELECTED, 2);
+  		} else if (this.gridX == 1 && this.gridY == 1) {
+  			this.execute(this.START_SELECTED, 3);
+  		} else {
+
+  		}
     },
 
     onOptionSelected: function() {
     	this.reverse();
 
-    	if (this.backOption.selected) {
-				this.execute(this.BACK_SELECTED);
-				return;
-			}
-
-			if (this.startOption.selected) {
-				this.execute(this.START_SELECTED);
-				return;
-			}
+    	this.executeStartSelectedDelegate();
     },
 
     recycle: function() {
@@ -111,6 +166,8 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
 
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+    	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
+		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.kill();
@@ -118,17 +175,16 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     	this.tl = null;
     	this.stages = null;
     	this.backOption = null;
-    	this.startOption = null;
-    	this.stageProgress = null;
-    	this.playerShipMarker = null;
+    	this.topLeft = null;
+    	this.bottomLeft = null;
+    	this.topRight = null;
+    	this.bottomRight = null;
     }
   });
 
 	Object.defineProperty(StageOverview.prototype, "ENTER", { get: function() { return 'enter'; } });
-	Object.defineProperty(StageOverview.prototype, "BACK_SELECTED", { get: function() { return 'back_selected'; } });
-	Object.defineProperty(StageOverview.prototype, "START_SELECTED", { get: function() { return 'start_selected'; } });
 	Object.defineProperty(StageOverview.prototype, "BACK_EXIT", { get: function() { return 'back_exit'; } });
-	Object.defineProperty(StageOverview.prototype, "START_EXIT", { get: function() { return 'start_exit'; } });
+	Object.defineProperty(StageOverview.prototype, "START_SELECTED", { get: function() { return 'start_exit'; } });
 
   return StageOverview;
 });

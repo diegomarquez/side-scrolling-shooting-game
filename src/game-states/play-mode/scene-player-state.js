@@ -10,14 +10,14 @@ define(function(require) {
 	return function (name) {
 		var state = stateMachineFactory.createState(this, name);
 
-		state.addStartAction(function (args) {
+		state.addStartAction(function (levelIndex) {
 			// Clear update groups and viewports before doing anything else
 			gb.groups.removeAll();
 			gb.viewports.removeAll();
 		});
 
-		state.addStartAction(function () {
-			var level = levelStorage.getLowestIncompleteLevel();
+		state.addStartAction(function (levelIndex) {
+			var level = levelStorage.getLevel(levelIndex);
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
 				// Wait for the loader to close before going back to the previous state

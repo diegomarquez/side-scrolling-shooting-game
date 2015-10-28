@@ -6,6 +6,8 @@ define(function(require) {
   return function (name) {
     var state = stateMachineFactory.createState(this, name);
 
+    var selectedStage = -1;
+
     state.addStartAction(function (args) {
     	// Clear update groups and viewports before doing anything else
     	gb.groups.removeAll();
@@ -31,7 +33,10 @@ define(function(require) {
 	    }); 
 
 	    // If the 'start' option is selected, go to the scene player state
-	    stageOverview.on(stageOverview.START_SELECTED, this, function() {
+	    stageOverview.on(stageOverview.START_SELECTED, this, function (selectedStageIndex) {
+
+	    	selectedStage = selectedStageIndex;
+
 	    	loaderContainer.transition();
   		});
 
@@ -48,7 +53,7 @@ define(function(require) {
     });
 
     var nextState = function() {
-    	state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null });
+    	state.execute(state.NEXT, { nextInitArgs: selectedStage, lastCompleteArgs: null });
     }
 
     Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });

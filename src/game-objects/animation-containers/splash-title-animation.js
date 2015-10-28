@@ -38,16 +38,14 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     		}.bind(this) 
     	});
 
-		this.tl.to(this.fly, 0.8, { x: 100 });
-		this.tl.to(this.shoot, 0.8, { x: Gb.canvas.width/2 });
-		this.tl.to(this.controls_1, 0.8, { x: Gb.canvas.width/2 });
-		this.tl.to(this.controls_2, 0.8, { x: Gb.canvas.width/2 });
-
-        if (this.custom) {
-		    this.tl.staggerTo([this.play, this.custom, this.edit], 0.5, { y: '-=200' }, 0);
-        } else {
-            this.tl.staggerTo([this.play, this.edit], 0.5, { y: '-=200' }, 0);
-        }
+		this.tl.to(this.fly, 0.5, { x: 100 }, 'title');
+		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2 }, 'title');
+		this.tl.to(this.controls_1, 0.5, { x: Gb.canvas.width/2 }, 'controls');
+		this.tl.to(this.controls_2, 0.5, { x: Gb.canvas.width/2 }, 'controls');
+	    this.tl.to(this.play, 0.3, { y: '-=200' }, 'options');
+	    this.tl.to(this.edit, 0.3, { y: '-=200' }, 'options');
+	    this.tl.to(this.custom, 0.3, { y: '-=200' }, 'options');
+        
 
 		this.tl.play();
 

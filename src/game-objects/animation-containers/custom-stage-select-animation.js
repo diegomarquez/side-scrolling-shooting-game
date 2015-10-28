@@ -33,14 +33,14 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
     		onReverseComplete: function() {
     			if (this.backOption.selected) {
-						this.execute(this.BACK_EXIT);
-						return;
-					}
+					this.execute(this.BACK_EXIT);
+					return;
+				}
 
-					if (this.startOption.selected) {
-						this.execute(this.START_EXIT, this.scenes[this.stageIndex]);
-						return;
-					}
+				if (this.startOption.selected) {
+					this.execute(this.START_EXIT, this.scenes[this.stageIndex]);
+					return;
+				}
     		}.bind(this) 
     	});
 
@@ -78,15 +78,15 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.backOption.selected = true;
     	this.startOption.selected = false;
 
-			for (var i = 0; i < children.length; i++) {
-				children[i].show();
-			}
+		for (var i = 0; i < children.length; i++) {
+			children[i].show();
+		}
 
-			var children = this.startOption.findChildren().allWithType("MarkerArrow");
+		var children = this.startOption.findChildren().allWithType("MarkerArrow");
 
-			for (var i = 0; i < children.length; i++) {
-				children[i].hide();
-			}
+		for (var i = 0; i < children.length; i++) {
+			children[i].hide();
+		}
     },
 
     onRightPress: function() {
@@ -95,15 +95,15 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
     	this.backOption.selected = false;
     	this.startOption.selected = true;
 
-			for (var i = 0; i < children.length; i++) {
-				children[i].hide();
-			}
+		for (var i = 0; i < children.length; i++) {
+			children[i].hide();
+		}
 
-			var children = this.startOption.findChildren().allWithType("MarkerArrow");
+		var children = this.startOption.findChildren().allWithType("MarkerArrow");
 
-			for (var i = 0; i < children.length; i++) {
-				children[i].show();
-			}
+		for (var i = 0; i < children.length; i++) {
+			children[i].show();
+		}
     },
 
     onUpPress: function() {
@@ -142,16 +142,16 @@ define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], funct
 
     onOptionSelected: function() {
     	if (this.backOption.selected) {
-    		this.reverse();
-				this.execute(this.BACK_SELECTED);
-				return;
-			}
+			this.reverse();
+			this.execute(this.BACK_SELECTED);
+			return;
+		}
 
-			if (this.startOption.selected && this.stageNames[this.currentIndex].validLevel) {
-				this.reverse();
-				this.execute(this.START_SELECTED, this.scenes[this.stageIndex]);	
-				return;
-			}
+		if (this.startOption.selected && this.stageNames[this.currentIndex].validLevel) {
+			this.reverse();
+			this.execute(this.START_SELECTED, this.scenes[this.stageIndex]);	
+			return;
+		}
     },
 
     recycle: function() {
