@@ -28,6 +28,38 @@ define(function(require) {
 					}
 				});
 
+			this.componentPool.createConfiguration("Boss1PortraitRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS1PORTRAIT.PNG"],
+					offset: 'center',
+				});
+
+			this.componentPool.createConfiguration("Boss2PortraitRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS2PORTRAIT.PNG"],
+					offset: 'center',
+				});
+
+			this.componentPool.createConfiguration("Boss3PortraitRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS3PORTRAIT.PNG"],
+					offset: 'center',
+				});
+
+			this.componentPool.createConfiguration("Boss4PortraitRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS4PORTRAIT.PNG"],
+					offset: 'center',
+				});
+
+			this.gameObjectPool.createConfiguration("Boss1Portrait", commonBundle.getGameObjectPoolId())
+				.setRenderer("Boss1PortraitRenderer");
+			this.gameObjectPool.createConfiguration("Boss2Portrait", commonBundle.getGameObjectPoolId())
+				.setRenderer("Boss2PortraitRenderer");
+			this.gameObjectPool.createConfiguration("Boss3Portrait", commonBundle.getGameObjectPoolId())
+				.setRenderer("Boss3PortraitRenderer");
+			this.gameObjectPool.createConfiguration("Boss4Portrait", commonBundle.getGameObjectPoolId())
+				.setRenderer("Boss4PortraitRenderer");
 
 			this.componentPool.createPool("MarkerArrowRenderer", require('arrow-renderer'));			
 			this.gameObjectPool.createDynamicPool("StageOverview", require('stage-overview-animation'));
@@ -35,7 +67,20 @@ define(function(require) {
 			this.componentPool.createConfiguration("TextRenderer", commonBundle.getTextRendererPoolId());
 			this.componentPool.createConfiguration("MarkerArrowRenderer", "MarkerArrowRenderer");
 			
-			this.gameObjectPool.createConfiguration("StageFrame", "StageFrame")
+			this.gameObjectPool.createConfiguration("Stage1Frame", "StageFrame")
+				.addChild('Boss1Portrait')
+				.setRenderer("StageFrameRenderer")
+
+			this.gameObjectPool.createConfiguration("Stage2Frame", "StageFrame")
+				.addChild('Boss2Portrait')
+				.setRenderer("StageFrameRenderer")
+
+			this.gameObjectPool.createConfiguration("Stage3Frame", "StageFrame")
+				.addChild('Boss3Portrait')
+				.setRenderer("StageFrameRenderer")
+
+			this.gameObjectPool.createConfiguration("Stage4Frame", "StageFrame")
+				.addChild('Boss4Portrait')
 				.setRenderer("StageFrameRenderer")
 
 			this.gameObjectPool.createConfiguration("MarkerArrow", commonBundle.getGameObjectPoolId())
@@ -66,20 +111,6 @@ define(function(require) {
 					size: 55,
 					offset: 'center'
 				});
-
-			// this.gameObjectPool.createConfiguration("Start", commonBundle.getGameObjectContainerPoolId())
-			// 	.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
-			// 	.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
-			// 	.setRenderer("TextRenderer", {
-			// 		name: 'start-button',
-			// 		fillColor: "none",
-			// 		strokeColor: "#FFFFFF",
-			// 		text: 'Start',
-			// 		font: 'Russo One',
-			// 		padding: 3,
-			// 		size: 55,
-			// 		offset: 'center'
-			// 	});
 
 			this.gameObjectPool.createConfiguration("StageOverview", 'StageOverview');
 		}

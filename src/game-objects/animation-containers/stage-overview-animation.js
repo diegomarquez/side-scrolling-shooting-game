@@ -12,10 +12,10 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
 
     	this.stages = Gb.create('StageOverviewTitle', 'First', viewports, { x: Gb.canvas.width/2, y: -200 });
     	
-    	this.topLeft = Gb.create('StageFrame', 'First', viewports, { x: -500, y: Gb.canvas.height/2-110 });
-    	this.bottomLeft = Gb.create('StageFrame', 'First', viewports, { x: -500, y: Gb.canvas.height/2+110 });
-    	this.topRight = Gb.create('StageFrame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2-110 });
-    	this.bottomRight = Gb.create('StageFrame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2+110 });
+    	this.topLeft = Gb.create('Stage1Frame', 'First', viewports, { x: -500, y: Gb.canvas.height/2-110 });
+    	this.topRight = Gb.create('Stage2Frame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2-110 });
+    	this.bottomLeft = Gb.create('Stage3Frame', 'First', viewports, { x: -500, y: Gb.canvas.height/2+110 });
+    	this.bottomRight = Gb.create('Stage4Frame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2+110 });
     	
     	this.topLeft.select();
 
@@ -137,7 +137,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
   		} else if (this.gridX == 1 && this.gridY == 1) {
 
   		} else {
-  			this.execute(this.BACK_EXIT);	
+  			this.execute(this.BACK_EXIT);
   		}
     },
 
@@ -145,9 +145,9 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     	if (this.gridX == 0 && this.gridY == 0) {
   			this.execute(this.START_SELECTED, 0);
   		} else if (this.gridX == 0 && this.gridY == 1) {
-  			this.execute(this.START_SELECTED, 1);
-  		} else if (this.gridX == 1 && this.gridY == 0) {
   			this.execute(this.START_SELECTED, 2);
+  		} else if (this.gridX == 1 && this.gridY == 0) {
+  			this.execute(this.START_SELECTED, 1);
   		} else if (this.gridX == 1 && this.gridY == 1) {
   			this.execute(this.START_SELECTED, 3);
   		} else {
