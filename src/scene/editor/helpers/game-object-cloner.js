@@ -22,6 +22,11 @@ define(function(require) {
 		var clone = require('setup-editable-game-object').setupWithGameObject(from.typeId, from);
 		// Apply all the editable attributes and position from the original into the clone
 		require('attribute-assigner').assignFrom(from, clone);
+
+		if (clone) {
+			require('object-counter').count(clone);
+			require('object-counter').showSuccessFeedback();
+		}
 	}
 
 	var complexClone = function(from) {
@@ -47,6 +52,11 @@ define(function(require) {
 			for (var i=0; i < newConfigurationResult.childConfigurationIds.length; i++) {
 				gb.goPool.clearConfiguration(newConfigurationResult.childConfigurationIds[i]);
 			}
+		}
+
+		if (clone) {
+			require('object-counter').count(clone);
+			require('object-counter').showSuccessFeedback();
 		}
 	}
 

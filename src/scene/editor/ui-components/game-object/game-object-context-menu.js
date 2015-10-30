@@ -31,6 +31,12 @@ define(function(require) {
 						},
 
 						click: function() {
+
+							if (require('object-counter').canCreate()) {
+								require('object-counter').showErrorFeedback();
+								return;
+							}
+
 							gameObjectCloner.clone(menu.go);
 						}						
 					},
@@ -47,6 +53,11 @@ define(function(require) {
 								name: 'Clone',
 								icon: 'ui-icon-bullet',
 								click: function() {
+									if (require('object-counter').canCreate()) {
+										require('object-counter').showErrorFeedback();
+										return;
+									}
+
 									gameObjectCloner.clone(menu.go);
 								}
 							},
@@ -296,7 +307,13 @@ define(function(require) {
 				// If the new configuration is null, it means that nothing was created because it wasn't needed
 				if (!newConfigurationId) return;      
 				// Add the new object in the place of the old one
-				require('setup-editable-game-object').setupWithGameObject(newConfigurationId, go);
+				var newGo = require('setup-editable-game-object').setupWithGameObject(newConfigurationId, go);
+				
+				if (newGo) {
+					require('object-counter').count(newGo);
+					require('object-counter').showSuccessFeedback();
+				}
+
 				// Remove the old game object       
 				gb.reclaimer.claim(go);
 			}

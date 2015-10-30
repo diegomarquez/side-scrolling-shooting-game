@@ -21,14 +21,22 @@ define(function(require) {
 					return require('editor-config').getControlObjects();
 				},
 				onClick: function(controlObjectName) {
-					gb.game.get_extension(require('logger')).success('Control object created successfully!');
+					if (require('object-counter').canCreate()) {
+						require('object-counter').showErrorFeedback();
+						return;
+					}
 					
-					require('setup-editable-game-object').setupWithViewport(
+					var object = require('setup-editable-game-object').setupWithViewport(
 						controlObjectName,
 						'First',
 						[{viewport: 'Main', layer: 'Front'}],
 						require('main-viewport').get()
 					);
+
+					if (object) {
+						require('object-counter').count(object);
+						require('object-counter').showSuccessFeedback();
+					}
 				}
 			});
 

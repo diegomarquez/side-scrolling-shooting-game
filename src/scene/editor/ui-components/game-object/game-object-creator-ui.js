@@ -58,9 +58,8 @@ define(function(require) {
 
 					if (go) {
 						require('object-counter').count(go);
+						require('object-counter').showSuccessFeedback();
 					}
-
-					gb.game.get_extension(require('logger')).success('Game object created successfully! ' + require('object-counter').toString());
 				}
 			});
 

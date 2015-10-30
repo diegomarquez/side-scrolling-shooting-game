@@ -26,6 +26,10 @@ define(function(require) {
 		setTimeout(require('gb').game.get_extension(require('logger')).hide, 3000);
 	}
 
+	ObjectCounter.prototype.showSuccessFeedback = function() {
+		require('gb').game.get_extension(require('logger')).success('Game object created successfully! ' + this.toString());
+	}
+
 	ObjectCounter.prototype.toString = function() {
 		return createdObjects + ' / ' + maxAmount;
 	};
