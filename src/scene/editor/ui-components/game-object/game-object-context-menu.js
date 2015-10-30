@@ -23,8 +23,24 @@ define(function(require) {
 				id: 'game-object-context-menu',
 				options: [
 					{
+						name: 'Clone',
+						icon: 'ui-icon-plusthick',
+
+						omit: function() {
+							return require('mode').isAdvanced();
+						},
+
+						click: function() {
+							gameObjectCloner.clone(menu.go);
+						}						
+					},
+					{
 						name: 'Create',
 						icon: 'ui-icon-plusthick',
+
+						omit: function() {
+							return require('mode').isBasic();
+						},
 
 						options: [
 							{

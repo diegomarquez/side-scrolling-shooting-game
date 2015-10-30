@@ -12,6 +12,10 @@ define(function(require) {
     		to.Attributes = JSON.parse(JSON.stringify(from.Attributes));
     	}
 
+    	to.rotation = from.rotation;
+		to.scaleX = from.scaleX;
+		to.scaleY = from.scaleY;
+
     	// Assign the attributes of each component from a game object to another one
     	if (from.components && to.components) {
     		for (var i = 0; i < from.components.length; i++) {
@@ -38,9 +42,6 @@ define(function(require) {
 				
 					// Both children must exist
 					if (!fromChild || !toChild) continue;
-		
-					// Skip Editor Game Objects
-					if (editorConfig.isEditorGameObject(fromChild.typeId) || editorConfig.isEditorGameObject(toChild.typeId)) continue;
 
 					toChild.Attributes = fromChild.Attributes;
 
