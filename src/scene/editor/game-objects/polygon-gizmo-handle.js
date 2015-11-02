@@ -1,6 +1,6 @@
 define(function (require) {
 
-	var m = new (require("matrix-3x3"))();;
+	var m = new (require("matrix-3x3"))();
 	var r = {};
 	var stepX = null;
 	var stepY = null;
