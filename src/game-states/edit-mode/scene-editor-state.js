@@ -36,6 +36,7 @@ define(function(require) {
 		state.addStartAction(function (args) {
 			// Add editor extensions
 			game.add_extension(require("mouse-events"));
+			game.add_extension(require("patch-game-object-container"));
 		});
 
 		state.addStartAction(function (initialScene) {
@@ -86,6 +87,7 @@ define(function(require) {
 			game.remove_extension(require("logger"));
 			game.remove_extension(require("mouse-events"));
 			game.remove_extension(require("fit-canvas-in-region"));
+			game.remove_extension(require("patch-game-object-container"));
 
 			// Clean up the scene editor        
 			sceneEditor.cleanUp();
