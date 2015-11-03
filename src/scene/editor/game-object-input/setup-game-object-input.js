@@ -7,12 +7,8 @@ define(function(require) {
 	var gameObjectContextMenu = require('game-object-context-menu');
 	var controlObjectContextMenu = require('control-object-context-menu');
 
-	var m = new (require("matrix-3x3"))();
-	var r = {};
 	var stepX = null;
 	var stepY = null;
-	var startOffsetX = null;
-	var startOffsetY = null;
 
 	var gridCellSize = editorConfig.getGridCellSize();
 	
@@ -71,16 +67,6 @@ define(function(require) {
 
 		go.single(go.MOUSE_DRAG_START, this, function(mouseData) {
 			mouseData.go.Selected = true;
-
-			stepX = Number(gridCellSize.width.toFixed(2));
-			stepY = Number(gridCellSize.height.toFixed(2));
-
-			if (snapToGridValue.get()) {
-				r = mouseData.go.parent.getTransform(r, m);
-
-				startOffsetX = (r.x - (r.x % (stepX))) - r.x;
-				startOffsetY = (r.y - (r.y % (stepY))) - r.y;
-			}
 		});
 
 		go.single(go.MOUSE_DRAG_END, this, function(mouseData) {
@@ -89,8 +75,12 @@ define(function(require) {
 
 		go.single(go.MOUSE_DRAG, this, function(mouseData) {
 			if (snapToGridValue.get()) {
-				mouseData.go.x = startOffsetX + (stepX * Math.floor(((startOffsetX + mouseData.go.X) / stepX) + 0.5));
-				mouseData.go.y = startOffsetY + (stepY * Math.floor(((startOffsetY + mouseData.go.Y) / stepY) + 0.5));				
+
+				stepX = Number(gridCellSize.width.toFixed(2));
+				stepY = Number(gridCellSize.height.toFixed(2));
+
+				mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
+				mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);				
 			}
 		});
 
