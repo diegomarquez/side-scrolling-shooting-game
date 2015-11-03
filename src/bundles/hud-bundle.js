@@ -47,6 +47,107 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration('HpMeter', 'HpMeterType')
 				.setRenderer('HpMeterRenderer');
+
+			this.componentPool.createPool("UpwardsMovement", require('upwards-movement'));
+			this.componentPool.createPool("ClaimOnDelegate", require('claim-on-delegate'));
+
+			this.componentPool.createConfiguration("UpwardsMovement", "UpwardsMovement")
+				.args({
+					endX: 0,
+					endY: -100,
+					time: 1
+				});
+
+			this.componentPool.createConfiguration("ClaimOnDelegate", "ClaimOnDelegate")
+				.args({
+					delegateName: 'finish-upward-movement'
+				});
+
+			this.componentPool.createConfiguration("TextRenderer", commonBundle.getTextRendererPoolId());
+			
+			this.gameObjectPool.createConfiguration("PowerDown", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'power-down',
+					text: 'Power Down',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("SpeedDown", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'speed-down',
+					text: 'Speed Down',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("HpDown", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'hp-down',
+					text: 'Hp Down',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("PowerUp", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'power-up',
+					text: 'Power Up!',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("SpeedUp", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'speed-up',
+					text: 'Speed Up!',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
+
+			this.gameObjectPool.createConfiguration("HpUp", commonBundle.getGameObjectPoolId())
+				.addComponent('UpwardsMovement')
+				.addComponent('ClaimOnDelegate')
+				.setRenderer("TextRenderer", {
+					name: 'hp-up',
+					text: 'Hp Up!',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					font: 'Russo One',
+					padding: 3,
+					size: 20,
+					offset: 'center'
+				});
 		},
 	});
 

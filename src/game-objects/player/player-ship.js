@@ -10,6 +10,11 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		rotation: 0
 	};
 
+	var powerupFeedbackArguments = {
+		x: 0,
+		y: 0
+	}
+
 	var bulletsViewport = [{viewport:'Main', layer:'Front'}];
 
 	var PlayerShip = GameObjectContainer.extend({
@@ -466,18 +471,33 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		powerUp: function() {
 			if (this.maxBulletAmount < 3) {
 				this.maxBulletAmount++;
+
+				powerupFeedbackArguments.x = this.X;
+				powerupFeedbackArguments.y = this.Y;
+
+				Gb.create('PowerUp', 'First', bulletsViewport, powerupFeedbackArguments);
 			}
 		},
 
 		speedUp: function() {
 			if (this.speed < 300) {
 				this.speed += 50;
+
+				powerupFeedbackArguments.x = this.X;
+				powerupFeedbackArguments.y = this.Y;
+
+				Gb.create('SpeedUp', 'First', bulletsViewport, powerupFeedbackArguments);
 			}
 		},
 
 		healthUp: function() {
 			if (this.hp < 5) {
 				this.hp++;
+
+				powerupFeedbackArguments.x = this.X;
+				powerupFeedbackArguments.y = this.Y;
+
+				Gb.create('HpUp', 'First', bulletsViewport, powerupFeedbackArguments);
 
 				this.execute(this.HEALTH_UP, this.hp);
 			}
@@ -486,6 +506,29 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		takeDamage: function(hitDirection) {
 			if (this.hp > 0) {
 				this.hp--;
+
+				powerupFeedbackArguments.x = this.X;
+				powerupFeedbackArguments.y = this.Y;
+
+				p = null;
+
+				// Loose a power up at random
+				if (Math.random() > 0.5) {
+					if (this.maxBulletAmount > 1) {
+						this.maxBulletAmount--;
+						
+						p = Gb.create('PowerDown', 'First', bulletsViewport, powerupFeedbackArguments);
+					}
+				} else {
+					if (this.speed > 200) {
+						this.speed -= 50;
+						p = Gb.create('SpeedDown', 'First', bulletsViewport, powerupFeedbackArguments);
+					}
+				}
+
+				if (!p) {
+					Gb.create('HpDown', 'First', bulletsViewport, powerupFeedbackArguments);
+				}
 
 				this.execute(this.HEALTH_DOWN, this.hp);
 			} else {
