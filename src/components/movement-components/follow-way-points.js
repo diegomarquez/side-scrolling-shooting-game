@@ -36,8 +36,10 @@ define(["editor-component", "tweenlite", "bezier", "util"], function(Component, 
 			
 		},
 
-		recycle: function() {
-			TweenLite.killTweensOf(this.parent);
+		recycle: function(parent) {
+			TweenLite.killTweensOf(parent);
+
+			this._super(parent);
 		}
 	});
 
