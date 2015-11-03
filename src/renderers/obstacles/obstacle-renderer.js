@@ -32,7 +32,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Applying transformations of parent
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
 			// Drawing code
-			Draw.polygon(context, 0, 0, this.parentColliderPoints, null, "#FFFFFF", 2/m.a);
+			Draw.polygon(context, 0, 0, this.parentColliderPoints, null, "#FFFFFF", 2/this.parent.scaleX);
 			// Restore original context
 			context.restore();
 		},

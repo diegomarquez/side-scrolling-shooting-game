@@ -19,9 +19,6 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     },
 
     onCollide: function(other) {
-    	
-    	
-    	
     	switch (this.powerUpType) {
     		case 'power-up':
     			other.powerUp();

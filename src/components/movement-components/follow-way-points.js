@@ -22,7 +22,8 @@ define(["editor-component", "tweenlite", "bezier", "util"], function(Component, 
 			    ease: Linear.easeNone,
 			    onCompleteScope: this, 
 				onComplete: function() {
-					this.parent.execute('finish-movement');
+					if (this.parent)
+						this.parent.execute('finish-movement');
 				}
 			});
 

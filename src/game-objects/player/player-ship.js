@@ -476,7 +476,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		},
 
 		healthUp: function() {
-			if (this.hp < 4) {
+			if (this.hp < 5) {
 				this.hp++;
 
 				this.execute(this.HEALTH_UP, this.hp);

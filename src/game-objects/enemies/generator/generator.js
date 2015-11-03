@@ -31,9 +31,9 @@ define(["editor-game-object-container", "timer-factory", "util", "matrix-3x3", "
 			TimerFactory.get(this, 'closeTimer', 'closeTimer');
 			TimerFactory.get(this, 'generateTimer', 'generateTimer');
 
-			this.openTimer.configure({ delay: 6000, removeOnComplete:false });
-			this.attackTimer.configure({ delay: 3000, removeOnComplete:false });
-			this.closeTimer.configure({ delay: 2000, removeOnComplete:false });
+			this.openTimer.configure({ delay: 2000, removeOnComplete:false });
+			this.attackTimer.configure({ delay: 1000, removeOnComplete:false });
+			this.closeTimer.configure({ delay: 1000, removeOnComplete:false });
 			this.generateTimer.configure({ delay: 1000, repeatCount: this.amount, removeOnComplete:false });
 
 			this.openTimer.start();
@@ -45,12 +45,14 @@ define(["editor-game-object-container", "timer-factory", "util", "matrix-3x3", "
 
 					this.renderer.play('opened');
 
-					this.attackTimer.start();
+					if (this.attackTimer)
+						this.attackTimer.start();
 				});
 			});
 
 			this.attackTimer.on(this.attackTimer.COMPLETE, function() {
-				this.generateTimer.start();
+				if (this.generateTimer)
+					this.generateTimer.start();
 			});
 
 			this.closeTimer.on(this.closeTimer.COMPLETE, function() {
@@ -60,7 +62,8 @@ define(["editor-game-object-container", "timer-factory", "util", "matrix-3x3", "
 					
 					this.renderer.play('closed');
 
-					this.openTimer.start();
+					if (this.openTimer)
+						this.openTimer.start();
 				});
 			});
 
@@ -69,7 +72,8 @@ define(["editor-game-object-container", "timer-factory", "util", "matrix-3x3", "
 			});
 
 			this.generateTimer.on(this.generateTimer.COMPLETE, function() {
-				this.closeTimer.start();
+				if (this.closeTimer)
+					this.closeTimer.start();
 			});
 		},
 

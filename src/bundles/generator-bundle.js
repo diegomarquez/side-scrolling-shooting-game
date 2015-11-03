@@ -157,7 +157,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration('ship-generator-0', 'GeneratorType')
 				.args({
-					hp: 3,
+					hp: 20,
 					amount: 3,
 					objectType: 'generator-enemy-ship-0'
 				})
