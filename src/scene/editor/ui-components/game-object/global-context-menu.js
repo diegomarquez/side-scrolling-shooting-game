@@ -83,16 +83,16 @@ define(function(require) {
 						}				
 					},
 
-					{
-						name: 'Edit Custom Types',
-						icon: 'ui-icon-pencil',	
-						disable: function() {
-							return gb.goPool.getConfigurationTypes({ customOnly: true }).length == 0;
-						},			
-						click: function(name, event) {
-							customTypesSelectorUI.show(event);
-						}
-					},
+					// {
+					// 	name: 'Edit Custom Types',
+					// 	icon: 'ui-icon-pencil',	
+					// 	disable: function() {
+					// 		return gb.goPool.getConfigurationTypes({ customOnly: true }).length == 0;
+					// 	},			
+					// 	click: function(name, event) {
+					// 		customTypesSelectorUI.show(event);
+					// 	}
+					// },
 
 					{
 						name: 'Grid',
