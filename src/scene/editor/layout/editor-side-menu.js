@@ -177,6 +177,19 @@ define(function(require) {
 			items.push(createDivider());
 
 			items.push(createTitleItem('Storage'));
+			
+			items.push(createOptionItem(
+				'New', 
+				'glyphicon-file', 
+				function() {  
+					require('scene-name').set('Untitled');
+					gb.reclaimer.clearAllObjectsFromPools().now();
+					// Re-Create editor specific game objects
+					require('editor-setup').setupGameObjects();
+					$('#remove-toggle-button input').bootstrapToggle('off');
+				}
+			));
+
 			items.push(createOptionItem(
 				'Save', 
 				'glyphicon-floppy-save', 

@@ -168,7 +168,7 @@ define(function(require) {
 								}
 							}
 						]
-					}
+					}					
 				]
 			});
 

@@ -1,5 +1,6 @@
 define(function(require) {
 	var gb = require('gb');
+	var editorConfig = require('editor-config');
 
 	var GameObjectCloner = require('class').extend({
 		init: function() {
@@ -26,6 +27,8 @@ define(function(require) {
 		if (clone) {
 			require('object-counter').count(clone);
 			require('object-counter').showSuccessFeedback();
+
+			showGizmos(from, clone);
 		}
 	}
 
@@ -57,7 +60,49 @@ define(function(require) {
 		if (clone) {
 			require('object-counter').count(clone);
 			require('object-counter').showSuccessFeedback();
+
+			showGizmos(from, clone);
 		}
+	}
+
+	var showGizmos = function(from, clone) {
+		from.findChildren().recurse().all(function (child) {
+			if (editorConfig.isColliderGizmoGameObject(child.typeId)) {
+				if (child.canDraw) {
+					clone.findChildren().recurse().all(function(child) {
+						if (editorConfig.isColliderGizmoGameObject(child.typeId)) {
+							child.show();
+						}
+					});
+				}
+
+				return;
+			}
+
+			if (editorConfig.isRotationGizmoGameObject(child.typeId)) {
+				if (child.canDraw) {
+					clone.findChildren().recurse().all(function(child) {
+						if (editorConfig.isRotationGizmoGameObject(child.typeId)) {
+							child.show();
+						}
+					});
+				}
+
+				return;
+			}
+
+			if (editorConfig.isScaleGizmoGameObject(child.typeId)) {
+				if (child.canDraw) {
+					clone.findChildren().recurse().all(function(child) {
+						if (editorConfig.isScaleGizmoGameObject(child.typeId)) {
+							child.show();
+						}
+					});
+				}
+
+				return;
+			}
+		});
 	}
 
 	var replaceTypeIds = function(from, to) {
