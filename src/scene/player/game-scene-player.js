@@ -71,11 +71,51 @@ define(function(require) {
 			// Show the complete message
 			gb.create('CompleteMessage', 'Second', this.viewports, {
 				onComplete: function() {
-					// Tween the player out of the screen
-					TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
-						// Signal the scene player is done 
-						this.execute(this.EXIT);
-					}.bind(this)});
+					var d = player.getDirection();
+
+					// Right
+					if (d == 0) {
+						// Tween the player out of the screen
+						TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
+							// Signal the scene player is done 
+							this.execute(this.EXIT);
+						}.bind(this)});
+
+						return;
+					}
+
+					// Left
+					if (d == 180) {
+						// Tween the player out of the screen
+						TweenLite.to(player, 1.5, { viewportOffsetX: -200, ease: Back.easeIn, onComplete: function() {
+							// Signal the scene player is done 
+							this.execute(this.EXIT);
+						}.bind(this)});
+
+						return;
+					}
+
+					// Up
+					if (d == 270) {
+						// Tween the player out of the screen
+						TweenLite.to(player, 1.5, { viewportOffsetY: -200, ease: Back.easeIn, onComplete: function() {
+							// Signal the scene player is done 
+							this.execute(this.EXIT);
+						}.bind(this)});
+
+						return;
+					}
+
+					// Down
+					if (d == 90) {
+						// Tween the player out of the screen
+						TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.height + 200, ease: Back.easeIn, onComplete: function() {
+							// Signal the scene player is done 
+							this.execute(this.EXIT);
+						}.bind(this)});
+
+						return;
+					}
 				}.bind(this)
 			});
 		});
