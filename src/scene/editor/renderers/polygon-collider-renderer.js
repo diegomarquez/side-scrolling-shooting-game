@@ -28,7 +28,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 			// Drawing code
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
-			Draw.polygon(context, 0, 0, this.parent.parentCollider.Points, null, "#00FF00", 2/m.a);
+			Draw.polygon(context, 0, 0, this.parent.parentCollider.Points, null, "#00FF00", 2/this.parent.scaleX);
 
 			// Restore original context
 			context.restore();
