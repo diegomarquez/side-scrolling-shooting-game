@@ -42,17 +42,18 @@ define(function(require) {
 					var self = $(this.html);
 
 					if (self.parent().length <= 0) {
-						self.appendTo('body');
+						self.appendTo('body').position({
+							my: 'left top',
+							at: 'left+' + x + ' top+' + y,
+							of: $('body'),
+							collision: 'fit'
+						});
+
 					} else {
 						this.hideSubMenues();
 					}
 
 					menu.update();
-
-					self.offset({ 
-						left: x, 
-						top: y 
-					});
 				},
 
 				hide: function() {
@@ -329,7 +330,8 @@ define(function(require) {
 		$(child).appendTo('body').position({
 			my: 'left top',
 			at: 'right+3 top-2',
-			of: parent
+			of: parent,
+			collision: 'fit'
 		});
 	};
 
