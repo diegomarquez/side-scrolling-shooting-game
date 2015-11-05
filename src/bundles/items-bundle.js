@@ -5,6 +5,7 @@ define(function(require) {
 	var ItemsBundle = require("bundle").extend({
 		create: function(args) {	
 			this.gameObjectPool.createDynamicPool("LevelItem", require("level-item"));
+			this.gameObjectPool.createDynamicPool("AllBossDefeatLevelItem", require("defeat-all-bosses-level-item"));
 			this.gameObjectPool.createDynamicPool("PowerUpItem", require("power-up-item"));
 
 			this.componentPool.createConfiguration("LevelItemCircle", commonBundle.getCircleColliderPoolId())
@@ -38,6 +39,11 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("level-item", "LevelItem")
+				.addComponent("LevelItemCircle")
+				.setRenderer("LevelItem_Renderer")
+				.itemCategory();
+
+			this.gameObjectPool.createConfiguration("defeat-all-bosses-level-item", "AllBossDefeatLevelItem")
 				.addComponent("LevelItemCircle")
 				.setRenderer("LevelItem_Renderer")
 				.itemCategory();
