@@ -37,15 +37,21 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 		},
 
 		deActivate: function() {
-			if (this.laser)
-				Gb.reclaimer.mark(this.laser);
+
+			if (this.laser) {
+				setTimeout(function() {
+					Gb.reclaimer.mark(this.laser);
+					this.laserBurst = null;
+				}.bind(this), 1000);	
+			}
 			
-			if (this.laserBurst)
-				Gb.reclaimer.mark(this.laserBurst);
-
-			this.laser = null;
-			this.laserBurst = null;
-
+			if (this.laserBurst) {
+				setTimeout(function() {
+					Gb.reclaimer.mark(this.laserBurst);
+					this.laser = null;
+				}.bind(this), 1000);
+			}
+			
 			this.damaged = false;
 			this.bursting = false;
 
