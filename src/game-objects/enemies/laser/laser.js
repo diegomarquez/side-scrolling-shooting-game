@@ -83,7 +83,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 					this.collidingObstacles.push(other);	
 				} else {
 
-					// Once a repeated obstancle is collided agaist, find the closest one of the collection
+					// Once a repeated obstacle is collided agaist, find the closest one of the collection
 				 
 					this.dirX = Math.cos(this.rotation * (Math.PI/180)) * step; 
 				 	this.dirY = Math.sin(this.rotation * (Math.PI/180)) * step;
@@ -104,7 +104,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 								// Push the result into a collection of distances
 								this.collisionDistances.push(collisionDistance);
 								// Test the next obstacle in the collection
-								continue obstacles;
+								break obstacles;
 							} else {
 								// Move the collision point along the path of the laser
 								this.collisionPoint.x += this.dirX;
