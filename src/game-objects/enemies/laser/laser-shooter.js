@@ -41,14 +41,14 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			if (this.laser) {
 				setTimeout(function() {
 					Gb.reclaimer.mark(this.laser);
-					this.laserBurst = null;
+					this.laser = null;
 				}.bind(this), 1000);	
 			}
 			
 			if (this.laserBurst) {
 				setTimeout(function() {
 					Gb.reclaimer.mark(this.laserBurst);
-					this.laser = null;
+					this.laserBurst = null;
 				}.bind(this), 1000);
 			}
 			
