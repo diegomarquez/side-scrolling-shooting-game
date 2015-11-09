@@ -4,9 +4,14 @@ define(function(require) {
 
 	var ControlObjectsBundle = require("bundle").extend({
 		create: function(args) {	
+				
+			this.componentPool.createPool("AutoHide", require('auto-hide'));
+			this.componentPool.createConfiguration("AutoHide", "AutoHide");
+
 			this.componentPool.createConfiguration("ActivateControlOnView", commonBundle.getActivateOnViewPoolId());
 
 			this.gameObjectPool.createDynamicPool("ScrollStopper", require('scroll-stopper'));
+			this.gameObjectPool.createDynamicPool("AbsoluteScrollStopper", require('absolute-scroll-stopper'));
 			this.gameObjectPool.createDynamicPool("BossWarning", require('boss-warning'));
 			this.gameObjectPool.createDynamicPool("DirectionSetter", require('direction-setter'));
 			this.gameObjectPool.createDynamicPool("StartPosition", require('start-position'));			
@@ -28,8 +33,20 @@ define(function(require) {
 					offset: 'center'
 				});
 
+			this.componentPool.createConfiguration("AbsoluteScrollStopperRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["STOP.PNG"],
+					offset: 'center'
+				});
+
 			this.gameObjectPool.createConfiguration("scroll-stopper", "ScrollStopper")
 				.addComponent("ActivateControlOnView");
+			
+			this.gameObjectPool.createConfiguration("absolute-scroll-stopper", "AbsoluteScrollStopper")
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("AbsoluteScrollStopperRenderer");
+				
 			this.gameObjectPool.createConfiguration("boss-warning", "BossWarning")
 				.addComponent("ActivateControlOnView");
 

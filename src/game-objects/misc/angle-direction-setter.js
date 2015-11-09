@@ -11,13 +11,20 @@ define(function(require) {
 			this.player = require('player-getter').get();
 			
 			this.renderer.play();
-			this.hide();
-
+			
 			this.player.once(this.player.STOP, this, this.onPlayerStop);
+
+			var collisionComponent = this.findComponents().firstWithProp('collider');
+		
+			if (collisionComponent)
+				collisionComponent.disable();
 		},
 
 		onPlayerStop: function() {
-			this.show();
+			var collisionComponent = this.findComponents().firstWithProp('collider');
+		
+			if (collisionComponent)
+				collisionComponent.enable();
 		},
 
 		deActivate: function() {
@@ -28,24 +35,6 @@ define(function(require) {
 			
 		},
 
-		show: function() {
-			this._super();
-
-			var collisionComponent = this.findComponents().firstWithProp('collider');
-		
-			if (collisionComponent)
-				collisionComponent.enable();
-		},
-
-		hide: function() {
-			this._super();
-
-			var collisionComponent = this.findComponents().firstWithProp('collider');
-		
-			if (collisionComponent)
-				collisionComponent.disable();
-		},
-
     	onCollide: function(other) {
     		other.move(this.rotation)
 
@@ -54,8 +43,17 @@ define(function(require) {
     		require('root').findChildren().recurse().all(function(child) {
 				return child.poolId == self.poolId && child.getViewportVisibility('Main'); 
 			}).forEach(function(sibling) {
-				sibling.hide();
+				
+				var collisionComponent = sibling.findComponents().firstWithProp('collider');
+		
+				if (collisionComponent)
+					collisionComponent.disable();
+				
 			});
+    	},
+
+    	getDirection: function() {
+    		return this.rotation;
     	}
 
 	});

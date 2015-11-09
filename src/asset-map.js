@@ -51,6 +51,7 @@ define(function() {
 	"ROUNDBULLET.PNG": "assets/images/RoundBullet.png",
 	"SMALLSPIDER.PNG": "assets/images/SmallSpider.png",
 	"SPEEDUP.PNG": "assets/images/SpeedUp.png",
+	"STOP.PNG": "assets/images/Stop.png",
 	"WARNING.PNG": "assets/images/Warning.png",
 	"BIOHAZARD.PNG": "assets/images/biohazard.png",
 	"DOWNARROW.PNG": "assets/images/downArrow.png",

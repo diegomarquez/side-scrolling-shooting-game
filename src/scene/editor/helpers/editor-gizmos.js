@@ -61,7 +61,7 @@ define(function(require) {
 
 	  					if (parent.typeId == 'start-position') { 
 	  						return gizmoBundle.getStartPositionId(); 
-	  					} 
+	  					}
 	  				},
 
 	  				ids: {

@@ -223,6 +223,7 @@ define(function(require) {
 			controlObjects = [
 				'start-position',
 				'scroll-stopper',
+				'absolute-scroll-stopper',
 				'boss-warning',		
 				'direction-right',
 				'direction-left',
