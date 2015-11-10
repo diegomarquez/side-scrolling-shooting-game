@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenlite"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite) {
+define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenlite", "directional-rotation"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite, DirectionalRotationPlugin) {
 	
 	var transformResult = {};
 	var matrix = new Matrix();
@@ -452,7 +452,8 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 				}
 
 				this.angle = angle * (Math.PI/180);
-				this.rotation = (angle + 90);
+				
+				Tweenlite.to(this, 1, { directionalRotation : (angle + 90) + "_short" });
 			}
 			
 			Tweenlite.to(this, 2, { forwardSpeed : this.maxForwardSpeed });
