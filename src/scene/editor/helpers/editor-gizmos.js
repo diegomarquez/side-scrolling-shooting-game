@@ -59,6 +59,22 @@ define(function(require) {
 	  						return gizmoBundle.getDownDirectionId(); 
 	  					}
 
+	  					if (parent.typeId == 'fast-direction-right') { 
+	  						return gizmoBundle.getFastRightDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'fast-direction-up') { 
+	  						return gizmoBundle.getFastUpDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'fast-direction-left') { 
+	  						return gizmoBundle.getFastLeftDirectionId(); 
+	  					}
+	  					
+	  					if (parent.typeId == 'fast-direction-down') { 
+	  						return gizmoBundle.getFastDownDirectionId(); 
+	  					}
+
 	  					if (parent.typeId == 'start-position') { 
 	  						return gizmoBundle.getStartPositionId(); 
 	  					}

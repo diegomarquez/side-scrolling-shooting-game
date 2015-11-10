@@ -16,7 +16,10 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 			this.laserHit = null;
 
 			this.collidingObstacles = [];
-			this.collisionDistances = [];
+			
+			this.shortestDistance = -1;
+			this.shortestCollisionPointX = 0;
+			this.shortestCollisionPointY = 0;
 		},
 
 		editorStart: function() {		 	
@@ -26,7 +29,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 			this.collisionPoint.x = 0;
 			this.collisionPoint.y = 0;
 
-			this.collisionDistances.length = 0;
+			this.shortestDistance = -1;
 
 			this.dirX = 0;
 			this.dirY = 0;
@@ -101,10 +104,20 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 						for (var i = 0; i < this.renderer.rendererWidth()/step; i++) {
 
 							if (SAT.pointInPolygon(this.collisionPoint, collider)) {
-								// Push the result into a collection of distances
-								this.collisionDistances.push(collisionDistance);
+								if (this.shortestDistance != -1 && collisionDistance < this.shortestDistance) {
+									this.shortestDistance = collisionDistance;
+
+									this.shortestCollisionPointX = this.collisionPoint.x;
+									this.shortestCollisionPointY = this.collisionPoint.y;
+								} else if (this.shortestDistance == -1) {
+									this.shortestDistance = collisionDistance;
+
+									this.shortestCollisionPointX = this.collisionPoint.x;
+									this.shortestCollisionPointY = this.collisionPoint.y;
+								}
+
 								// Test the next obstacle in the collection
-								break obstacles;
+								continue obstacles;
 							} else {
 								// Move the collision point along the path of the laser
 								this.collisionPoint.x += this.dirX;
@@ -116,7 +129,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 					}
 
 					// Once all distances have been calculated, find the smallest one
-					this.collisionDistance = Math.min.apply(null, this.collisionDistances);
+					this.collisionDistance = this.shortestDistance;
 					// Mark that a collision point has been found
 					this.collisionPointFound = true;
 					
@@ -125,8 +138,8 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 
 					// Create the laser hit game object
 					this.laserHit = Gb.create('LaserHit', this.getUpdateGroup(), this.getViewportList(), {
-						x: this.collisionPoint.x,
-						y: this.collisionPoint.y
+						x: this.shortestCollisionPointX,
+						y: this.shortestCollisionPointY
 					});
 
 					// Start playing the animation of the laser hit game object

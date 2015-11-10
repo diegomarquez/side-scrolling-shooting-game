@@ -228,7 +228,11 @@ define(function(require) {
 				'direction-right',
 				'direction-left',
 				'direction-up',
-				'direction-down',				
+				'direction-down',
+				'fast-direction-right',
+				'fast-direction-left',
+				'fast-direction-up',
+				'fast-direction-down',				
 				'choose-direction-right',
 				'choose-direction-left',
 				'choose-direction-up',
@@ -264,6 +268,10 @@ define(function(require) {
 				gizmoBundle.getLeftDirectionId(),
 				gizmoBundle.getUpDirectionId(),
 				gizmoBundle.getDownDirectionId(),
+				gizmoBundle.getFastRightDirectionId(),
+				gizmoBundle.getFastLeftDirectionId(),
+				gizmoBundle.getFastUpDirectionId(),
+				gizmoBundle.getFastDownDirectionId(),
 				gizmoBundle.getStartPositionId()
 			];
 

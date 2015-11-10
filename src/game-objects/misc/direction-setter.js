@@ -4,6 +4,7 @@ define(function(require) {
 		init: function() {
 			this._super();
 			this.angle = 0;
+			this.speed = 0;
 		},
 
 		editorStart: function() {
@@ -20,6 +21,7 @@ define(function(require) {
 			// Right
 			if (d == 0) {
 				if (Math.floor(this.mainViewport.x + this.X) <= this.halfWidth) {
+					this.player.setMaxForwardSpeed(this.speed);
 					this.player.move(this.angle);
 				}
 			}
@@ -27,6 +29,7 @@ define(function(require) {
 			// Left
 			if (d == 180) {
 				if (Math.floor(this.mainViewport.x + this.X) >= this.halfWidth) {
+					this.player.setMaxForwardSpeed(this.speed);
 					this.player.move(this.angle);
 				}
 			}
@@ -34,6 +37,7 @@ define(function(require) {
 			// Up
 			if (d == 270) {
 				if (Math.floor(this.mainViewport.y + this.Y) >= this.halfHeight) {
+					this.player.setMaxForwardSpeed(this.speed);
 					this.player.move(this.angle);
 				}
 			}
@@ -41,6 +45,7 @@ define(function(require) {
 			// Down
 			if (d == 90) {
 				if (Math.floor(this.mainViewport.y + this.Y) <= this.halfHeight) {
+					this.player.setMaxForwardSpeed(this.speed);
 					this.player.move(this.angle);
 				}
 			}

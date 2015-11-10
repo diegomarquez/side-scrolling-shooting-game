@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], function(GameObjectContainer, Keyboard, Gb, Matrix) {
+define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenlite"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite) {
 	
 	var transformResult = {};
 	var matrix = new Matrix();
@@ -27,6 +27,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 			this.maxBulletAmount = 1;
 
 			this.forwardSpeed = this.speed;
+			this.maxForwardSpeed = this.forwardSpeed;
 			this.angle = 0;
 			this.direction = 'right';
 
@@ -414,12 +415,15 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 		},
 
 		recycle: function() {
-			this._super();
+			TweenLite.killTweensOf(this);
+
 			Keyboard.levelCleanUp('player-ship-keyboard');
 
 			this.middleShootingPositions = null;
 			this.leftShootingPositions = null;
 			this.rightShootingPositions = null;
+
+			this._super();
 		},
 
 		isBlocked: function() {
@@ -450,15 +454,28 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3"], functio
 				this.angle = angle * (Math.PI/180);
 				this.rotation = (angle + 90);
 			}
-						
-			this.forwardSpeed = 200;
+			
+			Tweenlite.to(this, 2, { forwardSpeed : this.maxForwardSpeed });
+
 			this.execute(this.MOVE);
 		},
 
+		setMaxForwardSpeed: function(speed) {
+			this.maxForwardSpeed = speed;
+		},
+
 		stop: function() {
-			smallExhausts.call(this);
 			this.forwardSpeed = 0;
+			this.maxForwardSpeed = 200;
+			
+			TweenLite.killTweensOf(this);
+
+			smallExhausts.call(this);
 			this.execute(this.STOP);
+		},
+
+		getMaxForwardSpeed: function() {
+			return this.maxForwardSpeed;
 		},
 
 		getDirection: function() {

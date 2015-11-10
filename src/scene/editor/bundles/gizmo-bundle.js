@@ -52,6 +52,26 @@ define(function(require) {
 				offset:'center'
 			});
 
+			this.componentPool.createConfiguration("FastRightDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['FASTRIGHTARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("FastLeftDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['FASTLEFTARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("FastUpDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['FASTUPARROW.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("FastDownDirectionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['FASTDOWNARROW.PNG'],
+				offset:'center'
+			});
+
 			this.componentPool.createConfiguration("StartPositionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
 				path: gb.assetMap()['CHECKEREDFLAG.PNG'],
 				offset:'center'
@@ -97,6 +117,18 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("DownDirectionGizmo", "IconGizmoHandle")
 				.setRenderer('DownDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("FastRightDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('FastRightDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("FastLeftDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('FastLeftDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("FastUpDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('FastUpDirectionGizmoRenderer');
+
+			this.gameObjectPool.createConfiguration("FastDownDirectionGizmo", "IconGizmoHandle")
+				.setRenderer('FastDownDirectionGizmoRenderer');
 
 			this.gameObjectPool.createConfiguration("StartPositionGizmo", "IconGizmoHandle")
 				.setRenderer('StartPositionGizmoRenderer');
@@ -163,10 +195,15 @@ define(function(require) {
 
 		getScrollStopperId: function () { return "ScrollStopperGizmo"; },
 		getBossWarningId: function () { return "BossWarningGizmo"; },
+		
 		getRightDirectionId: function () { return "RightDirectionGizmo"; },
 		getLeftDirectionId: function () { return "LeftDirectionGizmo"; },
 		getUpDirectionId: function () { return "UpDirectionGizmo"; },
 		getDownDirectionId: function () { return "DownDirectionGizmo"; },
+		getFastRightDirectionId: function () { return "FastRightDirectionGizmo"; },
+		getFastLeftDirectionId: function () { return "FastLeftDirectionGizmo"; },
+		getFastUpDirectionId: function () { return "FastUpDirectionGizmo"; },
+		getFastDownDirectionId: function () { return "FastDownDirectionGizmo"; },
 		getStartPositionId: function () { return "StartPositionGizmo"; }
 		
 	});
