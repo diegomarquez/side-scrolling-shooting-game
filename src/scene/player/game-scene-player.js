@@ -28,7 +28,9 @@ define(function(require) {
 	},
 
 	setCompleteEvents: function() {
-		var levelItems = root.findChildren().recurse().allWithType('LevelItem');
+		var levelItems = root.findChildren().recurse().all(function(child) {
+			return child.poolId == 'LevelItem' || child.poolId == 'AllBossDefeatLevelItem'; 
+		});
 
 		var player = playerGetter.get();
 
