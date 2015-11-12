@@ -92,34 +92,35 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 			}
 			
 			if (this.hp > 0) {
-				this.hp--;	
-			} else {
+				this.hp--;
 
-				// Add the effects components
-				var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
-				var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
+				if (this.hp == 0) {
+					// Add the effects components
+					var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+					var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
 
-				// Disable the collider component
-				this.findComponents().firstWithProp('collider').disable();
+					// Disable the collider component
+					this.findComponents().firstWithProp('collider').disable();
 
-				// Start reapir timer
-				this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
-				this.repairTimer.start();
+					// Start reapir timer
+					this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
+					this.repairTimer.start();
 
-				this.renderer.pause();
+					this.renderer.pause();
 
-				this.repairTimer.on(this.repairTimer.COMPLETE, function() {
-					this.renderer.play();
+					this.repairTimer.on(this.repairTimer.COMPLETE, function() {
+						this.renderer.play();
 
-					// Reset damage
-					this.hp = this.initHp; 
-					// Enable the collider component
-					this.findComponents().firstWithProp('collider').enable();
+						// Reset damage
+						this.hp = this.initHp; 
+						// Enable the collider component
+						this.findComponents().firstWithProp('collider').enable();
 
-					// Remove the effects components
-					this.removeComponent(explosionsGenerator);
-					this.removeComponents(particleGenerators);
-				}, true);    			
+						// Remove the effects components
+						this.removeComponent(explosionsGenerator);
+						this.removeComponents(particleGenerators);
+					}, true);	
+				}
 			}
 		}
 	});

@@ -7,7 +7,8 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 		x: 0,
 		y: 0,
 		angle: 0,
-		rotation: 0
+		rotation: 0,
+		playerSpeed: 0
 	};
 
 	var powerupFeedbackArguments = {
@@ -75,6 +76,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 				}
@@ -86,6 +88,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 
@@ -95,6 +98,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 				}
@@ -106,6 +110,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 
@@ -115,6 +120,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 
@@ -124,6 +130,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					bulletArguments.y = transformResult.y;
 					bulletArguments.angle = this.angle;
 					bulletArguments.rotation = this.rotation - 90;
+					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
 					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
 				}
@@ -453,10 +460,10 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 
 				this.angle = angle * (Math.PI/180);
 				
-				Tweenlite.to(this, 1, { directionalRotation : (angle + 90) + "_short" });
+				Tweenlite.to(this, 0.3, { directionalRotation : (angle + 90) + "_short" });
 			}
 			
-			Tweenlite.to(this, 2, { forwardSpeed : this.maxForwardSpeed });
+			Tweenlite.to(this, 1, { forwardSpeed : this.maxForwardSpeed });
 
 			this.execute(this.MOVE);
 		},
@@ -519,40 +526,43 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 		},
 
 		takeDamage: function(hitDirection) {
+			
 			if (this.hp > 0) {
 				this.hp--;
 
-				powerupFeedbackArguments.x = this.X;
-				powerupFeedbackArguments.y = this.Y;
-
-				p = null;
-
-				// Loose a power up at random
-				if (Math.random() > 0.5) {
-					if (this.maxBulletAmount > 1) {
-						this.maxBulletAmount--;
-						
-						p = Gb.create('PowerDown', 'First', bulletsViewport, powerupFeedbackArguments);
-					}
+				if (this.hp == 0) {
+					this.damageComponent.disable();
+				
+					this.destroyComponent.enable();
+					this.destroyComponent.setDirection(hitDirection);
+					
+					noExhaust.call(this);
 				} else {
-					if (this.speed > 200) {
-						this.speed -= 50;
-						p = Gb.create('SpeedDown', 'First', bulletsViewport, powerupFeedbackArguments);
+					powerupFeedbackArguments.x = this.X;
+					powerupFeedbackArguments.y = this.Y;
+
+					p = null;
+
+					// Loose a power up at random
+					if (Math.random() > 0.5) {
+						if (this.maxBulletAmount > 1) {
+							this.maxBulletAmount--;
+							
+							p = Gb.create('PowerDown', 'First', bulletsViewport, powerupFeedbackArguments);
+						}
+					} else {
+						if (this.speed > 200) {
+							this.speed -= 50;
+							p = Gb.create('SpeedDown', 'First', bulletsViewport, powerupFeedbackArguments);
+						}
 					}
-				}
 
-				if (!p) {
-					Gb.create('HpDown', 'First', bulletsViewport, powerupFeedbackArguments);
-				}
+					if (!p) {
+						Gb.create('HpDown', 'First', bulletsViewport, powerupFeedbackArguments);
+					}
 
-				this.execute(this.HEALTH_DOWN, this.hp);
-			} else {
-				this.damageComponent.disable();
-				
-				this.destroyComponent.enable();
-				this.destroyComponent.setDirection(hitDirection);
-				
-				noExhaust.call(this);
+					this.execute(this.HEALTH_DOWN, this.hp);	
+				}
 			}
 		}
 	});

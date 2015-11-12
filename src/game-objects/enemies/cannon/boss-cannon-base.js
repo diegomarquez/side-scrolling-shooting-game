@@ -52,35 +52,38 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 
 		onCollide: function(other) {
 			if (this.started) {
+				
 				if (this.hp > 0) {
-					this.hp--;	
-				} else {
-					// Add the effects components
-					var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
-					var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
+					this.hp--;
 
-					// Disable the collider component
-					this.findComponents().firstWithProp('collider').disable();
-					// Notify Damage
-					this.execute(this.DAMAGE);
+					if (this.hp == 0) {
+						// Add the effects components
+						var explosionsGenerator = Gb.addComponentTo(this, this.damageExplosions);
+						var particleGenerators = Gb.addComponentsTo(this, this.damageParticles);
 
-					// Start reapir timer
-					this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
-					this.repairTimer.start();
+						// Disable the collider component
+						this.findComponents().firstWithProp('collider').disable();
+						// Notify Damage
+						this.execute(this.DAMAGE);
 
-					this.repairTimer.on(this.repairTimer.COMPLETE, function() {
-						// Reset damage
-						this.hp = this.initHp; 
-						// Enable the collider component
-						this.findComponents().firstWithProp('collider').enable();
+						// Start reapir timer
+						this.repairTimer.configure({ delay: 10000, removeOnComplete:false });
+						this.repairTimer.start();
 
-						// Remove the effects components
-						this.removeComponent(explosionsGenerator);
-						this.removeComponents(particleGenerators);
+						this.repairTimer.on(this.repairTimer.COMPLETE, function() {
+							// Reset damage
+							this.hp = this.initHp; 
+							// Enable the collider component
+							this.findComponents().firstWithProp('collider').enable();
 
-						// Notify Repair
-						this.execute(this.REPAIR);
-					}, true);    			
+							// Remove the effects components
+							this.removeComponent(explosionsGenerator);
+							this.removeComponents(particleGenerators);
+
+							// Notify Repair
+							this.execute(this.REPAIR);
+						}, true);	
+					}
 				}
 			}
 		}

@@ -25,7 +25,6 @@ define(['component', 'gb'], function(Component, Gb){
 
 			this.explosionsGenerator = Gb.addComponentTo(this.parent, this.damageExplosions);
 			
-			// When the last explosion is done with it's animation, mark the cannon for recycling
       		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
       			this.parent.removeComponent(this.explosionsGenerator);	
 

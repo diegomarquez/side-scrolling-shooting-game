@@ -67,31 +67,33 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 				if (this.hp > 0) {
 					this.hp--;
 
-					this.regenTimer.start();
-					this.execute('damage');
+					if (this.hp == 0) {
+						if (this.isActive()) {
+							var collider = this.findComponents().firstWithProp('collider');
+							collider.disable();
 
-					TweenLite.to(this, 0.5, { x: '-=' + this.vecX * 40, y: '-=' + this.vecY * 40, ease: Power2.easeOut });
-				} else {
-					if (this.isActive()) {
-						var collider = this.findComponents().firstWithProp('collider');
-						collider.disable();
+							this.target = null;
 
-						this.target = null;
+							this.execute('destroyed', this);
 
-						this.execute('destroyed', this);
-
-						if (this.otherBosses && this.otherBosses.length == 0) {
-							// Signal all cannons that the boss has been destroyed
-							if (this.cannons) {
-								for (var i=0; i < this.cannons.length; i++) {
-									if (this.cannons[i].getViewportVisibility('Main')) {
-										this.cannons[i].onBossDestroy();   
+							if (this.otherBosses && this.otherBosses.length == 0) {
+								// Signal all cannons that the boss has been destroyed
+								if (this.cannons) {
+									for (var i=0; i < this.cannons.length; i++) {
+										if (this.cannons[i].getViewportVisibility('Main')) {
+											this.cannons[i].onBossDestroy();   
+										}
 									}
-								}
 
-								this.cannons.length = 0;
+									this.cannons.length = 0;
+								}
 							}
 						}
+					} else {
+						this.regenTimer.start();
+						this.execute('damage');
+
+						TweenLite.to(this, 0.5, { x: '-=' + this.vecX * 40, y: '-=' + this.vecY * 40, ease: Power2.easeOut });
 					}
 				}
 			});

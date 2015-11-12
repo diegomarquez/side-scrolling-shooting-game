@@ -21,7 +21,6 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 		},
 
 		onCollide: function(other) {
-			
 			if (other.typeId == 'player-ship') {
 				this.destroyMine();
 
@@ -30,8 +29,10 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 
 			if (this.hp > 0) {
 				this.hp--;
-			} else {
-				this.destroyMine();
+
+				if (this.hp == 0) {
+					this.destroyMine();
+				}
 			}
 		},
 

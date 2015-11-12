@@ -32,27 +32,29 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     	if (!this.started)
     		return;
 
-  		if (this.hp > 0) {
-  			this.hp--;	
-  		} else {
-  			this.explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
+    	if (this.hp > 0) {
+			this.hp--;
 
-  			// When the explosion generator is finished, hide the cannon
-    		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
-     	  		this.hide(true).not().allWithType(this.explosionsGenerator.objectType);
-     	 	});
+			if (this.hp == 0) {
+				this.explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 
-     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
-      		this.explosionsGenerator.once(this.explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-      			Gb.reclaimer.mark(this);
-      		});
+	  			// When the explosion generator is finished, hide the cannon
+	    		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
+	     	  		this.hide(true).not().allWithType(this.explosionsGenerator.objectType);
+	     	 	});
 
-      		// Disable the collider component
-    		this.findComponents().firstWithProp('collider').disable();
+	     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+	      		this.explosionsGenerator.once(this.explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
+	      			Gb.reclaimer.mark(this);
+	      		});
 
-      		// Notify damage
-	      	this.execute(this.DAMAGE);
-  		}
+	      		// Disable the collider component
+	    		this.findComponents().firstWithProp('collider').disable();
+
+	      		// Notify damage
+		      	this.execute(this.DAMAGE);	
+			}
+		}
     }
   });
 

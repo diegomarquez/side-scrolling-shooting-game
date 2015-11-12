@@ -32,29 +32,31 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		onCollide: function(other) {
 			if (this.hp > 0) {
 				this.hp--;
-			} else {
-				if (this.isActive()) {
-					var collider = this.findComponents().firstWithProp('collider');
-					collider.disable();
 
-					this.execute('destroyed', this);
+				if (this.hp == 0) {
+					if (this.isActive()) {
+						var collider = this.findComponents().firstWithProp('collider');
+						collider.disable();
 
-					if (this.otherBosses && this.otherBosses.length == 0) {
-						// Signal all cannons that the boss has been destroyed
-						if (this.cannons) {
-							for (var i=0; i < this.cannons.length; i++) {
-								if (this.cannons[i].getViewportVisibility('Main')) {
-									this.cannons[i].onBossDestroy();   
+						this.execute('destroyed', this);
+
+						if (this.otherBosses && this.otherBosses.length == 0) {
+							// Signal all cannons that the boss has been destroyed
+							if (this.cannons) {
+								for (var i=0; i < this.cannons.length; i++) {
+									if (this.cannons[i].getViewportVisibility('Main')) {
+										this.cannons[i].onBossDestroy();   
+									}
 								}
+
+								this.cannons.length = 0;
 							}
-
-							this.cannons.length = 0;
 						}
-					}
 
-					if (this.body.isActive()) {
-						this.body.onBossDestroy();
-					}
+						if (this.body.isActive()) {
+							this.body.onBossDestroy();
+						}
+					}	
 				}
 			}
 		},

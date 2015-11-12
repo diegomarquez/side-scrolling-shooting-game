@@ -53,56 +53,73 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("direction-right", "DirectionSetter")
 				.args({
 					angle: 0,
-					speed: 200
+					type: 'decrease',
+					amount: 200,
+					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("direction-up", "DirectionSetter")
 				.args({
 					angle: 270,
-					speed: 200
+					type: 'decrease',
+					amount: 200,
+					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("direction-left", "DirectionSetter")
 				.args({
 					angle: 180,
-					speed: 200
+					type: 'decrease',
+					amount: 200,
+					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("direction-down", "DirectionSetter")
 				.args({
 					angle: 90,
-					speed: 200
+					type: 'decrease',
+					amount: 200,
+					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
 
 			this.gameObjectPool.createConfiguration("fast-direction-right", "DirectionSetter")
 				.args({
 					angle: 0,
-					speed: 800
+					type: 'increase',
+					amount: 200,
+					cap: 2000
+
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("fast-direction-up", "DirectionSetter")
 				.args({
 					angle: 270,
-					speed: 800
+					type: 'increase',
+					amount: 200,
+					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("fast-direction-left", "DirectionSetter")
 				.args({
 					angle: 180,
-					speed: 800
+					type: 'increase',
+					amount: 200,
+					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
 			
 			this.gameObjectPool.createConfiguration("fast-direction-down", "DirectionSetter")
 				.args({
 					angle: 90,
-					speed: 800
+					type: 'increase',
+					amount: 200,
+					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
 
