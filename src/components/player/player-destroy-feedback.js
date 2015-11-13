@@ -10,7 +10,7 @@ define(['component', 'gb'], function(Component, Gb){
 		},
 
 		setDirection: function(dir) {
-			dir.scale(2, 2);
+			dir.normalize();
 			
 			this.dirX = dir.x;
 			this.dirY = dir.y;
@@ -23,8 +23,8 @@ define(['component', 'gb'], function(Component, Gb){
 		update: function(delta) {
 			this.parent.rotation += 15;
 
-			this.parent.viewportOffsetX -= this.dirX * delta * 300;
-			this.parent.viewportOffsetY -= this.dirY * delta * 300;
+			this.parent.viewportOffsetX -= this.dirX * delta * 150;
+			this.parent.viewportOffsetY -= this.dirY * delta * 150;
 
 			if (!this.parent.getViewportVisibility('Main')) {
 				Gb.reclaimer.mark(this.parent);

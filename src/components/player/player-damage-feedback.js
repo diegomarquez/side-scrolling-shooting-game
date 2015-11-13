@@ -1,4 +1,4 @@
-define(['component', 'gb'], function(Component, Gb){
+define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactory){
 
 	var PlayerDamageComponent = Component.extend({
 		
@@ -25,14 +25,18 @@ define(['component', 'gb'], function(Component, Gb){
 
 			this.explosionsGenerator = Gb.addComponentTo(this.parent, this.damageExplosions);
 			
+			TimerFactory.get(this, 'disableTimer', 'disableTimer');
+			this.disableTimer.configure({ delay: 1000 });
+
+			this.disableTimer.on(this.disableTimer.COMPLETE, function() {
+				this.disable();
+				this.execute('complete');
+			}, true);
+
       		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
       			this.parent.removeComponent(this.explosionsGenerator);	
-
-      			this.disable();
-
+      			this.disableTimer.start();
       			this.explosionsGenerator = null;
-
-      			this.execute('complete');
       		});
 		},	
 
@@ -51,6 +55,13 @@ define(['component', 'gb'], function(Component, Gb){
 			}
 
 			this.startPos = !this.startPos;
+		},
+
+		recycle: function(parent) {
+			if (this.disableTimer)
+				this.disableTimer.remove();
+
+			this._super(parent);
 		}
 	});
 

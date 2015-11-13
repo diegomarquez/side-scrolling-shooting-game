@@ -76,7 +76,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 
 			this.gameObjectPool.createConfiguration("SpeedDown", commonBundle.getGameObjectPoolId())
@@ -90,7 +91,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 
 			this.gameObjectPool.createConfiguration("HpDown", commonBundle.getGameObjectPoolId())
@@ -104,7 +106,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 
 			this.gameObjectPool.createConfiguration("PowerUp", commonBundle.getGameObjectPoolId())
@@ -118,7 +121,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 
 			this.gameObjectPool.createConfiguration("SpeedUp", commonBundle.getGameObjectPoolId())
@@ -132,7 +136,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 
 			this.gameObjectPool.createConfiguration("HpUp", commonBundle.getGameObjectPoolId())
@@ -146,7 +151,8 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
-					offset: 'center'
+					offset: 'center',
+					lineWidth: 0.5
 				});
 		},
 	});

@@ -529,6 +529,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 			
 			if (this.hp > 0) {
 				this.hp--;
+				this.execute(this.HEALTH_DOWN, this.hp);
 
 				if (this.hp == 0) {
 					this.damageComponent.disable();
@@ -538,6 +539,10 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					
 					noExhaust.call(this);
 				} else {
+					
+					if (this.hp <= 0)
+						return;
+
 					powerupFeedbackArguments.x = this.X;
 					powerupFeedbackArguments.y = this.Y;
 
@@ -560,8 +565,6 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					if (!p) {
 						Gb.create('HpDown', 'First', bulletsViewport, powerupFeedbackArguments);
 					}
-
-					this.execute(this.HEALTH_DOWN, this.hp);	
 				}
 			}
 		}
