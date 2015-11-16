@@ -18,7 +18,11 @@ define(function(require) {
 						click: function(name, event) {
 							if (menu.go.poolId == 'AngleDirectionSetter') {
 								gb.reclaimer.mark(menu.go);
-							} else {
+							}
+							else if (menu.go.poolId == 'AbsoluteScrollStopper') {
+								gb.reclaimer.mark(menu.go);
+							}
+							else {
 								gb.reclaimer.mark(menu.go.parent);
 							}
 						}		

@@ -65,8 +65,8 @@ define(function(require) {
 					rotation: 90
 				})
 				.addChild('ShootingPosition', { name: 'middle', y: -35 })
-				.addChild('ShootingPosition', { name: 'right', x: 20, y: -25 })
-				.addChild('ShootingPosition', { name: 'left', x: -20, y: -25 })
+				.addChild('ShootingPosition', { name: 'right', x: 15, y: -25 })
+				.addChild('ShootingPosition', { name: 'left', x: -15, y: -25 })
 				
 				.addChild('SmallExhaust', { x: -21, y: 45, rotation: -58, scaleX: 0.6, scaleY: 0.6 })
 				.addChild('SmallExhaust', { x: 0, y: 55, rotation: -90, scaleX: 0.8, scaleY: 0.8 })

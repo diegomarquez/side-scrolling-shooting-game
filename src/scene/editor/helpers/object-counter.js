@@ -1,7 +1,7 @@
 define(function(require) {
 
 	var createdObjects = 0;
-	var maxAmount = 300;
+	var maxAmount = 350;
 
 	var ObjectCounter = function() {};
 
