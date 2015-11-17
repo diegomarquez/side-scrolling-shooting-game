@@ -12,6 +12,8 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 		editorStart: function() {
 			this.life = 50;
 			this.renderer.play();
+
+			this.angle = (this.rotation) * (Math.PI/180)
 		},
 
 		editorUpdate: function(delta) {
