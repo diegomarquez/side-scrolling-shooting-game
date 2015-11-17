@@ -25,6 +25,9 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
 
 			this.explosionsGenerator = Gb.addComponentTo(this.parent, this.damageExplosions);
 			
+			if (this.disableTimer)
+				this.disableTimer.remove();
+			
 			TimerFactory.get(this, 'disableTimer', 'disableTimer');
 			this.disableTimer.configure({ delay: 1000 });
 
