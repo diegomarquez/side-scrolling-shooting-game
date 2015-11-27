@@ -29,6 +29,7 @@ define(function(require) {
 	    	require('generator-bundle').create();
 	    	require('enemy-ship-bundle').create();
 	    	require('blob-bundle').create();
+	    	require('spider-bundle').create();
 		},
 
 		setCollisionPairs: function() {
