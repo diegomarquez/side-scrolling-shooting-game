@@ -7,7 +7,7 @@ define(function(require) {
 		create: function(args) {			
 			
 			this.gameObjectPool.createDynamicPool('Spider_Follow_Type', require('follow-spider'));
-			// this.gameObjectPool.createDynamicPool('Spider_Shooting_Type', require('shooting-spider'));
+			this.gameObjectPool.createDynamicPool('Spider_Shooting_Type', require('shooting-spider'));
 
 			this.componentPool.createPool('AngleMovement', require('movement-angle'));
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
@@ -65,24 +65,42 @@ define(function(require) {
 				.enemyCategory()
 				.strongEnemyTier();
 				
+			this.gameObjectPool.createConfiguration('shooting-spider-0', 'Spider_Shooting_Type')
+				.args({
+					hp: 2,
+					speed: 200,
+					scaleX: 0.6,
+					scaleY: 0.6,
+					shootingTime: 1200,
+					bulletType: 'double-cannon-bullet-slow'
+				})
+				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('Activate_Spider_On_View')
+				.addComponent('SpiderAngleMovement')
+				.addComponent('SpiderDestroyExplosions')
+				.addComponent('SpiderDestroyOnHpDepleted')
+				.setRenderer('Spider_Renderer')
+				.enemyCategory()
+				.weakEnemyTier();
 
-			// this.gameObjectPool.createConfiguration('shooting-spider-0', 'Spider_Shooting_Type')
-			// 	.args({
-			// 		hp: 5,
-			// 		speed: 200,
-			// 		scaleX: 0.8,
-			// 		scaleY: 0.8
-			// 	})
-			// 	.addComponent('EnemySpiderCircleCollider')
-			// 	.addComponent('Activate_EnemyShip_On_View')
-			// 	.addComponent('EnemyShipAngleMovement')
-			// 	.addComponent('EnemyShipFollowWayPoints')
-			// 	.addComponent('EnemyShipDestroyExplosions')
-			// 	.addComponent('EnemyShipDestroyOnHpDepleted')
-			// 	.setRenderer('Spider_Renderer')
-			// 	.enemyCategory()
-			// 	.weakEnemyTier();
-				
+			this.gameObjectPool.createConfiguration('shooting-spider-1', 'Spider_Shooting_Type')
+				.args({
+					hp: 4,
+					speed: 100,
+					scaleX: 0.6,
+					scaleY: 0.6,
+					shootingTime: 1000,
+					bulletType: 'double-cannon-bullet-slow'
+				})
+				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('Activate_Spider_On_View')
+				.addComponent('SpiderAngleMovement')
+				.addComponent('SpiderDestroyExplosions')
+				.addComponent('SpiderDestroyOnHpDepleted')
+				.setRenderer('Spider_Renderer')
+				.enemyCategory()
+				.strongEnemyTier();
+			
 		},
 	});
 
