@@ -1,10 +1,7 @@
 define(["editor-game-object-container", "reclaimer", "player-getter", "timer-factory", "gb"], function(GameObject, Reclaimer, PlayerGetter, TimerFactory, Gb) {
 	
 	var targetDecompose = {};
-	var targetMatrix = null;
-
 	var selfDecompose = {};
-	var selfMatrix = null;
 
 	var ShootingSpider = GameObject.extend({
 		init: function() {
@@ -16,6 +13,9 @@ define(["editor-game-object-container", "reclaimer", "player-getter", "timer-fac
 
 			this.shootingTime = 0;
 			this.bulletType = '';
+
+			this.targetMatrix = null;
+			this.selfMatrix = null;
 		},
 
 		editorStart: function() {
@@ -34,19 +34,20 @@ define(["editor-game-object-container", "reclaimer", "player-getter", "timer-fac
 			this.renderer.play();
 			this.angle = this.rotation * (Math.PI/180);
 
+			if (this.shootingTimer)
+				this.shootingTimer.remove();
+
 			TimerFactory.get(this, "shootingTimer", "shootingTimer");
 			
 			this.shootingTimer.configure({ delay: this.shootingTime, removeOnComplete: false, repeatCount: -1 });
 
-			this.shootingTimer.start();
-
-			targetMatrix = PlayerGetter.get().getMatrix(targetMatrix);
-			selfMatrix = this.getMatrix(selfMatrix);
+			this.targetMatrix = PlayerGetter.get().getMatrix(this.targetMatrix);
+			this.selfMatrix = this.getMatrix(this.selfMatrix);
 
 			this.shootingTimer.on(this.shootingTimer.REPEATE, function() {
 
-				targetDecompose = targetMatrix.decompose(targetDecompose);
-				selfDecompose = selfMatrix.decompose(selfDecompose);
+				targetDecompose = this.targetMatrix.decompose(targetDecompose);
+				selfDecompose = this.selfMatrix.decompose(selfDecompose);
 				
 				var deltaX = targetDecompose.x - selfDecompose.x;
 				var deltaY = targetDecompose.y - selfDecompose.y;
@@ -58,6 +59,8 @@ define(["editor-game-object-container", "reclaimer", "player-getter", "timer-fac
 				});
 
 			});
+
+			this.shootingTimer.start();
 		},
 
 		deActivate: function() {
