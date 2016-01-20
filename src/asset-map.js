@@ -59,9 +59,13 @@ define(function() {
 	"WARNING.PNG": "assets/images/Warning.png",
 	"BIOHAZARD.PNG": "assets/images/biohazard.png",
 	"DOWNARROW.PNG": "assets/images/downArrow.png",
+	"DOWNLEFTARROW.PNG": "assets/images/downLeftArrow.png",
+	"DOWNRIGHTARROW.PNG": "assets/images/downRightArrow.png",
 	"LEFTARROW.PNG": "assets/images/leftArrow.png",
 	"RIGHTARROW.PNG": "assets/images/rightArrow.png",
 	"UPARROW.PNG": "assets/images/upArrow.png",
+	"UPLEFTARROW.PNG": "assets/images/upLeftArrow.png",
+	"UPRIGHTARROW.PNG": "assets/images/upRightArrow.png",
 	"WEBBULLET.PNG": "assets/images/webBullet.png",
 	"SPACEINVADERS_FIRE.WAV": "assets/sound/SpaceInvaders_Fire.wav"
 };

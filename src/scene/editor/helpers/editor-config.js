@@ -236,7 +236,11 @@ define(function(require) {
 				'choose-direction-right',
 				'choose-direction-left',
 				'choose-direction-up',
-				'choose-direction-down'
+				'choose-direction-down',
+				'direction-down-left',
+				'direction-down-right',
+				'direction-up-left',
+				'direction-up-right'
 			];
 
 			return controlObjects;

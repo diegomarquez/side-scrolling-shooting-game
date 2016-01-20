@@ -62,6 +62,7 @@ define(function(require) {
 			collisionResolver.addCollisionPair('shipColliderId', 'enemyShipColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'blobColliderId');
 			collisionResolver.addCollisionPair('shipColliderId', 'enemySpiderColliderId');
+			collisionResolver.addCollisionPair('shipColliderId', 'webBulletColliderId');
 		},
 
 		removeCollisionPairs: function() {
@@ -94,6 +95,7 @@ define(function(require) {
 			collisionResolver.removeCollisionPair('shipColliderId', 'enemyShipColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'blobColliderId');
 			collisionResolver.removeCollisionPair('shipColliderId', 'enemySpiderColliderId');
+			collisionResolver.removeCollisionPair('shipColliderId', 'webBulletColliderId');
 		},
 
 		container: function() {

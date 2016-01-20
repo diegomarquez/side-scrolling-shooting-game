@@ -17,6 +17,8 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool("StartPosition", require('start-position'));			
 			this.gameObjectPool.createDynamicPool("AngleDirectionSetter", require('angle-direction-setter'));
 
+			this.gameObjectPool.createDynamicPool("TwoWayDirectionSetter", require('two-way-direction-setter'));
+
 			this.componentPool.createConfiguration("DirectionSetterCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
 					id:'directionSetterColliderId',
@@ -36,6 +38,30 @@ define(function(require) {
 			this.componentPool.createConfiguration("AbsoluteScrollStopperRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["STOP.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("TwoWayDirectionSetterRenderer1", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["DOWNLEFTARROW.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("TwoWayDirectionSetterRenderer2", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["DOWNRIGHTARROW.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("TwoWayDirectionSetterRenderer3", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["UPLEFTARROW.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("TwoWayDirectionSetterRenderer4", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["UPRIGHTARROW.PNG"],
 					offset: 'center'
 				});
 
@@ -122,6 +148,38 @@ define(function(require) {
 					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
+
+			this.gameObjectPool.createConfiguration("direction-down-left", "TwoWayDirectionSetter")
+				.args({
+					type: 'down-left'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("TwoWayDirectionSetterRenderer1");
+			
+			this.gameObjectPool.createConfiguration("direction-down-right", "TwoWayDirectionSetter")
+				.args({
+					type: 'down-right'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("TwoWayDirectionSetterRenderer2");
+			
+			this.gameObjectPool.createConfiguration("direction-up-left", "TwoWayDirectionSetter")
+				.args({
+					type: 'up-left'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("TwoWayDirectionSetterRenderer3");
+			
+			this.gameObjectPool.createConfiguration("direction-up-right", "TwoWayDirectionSetter")
+				.args({
+					type: 'up-right'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("TwoWayDirectionSetterRenderer4");
 
 			this.gameObjectPool.createConfiguration("start-position", "StartPosition");
 

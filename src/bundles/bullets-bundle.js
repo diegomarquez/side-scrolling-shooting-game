@@ -38,6 +38,13 @@ define(function(require) {
 					getResponse: true
 				});
 
+			this.componentPool.createConfiguration("WebBulletCollider", commonBundle.getCircleColliderPoolId())
+				.args({
+					id:'webBulletColliderId', 
+					radius:10,
+					getResponse: true
+				});
+
 			this.componentPool.createConfiguration("LaserCollider", commonBundle.getPolygonColliderPoolId())
 				.args({
 					id:'laserBulletColliderId',
@@ -203,7 +210,7 @@ define(function(require) {
 				})
 				.addComponent('BulletRotate')
 				.addComponent('BlobBulletDestroyExplosions')
-				.addComponent("CannonBulletCollider")
+				.addComponent("WebBulletCollider")
 				.setRenderer("WebBulletRenderer");
 
 			
