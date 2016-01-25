@@ -93,6 +93,12 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 
 			this.renderer.play('half-open-close');
 
+			this.renderer.once('complete', this, function() {	
+				this.renderer.play('closed');
+
+				console.log(this.renderer.currentLabel);
+			});
+
 			TimerFactory.get(this, 'openTimer', 'openTimer');
 			TimerFactory.get(this, 'attackTimer', 'attackTimer');
 			TimerFactory.get(this, 'closeTimer', 'closeTimer');
@@ -145,7 +151,13 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 				this.attackTimer.stop();
 				this.generateTimer.stop();
 
-				this.renderer.play('closing');
+				if (!this.renderer.isAtLabel('closed')) {
+					this.renderer.play('closing');
+
+					this.renderer.once('complete', this, function() {
+						this.renderer.play('closed');
+					});
+				}
 			});
 
 			this.on('repaired', this, function() {
