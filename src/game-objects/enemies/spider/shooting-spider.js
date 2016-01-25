@@ -60,6 +60,10 @@ define(["editor-game-object-container", "reclaimer", "player-getter", "timer-fac
 
 			});
 
+			this.once('destroyed', this, function() {
+				this.shootingTimer.stop();
+			});
+
 			this.shootingTimer.start();
 		},
 

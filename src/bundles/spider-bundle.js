@@ -89,7 +89,7 @@ define(function(require) {
 					speed: 100,
 					scaleX: 0.6,
 					scaleY: 0.6,
-					shootingTime: 1000,
+					shootingTime: 800,
 					bulletType: 'double-cannon-bullet-slow'
 				})
 				.addComponent('EnemySpiderCircleCollider')

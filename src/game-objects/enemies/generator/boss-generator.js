@@ -95,8 +95,6 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 
 			this.renderer.once('complete', this, function() {	
 				this.renderer.play('closed');
-
-				console.log(this.renderer.currentLabel);
 			});
 
 			TimerFactory.get(this, 'openTimer', 'openTimer');
