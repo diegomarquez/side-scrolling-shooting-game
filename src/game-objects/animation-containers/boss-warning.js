@@ -6,7 +6,9 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
     editorStart: function() {
       Gb.create('WarningMessage', 'First', [{viewport: 'Main', layer: 'Front'}], {
-      	onComplete: function() { Gb.reclaimer.mark(this); }.bind(this)
+      	onComplete: function() { 
+      		Gb.reclaimer.mark(this); 
+      	}.bind(this)
       });
     },
 
