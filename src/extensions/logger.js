@@ -2,6 +2,8 @@ define(function(require) {
 	var gb = require('gb');
 
 	var displayElement = document.createElement('div');
+	var showCounter = 0;
+	var self = null;
 
 	var scroll = function() {
 		var x = 5 + gb.game.mainContainer.scrollLeft;
@@ -21,6 +23,8 @@ define(function(require) {
 		execute: function(args) {
 			var hide = false;
 
+			showCounter = 0;
+
 			if (args) {
 				hide = args.hide || false;
 			}
@@ -39,6 +43,8 @@ define(function(require) {
 			displayElement.appendChild(infoContainer);
 			
 			gb.game.mainContainer.appendChild(displayElement);
+
+			self = this;
 		},
 
 		destroy: function() {
@@ -46,18 +52,45 @@ define(function(require) {
 		},
 
 		toggle: function() {
-			document.getElementById('logger-info-container').style.display == 'block' ? this.hide() : this.show();
+			document.getElementById('logger-info-container').style.display == 'block' ? this.hide(true) : this.show(true);
 		},
 
-		show: function() {
-			document.getElementById('logger-info-container').style.display = 'block';
-			gb.game.mainContainer.addEventListener('scroll', scroll);
+		show: function(callbacks) {
+
+			callbacks = !callbacks;
+
+			showCounter++;
+
+			if (showCounter === 1) {
+				document.getElementById('logger-info-container').style.display = 'block';
+				gb.game.mainContainer.addEventListener('scroll', scroll);
+
+				if (callbacks)
+					self.onShow();
+			}
+			
 			scroll();
 		},
 
-		hide: function() {
-			document.getElementById('logger-info-container').style.display = 'none';
-			gb.game.mainContainer.removeEventListener('scroll', scroll);
+		hide: function(callbacks) {
+
+			callbacks = !callbacks;
+
+			showCounter--;
+
+			if (showCounter < 0)
+				showCounter = 0;
+
+			if (document.getElementById('logger-info-container').style.display === 'none')
+				return;
+
+			if (showCounter === 0) {
+				document.getElementById('logger-info-container').style.display = 'none';
+				gb.game.mainContainer.removeEventListener('scroll', scroll);
+
+				if (callbacks)
+					self.onHide();
+			}		
 		},
 
 		success: function(message) {
@@ -118,6 +151,14 @@ define(function(require) {
 			if ($(infoContainer).children().length > 5) {
 				$(infoContainer).children().last().remove();
 			}
+		},
+
+		onShow: function() {
+
+		},
+
+		onHide: function() {
+			
 		}
 	});
 

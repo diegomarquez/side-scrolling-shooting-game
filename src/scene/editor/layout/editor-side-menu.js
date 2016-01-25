@@ -222,14 +222,32 @@ define(function(require) {
 				));
 			}
 
-			items.push(createToggleOptionItem(
+			var loggerItem = createToggleOptionItem(
 				'Log', 
 				'glyphicon-eye-close',
 				'glyphicon-eye-open',
 				function() {  
 					gb.game.get_extension(require('logger')).toggle();
 				}.bind(this)
-			));
+			);
+
+			gb.game.on(gb.game.EXTENSION_ADDED, this, function(extension) {
+				if (extension.constructor === require('logger')) {
+					extension.onShow = function() {
+						$(loggerItem).find('.side-menu-icon').toggle();
+
+						console.log("SHOW");
+					};
+
+					extension.onHide = function() {
+						$(loggerItem).find('.side-menu-icon').toggle();	
+
+						console.log("HIDE");
+					};
+				}
+			});
+
+			items.push(loggerItem);
 
 			items.push(createDivider());
 
