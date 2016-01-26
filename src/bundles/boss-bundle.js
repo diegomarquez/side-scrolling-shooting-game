@@ -17,10 +17,26 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('Boss_1_Icon', require("boss-1-icon"));
 			
 			this.componentPool.createConfiguration("Boss_1_Collider", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
+				.args({ 
+					id:'bossColliderId', 
+					points: [
+						{ x: -50 , y: -65 },
+						{ x:  50 , y: -65 },
+						{ x:  50 , y:  65 },
+						{ x: -50 , y:  65 }
+					] 
+				});
 
 			this.componentPool.createConfiguration("Boss_1_Cables_Collider", commonBundle.getPolygonColliderPoolId())
-				.args({ id:'bossColliderId', points: getPolygon(4, 20) });
+				.args({ 
+					id:'bossColliderId', 
+					points: [
+						{ x: -15 , y: -40 },
+						{ x:  15 , y: -40 },
+						{ x:  15 , y:  40 },
+						{ x: -15 , y:  40 }
+					] 
+				});
 
 			this.componentPool.createConfiguration("Boss_1_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({

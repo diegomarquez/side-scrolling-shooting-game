@@ -15,10 +15,15 @@ define(function(require) {
 			this.componentPool.createPool('DamageExplosions', require('damage-explosions'));
 			this.componentPool.createPool('DamageOnHpDepleted', require('damage-on-hp-depleted'));
 
-			this.componentPool.createConfiguration("GeneratorCircleCollider", commonBundle.getCircleColliderPoolId())
-				.args({
-					id: 'generatorColliderId',
-					radius: 20
+			this.componentPool.createConfiguration("GeneratorCircleCollider", commonBundle.getPolygonColliderPoolId())
+				.args({ 
+					id:'generatorColliderId', 
+					points: [
+						{ x: -32 , y: -15  },
+						{ x:  32 , y: -15  },
+						{ x:  32 , y: 15 },
+						{ x: -32 , y: 15 }
+					]
 				});
 
 			this.componentPool.createConfiguration("Activate_Generator_On_View", commonBundle.getActivateOnViewPoolId());

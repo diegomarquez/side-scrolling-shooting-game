@@ -15,7 +15,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("MineCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id: 'mineColliderId', 
-					radius: 10
+					radius: 13
 				});
 
 			this.componentPool.createConfiguration("Activate_Mine_On_View", commonBundle.getActivateOnViewPoolId());

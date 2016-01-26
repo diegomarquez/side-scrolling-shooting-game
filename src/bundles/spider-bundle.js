@@ -40,7 +40,7 @@ define(function(require) {
 					hp: 2,
 					speed: 200,
 				})
-				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('EnemySpiderCircleCollider', { radius: 25 })
 				.addComponent('Activate_Spider_On_View')
 				.addComponent('SpiderAngleMovement')
 				.addComponent('SpiderDestroyExplosions')
@@ -55,7 +55,7 @@ define(function(require) {
 					hp: 3,
 					speed: 300,
 				})
-				.addComponent('EnemySpiderCircleCollider')
+				.addComponent('EnemySpiderCircleCollider', { radius: 25 })
 				.addComponent('Activate_Spider_On_View')
 				.addComponent('SpiderAngleMovement')
 				.addComponent('SpiderDestroyExplosions')

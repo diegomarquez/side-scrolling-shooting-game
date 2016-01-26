@@ -413,7 +413,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("MissileTurretCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id:'cannonColliderId',
-					radius:20
+					radius:23
 				});
 
 			this.componentPool.createConfiguration("MissileTurretBaseRenderer", commonBundle.getBitmapRendererPoolId())

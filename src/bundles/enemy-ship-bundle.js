@@ -14,16 +14,27 @@ define(function(require) {
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));
 			this.componentPool.createPool('DestroyOnHpDepleted', require('destroy-on-hp-depleted'));
 
+			this.componentPool.createConfiguration("EnemyShipRectangleCollider", commonBundle.getPolygonColliderPoolId())
+				.args({ 
+					id:'enemyShipColliderId', 
+					points: [
+						{ x: -30 , y: -10  },
+						{ x:  30 , y: -10  },
+						{ x:  30 , y: 10 },
+						{ x: -30 , y: 10 }
+					]
+				});
+
 			this.componentPool.createConfiguration("EnemyShipCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id: 'enemyShipColliderId', 
-					radius: 10
+					radius: 12
 				});
 
 			this.componentPool.createConfiguration("EnemySpiderCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id: 'enemySpiderColliderId', 
-					radius: 10
+					radius: 15
 				});
 
 			this.componentPool.createConfiguration("Activate_EnemyShip_On_View", commonBundle.getActivateOnViewPoolId());
@@ -134,7 +145,7 @@ define(function(require) {
 					hp: 3,
 					speed: 120
 				})
-				.addComponent('EnemyShipCircleCollider')
+				.addComponent('EnemyShipRectangleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
@@ -148,7 +159,7 @@ define(function(require) {
 					hp: 5,
 					speed: 150
 				})
-				.addComponent('EnemyShipCircleCollider')
+				.addComponent('EnemyShipRectangleCollider')
 				.addComponent('Activate_EnemyShip_On_View')
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
