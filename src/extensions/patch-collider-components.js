@@ -51,6 +51,9 @@ define(function(require) {
 				},
 
 				set: function(value) {
+					if (!value.points)
+						return;
+
 					this.Points = value.points;
 				}
 			});
@@ -63,6 +66,9 @@ define(function(require) {
 				},
 
 				set: function(value) {
+					if (!value)
+						return;
+
 					this.pointsCopy = value;
 					this.execute(this.CHANGE_POINTS, value);
 				} 
@@ -78,6 +84,9 @@ define(function(require) {
 				},
 
 				set: function(value) {
+					if (!value.points)
+						return;
+
 					this.Points = value.points;
 				}
 			});
@@ -90,6 +99,9 @@ define(function(require) {
 				},
 
 				set: function(value) {
+					if (!value)
+						return;
+					
 					this.pointsCopy = value;
 					this.execute(this.CHANGE_POINTS, value);
 				} 
