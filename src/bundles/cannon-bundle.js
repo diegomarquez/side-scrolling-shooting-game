@@ -204,7 +204,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("LaserBaseCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
 					id:'cannonColliderId', 
-					radius:20 
+					radius:25
 				});
 
 			this.gameObjectPool.createConfiguration("laser-shooter-0", "LaserShooter")
@@ -312,10 +312,15 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('DoubleCannonBase', require("double-cannon-base"));
 			this.gameObjectPool.createDynamicPool('BossDoubleCannonBase', require("boss-double-cannon-base"));
 
-			this.componentPool.createConfiguration("DoubleBaseCollider", commonBundle.getCircleColliderPoolId())
+			this.componentPool.createConfiguration("DoubleBaseCollider", commonBundle.getPolygonColliderPoolId())
 				.args({ 
 					id:'cannonColliderId', 
-					radius:20 
+					points: [
+						{ x: -32 , y: 5  },
+						{ x:  32 , y: 5  },
+						{ x:  32 , y: 30 },
+						{ x: -32 , y: 30 }
+					]
 				});
 			
 			this.componentPool.createConfiguration("DoubleCannonBaseRenderer", commonBundle.getAnimationBitmapRendererPoolId())
