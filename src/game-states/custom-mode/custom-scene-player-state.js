@@ -18,9 +18,8 @@ define(function(require) {
 
 	state.addStartAction(function (sceneName) {
 		scenePlayer.once(scenePlayer.ESCAPE, this, function () {
-			// Wait for the loader to close before going back to the previous state
+
 			loaderContainer.once(loaderContainer.CLOSE, this, function() {
-				// Go back to the overview state
 				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
 			});
 
@@ -29,14 +28,22 @@ define(function(require) {
 
 		// When the scene is completed successfully
 		scenePlayer.once(scenePlayer.EXIT, this, function () {
-			// Go back to the overview state
-			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+			
+			loaderContainer.once(loaderContainer.CLOSE, this, function() {
+				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+			});
+
+			loaderContainer.transition();
 		});
 
 		// When the scene is failed
 		scenePlayer.once(scenePlayer.FAILURE, this, function () {
-			// Go back to the overview state
-			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+
+			loaderContainer.once(loaderContainer.CLOSE, this, function() {
+				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+			});
+
+			loaderContainer.transition();
 		});
 
 		// Wait for the loader to complete a transition before playing the scene
@@ -53,12 +60,15 @@ define(function(require) {
 	});
 
     state.addCompleteAction(function (args) {
-      // Signal that pools and the instances they hold should be cleared
+      	// Signal that pools and the instances they hold should be cleared
     	gb.reclaimer.clearAllObjectsFromPools().now();
     	gb.reclaimer.clearAllPools().now();
 
 	  	// Clean up the scene player    	
 		scenePlayer.cleanUp();
+
+		// Clean up loader events
+		loaderContainer.hardCleanUp();
     });
 
     return state;

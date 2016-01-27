@@ -6,8 +6,6 @@ define(function(require) {
   return function (name) {
     var state = stateMachineFactory.createState(this, name);
 
-    var selectedStage = -1;
-
     state.addStartAction(function (args) {
     	// Clear update groups and viewports before doing anything else
     	gb.groups.removeAll();
@@ -35,26 +33,29 @@ define(function(require) {
 	    // If the 'start' option is selected, go to the scene player state
 	    stageOverview.on(stageOverview.START_SELECTED, this, function (selectedStageIndex) {
 
-	    	selectedStage = selectedStageIndex;
+	    	loaderContainer.once(loaderContainer.CLOSE, this, function() {
+
+	    		console.log("LEL");
+
+	  			state.execute(state.NEXT, { nextInitArgs: selectedStageIndex, lastCompleteArgs: null });	
+	  		});
+
+	  		console.log("HJKHJK");
 
 	    	loaderContainer.transition();
   		});
-
-  		loaderContainer.once(loaderContainer.CLOSE, this, nextState);
     });
 
     state.addCompleteAction(function (args) {
+    	console.log("LALALA");
+
     	// Remove loader events
-    	loaderContainer.remove(loaderContainer.CLOSE, this, nextState);
+    	loaderContainer.hardCleanUp();
 
       	// Signal that pools and the instances they hold should be cleared
     	gb.reclaimer.clearAllObjectsFromPools().now();
     	gb.reclaimer.clearAllPools().now();
     });
-
-    var nextState = function() {
-    	state.execute(state.NEXT, { nextInitArgs: selectedStage, lastCompleteArgs: null });
-    }
 
     Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });
 

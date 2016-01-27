@@ -7,6 +7,8 @@ define(function(require) {
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
 			this._super();
+
+			this.blockEscape = true;
 		},
 
 		pools: function() {
@@ -126,11 +128,21 @@ define(function(require) {
 		},
 
 		setKeyboardEvents: function() {
-			keyboard.onKeyDown(keyboard.ESC, this, escape);
+			keyboard.onKeyDown(keyboard.ESC, this, this.escape);
 		},
 
 		removeKeyboardEvents: function() {
-      		keyboard.removeKeyDown(keyboard.ESC, this, escape);
+      		keyboard.removeKeyDown(keyboard.ESC, this, this.escape);
+		},
+
+		escape: function() {
+			
+			if (this.blockEscape)
+				return;
+
+			this.blockEscape = true;
+			
+			this.execute(this.ESCAPE);
 		},
 
 		setCompleteEvents: function() {
@@ -143,6 +155,8 @@ define(function(require) {
 
 		create: function(sceneData) {
 			this.viewports = [{viewport: 'Main', layer: 'Front'}];
+
+			this.blockEscape = true;
 
 			this.container()
 			this.pools();
@@ -180,6 +194,18 @@ define(function(require) {
 		},
 
 		cleanUp: function() {
+
+			var title = document.getElementById('player-title');
+			var controls = document.getElementById('player-controls');
+
+			if (title) {
+				title.parentNode.removeChild(title);
+			}
+
+			if (controls) {
+				controls.parentNode.removeChild(controls);
+			}
+
 			// Remove collisions detection
 			this.removeCollisionPairs();
 			// Remove listeners to exit the scene
@@ -193,10 +219,6 @@ define(function(require) {
 			this._super();
 		}
 	});
-
-	var escape = function() {
-		this.execute(this.ESCAPE);
-	}
 
 	Object.defineProperty(ScenePlayer.prototype, "EXIT", { get: function() { return 'exit'; } });
 	Object.defineProperty(ScenePlayer.prototype, "FAILURE", { get: function() { return 'exit'; } });

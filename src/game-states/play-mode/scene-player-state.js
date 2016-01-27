@@ -17,6 +17,9 @@ define(function(require) {
 		});
 
 		state.addStartAction(function (levelIndex) {
+
+			console.log("Selected Stage: " + levelIndex);
+
 			var level = levelStorage.getLevel(levelIndex);
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
@@ -33,14 +36,25 @@ define(function(require) {
 			scenePlayer.once(scenePlayer.EXIT, this, function () {
 				// Save to local storage
 				levelStorage.completeLevel(level);
-				// Go back to the overview state
-				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				
+				// Wait for the loader to close before going back to the previous state
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					// Go back to the overview state
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				});
+
+				loaderContainer.transition();
 			});
 
 			// When the scene is failed
 			scenePlayer.once(scenePlayer.FAILURE, this, function () {
-				// Go back to the overview state
-				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				// Wait for the loader to close before going back to the previous state
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					// Go back to the overview state
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				});
+
+				loaderContainer.transition();
 			});
 
 			// Wait for the loader to complete a transition before playing the scene
@@ -63,6 +77,9 @@ define(function(require) {
 
 			// Clean up the scene player      
 			scenePlayer.cleanUp();
+
+			// Clean up loader events
+			loaderContainer.hardCleanUp();
 		});
 
 		return state;

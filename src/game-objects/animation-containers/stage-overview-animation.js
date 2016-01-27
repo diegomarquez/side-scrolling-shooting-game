@@ -34,7 +34,7 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     		}.bind(this),
 
     		onReverseComplete: function() {
-				this.execute(this.BACK_EXIT);
+    			this.executeExitDelegate();
     		}.bind(this) 
     	});
 

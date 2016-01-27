@@ -538,6 +538,8 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 					this.destroyComponent.setDirection(hitDirection);
 					
 					noExhaust.call(this);
+
+					this.execute(this.NO_CONTROL);
 				} else {
 					
 					if (this.hp <= 0)
@@ -613,6 +615,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_DOWN", { get: function() { return 'health_down'; } });
 
 	Object.defineProperty(PlayerShip.prototype, "DESTROYED", { get: function() { return 'destroyed'; } });
+	Object.defineProperty(PlayerShip.prototype, "NO_CONTROL", { get: function() { return 'no_control'; } });
 
 	return PlayerShip;
 });
