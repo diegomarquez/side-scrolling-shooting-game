@@ -4,7 +4,8 @@ define(function(require) {
 	var levels = [
 		require('level-1'),
 		require('level-2'),
-		require('level-3')
+		require('level-3'),
+		require('level-4')
 	]
 
 	var LevelStorage = require('delegate').extend({
@@ -42,6 +43,10 @@ define(function(require) {
 
 		isLevelComplete: function(level) {
 			return localStorageWrapper.isLevelComplete(level['name']);
+		},
+
+		isLevelIndexComplete: function(index) {
+			return this.isLevelComplete(this.getLevel(index));
 		},
 
 		getLowestIncompleteLevel: function() {

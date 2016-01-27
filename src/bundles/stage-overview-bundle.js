@@ -28,6 +28,12 @@ define(function(require) {
 					}
 				});
 
+			this.componentPool.createConfiguration("StageCompleteIconRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["LEVELCOMPLETEICON.PNG"],
+					offset: 'center',
+				});
+
 			this.componentPool.createConfiguration("Boss1PortraitRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["BOSS1PORTRAIT.PNG"],
@@ -52,6 +58,13 @@ define(function(require) {
 					offset: 'center',
 				});
 
+			this.gameObjectPool.createConfiguration("StageCompleteIcon", commonBundle.getGameObjectPoolId())
+				.args({
+					x: 70,
+					y: 70
+				})
+				.setRenderer("StageCompleteIconRenderer");
+
 			this.gameObjectPool.createConfiguration("Boss1Portrait", commonBundle.getGameObjectPoolId())
 				.setRenderer("Boss1PortraitRenderer");
 			this.gameObjectPool.createConfiguration("Boss2Portrait", commonBundle.getGameObjectPoolId())
@@ -69,18 +82,22 @@ define(function(require) {
 			
 			this.gameObjectPool.createConfiguration("Stage1Frame", "StageFrame")
 				.addChild('Boss1Portrait')
+				.addChild("StageCompleteIcon")
 				.setRenderer("StageFrameRenderer")
 
 			this.gameObjectPool.createConfiguration("Stage2Frame", "StageFrame")
 				.addChild('Boss2Portrait')
+				.addChild("StageCompleteIcon")
 				.setRenderer("StageFrameRenderer")
 
 			this.gameObjectPool.createConfiguration("Stage3Frame", "StageFrame")
 				.addChild('Boss3Portrait')
+				.addChild("StageCompleteIcon")
 				.setRenderer("StageFrameRenderer")
 
 			this.gameObjectPool.createConfiguration("Stage4Frame", "StageFrame")
 				.addChild('Boss4Portrait')
+				.addChild("StageCompleteIcon")
 				.setRenderer("StageFrameRenderer")
 
 			this.gameObjectPool.createConfiguration("MarkerArrow", commonBundle.getGameObjectPoolId())

@@ -17,9 +17,6 @@ define(function(require) {
 		});
 
 		state.addStartAction(function (levelIndex) {
-
-			console.log("Selected Stage: " + levelIndex);
-
 			var level = levelStorage.getLevel(levelIndex);
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {

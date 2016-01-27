@@ -80,7 +80,7 @@ define(function(require) {
     },
 
     isLevelComplete: function(key) {
-    	return getItem.call(this, key + '-complete-flag');
+    	return getItem.call(this, key + '-complete-flag') === 'true';
     }
   });
 

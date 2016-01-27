@@ -34,21 +34,14 @@ define(function(require) {
 	    stageOverview.on(stageOverview.START_SELECTED, this, function (selectedStageIndex) {
 
 	    	loaderContainer.once(loaderContainer.CLOSE, this, function() {
-
-	    		console.log("LEL");
-
 	  			state.execute(state.NEXT, { nextInitArgs: selectedStageIndex, lastCompleteArgs: null });	
 	  		});
-
-	  		console.log("HJKHJK");
 
 	    	loaderContainer.transition();
   		});
     });
 
     state.addCompleteAction(function (args) {
-    	console.log("LALALA");
-
     	// Remove loader events
     	loaderContainer.hardCleanUp();
 

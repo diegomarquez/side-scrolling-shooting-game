@@ -17,6 +17,29 @@ define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], funct
     	this.bottomLeft = Gb.create('Stage3Frame', 'First', viewports, { x: -500, y: Gb.canvas.height/2+110 });
     	this.bottomRight = Gb.create('Stage4Frame', 'First', viewports, { x: Gb.canvas.width+500, y: Gb.canvas.height/2+110 });
     	
+    	var levelStorage = require('level-storage');
+
+    	this.topLeft.findChildren().firstWithType("StageCompleteIcon").hide();
+    	this.topRight.findChildren().firstWithType("StageCompleteIcon").hide();
+    	this.bottomLeft.findChildren().firstWithType("StageCompleteIcon").hide();
+    	this.bottomRight.findChildren().firstWithType("StageCompleteIcon").hide();
+
+    	if (levelStorage.isLevelIndexComplete(0)) {
+    		this.topLeft.findChildren().firstWithType("StageCompleteIcon").show();
+    	}
+    	
+    	if (levelStorage.isLevelIndexComplete(1)) {
+    		this.topRight.findChildren().firstWithType("StageCompleteIcon").show();
+    	}
+    	
+    	if (levelStorage.isLevelIndexComplete(2)) {
+    		this.bottomLeft.findChildren().firstWithType("StageCompleteIcon").show();
+    	}
+    	
+    	if (levelStorage.isLevelIndexComplete(3)) {
+    		this.bottomRight.findChildren().firstWithType("StageCompleteIcon").show();
+    	}
+
     	this.topLeft.select();
 
     	this.backOption = Gb.create('Back', 'First', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height*2 });
