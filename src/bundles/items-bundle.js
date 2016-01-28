@@ -16,7 +16,13 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("LevelItem_Renderer", commonBundle.getBitmapRendererPoolId())
 				.args({
-					path: gb.assetMap()["BALL.PNG"],
+					path: gb.assetMap()["STAR.PNG"],
+					offset: 'center',
+				});
+
+			this.componentPool.createConfiguration("LevelItem_2_Renderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["MOON.PNG"],
 					offset: 'center',
 				});
 
@@ -45,7 +51,7 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("defeat-all-bosses-level-item", "AllBossDefeatLevelItem")
 				.addComponent("LevelItemCircle")
-				.setRenderer("LevelItem_Renderer")
+				.setRenderer("LevelItem_2_Renderer")
 				.itemCategory();
 
 			this.gameObjectPool.createConfiguration("power-up-item", "PowerUpItem")
