@@ -38,6 +38,10 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 
 		destroyMine: function() {
 			if (this.isActive()) {
+				
+				this.angle = 0;
+				this.speed = 0;
+
 				var collider = this.findComponents().firstWithProp('collider');
 				collider.disable();
 
