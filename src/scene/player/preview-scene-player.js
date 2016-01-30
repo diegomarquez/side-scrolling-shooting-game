@@ -6,9 +6,10 @@ define(function(require) {
 			this._super();
 		},
 
-		decorateContainer: function () {
-			this._super();
+		decorateContainer: function (sceneData) {
+			this._super(sceneData);
 
+			document.getElementById('player-title').innerHTML = "";
 			document.getElementById('player-title').appendChild(document.createTextNode('Scene Preview'));
 		},
 

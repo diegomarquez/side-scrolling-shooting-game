@@ -165,14 +165,14 @@ define(function(require) {
 			this.requiredViewports();
 			this.setKeyboardEvents();
 			this.setCompleteEvents();
-			this.decorateContainer();
+			this.decorateContainer(sceneData);
 		},
 
 		start: function() {
 			
 		},
 
-		decorateContainer: function() {
+		decorateContainer: function(sceneData) {
 			var titleContainer = document.createElement('div');
 			var controlsContainer = document.createElement('div');
 
@@ -187,6 +187,8 @@ define(function(require) {
 			document.getElementById('player-controls').appendChild(document.createTextNode('Arrows to Move'));
 			document.getElementById('player-controls').appendChild(document.createElement('br'));
 			document.getElementById('player-controls').appendChild(document.createTextNode('A to Shoot'));
+
+			document.getElementById('player-title').appendChild(document.createTextNode(sceneData['name']));
 		},
 
 		removeContainer: function() {			
