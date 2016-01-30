@@ -19,10 +19,10 @@ define(function(require) {
 				.args({
 					objectType: explosionBundle.getMicroExplosionsId(),
 					sprayDelay: 0.03,
-					amountPerSpray: 1,
-					maxAmountToSpray: 20,
+					amountPerSpray: 2,
+					maxAmountToSpray: 30,
 					startingPositionTransformation: [
-						require('rectangle-generation')(40, 40)
+						require('rectangle-generation')(35, 35)
 					]
 				});
 

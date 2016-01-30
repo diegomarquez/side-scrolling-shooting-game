@@ -45,12 +45,9 @@ define(function(require) {
 
 				// Show the fail message
 				gb.create('FailureMessage', 'Second', this.viewports, {
-					onComplete: function() {
-						// Tween the player out of the screen
-						TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
-							// Signal the scene player is done 
-							this.execute(this.FAILURE);
-						}.bind(this)});
+					onComplete: function() { 
+						this.blockEscape = false;
+						this.execute(this.FAILURE);
 					}.bind(this)
 				});
 			});

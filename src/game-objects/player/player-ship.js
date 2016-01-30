@@ -236,11 +236,13 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 
 			this.explodeComponent.once('complete', this, function() {
 				if (this.hp <= 0) {
+					this.block = true;
 					this.execute(this.DESTROYED);
 				}
 			});
 			
 			this.destroyComponent.once('complete', this, function() {
+				this.block = true;
 				this.execute(this.DESTROYED);
 			});
 		},

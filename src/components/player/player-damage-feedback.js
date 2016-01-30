@@ -29,7 +29,7 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
 				this.disableTimer.remove();
 			
 			TimerFactory.get(this, 'disableTimer', 'disableTimer');
-			this.disableTimer.configure({ delay: 1000 });
+			this.disableTimer.configure({ delay: 400 });
 
 			this.disableTimer.on(this.disableTimer.COMPLETE, function() {
 				this.disable();
@@ -40,6 +40,8 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
       			this.parent.removeComponent(this.explosionsGenerator);	
       			this.disableTimer.start();
       			this.explosionsGenerator = null;
+
+      			this.execute('complete_explosions');
       		});
 		},	
 
