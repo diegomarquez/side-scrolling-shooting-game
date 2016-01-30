@@ -19,7 +19,8 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 			this.started = false;
 			this.initHp = this.hp;
 
-			TimerFactory.get(this, 'repairTimer', 'repairTimer');
+			if (!this.repairTimer)
+				TimerFactory.get(this, 'repairTimer', 'repairTimer');
 
 			this.completeCount = 1;
 		},
@@ -66,6 +67,11 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 			this.started = true;
 			this.renderer.play();
 			this.renderer.on(this.renderer.COMPLETE_BACK, this, this.onCompleteBackAnimation);
+		},
+
+		onBossStop: function() {
+			this.started = false;
+			this.renderer.remove(this.renderer.COMPLETE_BACK, this, this.onCompleteBackAnimation);
 		},
 
 		onBossDestroy: function() {

@@ -26,8 +26,6 @@ define(["editor-component"], function(Component) {
 
 			this.parent.x += this.parent.vecX * delta * this.parent.speed; 
       		this.parent.y += this.parent.vecY * delta * this.parent.speed;
-
-
 		}
 	});
 

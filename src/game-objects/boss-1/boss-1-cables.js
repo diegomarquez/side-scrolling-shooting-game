@@ -29,6 +29,10 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			this.bossStarted = true;
 		},
 
+		onBossStop: function() {
+			this.bossStarted = false;	
+		},
+
 		onCollide: function(other) {
 			if (this.bossStarted) {
 				if (this.health > 0) {

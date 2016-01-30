@@ -39,17 +39,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		recycle: function() {
-			if (this.openTimer)
-				this.openTimer.remove();
-
-			if (this.closeTimer)
-				this.closeTimer.remove();
-
-			if (this.attackTimer)
-				this.attackTimer.remove();
-
-			if (this.generateTimer)
-				this.generateTimer.remove();
+			this.deActivate();
+			this.cleanUpRendererDelegates();
 
 			this._super();
 		},
@@ -91,11 +82,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			if (this.objectType == '')
 				throw new Error('Missing objectType');	
 
-			this.renderer.play('half-open-close');
-
-			this.renderer.once('complete', this, function() {	
-				this.renderer.play('closed');
-			});
+			this.closingAnimation();
 
 			TimerFactory.get(this, 'openTimer', 'openTimer');
 			TimerFactory.get(this, 'attackTimer', 'attackTimer');
@@ -112,8 +99,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.openTimer.on(this.openTimer.COMPLETE, function() {
 				this.renderer.play('opening');
 
-				this.renderer.once('complete', this, function() {
-
+				this.addRendererDelegate('complete', function() {
 					this.renderer.play('opened');
 
 					this.attackTimer.start();
@@ -126,9 +112,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 
 			this.closeTimer.on(this.closeTimer.COMPLETE, function() {
 				this.renderer.play('closing');
-			
-				this.renderer.once('complete', this, function() {
-					
+
+				this.addRendererDelegate('complete', function() {
 					this.renderer.play('closed');
 
 					this.openTimer.start();
@@ -144,27 +129,72 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			});
 
 			this.on('damaged', this, function() {
+				if (!this.started)
+					return;
+
 				this.openTimer.stop();
 				this.closeTimer.stop();
 				this.attackTimer.stop();
 				this.generateTimer.stop();
 
-				if (!this.renderer.isAtLabel('closed')) {
-					this.renderer.play('closing');
-
-					this.renderer.once('complete', this, function() {
-						this.renderer.play('closed');
-					});
-				}
+				this.closingAnimation();
 			});
 
 			this.on('repaired', this, function() {
+				if (!this.started)
+					return;
+
 				this.openTimer.start();
 			});
 		},
 
+		onBossStop: function() {
+			this.started = false;
+
+			this.deActivate();
+			this.cleanUpRendererDelegates();
+			this.closingAnimation();
+		},
+
+		closingAnimation: function() {
+			if (this.renderer.isAtLabel('opened')) {
+				this.renderer.play('closing');
+				
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('opening')) {
+				this.renderer.reverse();
+				
+				this.addRendererDelegate('complete_back', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('closing')) {
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('half-open')) {
+				this.renderer.play('half-open-close');
+
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+		},
+
 		onBossDestroy: function() {
 			this.execute('destroyed');
+		},
+
+		addRendererDelegate: function(name, handler) {
+			this.renderer.once(name, this, handler, "boss-generator-renderer-handler");
+		},
+
+		cleanUpRendererDelegates: function() {
+			this.renderer.levelCleanUp("boss-generator-renderer-handler");
 		}
 
 	});

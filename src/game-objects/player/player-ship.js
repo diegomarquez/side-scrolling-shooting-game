@@ -473,12 +473,13 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 		},
 
 		stop: function() {
+			smallExhausts.call(this);
+
 			this.forwardSpeed = 0;
 			this.maxForwardSpeed = 200;
 			
 			TweenLite.killTweensOf(this);
 
-			smallExhausts.call(this);
 			this.execute(this.STOP);
 		},
 

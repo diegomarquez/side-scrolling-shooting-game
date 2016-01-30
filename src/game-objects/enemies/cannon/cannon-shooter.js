@@ -67,6 +67,9 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			this.rotation = (Math.atan2(deltaY, deltaX) - ((this.parent.rotation) * (Math.PI/180)) ) * (180 / Math.PI);
 			this.rotation = this.rotation % 360;
 
+			if (this.parent.disabled)
+				return;
+
 			if (!this.bursting) {
 				// Prevent update until the cannon has been started
 				if (!this.parent.started) return;

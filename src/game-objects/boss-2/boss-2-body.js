@@ -31,22 +31,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		editorStart: function() {
-
 			if (!this.laserAttacks && !this.mineAttacks)
 				throw new Error('No attacks set on boss-2');
-
-			this.attackCount = 0;
-			this.laserAttackIndex = 0;
-			this.mineAttackIndex = 0;
-
-			this.renderer.play('closed');
-
-			TimerFactory.get(this, 'openTimer', 'openTimer');
-			TimerFactory.get(this, 'attackTimer', 'attackTimer');
-			TimerFactory.get(this, 'closeTimer', 'closeTimer');
-			TimerFactory.get(this, 'laserTimer', 'laserTimer');
-
-			this.collider = this.findComponents().firstWithProp('collider');
 		},
 
 		editorUpdate: function(delta) {
@@ -83,6 +69,20 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		onBossStart: function() {
+			this.attackCount = 0;
+			this.laserAttackIndex = 0;
+			this.mineAttackIndex = 0;
+
+			this.collider = this.findComponents().firstWithProp('collider');
+
+			this.collider.enable();
+			this.closingAnimation();
+
+			TimerFactory.get(this, 'openTimer', 'openTimer');
+			TimerFactory.get(this, 'attackTimer', 'attackTimer');
+			TimerFactory.get(this, 'closeTimer', 'closeTimer');
+			TimerFactory.get(this, 'laserTimer', 'laserTimer');
+
 			this.openTimer.configure({ delay: 6000, removeOnComplete:false });
 			this.attackTimer.configure({ delay: 3000, removeOnComplete:false });
 			this.closeTimer.configure({ delay: 2000, removeOnComplete:false });
@@ -93,8 +93,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.openTimer.on(this.openTimer.COMPLETE, function() {
 				this.renderer.play('opening');
 
-				this.renderer.once('complete', this, function() {
-
+				this.addRendererDelegate('complete', function() {
 					this.collider.disable();
 
 					this.renderer.play('opened');
@@ -143,8 +142,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 				this.renderer.play('closing');
 				this.collider.enable();
 
-				this.renderer.once('complete', this, function() {
-					
+				this.addRendererDelegate('complete', function() {
 					this.renderer.play('closed');
 
 					this.openTimer.start();
@@ -169,37 +167,50 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			});
 		},
 
+		onBossStop: function() {
+			this.cleanUpRendererDelegates();
+			this.deActivate();
+
+			this.collider.enable();
+			this.closingAnimation();
+		},
+
+		closingAnimation: function() {
+			if (this.renderer.isAtLabel('opened')) {
+				this.renderer.play('closing');
+				
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('opening')) {
+				this.renderer.reverse();
+				
+				this.addRendererDelegate('complete_back', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('closing')) {
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+			else if (this.renderer.isAtLabel('half-open')) {
+				this.renderer.play('half-open-close');
+				
+				this.addRendererDelegate('complete', function() {
+					this.renderer.play('closed');
+				});
+			}
+		},
+
 		onCollide: function(other) {
 			
 		},
 
 		recycle: function() {
-			if (this.openTimer)
-				this.openTimer.remove();
-
-			if (this.closeTimer)
-				this.closeTimer.remove();
-
-			if (this.attackTimer)
-				this.attackTimer.remove();
-
-			if (this.laserTimer)
-				this.laserTimer.remove();
-
-			if (this.laser1)
-				Gb.reclaimer.mark(this.laser1);
-			
-			if (this.laser2)
-				Gb.reclaimer.mark(this.laser2);
-
-			if (this.laser3)
-				Gb.reclaimer.mark(this.laser3);
-
-			this.laser1 = null;
-			this.laser2 = null;
-			this.laser3 = null;
-
-			this.clearMines();
+			this.deActivate();
+			this.cleanUpRendererDelegates();
 
 			this._super();
 		},
@@ -371,6 +382,14 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.mine3 = null;
 			this.mine4 = null;
 			this.mine5 = null;
+		},
+
+		addRendererDelegate: function(name, handler) {
+			this.renderer.once(name, this, handler, "boss-2-renderer-handler");
+		},
+
+		cleanUpRendererDelegates: function() {
+			this.renderer.levelCleanUp("boss-2-renderer-handler");
 		}
 
 	});

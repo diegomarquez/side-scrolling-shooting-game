@@ -6,6 +6,10 @@ define(function(require) {
 
 	var Boss = require("bundle").extend({
 		create: function(args) {			
+			
+			this.componentPool.createPool("StopBoss", require("stop-boss"));
+			this.componentPool.createConfiguration("StopBoss", "StopBoss");
+
 			this.componentPool.createConfiguration("Activate_Boss_On_View", commonBundle.getActivateOnViewPoolId());
 
 			// Boss 1
@@ -83,6 +87,7 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180, x: -50, y: 160})
 				.addChild("boss-1-cables", {rotation: 180, x: 0, y: 160})
 				.addChild("boss-1-cables", {rotation: 180, x: 50, y: 160})
+				.addComponent("StopBoss")
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer")
@@ -133,6 +138,10 @@ define(function(require) {
 						'half-open': {
 							loop: false,
 							frames: [5]
+						},
+						'half-open-close': {
+							loop: false,
+							frames: [5,4,3,2,1,0]
 						}
 					}
 				});
@@ -173,6 +182,7 @@ define(function(require) {
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss_2_Core_Collider")
 				.addComponent("BossDestroyExplosions")
+				.addComponent("StopBoss")
 				.addChild('boss-body')
 				.setRenderer("Boss_2_Core_Renderer")
 				.enemyCategory()
@@ -226,6 +236,7 @@ define(function(require) {
 					speed: 20
 				})
 				.addChild('boss-3-eye')
+				.addComponent("StopBoss")
 				.addComponent("Activate_Boss_On_View")
 				.addComponent("Boss3BodyCollider")
 				.addComponent('Boss3DestroyExplosions')

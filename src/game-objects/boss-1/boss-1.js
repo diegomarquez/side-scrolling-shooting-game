@@ -4,48 +4,72 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 			this._super();
 
 			this.health = 40;
-			this.cableCount = null;
+			this.cableCount = -1;
+			this.initCableCount = -1;
+			this.hasStopListener = false;
+
 			this.destroyEffect = null;
 			this.colliderId = null;
 			this.cannons = null;
+			this.cables = null;
 
 			this.onPlayerStop = function() {
-				var cables = this.findChildren().allWithType("boss-1-cables");
 
-				this.cableCount = cables.length;
+				this.hasStopListener = false;
 
-				// Signal boss weak spots to start
-				for (var i = 0; i < this.cableCount; i++) {
-					cables[i].onBossStart();
-					cables[i].on(cables[i].DAMAGE, this, this.onDamage);
-				}
+				// Set up cables				
+				if (this.cables === null) {
+					this.cables = this.findChildren().allWithType("boss-1-cables");
 
-				// Get all the nearby Boss helpers
-				this.cannons = Root.findChildren().recurse().all(function(child) {
-					return (child.poolId == "BossCannonBase" ||  child.poolId == "BossDoubleCannonBase" || child.poolId == "BossGeneratorType") && child.getViewportVisibility('Main'); 
-				});
+					this.cableCount = this.cables.length;
+					this.initCableCount = this.cables.length;
 
-				// Signal boss cannos to start
-				for (var i = 0; i < this.cannons.length; i++) {
-					this.cannons[i].onBossStart();
-				}
-
-				// Get other bosses
-				this.otherBosses = null;
-
-				this.otherBosses = Root.findChildren().recurse().all(function(child) {
-					return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main');
-				});
-
-				// If there are other bosses present, set up a delegate to get informed when they are destroyed
-				if (this.otherBosses) {		
-					for (var i=0; i < this.otherBosses.length; i++) {
-						this.otherBosses[i].once('destroyed', this, function(boss) {
-							if (this.isActive()) {
-								this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
-							}
-						});
+					// Signal boss weak spots to start
+					for (var i = 0; i < this.cables.length; i++) {
+						this.cables[i].onBossStart();
+						this.cables[i].on(this.cables[i].DAMAGE, this, this.onDamage);
 					}	
+				} else {
+					// Signal boss weak spots to start
+					for (var i = 0; i < this.cables.length; i++) {
+						if (this.cables[i].isActive()) {
+							this.cables[i].onBossStart();
+						}
+					}
+				}
+
+				if (this.cannons === null) {
+					// Get all the nearby Boss helpers
+					this.cannons = Root.findChildren().recurse().all(function(child) {
+						return (child.poolId == "BossCannonBase" ||  child.poolId == "BossDoubleCannonBase" || child.poolId == "BossGeneratorType") && child.getViewportVisibility('Main'); 
+					});	
+				}
+				
+				// Signal boss cannons to start
+				for (var i = 0; i < this.cannons.length; i++) {
+					if (this.cannons[i].isActive()) {
+						this.cannons[i].onBossStart();
+					}
+				}
+
+				// Other bosses already detected, do nothing else
+				if (this.otherBosses === null)
+				{
+					// Get other bosses
+					this.otherBosses = Root.findChildren().recurse().all(function(child) {
+						return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main');
+					});
+
+					// If there are other bosses present, set up a delegate to get informed when they are destroyed
+					if (this.otherBosses) {		
+						for (var i=0; i < this.otherBosses.length; i++) {
+							this.otherBosses[i].once('destroyed', this, function(boss) {
+								if (this.isActive()) {
+									this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
+								}
+							});
+						}	
+					}
 				}
 			}
 
@@ -55,6 +79,10 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		editorStart: function() {
 			this.health = 40;
 			
+			if (this.hasStopListener)
+				return;
+
+			this.hasStopListener = true;
 			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
 		},
 
@@ -63,6 +91,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		deActivate: function() {
+			this.hasStopListener = false;
 			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
     	},
 
@@ -71,6 +100,10 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		onCollide: function(other) {
+
+			if (!this.hasStopListener)
+				return;
+
 			if (this.cableCount !== null && this.cableCount <= 0) {
 				if (this.health > 0) {
 					this.health--;  
@@ -113,9 +146,31 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 			}
 		},
 
+		stopLogic: function() {
+			if (this.cables === null || this.cannons === null)
+				return;
+
+			// Signal boss weak spots to stop
+			for (var i = 0; i < this.cables.length; i++) {
+				this.cables[i].onBossStop();
+			}
+
+			// Signal boss cannos to stop
+			for (var i = 0; i < this.cannons.length; i++) {
+				this.cannons[i].onBossStop();
+			}
+
+			if (this.hasStopListener)
+				return;
+
+			this.hasStopListener = true;
+			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+		},
+
 		recycle: function() {
 			this.cannons = null;
 			this.otherBosses = null;
+			this.cables = null;
 			
 			this._super();
 		}

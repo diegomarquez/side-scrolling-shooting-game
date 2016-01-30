@@ -6,6 +6,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       this.destroyExplosions = null;
       this.hp = 1;
       this.explosionsGenerator = null;
+      this.disabled = false;
     },
 
     editorStart: function() {
@@ -19,17 +20,34 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     regen: function(hp) {
     	this.hp = hp;
 
-    	this.explosionsGenerator.stop();
-    	this.show(true).not().allWithType(this.explosionsGenerator.objectType);
-    	this.removeComponent(this.explosionsGenerator);
-    	this.findComponents().firstWithProp('collider').enable();
-    	this.explosionsGenerator = null;
+    	if (this.explosionsGenerator) {
+    		this.explosionsGenerator.stop();
+    		this.show(true).not().allWithType(this.explosionsGenerator.objectType);
+    		this.removeComponent(this.explosionsGenerator);
+    		this.explosionsGenerator = null;
 
-    	this.execute('repair');
+    		this.findComponents().firstWithProp('collider').enable();
+    	
+    		this.execute('repair');
+    	}
+    },
+
+    disable: function() {
+    	this.disabled = true;
+    },
+
+    enable: function() {
+    	this.disabled = false;
     },
 
     onCollide: function(other) {
     	if (!this.started)
+    		return;
+
+    	if (!this.isRunning())
+    		return;
+
+    	if (this.disabled)
     		return;
 
     	if (this.hp > 0) {

@@ -13,7 +13,8 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 			this.started = false;
 			this.initHp = this.hp;
 
-			TimerFactory.get(this, 'repairTimer', 'repairTimer');
+			if (!this.repairTimer)
+				TimerFactory.get(this, 'repairTimer', 'repairTimer');
 		},
 
 		editorUpdate: function(delta) {
@@ -30,6 +31,10 @@ define(["editor-game-object-container", "gb", "timer-factory"], function(GameObj
 
 		onBossStart: function() {
 			this.started = true;
+		},
+
+		onBossStop: function() {
+			this.started = false;
 		},
 
 		onBossDestroy: function() {
