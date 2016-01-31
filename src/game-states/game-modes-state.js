@@ -34,16 +34,11 @@ define(function(require) {
     		currentStateMachine.start();
 
     		var stageOverview = currentStateMachine.get("stage_overview_state");
-    		// var scenePlayer = currentStateMachine.get("scene_player_state");
 
     		stageOverview.once(stageOverview.BACK, this, function() {
     			currentStateMachine.finish();	
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
-
-    		// scenePlayer.once(scenePlayer.BACK, this, function() {
-    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		// });
     	}
 
     	if (args == "edit-mode") {
@@ -58,10 +53,6 @@ define(function(require) {
     			currentStateMachine.finish();
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
-
-    		// sceneEditorPreview.once(sceneEditorPreview.BACK, this, function() {
-    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		// });
     	}
 
     	if (args == "custom-mode") {
@@ -70,16 +61,11 @@ define(function(require) {
     		currentStateMachine.start();
 
     		var customStageSelect = currentStateMachine.get("custom_stage_select_state");
-    		// var customSceneplayer = currentStateMachine.get("custom_scene_player_state");
 
     		customStageSelect.once(customStageSelect.BACK, this, function() {
     			currentStateMachine.finish();
     			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
     		});
-
-    		// customSceneplayer.once(customSceneplayer.BACK, this, function() {
-    		// 	state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		// });
     	}
     });
 

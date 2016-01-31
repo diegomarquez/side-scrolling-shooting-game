@@ -2,10 +2,10 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 
 	var levels = [
-		require('level-1'),
-		require('level-2'),
-		require('level-3'),
-		require('level-4')
+		require('stage-1'),
+		require('stage-2'),
+		require('stage-3'),
+		require('stage-4')
 	]
 
 	var LevelStorage = require('delegate').extend({
