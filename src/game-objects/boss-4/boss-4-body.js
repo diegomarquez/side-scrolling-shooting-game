@@ -39,6 +39,13 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 
 			this.waitTimer.on('complete', function() {
 				
+				if (!this.target.isStopped()) {
+					this.walkTimer.start();
+					return;
+				}
+
+				this.show();
+
 				var distance = this.renderer.rendererHeight()/2;
 
 				if (this.rotation == 0) {
@@ -80,6 +87,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			});
 
 			this.walkTimer.on('complete', function() {
+
+				this.show();
 
 				var deltaX = this.target.X - this.x;
 				var deltaY = this.target.Y - this.y;
@@ -148,6 +157,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 				this.movementAngleComponent.disable();
 
 				this.waitTimer.start();
+
+				this.hide();
 			});
 
 			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);

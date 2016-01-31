@@ -485,6 +485,10 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 			this.execute(this.STOP);
 		},
 
+		isStopped: function() {
+			return this.forwardSpeed === 0;
+		},
+
 		getMaxForwardSpeed: function() {
 			return this.maxForwardSpeed;
 		},
