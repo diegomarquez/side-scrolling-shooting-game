@@ -103,11 +103,9 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 	var getOffset = function (points, axis) {
 		var min = points[0][axis];
-		var max = points[0][axis];
 
 		for (var i=1; i < points.length; i++) {
 			min = Math.min(min, points[i][axis]);
-			max = Math.max(max, points[i][axis]);
 		}
 
 		return min;
