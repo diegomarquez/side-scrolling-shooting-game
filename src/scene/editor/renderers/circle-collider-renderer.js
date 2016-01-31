@@ -1,5 +1,5 @@
-define(["path-renderer", "draw"], function(PathRenderer, Draw) {
-	var p = null;
+define(["path-renderer", "draw", "vector-2D"], function(PathRenderer, Draw, Vector2D) {
+	var p = new Vector2D();
 
 	var CircleColliderRenderer = PathRenderer.extend({
 		init: function() {

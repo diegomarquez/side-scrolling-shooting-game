@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(GameObject, Gb, SAT, TimerFactory) {
+define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D"], function(GameObject, Gb, SAT, TimerFactory, Vector2D) {
 
 	var step = 5;
 
@@ -7,7 +7,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory"], function(
 			this._super();
 
 			this.collisionPointFound = false;
-			this.collisionPoint = { x: 0, y: 0 };
+			this.collisionPoint = new Vector2D();;
 			this.collisionDistance = 0;
 
 			this.dirX = 0;
