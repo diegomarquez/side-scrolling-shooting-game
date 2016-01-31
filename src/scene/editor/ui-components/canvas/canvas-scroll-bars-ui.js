@@ -65,9 +65,8 @@ define(function(require) {
 
 					main.scrollLeft = 0;
 					main.scrollTop = 0;
-					
-					gb.canvas.style.left = '0px';
-					gb.canvas.style.top = '0px';
+
+					gb.canvas.style.transform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					
 					var diff = (world.getWidth() - gb.game.WIDTH);
 					scrollContainer.style.width = diff > 0 ? gb.game.WIDTH + diff : gb.game.WIDTH;
@@ -104,6 +103,7 @@ define(function(require) {
 			gb.canvas.style.position = '';
 			gb.canvas.style.left = '';
 			gb.canvas.style.top = '';
+			gb.canvas.style.transform = '';
 		}
 	});
 
