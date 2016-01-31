@@ -33,6 +33,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 				if (!this.target)
 					return;
 
+				this.show();
+
 				var side = parseInt((Math.random() - 0.000000000001) * 4);
 
 				var playerX = this.target.x;
@@ -80,6 +82,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.on('out-of-screen-bounds', this, function() {
 				this.waitTimer.start();
 				this.movementAngleComponent.disable();
+				this.hide();
 			});
 		},
 
