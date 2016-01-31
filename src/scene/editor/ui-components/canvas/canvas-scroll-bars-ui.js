@@ -10,20 +10,27 @@ define(function(require) {
 			this._super();
 
 			var self = this;
+			var rafId = -1;
 
 			this.onScroll = function (event) {
-				var viewport = gb.viewports.get(editorConfig.getMainViewportName());
-				var left = event.target.scrollLeft;
-				var top = event.target.scrollTop;
+				if (rafId !== -1)
+					return;
 
-				gb.canvas.style.left = left;
-				viewport.X = -left;
-				
-				gb.canvas.style.top = top;
-				viewport.Y = -top;
+				rafId = requestAnimationFrame(function() {
+					var viewport = gb.viewports.get(editorConfig.getMainViewportName());
+					var left = event.target.scrollLeft;
+					var top = event.target.scrollTop;
 
-				require('grid-bundle').setOffsetX(left);
-				require('grid-bundle').setOffsetY(top);
+					gb.canvas.style.transform = "translate(" + left + "px," + top + "px" + ")";
+
+					viewport.X = -left;
+					viewport.Y = -top;
+
+					require('grid-bundle').setOffsetX(left);
+					require('grid-bundle').setOffsetY(top);
+
+					rafId = -1;
+				});
 			}
 		},
 
