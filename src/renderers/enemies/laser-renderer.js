@@ -33,7 +33,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 		this.largeCurvePoints[0].x = 0;
 		this.largeCurvePoints[0].y = 0;
-		this.largeCurvePoints[1].x = this.parent.collisionDistance/2 + Math.cos(this.verticalCounter/20) * 100;
+		this.largeCurvePoints[1].x = this.parent.collisionDistance/2 + Math.cos(this.verticalCounter/20) * this.parent.collisionDistance/4;
 		this.largeCurvePoints[1].y = 0;
 		this.largeCurvePoints[2].x = this.parent.collisionDistance;
 		this.largeCurvePoints[2].y = 0;
@@ -42,7 +42,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 		this.largeCurvePoints[0].x = 0;
 		this.largeCurvePoints[0].y = 0;
-		this.largeCurvePoints[1].x = this.parent.collisionDistance/2 - Math.cos(this.verticalCounter/50) * 100;
+		this.largeCurvePoints[1].x = this.parent.collisionDistance/2 - Math.cos(this.verticalCounter/50) * this.parent.collisionDistance/4;
 		this.largeCurvePoints[1].y = 0;
 		this.largeCurvePoints[2].x = this.parent.collisionDistance;
 		this.largeCurvePoints[2].y = 0;
@@ -51,7 +51,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 
 		this.largeCurvePoints[0].x = 0;
 		this.largeCurvePoints[0].y = 0;
-		this.largeCurvePoints[1].x = this.parent.collisionDistance/3 - Math.cos(this.verticalCounter/15) * 100;
+		this.largeCurvePoints[1].x = this.parent.collisionDistance/3 - Math.cos(this.verticalCounter/15) * this.parent.collisionDistance/4;
 		this.largeCurvePoints[1].y = 0;
 		this.largeCurvePoints[2].x = this.parent.collisionDistance;
 		this.largeCurvePoints[2].y = 0;

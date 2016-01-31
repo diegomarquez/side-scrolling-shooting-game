@@ -81,7 +81,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 		onCollide: function(other) {
 			if (other.poolId == 'Obstacle' && !this.collisionPointFound) {
 				
-				if (this.collidingObstacles.indexOf(other) == -1) {
+				if (this.collidingObstacles.indexOf(other) === -1) {
 					// Push each new obstacle that the laser is colliding against
 					this.collidingObstacles.push(other);	
 				} else {
@@ -128,11 +128,15 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 						}
 					}
 
-					// Once all distances have been calculated, find the smallest one
 					this.collisionDistance = this.shortestDistance;
 					// Mark that a collision point has been found
 					this.collisionPointFound = true;
 					
+					// Fix collider length
+					var laserCollider = this.findComponents().firstWithProp('collider');
+					laserCollider.pointsCopy[1].x = this.collisionDistance;
+					laserCollider.pointsCopy[2].x = this.collisionDistance;
+
 					// Activate the laser renderer
 					this.renderer.enable();
 
