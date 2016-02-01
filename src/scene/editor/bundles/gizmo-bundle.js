@@ -72,8 +72,23 @@ define(function(require) {
 				offset:'center'
 			});
 
-			this.componentPool.createConfiguration("StartPositionGizmoRenderer", commonBundle.getBitmapRendererPoolId()).args({
-				path: gb.assetMap()['CHECKEREDFLAG.PNG'],
+			this.componentPool.createConfiguration("StartPositionGizmoRendererRight", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['CHECKEREDFLAGRIGHT.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("StartPositionGizmoRendererLeft", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['CHECKEREDFLAGLEFT.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("StartPositionGizmoRendererUp", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['CHECKEREDFLAGUP.PNG'],
+				offset:'center'
+			});
+
+			this.componentPool.createConfiguration("StartPositionGizmoRendererDown", commonBundle.getBitmapRendererPoolId()).args({
+				path: gb.assetMap()['CHECKEREDFLAGDOWN.PNG'],
 				offset:'center'
 			});
 
@@ -130,8 +145,17 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("FastDownDirectionGizmo", "IconGizmoHandle")
 				.setRenderer('FastDownDirectionGizmoRenderer');
 
-			this.gameObjectPool.createConfiguration("StartPositionGizmo", "IconGizmoHandle")
-				.setRenderer('StartPositionGizmoRenderer');
+			this.gameObjectPool.createConfiguration("StartPositionGizmoRight", "IconGizmoHandle")
+				.setRenderer('StartPositionGizmoRendererRight');
+
+			this.gameObjectPool.createConfiguration("StartPositionGizmoLeft", "IconGizmoHandle")
+				.setRenderer('StartPositionGizmoRendererLeft');
+
+			this.gameObjectPool.createConfiguration("StartPositionGizmoUp", "IconGizmoHandle")
+				.setRenderer('StartPositionGizmoRendererUp');
+
+			this.gameObjectPool.createConfiguration("StartPositionGizmoDown", "IconGizmoHandle")
+				.setRenderer('StartPositionGizmoRendererDown');
 
 			// Handle configurations
 			this.gameObjectPool.createConfiguration(this.getCircleHandleId(), "CircleGizmoHandle")
@@ -204,7 +228,11 @@ define(function(require) {
 		getFastLeftDirectionId: function () { return "FastLeftDirectionGizmo"; },
 		getFastUpDirectionId: function () { return "FastUpDirectionGizmo"; },
 		getFastDownDirectionId: function () { return "FastDownDirectionGizmo"; },
-		getStartPositionId: function () { return "StartPositionGizmo"; }
+		
+		getStartPositionRightId: function () { return "StartPositionGizmoRight"; },
+		getStartPositionLeftId: function () { return "StartPositionGizmoLeft"; },
+		getStartPositionUpId: function () { return "StartPositionGizmoUp"; },
+		getStartPositionDownId: function () { return "StartPositionGizmoDown"; }
 		
 	});
 

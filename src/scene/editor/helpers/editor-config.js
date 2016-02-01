@@ -22,7 +22,6 @@ define(function(require) {
 	var rotationGizmoGameObjects = null;
 	var scaleGizmoGameObjects = null;
 
-
 	var cachedGridSize = { width: GRID_WIDTH, height: GRID_HEIGHT };
 	var cachedGridCellSize = { width: null, height: null };
 
@@ -221,7 +220,10 @@ define(function(require) {
 			}
 
 			controlObjects = [
-				'start-position',
+				'start-position-right',
+				'start-position-left',
+				'start-position-up',
+				'start-position-down',
 				'scroll-stopper',
 				'absolute-scroll-stopper',
 				'boss-warning',		
@@ -276,7 +278,10 @@ define(function(require) {
 				gizmoBundle.getFastLeftDirectionId(),
 				gizmoBundle.getFastUpDirectionId(),
 				gizmoBundle.getFastDownDirectionId(),
-				gizmoBundle.getStartPositionId()
+				gizmoBundle.getStartPositionRightId(),
+				gizmoBundle.getStartPositionLeftId(),
+				gizmoBundle.getStartPositionUpId(),
+				gizmoBundle.getStartPositionDownId()
 			];
 
 			return controlGizmoGameObjects;

@@ -75,8 +75,20 @@ define(function(require) {
 	  						return gizmoBundle.getFastDownDirectionId(); 
 	  					}
 
-	  					if (parent.typeId == 'start-position') { 
-	  						return gizmoBundle.getStartPositionId(); 
+	  					if (parent.typeId == 'start-position-right') { 
+	  						return gizmoBundle.getStartPositionRightId(); 
+	  					}
+
+	  					if (parent.typeId == 'start-position-left') { 
+	  						return gizmoBundle.getStartPositionLeftId(); 
+	  					}
+
+	  					if (parent.typeId == 'start-position-up') { 
+	  						return gizmoBundle.getStartPositionUpId(); 
+	  					}
+
+	  					if (parent.typeId == 'start-position-down') { 
+	  						return gizmoBundle.getStartPositionDownId(); 
 	  					}
 	  				},
 

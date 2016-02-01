@@ -181,7 +181,23 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("TwoWayDirectionSetterRenderer4");
 
-			this.gameObjectPool.createConfiguration("start-position", "StartPosition");
+			
+			this.gameObjectPool.createConfiguration("start-position-right", "StartPosition")
+				.args({
+					type: "right"
+				});
+			this.gameObjectPool.createConfiguration("start-position-left", "StartPosition")
+				.args({
+					type: "left"
+				});
+			this.gameObjectPool.createConfiguration("start-position-up", "StartPosition")
+				.args({
+					type: "up"
+				});
+			this.gameObjectPool.createConfiguration("start-position-down", "StartPosition")
+				.args({
+					type: "down"
+				});
 
 			this.gameObjectPool.createConfiguration("choose-direction-right", "AngleDirectionSetter")
 				.args({ 

@@ -17,8 +17,8 @@ define(function(require) {
 			// Load the Scene
 			playerLoader.load(sceneData);
 			
-			// Get a reference to the player ship and block it's controls
-			playerGetter.get(-300, gb.canvas.height/2).blockControls();
+			// Get a reference to the player ship, place it outside the screen and block it's controls
+			playerGetter.get(-200, -200).blockControls();
 
 			// Add the HP meter
 			gb.create('HpMeter', 'First', [{viewport: 'Messages', layer: 'Front'}], { x: 0, y: 5 });
@@ -136,20 +136,129 @@ define(function(require) {
 
 			var self = this;
 
-			// Tween the player ship into view
-			TweenLite.to(player, 3, { viewportOffsetX: 150, onComplete: function() {
-				gb.create('StartMessage', 'Second', this.viewports, {
-					onComplete: function() {
-						// Unblock controls when the start message is gone
-						player.unblockControls();
+			var startPosition = root.findChildren().recurse().firstWithType("StartPosition");
 
-						// Set the main viewport to follow the player movement
-						viewportFollow.setFollow('Main', player);
+			gb.reclaimer.mark(startPosition);
 
-						self.blockEscape = false;
-					}
-				}); 
-			}.bind(this)});
+			if (!startPosition) {
+				player.viewportOffsetX = -300;
+				player.viewportOffsetY = gb.canvas.height/2;
+
+				player.move(0);
+
+				// Tween the player ship into view
+				TweenLite.to(player, 3, { viewportOffsetX: 150, onComplete: function() {
+					gb.create('StartMessage', 'Second', this.viewports, {
+						onComplete: function() {
+							// Unblock controls when the start message is gone
+							player.unblockControls();
+
+							// Set the main viewport to follow the player movement
+							viewportFollow.setFollow('Main', player);
+
+							self.blockEscape = false;
+						}
+					}); 
+				}.bind(this)});
+
+				return;
+			}
+
+			if (startPosition.type === "right") {
+				player.viewportOffsetX = -300;
+				player.viewportOffsetY = gb.canvas.height/2;
+
+				player.move(0);
+
+				// Tween the player ship into view
+				TweenLite.to(player, 3, { viewportOffsetX: 150, onComplete: function() {
+					gb.create('StartMessage', 'Second', this.viewports, {
+						onComplete: function() {
+							// Unblock controls when the start message is gone
+							player.unblockControls();
+
+							// Set the main viewport to follow the player movement
+							viewportFollow.setFollow('Main', player);
+
+							self.blockEscape = false;
+						}
+					}); 
+				}.bind(this)});
+
+				return;
+			}
+
+			if (startPosition.type === "left") {
+				player.viewportOffsetX = gb.canvas.width + 300;
+				player.viewportOffsetY = gb.canvas.height/2;
+
+				player.move(180);
+
+				// Tween the player ship into view
+				TweenLite.to(player, 3, { viewportOffsetX: gb.canvas.width - 150, onComplete: function() {
+					gb.create('StartMessage', 'Second', this.viewports, {
+						onComplete: function() {
+							// Unblock controls when the start message is gone
+							player.unblockControls();
+
+							// Set the main viewport to follow the player movement
+							viewportFollow.setFollow('Main', player);
+
+							self.blockEscape = false;
+						}
+					}); 
+				}.bind(this)});
+
+				return;
+			}
+
+			if (startPosition.type === "up") {
+				player.viewportOffsetX = gb.canvas.width/2;
+				player.viewportOffsetY = gb.canvas.height + 300;
+
+				player.move(270);
+
+				// Tween the player ship into view
+				TweenLite.to(player, 3, { viewportOffsetY: gb.canvas.height - 150, onComplete: function() {
+					gb.create('StartMessage', 'Second', this.viewports, {
+						onComplete: function() {
+							// Unblock controls when the start message is gone
+							player.unblockControls();
+
+							// Set the main viewport to follow the player movement
+							viewportFollow.setFollow('Main', player);
+
+							self.blockEscape = false;
+						}
+					}); 
+				}.bind(this)});
+
+				return;
+			}
+
+			if (startPosition.type === "down") {
+				player.viewportOffsetX = gb.canvas.width/2;
+				player.viewportOffsetY = -300;
+
+				player.move(90);
+
+				// Tween the player ship into view
+				TweenLite.to(player, 3, { viewportOffsetY: 150, onComplete: function() {
+					gb.create('StartMessage', 'Second', this.viewports, {
+						onComplete: function() {
+							// Unblock controls when the start message is gone
+							player.unblockControls();
+
+							// Set the main viewport to follow the player movement
+							viewportFollow.setFollow('Main', player);
+
+							self.blockEscape = false;
+						}
+					}); 
+				}.bind(this)});
+
+				return;
+			}
 		}
 	});
 

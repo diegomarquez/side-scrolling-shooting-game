@@ -18,7 +18,6 @@ define(function(require) {
 
 			this.gameObjectSelectorUI.refresh();
 
-
 			this.gameObjectSelectorUI.show(event);
 		},
 
@@ -36,7 +35,7 @@ define(function(require) {
 				},
 				onClick: function(gameObjectName) {
 					self.gameObjectSelectorUI.getOptions().selector = true;
-					self.gameObjectSelectorUI.getOptions().buttons = false;
+					self.gameObjectSelectorUI.getOptions().buttons = false;					
 
 					if (require('object-counter').canCreate()) {
 						require('object-counter').showErrorFeedback();
@@ -74,7 +73,7 @@ define(function(require) {
 				id: 'game-object-selector-wrapper',
 				classNames: ['well', 'well-small']
 			});
-		},
+		}
 	});
 
 	return GameObjectSelector;

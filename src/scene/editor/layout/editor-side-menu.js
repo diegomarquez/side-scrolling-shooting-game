@@ -235,14 +235,10 @@ define(function(require) {
 				if (extension.constructor === require('logger')) {
 					extension.onShow = function() {
 						$(loggerItem).find('.side-menu-icon').toggle();
-
-						console.log("SHOW");
 					};
 
 					extension.onHide = function() {
-						$(loggerItem).find('.side-menu-icon').toggle();	
-
-						console.log("HIDE");
+						$(loggerItem).find('.side-menu-icon').toggle();
 					};
 				}
 			});
