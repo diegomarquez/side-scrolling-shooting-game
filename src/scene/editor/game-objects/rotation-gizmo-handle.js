@@ -10,7 +10,7 @@ define(function (require) {
 	var stepX = 0;
 	var stepY = 0;
 	var m = new (require("matrix-3x3"))();
-	var r = {};
+	var r = new (require("vector-2D"))();
 
 	var RotationGizmoHandle = require("fixed-gizmo-handle").extend({		
 		init: function() {
@@ -22,6 +22,16 @@ define(function (require) {
 
 			this.x = 50;
 			this.y = 0;
+
+			this.parent.once("setup_complete", this, function() {
+				this.parent.transform();
+				
+				parentMatrix = this.parent.getMatrix(parentMatrix);
+				parentTransform = parentMatrix.decompose(parentTransform);
+
+				this.x = Math.cos(parentTransform.rotation * (Math.PI/180)) * 50;
+				this.y = Math.sin(parentTransform.rotation * (Math.PI/180)) * 50;
+			});
 
 			this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
 				stepX = Number(require("editor-config").getGridCellSize().width.toFixed(2));

@@ -91,13 +91,15 @@ define(function(require) {
 		doOverridesForEditor(object);
 
 		// Once the needed overrides are done, start the game object
-		object.start()
+		object.start();
 
 		// Add all required gizmos
 		addEditorGizmos(object);
 
 		// Setup the mouse interactions
 		gameObjectInputInteraction.setupInteraction(object);
+
+		object.execute("setup_complete");
 	}
 
 	var doOverridesForEditor = function(object) {
