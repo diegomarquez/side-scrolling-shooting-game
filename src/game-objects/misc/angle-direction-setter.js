@@ -12,7 +12,7 @@ define(function(require) {
 			
 			this.renderer.play();
 			
-			this.player.on(this.player.STOP, this, this.onPlayerStop);
+			this.player.on(this.player.STOP_MOVEMENT, this, this.onPlayerStop);
 
 			var collisionComponent = this.findComponents().firstWithProp('collider');
 		
@@ -28,12 +28,12 @@ define(function(require) {
 		},
 
 		deActivate: function() {
-			this.player.removeDelegate(this.player.STOP, this, this.onPlayerStop);
+			this.player.removeDelegate(this.player.STOP_MOVEMENT, this, this.onPlayerStop);
     	},
 
     	recycle: function() {
     		if (this.player) {
-    			this.player.removeDelegate(this.player.STOP, this, this.onPlayerStop);	
+    			this.player.removeDelegate(this.player.STOP_MOVEMENT, this, this.onPlayerStop);	
     		}
 
     		this._super();

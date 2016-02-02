@@ -138,8 +138,6 @@ define(function(require) {
 
 			var startPosition = root.findChildren().recurse().firstWithType("StartPosition");
 
-			gb.reclaimer.mark(startPosition);
-
 			if (!startPosition) {
 				player.viewportOffsetX = -300;
 				player.viewportOffsetY = gb.canvas.height/2;
@@ -163,6 +161,8 @@ define(function(require) {
 
 				return;
 			}
+
+			gb.reclaimer.mark(startPosition);
 
 			if (startPosition.type === "right") {
 				player.viewportOffsetX = -300;

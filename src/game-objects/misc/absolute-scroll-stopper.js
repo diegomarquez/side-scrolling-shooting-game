@@ -23,28 +23,28 @@ define(function(require) {
 
 			if (d == 0) {
 				if (Math.floor(this.mainViewport.x + this.X) <= this.halfWidth) {
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
 
 			if (d == 180) {
 				if (Math.floor(this.mainViewport.x + this.X) >= this.halfWidth) {
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
 
 			if (d == 270) {
 				if (Math.floor(this.mainViewport.y + this.Y) >= this.halfHeight) {
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
 
 			if (d == 90) {
 				if (Math.floor(this.mainViewport.y + this.Y) <= this.halfHeight) {
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}

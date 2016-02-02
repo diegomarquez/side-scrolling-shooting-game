@@ -474,7 +474,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 			this.maxForwardSpeed = speed;
 		},
 
-		stop: function() {
+		stopMovement: function() {
 			smallExhausts.call(this);
 
 			this.forwardSpeed = 0;
@@ -482,7 +482,7 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 			
 			TweenLite.killTweensOf(this);
 
-			this.execute(this.STOP);
+			this.execute(this.STOP_MOVEMENT);
 		},
 
 		isStopped: function() {
@@ -614,9 +614,9 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenli
 	}
 
 	Object.defineProperty(PlayerShip.prototype, "MOVE", { get: function() { return 'move'; } });
-	Object.defineProperty(PlayerShip.prototype, "STOP", { get: function() { return 'stop'; } });
-	Object.defineProperty(PlayerShip.prototype, "BLOCK", { get: function() { return 'stop'; } });
-	Object.defineProperty(PlayerShip.prototype, "UNBLOCK", { get: function() { return 'stop'; } });
+	Object.defineProperty(PlayerShip.prototype, "STOP_MOVEMENT", { get: function() { return 'stop_movement'; } });
+	Object.defineProperty(PlayerShip.prototype, "BLOCK", { get: function() { return 'block'; } });
+	Object.defineProperty(PlayerShip.prototype, "UNBLOCK", { get: function() { return 'unblock'; } });
 	
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_UP", { get: function() { return 'health_up'; } });
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_DOWN", { get: function() { return 'health_down'; } });

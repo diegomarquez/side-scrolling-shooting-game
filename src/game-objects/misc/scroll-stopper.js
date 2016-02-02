@@ -35,7 +35,7 @@ define(function(require) {
 					if (!this.valid)
 						return;
 
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
@@ -48,7 +48,7 @@ define(function(require) {
 					if (!this.valid)
 						return;
 
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
@@ -61,7 +61,7 @@ define(function(require) {
 					if (!this.valid)
 						return;
 
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}
@@ -74,7 +74,7 @@ define(function(require) {
 					if (!this.valid)
 						return;
 
-					this.player.stop();
+					this.player.stopMovement();
 					this.stopped = true;
 				}
 			}

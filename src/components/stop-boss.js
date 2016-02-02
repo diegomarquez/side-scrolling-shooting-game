@@ -12,7 +12,7 @@ define(["editor-component", "gb", "player-getter"], function(Component, Gb, Play
 			if (!parent.stopLogic)
 				throw new Error("missing stopLogic method");
 
-			PlayerGetter.get().on(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().on(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 			PlayerGetter.get().on(PlayerGetter.get().MOVE, this, this.onPlayerMove);
 		},
 
@@ -50,7 +50,7 @@ define(["editor-component", "gb", "player-getter"], function(Component, Gb, Play
 			this.isPlayerStopped = false;
 
 			if (PlayerGetter.exists()) {
-				PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+				PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 				PlayerGetter.get().removeDelegate(PlayerGetter.get().MOVE, this, this.onPlayerMove);	
 			}
 		}

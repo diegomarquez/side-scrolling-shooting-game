@@ -83,7 +83,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				return;
 
 			this.hasStopListener = true;
-			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
 
 		editorUpdate: function(delta) {
@@ -92,7 +92,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 
 		deActivate: function() {
 			this.hasStopListener = false;
-			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
     	},
 
 		onDamage: function (cable) {
@@ -123,7 +123,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 						// Check if all bosses have been destroyed to resume scrolling
 						if (this.otherBosses && this.otherBosses.length == 0) {
 							PlayerGetter.get().move();
-							PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+							PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 						}
 
 					});
@@ -164,7 +164,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				return;
 
 			this.hasStopListener = true;
-			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
 
 		recycle: function() {

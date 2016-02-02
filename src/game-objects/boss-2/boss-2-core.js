@@ -22,12 +22,12 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 				return;
 
 			this.hasStopListener = true;
-			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
 
 		deActivate: function() {
 			this.hasStopListener = false;
-			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
     	},
 
 		editorUpdate: function(delta) {
@@ -76,7 +76,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 					this.hasStopListener = false;
 
 					PlayerGetter.get().move();
-					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 				}
 			}
 
@@ -102,7 +102,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 				return;
 
 			this.hasStopListener = true;
-			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
 
 		onPlayerStop: function() {

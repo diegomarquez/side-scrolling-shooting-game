@@ -161,11 +161,11 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 				this.hide();
 			});
 
-			PlayerGetter.get().once(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
 
 		deActivate: function() {
-			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 
 			this.target = null;
     	},
@@ -214,7 +214,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			if (PlayerGetter.exists()) {
 				if (this.otherBosses && this.otherBosses.length == 0) {
 					PlayerGetter.get().move();
-					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP, this, this.onPlayerStop);
+					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 				}
 			}
 
