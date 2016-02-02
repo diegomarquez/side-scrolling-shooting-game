@@ -35,7 +35,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		},
 
 		onCollide: function(other) {
-			if (!this.hasStopListener)
+			if (this.hasStopListener)
 				return;
 
 			if (this.hp > 0) {

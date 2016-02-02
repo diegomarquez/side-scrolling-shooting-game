@@ -175,6 +175,10 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 		},
 
 		onCollide: function(other) {
+			
+			if (this.target === null)
+				return;
+			
 			if (this.hp > 0) {
 				this.hp--;
 
@@ -203,11 +207,11 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 								this.cannons.length = 0;
 							}
 						}
-					}	
+					}
 				} else {
-					this.execute('damage');	
+					this.execute('damage');
 				}
-			}	
+			}
 		},
 
 		recycle: function() {
@@ -230,7 +234,7 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this._super();
 		},
 
-		onPlayerStop: function() {			
+		onPlayerStop: function() {
 			this.target = PlayerGetter.get();
 			
 			this.movementAngleComponent.enable();
