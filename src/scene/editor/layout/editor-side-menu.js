@@ -198,7 +198,7 @@ define(function(require) {
 
 			items.push(createOptionItem(
 				'Open', 
-				'glyphicon-floppy-open', 
+				'glyphicon-folder-open', 
 				function() { this.open() }.bind(this.loadDialog)
 			));
 			
