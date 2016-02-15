@@ -27,21 +27,21 @@ define(function(require) {
 
 				// Basic serialization information
 				var goToSerialize = {
-					id: go.typeId,
-					g: go.getUpdateGroup(),
-					v: go.getViewportList(),
-					x: go.x,
-					y: go.y 
+					"id": go.typeId,
+					"g": go.getUpdateGroup(),
+					"v": go.getViewportList(),
+					"x": go.x,
+					"y": go.y 
 				} 
 
 				if (go.hasStructuralChanges()) {
 					// Game object with structural changes are serialized entirely to ensure they can be reconstructed
-					goToSerialize.properties = serializeGameObject(go);
-					goToSerialize.hasStructuralChanges = true;
+					goToSerialize["properties"] = serializeGameObject(go);
+					goToSerialize["hasStructuralChanges"] = true;
 				} else {
 					// Game Objects with no structural changes can afford to only store changes
-					goToSerialize.properties = serializeGameObjectDifference(go);
-					goToSerialize.hasStructuralChanges = false;
+					goToSerialize["properties"] = serializeGameObjectDifference(go);
+					goToSerialize["hasStructuralChanges"] = false;
 				}
 
 				gos.push(goToSerialize);
@@ -59,30 +59,30 @@ define(function(require) {
 				var v = allViewports[i];
 
 				vs.push({
-					name: v.name,
-					width: v.Width,
-					height: v.Height,
-					offsetX: v.OffsetX,
-					offsetY: v.OffsetY, 
-					scaleX: v.ScaleX,
-					scaleY: v.ScaleY,
-					stroke: v.getStroke(),
-					worldFit: v.WorldFit,
-					layers: editorConfig.getViewportLayers(v)
+					"name": v.name,
+					"width": v.Width,
+					"height": v.Height,
+					"offsetX": v.OffsetX,
+					"offsetY": v.OffsetY, 
+					"scaleX": v.ScaleX,
+					"scaleY": v.ScaleY,
+					"stroke": v.getStroke(),
+					"worldFit": v.WorldFit,
+					"layers": editorConfig.getViewportLayers(v)
 				});
 			}      
 
 			// Build the object that will actually be serialized into a JSON string
 			var scene = {
-				name: sceneName,
-				objects: gos,
-				groups: groups,
-				viewports: vs,
-				goConfig: getConfigurationObjectsToSerialize(gb.goPool),
-				coConfig: getConfigurationObjectsToSerialize(gb.coPool),
-				world: {
-					width: world.getWidth(),
-					height: world.getHeight()
+				"name": sceneName,
+				"objects": gos,
+				"groups": groups,
+				"viewports": vs,
+				"goConfig": getConfigurationObjectsToSerialize(gb.goPool),
+				"coConfig": getConfigurationObjectsToSerialize(gb.coPool),
+				"world": {
+					"width": world.getWidth(),
+					"height": world.getHeight()
 				}
 			}
 
@@ -136,7 +136,7 @@ define(function(require) {
 
 	var saveAllPropertiesToObject = function(object, to, prop) {
 		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
-			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation, scaleX: object.scaleX, scaleY: object.scaleY });
+			to[prop] = util.shallow_merge_many(object.args, object.Attributes, { "x": object.x, "y": object.y, "rotation": object.rotation, "scaleX": object.scaleX, "scaleY": object.scaleY });
 		} else {
 			to[prop] = util.shallow_merge_many(object.args, object.Attributes);
 		}
@@ -148,10 +148,10 @@ define(function(require) {
 		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
 			attributes = util.shallow_merge_many(object.args, object.Attributes);
 		} else {
-			attributes = util.shallow_merge_many(object.args, object.Attributes, { x: object.x, y: object.y, rotation: object.rotation, scaleX: object.scaleX, scaleY: object.scaleY });  
+			attributes = util.shallow_merge_many(object.args, object.Attributes, { "x": object.x, "y": object.y, "rotation": object.rotation, "scaleX": object.scaleX, "scaleY": object.scaleY });  
 		}
 
-		array.push({attributes: attributes, indexInParent: index});
+		array.push({"attributes": attributes, "indexInParent": index});
 	}
 
 	var saveAttributeChangesToObject = function(object, to, prop) {
@@ -165,11 +165,11 @@ define(function(require) {
 			if (!to[prop]) 
 				to[prop] = {};
 
-			to[prop].x = object.x;
-			to[prop].y = object.y;
-			to[prop].rotation = object.rotation;
-			to[prop].scaleX = object.scaleX;
-			to[prop].scaleY = object.scaleY;
+			to[prop]["x"] = object.x;
+			to[prop]["y"] = object.y;
+			to[prop]["rotation"] = object.rotation;
+			to[prop]["scaleX"] = object.scaleX;
+			to[prop]["scaleY"] = object.scaleY;
 		}
 	}
 
@@ -177,7 +177,7 @@ define(function(require) {
 		var changes = attributeComparer.getChanges(object);
 
 		if (changes) {
-			array.push({attributes: changes, indexInParent: index});
+			array.push({"attributes": changes, "indexInParent": index});
 		}
 	} 
 
@@ -185,11 +185,11 @@ define(function(require) {
 		var serializableArguments = {};
 
 		// Save attributes of the game object if any
-		saveAllPropertiesToObject(go, serializableArguments, 'args');
+		saveAllPropertiesToObject(go, serializableArguments, "args");
 
 		// Get objects for each component
 		if (go.components) {
-			serializableArguments.componentArgs = {};
+			serializableArguments["componentArgs"] = {};
 
 			var componentIndex = -1;
 
@@ -202,14 +202,14 @@ define(function(require) {
 
 				// Create a collection where to store components, if a game object have several components of the same type, 
 				// they will be grouped together in the same collection
-				createArrayInKey(serializableArguments.componentArgs, component.typeId);
+				createArrayInKey(serializableArguments["componentArgs"], component.typeId);
 
 				// Save component attributes for each component
-				saveAllPropertiesToArray(component, serializableArguments.componentArgs[component.typeId], componentIndex);
+				saveAllPropertiesToArray(component, serializableArguments["componentArgs"][component.typeId], componentIndex);
 			} 
 		}
 
-		serializableArguments.children = serializeGameObjectChildren(go);
+		serializableArguments["children"] = serializeGameObjectChildren(go);
 
 		return serializableArguments;
 	}
@@ -234,8 +234,8 @@ define(function(require) {
 
 				// Get a object to serialize for the child itself
 				var serializedChild = serializeGameObject(child);
-				serializedChild.indexInParent = childIndex;
-				serializedChild.hasStructuralChanges = child.hasStructuralChanges();
+				serializedChild["indexInParent"] = childIndex;
+				serializedChild["hasStructuralChanges"] = child.hasStructuralChanges();
 
 				// Store the child changes as well as the index in the parent
 				serializableChildArguments[id].push(serializedChild); 
@@ -251,11 +251,11 @@ define(function(require) {
 		var serializableArguments = {};
 
 		// Save changes to the game object if any
-		saveAttributeChangesToObject(go, serializableArguments, 'args');
+		saveAttributeChangesToObject(go, serializableArguments, "args");
 
 		// Get objects for each component that has recieved changes
 		if (go.components) {
-			serializableArguments.componentArgs = {};
+			serializableArguments["componentArgs"] = {};
 
 			var componentIndex = -1;
 
@@ -268,14 +268,14 @@ define(function(require) {
 
 				// Create a collection where to store changes, if a game object have several components of the same type, 
 				// they will be grouped together in the same collection
-				createArrayInKey(serializableArguments.componentArgs, component.typeId);
+				createArrayInKey(serializableArguments["componentArgs"], component.typeId);
 
 				// Save changes for each component, if any
-				saveAttributeChangesToArray(component, serializableArguments.componentArgs[component.typeId], componentIndex);
+				saveAttributeChangesToArray(component, serializableArguments["componentArgs"][component.typeId], componentIndex);
 			} 
 
-			serializableArguments.componentArgs = cleanUpArguments(serializableArguments.componentArgs);
-			serializableArguments.children = serializeGameObjectChildrenDifference(go); 
+			serializableArguments["componentArgs"] = cleanUpArguments(serializableArguments["componentArgs"]);
+			serializableArguments["children"] = serializeGameObjectChildrenDifference(go); 
 		}
 
 		return serializableArguments;
@@ -304,8 +304,8 @@ define(function(require) {
 
 				// Store changes only if the child actually got some changes
 				if (Object.keys(serializedChild).length > 0) {
-					serializedChild.indexInParent = childIndex;
-					serializedChild.hasStructuralChanges = child.hasStructuralChanges();
+					serializedChild["indexInParent"] = childIndex;
+					serializedChild["hasStructuralChanges"] = child.hasStructuralChanges();
 					 
 					// Store the child changes as well as the index in the parent
 					serializableChildArguments[id].push(serializedChild); 

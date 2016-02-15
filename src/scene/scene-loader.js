@@ -85,30 +85,30 @@ define(function(require) {
 				var gameObject = this.getGameObject(serializedGameObject);
 
 				// If any structural changes, modify the game object to look like the serialized data
-				applyStructuralChanges.call(this, gameObject, serializedGameObject.hasStructuralChanges, serializedGameObject.properties);
+				applyStructuralChanges.call(this, gameObject, serializedGameObject["hasStructuralChanges"], serializedGameObject["properties"]);
 				// Apply serialized component attributes
-				applyAttributesToComponents.call(this, gameObject, this.getComponentArgs(serializedGameObject.properties));
+				applyAttributesToComponents.call(this, gameObject, this.getComponentArgs(serializedGameObject["properties"]));
 				// Recursively apply arguments to children and attributes to their components
-				applyAttributesToChildren.call(this, gameObject, this.getChildrenArgs(serializedGameObject.properties));
+				applyAttributesToChildren.call(this, gameObject, this.getChildrenArgs(serializedGameObject["properties"]));
 
 				// Place the game object in it's position in the world
-				gameObject.x = serializedGameObject.x;
-				gameObject.y = serializedGameObject.y;
+				gameObject.x = serializedGameObject["x"];
+				gameObject.y = serializedGameObject["y"];
 
 				require('object-counter').count(gameObject);
 			} 
 	    },
 
 	    getComponentArgs: function(properties) {
-			return properties ? properties.componentArgs : null;
+			return properties ? properties["componentArgs"] : null;
 		},
 
 		getGameObjectArgs: function(properties) {
-			return properties ? properties.args : null;
+			return properties ? properties["args"] : null;
 		},
 
 		getChildrenArgs: function(properties) {
-			return properties ? properties.children : null;
+			return properties ? properties["children"] : null;
 		}
   	});
 
@@ -144,7 +144,7 @@ define(function(require) {
 				// Add a new component to the game object
 				var component = gb.addComponentTo(go, k);
 				// Apply serialized attributes to the component
-	  			applyAttributes.call(this, component, serializedComponent.attributes); 
+	  			applyAttributes.call(this, component, serializedComponent["attributes"]); 
 	  		}
  		}
 	}
@@ -159,14 +159,14 @@ define(function(require) {
 			for (var i = 0; i < childrenOfType.length; i++) {
 				// Extract properties of the serialized game object
 				var allChildProperties = childrenOfType[i];
-				var childArgs = allChildProperties.args;
-				var componentsArgs = allChildProperties.componentArgs;
-				var childrenArgs = allChildProperties.children;
+				var childArgs = allChildProperties["args"];
+				var componentsArgs = allChildProperties["componentArgs"];
+				var childrenArgs = allChildProperties["children"];
 
 				var childGo = this.addChildGameObject(childId, go)
 
 				// If any structural changes, modify the game object to look like the serialized data
-      			applyStructuralChanges.call(this, childGo, allChildProperties.hasStructuralChanges, allChildProperties);		
+      			applyStructuralChanges.call(this, childGo, allChildProperties["hasStructuralChanges"], allChildProperties);		
 				// Apply serialized arguments to child game object
 				applyAttributes.call(this, childGo, childArgs);
 				// Apply serialized arguments to child components
@@ -185,7 +185,7 @@ define(function(require) {
 
 		// Set arguments that go through the Attributes interface method
 		if (object.Attributes) {
-  		object.Attributes = args;	
+  			object.Attributes = args;	
 		}
 
 		// Set all other arguments
@@ -202,7 +202,7 @@ define(function(require) {
 	  	for (var k in componentArgs) { 	
 	  		for (var i = 0; i < componentArgs[k].length; i++) {
 	  			var serializedComponent = componentArgs[k][i];
-	  			applyAttributes(goComponents[serializedComponent.indexInParent], serializedComponent.attributes) 
+	  			applyAttributes(goComponents[serializedComponent["indexInParent"]], serializedComponent["attributes"]) 
 	  		}
 	  	}	
 	}
@@ -218,12 +218,12 @@ define(function(require) {
 			for (var i = 0; i < childrenOfType.length; i++) {
 				// Extract properties of the serialized game object
 				var allChildProperties = childrenOfType[i];
-				var childArgs = allChildProperties.args;
-				var componentsArgs = allChildProperties.componentArgs;
-				var childrenArgs = allChildProperties.children;
+				var childArgs = allChildProperties["args"];
+				var componentsArgs = allChildProperties["componentArgs"];
+				var childrenArgs = allChildProperties["children"];
 
 				// Get the child to work with
-				var childGo = goChildren[allChildProperties.indexInParent];
+				var childGo = goChildren[allChildProperties["indexInParent"]];
 
 				// Apply serialized arguments to child game object
 				applyAttributes(childGo, childArgs);
