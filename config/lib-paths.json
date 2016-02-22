@@ -12,5 +12,6 @@
 	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite",
 	"bezier": "./lib/gsap/src/uncompressed/plugins/BezierPlugin",
 	"directional-rotation": "./lib/gsap/src/uncompressed/plugins/DirectionalRotationPlugin",
-	"ease": "./lib/gsap/src/uncompressed/easing/EasePack"
+	"ease": "./lib/gsap/src/uncompressed/easing/EasePack",
+	"pako": "./lib/pako/dist/pako"
 }
