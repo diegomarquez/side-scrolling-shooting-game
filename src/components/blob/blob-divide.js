@@ -1,4 +1,4 @@
-define(["editor-component", "gb", "tweenlite"], function(Component, Gb, Tweenlite) {
+define(["editor-component", "gb", "TweenLite", "EasePack"], function(Component, Gb, Tweenlite) {
 	var BlobShrapnel = Component.extend({
 		init: function() {
 			this._super();
@@ -88,7 +88,7 @@ define(["editor-component", "gb", "tweenlite"], function(Component, Gb, Tweenlit
 			var vecX = Math.cos(angle) * distance;
 			var vecY = Math.sin(angle) * distance;
 
-			TweenLite.to(blob, 1.2, { x: '+=' + vecX, y: '+=' + vecY, ease: Power2.easeOut });
+			Tweenlite.to(blob, 1.2, { x: '+=' + vecX, y: '+=' + vecY, ease: Power2.easeOut });
 		}
 	});
 

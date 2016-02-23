@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "player-getter", "root", "timer-factory", "gb", "tweenlite"], function(GameObject, PlayerGetter, Root, TimerFactory, Gb, TweenLite) {
+define(["editor-game-object-container", "player-getter", "root", "timer-factory", "gb", "TweenLite", "EasePack"], function(GameObject, PlayerGetter, Root, TimerFactory, Gb, TweenLite) {
 	var SpiderFollow = GameObject.extend({
 		init: function() {
 			this._super();

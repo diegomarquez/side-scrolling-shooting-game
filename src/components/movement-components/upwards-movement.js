@@ -1,4 +1,4 @@
-define(['component', 'tweenlite'], function(Component, Tweenlite){
+define(['component', "TweenLite", "EasePack"], function(Component, TweenLite){
 	
 	var UpwardsMovement = Component.extend({
 		start: function(parent) {

@@ -1,4 +1,4 @@
-define(["game-object", "gb", "timelinelite"], function(GameObject, Gb, TimelineLite) {
+define(["game-object", "gb", "TimelineLite", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite) {
   var SideMessage = GameObject.extend({
     init: function() {
       this._super();

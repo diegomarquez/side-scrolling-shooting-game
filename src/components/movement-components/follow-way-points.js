@@ -1,4 +1,4 @@
-define(["editor-component", "tweenlite", "bezier", "util"], function(Component, TweenLite, BezierPlugin, Util) {
+define(["editor-component", "TweenLite", "BezierPlugin", "EasePack", "util"], function(Component, TweenLite, BezierPlugin, EasePack, Util) {
 	var FollowWayPoints = Component.extend({
 		init: function() {
 			this._super();

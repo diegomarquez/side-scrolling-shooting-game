@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "player-getter", "root", "timer-factory", "gb", "tweenlite", "util"], function(GameObject, PlayerGetter, Root, TimerFactory, Gb, TweenLite, Util) {
+define(["editor-game-object-container", "player-getter", "root", "timer-factory", "gb", "TweenLite", "EasePack", "util"], function(GameObject, PlayerGetter, Root, TimerFactory, Gb, TweenLite, EasePack, Util) {
 	var Boss_4_Body = GameObject.extend({
 		init: function() {
 			this._super();

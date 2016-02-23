@@ -1,4 +1,4 @@
-define(["game-object", "gb", "timelinelite", "keyboard", "local-storage"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage) {
+define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage) {
   var Title = GameObject.extend({
     init: function() {
       this._super();

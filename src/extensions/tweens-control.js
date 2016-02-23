@@ -1,4 +1,4 @@
-define(["extension", "gb", "timelinelite"], function(Extension, Gb, TimelineLite) {
+define(["extension", "gb", "TimelineLite", "TweenLite", "EasePack"], function(Extension, Gb, TimelineLite) {
 	var game = Gb.game;
 
   	var TweensControl = Extension.extend({

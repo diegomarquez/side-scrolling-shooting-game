@@ -1,4 +1,4 @@
-define(["game-object", "gb", "timelinelite", "keyboard", "level-storage"], function(GameObject, Gb, TimelineLite, Keyboard, LevelStorage) {
+define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LevelStorage) {
   var StageOverview = GameObject.extend({
     init: function() {
       this._super();

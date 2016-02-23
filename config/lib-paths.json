@@ -8,10 +8,10 @@
 	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle",
 	"jscrollpane": "./lib/jscrollpane/script/jquery.jscrollpane",
 	"jquery-mousewheel": "./lib/jscrollpane/script/jquery.mousewheel",
-	"tweenlite": "./lib/gsap/src/uncompressed/TweenLite",
-	"timelinelite": "./lib/gsap/src/uncompressed/TimelineLite",
-	"bezier": "./lib/gsap/src/uncompressed/plugins/BezierPlugin",
-	"directional-rotation": "./lib/gsap/src/uncompressed/plugins/DirectionalRotationPlugin",
-	"ease": "./lib/gsap/src/uncompressed/easing/EasePack",
+	"TweenLite": "./lib/gsap/src/uncompressed/TweenLite",
+	"TimelineLite": "./lib/gsap/src/uncompressed/TimelineLite",
+	"BezierPlugin": "./lib/gsap/src/uncompressed/plugins/BezierPlugin",
+	"DirectionalRotationPlugin": "./lib/gsap/src/uncompressed/plugins/DirectionalRotationPlugin",
+	"EasePack": "./lib/gsap/src/uncompressed/easing/EasePack",
 	"pako": "./lib/pako/dist/pako"
 }

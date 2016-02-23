@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "tweenlite", "directional-rotation"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite, DirectionalRotationPlugin) {
+define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLite", "DirectionalRotationPlugin", "EasePack"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite) {
 	
 	var transformResult = {};
 	var matrix = new Matrix();

@@ -6,7 +6,8 @@ define(function(require) {
 	var viewportFollow = require('viewport-follow');
 	var playerGetter = require('player-getter');
 
-	require('tweenlite');
+	require("TweenLite");
+	require("EasePack");
 
 	var GameScenePlayer = require("scene-player").constructor.extend({
 		init: function() {
