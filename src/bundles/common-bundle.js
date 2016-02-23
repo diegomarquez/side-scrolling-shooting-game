@@ -22,7 +22,7 @@ define(function(require) {
 	});
 
 	var getModuleName = function(module) {
-		var moduleName = module.toString().match(/require\(['|"](.*?)['|"]\)/)[1]
+		var moduleName = module.toString().match(/\(['|"](.*?)['|"]\)/)[1];
 		return moduleName;
 	}
 
