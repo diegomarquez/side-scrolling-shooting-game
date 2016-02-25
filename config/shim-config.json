@@ -22,9 +22,5 @@
 
 	"bootstrap-toogle": {
 		"deps": ["jquery", "bootstrap"]
-	},
-
-	"pako": {
-		"exports": "pako"
 	}
 }

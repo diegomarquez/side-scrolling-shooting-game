@@ -8,8 +8,6 @@ define(function(require) {
 
 	require('jscrollpane');
 
-	$.fn.button.noConflict();
-
 	var gb = require('gb');
 	var util = require('util');
 	var editorSetup = require('editor-setup');

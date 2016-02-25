@@ -4,11 +4,9 @@
   "dependencies": {
     "requirejs": "2.x.x",
     "requirejs-domready": "2.x.x",
-    "jquery-ui": "~1.11.1",
     "jquery": "~1.11.1",
     "jquery.selectBoxIt": "~3.8.1",
     "bootstrap-toggle": "~2.0.0",
-    "bootstrap": "~3.3.1",
     "almond": "~0.3.0",
     "jquery.transit": "~0.9.12",
     "jscrollpane": "~2.0.20",

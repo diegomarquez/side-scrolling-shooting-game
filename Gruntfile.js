@@ -60,6 +60,17 @@ module.exports = function(grunt) {
 
       'prod': { 
       	files: assetSelectorsProd 
+      },
+
+      'vendor-to-lib': { 
+      	files: [
+      		{
+      			expand: true, 
+      			cwd: './vendor',
+      			src: ['**'], 
+      			dest: './lib/'
+      		}
+      	] 
       }
     },
 
@@ -325,7 +336,7 @@ module.exports = function(grunt) {
   grunt.registerTask('refresh', ['css', 'asset-map-dev', 'open:index']);
   
   // This task sets up the development environment
-  grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map-dev']);
+  grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map-dev', 'copy:vendor-to-lib']);
   
   // Builds a development release, no minification
   grunt.registerTask('build-dev', [
