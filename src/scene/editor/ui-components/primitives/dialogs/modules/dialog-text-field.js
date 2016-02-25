@@ -29,7 +29,14 @@ define(function(require) {
 			input.type = 'text';
 			input.name = lowerCaseName;
 			input.id = lowerCaseName;
-			input.value = this.options.value;
+
+			if (Object.prototype.toString.call(this.options.value) == '[object Function]') {
+	          // Function values are assigned to the input when the dialog opens
+	          $(input).data('valueGetter', this.options.value);
+	        } else {
+	          // Regular value is assigned on initialization
+	          input.value = this.options.value;
+	        }
 			
 			$(input).addClass('ui-corner-all');
 
@@ -37,9 +44,17 @@ define(function(require) {
 		},
 
 		open: function() {
-			// Set the current value as default to go back to it if necessary
 			var input = $(this.html()).find('input');
-			input.attr('default', input.value);      
+
+			// Function values are set dynamically when the dialog opens
+			var valueGetter = $(input).data('valueGetter');
+
+			if (valueGetter) {
+				input[0].value = valueGetter();
+			}
+
+			// Set the current value as default to go back to it if necessary
+			input.attr('default', input.value);
 		},
 
 		reset: function() {
