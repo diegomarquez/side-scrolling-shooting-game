@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Exo';
+  font-weight: 400;
+  font-style: normal;
+  src: url('../assets/fonts/Exo-regular.eot');
+  src: url('../assets/fonts/Exo-regular.eot?#iefix') format('embedded-opentype'),
+       local('Exo Regular'),
+       local('Exo-regular'),
+       url('../assets/fonts/Exo-regular.woff2') format('woff2'),
+       url('../assets/fonts/Exo-regular.woff') format('woff'),
+       url('../assets/fonts/Exo-regular.ttf') format('truetype'),
+       url('../assets/fonts/Exo-regular.svg#Exo') format('svg');
+}
+
+@font-face {
+  font-family: 'Exo';
+  font-weight: 700;
+  font-style: normal;
+  src: url('../assets/fonts/Exo-700.eot');
+  src: url('../assets/fonts/Exo-700.eot?#iefix') format('embedded-opentype'),
+       local('Exo Bold'),
+       local('Exo-700'),
+       url('../assets/fonts/Exo-700.woff2') format('woff2'),
+       url('../assets/fonts/Exo-700.woff') format('woff'),
+       url('../assets/fonts/Exo-700.ttf') format('truetype'),
+       url('../assets/fonts/Exo-700.svg#Exo') format('svg');
+}
+
