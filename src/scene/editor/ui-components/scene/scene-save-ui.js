@@ -1,5 +1,6 @@
 define(function(require) {
 	var localStorageWrapper = require('local-storage');
+	var levelRequester = require('level-requester');
 	var sceneSerializer = require('scene-serializer');
 	
 	var dialogTabbedModular = require('dialog-tabbed-modular');	
@@ -27,7 +28,7 @@ define(function(require) {
 
 						fields: [
 							new dialogTextField({
-								name: 'Scene Name',
+								name: 'Local Scene Name',
 								value: function() {
 									return sceneName.get();
 								},
@@ -46,7 +47,7 @@ define(function(require) {
 								validations: [
 									{
 										check: function() { 
-						            		return !localStorageWrapper.getScene(this.SceneName()); 
+						            		return !localStorageWrapper.getScene(this.LocalSceneName()); 
 						          		},
 						          		tip: "To overwrite the old scene click the 'Update' button"
 									}
@@ -56,16 +57,16 @@ define(function(require) {
 
 						buttons: {
 							'Save': function () {
-								serializeAndStore.call(this);
+								serializeAndStoreLocal.call(this);
 							},
 
 							'Update': function () {
-								serializeAndStore.call(this);
+								serializeAndStoreLocal.call(this);
 							}
 						},
 
 						validateOnAction: {
-							'Save': ['Scene Name', 'Scene Already Exists'],
+							'Save': ['Local Scene Name', 'Scene Already Exists'],
 							'Update': ['Scene Name']
 						}
 					},
@@ -74,7 +75,7 @@ define(function(require) {
 
 						fields: [
 							new dialogTextField({
-								name: 'Scene Name',
+								name: 'Remote Scene Name',
 								value: function() {
 									return sceneName.get();
 								},
@@ -100,21 +101,7 @@ define(function(require) {
 									},
 									{
 										check: function(remote) { 
-											var isValid = false;
-
-											$.ajax({
-												url: remote,
-												type: "GET",
-												async: false,
-												success: function() { 
-													isValid = true; 
-												},
-												error: function() { 
-													isValid = false;
-												}
-											});
-
-											return isValid;  
+											return levelRequester.pingRemote(remote);  
 										},
 										tip: "Remote is not available"
 									}
@@ -124,13 +111,12 @@ define(function(require) {
 
 						buttons: {
 							'Upload': function () {
-								$.post(this.RemoteUrl(), sceneSerializer.serialize(this.SceneName()));
-								$(this).dialog('close');
+								serializeAndStoreRemote.call(this);
 							}
 						},
 
 						validateOnAction: {
-							'Upload': ['Scene Name', 'Remote Url']
+							'Upload': ['Remote Scene Name', 'Remote Url']
 						}
 					}
 				]
@@ -142,8 +128,8 @@ define(function(require) {
 		}
 	});
 		
-	var serializeAndStore = function() { 
-		var name = this.SceneName();
+	var serializeAndStoreLocal = function() {
+		var name = this.LocalSceneName();
 
 		if (localStorageWrapper.setScene(name, sceneSerializer.serialize(name))) {
 			$(this).dialog('close');
@@ -152,6 +138,20 @@ define(function(require) {
 		}
 
 		sceneName.set(name);
+	}
+
+	var serializeAndStoreRemote = function() {
+		var self = this;
+
+		var serializedScene = sceneSerializer.serialize(this.RemoteSceneName()); 
+		
+		levelRequester.post(serializedScene, this.RemoteUrl(),
+			function (successResult) {
+				$(self).dialog('close');
+			},
+			function (failureResult) {
+				$(self).dialog('option', 'setErrorFeedback')('There was an error posting to the remote');
+			});
 	}
 
 	var validateURL = function(url) {

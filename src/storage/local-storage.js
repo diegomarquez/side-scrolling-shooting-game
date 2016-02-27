@@ -1,126 +1,132 @@
 define(function(require) {
 	var previewScene = null;
 
-  var LocalStorage = require('delegate').extend({
-    init: function () {
-      try {
-          localStorage.setItem('testEntry', 'testValue');
-          localStorage.removeItem('testEntry');
+	var compresor = require('level-compressor');
 
-          this.available = true;
-      } catch(e) {
-          this.execute(this.LOCAL_STORAGE_NOT_AVAILABLE);
+	var LocalStorage = require('delegate').extend({
+		init: function () {
+			try {
+				localStorage.setItem('testEntry', 'testValue');
+				localStorage.removeItem('testEntry');
 
-          this.available = false;
-      }
-    },
+				this.available = true;
+			} catch(e) {
+				this.execute(this.LOCAL_STORAGE_NOT_AVAILABLE);
 
-    setScene: function (key, value) {
-      return setItem.call(this, 'scene_' + key, value);
-    },
+				this.available = false;
+			}
+		},
 
-    getScene: function (key, value) {
-      return getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
-    },
+		setScene: function (key, value) {
+			var data = compresor.compress(value);
 
-    setPreviewScene: function(preview) {
-    	previewScene = preview;
-    },
+			return setItem.call(this, 'scene_' + key, data);
+		},
 
-    getPreviewScene: function() {
-    	return previewScene
-    },
+		getScene: function (key) {
+			var data = getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
 
-    removeScene: function (key) {
-      removeItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
-    },
+			return compresor.decompress(data);
+		},
 
-    getAllScenes: function() {
-      available.call(this);
+		setPreviewScene: function(preview) {
+			previewScene = preview;
+		},
 
-      return Object.keys(localStorage).filter(function(key) {
-        return key.search(/^scene_/) != -1;
-      }).map(function(key) {
-        return key.replace(/^scene_/, '');
-      });
-    },
+		getPreviewScene: function() {
+			return previewScene
+		},
 
-    getScenesCount: function() {
-      available.call(this);
-      return this.getAllScenes().length;
-    },
+		removeScene: function (key) {
+			removeItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
+		},
 
-    clearScenes: function () {
-      available.call(this);
+		getAllScenes: function() {
+			available.call(this);
 
-      var levels = this.getAllScenes();
+			return Object.keys(localStorage).filter(function(key) {
+				return key.search(/^scene_/) != -1;
+			}).map(function(key) {
+				return key.replace(/^scene_/, '');
+			});
+		},
 
-      for (var i = 0; i < levels.length; i++) {
-        this.removeScene.call(this, levels[i]);
-      };
-    },
+		getScenesCount: function() {
+			available.call(this);
+			return this.getAllScenes().length;
+		},
 
-    clear: function () {
-      available.call(this);
-      localStorage.clear();
-    },
+		clearScenes: function () {
+			available.call(this);
 
-    completeLevel: function(key) {
-    	setItem.call(this, key + '-complete-flag', true);
-    },
+			var levels = this.getAllScenes();
 
-    resetCompletedLevels: function() {
-    	available.call(this);
+			for (var i = 0; i < levels.length; i++) {
+				this.removeScene.call(this, levels[i]);
+			};
+		},
 
-      return Object.keys(localStorage).filter(function(key) {
-        return key.search(/-complete-flag$/) != -1;
-      }).forEach(function(key, index, array) {
-      	array[index] = false;
-      });
-    },
+		clear: function () {
+			available.call(this);
+			localStorage.clear();
+		},
 
-    isLevelComplete: function(key) {
-    	return getItem.call(this, key + '-complete-flag') === 'true';
-    }
-  });
+		completeLevel: function(key) {
+			setItem.call(this, key + '-complete-flag', true);
+		},
 
-  var available = function() {
-    if (!this.available) {
-      throw new Error('Local Storage Not Available');
-    }
-  }
+		resetCompletedLevels: function() {
+			available.call(this);
 
-  var setItem = function (key, value) {
-    available.call(this);
+			return Object.keys(localStorage).filter(function(key) {
+				return key.search(/-complete-flag$/) != -1;
+			}).forEach(function(key, index, array) {
+				array[index] = false;
+			});
+		},
 
-    try {
-      localStorage.setItem(key, value);
+		isLevelComplete: function(key) {
+			return getItem.call(this, key + '-complete-flag') === 'true';
+		}
+	});
 
-      return true;
-    } catch (e) {
-      this.execute(this.STORAGE_LIMIT_REACHED, {
-        key: key,
-        value: value
-      });
+	var available = function() {
+		if (!this.available) {
+			throw new Error('Local Storage Not Available');
+		}
+	}
 
-      return false;
-    }
-  }
+	var setItem = function (key, value) {
+		available.call(this);
 
-  var removeItem = function (key) {
-    available.call(this);
+		try {
+			localStorage.setItem(key, value);
 
-    localStorage.removeItem(key);
-  }
+			return true;
+		} catch (e) {
+			this.execute(this.STORAGE_LIMIT_REACHED, {
+				key: key,
+				value: value
+			});
 
-  var getItem = function (key) {
-    available.call(this);
+			return false;
+		}
+	}
 
-    return localStorage.getItem(key);
-  }
+	var removeItem = function (key) {
+		available.call(this);
 
-  Object.defineProperty(LocalStorage.prototype, "LOCAL_STORAGE_NOT_AVAILABLE", { get: function() { return 'local_storage_not_available'; } });
-  Object.defineProperty(LocalStorage.prototype, "LOCAL_STORAGE_LIMIT_REACHED", { get: function() { return 'local_storage_limit_reached'; } });
+		localStorage.removeItem(key);
+	}
 
-  return new LocalStorage();
+	var getItem = function (key) {
+		available.call(this);
+
+		return localStorage.getItem(key);
+	}
+
+	Object.defineProperty(LocalStorage.prototype, "LOCAL_STORAGE_NOT_AVAILABLE", { get: function() { return 'local_storage_not_available'; } });
+	Object.defineProperty(LocalStorage.prototype, "LOCAL_STORAGE_LIMIT_REACHED", { get: function() { return 'local_storage_limit_reached'; } });
+
+	return new LocalStorage();
 });
