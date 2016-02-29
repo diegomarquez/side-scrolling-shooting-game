@@ -23,10 +23,37 @@ define(function(require) {
 			isValid = false;
 		};
 
-		x.open("GET", remote, true);
+		x.open("GET", remote, false);
 		x.send();
 
 		return isValid;
+	};
+
+	LevelRequester.prototype.get = function(remote, success, failure) {
+		var x = new XMLHttpRequest();
+	    
+		x.onload = function (e) {
+			if (x.readyState === 4) {
+				if (x.status === 200) {
+					success(x.responseText);
+				} else {
+					failure(x.statusText);
+				}
+			}
+		};
+
+		x.onerror = function (e) {
+			failure(x.statusText);
+		};
+
+		x.open("GET", remote, true);
+		x.send();
+	};
+
+	LevelRequester.prototype.getLevel = function(remote, success, failure) {
+		this.get(remote, function (data) {
+			success(levelCompressor.decompress(data))
+		}, failure);
 	};
 
 	LevelRequester.prototype.post = function(levelJson, remote, success, failure) {

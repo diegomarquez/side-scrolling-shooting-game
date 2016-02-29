@@ -127,6 +127,8 @@ define(function(require) {
 			}
 
 			options.updateField = function(tab, name, value) {
+				debugger;
+
 				fieldObjects[tab][toMethodName(name)].update(value);
 			}
 

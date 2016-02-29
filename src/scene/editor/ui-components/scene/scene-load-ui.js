@@ -1,5 +1,7 @@
 define(function(require) {
 	var localStorageWrapper = require('local-storage');
+	var levelRequester = require('level-requester');
+	var levelCompressor = require('level-compressor');
 	var sceneLoader = require('editor-scene-loader');
 
 	var dialogTabbedModular = require('dialog-tabbed-modular');
@@ -58,7 +60,7 @@ define(function(require) {
 							}),
 							new dialogTextField({
 								name: 'Remote Input',
-								value: 'http://localhost:3000/scenes',
+								value: 'http://localhost:3000',
 								validations: [ 
 									{
 										check: function(remote) {
@@ -74,15 +76,7 @@ define(function(require) {
 								validations: [
 									{
 										check: function() {
-											$.ajax({
-													url: this.RemoteInput(),
-													type: "GET",
-													async: false,
-													success: function() { isValid = true; },
-													error: function() { isValid = false; }
-												});
-
-												return isValid;   
+											return levelRequester.pingRemote(this.RemoteInput());   
 										 },
 
 										 tip: "Remote is not available"
@@ -107,27 +101,29 @@ define(function(require) {
 							'Open Remote': function () {
 								var self = this;
 
-								$.ajax({
-									url: this.RemoteInput() + "/" + this.RemoteSceneSelector(),
-									type: "GET",
-									success: function(scene) { 
-										sceneLoader.load(JSON.parse(scene));
+								levelRequester.getLevel(
+									this.RemoteInput() + "/data/" + this.RemoteSceneSelector(),
+									function (data) {
+										sceneLoader.load(data);
 										sceneLoader.layout();
-										$(self).dialog('close');  
-									}
-								}); 
+										$(self).dialog('close');
+									},
+									function (error) {
+										$(self).dialog('option', 'setErrorFeedback')('There was an error getting the scene');
+									}); 
 							},
 
 							'Get Remote Scenes': function() {           
 								var self = this;
 
-								$.ajax({
-									url: this.RemoteInput(),
-									type: "GET",
-									success: function(data) { 
-										self.dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', data);
-									}
-								});
+								levelRequester.get(
+									this.RemoteInput() + "/view/0",
+									function (data) {
+										$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', JSON.parse(data));
+									},
+									function (error) {
+										$(self).dialog('option', 'setErrorFeedback')('There was an error getting the scenes');
+									});
 							}
 						},
 
