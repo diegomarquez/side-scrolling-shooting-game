@@ -15,7 +15,7 @@ define(function(require) {
 
 		getLevelNames: function() {
 			return levels.map(function(level) {
-		    	return level.get()['name'].toUpperCase();
+		    	return level.name().toUpperCase();
 		    });
 		},
 
@@ -25,10 +25,10 @@ define(function(require) {
 
 		getLevelFromName: function(name) {
 			for (var i = 0; i < levels.length; i++) {
-				var level = this.getLevel(i);
+				var level = levels[i];
 
-				if (level['name'] === name.toLowerCase()) {
-					return level;
+				if (level.name() === name.toLowerCase()) {
+					return this.getLevel(i);
 				}
 			}
 		},
@@ -52,10 +52,10 @@ define(function(require) {
 		getLowestIncompleteLevel: function() {
 			// Get the first level that is not complete
 			for (var i = 0; i < levels.length; i++) {
-				var level = levels[i].get();
+				var name = levels[i].name();
 
-				if (!localStorageWrapper.isLevelComplete(level['name'])) {		
-					return level; 
+				if (!localStorageWrapper.isLevelComplete(name)) {		
+					return levels[i].get(); 
 				}
 			}
 
@@ -66,9 +66,9 @@ define(function(require) {
 		getLowestIncompleteLevelIndex: function() {
 			// Get the first level that is not complete
 			for (var i = 0; i < levels.length; i++) {
-				var level = levels[i].get();
+				var name = levels[i].name();
 
-				if (!localStorageWrapper.isLevelComplete(level['name'])) {		
+				if (!localStorageWrapper.isLevelComplete(name)) {		
 					return i; 
 				}
 			}

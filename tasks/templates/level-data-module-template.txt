@@ -1,0 +1,23 @@
+define(['level-compressor'], function(LevelCompressor) {
+
+	var Data = function() {};
+
+	var data = "<%= data %>";
+	var decompresed = null;
+
+	Data.prototype.get = function() {
+		if (!decompresed) {
+			decompresed = LevelCompressor.decompress(data);
+
+			data = null;
+		}
+
+		return decompresed;
+	}
+
+	Data.prototype.name = function() {
+		return "<%= name %>";
+	}
+
+	return new Data();
+});

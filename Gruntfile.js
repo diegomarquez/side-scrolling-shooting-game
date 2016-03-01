@@ -260,12 +260,38 @@ module.exports = function(grunt) {
       }
     },
 
-    'create-data-module': {
-      'config': {
+    'create-data-modules': {
+      'asset-map': {
+        options: {
+        	template: "json-data-module-template.txt"
+        },
         files: [
-          { src: [generatedDir + 'asset-map.json'], dest: 'src/' },
-          { src: [configDir + 'font-data.json'], dest: 'src/' },
-          { src: 'scenes/**/*.json', dest: 'src/data/' }
+          { 
+          	src: [generatedDir + 'asset-map.json'], 
+          	dest: 'src/'
+          }
+        ]
+      },
+      'font-data': {
+      	options: {
+        	template: "json-data-module-template.txt"
+        },
+        files: [
+          { 
+          	src: [configDir + 'font-data.json'],
+          	dest: 'src/'
+          }
+        ]
+      },
+      'levels': {
+      	options: {
+        	template: "level-data-module-template.txt"
+        },
+        files: [
+          { 
+          	src: 'scenes/**/*.bin', 
+          	dest: 'src/data/'
+          }
         ]
       }
     },
@@ -281,21 +307,6 @@ module.exports = function(grunt) {
         options: {
           buildDir: buildProdDir
         }
-      }
-    },
-
-    'download-fonts': {
-    	target: {
-    		options: {
-    			fontsDir: 'styles/assets/fonts/',
-    			relativeFontsDir: '../assets/fonts/',
-    			cssDir: 'styles/css/'
-    		},
-
-        files: [
-          { src: 'http://fonts.googleapis.com/css?family=Exo:400,700' },
-          { src: 'http://fonts.googleapis.com/css?family=Russo+One' }
-        ]
       }
     }  
   });
@@ -313,16 +324,13 @@ module.exports = function(grunt) {
 
   // Local tasks
   grunt.loadTasks('tasks');
-  
-  // This taks creates requireJs modules out of .json files
-  grunt.registerTask('data-modules', ['create-data-module']);
-  
+
   // This task creates the asset map 
-  grunt.registerTask('asset-map-dev', ['local-assets:dev', 'merge-json', 'data-modules', 'config']);
+  grunt.registerTask('asset-map-dev', ['local-assets:dev', 'merge-json', 'create-data-modules', 'config']);
   // This task creates the asset map 
-  grunt.registerTask('asset-map-build-dev', ['local-assets:build-dev', 'merge-json', 'data-modules', 'config']);
+  grunt.registerTask('asset-map-build-dev', ['local-assets:build-dev', 'merge-json', 'create-data-modules', 'config']);
   // This task creates the asset map 
-  grunt.registerTask('asset-map-build-prod', ['local-assets:build-prod', 'merge-json', 'data-modules', 'config']);
+  grunt.registerTask('asset-map-build-prod', ['local-assets:build-prod', 'merge-json', 'create-data-modules', 'config']);
   
   // This task creates all the requirejs configuration needed
   grunt.registerTask('config', ['create-config']);

@@ -1,4 +1,5 @@
 define(function() {
+
 	var Data = function() {};
 
 	var data = {
