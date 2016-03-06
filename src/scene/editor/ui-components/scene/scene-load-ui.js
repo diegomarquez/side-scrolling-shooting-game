@@ -7,7 +7,6 @@ define(function(require) {
 	var dialogTabbedModular = require('dialog-tabbed-modular');
 	
 	var dialogTextField = require('dialog-text-field');
-	var dialogDropdownField = require('dialog-dropdown-field');
 	var dialogPagingField = require('dialog-paging-field');
 	var dialogHiddenField = require('dialog-hidden-field');
 
@@ -183,11 +182,13 @@ define(function(require) {
 						}
 					},
 					{
-						name: 'Built-In Scenes',
+						name: 'Built In Scenes',
 						
 						fields: [
-							new dialogDropdownField({
+							new dialogPagingField({
 								name: 'Built Scene Selector',
+								itemsPerPage: 4,
+								hideNavagationButtons: true,
 								data: function() {
 									return require('level-storage').getLevelNames();
 								}
@@ -195,7 +196,7 @@ define(function(require) {
 						],
 						
 						buttons: {
-							'Open Built-In': function () {
+							'Open Built In': function () {
 								var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
 								sceneLoader.load(scene);
 								sceneLoader.layout();
@@ -204,7 +205,7 @@ define(function(require) {
 						},
 
 						validateOnAction: {
-							'Open Built-In': []
+							'Open Built In': []
 						}
 					}
 				]

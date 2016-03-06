@@ -66,12 +66,17 @@ define(function(require) {
 
 			this.addListItem(container, { 'margin-top': '0px' }, data[0], 0);
 
-			for (var i = 0; i < this.itemsPerPage() - 1; i++) {
+			for (var i = 0; i < this.itemsPerPage() - 2; i++) {
 				this.addListItem(container, null, data[i+1], i+1);
 			}
 
-			this.addNavigationButtons(container);
-
+			if (this.options.hideNavagationButtons) {
+				this.addListItem(container, { 'margin-bottom': '0px' }, data[data.length-1], data.length);
+			} else {
+				this.addListItem(container, null, data[data.length-1], data.length);
+				this.addNavigationButtons(container);
+			}
+			
 			$(container).addClass('ui-corner-all');
 			$(container).addClass('well');
 			$(container).addClass('well-small');
@@ -88,12 +93,12 @@ define(function(require) {
 
 			$(label).addClass('radio');
 			
+			label.style.marginBottom = '13px';
+
 			if (styles) {
 				$(label).css(styles);
 			}
 			
-			label.style.marginBottom = '13px';
-
 			var input = document.createElement('input');
 			input.type = 'radio';
 			input.name = this.name().toLowerCase() + "_radio";
