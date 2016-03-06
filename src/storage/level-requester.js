@@ -23,8 +23,12 @@ define(function(require) {
 			isValid = false;
 		};
 
-		x.open("GET", remote, false);
-		x.send();
+		try {
+			x.open("GET", remote, false);
+			x.send();
+		} catch (e) {
+			return false;			
+		}
 
 		return isValid;
 	};
@@ -37,17 +41,21 @@ define(function(require) {
 				if (x.status === 200) {
 					success(x.responseText);
 				} else {
-					failure(x.statusText);
+					failure();
 				}
 			}
 		};
 
 		x.onerror = function (e) {
-			failure(x.statusText);
+			failure();
 		};
 
-		x.open("GET", remote, true);
-		x.send();
+		try {
+			x.open("GET", remote, true);
+			x.send();
+		} catch (e) {
+			failure();				
+		}
 	};
 
 	LevelRequester.prototype.getLevel = function(remote, success, failure) {
@@ -66,13 +74,13 @@ define(function(require) {
 				if (x.status === 200) {
 					success(x.responseText);
 				} else {
-					failure(x.statusText);
+					failure();
 				}
 			}
 		};
 
 		x.onerror = function (e) {
-			failure(x.statusText);
+			failure();
 		};
 
 		var boundary = "---------" + (parseInt(Math.random() * 100000000)).toString();
@@ -82,9 +90,13 @@ define(function(require) {
 		compressedLevel + '\r\n' +
 		'--' + boundary + '--';
 
-		x.open("POST", remote, true);
-		x.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + boundary);
-		x.send(body);
+		try {
+			x.open("POST", remote, true);
+			x.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + boundary);
+			x.send(body);
+		} catch (e) {
+			failure();				
+		}
 	};
 
 	return new LevelRequester();

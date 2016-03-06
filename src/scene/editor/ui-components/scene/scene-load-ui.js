@@ -8,14 +8,17 @@ define(function(require) {
 	
 	var dialogTextField = require('dialog-text-field');
 	var dialogDropdownField = require('dialog-dropdown-field');
+	var dialogPagingField = require('dialog-paging-field');
 	var dialogHiddenField = require('dialog-hidden-field');
+
+	var lastConnectedRemote = "";
 
 	var SceneLoad = require('ui-component').extend({
 		init: function() {
 			this.loadSceneDialog = new dialogTabbedModular().create({
 				id: 'load-scene-dialog',
 				title: 'Open a scene',
-				tip: 'Choose a scene to open from a dropdown',
+				tip: 'Choose a scene to load',
 				autoOpen: false,
 				height: 'auto',
 				width: 'auto',
@@ -27,8 +30,9 @@ define(function(require) {
 						name: 'Local Scenes',
 
 						fields: [
-							new dialogDropdownField({
+							new dialogPagingField({
 								name: 'Local Scene Selector',
+								itemsPerPage: 10,
 								data: function() {
 									return localStorageWrapper.getAllScenes();
 								}
@@ -37,10 +41,12 @@ define(function(require) {
 
 						buttons: {
 							'Open Local': function () {
-								var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
-								sceneLoader.load(JSON.parse(scene));
-								sceneLoader.layout();
-								$(this).dialog('close');
+								if (this.LocalSceneSelector() != 'no-data') {
+									var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
+									sceneLoader.load(JSON.parse(scene));
+									sceneLoader.layout();
+									$(this).dialog('close');
+								}
 							}
 						},
 
@@ -52,10 +58,34 @@ define(function(require) {
 						name: 'Remote Scenes',	
 
 						fields: [
-							new dialogDropdownField({
+							new dialogPagingField({
 								name: 'Remote Scene Selector',
-								data: function() {
-									return [];
+								itemsPerPage: 10,
+								disabled: true,
+								next: function() {
+									var self = this.getDialog();
+
+									$(self).dialog('option').showLoadingFeedback();
+
+									levelRequester.get(
+										self.RemoteInput() + "/view/" + this.currentPage(),
+										function (data) {
+											$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
+
+											var d = JSON.parse(data).map(function (pair) {
+												return pair.name + " => " + pair.id;
+											});
+
+											$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', d);
+											$(self).dialog('option').hideLoadingFeedback();
+										},
+										function (error) {
+											$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
+											$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', []);
+											$(self).dialog('option', 'setErrorFeedback')('There was an error getting more scenes');
+											$(self).dialog('option').hideLoadingFeedback();
+										}
+									);
 								}
 							}),
 							new dialogTextField({
@@ -98,11 +128,12 @@ define(function(require) {
 						],
 
 						buttons: {
-							'Open Remote': function () {
+							'Open Remote Scene': function () {
 								var self = this;
+								var sceneRemoteId = this.RemoteSceneSelector().match(/=>\s+(.*?)$/)[1];
 
 								levelRequester.getLevel(
-									this.RemoteInput() + "/data/" + this.RemoteSceneSelector(),
+									this.RemoteInput() + "/data/" + sceneRemoteId,
 									function (data) {
 										sceneLoader.load(data);
 										sceneLoader.layout();
@@ -110,26 +141,45 @@ define(function(require) {
 									},
 									function (error) {
 										$(self).dialog('option', 'setErrorFeedback')('There was an error getting the scene');
-									}); 
+									});
 							},
 
-							'Get Remote Scenes': function() {           
+							'Connect With Remote': function() {           
 								var self = this;
 
+								$(self).dialog('option').showLoadingFeedback();
+
+								// Initial Request
 								levelRequester.get(
 									this.RemoteInput() + "/view/0",
 									function (data) {
-										$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', JSON.parse(data));
+										$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
+
+										var d = JSON.parse(data).map(function (pair) {
+											return pair.name + " => " + pair.id;
+										});
+
+										if (lastConnectedRemote !== self.RemoteInput()) {
+											$(self).dialog('option').resetField('Remote Scenes', 'Remote Scene Selector');		
+										}
+
+										$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', d);
+										$(self).dialog('option').hideLoadingFeedback();
+
+										lastConnectedRemote = self.RemoteInput();
 									},
 									function (error) {
-										$(self).dialog('option', 'setErrorFeedback')('There was an error getting the scenes');
-									});
+										$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
+										$(self).dialog('option', 'setErrorFeedback')('There was an error connecting to the remote');
+										$(self).dialog('option').hideLoadingFeedback();
+									}
+								);
 							}
 						},
 
 						validateOnAction: {
-							'Open Remote': ['Remote Input', 'Remote Url Validity', 'Remote Availability'],
-							'Get Remote Scenes': ['Remote Url Validity', 'Remote Availability']
+							'Open Remote Scene': ['Remote Input', 'Remote Url Validity', 'Remote Availability'],
+							'Connect With Remote': ['Remote Url Validity', 'Remote Availability']
 						}
 					},
 					{

@@ -53,11 +53,13 @@ app.use(connectRoute(function (router) {
 				return;
 			}
 
-			res.writeHead(200, { 'Content-Type': 'application/json' });
-			
-			var binFiles = files.filter(function(file) {
+			var binFiles = files.filter(function(file, index) {
 				return file.match(/\.bin$/);
-			});
+			}).map(function(fileName) {
+				return {id: fileName, name: fileName.replace(/\.bin/, "") }
+			}).splice(req.params.page * 10, 10);
+
+			res.writeHead(200, { 'Content-Type': 'application/json' });
 
 			res.end(JSON.stringify(binFiles));
 		});
@@ -72,7 +74,7 @@ app.use(connectRoute(function (router) {
 				res.end();
 				return;
 			}
-			
+
 			res.writeHead(200, { 'Content-Type': 'text/plain' });
 			res.end(data);
 		});

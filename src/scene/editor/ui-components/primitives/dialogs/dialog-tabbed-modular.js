@@ -57,7 +57,6 @@ define(function(require) {
 					field.create();
 					
 					$(field.html()).css({
-						'padding-left': '10px',
 						'padding-bottom': '5px'
 					});
 
@@ -113,7 +112,7 @@ define(function(require) {
 					resetFeedback(tip, tab.fields, options);
 
 					$.each(tab.fields, function(index, field) {
-						field.open();
+						field.open(dialog);
 					});
 				});
 			}
@@ -127,9 +126,29 @@ define(function(require) {
 			}
 
 			options.updateField = function(tab, name, value) {
-				debugger;
-
 				fieldObjects[tab][toMethodName(name)].update(value);
+			}
+
+			options.enableField = function(tab, name) {
+				fieldObjects[tab][toMethodName(name)].enable();
+			}
+
+			options.disableField = function(tab, name) {
+				fieldObjects[tab][toMethodName(name)].disable();
+			}
+
+			options.resetField = function(tab, name) {
+				fieldObjects[tab][toMethodName(name)].reset();
+			}
+
+			options.showLoadingFeedback = function() {
+				$(dialog).attr("disabled", true).addClass("ui-state-disabled");
+				$(dialog).css({ pointerEvents: 'none' });
+			}
+
+			options.hideLoadingFeedback = function() {
+				$(dialog).attr("disabled", false).removeClass("ui-state-disabled");
+				$(dialog).css({ pointerEvents: 'all' });
 			}
 
 			// Build the object with all the getters for each field
