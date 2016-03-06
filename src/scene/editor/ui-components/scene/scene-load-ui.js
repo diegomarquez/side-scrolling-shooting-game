@@ -81,7 +81,7 @@ define(function(require) {
 										function (error) {
 											$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
 											$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', []);
-											$(self).dialog('option', 'setErrorFeedback')('There was an error getting more scenes');
+											$(self).dialog('option').showErrorFeedback('There was an error getting more scenes');
 											$(self).dialog('option').hideLoadingFeedback();
 										}
 									);
@@ -139,7 +139,7 @@ define(function(require) {
 										$(self).dialog('close');
 									},
 									function (error) {
-										$(self).dialog('option', 'setErrorFeedback')('There was an error getting the scene');
+										$(self).dialog('option').showErrorFeedback('There was an error getting the scene');
 									});
 							},
 
@@ -169,7 +169,7 @@ define(function(require) {
 									},
 									function (error) {
 										$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
-										$(self).dialog('option', 'setErrorFeedback')('There was an error connecting to the remote');
+										$(self).dialog('option').showErrorFeedback('There was an error connecting to the remote');
 										$(self).dialog('option').hideLoadingFeedback();
 									}
 								);

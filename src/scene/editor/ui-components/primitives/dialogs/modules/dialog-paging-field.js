@@ -71,9 +71,9 @@ define(function(require) {
 			}
 
 			if (this.options.hideNavagationButtons) {
-				this.addListItem(container, { 'margin-bottom': '0px' }, data[data.length-1], data.length);
+				this.addListItem(container, { 'margin-bottom': '0px' }, data[this.itemsPerPage()-1], this.itemsPerPage()-1);
 			} else {
-				this.addListItem(container, null, data[data.length-1], data.length);
+				this.addListItem(container, null, data[this.itemsPerPage()-1], this.itemsPerPage()-1);
 				this.addNavigationButtons(container);
 			}
 			

@@ -134,7 +134,7 @@ define(function(require) {
 		if (localStorageWrapper.setScene(name, sceneSerializer.serialize(name))) {
 			$(this).dialog('close');
 		} else {
-			$(this).dialog('option', 'setErrorFeedback')('No more space in local storage. Delete scenes to free up space.');
+			$(self).dialog('option').showErrorFeedback('No more space in local storage. Delete scenes to free up space.');
 		}
 
 		sceneName.set(name);
@@ -145,12 +145,16 @@ define(function(require) {
 
 		var serializedScene = sceneSerializer.serialize(this.RemoteSceneName()); 
 		
-		levelRequester.post(serializedScene, this.RemoteUrl(),
+		levelRequester.post(serializedScene, this.RemoteUrl() + '/add',
 			function (successResult) {
 				$(self).dialog('close');
+
+				var response = JSON.parse(successResult);
+
+				localStorageWrapper.setRemoteId(response.name, response.id, response.remote);
 			},
 			function (failureResult) {
-				$(self).dialog('option', 'setErrorFeedback')('There was an error posting to the remote');
+				$(self).dialog('option').showErrorFeedback('There was an error posting to the remote');
 			});
 	}
 

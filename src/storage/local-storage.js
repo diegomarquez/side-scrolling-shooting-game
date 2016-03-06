@@ -87,6 +87,42 @@ define(function(require) {
 
 		isLevelComplete: function(key) {
 			return getItem.call(this, key + '-complete-flag') === 'true';
+		},
+
+		setRemoteId: function(name, id, remote) {
+			var data = name + "@@" + id;
+
+			setItem.call(this, data + "@@remote-id", remote);
+		},
+
+		getRemoteIdRemote: function(name, id) {
+			available.call(this);
+
+			var id = Object.keys(localStorage).filter(function(key) {
+				var regex = new RegExp(name + "@@" + id + "@@remote-id");
+
+				return key.search(regex) != -1;
+			});
+
+			return getItem.call(this, id[0]);
+		},
+
+		getRemoteIdNames: function() {
+			available.call(this);
+
+			return Object.keys(localStorage).filter(function(key) {
+				return key.search(/@@remote-id/) != -1;
+			}).map(function(key) {
+				var match = key.match(/(.+)@@(.+)@@remote-id/);
+
+				return match[1] + " => " + match[2];
+			});
+		},
+
+		removeRemoteId: function(name, id) {
+			var data = name + "@@" + id;
+
+			removeItem.call(this, data);
 		}
 	});
 

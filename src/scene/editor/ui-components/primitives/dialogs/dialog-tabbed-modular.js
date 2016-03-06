@@ -151,6 +151,11 @@ define(function(require) {
 				$(dialog).css({ pointerEvents: 'all' });
 			}
 
+			options.showErrorFeedback = function(message) {
+				applyFeedback(tip, null, message);
+				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
+			}
+
 			// Build the object with all the getters for each field
 			var valueGetters = {};
 			
@@ -234,15 +239,20 @@ define(function(require) {
 
 	var applyFeedback = function(tipContainer, fieldObject, validationTipMessage) {
 		tipContainer.toError(validationTipMessage);
-		fieldObject.applyFeedback();
+		
+		if (fieldObject) {
+			fieldObject.applyFeedback();
+		}
 	}
 
 	var resetFeedback = function(tipContainer, fieldObjects, options) {
 		tipContainer.toInfo(options.tip);
 
-		$.each(fieldObjects, function (key, field) {
-			field.resetFeedback();
-		});
+		if (fieldObjects) {
+			$.each(fieldObjects, function (key, field) {
+				field.resetFeedback();
+			});
+		}
 	}
 
 	var toMethodName = function(name) {

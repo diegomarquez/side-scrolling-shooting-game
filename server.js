@@ -19,7 +19,7 @@ app.use(connectRoute(function (router) {
 		res.end('Hi!');  
 	});
 
-	router.post('/', function (req, res, next) {
+	router.post('/add/', function (req, res, next) {
 		var form = new formidable.IncomingForm();
 
 		form.parse(req, function(err, fields, files) {
@@ -34,13 +34,24 @@ app.use(connectRoute(function (router) {
 				fs.writeFile("scenes/" + name + ".bin", fields.data, function(err) {		
 					if(err) {
 						console.log(err);
-					} else {
-						console.log("The file " + name + ".bin" + " was saved!");
+
+						res.writeHead(500);
+						res.end();
+
+						return;
 					}
+					
+					console.log("The file " + name + ".bin" + " was saved!");
+
+					res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+					res.end(JSON.stringify({
+						name: name,
+						id: name + ".bin",
+						remote: req.headers.host
+					}));
 				});
 			});
-
-			res.end();
 		});
 	});
 
