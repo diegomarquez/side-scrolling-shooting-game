@@ -57,7 +57,7 @@ define(function(require) {
 					field.create();
 					
 					$(field.html()).css({
-						'padding-bottom': '5px'
+						'margin-bottom': '5px'
 					});
 
 					fieldObjects[tab.name][toMethodName(field.name())] = field;
@@ -175,7 +175,11 @@ define(function(require) {
 			var tabs = $(tabContainer).tabs({
 				activate: function() {
 					var activeTabIndex = $(tabs).tabs('option', 'active');
-					$(dialog).dialog('option', 'buttons', options.tabs[activeTabIndex].buttons)
+					$(dialog).dialog('option', 'buttons', options.tabs[activeTabIndex].buttons);
+
+					$.each(options.tabs, function(index, tab) {
+						resetFeedback(tip, tab.fields, options);
+					});
 				}
 			});
 

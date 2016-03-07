@@ -174,6 +174,10 @@ define(function(require) {
 
 		open: function(dialog) {
 			this.dialog = dialog;
+
+			if (this.options.data) {
+				this.update();
+			}
 		},
 
 		reset: function() {
@@ -247,15 +251,11 @@ define(function(require) {
 		},
 
 		applyFeedback: function() {
-			var all = $(this.html());
 			
-			all.addClass("ui-state-error");
 		},
 
 		resetFeedback: function() {
-			var all = $(this.html());
 			
-			all.removeClass("ui-state-error");
 		},
 
 		enable: function() {

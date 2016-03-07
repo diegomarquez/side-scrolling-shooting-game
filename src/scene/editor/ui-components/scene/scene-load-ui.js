@@ -34,23 +34,30 @@ define(function(require) {
 								itemsPerPage: 10,
 								data: function() {
 									return localStorageWrapper.getAllScenes();
-								}
+								},
+								validations: [ 
+									{
+										check: function() {
+											return this.LocalSceneSelector();
+										},
+										
+										tip: "No scene selected"
+									}
+								]
 							})
 						],
 
 						buttons: {
 							'Open Local': function () {
-								if (this.LocalSceneSelector() != 'no-data') {
-									var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
-									sceneLoader.load(JSON.parse(scene));
-									sceneLoader.layout();
-									$(this).dialog('close');
-								}
+								var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
+								sceneLoader.load(JSON.parse(scene));
+								sceneLoader.layout();
+								$(this).dialog('close');
 							}
 						},
 
 						validateOnAction: {
-							'Open Local': []
+							'Open Local': ['Local Scene Selector']
 						}	
 					},
 					{
@@ -85,15 +92,25 @@ define(function(require) {
 											$(self).dialog('option').hideLoadingFeedback();
 										}
 									);
-								}
+								},
+
+								validations: [ 
+									{
+										check: function() {
+											return this.RemoteSceneSelector();
+										},
+										
+										tip: "No scene selected"
+									}
+								]
 							}),
 							new dialogTextField({
 								name: 'Remote Input',
 								value: 'http://localhost:3000',
 								validations: [ 
 									{
-										check: function(remote) {
-											return this.RemoteSceneSelector();
+										check: function() {
+											return this.RemoteInput() === "";
 										},
 										
 										tip: "Remote scene selector is empty"
@@ -177,7 +194,7 @@ define(function(require) {
 						},
 
 						validateOnAction: {
-							'Open Remote Scene': ['Remote Input', 'Remote Url Validity', 'Remote Availability'],
+							'Open Remote Scene': ['Remote Input', 'Remote Url Validity', 'Remote Availability', 'Remote Scene Selector'],
 							'Connect With Remote': ['Remote Url Validity', 'Remote Availability']
 						}
 					},
@@ -191,7 +208,16 @@ define(function(require) {
 								hideNavagationButtons: true,
 								data: function() {
 									return require('level-storage').getLevelNames();
-								}
+								},
+								validations: [ 
+									{
+										check: function() {
+											return this.BuiltSceneSelector();
+										},
+										
+										tip: "No scene selected"
+									}
+								]
 							})
 						],
 						
@@ -205,7 +231,54 @@ define(function(require) {
 						},
 
 						validateOnAction: {
-							'Open Built In': []
+							'Open Built In': ['Built Scene Selector']
+						}
+					},
+					{
+						name: 'Known Remote Scenes',
+						
+						fields: [
+							new dialogPagingField({
+								name: 'Known Remote Scene Selector',
+								itemsPerPage: 10,
+								data: function() {
+									return localStorageWrapper.getRemoteIdNames();
+								},
+								validations: [ 
+									{
+										check: function() {
+											return this.KnownRemoteSceneSelector();
+										},
+										
+										tip: "No scene selected"
+									}
+								]
+							})
+						],
+						
+						buttons: {
+							'Open Known Remote Scene': function () {
+								var name = this.KnownRemoteSceneSelector().match(/^(.*) => .*$/)[1];
+								var id = this.KnownRemoteSceneSelector().match(/^.* => (.*)$/)[1];
+								var remote = localStorageWrapper.getRemoteIdRemote(name, id);
+
+								var self = this;
+
+								levelRequester.getLevel(
+									remote + "/data/" + id,
+									function (data) {
+										sceneLoader.load(data);
+										sceneLoader.layout();
+										$(self).dialog('close');
+									},
+									function (error) {
+										$(self).dialog('option').showErrorFeedback('There was an error getting the scene');
+									});
+							}
+						},
+
+						validateOnAction: {
+							'Open Known Remote Scene': ['Known Remote Scene Selector']
 						}
 					}
 				]

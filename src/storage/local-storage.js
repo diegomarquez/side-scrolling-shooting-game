@@ -104,7 +104,7 @@ define(function(require) {
 				return key.search(regex) != -1;
 			});
 
-			return getItem.call(this, id[0]);
+			return 'http://' + getItem.call(this, id[0]);
 		},
 
 		getRemoteIdNames: function() {
