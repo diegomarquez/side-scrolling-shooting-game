@@ -122,7 +122,17 @@ define(function(require) {
 		removeRemoteId: function(name, id) {
 			var data = name + "@@" + id;
 
-			removeItem.call(this, data);
+			removeItem.call(this, data + "@@remote-id");
+		},
+
+		removeAllRemoteIds: function() {
+			var self = this;
+
+			return Object.keys(localStorage).filter(function(key) {
+				return key.search(/@@remote-id/) != -1;
+			}).forEach(function(key) {
+				removeItem.call(self, key);		
+			});
 		}
 	});
 

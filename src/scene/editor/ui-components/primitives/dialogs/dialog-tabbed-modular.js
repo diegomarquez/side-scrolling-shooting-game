@@ -107,7 +107,7 @@ define(function(require) {
 				});
 			}
 			
-			options.open = function() { 
+			options.open = function() {
 				$.each(options.tabs, function(index, tab) {
 					resetFeedback(tip, tab.fields, options);
 
@@ -115,6 +115,8 @@ define(function(require) {
 						field.open(dialog);
 					});
 				});
+
+				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
 			}
 			
 			options.create = function (event, ui) {

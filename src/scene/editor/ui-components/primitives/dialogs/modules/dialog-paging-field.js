@@ -177,6 +177,12 @@ define(function(require) {
 
 			if (this.options.data) {
 				this.update();
+
+				if (this.options.data().length === 0) {
+					this.disable();
+				} else {
+					this.enable();
+				}
 			}
 		},
 
