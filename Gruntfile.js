@@ -341,7 +341,7 @@ module.exports = function(grunt) {
   // This task opens index.html
   grunt.registerTask('run', ['open:index']);
   // Refreshes all the data before opening index.html
-  grunt.registerTask('refresh', ['css', 'asset-map-dev', 'open:index']);
+  grunt.registerTask('refresh', ['css', 'asset-map-dev', 'copy:vendor-to-lib', 'open:index']);
   
   // This task sets up the development environment
   grunt.registerTask('setup', ['shell:bower', 'framework', 'css', 'asset-map-dev', 'copy:vendor-to-lib']);
