@@ -7,72 +7,69 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
 
-  return function (name) {
-    var state = stateMachineFactory.createState(this, name);
+  	return function (name) {
+    	var state = stateMachineFactory.createState(this, name);
 
-    state.addStartAction(function (args) {
-    	// Clear update groups and viewports before doing anything else
-    	gb.groups.removeAll();
-      	gb.viewports.removeAll();
-    });
+	    state.addStartAction(function (args) {
+	    	// Clear update groups and viewports before doing anything else
+	    	gb.groups.removeAll();
+	      	gb.viewports.removeAll();
+	    });
 
-	state.addStartAction(function (sceneName) {
-		scenePlayer.once(scenePlayer.ESCAPE, this, function () {
+		state.addStartAction(function (sceneName) {
+			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				});
 
-			loaderContainer.once(loaderContainer.CLOSE, this, function() {
-				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				loaderContainer.transition();
 			});
 
-			loaderContainer.transition();
-		});
+			// When the scene is completed successfully
+			scenePlayer.once(scenePlayer.EXIT, this, function () {	
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				});
 
-		// When the scene is completed successfully
-		scenePlayer.once(scenePlayer.EXIT, this, function () {
-			
-			loaderContainer.once(loaderContainer.CLOSE, this, function() {
-				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				loaderContainer.transition();
 			});
 
-			loaderContainer.transition();
-		});
+			// When the scene is failed
+			scenePlayer.once(scenePlayer.FAILURE, this, function () {
+				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				});
 
-		// When the scene is failed
-		scenePlayer.once(scenePlayer.FAILURE, this, function () {
-
-			loaderContainer.once(loaderContainer.CLOSE, this, function() {
-				state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+				loaderContainer.transition();
 			});
 
-			loaderContainer.transition();
+			// Wait for the loader to complete a transition before playing the scene
+			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
+				scenePlayer.start();	
+			});
+
+			// Load the scene
+			scenePlayer.create(JSON.parse(localStorageWrapper.getScene(sceneName)));
 		});
 
-		// Wait for the loader to complete a transition before playing the scene
-		loaderContainer.once(loaderContainer.TRANSITION, this, function() {
-			scenePlayer.start();	
+		state.addUpdateAction(function (delta) {
+			viewportFollow.update(delta);
 		});
 
-		// Load the scene
-		scenePlayer.create(JSON.parse(localStorageWrapper.getScene(sceneName)));
-	});
+	    state.addCompleteAction(function (args) {
+	      	// Signal that pools and the instances they hold should be cleared
+	    	gb.reclaimer.clearAllObjectsFromPools().now();
+	    	gb.reclaimer.clearAllPools().now();
 
-	state.addUpdateAction(function (delta) {
-		viewportFollow.update(delta);
-	});
+		  	// Clean up the scene player    	
+			scenePlayer.cleanUp();
 
-    state.addCompleteAction(function (args) {
-      	// Signal that pools and the instances they hold should be cleared
-    	gb.reclaimer.clearAllObjectsFromPools().now();
-    	gb.reclaimer.clearAllPools().now();
+			// Clean up loader events
+			loaderContainer.hardCleanUp();
+	    });
 
-	  	// Clean up the scene player    	
-		scenePlayer.cleanUp();
-
-		// Clean up loader events
-		loaderContainer.hardCleanUp();
-    });
-
-    return state;
-  };
+    	return state;
+  	};
 });   
 
   

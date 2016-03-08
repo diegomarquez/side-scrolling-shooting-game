@@ -7,17 +7,17 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
 
-  return function (name) {
-    var state = stateMachineFactory.createState(this, name);
+  	return function (name) {
+		var state = stateMachineFactory.createState(this, name);
 
-    state.addStartAction(function (args) {
-    	// Clear update groups and viewports before doing anything else
-    	gb.groups.removeAll();
-      gb.viewports.removeAll();
+		state.addStartAction(function (args) {
+			// Clear update groups and viewports before doing anything else
+			gb.groups.removeAll();
+		  	gb.viewports.removeAll();
 
-      // Add extensions
-	    gb.game.add_extension(require("center-canvas"));
-    });
+		  	// Add extensions
+		    gb.game.add_extension(require("center-canvas"));
+		});
 
 		state.addStartAction(function (args) {
 			var previewScene = JSON.parse(localStorageWrapper.getPreviewScene());
@@ -45,17 +45,17 @@ define(function(require) {
 			viewportFollow.update(delta);
 		});
 
-    state.addCompleteAction(function (args) {
-      // Signal that pools and the instances they hold should be cleared
-    	gb.reclaimer.clearAllObjectsFromPools().now();
-    	gb.reclaimer.clearAllPools().now();
+    	state.addCompleteAction(function (args) {
+      		// Signal that pools and the instances they hold should be cleared
+    		gb.reclaimer.clearAllObjectsFromPools().now();
+    		gb.reclaimer.clearAllPools().now();
 
-	  	// Clean up the scene player    	
-		  scenePlayer.cleanUp();
-    });
+	  		// Clean up the scene player    	
+		  	scenePlayer.cleanUp();
+    	});
 
-    return state;
-  };
+    	return state;
+  	};
 });   
 
   
