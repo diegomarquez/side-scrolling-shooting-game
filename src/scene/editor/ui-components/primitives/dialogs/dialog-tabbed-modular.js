@@ -146,11 +146,13 @@ define(function(require) {
 			options.showLoadingFeedback = function() {
 				$(dialog).attr("disabled", true).addClass("ui-state-disabled");
 				$(dialog).css({ pointerEvents: 'none' });
+				$(dialog).parent().css({ pointerEvents: 'none' });
 			}
 
 			options.hideLoadingFeedback = function() {
 				$(dialog).attr("disabled", false).removeClass("ui-state-disabled");
 				$(dialog).css({ pointerEvents: 'all' });
+				$(dialog).parent().css({ pointerEvents: 'all' });
 			}
 
 			options.showErrorFeedback = function(message) {
