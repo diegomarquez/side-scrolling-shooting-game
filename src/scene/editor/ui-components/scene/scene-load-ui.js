@@ -49,10 +49,14 @@ define(function(require) {
 
 						buttons: {
 							'Open Local': function () {
-								var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
-								sceneLoader.load(JSON.parse(scene));
-								sceneLoader.layout();
-								$(this).dialog('close');
+								try {
+									var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
+									sceneLoader.load(JSON.parse(scene));
+									sceneLoader.layout();
+									$(this).dialog('close');
+								} catch (e) {
+									$(this).dialog('option').showErrorFeedback('Error opening scene.');
+								}
 							}
 						},
 
@@ -88,7 +92,7 @@ define(function(require) {
 										function (error) {
 											$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
 											$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', []);
-											$(self).dialog('option').showErrorFeedback('There was an error getting more scenes');
+											$(self).dialog('option').showErrorFeedback('Error getting more scenes.');
 											$(self).dialog('option').hideLoadingFeedback();
 										}
 									);
@@ -151,13 +155,18 @@ define(function(require) {
 								levelRequester.getLevel(
 									this.RemoteInput() + "/data/" + sceneRemoteId,
 									function (data) {
-										sceneLoader.load(data);
-										sceneLoader.layout();
-										$(self).dialog('close');
+										try {
+											sceneLoader.load(data);
+											sceneLoader.layout();
+											$(self).dialog('close');
+										} catch (e) {
+											$(self).dialog('option').showErrorFeedback('Error opening scene.');
+										}
 									},
 									function (error) {
-										$(self).dialog('option').showErrorFeedback('There was an error getting the scene');
-									});
+										$(self).dialog('option').showErrorFeedback('Error opening scene.');
+									}
+								);
 							},
 
 							'Connect With Remote': function() {           
@@ -186,7 +195,7 @@ define(function(require) {
 									},
 									function (error) {
 										$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
-										$(self).dialog('option').showErrorFeedback('There was an error connecting to the remote');
+										$(self).dialog('option').showErrorFeedback('Error connecting to the remote.');
 										$(self).dialog('option').hideLoadingFeedback();
 									}
 								);
@@ -223,10 +232,14 @@ define(function(require) {
 						
 						buttons: {
 							'Open Built In': function () {
-								var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
-								sceneLoader.load(scene);
-								sceneLoader.layout();
-								$(this).dialog('close');
+								try {
+									var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
+									sceneLoader.load(scene);
+									sceneLoader.layout();
+									$(this).dialog('close');	
+								} catch (e) {
+									$(self).dialog('option').showErrorFeedback('Error opening scene.');
+								}
 							}
 						},
 
@@ -267,13 +280,18 @@ define(function(require) {
 								levelRequester.getLevel(
 									remote + "/data/" + id,
 									function (data) {
-										sceneLoader.load(data);
-										sceneLoader.layout();
-										$(self).dialog('close');
+										try {
+											sceneLoader.load(data);
+											sceneLoader.layout();
+											$(self).dialog('close');
+										} catch (e) {
+											$(self).dialog('option').showErrorFeedback('Error opening scene.');
+										}
 									},
 									function (error) {
-										$(self).dialog('option').showErrorFeedback('There was an error getting the scene');
-									});
+										$(self).dialog('option').showErrorFeedback('Error opening scene.');
+									}
+								);
 							}
 						},
 

@@ -19,105 +19,109 @@ define(function(require) {
 		},
 
 		serialize: function(sceneName) {
-			// Serialize Game Objects
-			var gos = [];
+			try {
+				// Serialize Game Objects
+				var gos = [];
 
-			for (var i = 0; i < this.serializableObjects.length; i++) {
-				var go = this.serializableObjects[i];
+				for (var i = 0; i < this.serializableObjects.length; i++) {
+					var go = this.serializableObjects[i];
 
-				// Basic serialization information
-				var goToSerialize = {
-					"id": go.typeId,
-					"g": go.getUpdateGroup(),
-					"v": go.getViewportList(),
-					"x": go.x,
-					"y": go.y 
-				} 
+					// Basic serialization information
+					var goToSerialize = {
+						"id": go.typeId,
+						"g": go.getUpdateGroup(),
+						"v": go.getViewportList(),
+						"x": go.x,
+						"y": go.y 
+					} 
 
-				if (go.hasStructuralChanges()) {
-					// Game object with structural changes are serialized entirely to ensure they can be reconstructed
-					goToSerialize["properties"] = serializeGameObject(go);
-					goToSerialize["hasStructuralChanges"] = true;
-				} else {
-					// Game Objects with no structural changes can afford to only store changes
-					goToSerialize["properties"] = serializeGameObjectDifference(go);
-					goToSerialize["hasStructuralChanges"] = false;
+					if (go.hasStructuralChanges()) {
+						// Game object with structural changes are serialized entirely to ensure they can be reconstructed
+						goToSerialize["properties"] = serializeGameObject(go);
+						goToSerialize["hasStructuralChanges"] = true;
+					} else {
+						// Game Objects with no structural changes can afford to only store changes
+						goToSerialize["properties"] = serializeGameObjectDifference(go);
+						goToSerialize["hasStructuralChanges"] = false;
+					}
+
+					gos.push(goToSerialize);
 				}
 
-				gos.push(goToSerialize);
-			}
+				// Serialize Update Groups
+				var groups = gb.groups.allGroupNames();
 
-			// Serialize Update Groups
-			var groups = gb.groups.allGroupNames();
+				// Serialize viewports
+				var vs = [];
 
-			// Serialize viewports
-			var vs = [];
+				var allViewports = editorConfig.getViewports();
 
-			var allViewports = editorConfig.getViewports();
+				for (i = 0; i < allViewports.length; i++) {
+					var v = allViewports[i];
 
-			for (i = 0; i < allViewports.length; i++) {
-				var v = allViewports[i];
+					vs.push({
+						"name": v.name,
+						"width": v.Width,
+						"height": v.Height,
+						"offsetX": v.OffsetX,
+						"offsetY": v.OffsetY, 
+						"scaleX": v.ScaleX,
+						"scaleY": v.ScaleY,
+						"stroke": v.getStroke(),
+						"worldFit": v.WorldFit,
+						"layers": editorConfig.getViewportLayers(v)
+					});
+				}      
 
-				vs.push({
-					"name": v.name,
-					"width": v.Width,
-					"height": v.Height,
-					"offsetX": v.OffsetX,
-					"offsetY": v.OffsetY, 
-					"scaleX": v.ScaleX,
-					"scaleY": v.ScaleY,
-					"stroke": v.getStroke(),
-					"worldFit": v.WorldFit,
-					"layers": editorConfig.getViewportLayers(v)
-				});
-			}      
-
-			// Build the object that will actually be serialized into a JSON string
-			var scene = {
-				"name": sceneName,
-				"objects": gos,
-				"groups": groups,
-				"viewports": vs,
-				"goConfig": getConfigurationObjectsToSerialize(gb.goPool),
-				"coConfig": getConfigurationObjectsToSerialize(gb.coPool),
-				"world": {
-					"width": world.getWidth(),
-					"height": world.getHeight()
+				// Build the object that will actually be serialized into a JSON string
+				var scene = {
+					"name": sceneName,
+					"objects": gos,
+					"groups": groups,
+					"viewports": vs,
+					"goConfig": getConfigurationObjectsToSerialize(gb.goPool),
+					"coConfig": getConfigurationObjectsToSerialize(gb.coPool),
+					"world": {
+						"width": world.getWidth(),
+						"height": world.getHeight()
+					}
 				}
-			}
 
-			// Remove empty objects and null properties during the serialization
-			// Also remove complex objects that don't need to be serialized
-			return JSON.stringify(scene, function (key, value) {
-				if (util.isObject(value)) {
-					// Filter out objects with no properties
-					for (var k in value) {
-						if (util.isObject(value[k])) {
-							if (Object.keys(value[k]).length == 0) {
-								delete value[k];
-							} 
+				// Remove empty objects and null properties during the serialization
+				// Also remove complex objects that don't need to be serialized
+				return JSON.stringify(scene, function (key, value) {
+					if (util.isObject(value)) {
+						// Filter out objects with no properties
+						for (var k in value) {
+							if (util.isObject(value[k])) {
+								if (Object.keys(value[k]).length == 0) {
+									delete value[k];
+								} 
+							}
+						}
+
+						// If after the filtering there are no properties left in the object, ignore it
+						if (Object.keys(value).length == 0) {
+							return undefined; 
+						}
+					} 
+
+					if (util.isArray(value)) {
+						if (value.length == 0) {
+							return undefined;
 						}
 					}
 
-					// If after the filtering there are no properties left in the object, ignore it
-					if (Object.keys(value).length == 0) {
-						return undefined; 
-					}
-				} 
-
-				if (util.isArray(value)) {
-					if (value.length == 0) {
+					// Null properties are ignored
+					if (value === null) {
 						return undefined;
 					}
-				}
 
-				// Null properties are ignored
-				if (value === null) {
-					return undefined;
-				}
-
-				return value;
-			});
+					return value;
+				});
+			} catch (e) {
+				return false;
+			}
 		}
 	});
 

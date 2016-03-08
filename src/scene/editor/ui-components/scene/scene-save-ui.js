@@ -131,10 +131,18 @@ define(function(require) {
 	var serializeAndStoreLocal = function() {
 		var name = this.LocalSceneName();
 
-		if (localStorageWrapper.setScene(name, sceneSerializer.serialize(name))) {
+		var serializedScene = sceneSerializer.serialize(name);
+
+		if (serializedScene === false) {
+			$(self).dialog('option').showErrorFeedback('Error saving then scene.');
+
+			return;
+		}
+
+		if (localStorageWrapper.setScene(name, serializedScene)) {
 			$(this).dialog('close');
 		} else {
-			$(self).dialog('option').showErrorFeedback('No more space in local storage. Delete scenes to free up space.');
+			$(self).dialog('option').showErrorFeedback('No more space in local storage.');
 		}
 
 		sceneName.set(name);
@@ -145,6 +153,12 @@ define(function(require) {
 
 		var serializedScene = sceneSerializer.serialize(this.RemoteSceneName()); 
 		
+		if (serializedScene === false) {
+			$(self).dialog('option').showErrorFeedback('Error saving the scene.');
+
+			return;
+		}
+
 		levelRequester.post(serializedScene, this.RemoteUrl() + '/add',
 			function (successResult) {
 				$(self).dialog('close');
@@ -154,8 +168,10 @@ define(function(require) {
 				localStorageWrapper.setRemoteId(response.name, response.id, response.remote);
 			},
 			function (failureResult) {
-				$(self).dialog('option').showErrorFeedback('There was an error posting to the remote');
+				$(self).dialog('option').showErrorFeedback('Error posting to the remote.');
 			});
+
+		sceneName.set(name);
 	}
 
 	var validateURL = function(url) {
