@@ -1,7 +1,6 @@
 define(function(require) {
 	require('jquery');
 	require('jquery-ui');
-	require('jquery-selectBoxIt');
 	
 	require('bootstrap');
 	require('bootstrap-toogle');
