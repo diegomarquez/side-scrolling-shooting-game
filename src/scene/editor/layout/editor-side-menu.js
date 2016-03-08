@@ -111,8 +111,17 @@ define(function(require) {
 					var storage = require('local-storage');
 					var serializer = require('scene-serializer');
 
-					storage.setPreviewScene(serializer.serialize(require('scene-name').get()));
-					this.execute(this.PREVIEW); 
+					try {
+						storage.setPreviewScene(serializer.serialize(require('scene-name').get()));
+						this.execute(this.PREVIEW);
+					} catch (e) {
+						var logger = gb.game.get_extension(require('logger'));
+
+						logger.error('Error previewing the scene.');
+						logger.show();
+
+						setTimeout(logger.hide, 10000);
+					}
 				}.bind(this)
 			));
 
