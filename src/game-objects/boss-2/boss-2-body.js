@@ -168,14 +168,20 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		onBossStop: function() {
+			if (!this.renderer)
+				return;
+			
+			this.collider.enable();
+			
 			this.cleanUpRendererDelegates();
 			this.deActivate();
-
-			this.collider.enable();
 			this.closingAnimation();
 		},
 
 		closingAnimation: function() {
+			if (!this.renderer)
+				return;	
+			
 			if (this.renderer.isAtLabel('opened')) {
 				this.renderer.play('closing');
 				
@@ -268,7 +274,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.laserTimer.start();
 
 			if (this.laserAttackIndex < this.laserAttacks.length-1) {
-				this.laserAttackIndex++;	
+				this.laserAttackIndex++;
 			} else {
 				this.laserAttackIndex = 0;
 			}
@@ -335,7 +341,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 				});
 			}
 
-			this.closeTimer.start();			
+			this.closeTimer.start();
 
 			if (this.mineAttackIndex < this.mineAttacks.length-1) {
 				this.mineAttackIndex++;	
@@ -389,6 +395,9 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		cleanUpRendererDelegates: function() {
+			if (!this.renderer)
+				return;
+			
 			this.renderer.levelCleanUp("boss-2-renderer-handler");
 		}
 
