@@ -67,14 +67,16 @@ define(function(require) {
 					// Stop updating the logic of all the objects in the first group
 					gb.groups.stop_update('First');
 
-					// Stop following the player's ship mvement with the camera
+					// Stop following the player's ship movement with the camera
 					viewportFollow.unsetFollow('Main', player);
 
 					// Remove the player's ship from the first update group
 					gb.groups.get('First').remove(player);
 
+					// Start the player and all of it's children because they where stopped when calling stop_update
+					player.run();
 					// Put it in the second group so it continues updating.
-					gb.groups.get('Second').add(player);			
+					gb.groups.get('Second').add(player);		
 
 					this.blockEscape = true;
 

@@ -32,6 +32,16 @@ define(function(require) {
 				loaderContainer.transition();
 			});
 
+			// When the scene is completed successfully
+			scenePlayer.once(scenePlayer.EXIT, this, function () {
+				scenePlayer.enableEscape();	
+			});
+
+			// When the scene is failed
+			scenePlayer.once(scenePlayer.FAILURE, this, function () {
+				scenePlayer.enableEscape();
+			});
+
 			// Wait for the loader to complete a transition before playing the scene
 			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
 				scenePlayer.start();	

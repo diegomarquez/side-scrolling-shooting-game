@@ -145,6 +145,10 @@ define(function(require) {
 			this.execute(this.ESCAPE);
 		},
 
+		enableEscape: function() {
+			this.blockEscape = false;
+		},
+
 		setCompleteEvents: function() {
 			
 		},
