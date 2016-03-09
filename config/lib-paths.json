@@ -1,6 +1,6 @@
 {
 	"domready": "./lib/requirejs-domready/domReady",
-	"jquery": "./lib/jquery/dist/jquery",
+	"jquery": "./lib/jquery",
 	"jquery-transit": "./lib/jquery.transit/jquery.transit",
 	"bootstrap-toogle": "./lib/bootstrap-toggle/js/bootstrap2-toggle",
 	"jscrollpane": "./lib/jscrollpane/script/jquery.jscrollpane",
