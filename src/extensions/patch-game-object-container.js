@@ -19,10 +19,12 @@ define(function(require) {
 
 			oldDrawMethod = gameObjectContainer.prototype.draw;
 
+			var goPrototypeDraw = gameObject.prototype.draw;
+
 			gameObjectContainer.prototype.draw = function(context, viewport) {
 				// Draw only if inside the viewport and is allowed to be drawn
-				if (viewport.isGameObjectInside(this, context) && this.canDraw) {
-					gameObject.prototype.draw.call(this, context, viewport);	
+				if (this.canDraw && viewport.isGameObjectInside(this, context)) {
+					goPrototypeDraw.call(this, context, viewport);	
 				}
 
 				if(gb.debug && !this.skipDebug) {
@@ -59,7 +61,7 @@ define(function(require) {
 						// Try to skip drawing as soon as possible
 					
 						// Draw only if inside the viewport and is allowed to be drawn
-						if (viewport.isGameObjectInside(child, context) && child.canDraw) {
+						if (child.canDraw && viewport.isGameObjectInside(child, context)) {
 
 							// If there are options for this child, apply them
 							if (this.childrenOptions && this.childrenOptions[child.uid]) {
