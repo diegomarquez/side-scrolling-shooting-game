@@ -110,9 +110,13 @@ define(function(require) {
 			if (text) {
 				label.appendChild(document.createTextNode(text));
 				input.setAttribute("text", text);
+
+				$(input).attr("disabled", false).removeClass("ui-state-disabled");
 			} else {
 				label.appendChild(document.createTextNode("No Data"));
 				input.setAttribute("text", "no-data");
+
+				$(input).attr("disabled", true).addClass("ui-state-disabled");
 			}
 
 			label.style.fontWeight = "normal";

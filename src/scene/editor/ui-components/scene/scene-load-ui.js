@@ -3,6 +3,7 @@ define(function(require) {
 	var levelRequester = require('level-requester');
 	var levelCompressor = require('level-compressor');
 	var sceneLoader = require('editor-scene-loader');
+	var sceneSerializer = require('scene-serializer');
 
 	var dialogTabbedModular = require('dialog-tabbed-modular');
 	
@@ -49,12 +50,19 @@ define(function(require) {
 
 						buttons: {
 							'Open Local': function () {
+								// Store a backup of the current scene in case something goes wrong while loading the new one
+								localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
+
 								try {
 									var scene = localStorageWrapper.getScene(this.LocalSceneSelector());
 									sceneLoader.load(JSON.parse(scene));
 									sceneLoader.layout();
 									$(this).dialog('close');
 								} catch (e) {
+									// Restore the initial scene and show error feedback
+									sceneLoader.load(localStorageWrapper.getBackUpScene());
+									sceneLoader.layout();
+
 									$(this).dialog('option').showErrorFeedback('Error opening scene.');
 								}
 							}
@@ -152,6 +160,9 @@ define(function(require) {
 								var self = this;
 								var sceneRemoteId = this.RemoteSceneSelector().match(/=>\s+(.*?)$/)[1];
 
+								// Store a backup of the current scene in case something goes wrong while loading the new one
+								localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
+
 								levelRequester.getLevel(
 									this.RemoteInput() + "/data/" + sceneRemoteId,
 									function (data) {
@@ -160,6 +171,10 @@ define(function(require) {
 											sceneLoader.layout();
 											$(self).dialog('close');
 										} catch (e) {
+											// Restore the initial scene and show error feedback
+											sceneLoader.load(localStorageWrapper.getBackUpScene());
+											sceneLoader.layout();
+
 											$(self).dialog('option').showErrorFeedback('Error opening scene.');
 										}
 									},
@@ -232,12 +247,21 @@ define(function(require) {
 						
 						buttons: {
 							'Open Built In': function () {
+
+								// Store a backup of the current scene in case something goes wrong while loading the new one
+								localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
+
 								try {
 									var scene = require('level-storage').getLevelFromName(this.BuiltSceneSelector());
 									sceneLoader.load(scene);
 									sceneLoader.layout();
 									$(this).dialog('close');	
 								} catch (e) {
+
+									// Restore the initial scene and show error feedback
+									sceneLoader.load(localStorageWrapper.getBackUpScene());
+									sceneLoader.layout();
+
 									$(self).dialog('option').showErrorFeedback('Error opening scene.');
 								}
 							}
@@ -277,6 +301,9 @@ define(function(require) {
 
 								var self = this;
 
+								// Store a backup of the current scene in case something goes wrong while loading the new one
+								localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
+
 								levelRequester.getLevel(
 									remote + "/data/" + id,
 									function (data) {
@@ -285,6 +312,10 @@ define(function(require) {
 											sceneLoader.layout();
 											$(self).dialog('close');
 										} catch (e) {
+											// Restore the initial scene and show error feedback
+											sceneLoader.load(localStorageWrapper.getBackUpScene());
+											sceneLoader.layout();
+
 											$(self).dialog('option').showErrorFeedback('Error opening scene.');
 										}
 									},

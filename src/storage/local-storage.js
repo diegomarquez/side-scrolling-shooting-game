@@ -1,5 +1,6 @@
 define(function(require) {
 	var previewScene = null;
+	var backupScene = null;
 
 	var compresor = require('level-compressor');
 
@@ -34,7 +35,15 @@ define(function(require) {
 		},
 
 		getPreviewScene: function() {
-			return previewScene
+			return previewScene;
+		},
+
+		setBackUpScene: function(backUp) {
+			backUpScene = backUp;
+		},
+
+		getBackUpScene: function() {
+			return backUpScene;
 		},
 
 		removeScene: function (key) {

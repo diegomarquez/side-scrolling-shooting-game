@@ -11,6 +11,10 @@ define(function(require) {
 	    load: function(scene) {
 	    	var s;
 
+	    	if (!scene) {
+	    		throw new Error('missing scene');
+	    	}
+
 	    	if (util.isString(scene)) {
 	    		s = JSON.parse(scene);
 	    	}
@@ -29,7 +33,7 @@ define(function(require) {
 			this.layout = function() {
 				this.addGameObjects(s);
 				this.execute(this.LOAD_COMPLETE);
-			}.bind(this)
+			}.bind(this);
 	    },
 
 	    cleanUp: function () {

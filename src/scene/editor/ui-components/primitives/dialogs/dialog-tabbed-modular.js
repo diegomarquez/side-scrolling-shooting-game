@@ -48,6 +48,10 @@ define(function(require) {
 				$(tabContent).append(form);
 				$(form).append(fieldset);
 
+				$(form).css({
+					'padding': '2px'
+				});
+
 				var fields = tab.fields;
 
 				fieldObjects[tab.name] = {};
