@@ -16,6 +16,7 @@ define(function(require) {
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
+	var controlObjectsNameAliases = null;
 	var draggableOnlyObjects = null;
 	var controlGizmoGameObjects = null;
 	var colliderGizmoGameObjects = null;
@@ -225,8 +226,8 @@ define(function(require) {
 				'start-position-up',
 				'start-position-down',
 				'scroll-stopper',
-				'absolute-scroll-stopper',
-				'boss-warning',		
+				'boss-scroll-stopper',
+				'warning-sign',		
 				'direction-right',
 				'direction-left',
 				'direction-up',
@@ -246,6 +247,18 @@ define(function(require) {
 			];
 
 			return controlObjects;
+		},
+
+		getControlObjectOriginalName: function(name) {
+			if (!controlObjectsNameAliases) {
+				controlObjectsNameAliases = {
+					'boss-scroll-stopper': 'scroll-stopper',
+					'scroll-stopper': 'absolute-scroll-stopper',
+					'warning-sign': 'boss-warning' 
+				}
+			}
+
+			return controlObjectsNameAliases[name] ? controlObjectsNameAliases[name] : name;
 		},
 
 		getDraggableOnlyObjects: function() {

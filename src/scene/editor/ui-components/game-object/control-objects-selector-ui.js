@@ -25,7 +25,8 @@ define(function(require) {
 					return require('editor-config').getControlObjects();
 				},
 				onClick: function(controlObjectName) {
-					
+					controlObjectName = require('editor-config').getControlObjectOriginalName(controlObjectName);
+
 					if (self.hasStartPosition === null) {
 						self.hasStartPosition = !!root.findChildren().recurse().firstWithType("StartPosition");
 					}
