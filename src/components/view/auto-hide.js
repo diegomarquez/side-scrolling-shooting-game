@@ -5,7 +5,7 @@ define(["editor-component", "gb"], function(Component, Gb) {
 		},
 
 		editorStart: function(parent) {
-			this.parent.hide();
+			this.parent.alpha = 0;
 		}
 	});
 
