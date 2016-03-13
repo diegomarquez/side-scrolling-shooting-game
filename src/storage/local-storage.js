@@ -31,24 +31,24 @@ define(function(require) {
 			return compresor.decompress(data);
 		},
 
-		setPreviewScene: function(preview) {
-			previewScene = preview;
+		setPreviewScene: function(scene) {
+			previewScene = scene;
 		},
 
 		getPreviewScene: function() {
 			return previewScene;
 		},
 
-		setBackUpScene: function(backUp) {
-			backUpScene = backUp;
+		setBackUpScene: function(scene) {
+			backUpScene = scene;
 		},
 
 		getBackUpScene: function() {
 			return backUpScene;
 		},
 
-		setUrlScene: function(urlScene) {
-			urlScene = urlScene;
+		setUrlScene: function(scene) {
+			urlScene = scene;
 		},
 
 		getUrlScene: function() {

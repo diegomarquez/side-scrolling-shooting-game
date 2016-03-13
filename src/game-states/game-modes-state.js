@@ -3,6 +3,7 @@ define(function(require) {
 	
 	var gb = require("gb");
 	var levelStorage = require("level-storage");
+	var localStorageWrapper = require("local-storage");
 
 	// Built in levels state machine
 	var playerStateMachine = stateMachineFactory.createFixedStateMachine();
@@ -51,7 +52,11 @@ define(function(require) {
 			if (mode === "edit-mode") {
 				currentStateMachine = editorStateMachine;
 
-				currentStateMachine.start(levelStorage.getLevel(0));
+				if (localStorageWrapper.getUrlScene()) {
+					currentStateMachine.start(JSON.parse(localStorageWrapper.getUrlScene()));
+				} else {
+					currentStateMachine.start(levelStorage.getLevel(0));	
+				}
 
 				var sceneEditor = currentStateMachine.get("scene_editor_state");
 				

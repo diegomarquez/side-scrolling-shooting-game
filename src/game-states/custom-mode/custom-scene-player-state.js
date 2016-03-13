@@ -6,6 +6,7 @@ define(function(require) {
 	var scenePlayer = require('game-scene-player');
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
+	var util = require('util');
 
   	return function (name) {
     	var state = stateMachineFactory.createState(this, name);
@@ -16,7 +17,7 @@ define(function(require) {
 	      	gb.viewports.removeAll();
 	    });
 
-		state.addStartAction(function (sceneName) {
+		state.addStartAction(function (scene) {
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
@@ -48,8 +49,14 @@ define(function(require) {
 				scenePlayer.start();	
 			});
 
-			// Load the scene
-			scenePlayer.create(JSON.parse(localStorageWrapper.getScene(sceneName)));
+			// Load the scene from a string or from an object
+			if (util.isString(scene)) {
+				scenePlayer.create(JSON.parse(localStorageWrapper.getScene(scene)));
+			} else {
+				debugger;
+
+				scenePlayer.create(scene);
+			}
 		});
 
 		state.addUpdateAction(function (delta) {
