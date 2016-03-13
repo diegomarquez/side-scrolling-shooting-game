@@ -33,6 +33,31 @@ define(function(require) {
 		return isValid;
 	};
 
+	LevelRequester.prototype.pingRemoteAsync = function(remote, success, failure) {
+		var x = new XMLHttpRequest();
+	    
+		x.onload = function (e) {
+			if (x.readyState === 4) {
+				if (x.status === 200) {
+					success();
+				} else {
+					failure();
+				}
+			}
+		};
+
+		x.onerror = function (e) {
+			failure();
+		};
+
+		try {
+			x.open("GET", remote, true);
+			x.send();
+		} catch (e) {
+			failure();			
+		}
+	};
+
 	LevelRequester.prototype.get = function(remote, success, failure) {
 		var x = new XMLHttpRequest();
 	    

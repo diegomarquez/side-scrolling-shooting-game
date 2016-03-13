@@ -3,6 +3,7 @@
 define(function(require){
 	var gb = require('gb');
 	var loaderContainer = require('loader-container');
+	var queryString = require('query-string');
 
 	var game = gb.game;
 
@@ -22,19 +23,47 @@ define(function(require){
 	mainStateMachine.add((require('splash-state'))('splash_state'));
 	mainStateMachine.add((require('game-modes-state'))('game_modes_state'));
 
-	// This is the main initialization function
-	game.on(game.CREATE, this, function() {
-		// Start the main state machine
-		mainStateMachine.start();
-		// Open the loader
-		loaderContainer.open();
-	});
+	// Execute when there is scene information in the url
+	function urlStartUp(scene) {
+		game.once(game.CREATE, this, function() {
+			try {
+				// Start in the game modes state, in the url loading mode
+				mainStateMachine.start({ mode: 'url-mode', data: scene }, 1);
+			} catch (e) {
+				// Should there be any problems, fallback to the regular initialization
+				
+				// Start in the splash state
+				mainStateMachine.start();
+				// Open the loader
+				loaderContainer.open();
 
-	// This is the main update loop
-	game.on(game.UPDATE, this, function (delta) {
-		mainStateMachine.update(delta);
-	});
+				return;
+			}
+		});
 
-	// This is the main setup that kicks off the whole thing
-	game.create();
+		game.on(game.UPDATE, this, function (delta) {
+			mainStateMachine.update(delta);
+		});
+
+		game.create();
+	}
+
+	// Execute when scene infromation could not be found in the url
+	function basicStartUp () {
+		game.on(game.CREATE, this, function() {
+			// Start in the splash state
+			mainStateMachine.start();
+			// Open the loader
+			loaderContainer.open();
+		});
+
+		game.on(game.UPDATE, this, function (delta) {
+			mainStateMachine.update(delta);
+		});
+
+		game.create();	
+	}
+
+	// Choose a start up routine according to what is found in the query string
+	queryString.hasScene(urlStartUp, basicStartUp);
 });

@@ -1,4 +1,6 @@
-define(function() {
+define(function(require) {
+
+	var levelRequester = require("level-requester");
 
 	var firstStartInEditorBasicCall = true;
 	var firstStartInEditorAdvancedCall = true;
@@ -43,6 +45,41 @@ define(function() {
 			}
 
 			return false;
+		},
+
+		hasScene: function(success, failure) {
+			if (!window.location.search) {
+				failure();
+
+				return;
+			}
+
+			var sceneMatch = window.location.search.match(/[?&]?url=(.*?)@(.*?)$/);
+
+			if (!sceneMatch) {
+				failure();
+
+				return;
+			}
+
+			var id = sceneMatch[1];
+			var remote = sceneMatch[2];
+
+			if (!id || !remote) {
+				failure();
+
+				return;
+			}
+
+			var fullRemoteUrl = remote + '/data/' + id;
+
+			if (fullRemoteUrl.search(/^http:\/\//) === -1) {
+				fullRemoteUrl = 'http://' + fullRemoteUrl;
+			}
+			
+			levelRequester.pingRemoteAsync(fullRemoteUrl, function() {
+				levelRequester.getLevel(fullRemoteUrl, success, failure);
+			}, failure);
 		}
 	}
 });

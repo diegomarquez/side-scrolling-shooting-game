@@ -22,64 +22,83 @@ define(function(require) {
 	customStateMachine.add((require("custom-stage-select-state"))("custom_stage_select_state"));
 	customStateMachine.add((require("custom-scene-player-state"))("custom_scene_player_state"));
 
-  return function (name) {
-    var state = stateMachineFactory.createState(this, name);
+	// Play scene from url state
+	var urlStateMachine = stateMachineFactory.createFixedStateMachine();
+	
+	urlStateMachine.add((require("url-scene-player-state"))("url_scene_player_state"));
 
-    var currentStateMachine = null;
+	return function (name) {
+		var state = stateMachineFactory.createState(this, name);
 
-    state.addStartAction(function (args) {
-    	if (args == "play-mode") {
-    		currentStateMachine = playerStateMachine;
+		var currentStateMachine = null;
 
-    		currentStateMachine.start();
+		state.addStartAction(function (args) {
+			var mode = args.mode ? args.mode : args;
 
-    		var stageOverview = currentStateMachine.get("stage_overview_state");
+			if (mode === "play-mode") {
+				currentStateMachine = playerStateMachine;
 
-    		stageOverview.once(stageOverview.BACK, this, function() {
-    			currentStateMachine.finish();	
-    			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		});
-    	}
+				currentStateMachine.start();
 
-    	if (args == "edit-mode") {
-    		currentStateMachine = editorStateMachine;
+				var stageOverview = currentStateMachine.get("stage_overview_state");
 
-    		currentStateMachine.start(levelStorage.getLevel(0));
+				stageOverview.once(stageOverview.BACK, this, function() {
+					currentStateMachine.finish();   
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				});
+			}
 
-    		var sceneEditor = currentStateMachine.get("scene_editor_state");
-    		var sceneEditorPreview = currentStateMachine.get("scene_editor_player_state");
+			if (mode === "edit-mode") {
+				currentStateMachine = editorStateMachine;
 
-    		sceneEditor.once(sceneEditor.BACK, this, function() {
-    			currentStateMachine.finish();
-    			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		});
-    	}
+				currentStateMachine.start(levelStorage.getLevel(0));
 
-    	if (args == "custom-mode") {
-    		currentStateMachine = customStateMachine;
+				var sceneEditor = currentStateMachine.get("scene_editor_state");
+				
+				sceneEditor.once(sceneEditor.BACK, this, function() {
+					currentStateMachine.finish();
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				});
+			}
 
-    		currentStateMachine.start();
+			if (mode === "custom-mode") {
+				currentStateMachine = customStateMachine;
 
-    		var customStageSelect = currentStateMachine.get("custom_stage_select_state");
+				currentStateMachine.start();
 
-    		customStageSelect.once(customStageSelect.BACK, this, function() {
-    			currentStateMachine.finish();
-    			state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
-    		});
-    	}
-    });
+				var customStageSelect = currentStateMachine.get("custom_stage_select_state");
 
-    state.addUpdateAction(function (delta) {
-    	currentStateMachine.update(delta);
-    });
+				customStageSelect.once(customStageSelect.BACK, this, function() {
+					currentStateMachine.finish();
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				});
+			}
 
-    state.addCompleteAction(function (args) {
-    	gb.reclaimer.clearAllObjectsFromPools().now();
-    	gb.reclaimer.clearAllPools().now();
-    });
+			if (mode === "url-mode") {
+				currentStateMachine = urlStateMachine;
 
-    return state;
-  };
-});   
+				currentStateMachine.start(args.data);
 
-  
+				var urlPlayer = currentStateMachine.get("url_scene_player_state");
+
+				urlPlayer.once(urlPlayer.BACK, this, function() {
+					currentStateMachine.finish();
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
+				});
+			}
+		});
+
+		state.addUpdateAction(function (delta) {
+			currentStateMachine.update(delta);
+		});
+
+		state.addCompleteAction(function (args) {
+			gb.reclaimer.clearAllObjectsFromPools().now();
+			gb.reclaimer.clearAllPools().now();
+		});
+
+		return state;
+	};
+});
+
+		
