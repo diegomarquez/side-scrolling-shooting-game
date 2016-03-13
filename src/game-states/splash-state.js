@@ -38,10 +38,11 @@ define(function(require) {
 			if (!document.getElementById('main-player-container')) {
 				this.mainContainer = document.createElement('div');
 				this.mainContainer.id = 'main-player-container';
-				document.body.appendChild(this.mainContainer);
-				canvasContainer.detachCanvas();
-				this.mainContainer.appendChild(canvasContainer.getCanvasContainer());   
+				document.body.appendChild(this.mainContainer);	   
 			}
+
+			canvasContainer.detachCanvas();
+			document.getElementById('main-player-container').appendChild(canvasContainer.getCanvasContainer());
 				
 			if (loaderContainer.isOpen()) {
 				// If the loader is already open, do the splash animation
@@ -63,7 +64,7 @@ define(function(require) {
 			gb.reclaimer.clearAllPools().now();
 
 			// If the next state is the scene editor ...
-			if (args == 'edit-mode') {    
+			if (args === 'edit-mode') {
 				// Save the canvas for later use
 				canvasContainer.detachCanvas();
 				// Remove the canvas container from the DOM

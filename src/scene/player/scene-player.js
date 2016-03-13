@@ -106,10 +106,11 @@ define(function(require) {
 		    if (!this.mainContainer) {
 		    	this.mainContainer = document.createElement('div');
 				this.mainContainer.id = 'main-player-container';
-				document.body.appendChild(this.mainContainer);
-				canvasContainer.detachCanvas();
-				this.mainContainer.appendChild(canvasContainer.getCanvasContainer());	
+				document.body.appendChild(this.mainContainer);	
 		    }
+
+		    canvasContainer.detachCanvas();
+			this.mainContainer.appendChild(canvasContainer.getCanvasContainer());
 		},
 
 		requiredViewports: function() {
