@@ -89,7 +89,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 		}
 
 		if (this.edit.selected) {
-			if (Keyboard.isKeyDown(Keyboard.CTRL) && Keyboard.isKeyDown(Keyboard.ALT)) {
+			if (Keyboard.isKeyDown(Keyboard.P) && Keyboard.isKeyDown(Keyboard.O) && Keyboard.isKeyDown(Keyboard.I)) {
 				this.execute(this.EDIT, true);
 			} else {
 				this.execute(this.EDIT, false);	
