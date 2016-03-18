@@ -397,6 +397,33 @@ module.exports = function(grunt) {
     	'asset-map-dev'
     ]);
 
+    // Builds a development release, no minification
+    grunt.registerTask('build-dev-no-jquery', [
+    	'clean:build-dev', 
+    	'css', 
+    	'asset-map-dev',
+    	'make-dir:build-dev',
+    	'copy:dev',
+    	'asset-map-build-dev', 
+    	'requirejs:dev', 
+    	'create-build-index:dev',
+    	'asset-map-dev'
+    ]);
+
+    // Builds a production release, js and css minified
+    grunt.registerTask('build-prod-no-jquery', [
+    	'clean:build-prod', 
+    	'css', 
+    	'asset-map-dev',
+    	'make-dir:build-prod', 
+    	'copy:prod', 
+    	'asset-map-build-prod',  
+    	'requirejs:prod', 
+    	'create-build-index:prod', 
+    	'cssmin',
+    	'asset-map-dev'
+    ]);
+
     // Default task setups for development
     grunt.registerTask('default', ['setup']);
 };
