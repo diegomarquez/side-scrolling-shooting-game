@@ -237,9 +237,13 @@ define(function(require) {
     			if (text) {
 					label.append(document.createTextNode(text));
 					input.attr("text", text);
+
+					$(input).attr("disabled", false).removeClass("ui-state-disabled");
 				} else {
 					label.append(document.createTextNode("No Data"));
 					input.attr("text", "no-data");
+
+					$(input).attr("disabled", true).addClass("ui-state-disabled");
 				}
 
 				input.prop('checked', false);
