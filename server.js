@@ -16,7 +16,7 @@ app.use(cors());
 app.use(connectRoute(function (router) {
 	router.get('/', function (req, res, next) {
 		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.end('Hi!');  
+		res.end('spacemaze-scene-store-available'); 
 	});
 
 	router.post('/add/', function (req, res, next) {

@@ -12,7 +12,11 @@ define(function(require) {
 		x.onload = function (e) {
 			if (x.readyState === 4) {
 				if (x.status === 200) {
-					isValid = true;
+					if (x.responseText === "spacemaze-scene-store-available") {
+						isValid = true;
+					} else {
+						isValid = false;
+					}
 				} else {
 					isValid = false;
 				}
@@ -39,7 +43,11 @@ define(function(require) {
 		x.onload = function (e) {
 			if (x.readyState === 4) {
 				if (x.status === 200) {
-					success();
+					if (x.responseText === "spacemaze-scene-store-available") {
+						success();
+					} else {
+						failure();
+					}
 				} else {
 					failure();
 				}
