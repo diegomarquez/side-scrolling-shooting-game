@@ -49,36 +49,36 @@ define(function(require) {
 
 		hasScene: function(success, failure) {
 			if (!window.location.search) {
-				failure();
-
 				return;
 			}
 
 			var sceneMatch = window.location.search.match(/[?&]?url=(.*?)@(.*?)$/);
 
 			if (!sceneMatch) {
-				failure();
-
 				return;
 			}
 
 			var id = sceneMatch[1];
 			var remote = sceneMatch[2];
 
-			if (!id || !remote) {
-				failure();
-
+			if (!id) {
 				return;
 			}
 
-			var fullRemoteUrl = remote + '/data/' + id;
-
-			if (fullRemoteUrl.search(/^http:\/\//) === -1) {
-				fullRemoteUrl = 'http://' + fullRemoteUrl;
+			if (!remote) {
+				return;
 			}
+
+			var remoteBaseUrl = remote;
 			
-			levelRequester.pingRemoteAsync(fullRemoteUrl, function() {
-				levelRequester.getLevel(fullRemoteUrl, success, failure);
+			if (remote.search(/^http:\/\//) === -1) {
+				remoteBaseUrl = 'http://' + remote;
+			}
+
+			var remoteDataUrl = remoteBaseUrl + '/data/' + id;
+
+			levelRequester.pingRemoteAsync(remoteBaseUrl, function() {
+				levelRequester.getLevel(remoteDataUrl, success, failure);
 			}, failure);
 		}
 	}
