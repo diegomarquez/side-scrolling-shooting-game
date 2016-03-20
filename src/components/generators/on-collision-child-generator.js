@@ -4,6 +4,7 @@ define(["child-generator"], function(ChildGenerator) {
 			this._super();
 
 			this.excludeFromCollision = '';
+			this.self = OnCollisionChildGenerator;
 		},
 
 		editorStart: function(parent) {
@@ -18,12 +19,11 @@ define(["child-generator"], function(ChildGenerator) {
 	});
 
 	var onCollide = function (other, response) {
-
 		if (other.typeId === this.excludeFromCollision)
 			return;
 		
-		OnCollisionChildGenerator.args['vector'] = response.overlapV;
-		this.spray(OnCollisionChildGenerator.args);
+		this.self.args['vector'] = response.overlapV;
+		this.spray(this.self.args);
 	}
 
 	OnCollisionChildGenerator.args = {

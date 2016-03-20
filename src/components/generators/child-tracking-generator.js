@@ -13,6 +13,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime = null;
 			this.createdObjects = [];
 			this.stopped = false;
+
+			this.self = ChildTrackingGenerator;
+			this.gb = Gb;
 		},
 
 		editorStart: function(parent) {
@@ -26,7 +29,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime += delta;
 
 			if (this.delayTime >= this.sprayDelay) {
-				this.spray(ChildTrackingGenerator.args);
+				this.spray(this.self.args);
 				this.delayTime = 0;
 			}
 		},
@@ -60,7 +63,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							}	
 						}
 
-						var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+						var go = this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
 
 						this.createdObjects.push(go);
 						
@@ -88,7 +91,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 								}
 							}
 
-							var go = Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+							var go = this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
 
 							this.createdObjects.push(go);
 							

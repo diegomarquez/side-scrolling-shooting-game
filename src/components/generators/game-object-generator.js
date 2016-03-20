@@ -13,6 +13,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime = null;
 			this.viewports = null;
 			this.updateGroup = null;
+
+			this.self = GameObjectGenerator;
+			this.gb = Gb;
 		},
 
 		editorStart: function(parent) {
@@ -27,7 +30,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime += delta;
 
 			if (this.delayTime >= this.sprayDelay) {
-				this.spray(GameObjectGenerator.args);
+				this.spray(this.self.args);
 				this.delayTime = 0;
 			}
 		},
@@ -53,7 +56,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							}	
 						}
 
-						Gb.create(this.objectType, this.updateGroup, this.viewports, args);
+						this.gb.create(this.objectType, this.updateGroup, this.viewports, args);
 
 						this.currentSprayCount++;
 					}
@@ -77,7 +80,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 								}	
 							}
 
-							Gb.create(this.objectType, this.updateGroup, this.viewports, args);
+							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);
 
 							this.currentSprayCount++;
 						}

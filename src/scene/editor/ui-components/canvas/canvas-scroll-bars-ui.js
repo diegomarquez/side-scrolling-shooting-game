@@ -9,29 +9,37 @@ define(function(require) {
 		init: function() {
 			this._super();
 
-			var self = this;
-			var rafId = -1;
+			var scrollContext = {
+				canvas: gb.canvas,
+				viewports: gb.viewports,
+				config: editorConfig,
+				gridBundle: require('grid-bundle'),
+				rafId: -1
+			}
 
 			this.onScroll = function (event) {
-				if (rafId !== -1)
+				if (this.rafId !== -1)
 					return;
 
-				rafId = requestAnimationFrame(function() {
-					var viewport = gb.viewports.get(editorConfig.getMainViewportName());
+				this.rafId = requestAnimationFrame(function() {
+					var viewport = this.viewports.get(this.config.getMainViewportName());
 					var left = event.target.scrollLeft;
 					var top = event.target.scrollTop;
 
-					gb.canvas.style.transform = "translate(" + left + "px," + top + "px" + ")";
+					var translate = "translate(" + left + "px," + top + "px" + ")";
+
+					this.canvas.style.webkitTransform = translate;
+					this.canvas.style.transform = translate;
 
 					viewport.X = -left;
 					viewport.Y = -top;
 
-					require('grid-bundle').setOffsetX(left);
-					require('grid-bundle').setOffsetY(top);
+					this.gridBundle.setOffsetX(left);
+					this.gridBundle.setOffsetY(top);
 
-					rafId = -1;
-				});
-			}
+					this.rafId = -1;
+				}.bind(this));
+			}.bind(scrollContext);
 		},
 
 		create: function() {
@@ -66,6 +74,7 @@ define(function(require) {
 					main.scrollLeft = 0;
 					main.scrollTop = 0;
 
+					gb.canvas.style.webkitTransform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					gb.canvas.style.transform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					
 					var diff = (world.getWidth() - gb.game.WIDTH);

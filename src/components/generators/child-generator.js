@@ -12,6 +12,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.currentSprayCount = null;
 			this.delayTime = null;
 			this.createdObjects = [];
+
+			this.self = ChildGenerator;
+			this.gb = Gb;
 		},
 
 		editorStart: function(parent) {
@@ -24,7 +27,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime += delta;
 
 			if (this.delayTime >= this.sprayDelay) {
-				this.spray(ChildGenerator.args);
+				this.spray(this.self.args);
 				this.delayTime = 0;
 			}
 		},
@@ -37,42 +40,42 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
 		spray: function(args) {
 			if (!this.maxAmountToSpray) {
-				create.call(this, args);
+				this.create(args);
 				this.execute(this.SPRAY);	
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
 					this.execute(this.STOP_CREATION);
 				} else {
-					create.call(this, args);
+					this.create(args);
 					this.execute(this.SPRAY);	
 				}	
 			}
-		}
+		},
+
+		create: function(args) {
+			if (!this.isEnabled()) return;
+
+			for (var i=0; i < this.amountPerSpray; i++) {
+				this.startingPostion(args);
+
+				this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+
+				this.currentSprayCount++;
+			}
+		},
+
+		startingPostion: function(args) {
+			args['x'] = 0;
+			args['y'] = 0;
+
+			if (this.startingPositionTransformation) {
+				for (var i = 0; i < this.startingPositionTransformation.length; i++) {
+					this.startingPositionTransformation[i].call(this, args);
+				}	
+			}
+		}	
 	});
-
-	var create = function(args) {
-		if (!this.isEnabled()) return;
-
-		for (var i=0; i < this.amountPerSpray; i++) {
-			startingPostion.call(this, args);
-
-			Gb.addChildTo(this.parent, this.objectType, null, args, 'create');
-
-			this.currentSprayCount++;
-		}
-	} 
-
-	var startingPostion = function(args) {
-		args['x'] = 0;
-		args['y'] = 0;
-
-		if (this.startingPositionTransformation) {
-			for (var i = 0; i < this.startingPositionTransformation.length; i++) {
-				this.startingPositionTransformation[i].call(this, args);
-			}	
-		}
-	}
 
 	ChildGenerator.args = {
 		x: null,
