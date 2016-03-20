@@ -91,7 +91,7 @@ define(function(require) {
 							}),
 							new dialogTextField({
 								name: 'Remote Url',
-								value: 'http://localhost:3000',
+								value: window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'http://scene-store.herokuapp.com',
 								validations: [
 									{
 										check: function(remote) { 

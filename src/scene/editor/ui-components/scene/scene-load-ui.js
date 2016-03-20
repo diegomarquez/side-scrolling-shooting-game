@@ -106,7 +106,7 @@ define(function(require) {
 									);
 								},
 
-								validations: [ 
+								validations: [
 									{
 										check: function() {
 											return this.RemoteSceneSelector();
@@ -118,8 +118,8 @@ define(function(require) {
 							}),
 							new dialogTextField({
 								name: 'Remote Input',
-								value: 'http://localhost:3000',
-								validations: [ 
+								value: window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'http://scene-store.herokuapp.com',
+								validations: [
 									{
 										check: function() {
 											return this.RemoteInput() === "";
