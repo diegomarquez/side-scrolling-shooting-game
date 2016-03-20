@@ -30,6 +30,9 @@ define(function(require){
 				// Start in the game modes state, in the url loading mode
 				this.mainStateMachine.start({ mode: 'url-mode', data: scene }, 1);
 			} catch (e) {
+				// Print error for debugging
+				console.error(e);
+
 				// Should there be any problems, fallback to the regular initialization
 				
 				// Start in the splash state
