@@ -149,9 +149,11 @@ define(function(require) {
 	}
 
 	var serializeAndStoreRemote = function() {
+		var name = this.RemoteSceneName();
+
 		var self = this;
 
-		var serializedScene = sceneSerializer.serialize(this.RemoteSceneName()); 
+		var serializedScene = sceneSerializer.serialize(name); 
 		
 		if (serializedScene === false) {
 			$(self).dialog('option').showErrorFeedback('Error saving the scene.');
