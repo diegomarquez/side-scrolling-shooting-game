@@ -1,5 +1,4 @@
 define(function(require) {
-
 	var levelRequester = require("level-requester");
 
 	var firstStartInEditorBasicCall = true;
@@ -49,12 +48,14 @@ define(function(require) {
 
 		hasScene: function(success, failure) {
 			if (!window.location.search) {
+				failure();
 				return;
 			}
 
 			var sceneMatch = window.location.search.match(/[?&]?url=(.*?)@(.*?)$/);
 
 			if (!sceneMatch) {
+				failure();
 				return;
 			}
 
@@ -62,10 +63,12 @@ define(function(require) {
 			var remote = sceneMatch[2];
 
 			if (!id) {
+				failure();
 				return;
 			}
 
 			if (!remote) {
+				failure();
 				return;
 			}
 

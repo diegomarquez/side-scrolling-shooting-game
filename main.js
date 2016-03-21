@@ -1,6 +1,6 @@
 // side-shmup's main entry point
 
-define(function(require){
+define(function(require) {
 	var gb = require('gb');
 	var loaderContainer = require('loader-container');
 	var queryString = require('query-string');
