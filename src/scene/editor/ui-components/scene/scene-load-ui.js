@@ -70,7 +70,7 @@ define(function(require) {
 
 						validateOnAction: {
 							'Open Local': ['Local Scene Selector']
-						}	
+						}
 					},
 					{
 						name: 'Remote Scenes',	
@@ -122,10 +122,10 @@ define(function(require) {
 								validations: [
 									{
 										check: function() {
-											return this.RemoteInput() === "";
+											return this.RemoteInput();
 										},
 										
-										tip: "Remote scene selector is empty"
+										tip: "Missing remote"
 									}
 								]
 							}),
@@ -134,7 +134,7 @@ define(function(require) {
 								validations: [
 									{
 										check: function() {
-											return levelRequester.pingRemote(this.RemoteInput());   
+											return levelRequester.pingRemote(this.RemoteInput());
 										 },
 
 										 tip: "Remote is not available"
@@ -146,7 +146,7 @@ define(function(require) {
 								validations: [
 									{
 										check: function() { 
-											return validateURL(this.RemoteInput());   
+											return validateURL(this.RemoteInput());
 										},
 										
 										tip: "Remote url is not valid"
