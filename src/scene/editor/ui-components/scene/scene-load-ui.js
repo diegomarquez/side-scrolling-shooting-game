@@ -86,7 +86,7 @@ define(function(require) {
 									$(self).dialog('option').showLoadingFeedback();
 
 									levelRequester.get(
-										self.RemoteInput() + "/view/" + this.currentPage(),
+										self.RemoteInput() + "/view/" + this.currentPage()+1,
 										function (data) {
 											$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
 
@@ -191,7 +191,7 @@ define(function(require) {
 
 								// Initial Request
 								levelRequester.get(
-									this.RemoteInput() + "/view/0",
+									this.RemoteInput() + "/view/1",
 									function (data) {
 										$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
 
