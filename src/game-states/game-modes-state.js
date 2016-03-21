@@ -44,7 +44,7 @@ define(function(require) {
 				var stageOverview = currentStateMachine.get("stage_overview_state");
 
 				stageOverview.once(stageOverview.BACK, this, function() {
-					currentStateMachine.finish();   
+					currentStateMachine.finish();
 					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 				});
 			}

@@ -3,6 +3,7 @@ define(function(require) {
 	var canvasContainer = require('canvas-container');
 	var keyboard = require('keyboard');
 	var collisionResolver = require('collision-resolver');
+	var util = require('util');
 
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
@@ -193,10 +194,19 @@ define(function(require) {
 			document.getElementById('player-controls').appendChild(document.createElement('br'));
 			document.getElementById('player-controls').appendChild(document.createTextNode('A to Shoot'));
 
-			document.getElementById('player-title').appendChild(document.createTextNode(sceneData['name']));
+			var name;
+
+			if (util.isString(sceneData)) {
+	    		name = JSON.parse(sceneData)['name'];
+	    	}
+	    	else if (util.isObject(sceneData)) {
+	    		name = sceneData['name'];
+	    	}
+
+			document.getElementById('player-title').appendChild(document.createTextNode(name));
 		},
 
-		removeContainer: function() {			
+		removeContainer: function() {
   
 		},
 

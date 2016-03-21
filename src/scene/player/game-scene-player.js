@@ -76,7 +76,7 @@ define(function(require) {
 					// Start the player and all of it's children because they where stopped when calling stop_update
 					player.run();
 					// Put it in the second group so it continues updating.
-					gb.groups.get('Second').add(player);		
+					gb.groups.get('Second').add(player);
 
 					this.blockEscape = true;
 

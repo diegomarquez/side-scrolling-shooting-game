@@ -34,7 +34,7 @@ define(function(require) {
 	    stageOverview.on(stageOverview.START_SELECTED, this, function (selectedStageIndex) {
 
 	    	loaderContainer.once(loaderContainer.CLOSE, this, function() {
-	  			state.execute(state.NEXT, { nextInitArgs: selectedStageIndex, lastCompleteArgs: null });	
+	  			state.execute(state.NEXT, { nextInitArgs: selectedStageIndex, lastCompleteArgs: null });
 	  		});
 
 	    	loaderContainer.transition();
