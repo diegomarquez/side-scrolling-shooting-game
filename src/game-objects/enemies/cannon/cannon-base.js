@@ -17,6 +17,10 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
       
     },
 
+    recycle: function() {
+    	this._super();
+    },
+
     regen: function(hp) {
     	this.hp = hp;
 
@@ -26,7 +30,10 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
     		this.removeComponent(this.explosionsGenerator);
     		this.explosionsGenerator = null;
 
-    		this.findComponents().firstWithProp('collider').enable();
+    		var collider = this.findComponents().firstWithProp('collider');
+
+    		if (collider)
+    			collider.enable();
     	
     		this.execute('repair');
     	}
@@ -54,20 +61,20 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			this.hp--;
 
 			if (this.hp == 0) {
+				// Disable the collider component
+	    		this.findComponents().firstWithProp('collider').disable();
+
 				this.explosionsGenerator = Gb.addComponentTo(this, this.destroyExplosions);
 
-	  			// When the explosion generator is finished, hide the cannon
-	    		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
-	     	  		this.hide(true).not().allWithType(this.explosionsGenerator.objectType);
-	     	 	});
+    			// When the explosion generator is finished, hide the cannon
+    			this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
+     	  			this.hide(true).not().allWithType(this.explosionsGenerator.objectType);
+     	 		});
 
-	     	 	// When the last explosion is done with it's animation, mark the cannon for recycling
+    			// When the last explosion is done with it's animation, mark the cannon for recycling
 	      		this.explosionsGenerator.once(this.explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
 	      			Gb.reclaimer.mark(this);
 	      		});
-
-	      		// Disable the collider component
-	    		this.findComponents().firstWithProp('collider').disable();
 
 	      		// Notify damage
 		      	this.execute(this.DAMAGE);	

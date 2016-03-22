@@ -20,6 +20,9 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			if (this.hasStopListener)
 				return;
 
+			this.eye = this.findChildren().firstWithType("boss-3-eye");
+			this.eye.disable();
+
 			this.hasStopListener = true;
 			PlayerGetter.get().once(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 		},
@@ -74,7 +77,9 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.regenTimer.configure({ delay: 500, removeOnComplete: false });
 
 			this.regenTimer.on('complete', function() {
-				this.eye.regen(40);
+				if (this.hp > 0) {
+					this.eye.regen(40);	
+				}
 			});
 	
 			this.eye.on('damage', this, function() {
@@ -104,13 +109,14 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 							}
 						}
 					} else {
-						this.regenTimer.start();
-						this.execute('damage');
+						this.regenTimer.reset();
 
 						TweenLite.to(this, 0.5, { x: '-=' + this.vecX * 40, y: '-=' + this.vecY * 40, ease: Power2.easeOut });
+
+						this.execute('damage');
 					}
 				}
-			}, "eye-damage-handler");
+			}, false, false, false, "eye-damage-handler");
 
 			if (this.cannons === null) {
 				this.cannons = Root.findChildren().recurse().all(function(child) {
