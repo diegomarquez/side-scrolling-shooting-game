@@ -238,7 +238,7 @@ define(function(require) {
 	});
 
 	Object.defineProperty(ScenePlayer.prototype, "EXIT", { get: function() { return 'exit'; } });
-	Object.defineProperty(ScenePlayer.prototype, "FAILURE", { get: function() { return 'exit'; } });
+	Object.defineProperty(ScenePlayer.prototype, "FAILURE", { get: function() { return 'failure'; } });
 	Object.defineProperty(ScenePlayer.prototype, "ESCAPE", { get: function() { return 'escape'; } });
 
 	return new ScenePlayer();

@@ -96,11 +96,11 @@ define(function(require) {
 		resetCompletedLevels: function() {
 			available.call(this);
 
-			return Object.keys(localStorage).filter(function(key) {
+			Object.keys(localStorage).filter(function(key) {
 				return key.search(/-complete-flag$/) != -1;
-			}).forEach(function(key, index, array) {
-				array[index] = false;
-			});
+			}.bind(this)).forEach(function(key, index, array) {
+				setItem.call(this, key, false);
+			}.bind(this));
 		},
 
 		isLevelComplete: function(key) {

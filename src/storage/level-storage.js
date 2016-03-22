@@ -1,5 +1,6 @@
 define(function(require) {
 	var localStorageWrapper = require('local-storage');
+	var util = require('util');
 
 	var levels = [
 		require('stage-1'),
@@ -34,15 +35,15 @@ define(function(require) {
 		},
 
 		completeLevel: function(level) {
-			localStorageWrapper.completeLevel(level['name']);
+			localStorageWrapper.completeLevel(this.getLevelName(level));
 		},
 
-		reset: function(level) {
-			localStorageWrapper.resetCompletedLevels(level['name']);
+		reset: function() {
+			localStorageWrapper.resetCompletedLevels();
 		},
 
 		isLevelComplete: function(level) {
-			return localStorageWrapper.isLevelComplete(level['name']);
+			return localStorageWrapper.isLevelComplete(this.getLevelName(level));
 		},
 
 		isLevelIndexComplete: function(index) {
@@ -75,6 +76,15 @@ define(function(require) {
 
 			// If all levels are complete return the index for the last
 			return levels.length - 1;
+		},
+
+		getLevelName: function(level) {
+			if (util.isString(level)) {
+	    		return JSON.parse(level)['name'];
+	    	}
+	    	else if (util.isObject(level)) {
+	    		return level['name'];
+	    	}
 		}
 	});
 
