@@ -45,7 +45,8 @@ define(function(require) {
 				.addComponent('SpiderAngleMovement')
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
-				.addComponent("CheckOutOfBounds")
+				.addComponent('CheckOutOfBounds')
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -61,6 +62,7 @@ define(function(require) {
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
 				.addComponent("CheckOutOfBounds")
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -79,6 +81,7 @@ define(function(require) {
 				.addComponent('SpiderAngleMovement')
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -97,6 +100,7 @@ define(function(require) {
 				.addComponent('SpiderAngleMovement')
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();

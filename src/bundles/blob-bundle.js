@@ -57,6 +57,7 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobShrapnel', { objectType: 'blob-bullet-slow', amount: 'x4' })
+				.addComponent('EnemyShipExplosion3')
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -71,6 +72,7 @@ define(function(require) {
 				.addComponent('BlobDestroyExplosions')
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
+				.addComponent('EnemyShipExplosion3')
 				.addComponent('BlobShrapnel', { objectType: 'blob-bullet-slow', amount: 'x8' })
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
@@ -86,6 +88,7 @@ define(function(require) {
 				.addComponent('BlobDestroyExplosions')
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
+				.addComponent('EnemyShipExplosion1')
 				.addComponent('BlobDivide', { objectType: 'blob-explode-0', amount: 'x2' })
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
@@ -101,6 +104,7 @@ define(function(require) {
 				.addComponent('BlobDestroyExplosions')
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
+				.addComponent('EnemyShipExplosion1')
 				.addComponent('BlobDivide', { objectType: 'blob-explode-1', amount: 'x3' })
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
@@ -117,6 +121,7 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobDivide', { objectType: 'blob-divide-0', amount: 'x2' })
+				.addComponent('EnemyShipExplosion1')
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -132,6 +137,7 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobDivide', { objectType: 'blob-divide-1', amount: 'x3' })
+				.addComponent('EnemyShipExplosion1')
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.strongEnemyTier();

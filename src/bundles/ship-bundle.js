@@ -34,12 +34,19 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("ShipColliderCircle", commonBundle.getCircleColliderPoolId())
 				.args({
-					id: 'shipColliderId', 
+					id: 'shipColliderId',
 					radius: 20,
 					getResponse: true
 				});
 
 			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
+
+			this.componentPool.createConfiguration("ShotSound", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'PLAYER_SHOT',
+					parentEvent: 'shot',
+					playMode: 'single'
+				});			
 
 			this.componentPool.createConfiguration("ExhaustRenderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
@@ -79,6 +86,8 @@ define(function(require) {
 				.addComponent('ShipDamage')
 				.addComponent('ShipDestroy')
 				.addComponent('ShipExplode')
+
+				.addComponent('ShotSound')
 
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");

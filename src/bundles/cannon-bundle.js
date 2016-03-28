@@ -14,9 +14,6 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'));
 			this.gameObjectPool.createConfiguration("FirePosition", 'editor-game-object').childOnly();
 
-			// =============================
-			// =============================
-
 			// Cannon
 			// =======================
 			
@@ -125,6 +122,7 @@ define(function(require) {
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('cannon-shooter-0')
 				.setRenderer("CannonBaseRenderer")
 				.enemyCategory()
@@ -137,6 +135,7 @@ define(function(require) {
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('cannon-shooter-1')
 				.setRenderer("CannonBaseRenderer")
 				.enemyCategory()
@@ -153,6 +152,7 @@ define(function(require) {
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-cannon-shooter-0')
 				.setRenderer("BossCannonBaseRenderer")
 				.enemyCategory()
@@ -169,6 +169,7 @@ define(function(require) {
 				})
 				.addComponent('CannonBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-cannon-shooter-1')
 				.setRenderer("BossCannonBaseRenderer")
 				.enemyCategory()
@@ -254,6 +255,7 @@ define(function(require) {
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('laser-shooter-0')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
@@ -266,6 +268,7 @@ define(function(require) {
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('laser-shooter-1')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
@@ -282,6 +285,7 @@ define(function(require) {
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-laser-shooter-0')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
@@ -298,6 +302,7 @@ define(function(require) {
 				})
 				.addComponent('LaserBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-laser-shooter-1')
 				.setRenderer("LaserBaseRenderer")
 				.enemyCategory()
@@ -342,6 +347,7 @@ define(function(require) {
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
@@ -357,6 +363,7 @@ define(function(require) {
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
@@ -376,6 +383,7 @@ define(function(require) {
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
@@ -395,6 +403,7 @@ define(function(require) {
 				})
 				.addComponent('DoubleBaseCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('FirePosition', { x: -27, y: 6, angle: -41 })
 				.addChild('FirePosition', { x: 27, y: 6, angle: 41 })
 				.setRenderer("DoubleCannonBaseRenderer")
@@ -452,6 +461,7 @@ define(function(require) {
 					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
+				.addComponent('MissileLaunch1')
 				.setRenderer("MissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -466,6 +476,7 @@ define(function(require) {
 					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
+				.addComponent('MissileLaunch1')
 				.setRenderer("MissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -480,6 +491,7 @@ define(function(require) {
 					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
+				.addComponent('MissileLaunch1')
 				.setRenderer("BossMissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -494,6 +506,7 @@ define(function(require) {
 					skipDebug: true
 				})
 				.addComponent('ActivateShooterOnView')
+				.addComponent('MissileLaunch1')
 				.setRenderer("BossMissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -513,6 +526,7 @@ define(function(require) {
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('missile-turret-shooter-0', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
@@ -526,6 +540,7 @@ define(function(require) {
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('missile-turret-shooter-1', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
@@ -543,6 +558,7 @@ define(function(require) {
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-missile-turret-shooter-0', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")
@@ -560,6 +576,7 @@ define(function(require) {
 				})
 				.addComponent('MissileTurretCollider')
 				.addComponent('ActivateShooterOnView')
+				.addComponent('CannonExplosion1')
 				.addChild('boss-missile-turret-shooter-1', { y: 7 })
 				.addChild('missile-turret-hinge')
 				.setRenderer("MissileTurretBaseRenderer")

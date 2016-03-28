@@ -121,6 +121,9 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 
 				if (this.burtsTimer % 30 == 0) {
 					if (this.currentBurstCount < this.burstAmount) {
+
+						this.execute("launch");
+
 						var missile = Gb.create(this.missileType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 							angle: selfMatrix.decompose(selfDecompose).rotation - 180,
 							x: this.parent.x,

@@ -52,6 +52,7 @@ define(function(require) {
 				.addComponent('MineWobbleMovement')
 				.addComponent('Activate_Mine_On_View')
 				.addComponent('MineDestroyExplosions')
+				.addComponent('EnemyShipExplosion3')
 				.setRenderer('MineRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -64,6 +65,7 @@ define(function(require) {
 				.addComponent('MineWobbleMovement')
 				.addComponent('Activate_Mine_On_View')
 				.addComponent('MineDestroyExplosions')
+				.addComponent('EnemyShipExplosion3')
 				.setRenderer('MineRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -78,6 +80,7 @@ define(function(require) {
 				.addComponent('MineAngleMovement')
 				.addComponent('MineWobbleMovement')
 				.addComponent('MineDestroyExplosions')
+				.addComponent('EnemyShipExplosion3')
 				.setRenderer('MineRenderer')
 				.childOnly();
 
@@ -91,6 +94,7 @@ define(function(require) {
 				.addComponent('MineAngleMovement')
 				.addComponent('MineWobbleMovement')
 				.addComponent('MineDestroyExplosions')
+				.addComponent('EnemyShipExplosion3')
 				.setRenderer('MineRenderer')
 				.childOnly();
 		},

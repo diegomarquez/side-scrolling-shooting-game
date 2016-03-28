@@ -1,4 +1,6 @@
-define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLite", "DirectionalRotationPlugin", "EasePack"], function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite) {
+define(
+	["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLite", "DirectionalRotationPlugin", "EasePack"], 
+	function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite, DirectionalRotationPlugin, EasePack) {
 	
 	var transformResult = {};
 	var matrix = new Matrix();
@@ -68,6 +70,8 @@ define(["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLi
 				if (this.block) return;
 				if (this.destroyComponent.isEnabled()) return;
 				if (this.explodeComponent.isEnabled()) return;
+
+				this.execute("shot");
 
 				if (this.maxBulletAmount == 1) {
 					this.middleShootingPositions.getTransform(transformResult, matrix);

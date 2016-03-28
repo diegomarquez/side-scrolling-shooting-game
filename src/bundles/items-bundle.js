@@ -59,6 +59,7 @@ define(function(require) {
 					powerUpType: 'power-up'
 				})
 				.addComponent("LevelItemCircle")
+				.addComponent("PowerUp1")
 				.setRenderer("PowerUp_Renderer")
 				.itemCategory();
 
@@ -67,6 +68,7 @@ define(function(require) {
 					powerUpType: 'speed-up'
 				})
 				.addComponent("LevelItemCircle")
+				.addComponent("PowerUp1")
 				.setRenderer("SpeedUp_Renderer")
 				.itemCategory();
 
@@ -75,6 +77,7 @@ define(function(require) {
 					powerUpType: 'health-up'
 				})
 				.addComponent("LevelItemCircle")
+				.addComponent("PowerUp1")
 				.setRenderer("HealthUp_Renderer")
 				.itemCategory();
 		},

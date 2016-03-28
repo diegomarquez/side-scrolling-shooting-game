@@ -53,6 +53,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("GeneratorDamageOnHpDepleted", "DamageOnHpDepleted");
 			// ======================
+			
 
 			this.gameObjectPool.createDynamicPool('GeneratorWayPoint', require('generator-way-point'));
 
@@ -171,6 +172,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyOnHpDepleted')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })
@@ -192,6 +194,7 @@ define(function(require) {
 				.addComponent('GeneratorDestroyOnHpDepleted')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })
@@ -214,6 +217,8 @@ define(function(require) {
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
+				.addComponent('GeneratorExplosion2')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })
@@ -236,6 +241,8 @@ define(function(require) {
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
+				.addComponent('GeneratorExplosion2')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })
@@ -258,6 +265,8 @@ define(function(require) {
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
+				.addComponent('GeneratorExplosion2')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })
@@ -280,6 +289,8 @@ define(function(require) {
 				.addComponent('GeneratorDamageExplosions')
 				.addComponent('GeneratorDestroyExplosions')
 				.addComponent('ConnectSimilarGeneratorWayPoints')
+				.addComponent('GeneratorExplosion1')
+				.addComponent('GeneratorExplosion2')
 				.addChild('GeneratorWayPoint', { y : -20 })
 				.addChild('GeneratorWayPoint', { y : -40 })
 				.addChild('GeneratorWayPoint', { y : -60 })

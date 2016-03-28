@@ -4,6 +4,7 @@ define(function(require) {
 	var gb = require('gb');
 	var loaderContainer = require('loader-container');
 	var queryString = require('query-string');
+	var soundPlayer = require('sound-player');
 
 	this.game = gb.game;
 
@@ -63,6 +64,30 @@ define(function(require) {
 
 		this.game.create();	
 	}
+
+	soundPlayer.createChannels(30);
+
+	soundPlayer.load('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
+	soundPlayer.load('POWER_UP', gb.assetMap()['POWERUP.OGG']);
+	soundPlayer.load('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
+	soundPlayer.load('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
+	soundPlayer.load('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
+	soundPlayer.load('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
+	soundPlayer.load('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
+	soundPlayer.load('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
+	soundPlayer.load('BUG', gb.assetMap()['BUG.OGG']);
+	soundPlayer.load('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
+
+	soundPlayer.assignChannels('PLAYER_SHOT', 3);
+	soundPlayer.assignChannels('POWER_UP', 3);
+	soundPlayer.assignChannels('EXPLOSION_1', 3);
+	soundPlayer.assignChannels('EXPLOSION_2', 3);
+	soundPlayer.assignChannels('EXPLOSION_3', 3);
+	soundPlayer.assignChannels('EXPLOSION_4', 3);
+	soundPlayer.assignChannels('EXPLOSION_5', 3);
+	soundPlayer.assignChannels('EXPLOSION_6', 3);
+	soundPlayer.assignChannels('BUG', 3);
+	soundPlayer.assignChannels('SMALL_LAUNCH', 3);
 
 	// Choose a start up routine according to what is found in the query string
 	queryString.hasScene(urlStartUp.bind(this), basicStartUp.bind(this));

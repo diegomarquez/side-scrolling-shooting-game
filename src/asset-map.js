@@ -75,7 +75,16 @@ define(function() {
 	"UPLEFTARROW.PNG": "assets/images/upLeftArrow.png",
 	"UPRIGHTARROW.PNG": "assets/images/upRightArrow.png",
 	"WEBBULLET.PNG": "assets/images/webBullet.png",
-	"SPACEINVADERS_FIRE.WAV": "assets/sound/SpaceInvaders_Fire.wav"
+	"BUG.OGG": "assets/sound/bug.ogg",
+	"EXPLOSION1.OGG": "assets/sound/explosion1.ogg",
+	"EXPLOSION2.OGG": "assets/sound/explosion2.ogg",
+	"EXPLOSION3.OGG": "assets/sound/explosion3.ogg",
+	"EXPLOSION4.OGG": "assets/sound/explosion4.ogg",
+	"EXPLOSION5.OGG": "assets/sound/explosion5.ogg",
+	"EXPLOSION6.OGG": "assets/sound/explosion6.ogg",
+	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
+	"POWERUP.OGG": "assets/sound/powerUp.ogg",
+	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"
 };
 
 	Data.prototype.get = function() {

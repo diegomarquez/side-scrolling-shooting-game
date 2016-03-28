@@ -13,32 +13,24 @@ define(function(require) {
 				canvas: gb.canvas,
 				viewports: gb.viewports,
 				config: editorConfig,
-				gridBundle: require('grid-bundle'),
-				rafId: -1
+				gridBundle: require('grid-bundle')
 			}
 
 			this.onScroll = function (event) {
-				if (this.rafId !== -1)
-					return;
+				var viewport = this.viewports.get(this.config.getMainViewportName());
+				var left = event.target.scrollLeft;
+				var top = event.target.scrollTop;
 
-				this.rafId = requestAnimationFrame(function() {
-					var viewport = this.viewports.get(this.config.getMainViewportName());
-					var left = event.target.scrollLeft;
-					var top = event.target.scrollTop;
+				var translate = "translate(" + left + "px," + top + "px" + ")";
 
-					var translate = "translate(" + left + "px," + top + "px" + ")";
+				this.canvas.style.webkitTransform = translate;
+				this.canvas.style.transform = translate;
 
-					this.canvas.style.webkitTransform = translate;
-					this.canvas.style.transform = translate;
+				viewport.X = -left;
+				viewport.Y = -top;
 
-					viewport.X = -left;
-					viewport.Y = -top;
-
-					this.gridBundle.setOffsetX(left);
-					this.gridBundle.setOffsetY(top);
-
-					this.rafId = -1;
-				}.bind(this));
+				this.gridBundle.setOffsetX(left);
+				this.gridBundle.setOffsetY(top);
 			}.bind(scrollContext);
 		},
 

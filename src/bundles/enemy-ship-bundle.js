@@ -91,6 +91,7 @@ define(function(require) {
 				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('EnemyShipExplosion1')
 				.setRenderer('EnemyShip_1_Renderer')
 				.childOnly();
 
@@ -105,6 +106,7 @@ define(function(require) {
 				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('EnemyShipExplosion1')
 				.setRenderer('EnemyShip_1_Renderer')
 				.childOnly();
 
@@ -121,6 +123,7 @@ define(function(require) {
 				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Helper_Renderer')
 				.childOnly();
 
@@ -137,6 +140,7 @@ define(function(require) {
 				.addComponent('EnemyShipFollowWayPoints')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('SpiderExplosion1')
 				.setRenderer('Spider_Helper_Renderer')
 				.childOnly();
 
@@ -150,6 +154,7 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('EnemyShipExplosion2')
 				.setRenderer('EnemyShip_2_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -164,6 +169,7 @@ define(function(require) {
 				.addComponent('EnemyShipAngleMovement')
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
+				.addComponent('EnemyShipExplosion2')
 				.setRenderer('EnemyShip_2_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();

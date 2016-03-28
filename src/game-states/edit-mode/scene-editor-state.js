@@ -20,6 +20,7 @@ define(function(require) {
 
 			// Setup pools for the scene player state
 			require('common-bundle').create();
+			require('sound-bundle').create();
 			require('explosion-generator-bundle').create();
 			require('particle-generator-bundle').create();
 			require('obstacle-bundle').create();

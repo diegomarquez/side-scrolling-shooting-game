@@ -21,12 +21,15 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
     onCollide: function(other) {
     	switch (this.powerUpType) {
     		case 'power-up':
+    			this.execute('pick-up');
     			other.powerUp();
     			break;
     		case 'speed-up':
+    			this.execute('pick-up');
     			other.speedUp();
     			break;
     		case 'health-up':
+    			this.execute('pick-up');
     			other.healthUp();
     			break;
     	}

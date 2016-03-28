@@ -174,6 +174,7 @@ define(function(require) {
 				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent('DestroyOnHpDepleted')
 				.addComponent("MissileCollider")
+				.addComponent('MissileExplosion1')
 				.setRenderer("MissileRenderer");
 
 			this.gameObjectPool.createConfiguration("missile-fast", "Missile")
@@ -184,6 +185,7 @@ define(function(require) {
 				.addComponent('BlobBulletDestroyExplosions')
 				.addComponent('DestroyOnHpDepleted')
 				.addComponent("MissileCollider")
+				.addComponent('MissileExplosion1')
 				.setRenderer("MissileRenderer");
 
 			this.gameObjectPool.createConfiguration("blob-bullet-slow", "CannonBullet")
