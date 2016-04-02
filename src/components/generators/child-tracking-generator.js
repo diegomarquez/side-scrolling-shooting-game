@@ -51,7 +51,6 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 				return;
 
 			if (!this.maxAmountToSpray) {
-				
 				if (this.isEnabled()) {
 					for (var i=0; i < this.amountPerSpray; i++) {
 						args['x'] = 0;
@@ -71,15 +70,16 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
 						this.currentSprayCount++;
 					}
+
+					this.execute(this.SPRAY);
+					this.parent.execute(this.SPRAY);
 				}
-				
-				this.execute(this.SPRAY);
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
 					this.execute(this.STOP_CREATION);
+					this.parent.execute(this.STOP_CREATION);
 				} else {
-					
 					if (this.isEnabled()) {
 						for (var i=0; i < this.amountPerSpray; i++) {
 							args['x'] = 0;
@@ -99,9 +99,10 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 
 							this.currentSprayCount++;
 						}
-					}
 
-					this.execute(this.SPRAY);
+						this.execute(this.SPRAY);
+						this.parent.execute(this.SPRAY);
+					}
 				}	
 			}
 		}

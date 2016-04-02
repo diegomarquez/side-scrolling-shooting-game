@@ -6,7 +6,6 @@ define(function(require) {
 	var Bullets = require("bundle").extend({
 		create: function(args) {						
 			this.componentPool.createPool('laser-renderer', require('laser-renderer'));
-			this.componentPool.createPool('twich-component', require('twitch'));
 			this.componentPool.createPool('rotate-component', require('rotate'));
 
 			this.gameObjectPool.createDynamicPool('Bullet', require("basic-bullet"));
@@ -63,7 +62,7 @@ define(function(require) {
 					getResponse: true
 				});
 
-			this.componentPool.createConfiguration("LaserTwitch", 'twich-component')
+			this.componentPool.createConfiguration("LaserTwitch", commonBundle.getTwitchPoolId())
 				.args({
 					amount: 6
 				});

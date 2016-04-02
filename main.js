@@ -65,7 +65,7 @@ define(function(require) {
 		this.game.create();	
 	}
 
-	soundPlayer.createChannels(30);
+	soundPlayer.createChannels(40);
 
 	soundPlayer.load('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
 	soundPlayer.load('POWER_UP', gb.assetMap()['POWERUP.OGG']);
@@ -75,6 +75,7 @@ define(function(require) {
 	soundPlayer.load('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
 	soundPlayer.load('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
 	soundPlayer.load('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
+	soundPlayer.load('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
 	soundPlayer.load('BUG', gb.assetMap()['BUG.OGG']);
 	soundPlayer.load('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
 
@@ -86,6 +87,7 @@ define(function(require) {
 	soundPlayer.assignChannels('EXPLOSION_4', 3);
 	soundPlayer.assignChannels('EXPLOSION_5', 3);
 	soundPlayer.assignChannels('EXPLOSION_6', 3);
+	soundPlayer.assignChannels('EXPLOSION_7', 10);
 	soundPlayer.assignChannels('BUG', 3);
 	soundPlayer.assignChannels('SMALL_LAUNCH', 3);
 

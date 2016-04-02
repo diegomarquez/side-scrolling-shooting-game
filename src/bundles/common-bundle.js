@@ -15,8 +15,10 @@ define(function(require) {
 			createComponentPool.call(this, function() { return require('animations-bitmap-renderer') });
 
 			createComponentPool.call(this, function() { return require('sound-component') });
+			createComponentPool.call(this, function() { return require('add-component') });
 
 			createComponentPool.call(this, function() { return require('activate-on-view') });
+			createComponentPool.call(this, function() { return require('twitch') });
 
 			createGameObjectPool.call(this, function() { return require('game-object') });
 			createGameObjectPool.call(this, function() { return require('game-object-container') });			

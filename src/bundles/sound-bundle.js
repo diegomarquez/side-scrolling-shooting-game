@@ -54,6 +54,13 @@ define(function(require) {
 					playMode: 'single'
 				});
 
+			this.componentPool.createConfiguration("GeneratorExplosion3", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'EXPLOSION_2',
+					parentEvent: 'damage',
+					playMode: 'single'
+				});
+
 			this.componentPool.createConfiguration("PowerUp1", commonBundle.getSoundComponentPoolId())
 				.args({
 					soundId: 'POWER_UP',
@@ -73,9 +80,28 @@ define(function(require) {
 					soundId: 'EXPLOSION_6',
 					parentEvent: 'destroyed',
 					playMode: 'single'
-				});	
+				});
 
-			
+			this.componentPool.createConfiguration("BossStartExplosion", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'EXPLOSION_5',
+					parentEvent: 'destroyed',
+					playMode: 'single'
+				});
+
+			this.componentPool.createConfiguration("BossEndExplosion", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'EXPLOSION_2',
+					parentEvent: 'stop_creation',
+					playMode: 'single'
+				});
+
+			this.componentPool.createConfiguration("BossSmallExplosion", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'EXPLOSION_7',
+					parentEvent: 'spray',
+					playMode: 'single'
+				});
 		}
 	});
 

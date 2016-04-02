@@ -82,6 +82,7 @@ define(function() {
 	"EXPLOSION4.OGG": "assets/sound/explosion4.ogg",
 	"EXPLOSION5.OGG": "assets/sound/explosion5.ogg",
 	"EXPLOSION6.OGG": "assets/sound/explosion6.ogg",
+	"EXPLOSION7.OGG": "assets/sound/explosion7.ogg",
 	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
 	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"

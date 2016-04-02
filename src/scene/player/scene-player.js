@@ -15,6 +15,7 @@ define(function(require) {
 		pools: function() {
 	    	require('common-bundle').create();
 	    	require('sound-bundle').create();
+	    	require('add-components-bundle').create();
 	    	require('hud-bundle').create();
 	    	require('explosion-bundle').create();
 	    	require('explosion-generator-bundle').create();
