@@ -91,6 +91,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.openTimer.start();
 
 			this.openTimer.on(this.openTimer.COMPLETE, function() {
+				this.execute("opening");
+
 				this.renderer.play('opening');
 
 				this.addRendererDelegate('complete', function() {
@@ -112,6 +114,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 					this.closeTimer.start();
 
 				} else {
+
 					if (Util.rand_b()) {
 
 						// Try laser attack and fall back to mine attack
@@ -139,6 +142,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			});
 
 			this.closeTimer.on(this.closeTimer.COMPLETE, function() {
+				this.execute("closing");
+
 				this.renderer.play('closing');
 				this.collider.enable();
 
@@ -182,6 +187,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			if (!this.renderer)
 				return;	
 			
+			this.execute("closing");
+
 			if (this.renderer.isAtLabel('opened')) {
 				this.renderer.play('closing');
 				
@@ -222,6 +229,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		doLaserAttack: function() {
+			this.execute("laser-attack");
+
 			selfDecompose = this.getMatrix().decompose(selfDecompose);
 
 			if (this.laserAttacks[this.laserAttackIndex] == 'x1') {
@@ -281,6 +290,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		doMineAttack: function() {
+			this.execute("mine-attack");
+
 			selfDecompose = this.getMatrix().decompose(selfDecompose);
 			
 			if (this.mineAttacks[this.mineAttackIndex] == 'x3') {

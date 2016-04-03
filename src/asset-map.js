@@ -75,6 +75,7 @@ define(function() {
 	"UPLEFTARROW.PNG": "assets/images/upLeftArrow.png",
 	"UPRIGHTARROW.PNG": "assets/images/upRightArrow.png",
 	"WEBBULLET.PNG": "assets/images/webBullet.png",
+	"BLOOB.OGG": "assets/sound/bloob.ogg",
 	"BUG.OGG": "assets/sound/bug.ogg",
 	"EXPLOSION1.OGG": "assets/sound/explosion1.ogg",
 	"EXPLOSION2.OGG": "assets/sound/explosion2.ogg",
@@ -83,6 +84,8 @@ define(function() {
 	"EXPLOSION5.OGG": "assets/sound/explosion5.ogg",
 	"EXPLOSION6.OGG": "assets/sound/explosion6.ogg",
 	"EXPLOSION7.OGG": "assets/sound/explosion7.ogg",
+	"LARGEBUG.OGG": "assets/sound/largeBug.ogg",
+	"OPENHATCH.OGG": "assets/sound/openHatch.ogg",
 	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
 	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"

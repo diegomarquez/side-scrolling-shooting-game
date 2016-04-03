@@ -102,6 +102,37 @@ define(function(require) {
 					parentEvent: 'spray',
 					playMode: 'single'
 				});
+
+			this.componentPool.createConfiguration("Boss2Mines", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'BLOOP',
+					parentEvent: 'mine-attack',
+					playMode: 'single'
+				});
+
+			this.componentPool.createConfiguration("Boss2Open", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'OPEN_HATCH',
+					parentEvent: 'opening',
+					playMode: 'single'
+				});
+
+			this.componentPool.createConfiguration("Boss2Close", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'OPEN_HATCH',
+					parentEvent: 'closing',
+					playMode: 'single'
+				});
+
+			this.componentPool.createConfiguration("Boss4Move", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'LARGE_BUG',
+					parentEvent: 'move',
+					playMode: 'single'
+				});
+
+			
+
 		}
 	});
 

@@ -87,6 +87,10 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			});
 
 			this.walkTimer.on('complete', function() {
+				if (this.hp <= 0)
+					return;
+
+				this.execute("move");
 
 				this.show();
 
@@ -239,6 +243,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			
 			this.movementAngleComponent.enable();
 			this.activateOnViewComponent.disable();
+
+			this.execute("move");
 
 			this.renderer.play('walking');
 
