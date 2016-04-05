@@ -95,6 +95,10 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
     	},
 
+    	canBeDamaged: function() {
+    		return this.cableCount === 0;
+    	},
+
 		onDamage: function (cable) {
 			this.cableCount--;
 		},

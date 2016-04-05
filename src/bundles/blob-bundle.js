@@ -5,7 +5,7 @@ define(function(require) {
 
 	var Blob = require("bundle").extend({
 		create: function(args) {			
-			
+
 			this.gameObjectPool.createDynamicPool('BlobType', require('blob'));
 			
 			this.componentPool.createPool('DestroyExplosions', require('destroy-explosions'));

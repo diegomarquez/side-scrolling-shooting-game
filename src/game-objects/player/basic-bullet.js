@@ -1,4 +1,28 @@
 define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
+
+	var damageableObjects = [
+		"BlobType",
+		"Boss_1_Cables",
+		"Boss_2_Core",
+		"Boss3OuterEye",
+		"Boss_4_Body",
+		"CannonBase",
+		"BossCannonBase",
+		"LaserShooter",
+		"LaserBase",
+		"DoubleCannonBase",
+		"BossDoubleCannonBase",
+		"MissileShooter",
+		"MissileTurretBase",
+		"EnemyShip_1_Type",
+		"EnemyShip_2_Type",
+		"GeneratorType",
+		"BossGeneratorType",
+		"MineType",
+		"Spider_Follow_Type",
+		"Spider_Shooting_Type"
+	]
+
 	var BasicBullet = GameObject.extend({
 		init: function() {
 			this._super();
@@ -29,7 +53,40 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 		},
 
 		onCollide: function(other) {
-			Reclaimer.mark(this);
+
+			if (damageableObjects.indexOf(other.poolId) !== -1) {
+				this.execute("hit");
+				Reclaimer.mark(this);
+				
+				return;
+			}
+
+			if (other.poolId === "Boss_2_Body") {
+				this.execute("deflect");
+				// TODO: Replace with delfect movement
+				Reclaimer.mark(this);
+
+				return;
+			}
+
+			if (other.poolId === "Boss_1") {
+				if (other.canBeDamaged()) {
+					this.execute("hit");
+					Reclaimer.mark(this);
+				} else {
+					this.execute("deflect");
+					// TODO: Replace with delfect movement
+					Reclaimer.mark(this);	
+				}
+
+				return;
+			}
+
+			if (other.poolId === "Obstacle") {
+				Reclaimer.mark(this);
+
+				return;
+			}
 		}
 	});
 

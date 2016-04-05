@@ -118,6 +118,8 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("player-bullet", "Bullet")
 				.addComponent(require('particle-generator-bundle').getPlayerBulletCollisionParticlesId())
 				.addComponent("BulletCollider")
+				.addComponent("PlayerBulletHit")
+				.addComponent("PlayerBulletDeflect")
 				.setRenderer("PlayerBullet1Renderer");
 
 			this.gameObjectPool.createConfiguration("cannon-bullet-slow", "CannonBullet")

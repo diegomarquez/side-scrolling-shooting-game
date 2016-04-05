@@ -65,22 +65,25 @@ define(function(require) {
 		this.game.create();	
 	}
 
-	soundPlayer.createChannels(50);
+	soundPlayer.createChannels(60);
 
-	soundPlayer.load('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
-	soundPlayer.load('POWER_UP', gb.assetMap()['POWERUP.OGG']);
-	soundPlayer.load('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
-	soundPlayer.load('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
-	soundPlayer.load('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
-	soundPlayer.load('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
-	soundPlayer.load('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
-	soundPlayer.load('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
-	soundPlayer.load('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
-	soundPlayer.load('BUG', gb.assetMap()['BUG.OGG']);
-	soundPlayer.load('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG']);
-	soundPlayer.load('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
-	soundPlayer.load('BLOOP', gb.assetMap()['BLOOB.OGG']);
-	soundPlayer.load('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
+	soundPlayer.loadWithAudioTag('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
+	soundPlayer.loadWithAudioTag('POWER_UP', gb.assetMap()['POWERUP.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
+	soundPlayer.loadWithAudioTag('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
+	soundPlayer.loadWithAudioTag('BUG', gb.assetMap()['BUG.OGG']);
+	soundPlayer.loadWithAudioTag('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG']);
+	soundPlayer.loadWithAudioTag('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
+	soundPlayer.loadWithAudioTag('BLOOP', gb.assetMap()['BLOOB.OGG']);
+	soundPlayer.loadWithAudioTag('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
+	
+	soundPlayer.loadWithWebAudio('HIT', gb.assetMap()['HIT.OGG']);
+	soundPlayer.loadWithWebAudio('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
 
 	soundPlayer.assignChannels('PLAYER_SHOT', 1);
 	soundPlayer.assignChannels('POWER_UP', 3);

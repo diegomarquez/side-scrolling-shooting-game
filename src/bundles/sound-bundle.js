@@ -131,8 +131,19 @@ define(function(require) {
 					playMode: 'single'
 				});
 
-			
+			this.componentPool.createConfiguration("PlayerBulletHit", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'HIT',
+					parentEvent: 'hit',
+					playMode: 'single-buffer'
+				});
 
+			this.componentPool.createConfiguration("PlayerBulletDeflect", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'DEFLECT',
+					parentEvent: 'deflect',
+					playMode: 'single-buffer'
+				});
 		}
 	});
 
