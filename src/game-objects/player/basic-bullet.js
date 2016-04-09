@@ -1,4 +1,4 @@
-define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
+define(["editor-game-object-container", "reclaimer", "util"], function(GameObject, Reclaimer, Util) {
 
 	var damageableObjects = [
 		"BlobType",
@@ -31,13 +31,14 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 			this.life = 100;
 			this.angle = 0;
 			this.playerSpeed = 0;
+			this.disableTimeoutId = -1;
 		},
 
 		editorStart: function() {
 			this.life = 200;
 			this.renderer.play();
 
-			this.angle = (this.rotation) * (Math.PI/180)
+			this.angle = (this.rotation) * (Math.PI/180);
 		},
 
 		editorUpdate: function(delta) {
@@ -59,16 +60,13 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 				other.execute("hit");
 	
 				Reclaimer.mark(this);
-				
 				return;
 			}
 
 			if (other.poolId === "Boss_2_Body") {
 				this.execute("deflect");
-				
-				// TODO: Replace with delfect movement
-				Reclaimer.mark(this);
 
+				this.deflect();
 				return;
 			}
 
@@ -80,15 +78,29 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 					Reclaimer.mark(this);
 				} else {
 					this.execute("deflect");
-					
-					// TODO: Replace with delfect movement
-					Reclaimer.mark(this);	
+
+					this.deflect();
 				}
 
 				return;
 			}
 
 			Reclaimer.mark(this);
+		},
+
+		deflect: function() {
+			this.findComponents().firstWithProp('collider').disable();
+			this.angle += Math.PI + ((Math.PI/180) * Util.rand_i(-45, 45));
+			this.rotation = this.angle * (180/Math.PI);
+
+			this.disableTimeoutId = setTimeout(function() {
+				this.findComponents().firstWithProp('collider').enable();
+			}.bind(this), 200);
+		},
+
+		recycle: function() {
+			clearTimeout(this.disableTimeoutId);
+			this._super();
 		}
 	});
 
