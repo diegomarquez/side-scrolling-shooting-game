@@ -86,9 +86,12 @@ define(function(require) {
 				.addComponent('ShipDamage')
 				.addComponent('ShipDestroy')
 				.addComponent('ShipExplode')
+				.addComponent('AddPlayerHitFlash')
 
 				.addComponent('ShotSound')
-
+				.addComponent('PlayerDamage')
+				.addComponent('PlayerDestroyed')
+				
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
 		},

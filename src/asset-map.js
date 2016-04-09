@@ -88,6 +88,7 @@ define(function() {
 	"HIT.OGG": "assets/sound/hit.ogg",
 	"LARGEBUG.OGG": "assets/sound/largeBug.ogg",
 	"OPENHATCH.OGG": "assets/sound/openHatch.ogg",
+	"PLAYERDAMAGE.OGG": "assets/sound/playerDamage.ogg",
 	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
 	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"

@@ -2,6 +2,8 @@ define(["editor-component", "gb"], function(Component, Gb) {
 	var DamageFlash = Component.extend({
 		init: function() {
 			this._super();
+
+			this.flashTime = 0;
 		},
 
 		editorStart: function(parent) {
@@ -19,7 +21,7 @@ define(["editor-component", "gb"], function(Component, Gb) {
 				});
 
 				parent.removeComponent(this);
-			}.bind(this), 20);
+			}.bind(this), this.flashTime);
 		},
 	});
 

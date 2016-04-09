@@ -9,7 +9,7 @@ define(function(require) {
 				.args({
 					soundId: 'EXPLOSION_1',
 					parentEvent: 'damage',
-					playMode: 'single'
+					playMode: 'single-buffer'
 				});
 
 			this.componentPool.createConfiguration("EnemyShipExplosion1", commonBundle.getSoundComponentPoolId())
@@ -142,6 +142,27 @@ define(function(require) {
 				.args({
 					soundId: 'DEFLECT',
 					parentEvent: 'deflect',
+					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("PlayerDamage", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'PLAYER_DAMAGE',
+					parentEvent: 'damage',
+					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("PlayerSmallExplosion", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'EXPLOSION_1',
+					parentEvent: 'spray',
+					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("PlayerDestroyed", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'PLAYER_DAMAGE',
+					parentEvent: 'destroyed',
 					playMode: 'single-buffer'
 				});
 		}

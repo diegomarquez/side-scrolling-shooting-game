@@ -543,6 +543,8 @@ define(
 				this.execute(this.HEALTH_DOWN, this.hp);
 
 				if (this.hp == 0) {
+					this.execute(this.DAMAGE);
+					
 					this.damageComponent.disable();
 				
 					this.destroyComponent.enable();
@@ -555,6 +557,8 @@ define(
 					
 					if (this.hp <= 0)
 						return;
+
+					this.execute(this.DAMAGE);
 
 					powerupFeedbackArguments.x = this.X;
 					powerupFeedbackArguments.y = this.Y;
@@ -625,6 +629,7 @@ define(
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_UP", { get: function() { return 'health_up'; } });
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_DOWN", { get: function() { return 'health_down'; } });
 
+	Object.defineProperty(PlayerShip.prototype, "DAMAGE", { get: function() { return 'damage'; } });
 	Object.defineProperty(PlayerShip.prototype, "DESTROYED", { get: function() { return 'destroyed'; } });
 	Object.defineProperty(PlayerShip.prototype, "NO_CONTROL", { get: function() { return 'no_control'; } });
 

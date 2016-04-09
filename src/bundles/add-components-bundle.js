@@ -23,7 +23,20 @@ define(function(require) {
 				.args({
 					componentId: 'BulletHitFlash',
 					parentEvent: 'hit',
-					executeOnce: false
+					executeOnce: false,
+					componentArgs: {
+						flashTime: 20
+					}
+				});
+
+			this.componentPool.createConfiguration("AddPlayerHitFlash", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: 'BulletHitFlash',
+					parentEvent: 'damage',
+					executeOnce: false,
+					componentArgs: {
+						flashTime: 200
+					}
 				});
 		}
 	});

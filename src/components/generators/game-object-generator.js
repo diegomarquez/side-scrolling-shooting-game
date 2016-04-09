@@ -62,7 +62,8 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 					}
 				}
 
-				this.execute(this.SPRAY);	
+				this.execute(this.SPRAY);
+				this.parent.execute(this.SPRAY);
 			} else {
 				if (this.currentSprayCount > this.maxAmountToSpray) {
 					this.disable();
@@ -86,8 +87,8 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 						}
 					}
 					
-
-					this.execute(this.SPRAY);	
+					this.execute(this.SPRAY);
+					this.parent.execute(this.SPRAY);
 				}	
 			}
 		}

@@ -11,6 +11,8 @@ define(['component', 'gb'], function(Component, Gb){
 		enable: function() {
 			this._super();
 
+			Gb.addComponentTo(this.parent, 'PlayerSmallExplosion');
+
 			this.parent.damageComponent.setExplosions(this.damageExplosions);
 			this.parent.damageComponent.enable();
 
@@ -18,7 +20,6 @@ define(['component', 'gb'], function(Component, Gb){
 				Gb.reclaimer.mark(this.parent);
 				this.execute('complete');
 			});
-
 		},
 
 		update: function(delta) {

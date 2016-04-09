@@ -69,7 +69,6 @@ define(function(require) {
 
 	soundPlayer.loadWithAudioTag('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
 	soundPlayer.loadWithAudioTag('POWER_UP', gb.assetMap()['POWERUP.OGG']);
-	soundPlayer.loadWithAudioTag('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
 	soundPlayer.loadWithAudioTag('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
 	soundPlayer.loadWithAudioTag('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
 	soundPlayer.loadWithAudioTag('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
@@ -82,12 +81,13 @@ define(function(require) {
 	soundPlayer.loadWithAudioTag('BLOOP', gb.assetMap()['BLOOB.OGG']);
 	soundPlayer.loadWithAudioTag('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
 	
+	soundPlayer.loadWithWebAudio('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
 	soundPlayer.loadWithWebAudio('HIT', gb.assetMap()['HIT.OGG']);
 	soundPlayer.loadWithWebAudio('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
+	soundPlayer.loadWithWebAudio('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG']);
 
 	soundPlayer.assignChannels('PLAYER_SHOT', 1);
 	soundPlayer.assignChannels('POWER_UP', 3);
-	soundPlayer.assignChannels('EXPLOSION_1', 3);
 	soundPlayer.assignChannels('EXPLOSION_2', 3);
 	soundPlayer.assignChannels('EXPLOSION_3', 3);
 	soundPlayer.assignChannels('EXPLOSION_4', 3);
