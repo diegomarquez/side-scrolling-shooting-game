@@ -47,6 +47,7 @@ define(function(require) {
 				.addComponent('SpiderDestroyOnHpDepleted')
 				.addComponent('CheckOutOfBounds')
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -63,6 +64,7 @@ define(function(require) {
 				.addComponent('SpiderDestroyOnHpDepleted')
 				.addComponent("CheckOutOfBounds")
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -82,6 +84,7 @@ define(function(require) {
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -101,6 +104,7 @@ define(function(require) {
 				.addComponent('SpiderDestroyExplosions')
 				.addComponent('SpiderDestroyOnHpDepleted')
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();

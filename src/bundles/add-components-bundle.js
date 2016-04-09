@@ -16,6 +16,15 @@ define(function(require) {
 						amount: 5
 					}
 				});
+
+			this.componentPool.createConfiguration("BulletHitFlash", commonBundle.getDamageFlashPoolId());
+
+			this.componentPool.createConfiguration("AddBulletHitFlash", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: 'BulletHitFlash',
+					parentEvent: 'hit',
+					executeOnce: false
+				});
 		}
 	});
 

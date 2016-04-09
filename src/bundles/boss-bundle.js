@@ -74,6 +74,7 @@ define(function(require) {
 				.addComponent("Boss_1_Cables_Collider")
 				.addComponent("Activate_Boss_On_View")
 				.addComponent('GeneratorExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer("Boss_1_Cables_Renderer")
 				.childOnly();
 
@@ -94,6 +95,7 @@ define(function(require) {
 				.addComponent('BossSmallExplosion')
 				.addComponent('BossStartExplosion')
 				.addComponent("Activate_Boss_On_View")
+				.addComponent("AddBulletHitFlash")
 				.addComponent("Boss_1_Collider")
 				.setRenderer("Boss_1_Renderer")
 				.enemyCategory()
@@ -195,6 +197,7 @@ define(function(require) {
 				.addComponent('BossEndExplosion')
 				.addComponent('BossSmallExplosion')
 				.addComponent('BossStartExplosion')
+				.addComponent("AddBulletHitFlash")
 				.addChild('boss-body')
 				.setRenderer("Boss_2_Core_Renderer")
 				.enemyCategory()
@@ -314,6 +317,7 @@ define(function(require) {
 				.addComponent('Boss3EyeCollider')
 				.addComponent('Boss_3_Wobble')
 				.addComponent('GeneratorExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer("OuterEyeRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -412,6 +416,7 @@ define(function(require) {
 				.addComponent('BossStartExplosion')
 				.addComponent('Boss4Move')
 				.addComponent("AddBossTwitchOnDestroy")
+				.addComponent("AddBulletHitFlash")
 				.addChild("FirePosition", { y: 30 })
 				.setRenderer("Boss_4_Body_Renderer")
 				.enemyCategory()

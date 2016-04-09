@@ -92,6 +92,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('EnemyShipExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('EnemyShip_1_Renderer')
 				.childOnly();
 
@@ -107,6 +108,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('EnemyShipExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('EnemyShip_1_Renderer')
 				.childOnly();
 
@@ -124,6 +126,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Helper_Renderer')
 				.childOnly();
 
@@ -141,6 +144,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('SpiderExplosion1')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('Spider_Helper_Renderer')
 				.childOnly();
 
@@ -155,6 +159,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('EnemyShipExplosion2')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('EnemyShip_2_Renderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -170,6 +175,7 @@ define(function(require) {
 				.addComponent('EnemyShipDestroyExplosions')
 				.addComponent('EnemyShipDestroyOnHpDepleted')
 				.addComponent('EnemyShipExplosion2')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('EnemyShip_2_Renderer')
 				.enemyCategory()
 				.strongEnemyTier();

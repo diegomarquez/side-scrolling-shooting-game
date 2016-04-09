@@ -58,6 +58,7 @@ define(function(require) {
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobShrapnel', { objectType: 'blob-bullet-slow', amount: 'x4' })
 				.addComponent('EnemyShipExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -74,6 +75,7 @@ define(function(require) {
 				.addComponent('BlobFollowTarget')
 				.addComponent('EnemyShipExplosion3')
 				.addComponent('BlobShrapnel', { objectType: 'blob-bullet-slow', amount: 'x8' })
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -90,6 +92,7 @@ define(function(require) {
 				.addComponent('BlobFollowTarget')
 				.addComponent('EnemyShipExplosion1')
 				.addComponent('BlobDivide', { objectType: 'blob-explode-0', amount: 'x2' })
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -106,6 +109,7 @@ define(function(require) {
 				.addComponent('BlobFollowTarget')
 				.addComponent('EnemyShipExplosion1')
 				.addComponent('BlobDivide', { objectType: 'blob-explode-1', amount: 'x3' })
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -121,6 +125,7 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobDivide', { objectType: 'blob-divide-0', amount: 'x2' })
+				.addComponent("AddBulletHitFlash")
 				.addComponent('EnemyShipExplosion1')
 				.setRenderer('BlobRenderer')
 				.enemyCategory()
@@ -137,6 +142,7 @@ define(function(require) {
 				.addComponent('BlobDestroyOnHpDepleted')
 				.addComponent('BlobFollowTarget')
 				.addComponent('BlobDivide', { objectType: 'blob-divide-1', amount: 'x3' })
+				.addComponent("AddBulletHitFlash")
 				.addComponent('EnemyShipExplosion1')
 				.setRenderer('BlobRenderer')
 				.enemyCategory()

@@ -53,6 +53,7 @@ define(function(require) {
 				.addComponent('Activate_Mine_On_View')
 				.addComponent('MineDestroyExplosions')
 				.addComponent('EnemyShipExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('MineRenderer')
 				.enemyCategory()
 				.weakEnemyTier();
@@ -66,6 +67,7 @@ define(function(require) {
 				.addComponent('Activate_Mine_On_View')
 				.addComponent('MineDestroyExplosions')
 				.addComponent('EnemyShipExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('MineRenderer')
 				.enemyCategory()
 				.strongEnemyTier();
@@ -81,6 +83,7 @@ define(function(require) {
 				.addComponent('MineWobbleMovement')
 				.addComponent('MineDestroyExplosions')
 				.addComponent('EnemyShipExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('MineRenderer')
 				.childOnly();
 
@@ -95,6 +98,7 @@ define(function(require) {
 				.addComponent('MineWobbleMovement')
 				.addComponent('MineDestroyExplosions')
 				.addComponent('EnemyShipExplosion3')
+				.addComponent("AddBulletHitFlash")
 				.setRenderer('MineRenderer')
 				.childOnly();
 		},

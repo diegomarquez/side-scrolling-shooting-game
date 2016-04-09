@@ -34,7 +34,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 		},
 
 		editorStart: function() {
-			this.life = 50;
+			this.life = 200;
 			this.renderer.play();
 
 			this.angle = (this.rotation) * (Math.PI/180)
@@ -56,6 +56,8 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 
 			if (damageableObjects.indexOf(other.poolId) !== -1) {
 				this.execute("hit");
+				other.execute("hit");
+	
 				Reclaimer.mark(this);
 				
 				return;
@@ -63,6 +65,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 
 			if (other.poolId === "Boss_2_Body") {
 				this.execute("deflect");
+				
 				// TODO: Replace with delfect movement
 				Reclaimer.mark(this);
 
@@ -72,9 +75,12 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 			if (other.poolId === "Boss_1") {
 				if (other.canBeDamaged()) {
 					this.execute("hit");
+					other.execute("hit");
+
 					Reclaimer.mark(this);
 				} else {
 					this.execute("deflect");
+					
 					// TODO: Replace with delfect movement
 					Reclaimer.mark(this);	
 				}
@@ -82,11 +88,7 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 				return;
 			}
 
-			if (other.poolId === "Obstacle") {
-				Reclaimer.mark(this);
-
-				return;
-			}
+			Reclaimer.mark(this);
 		}
 	});
 
