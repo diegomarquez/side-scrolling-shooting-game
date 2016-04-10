@@ -20,6 +20,7 @@ define(function(require) {
 
     	// Setup pools for the stage overview screen
     	require('common-bundle').create();
+    	require('sound-bundle').create();
 	    require('custom-stage-select-bundle').create();
 
 	    // Create the stage overview game object

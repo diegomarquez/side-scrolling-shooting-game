@@ -75,6 +75,7 @@ define(function() {
 	"UPLEFTARROW.PNG": "assets/images/upLeftArrow.png",
 	"UPRIGHTARROW.PNG": "assets/images/upRightArrow.png",
 	"WEBBULLET.PNG": "assets/images/webBullet.png",
+	"BACK.OGG": "assets/sound/back.ogg",
 	"BLOOB.OGG": "assets/sound/bloob.ogg",
 	"BUG.OGG": "assets/sound/bug.ogg",
 	"DEFLECT.OGG": "assets/sound/deflect.ogg",
@@ -87,10 +88,12 @@ define(function() {
 	"EXPLOSION7.OGG": "assets/sound/explosion7.ogg",
 	"HIT.OGG": "assets/sound/hit.ogg",
 	"LARGEBUG.OGG": "assets/sound/largeBug.ogg",
+	"OK.OGG": "assets/sound/ok.ogg",
 	"OPENHATCH.OGG": "assets/sound/openHatch.ogg",
 	"PLAYERDAMAGE.OGG": "assets/sound/playerDamage.ogg",
 	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
+	"SELECT.OGG": "assets/sound/select.ogg",
 	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"
 };
 

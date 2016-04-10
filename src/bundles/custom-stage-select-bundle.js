@@ -90,7 +90,10 @@ define(function(require) {
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("CustomStageSelect", 'CustomStageSelect');
+			this.gameObjectPool.createConfiguration("CustomStageSelect", 'CustomStageSelect')
+				.addComponent("OptionHighlight")
+				.addComponent("OptionSelect")
+				.addComponent("OptionBack");
 		}
 	});
 

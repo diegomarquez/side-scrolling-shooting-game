@@ -85,6 +85,9 @@ define(function(require) {
 	soundPlayer.loadWithWebAudio('HIT', gb.assetMap()['HIT.OGG']);
 	soundPlayer.loadWithWebAudio('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
 	soundPlayer.loadWithWebAudio('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG']);
+	soundPlayer.loadWithWebAudio('SELECT', gb.assetMap()['SELECT.OGG']);
+	soundPlayer.loadWithWebAudio('OK', gb.assetMap()['OK.OGG']);
+	soundPlayer.loadWithWebAudio('BACK', gb.assetMap()['BACK.OGG']);
 
 	soundPlayer.assignChannels('PLAYER_SHOT', 1);
 	soundPlayer.assignChannels('POWER_UP', 3);

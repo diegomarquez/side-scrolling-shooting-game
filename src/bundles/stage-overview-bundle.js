@@ -129,7 +129,10 @@ define(function(require) {
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("StageOverview", 'StageOverview');
+			this.gameObjectPool.createConfiguration("StageOverview", 'StageOverview')
+				.addComponent("OptionHighlight")
+				.addComponent("OptionSelect")
+				.addComponent("OptionBack");
 		}
 	});
 

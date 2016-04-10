@@ -24,6 +24,7 @@ define(function(require) {
 			// Setup pools for the splash screen
 			require('common-bundle').create();
 			require('splash-bundle').create();
+			require('sound-bundle').create();
 
 			// Add extensions
 			game.add_extension(require("center-canvas"));

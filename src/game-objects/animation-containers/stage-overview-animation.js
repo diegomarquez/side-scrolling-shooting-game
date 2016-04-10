@@ -61,16 +61,18 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     		}.bind(this) 
     	});
 
-			this.tl.to(this.stages, 0.5, { y: 50 }, 'title');
-    		this.tl.to(this.topLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
-    		this.tl.to(this.bottomLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
-    		this.tl.to(this.topRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
-    		this.tl.to(this.bottomRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
-			this.tl.to(this.backOption, 0.5, { y: Gb.canvas.height - 40 }, 'title');
+		this.tl.to(this.stages, 0.5, { y: 50 }, 'title');
+		this.tl.to(this.topLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+		this.tl.to(this.bottomLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+		this.tl.to(this.topRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+		this.tl.to(this.bottomRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+		this.tl.to(this.backOption, 0.5, { y: Gb.canvas.height - 40 }, 'title');
 
-			this.tl.play();
+		this.tl.play();
 
-			this.onLeftPress();			
+		this.onLeftPress();
+
+		this._super();
     }, 
 
     reverse: function() {
@@ -86,8 +88,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     onLeftPress: function() {
     	this.hideAllOptions();
 		
-		if (this.gridX > 0)
+		if (this.gridX > 0) {
 			this.gridX--;
+
+			this.execute("option");
+		}
 
 		this.showSelection();
     },
@@ -95,8 +100,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     onRightPress: function() {
     	this.hideAllOptions();
 
-    	if (this.gridX < 1)
+    	if (this.gridX < 1) {
     		this.gridX++;
+
+    		this.execute("option");
+    	}
 
     	this.showSelection();
     },
@@ -104,8 +112,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     onUpPress: function() {
     	this.hideAllOptions();
 
-    	if (this.gridY > 0)
+    	if (this.gridY > 0) {
     		this.gridY--;
+
+    		this.execute("option");
+    	}
 
     	this.showSelection();
     },
@@ -113,8 +124,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     onDownPress: function() {
     	this.hideAllOptions();
 
-    	if (this.gridY < 2)
+    	if (this.gridY < 2) {
     		this.gridY++;
+
+    		this.execute("option");	
+    	}
 
     	this.showSelection();
     },
@@ -167,14 +181,18 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     executeStartSelectedDelegate: function() {
     	if (this.gridX == 0 && this.gridY == 0) {
   			this.execute(this.START_SELECTED, 0);
+  			this.execute("select");
   		} else if (this.gridX == 0 && this.gridY == 1) {
   			this.execute(this.START_SELECTED, 2);
+  			this.execute("select");
   		} else if (this.gridX == 1 && this.gridY == 0) {
   			this.execute(this.START_SELECTED, 1);
+  			this.execute("select");
   		} else if (this.gridX == 1 && this.gridY == 1) {
   			this.execute(this.START_SELECTED, 3);
+  			this.execute("select");
   		} else {
-
+  			this.execute("back");
   		}
     },
 

@@ -100,7 +100,9 @@ define(function(require) {
 					offset: 'center'
 				});
 
-			this.gameObjectPool.createConfiguration("Title", 'Title');
+			this.gameObjectPool.createConfiguration("Title", 'Title')
+				.addComponent("OptionHighlight")
+				.addComponent("OptionSelect")
 		},
 	});
 

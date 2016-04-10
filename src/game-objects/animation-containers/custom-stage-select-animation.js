@@ -79,6 +79,8 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 			hideMarkers.call(this);
 			showMarker.call(this, this.currentIndex);	
 			updateStageNames.call(this, this.currentIndex, this.stageIndex, true);
+
+			this._super();
 	    }, 
 
 	    reverse: function() {
@@ -94,7 +96,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 	    onLeftPress: function() {
 	    	var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
-	    	this.backOption.selected = true;
+	    	if (!this.backOption.selected) {
+	    		this.execute("option");	
+	    	}
+
+    		this.backOption.selected = true;
 	    	this.startOption.selected = false;
 
 			for (var i = 0; i < children.length; i++) {
@@ -111,7 +117,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 	    onRightPress: function() {
 	    	var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
-	    	this.backOption.selected = false;
+	    	if (this.backOption.selected) {
+	    		this.execute("option");
+	    	}
+
+    		this.backOption.selected = false;
 	    	this.startOption.selected = true;
 
 			for (var i = 0; i < children.length; i++) {
@@ -122,12 +132,13 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 
 			for (var i = 0; i < children.length; i++) {
 				children[i].show();
-			}
+			}	    	
 	    },
 
 	    onUpPress: function() {
 	    	if (this.stageIndex > 0) {
 	    		this.stageIndex--;
+	    		this.execute("option");
 	    	}
 
 	    	if (this.currentIndex > 0) {
@@ -145,6 +156,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 	    onDownPress: function() {
 	    	if (this.stageIndex < this.sceneCount) {
 	    		this.stageIndex++;
+	    		this.execute("option");
 	    	}
 
 	    	if (this.currentIndex < this.markers.length - 1) {
@@ -163,11 +175,14 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 	    	if (this.backOption.selected) {
 				this.reverse();
 				this.execute(this.BACK_SELECTED);
+				this.execute("back");
 				return;
 			}
 
 			if (this.startOption.selected && this.stageNames[this.currentIndex].validLevel) {
 				this.reverse();
+
+				this.execute("select");
 
 				if (LocalStorage.getUrlScene()) {
 					if (this.stageIndex === 0) {

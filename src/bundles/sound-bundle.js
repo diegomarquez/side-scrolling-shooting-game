@@ -165,6 +165,27 @@ define(function(require) {
 					parentEvent: 'destroyed',
 					playMode: 'single-buffer'
 				});
+
+			this.componentPool.createConfiguration("OptionHighlight", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'SELECT',
+					parentEvent: 'option',
+					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("OptionSelect", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'OK',
+					parentEvent: 'select',
+					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("OptionBack", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'BACK',
+					parentEvent: 'back',
+					playMode: 'single-buffer'
+				});			
 		}
 	});
 

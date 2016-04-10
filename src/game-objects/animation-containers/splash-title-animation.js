@@ -51,6 +51,8 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 
 		this.currentOption = 0;
 		highLightOption.call(this, this.currentOption);
+
+		this._super();
     }, 
 
     addOption: function(varName, objectName, viewports, args) {
@@ -70,6 +72,8 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     onUpPress: function() {
     	if (this.currentOption > 0) {
     		this.currentOption--;
+
+    		this.execute("option");
     	}
 
     	highLightOption.call(this, this.currentOption);
@@ -78,6 +82,8 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     onDownPress: function() {
     	if (this.currentOption < this.options.length - 1) {
     		this.currentOption++;
+
+    		this.execute("option");
     	}
 
     	highLightOption.call(this, this.currentOption);
@@ -101,6 +107,8 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 				this.reverse();
 			}
 		}
+
+		this.execute("select");
     },
 
     recycle: function() {
