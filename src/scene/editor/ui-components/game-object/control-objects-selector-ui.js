@@ -2,13 +2,17 @@ define(function(require) {
 	var gb = require('gb');
 	var root = require('root');
 
+	var dataSource = "";
+
 	var ControlObjectSelector = require('ui-component').extend({
 		init: function() {
 			this.controlObjectSelectorUI = null;
 			this.hasStartPosition = null;
 		},
 
-		show: function(event) {
+		show: function(event, source) {
+			dataSource = source;
+
 			this.controlObjectSelectorUI.show(event);
 		},
 
@@ -22,11 +26,26 @@ define(function(require) {
 				buttons: true,
 				height: 200,
 				data: function() {
-					return require('editor-config').getControlObjects();
+					if (!dataSource)
+						return require('editor-config').getControlObjects();
+
+					if (dataSource === "control")
+						return require('editor-config').getControlObjects();
+
+					if (dataSource === "sound")
+						return require('editor-config').getSoundObjects();
 				},
 				onClick: function(controlObjectName) {
-					controlObjectName = require('editor-config').getControlObjectOriginalName(controlObjectName);
+					
+					if (dataSource === "control") {
+						controlObjectName = require('editor-config').getControlObjectOriginalName(controlObjectName);
+					}
+						
 
+					if (dataSource === "sound") {
+						// Space to do transformations if needed
+					}
+					
 					if (self.hasStartPosition === null) {
 						self.hasStartPosition = !!root.findChildren().recurse().firstWithType("StartPosition");
 					}

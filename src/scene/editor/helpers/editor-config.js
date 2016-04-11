@@ -17,6 +17,7 @@ define(function(require) {
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
 	var controlObjectsNameAliases = null;
+	var soundObjects = null;
 	var draggableOnlyObjects = null;
 	var controlGizmoGameObjects = null;
 	var colliderGizmoGameObjects = null;
@@ -115,7 +116,7 @@ define(function(require) {
 		},
 
 		isControlObject: function(id) {
-			return checkExistance(id, this.getControlObjects());
+			return checkExistance(id, this.getControlObjects()) || checkExistance(id, this.getSoundObjects());
 		},
 
 		isDraggableOnlyObject: function(id) {
@@ -226,8 +227,10 @@ define(function(require) {
 				'start-position-up',
 				'start-position-down',
 				'scroll-stopper',
+				'absolute-scroll-stopper',
 				'boss-scroll-stopper',
-				'warning-sign',		
+				'warning-sign',
+				'boss-warning',
 				'direction-right',
 				'direction-left',
 				'direction-up',
@@ -259,6 +262,16 @@ define(function(require) {
 			}
 
 			return controlObjectsNameAliases[name] ? controlObjectsNameAliases[name] : name;
+		},
+
+		getSoundObjects: function() {
+			if (soundObjects) {
+				return soundObjects;
+			}
+
+			soundObjects = ['bgm-1', 'bgm-2', 'bgm-3', 'bgm-4'];
+
+			return soundObjects;
 		},
 
 		getDraggableOnlyObjects: function() {

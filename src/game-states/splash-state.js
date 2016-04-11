@@ -4,12 +4,17 @@ define(function(require) {
 	var stateMachineFactory = require("state-machine");
 	var gb = require("gb");
 
+	var soundPlayer = require("sound-player");
+
 	var game = gb.game;
 
 	return function (name) {
 		var state = stateMachineFactory.createState(this, name);
 
 		state.addStartAction(function (args) {
+			// Play the intro loop if it isn't already playing
+			soundPlayer.playLoop("INTRO");
+
 			// Clear update groups and viewports before doing anything else
 			gb.groups.removeAll();
 			gb.viewports.removeAll();
@@ -79,6 +84,9 @@ define(function(require) {
 				require('mode').setBasic();
 
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					// Stop playing music when going into the editor
+					soundPlayer.stop("INTRO");
+
 					state.execute(state.NEXT, { nextInitArgs:'edit-mode', lastCompleteArgs: 'edit-mode' });
 				});
 
@@ -116,6 +124,9 @@ define(function(require) {
 
 				// Once the loader animation is complete go to the game mode state signaling the edit option was selected
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
+					// Stop playing music when going into the editor
+					soundPlayer.stop("INTRO");
+
 					state.execute(state.NEXT, { nextInitArgs:'edit-mode', lastCompleteArgs: 'edit-mode' });
 				});
 

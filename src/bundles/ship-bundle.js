@@ -39,14 +39,7 @@ define(function(require) {
 					getResponse: true
 				});
 
-			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
-
-			this.componentPool.createConfiguration("ShotSound", commonBundle.getSoundComponentPoolId())
-				.args({
-					soundId: 'PLAYER_SHOT',
-					parentEvent: 'shot',
-					playMode: 'single'
-				});			
+			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');			
 
 			this.componentPool.createConfiguration("ExhaustRenderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({

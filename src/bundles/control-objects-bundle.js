@@ -65,6 +65,12 @@ define(function(require) {
 					offset: 'center'
 				});
 
+			this.componentPool.createConfiguration("SoundPlayerRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["SOUND.PNG"],
+					offset: 'center'
+				});
+
 			this.gameObjectPool.createConfiguration("scroll-stopper", "ScrollStopper")
 				.addComponent("ActivateControlOnView");
 			
@@ -234,6 +240,38 @@ define(function(require) {
 				.addComponent("DirectionSetterCollider")
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AngleDirectionSetterRenderer");
+
+			this.gameObjectPool.createConfiguration("bgm-1", commonBundle.getGameObjectPoolId())
+				.args({
+					soundId: 'LEVEL_1'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("SoundPlayerRenderer");
+
+			this.gameObjectPool.createConfiguration("bgm-2", commonBundle.getGameObjectPoolId())
+				.args({
+					soundId: 'LEVEL_2'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("SoundPlayerRenderer");
+
+			this.gameObjectPool.createConfiguration("bgm-3", commonBundle.getGameObjectPoolId())
+				.args({
+					soundId: 'LEVEL_3'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("SoundPlayerRenderer");
+
+			this.gameObjectPool.createConfiguration("bgm-4", commonBundle.getGameObjectPoolId())
+				.args({
+					soundId: 'LEVEL_4'
+				})
+				.addComponent("AutoHide")
+				.addComponent("ActivateControlOnView")
+				.setRenderer("SoundPlayerRenderer");
 
 		}
 	});

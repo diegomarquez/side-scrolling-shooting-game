@@ -79,7 +79,15 @@ define(function(require) {
 						name: 'Add Control Object',
 						icon: 'ui-icon-plusthick',
 						click: function(name, event) {
-							controlObjectSelectorUI.show(event);
+							controlObjectSelectorUI.show(event, "control");
+						}				
+					},
+
+					{
+						name: 'Add Sound Object',
+						icon: 'ui-icon-volume-on',
+						click: function(name, event) {
+							controlObjectSelectorUI.show(event, "sound");
 						}				
 					},
 

@@ -48,6 +48,7 @@ define(function(require) {
 		go.Dragable = true;
 
 		go.single(go.CONTEXT_MENU, this, function(mouseData) {
+			debugger;
 
 			if (editorConfig.isControlObject(mouseData.go.typeId)) {
 				this.controlObjectContextMenu.show(mouseData);
