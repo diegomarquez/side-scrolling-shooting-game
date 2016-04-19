@@ -79,6 +79,7 @@ define(function() {
 	"BACK.OGG": "assets/sound/back.ogg",
 	"BLOOB.OGG": "assets/sound/bloob.ogg",
 	"BUG.OGG": "assets/sound/bug.ogg",
+	"COSMICDANCE.OGG": "assets/sound/cosmicDance.ogg",
 	"DEFLECT.OGG": "assets/sound/deflect.ogg",
 	"EXPLOSION1.OGG": "assets/sound/explosion1.ogg",
 	"EXPLOSION2.OGG": "assets/sound/explosion2.ogg",
@@ -91,13 +92,17 @@ define(function() {
 	"INTRO.OGG": "assets/sound/intro.ogg",
 	"LARGEBUG.OGG": "assets/sound/largeBug.ogg",
 	"LEVEL1.OGG": "assets/sound/level1.ogg",
+	"LEVEL2.OGG": "assets/sound/level2.ogg",
+	"LEVEL3.OGG": "assets/sound/level3.ogg",
+	"LEVEL5.OGG": "assets/sound/level5.ogg",
 	"OK.OGG": "assets/sound/ok.ogg",
 	"OPENHATCH.OGG": "assets/sound/openHatch.ogg",
 	"PLAYERDAMAGE.OGG": "assets/sound/playerDamage.ogg",
 	"PLAYERSHOT.OGG": "assets/sound/playerShot.ogg",
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
 	"SELECT.OGG": "assets/sound/select.ogg",
-	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg"
+	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg",
+	"WARNING.OGG": "assets/sound/warning.ogg"
 };
 
 	Data.prototype.get = function() {

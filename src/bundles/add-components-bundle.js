@@ -38,6 +38,35 @@ define(function(require) {
 						flashTime: 200
 					}
 				});
+
+			this.componentPool.createConfiguration("RestartLastBGM", commonBundle.getAddGameObjectPoolId())
+				.args({
+					goId: 'bgm-last',
+					parentEvent: 'all-bosses-destroyed',
+					group: "First",
+					viewports: [{viewport: 'Main', layer: 'Front'}],
+					executeOnce: false
+				});
+
+			this.componentPool.createConfiguration("StopCurrentBGM", commonBundle.getAddGameObjectPoolId())
+				.args({
+					goId: 'bgm-stop-current',
+					parentEvent: 'last-boss-destroyed',
+					group: "First",
+					viewports: [{viewport: 'Main', layer: 'Front'}],
+					executeOnce: false
+				});
+
+			this.componentPool.createConfiguration("StopCurrentAndRestartLastBGM", commonBundle.getAddGameObjectPoolId())
+				.args({
+					goId: 'bgm-last',
+					parentEvent: 'boss-stop',
+					group: "First",
+					viewports: [{viewport: 'Main', layer: 'Front'}],
+					executeOnce: false
+				});
+
+			
 		}
 	});
 

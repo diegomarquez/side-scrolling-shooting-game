@@ -65,10 +65,16 @@ define(function(require) {
 		this.game.create();	
 	}
 
-	soundPlayer.createChannels(1);
+	soundPlayer.createChannels(2);
+
+	// soundPlayer.assignChannels('INTRO', 1);
 
 	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
 	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
+	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
+	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG']);
+	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG']);
+	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG']);
 
 	soundPlayer.loadWithWebAudio('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
 	soundPlayer.loadWithWebAudio('POWER_UP', gb.assetMap()['POWERUP.OGG']);
@@ -90,6 +96,7 @@ define(function(require) {
 	soundPlayer.loadWithWebAudio('SELECT', gb.assetMap()['SELECT.OGG']);
 	soundPlayer.loadWithWebAudio('OK', gb.assetMap()['OK.OGG']);
 	soundPlayer.loadWithWebAudio('BACK', gb.assetMap()['BACK.OGG']);
+	soundPlayer.loadWithWebAudio('WARNING', gb.assetMap()['WARNING.OGG']);
 
 	soundPlayer.loadAll();
 

@@ -45,6 +45,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 		recycle: function() {
 			if (PlayerGetter.exists()) {
 				if (this.otherBosses && this.otherBosses.length == 0) {
+					this.execute('all-bosses-destroyed', this);
+
 					PlayerGetter.get().move();
 					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 				}
@@ -96,6 +98,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 							this.execute('destroyed', this);
 
 							if (this.otherBosses && this.otherBosses.length == 0) {
+								this.execute('last-boss-destroyed', this);
+								
 								// Signal all cannons that the boss has been destroyed
 								if (this.cannons) {
 									for (var i=0; i < this.cannons.length; i++) {
@@ -154,6 +158,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 		},
 
 		stopLogic: function() {
+			this.execute('boss-stop', this);
+			
 			if (this.cannons === null) {
 				return;
 			}

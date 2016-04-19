@@ -192,6 +192,13 @@ define(function(require) {
 					soundId: 'BACK',
 					parentEvent: 'back',
 					playMode: 'single-buffer'
+				});
+
+			this.componentPool.createConfiguration("WarningSound", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'WARNING',
+					parentEvent: 'warning',
+					playMode: 'single-buffer'
 				});			
 		}
 	});

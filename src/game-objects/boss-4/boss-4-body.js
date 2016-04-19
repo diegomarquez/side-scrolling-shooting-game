@@ -200,6 +200,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 						this.execute('destroyed', this);
 
 						if (this.otherBosses && this.otherBosses.length == 0) {
+							this.execute('last-boss-destroyed', this);
+
 							// Signal all cannons that the boss has been destroyed
 							if (this.cannons) {
 								for (var i=0; i < this.cannons.length; i++) {
@@ -221,6 +223,8 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 		recycle: function() {
 			if (PlayerGetter.exists()) {
 				if (this.otherBosses && this.otherBosses.length == 0) {
+					this.execute('all-bosses-destroyed', this);
+
 					PlayerGetter.get().move();
 					PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 				}
@@ -266,6 +270,10 @@ define(["editor-game-object-container", "player-getter", "root", "timer-factory"
 			this.otherBosses = Root.findChildren().recurse().all(function(child)
 			{
 				return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main');
+			});
+
+			PlayerGetter.get().once(PlayerGetter.get().MOVE, this, function() {
+				this.execute('boss-stop', this);
 			});
 
 			if (this.otherBosses) {		

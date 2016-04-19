@@ -120,16 +120,16 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 
 					// When the last explosion is done with it's animation, check if this is the last boss standing
 					explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {
-						
-						// Recycle the boss
-						Gb.reclaimer.mark(this);
-
 						// Check if all bosses have been destroyed to resume scrolling
 						if (this.otherBosses && this.otherBosses.length == 0) {
+							this.execute('all-bosses-destroyed', this);
+
 							PlayerGetter.get().move();
 							PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
 						}
 
+						// Recycle the boss
+						Gb.reclaimer.mark(this);
 					});
 
 					// Signal other bosses
@@ -137,6 +137,8 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 
 					// Check if all bosses have been destroyed
 					if (this.otherBosses && this.otherBosses.length == 0) {
+						this.execute('last-boss-destroyed', this);
+
 						// Signal all cannons that all bosses has been destroyed
 						if (this.cannons) {
 							for (var i=0; i < this.cannons.length; i++) {
@@ -151,6 +153,8 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		stopLogic: function() {
+			this.execute('boss-stop', this);
+
 			if (this.cables === null || this.cannons === null)
 				return;
 

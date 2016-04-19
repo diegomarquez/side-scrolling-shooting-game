@@ -4,6 +4,7 @@ define(function(require) {
 	var keyboard = require('keyboard');
 	var collisionResolver = require('collision-resolver');
 	var util = require('util');
+	var soundPlayer = require('sound-player');
 
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
@@ -174,10 +175,12 @@ define(function(require) {
 			this.setKeyboardEvents();
 			this.setCompleteEvents();
 			this.decorateContainer(sceneData);
+
+			soundPlayer.playLoop('INTRO');
 		},
 
 		start: function() {
-			
+				
 		},
 
 		decorateContainer: function(sceneData) {

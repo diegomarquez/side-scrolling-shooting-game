@@ -18,6 +18,7 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool("AngleDirectionSetter", require('angle-direction-setter'));
 
 			this.gameObjectPool.createDynamicPool("TwoWayDirectionSetter", require('two-way-direction-setter'));
+			this.gameObjectPool.createDynamicPool("BGMSound", require('bgm-sound'));
 
 			this.componentPool.createConfiguration("DirectionSetterCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
@@ -80,7 +81,8 @@ define(function(require) {
 				.setRenderer("AbsoluteScrollStopperRenderer");
 				
 			this.gameObjectPool.createConfiguration("boss-warning", "BossWarning")
-				.addComponent("ActivateControlOnView");
+				.addComponent("ActivateControlOnView")
+				.addComponent("WarningSound")
 
 			this.gameObjectPool.createConfiguration("direction-right", "DirectionSetter")
 				.args({
@@ -241,7 +243,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AngleDirectionSetterRenderer");
 
-			this.gameObjectPool.createConfiguration("bgm-1", commonBundle.getGameObjectPoolId())
+			this.gameObjectPool.createConfiguration("bgm-1", "BGMSound")
 				.args({
 					soundId: 'LEVEL_1'
 				})
@@ -249,7 +251,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("SoundPlayerRenderer");
 
-			this.gameObjectPool.createConfiguration("bgm-2", commonBundle.getGameObjectPoolId())
+			this.gameObjectPool.createConfiguration("bgm-2", "BGMSound")
 				.args({
 					soundId: 'LEVEL_2'
 				})
@@ -257,7 +259,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("SoundPlayerRenderer");
 
-			this.gameObjectPool.createConfiguration("bgm-3", commonBundle.getGameObjectPoolId())
+			this.gameObjectPool.createConfiguration("bgm-3", "BGMSound")
 				.args({
 					soundId: 'LEVEL_3'
 				})
@@ -265,7 +267,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("SoundPlayerRenderer");
 
-			this.gameObjectPool.createConfiguration("bgm-4", commonBundle.getGameObjectPoolId())
+			this.gameObjectPool.createConfiguration("bgm-4", "BGMSound")
 				.args({
 					soundId: 'LEVEL_4'
 				})
@@ -273,6 +275,24 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("SoundPlayerRenderer");
 
+			this.gameObjectPool.createConfiguration("bgm-boss", "BGMSound")
+				.args({
+					soundId: 'BOSS',
+					storeLast: false,
+					inmediateRecycle: true
+				});
+
+			this.gameObjectPool.createConfiguration("bgm-last", "BGMSound")
+				.args({
+					playLast: true,
+					inmediateRecycle: true
+				});
+
+			this.gameObjectPool.createConfiguration("bgm-stop-current", "BGMSound")
+				.args({
+					stopCurrent: true,
+					inmediateRecycle: true
+				});			
 		}
 	});
 

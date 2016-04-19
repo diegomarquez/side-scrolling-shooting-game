@@ -5,6 +5,7 @@ define(function(require) {
 	var playerLoader = require('player-scene-loader');
 	var viewportFollow = require('viewport-follow');
 	var playerGetter = require('player-getter');
+	var soundPlayer = require('sound-player');
 
 	require("TweenLite");
 	require("EasePack");
@@ -157,6 +158,8 @@ define(function(require) {
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
 
+							soundPlayer.stop("INTRO");
+
 							self.blockEscape = false;
 						}
 					}); 
@@ -183,6 +186,8 @@ define(function(require) {
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
 
+							soundPlayer.stop("INTRO");
+
 							self.blockEscape = false;
 						}
 					}); 
@@ -206,6 +211,8 @@ define(function(require) {
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
+
+							soundPlayer.stop("INTRO");
 
 							self.blockEscape = false;
 						}
@@ -231,6 +238,8 @@ define(function(require) {
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
 
+							soundPlayer.stop("INTRO");
+
 							self.blockEscape = false;
 						}
 					}); 
@@ -254,6 +263,8 @@ define(function(require) {
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
+
+							soundPlayer.stop("INTRO");
 
 							self.blockEscape = false;
 						}

@@ -17,6 +17,7 @@ define(function(require) {
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
 	var controlObjectsNameAliases = null;
+	var aliasedControlObjects = null;
 	var soundObjects = null;
 	var draggableOnlyObjects = null;
 	var controlGizmoGameObjects = null;
@@ -116,7 +117,7 @@ define(function(require) {
 		},
 
 		isControlObject: function(id) {
-			return checkExistance(id, this.getControlObjects()) || checkExistance(id, this.getSoundObjects());
+			return checkExistance(id, this.getControlObjects()) || checkExistance(id, this.getSoundObjects()) || checkExistance(id, aliasedControlObjects);
 		},
 
 		isDraggableOnlyObject: function(id) {
@@ -227,9 +228,7 @@ define(function(require) {
 				'start-position-up',
 				'start-position-down',
 				'scroll-stopper',
-				'absolute-scroll-stopper',
 				'boss-scroll-stopper',
-				'warning-sign',
 				'boss-warning',
 				'direction-right',
 				'direction-left',
@@ -248,6 +247,12 @@ define(function(require) {
 				'direction-up-left',
 				'direction-up-right'
 			];
+
+			aliasedControlObjects = [
+				'scroll-stopper',
+				'absolute-scroll-stopper',
+				'boss-warning'
+			]
 
 			return controlObjects;
 		},

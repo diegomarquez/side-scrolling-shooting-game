@@ -1,26 +1,33 @@
 define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
-  var BossWarning = GameObject.extend({
-    init: function() {
-      this._super();
-    },
+	
+	var viewport = [{viewport: 'Main', layer: 'Front'}];
 
-    editorStart: function() {
-      Gb.create('WarningMessage', 'First', [{viewport: 'Main', layer: 'Front'}], {
-      	onComplete: function() { 
-      		Gb.reclaimer.mark(this); 
-      	}.bind(this)
-      });
-    },
+	var BossWarning = GameObject.extend({
+		init: function() {
+			this._super();
+		},
 
-    deActivate: function() {
+		editorStart: function() {
+			this.execute("warning");
 
-    },
+			Gb.create('WarningMessage', 'First', viewport, {
+				onComplete: function() {
+					Gb.create("bgm-boss", "First", viewport);
 
-    editorUpdate: function(delta) {
-      
-    }
-  });
+					Gb.reclaimer.mark(this);
+				}.bind(this)
+			});
+		},
 
-  return BossWarning;
+		deActivate: function() {
+
+		},
+
+		editorUpdate: function(delta) {
+
+		}
+	});
+
+	return BossWarning;
 });
 

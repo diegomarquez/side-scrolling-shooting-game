@@ -49,6 +49,8 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 						this.execute('destroyed', this);
 
 						if (this.otherBosses && this.otherBosses.length == 0) {
+							this.execute('last-boss-destroyed', this);
+							
 							// Signal all cannons that the boss has been destroyed
 							if (this.cannons) {
 								for (var i=0; i < this.cannons.length; i++) {
@@ -73,6 +75,8 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 			if (PlayerGetter.exists()) {
 				if (this.otherBosses && this.otherBosses.length == 0) {
 					
+					this.execute('all-bosses-destroyed', this);
+
 					this.hasStopListener = false;
 
 					PlayerGetter.get().move();
@@ -88,6 +92,8 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		},
 
 		stopLogic: function() {
+			this.execute('boss-stop', this);
+
 			if (this.cannons === null || this.body === null)
 				return;
 

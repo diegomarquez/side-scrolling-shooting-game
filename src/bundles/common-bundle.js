@@ -16,6 +16,7 @@ define(function(require) {
 
 			createComponentPool.call(this, function() { return require('sound-component') });
 			createComponentPool.call(this, function() { return require('add-component') });
+			createComponentPool.call(this, function() { return require('add-game-object') });
 
 			createComponentPool.call(this, function() { return require('activate-on-view') });
 			createComponentPool.call(this, function() { return require('twitch') });
