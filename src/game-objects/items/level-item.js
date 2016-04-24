@@ -16,6 +16,8 @@ define(["editor-game-object-container", "reclaimer"], function(GameObject, Recla
 
     onCollide: function(other) {
     	Reclaimer.mark(this);
+
+    	this.execute("pick-up");
     }
   });
 

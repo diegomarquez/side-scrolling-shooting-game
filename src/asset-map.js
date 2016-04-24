@@ -102,7 +102,8 @@ define(function() {
 	"POWERUP.OGG": "assets/sound/powerUp.ogg",
 	"SELECT.OGG": "assets/sound/select.ogg",
 	"SMALLLAUNCH.OGG": "assets/sound/smallLaunch.ogg",
-	"WARNING.OGG": "assets/sound/warning.ogg"
+	"WARNING.OGG": "assets/sound/warning.ogg",
+	"WIN.OGG": "assets/sound/win.ogg"
 };
 
 	Data.prototype.get = function() {

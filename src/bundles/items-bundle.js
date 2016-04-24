@@ -46,11 +46,15 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("level-item", "LevelItem")
 				.addComponent("LevelItemCircle")
+				.addComponent("LevelItemStopCurrentBGM")
+				.addComponent("WinSound")
 				.setRenderer("LevelItem_Renderer")
 				.itemCategory();
 
 			this.gameObjectPool.createConfiguration("defeat-all-bosses-level-item", "AllBossDefeatLevelItem")
 				.addComponent("LevelItemCircle")
+				.addComponent("LevelItemStopCurrentBGM")
+				.addComponent("WinSound")
 				.setRenderer("LevelItem_2_Renderer")
 				.itemCategory();
 

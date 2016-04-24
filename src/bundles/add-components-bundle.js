@@ -66,7 +66,23 @@ define(function(require) {
 					executeOnce: false
 				});
 
-			
+			this.componentPool.createConfiguration("PlayerStopCurrentBGM", commonBundle.getAddGameObjectPoolId())
+				.args({
+					goId: 'bgm-stop-current',
+					parentEvent: 'no_control',
+					group: "First",
+					viewports: [{viewport: 'Main', layer: 'Front'}],
+					executeOnce: false
+				});
+
+			this.componentPool.createConfiguration("LevelItemStopCurrentBGM", commonBundle.getAddGameObjectPoolId())
+				.args({
+					goId: 'bgm-stop-current',
+					parentEvent: 'pick-up',
+					group: "First",
+					viewports: [{viewport: 'Main', layer: 'Front'}],
+					executeOnce: false
+				});
 		}
 	});
 

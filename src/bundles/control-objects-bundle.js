@@ -292,7 +292,7 @@ define(function(require) {
 				.args({
 					stopCurrent: true,
 					inmediateRecycle: true
-				});			
+				});
 		}
 	});
 

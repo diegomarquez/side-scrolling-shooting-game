@@ -199,7 +199,14 @@ define(function(require) {
 					soundId: 'WARNING',
 					parentEvent: 'warning',
 					playMode: 'single-buffer'
-				});			
+				});
+
+			this.componentPool.createConfiguration("WinSound", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'WIN',
+					parentEvent: 'pick-up',
+					playMode: 'single-buffer'
+				});
 		}
 	});
 

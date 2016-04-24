@@ -97,6 +97,7 @@ define(function(require) {
 	soundPlayer.loadWithWebAudio('OK', gb.assetMap()['OK.OGG']);
 	soundPlayer.loadWithWebAudio('BACK', gb.assetMap()['BACK.OGG']);
 	soundPlayer.loadWithWebAudio('WARNING', gb.assetMap()['WARNING.OGG']);
+	soundPlayer.loadWithWebAudio('WIN', gb.assetMap()['WIN.OGG']);
 
 	soundPlayer.loadAll();
 

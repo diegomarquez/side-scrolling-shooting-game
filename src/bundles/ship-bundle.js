@@ -84,6 +84,8 @@ define(function(require) {
 				.addComponent('ShotSound')
 				.addComponent('PlayerDamage')
 				.addComponent('PlayerDestroyed')
+
+				.addComponent('PlayerStopCurrentBGM')
 				
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
