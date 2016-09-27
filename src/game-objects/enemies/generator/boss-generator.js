@@ -12,8 +12,12 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.objectType = '';
 		},
 
+		canCollide: function() {
+			return this.started;
+		},
+
 		editorStart: function() {
-			this.started = false;		
+			this.started = false;	
 		},
 
 		deActivate: function() {

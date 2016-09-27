@@ -21,6 +21,9 @@ define(["editor-component", "timer-factory"], function(Component, TimerFactory) 
 			});
 
       		this.parent.on('collide', this, function() {
+      			if (this.parent.canCollide && !this.parent.canCollide())
+      				return;
+
       			if (this.parent.hp > 0) {
       				this.parent.hp--;
       			} else {
