@@ -23,6 +23,10 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			this.currentBurstCount = 0;
 			this.bulletCount = 0;
 			this.missileType = '';
+
+			this.firePositions = null;
+			this.firePositionIndex = 0;
+			this.firePositionDecompose = {};
 		},
 
 		editorStart: function() {
@@ -52,6 +56,9 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 			this.rotation = this.rotation % 360;
 
 			this.rateVariation = Math.floor(20 + (Math.random() * 50));
+
+			this.firePositions = this.findChildren().allWithType("FirePosition").map(function(go) { return go.getMatrix() });
+			this.firePositionIndex = 0;
 
 			this.parent.on(this.parent.DAMAGE, this, function() {
 				this.damaged = true;
@@ -124,12 +131,22 @@ define(["editor-game-object-container", "gb", "player-getter"], function(GameObj
 
 						this.execute("launch");
 
+						var firePosition = this.firePositions[this.firePositionIndex];
+						this.firePositionDecompose = firePosition.decompose(this.firePositionDecompose);
+
 						var missile = Gb.create(this.missileType, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 							angle: selfMatrix.decompose(selfDecompose).rotation - 180,
-							x: this.parent.x,
-							y: this.parent.y + 5,
+							x: this.firePositionDecompose.x,
+							y: this.firePositionDecompose.y,
 							target: this.target
 						});
+
+						if (this.firePositionIndex < this.firePositions.length - 1) {
+							this.firePositionIndex++;
+						}
+						else {
+							this.firePositionIndex = 0;
+						}
 
 						var viewportList = missile.getViewportList();
 

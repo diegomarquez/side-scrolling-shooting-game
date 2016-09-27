@@ -430,7 +430,7 @@ define(function(require) {
 
 			this.gameObjectPool.createPool('MissileShooter', require("missile-turret-shooter"));
 			this.gameObjectPool.createDynamicPool('MissileTurretBase', require("missile-turret-base"));
-			
+
 			this.componentPool.createConfiguration("MissileTurretCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id:'cannonColliderId',
@@ -474,6 +474,9 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.addComponent('MissileLaunch1')
+				.addChild("FirePosition", { y: -5 })
+				.addChild("FirePosition", { y: 0 })
+				.addChild("FirePosition", { y: 5 })
 				.setRenderer("MissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -489,6 +492,9 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.addComponent('MissileLaunch1')
+				.addChild("FirePosition", { y: -5 })
+				.addChild("FirePosition", { y: 0 })
+				.addChild("FirePosition", { y: 5 })
 				.setRenderer("MissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -504,6 +510,9 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.addComponent('MissileLaunch1')
+				.addChild("FirePosition", { y: -5 })
+				.addChild("FirePosition", { y: 0 })
+				.addChild("FirePosition", { y: 5 })
 				.setRenderer("BossMissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
@@ -519,6 +528,9 @@ define(function(require) {
 				})
 				.addComponent('ActivateShooterOnView')
 				.addComponent('MissileLaunch1')
+				.addChild("FirePosition", { y: -5 })
+				.addChild("FirePosition", { y: 0 })
+				.addChild("FirePosition", { y: 5 })
 				.setRenderer("BossMissileTurretShooterRenderer")
 				.disableMouseSupport()
 				.childOnly();
