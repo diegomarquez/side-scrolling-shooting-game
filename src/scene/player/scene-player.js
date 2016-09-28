@@ -228,6 +228,8 @@ define(function(require) {
 				controls.parentNode.removeChild(controls);
 			}
 
+			soundPlayer.stopAll();
+
 			// Remove collisions detection
 			this.removeCollisionPairs();
 			// Remove listeners to exit the scene
