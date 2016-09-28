@@ -144,7 +144,7 @@ define(function(require) {
 
 			update: function() {
 				for (var i = 0; i < result.elements.length; i++) {
-					setEntryState(result.elements[i], options.options[i]);
+					setEntryState(result.elements[i], options.options[i], true);
 				}
 			}
 		};
@@ -209,9 +209,13 @@ define(function(require) {
 	};
 
 	var setupMenuEntry = function (optionsElement, options) {
-		var optionText = options.name;
 		var optionIcon = options.icon;
-		
+		var optionText = "";
+
+		if (Object.prototype.toString.call(options.name) === '[object String]') {
+			optionText = options.name;
+		}
+
 		var icon = $(document.createElement('span'));
 		icon.addClass('ui-icon');
 		icon.addClass(optionIcon);
@@ -284,12 +288,32 @@ define(function(require) {
 		}
 	}
 
-	var setEntryState = function(optionsElement, options) {
+	var setEntryState = function(optionsElement, options, updateName) {
 
 		if (Object.prototype.toString.call(options.omit) == '[object Function]') {
 			optionsElement.style.display = options.omit() ? 'none' : 'block';
 		} else {
 			optionsElement.style.display = 'block';
+		}
+
+		if (Object.prototype.toString.call(options.name) == '[object Function]' && updateName) {
+			var name = options.name();
+
+			if (name instanceof Promise) {
+
+				name.then(function(val) {
+					$(optionsElement).attr('value', val);
+
+					var cache = $(optionsElement).children();
+    				$(optionsElement).text(val).append(cache);
+				});
+			}
+			else {
+				$(optionsElement).attr('value', options.name());
+
+				var cache = $(optionsElement).children();
+    			$(optionsElement).text(options.name()).append(cache);
+			}
 		}
 
 		$(optionsElement).off('mouseover');

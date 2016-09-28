@@ -53,8 +53,6 @@ define(function(require) {
 			if (util.isString(scene)) {
 				scenePlayer.create(JSON.parse(localStorageWrapper.getScene(scene)));
 			} else {
-				debugger;
-
 				scenePlayer.create(scene);
 			}
 		});

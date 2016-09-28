@@ -23,6 +23,13 @@ define(function(require) {
 				id: 'game-object-context-menu',
 				options: [
 					{
+						name: function() {
+							return menu.go.typeId;
+						},
+						icon: 'ui-icon-caret-1-e',
+						disable: true						
+					},
+					{
 						name: 'Clone',
 						icon: 'ui-icon-plusthick',
 

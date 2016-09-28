@@ -13,6 +13,44 @@ define(function(require) {
 				id: 'control-object-context-menu',
 				options: [
 					{
+						name: function() {
+							return new Promise(function(resolve, reject) {
+								require(['editor-config'], function(editorConfig) {
+
+									if (menu.go.poolId === "IconGizmoHandle") {
+										resolve(editorConfig.getControlObjectAliasName(menu.go.parent.typeId));
+									}
+									else {
+										resolve(editorConfig.getControlObjectAliasName(menu.go.typeId));	
+									}
+									
+								});
+							});
+						},
+						icon: 'ui-icon-caret-1-e',
+						disable: true						
+					},
+					{
+						name: 'Clone',
+						icon: 'ui-icon-plusthick',
+
+						omit: function() {
+							return require('mode').isAdvanced();
+						},
+
+						click: function() {
+
+							if (require('object-counter').canCreate()) {
+								require('object-counter').showErrorFeedback();
+								return;
+							}
+
+							require(['game-object-cloner'], function(cloner) {
+								cloner.clone(menu.go);	
+							});
+						}						
+					},
+					{
 						name: 'Remove',
 						icon: 'ui-icon-trash',		
 						click: function(name, event) {

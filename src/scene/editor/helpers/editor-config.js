@@ -17,6 +17,7 @@ define(function(require) {
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
 	var controlObjectsNameAliases = null;
+	var controlObjectOriginalNames = null;
 	var aliasedControlObjects = null;
 	var soundObjects = null;
 	var draggableOnlyObjects = null;
@@ -267,6 +268,18 @@ define(function(require) {
 			}
 
 			return controlObjectsNameAliases[name] ? controlObjectsNameAliases[name] : name;
+		},
+
+		getControlObjectAliasName: function(name) {
+			if (!controlObjectOriginalNames) {
+				controlObjectOriginalNames = {
+					'scroll-stopper': 'boss-scroll-stopper',
+					'absolute-scroll-stopper': 'scroll-stopper',
+					'boss-warning': 'warning-sign'
+				}
+			}
+
+			return controlObjectOriginalNames[name] ? controlObjectOriginalNames[name] : name;
 		},
 
 		getSoundObjects: function() {
