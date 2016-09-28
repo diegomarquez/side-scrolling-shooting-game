@@ -9,6 +9,8 @@ define(function(require) {
 		var state = stateMachineFactory.createState(this, name);
 
 		state.addStartAction(function (args) {
+			debugger;
+
 			// Stop playing music when going into the editor
 			soundPlayer.playLoop("INTRO");
 

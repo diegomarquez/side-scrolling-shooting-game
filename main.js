@@ -67,8 +67,6 @@ define(function(require) {
 
 	soundPlayer.createChannels(2);
 
-	// soundPlayer.assignChannels('INTRO', 1);
-
 	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
 	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
 	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
@@ -103,6 +101,8 @@ define(function(require) {
 
 	// Wait for the main background music to be ready
 	soundPlayer.once(soundPlayer.ON_LOAD_ALL_COMPLETE, this, function() {
+		soundPlayer.assignChannels('INTRO', 1);
+
 		// Choose a start up routine according to what is found in the query string
 		queryString.hasScene(urlStartUp.bind(this), basicStartUp.bind(this));
 	});
