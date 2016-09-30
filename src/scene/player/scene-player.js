@@ -228,7 +228,7 @@ define(function(require) {
 				controls.parentNode.removeChild(controls);
 			}
 
-			soundPlayer.stopAll();
+			soundPlayer.stopAll().now();
 
 			// Remove collisions detection
 			this.removeCollisionPairs();

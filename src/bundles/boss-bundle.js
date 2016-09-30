@@ -91,6 +91,7 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180, x: 50, y: 160})
 				.addComponent("StopBoss")
 				.addComponent("AddBossTwitchOnDestroy")
+				.addComponent("AddBoss_1_OnDestroyParticles")
 				.addComponent('BossEndExplosion')
 				.addComponent('BossSmallExplosion')
 				.addComponent('BossStartExplosion')

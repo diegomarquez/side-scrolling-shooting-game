@@ -80,7 +80,18 @@ define(function(require) {
 						require('offset-generation')(0, 0),
 						require('rectangle-generation')(20, 10)
 					]
-				}) 
+				})
+
+			this.componentPool.createConfiguration(this.getBoss_1_DestroyParticlesGeneratorId(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_1_DestroyParticleId(),
+					amountPerSpray: 5,
+					maxAmountToSpray: 5,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
 		},
 
 		getPlayerBulletTrailingParticlesId: function() {
@@ -113,6 +124,10 @@ define(function(require) {
 
 		getCannonDamageParticles_2_Id: function() {
 			return 'CannonDamageParticleGenerator2';
+		},
+
+		getBoss_1_DestroyParticlesGeneratorId: function() {
+			return 'Boss_1_Destroy_Particle_Generator';
 		}
 	});
 

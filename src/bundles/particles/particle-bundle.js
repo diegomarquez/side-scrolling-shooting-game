@@ -1,4 +1,5 @@
 define(function(require) {	
+	var gb = require('gb');
 	var commonBundle = require('common-bundle');
 	var draw = require('draw');
 
@@ -6,6 +7,7 @@ define(function(require) {
 		create: function(args) {						
 			this.componentPool.createPool('movement-angle', require('movement-angle'));
 			this.componentPool.createPool('angle-modifier', require('angle-modifier'));
+			this.componentPool.createPool('rotate', require('rotate'));
 			this.componentPool.createPool('cosine-angle-modifier', require('cosine-angle-modifier'));
 			this.componentPool.createPool('straight-line-movement-angle', require('straight-line-movement-angle'));
 			this.componentPool.createPool('straight-line-movement-vector', require('straight-line-movement-vector'));
@@ -55,8 +57,15 @@ define(function(require) {
 					}
 				});
 
+			this.componentPool.createConfiguration("Boss_1_DestroyParticleRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS1CABLEDAMAGED.PNG"],
+					offset: 'center'
+				});
+
 			this.componentPool.createConfiguration("MovementAngle", 'movement-angle');
 			this.componentPool.createConfiguration("AngleModifier", 'angle-modifier');
+			this.componentPool.createConfiguration("Rotate", 'rotate');
 			this.componentPool.createConfiguration("CosineAngleModifier", 'cosine-angle-modifier');
 			this.componentPool.createConfiguration("StraightMovementAngle", 'straight-line-movement-angle');
 			this.componentPool.createConfiguration("StraightMovementVectorReverse", 'straight-line-movement-vector')
@@ -144,7 +153,7 @@ define(function(require) {
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("SmokeSquareParticle_1");
 
-				this.gameObjectPool.createConfiguration("CosineParticle_2", 'particle')
+			this.gameObjectPool.createConfiguration("CosineParticle_2", 'particle')
 				.args({ 
 					angleRange: { min: -90, max: -90 },
 					speedRange: { min: 50, max:70 },
@@ -162,6 +171,17 @@ define(function(require) {
 				.addComponent("MovementAngle")
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("SmokeSquareParticle_2");
+
+			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 20, max: 50 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.setRenderer("Boss_1_DestroyParticleRenderer");
 		},
 
 		getStraightParticle_1_Id: function() {
@@ -190,6 +210,10 @@ define(function(require) {
 
 		getCosineParticle_2_Id: function() {
 			return "CosineParticle_2";
+		},
+
+		getBoss_1_DestroyParticleId: function() {
+			return "Boss_1_DestroyParticle";
 		}
 	});
 
