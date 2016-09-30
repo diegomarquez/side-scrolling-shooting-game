@@ -12,6 +12,7 @@ define(function(require) {
 			this.stopCurrent = false;
 			this.storeLast = true;
 			this.inmediateRecycle = false;
+			this.stopSoundOnRecycle = false;
 		},
 
 		editorStart: function() {
@@ -47,13 +48,14 @@ define(function(require) {
     	},
 
     	recycle: function() {
+			if (this.soundId !== "" && this.stopSoundOnRecycle)
+				soundPlayer.stop(this.soundId);
+			
 			this.playLast = false;
 			this.stopCurrent = false;
 			this.storeLast = true;
 			this.inmediateRecycle = false;
-
-			if (this.soundId !== "")
-				soundPlayer.stop(this.soundId);	
+			this.stopSoundOnRecycle = false;
 
 			this.soundId = "";
 
