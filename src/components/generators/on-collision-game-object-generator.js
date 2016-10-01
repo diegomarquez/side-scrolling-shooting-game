@@ -10,11 +10,15 @@ define(["game-object-generator"], function(GameObjectGenerator) {
 		editorStart: function(parent) {
 			this._super();
 
-			parent.once(parent.COLLIDE, this, onCollide);
+			parent.on(parent.COLLIDE, this, onCollide);
 		},
 
 		editorUpdate: function() {
 
+		},
+
+		recycle: function(parent) {
+			parent.removeDelegate(parent.COLLIDE, this, onCollide);
 		}
 	});
 
