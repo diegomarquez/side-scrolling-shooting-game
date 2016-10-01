@@ -172,15 +172,32 @@ define(function(require) {
 				.addComponent("ClaimOnLifeDepleted")
 				.setRenderer("SmokeSquareParticle_2");
 
+			this.componentPool.createConfiguration("BossParticleTween", commonBundle.getTweenPoolId());
+
 			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle", "particle")
 				.args({ 
 					angleRange: { min: 0, max: 360 },
-					speedRange: { min: 20, max: 50 },
+					speedRange: { min: 0, max: 0 },
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
 				.setRenderer("Boss_1_DestroyParticleRenderer");
 		},
 
