@@ -20,6 +20,7 @@ define(function(require) {
 
 			createComponentPool.call(this, function() { return require('activate-on-view') });
 			createComponentPool.call(this, function() { return require('twitch') });
+			createComponentPool.call(this, function() { return require('tween') });
 			createComponentPool.call(this, function() { return require("damage-flash") });
 
 			createGameObjectPool.call(this, function() { return require('game-object') });
