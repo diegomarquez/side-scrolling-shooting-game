@@ -1,4 +1,4 @@
-define(["editor-component", "gb"], function(EditorComponent, Gb) {
+define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 	var GameObjectGenerator = EditorComponent.extend({
 		init: function() {
 			this._super();
@@ -56,7 +56,14 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							}	
 						}
 
-						this.gb.create(this.objectType, this.updateGroup, this.viewports, args);
+						if (Util.isArray(this.objectType)) {
+							var index = Util.rand_i(0, this.objectType.length-1);
+
+							this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
+
+						} else {
+							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
+						}
 
 						this.currentSprayCount++;
 					}
@@ -81,7 +88,14 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 								}	
 							}
 
-							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);
+							if (Util.isArray(this.objectType)) {
+								var index = Util.rand_i(0, this.objectType.length-1);
+
+								this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
+
+							} else {
+								this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
+							}
 
 							this.currentSprayCount++;
 						}

@@ -82,11 +82,93 @@ define(function(require) {
 					]
 				})
 
-			this.componentPool.createConfiguration(this.getBoss_1_DestroyParticlesGeneratorId(), 'particle-generator')
+			this.componentPool.createConfiguration(this.getBoss_1_DestroyParticlesGenerator_1_Id(), 'particle-generator')
 				.args({
-					objectType: particleBundle.getBoss_1_DestroyParticleId(),
-					amountPerSpray: 5,
-					maxAmountToSpray: 5,
+					objectType: particleBundle.getBoss_1_DestroyParticle_1_Id(),
+					amountPerSpray: 4,
+					maxAmountToSpray: 4,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_1_DestroyParticlesGenerator_2_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_1_DestroyParticle_2_Id(),
+					amountPerSpray: 2,
+					maxAmountToSpray: 2,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_1_DestroyParticlesGenerator_3_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_1_DestroyParticle_3_Id(),
+					amountPerSpray: 1,
+					maxAmountToSpray: 1,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_2_DestroyParticlesGenerator_1_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_2_DestroyParticle_1_Id(),
+					amountPerSpray: 4,
+					maxAmountToSpray: 4,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_2_DestroyParticlesGenerator_2_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_2_DestroyParticle_2_Id(),
+					amountPerSpray: 1,
+					maxAmountToSpray: 1,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_3_DestroyParticlesGenerator_1_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_3_DestroyParticle_1_Id(),
+					amountPerSpray: 4,
+					maxAmountToSpray: 4,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_3_DestroyParticlesGenerator_2_Id(), 'particle-generator')
+				.args({
+					objectType: particleBundle.getBoss_3_DestroyParticle_2_Id(),
+					amountPerSpray: 2,
+					maxAmountToSpray: 2,
+					sprayDelay: 0.1,
+					startingPositionTransformation: [
+						require('circle-generation')(30)
+					]
+				});
+
+			this.componentPool.createConfiguration(this.getBoss_4_DestroyParticlesGenerator_1_Id(), 'particle-generator')
+				.args({
+					objectType: [
+						particleBundle.getBoss_4_DestroyParticle_1_Id(),
+						particleBundle.getBoss_4_DestroyParticle_2_Id(),
+						particleBundle.getBoss_4_DestroyParticle_3_Id(),
+						particleBundle.getBoss_4_DestroyParticle_4_Id()
+					],
+					amountPerSpray: 8,
+					maxAmountToSpray: 8,
 					sprayDelay: 0.1,
 					startingPositionTransformation: [
 						require('circle-generation')(30)
@@ -126,8 +208,36 @@ define(function(require) {
 			return 'CannonDamageParticleGenerator2';
 		},
 
-		getBoss_1_DestroyParticlesGeneratorId: function() {
-			return 'Boss_1_Destroy_Particle_Generator';
+		getBoss_1_DestroyParticlesGenerator_1_Id: function() {
+			return 'Boss_1_Destroy_Particle_1_Generator';
+		},
+
+		getBoss_1_DestroyParticlesGenerator_2_Id: function() {
+			return 'Boss_1_Destroy_Particle_2_Generator';
+		},
+
+		getBoss_2_DestroyParticlesGenerator_1_Id: function() {
+			return 'Boss_2_Destroy_Particle_1_Generator';
+		},
+
+		getBoss_2_DestroyParticlesGenerator_2_Id: function() {
+			return 'Boss_2_Destroy_Particle_2_Generator';
+		},
+
+		getBoss_1_DestroyParticlesGenerator_3_Id: function() {
+			return 'Boss_1_Destroy_Particle_3_Generator';
+		},
+
+		getBoss_3_DestroyParticlesGenerator_1_Id: function() {
+			return 'Boss_3_Destroy_Particle_1_Generator';	
+		},
+
+		getBoss_3_DestroyParticlesGenerator_2_Id: function() {
+			return 'Boss_3_Destroy_Particle_2_Generator';	
+		},
+
+		getBoss_4_DestroyParticlesGenerator_1_Id: function() {
+			return 'Boss_4_Destroy_Particle_1_Generator';	
 		}
 	});
 

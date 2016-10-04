@@ -8,9 +8,65 @@ define(function(require) {
 			
 			this.componentPool.createConfiguration("BossTwitch", commonBundle.getTwitchPoolId());
 
-			this.componentPool.createConfiguration("AddBoss_1_OnDestroyParticles", commonBundle.getAddComponentPoolId())
+			this.componentPool.createConfiguration("AddBoss_1_OnDestroyParticles_1", commonBundle.getAddComponentPoolId())
 				.args({
-					componentId: particleBundle.getBoss_1_DestroyParticlesGeneratorId(),
+					componentId: particleBundle.getBoss_1_DestroyParticlesGenerator_1_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_1_OnDestroyParticles_2", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_1_DestroyParticlesGenerator_2_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_1_OnDestroyParticles_3", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_1_DestroyParticlesGenerator_3_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_2_OnDestroyParticles_1", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_2_DestroyParticlesGenerator_1_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_2_OnDestroyParticles_2", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_2_DestroyParticlesGenerator_2_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_3_OnDestroyParticles_1", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_3_DestroyParticlesGenerator_1_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_3_OnDestroyParticles_2", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_3_DestroyParticlesGenerator_2_Id(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
+
+			this.componentPool.createConfiguration("AddBoss_4_OnDestroyParticles_1", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: particleBundle.getBoss_4_DestroyParticlesGenerator_1_Id(),
 					parentEvent: 'stop_creation',
 					executeOnce: true,
 					componentArgs: null

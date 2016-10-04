@@ -91,7 +91,9 @@ define(function(require) {
 				.addChild("boss-1-cables", {rotation: 180, x: 50, y: 160})
 				.addComponent("StopBoss")
 				.addComponent("AddBossTwitchOnDestroy")
-				.addComponent("AddBoss_1_OnDestroyParticles")
+				.addComponent("AddBoss_1_OnDestroyParticles_1")
+				.addComponent("AddBoss_1_OnDestroyParticles_2")
+				.addComponent("AddBoss_1_OnDestroyParticles_3")
 				.addComponent('BossEndExplosion')
 				.addComponent('BossSmallExplosion')
 				.addComponent('BossStartExplosion')
@@ -198,6 +200,8 @@ define(function(require) {
 				.addComponent("BossDestroyExplosions")
 				.addComponent("StopBoss")
 				.addComponent("AddBossTwitchOnDestroy")
+				.addComponent("AddBoss_2_OnDestroyParticles_1")
+				.addComponent("AddBoss_2_OnDestroyParticles_2")
 				.addComponent('BossEndExplosion')
 				.addComponent('BossSmallExplosion')
 				.addComponent('BossStartExplosion')
@@ -225,7 +229,19 @@ define(function(require) {
 			this.componentPool.createPool('FollowTarget', require('follow-target'));
 			this.componentPool.createPool('BlobDivide', require('blob-divide'));
 
-			this.componentPool.createConfiguration('Boss_3_Body_Renderer', 'Boss_3_Body_Renderer');
+			this.componentPool.createConfiguration('Boss_3_Body_Renderer', 'Boss_3_Body_Renderer')
+				.args({
+					name: 'Boss_3_Body',
+					width: 200,
+					height: 200,
+					largeAnchor: 20,
+					largeAnchorMultiplier: 40,
+					pointOffsetMultiplier: 6,
+					horizontalCounterMultiplier: 30,
+					offset1: 75,
+					offset2: 100,
+					lineWidth: 3
+				});
 			this.componentPool.createConfiguration('Boss_3_Wobble', 'Boss_3_Wobble')
 				.args({
 					speedX: 1.2,
@@ -268,6 +284,8 @@ define(function(require) {
 				.addComponent('RestartLastBGM')
 				.addComponent('StopCurrentBGM')
 				.addComponent("AddBossTwitchOnDestroy")
+				.addComponent("AddBoss_3_OnDestroyParticles_1")
+				.addComponent("AddBoss_3_OnDestroyParticles_2")
 				.addComponent('BlobFollowTarget')
 				.addComponent('BossDivide', { objectType: 'blob-explode-1', amount: 'x2' })
 				.addComponent("StopCurrentAndRestartLastBGM")
@@ -428,6 +446,7 @@ define(function(require) {
 				.addComponent('StopCurrentBGM')
 				.addComponent('Boss4Move')
 				.addComponent("AddBossTwitchOnDestroy")
+				.addComponent("AddBoss_4_OnDestroyParticles_1")
 				.addComponent("AddBulletHitFlash")
 				.addComponent("StopCurrentAndRestartLastBGM")
 				.addChild("FirePosition", { y: 30 })

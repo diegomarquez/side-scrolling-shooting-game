@@ -57,9 +57,87 @@ define(function(require) {
 					}
 				});
 
-			this.componentPool.createConfiguration("Boss_1_DestroyParticleRenderer", commonBundle.getBitmapRendererPoolId())
+			this.componentPool.createConfiguration("Boss_1_DestroyParticleRenderer_1", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["BOSS1CABLEDAMAGED.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_1_DestroyParticleRenderer_2", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS1CHUNK1.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_1_DestroyParticleRenderer_3", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS1CHUNK2.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_2_DestroyParticleRenderer_1", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS2CHUNK1.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_2_DestroyParticleRenderer_2", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS2CHUNK2.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createPool('Boss_3_DestroyParticleRenderer', require('boss-3-body-renderer'));
+			
+			this.componentPool.createConfiguration('Boss_3_DestroyParticleRenderer_1', 'Boss_3_DestroyParticleRenderer')
+				.args({
+					name: 'Boss_3_DestroyParticle_1',
+					width: 50,
+					height: 50,
+					largeAnchor: 10,
+					largeAnchorMultiplier: 10,
+					pointOffsetMultiplier: 3,
+					horizontalCounterMultiplier: 15,
+					offset1: 20,
+					offset2: 25,
+					lineWidth: 2
+				});
+
+			this.componentPool.createConfiguration('Boss_3_DestroyParticleRenderer_2', 'Boss_3_DestroyParticleRenderer')
+				.args({
+					name: 'Boss_3_DestroyParticle_2',
+					width: 25,
+					height: 25,
+					largeAnchor: 5,
+					largeAnchorMultiplier: 5,
+					pointOffsetMultiplier: 2,
+					horizontalCounterMultiplier: 10,
+					offset1: 10,
+					offset2: 12,
+					lineWidth: 1
+				});
+
+			this.componentPool.createConfiguration("Boss_4_DestroyParticleRenderer_1", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS4CHUNK1.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_4_DestroyParticleRenderer_2", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS4CHUNK2.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_4_DestroyParticleRenderer_3", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS4CHUNK3.PNG"],
+					offset: 'center'
+				});
+
+			this.componentPool.createConfiguration("Boss_4_DestroyParticleRenderer_4", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["BOSS4CHUNK4.PNG"],
 					offset: 'center'
 				});
 
@@ -174,7 +252,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("BossParticleTween", commonBundle.getTweenPoolId());
 
-			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle", "particle")
+			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle_1", "particle")
 				.args({ 
 					angleRange: { min: 0, max: 360 },
 					speedRange: { min: 0, max: 0 },
@@ -198,7 +276,267 @@ define(function(require) {
 						}
 					}, 
 				})
-				.setRenderer("Boss_1_DestroyParticleRenderer");
+				.setRenderer("Boss_1_DestroyParticleRenderer_1");
+
+			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle_2", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_1_DestroyParticleRenderer_2");
+
+			this.gameObjectPool.createConfiguration("Boss_1_DestroyParticle_3", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_1_DestroyParticleRenderer_3");
+
+			this.gameObjectPool.createConfiguration("Boss_2_DestroyParticle_1", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_2_DestroyParticleRenderer_1");
+
+			this.gameObjectPool.createConfiguration("Boss_2_DestroyParticle_2", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_2_DestroyParticleRenderer_2");
+
+			this.gameObjectPool.createConfiguration("Boss_3_DestroyParticle_1", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_3_DestroyParticleRenderer_1");
+
+			this.gameObjectPool.createConfiguration("Boss_3_DestroyParticle_2", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_3_DestroyParticleRenderer_2");
+
+			this.gameObjectPool.createConfiguration("Boss_4_DestroyParticle_1", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_4_DestroyParticleRenderer_1");
+
+			this.gameObjectPool.createConfiguration("Boss_4_DestroyParticle_2", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_4_DestroyParticleRenderer_2");
+
+			this.gameObjectPool.createConfiguration("Boss_4_DestroyParticle_3", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_4_DestroyParticleRenderer_3");
+
+			this.gameObjectPool.createConfiguration("Boss_4_DestroyParticle_4", "particle")
+				.args({ 
+					angleRange: { min: 0, max: 360 },
+					speedRange: { min: 0, max: 0 },
+					spreadRange: { min: 0, max: 0 },
+					lifeRange: { min: 0, max: 0 }
+				})
+				.addComponent("StraightMovementAngle")
+				.addComponent("Rotate", { amount: 0.3 })
+				.addComponent("BossParticleTween", { 
+					properties: {
+						speed: true
+					},
+					tweenProperties: {
+						time: 2,
+						tweenStartProperties: {
+							speed: 250
+						},
+						tweenEndProperties: {
+							speed: 10,
+							ease: Power2.easeOut
+						}
+					}, 
+				})
+				.setRenderer("Boss_4_DestroyParticleRenderer_4");
 		},
 
 		getStraightParticle_1_Id: function() {
@@ -229,9 +567,50 @@ define(function(require) {
 			return "CosineParticle_2";
 		},
 
-		getBoss_1_DestroyParticleId: function() {
-			return "Boss_1_DestroyParticle";
+		getBoss_1_DestroyParticle_1_Id: function() {
+			return "Boss_1_DestroyParticle_1";
+		},
+
+		getBoss_1_DestroyParticle_2_Id: function() {
+			return "Boss_1_DestroyParticle_2";
+		},
+
+		getBoss_2_DestroyParticle_1_Id: function() {
+			return "Boss_2_DestroyParticle_1";
+		},
+
+		getBoss_2_DestroyParticle_2_Id: function() {
+			return "Boss_2_DestroyParticle_2";
+		},
+
+		getBoss_1_DestroyParticle_3_Id: function() {
+			return "Boss_1_DestroyParticle_3";
+		},
+
+		getBoss_3_DestroyParticle_1_Id: function() {
+			return "Boss_3_DestroyParticle_1";
+		},
+
+		getBoss_3_DestroyParticle_2_Id: function() {
+			return "Boss_3_DestroyParticle_2";
+		},
+
+		getBoss_4_DestroyParticle_1_Id: function() {
+			return "Boss_4_DestroyParticle_1";
+		},
+
+		getBoss_4_DestroyParticle_2_Id: function() {
+			return "Boss_4_DestroyParticle_2";
+		},
+
+		getBoss_4_DestroyParticle_3_Id: function() {
+			return "Boss_4_DestroyParticle_3";
+		},
+
+		getBoss_4_DestroyParticle_4_Id: function() {
+			return "Boss_4_DestroyParticle_4";
 		}
+
 	});
 
 	return new Particles();
