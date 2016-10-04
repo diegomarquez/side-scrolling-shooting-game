@@ -229,6 +229,7 @@ define(function(require) {
 			}
 
 			soundPlayer.stopAll().now();
+			require("bgm-sound").clearLastBGMId();
 
 			// Remove collisions detection
 			this.removeCollisionPairs();

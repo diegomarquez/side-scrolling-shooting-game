@@ -63,6 +63,10 @@ define(function(require) {
     	}
 	});
 
+	BGMSound.clearLastBGMId = function() {
+		lastBGMSoundId = "";
+	}
+
 	return BGMSound;
 });
 
