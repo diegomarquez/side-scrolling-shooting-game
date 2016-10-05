@@ -20,7 +20,10 @@ define(function(require) {
 			playerLoader.load(sceneData);
 			
 			// Get a reference to the player ship, place it outside the screen and block it's controls
-			playerGetter.get(-200, -200).blockControls();
+			var player = playerGetter.get(-200, -200).blockControls();
+
+			// Disable all player collisions
+			playerGetter.get().findComponents().firstWithProp('collider').disable();
 
 			// Add the HP meter
 			gb.create('HpMeter', 'First', [{viewport: 'Messages', layer: 'Front'}], { x: 0, y: 5 });
@@ -76,6 +79,8 @@ define(function(require) {
 
 					// Start the player and all of it's children because they where stopped when calling stop_update
 					player.run();
+					// Disable all player collisions
+					player.findComponents().firstWithProp('collider').enable();
 					// Put it in the second group so it continues updating.
 					gb.groups.get('Second').add(player);
 
@@ -122,7 +127,7 @@ define(function(require) {
 							// Down
 							if (d === 90) {
 								// Tween the player out of the screen
-								TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.height + 200, ease: Back.easeIn, onComplete: function() {
+								TweenLite.to(player, 1.5, { viewportOffsetY: gb.canvas.height + 200, ease: Back.easeIn, onComplete: function() {
 									// Signal the scene player is done 
 									this.execute(this.EXIT);
 								}.bind(this)});
@@ -182,6 +187,8 @@ define(function(require) {
 						onComplete: function() {
 							// Unblock controls when the start message is gone
 							player.unblockControls();
+							// Enable all player collisions
+							player.findComponents().firstWithProp('collider').enable();
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
@@ -208,6 +215,8 @@ define(function(require) {
 						onComplete: function() {
 							// Unblock controls when the start message is gone
 							player.unblockControls();
+							// Enable all player collisions
+							player.findComponents().firstWithProp('collider').enable();
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
@@ -234,6 +243,8 @@ define(function(require) {
 						onComplete: function() {
 							// Unblock controls when the start message is gone
 							player.unblockControls();
+							// Enable all player collisions
+							player.findComponents().firstWithProp('collider').enable();
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
@@ -260,6 +271,8 @@ define(function(require) {
 						onComplete: function() {
 							// Unblock controls when the start message is gone
 							player.unblockControls();
+							// Enable all player collisions
+							player.findComponents().firstWithProp('collider').enable();
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
