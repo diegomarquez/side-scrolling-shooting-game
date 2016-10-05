@@ -12,6 +12,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.currentSprayCount = null;
 			this.delayTime = null;
 			this.createdObjects = [];
+			this.viewports = null;
 
 			this.self = ChildGenerator;
 			this.gb = Gb;
@@ -38,6 +39,10 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.currentSprayCount = 0;
 		},
 
+		recycle: function(parent) {
+			this.viewports = null;
+		},
+
 		spray: function(args) {
 			if (!this.maxAmountToSpray) {
 				this.create(args);
@@ -59,7 +64,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			for (var i=0; i < this.amountPerSpray; i++) {
 				this.startingPostion(args);
 
-				this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+				this.gb.addChildTo(this.parent, this.objectType, this.viewports, args, 'create');
 
 				this.currentSprayCount++;
 			}

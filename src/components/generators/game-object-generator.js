@@ -22,8 +22,11 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 			this.delayTime = 0;
 			this.currentSprayCount = 0;
 
-			this.viewports = this.parent.getViewportList();
-			this.updateGroup = this.parent.getUpdateGroup();
+			if (!this.args.viewports)
+				this.viewports = this.parent.getViewportList();
+			
+			if (!this.args.updateGroup)
+				this.updateGroup = this.parent.getUpdateGroup();
 		},
 
 		editorUpdate: function(delta) {
@@ -40,6 +43,11 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 
 			this.delayTime = 0;
 			this.currentSprayCount = 0;
+		},
+
+		recycle: function(parent) {
+			this.viewports = null;
+			this.updateGroup = null;
 		},
 
 		spray: function(args) {
@@ -62,6 +70,9 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 							this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
 
 						} else {
+							if (this.typeId === "Boss_1_Destroy_Particle_1_Generator")
+								debugger;
+
 							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
 						}
 
@@ -94,6 +105,9 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 								this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
 
 							} else {
+								if (this.typeId === "Boss_1_Destroy_Particle_1_Generator")
+									debugger;
+
 								this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
 							}
 

@@ -3,8 +3,8 @@ define(["animation-path-renderer", "draw"], function (AnimationPathRenderer, Dra
 		init: function() {
 			this._super();
 
-			this.width = 50;
-			this.height = 50;
+			this.width = 100;
+			this.height = 100;
 			this.name = "round-explosion-renderer";
 			this.offset = 'center';
 			this.frameDelay = 0.02;

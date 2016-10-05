@@ -12,6 +12,8 @@ define(function(require) {
 			this.componentPool.createPool('straight-line-movement-angle', require('straight-line-movement-angle'));
 			this.componentPool.createPool('straight-line-movement-vector', require('straight-line-movement-vector'));
 			this.componentPool.createPool('claim-on-life-depleted', require('claim-on-life-depleted'));
+			this.componentPool.createPool('claim-on-out-screen-bounds', require('claim-on-out-screen-bounds'));
+			this.componentPool.createPool('check-out-of-bounds', require('check-out-of-bounds'));
 
 			this.componentPool.createConfiguration("WhiteSquareParticle", commonBundle.getPathRendererPoolId())
 				.args({
@@ -151,6 +153,8 @@ define(function(require) {
 					direction: -1
 				});
 			this.componentPool.createConfiguration("ClaimOnLifeDepleted", 'claim-on-life-depleted');
+			this.componentPool.createConfiguration("CheckOutOfBounds", 'check-out-of-bounds');
+			this.componentPool.createConfiguration("ClaimOnOutOfScreenBounds", 'claim-on-out-screen-bounds');
 			
 			this.gameObjectPool.createDynamicPool('particle', require('particle'))			
 
@@ -259,6 +263,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -285,6 +291,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -311,6 +319,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -337,6 +347,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -363,6 +375,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -389,6 +403,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -415,6 +431,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -441,6 +459,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -467,6 +487,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -493,6 +515,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 
@@ -519,6 +543,8 @@ define(function(require) {
 					spreadRange: { min: 0, max: 0 },
 					lifeRange: { min: 0, max: 0 }
 				})
+				.addComponent("ClaimOnOutOfScreenBounds")
+				.addComponent("CheckOutOfBounds")
 				.addComponent("StraightMovementAngle")
 				.addComponent("Rotate", { amount: 0.3 })
 				.addComponent("BossParticleTween", { 

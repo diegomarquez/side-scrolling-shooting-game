@@ -2,11 +2,20 @@ define(function(require) {
 	
 	var commonBundle = require("common-bundle");
 	var particleBundle = require('particle-generator-bundle');
+	var explosionBundle = require('explosion-generator-bundle');
 
 	var AddComponentsBundle = require("bundle").extend({
 		create: function(args) {			
 			
 			this.componentPool.createConfiguration("BossTwitch", commonBundle.getTwitchPoolId());
+
+			this.componentPool.createConfiguration("AddBossOnDestroyLastExplosions", commonBundle.getAddComponentPoolId())
+				.args({
+					componentId: explosionBundle.getLargeExplosionsEffectId(),
+					parentEvent: 'stop_creation',
+					executeOnce: true,
+					componentArgs: null
+				});
 
 			this.componentPool.createConfiguration("AddBoss_1_OnDestroyParticles_1", commonBundle.getAddComponentPoolId())
 				.args({

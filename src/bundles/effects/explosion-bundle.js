@@ -12,22 +12,29 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration(this.getMicroExplosionsId(), "Explosion")
 				.args({ 
-					scaleX: 0.7, 
-					scaleY: 0.7
+					scaleX: 0.35, 
+					scaleY: 0.35
 				})
 				.setRenderer("ExplosionRenderer");
 
 			this.gameObjectPool.createConfiguration(this.getSmallExplosionsId(), "Explosion")
 				.args({ 
-					scaleX: 0.5, 
-					scaleY: 0.5
+					scaleX: 0.25, 
+					scaleY: 0.25
 				})
 				.setRenderer("ExplosionRenderer");
 
 			this.gameObjectPool.createConfiguration(this.getMediumExplosionsId(), "Explosion")
 				.args({ 
-					scaleX: 0.9, 
-					scaleY: 0.9
+					scaleX: 0.45, 
+					scaleY: 0.45
+				})
+				.setRenderer("ExplosionRenderer");
+
+			this.gameObjectPool.createConfiguration(this.getLargeExplosionsId(), "Explosion")
+				.args({ 
+					scaleX: 1, 
+					scaleY: 1
 				})
 				.setRenderer("ExplosionRenderer");
 		},
@@ -42,6 +49,10 @@ define(function(require) {
 
 		getMediumExplosionsId: function() {
 			return "MediumExplosion";
+		},
+
+		getLargeExplosionsId: function() {
+			return "LargeExplosion";
 		}
 	});
 

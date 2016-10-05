@@ -126,6 +126,11 @@ define(function(require) {
 				var messagesViewport = gb.viewports.add('Messages', gb.canvas.width, gb.canvas.height);
 				messagesViewport.addLayer('Front');
 			}
+
+			var mainViewport = gb.viewports.get("Main");
+
+			if (!mainViewport.layerExists("Effects"))
+				mainViewport.addLayer("Effects");
 		},
 
 		load: function(sceneData) {

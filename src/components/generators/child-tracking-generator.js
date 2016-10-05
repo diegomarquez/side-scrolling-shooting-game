@@ -13,6 +13,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.delayTime = null;
 			this.createdObjects = [];
 			this.stopped = false;
+			this.viewports = null;
 
 			this.self = ChildTrackingGenerator;
 			this.gb = Gb;
@@ -46,6 +47,10 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 			this.currentSprayCount = 0;
 		},
 
+		recycle: function(parent) {
+			this.viewports = null;
+		},
+
 		spray: function(args) {
 			if (this.stopped)
 				return;
@@ -62,7 +67,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							}	
 						}
 
-						var go = this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+						var go = this.gb.addChildTo(this.parent, this.objectType, this.viewports, args, 'create');
 
 						this.createdObjects.push(go);
 						
@@ -91,7 +96,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 								}
 							}
 
-							var go = this.gb.addChildTo(this.parent, this.objectType, null, args, 'create');
+							var go = this.gb.addChildTo(this.parent, this.objectType, this.viewports, args, 'create');
 
 							this.createdObjects.push(go);
 							
