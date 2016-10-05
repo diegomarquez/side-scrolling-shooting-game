@@ -1,4 +1,4 @@
-define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage) {
+define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage, Util) {
 	var StageOverview = GameObject.extend({
 	    init: function() {
 	      this._super();
@@ -231,7 +231,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 			return;
 		}
 
-		var startIndex = currentStageIndex % (this.markers.length - 1);
+		var startIndex = Util.wrapInRange(currentStageIndex, 0, this.markers.length - 1);
 
 		for (var i = 0; i < this.markers.length; i++) {
 			if (this.scenes[startIndex + i]) {
