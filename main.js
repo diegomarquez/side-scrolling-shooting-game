@@ -5,6 +5,7 @@ define(function(require) {
 	var loaderContainer = require('loader-container');
 	var queryString = require('query-string');
 	var soundPlayer = require('sound-player');
+	var assetPreloader = require('asset-preloader');
 
 	this.game = gb.game;
 
@@ -65,6 +66,8 @@ define(function(require) {
 		this.game.create();	
 	}
 
+	assetPreloader.addGraphicAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
+
 	soundPlayer.createChannels(2);
 
 	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
@@ -97,13 +100,34 @@ define(function(require) {
 	soundPlayer.loadWithWebAudio('WARNING', gb.assetMap()['WARNING.OGG']);
 	soundPlayer.loadWithWebAudio('WIN', gb.assetMap()['WIN.OGG']);
 
+	assetPreloader.loadAll();
 	soundPlayer.loadAll();
+
+	var complete = 0;
+
+	// Wait for assets to be ready
+	assetPreloader.once(assetPreloader.ON_LOAD_ALL_COMPLETE, this, function() {
+		complete++;
+
+		if (complete === 2) {
+			start.call(this);
+		}
+	});
 
 	// Wait for the main background music to be ready
 	soundPlayer.once(soundPlayer.ON_LOAD_ALL_COMPLETE, this, function() {
+		complete++;
+
+		if (complete === 2) {
+			start.call(this);
+		}
+	});
+
+
+	function start() {
 		soundPlayer.assignChannels('INTRO', 1);
 
 		// Choose a start up routine according to what is found in the query string
 		queryString.hasScene(urlStartUp.bind(this), basicStartUp.bind(this));
-	});
+	}
 });
