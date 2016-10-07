@@ -40,7 +40,7 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'splash-controls-1',
 					fillColor: "none",
-					strokeColor: "#FFFFFF",
+					strokeColor: "#ec751e",
 					text: 'Press "← ↑ → ↓" to Move',
 					font: 'Russo One',
 					offset: 'center',
@@ -51,7 +51,7 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'splash-controls-2',
 					fillColor: "none",
-					strokeColor: "#FFFFFF",
+					strokeColor: "#ec751e",
 					text: 'Press "A" to Shoot',
 					font: 'Russo One',
 					offset: 'center',
