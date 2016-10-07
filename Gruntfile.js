@@ -1,5 +1,17 @@
 var path = require('path');
 
+function generateUUID(){
+    var d = new Date().getTime();
+    
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+
+    return uuid;
+}
+
 module.exports = function(grunt) {
     var t = grunt.template.process;
     var p = grunt.file.readJSON('package.json');
@@ -15,6 +27,7 @@ module.exports = function(grunt) {
     var generatedDir = 'generated/';
     var generatedCssDir = 'generated/css/';
     var configDir = 'config/';
+    var cacheBustingId = generateUUID();
 
     var assetPaths = p.additionalAssetPaths.split(',');
     assetPaths.push(assetsDir);
@@ -257,22 +270,25 @@ module.exports = function(grunt) {
 
         'local-assets': {
             'options': { 
-                generatedDir: generatedDir 
+                generatedDir: generatedDir
             },
 
             'build-dev': { 
                 src: [assetsDir],
-                cwd: buildDevDir
+                cwd: buildDevDir,
+                cacheBustingId: cacheBustingId
             },
 
             'build-prod': { 
                 src: [assetsDir],
-                cwd: buildProdDir
+                cwd: buildProdDir,
+                cacheBustingId: cacheBustingId
             },
 
             'dev': { 
                 src: assetPaths,
-                cwd: '.'
+                cwd: '.',
+                cacheBustingId: "test"
             }
         },
 
@@ -323,13 +339,15 @@ module.exports = function(grunt) {
         'create-build-index': {
             'dev': {
                 options: {
-                    buildDir: buildDevDir
+                    buildDir: buildDevDir,
+                    cacheBustingId: "test"
                 }
             },
 
             'prod': {
                 options: {
-                    buildDir: buildProdDir
+                    buildDir: buildProdDir,
+                    cacheBustingId: cacheBustingId
                 }
             }
         } 

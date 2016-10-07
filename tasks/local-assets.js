@@ -2,8 +2,7 @@ var path = require('path');
 
 module.exports = function(grunt) {
     grunt.registerMultiTask('local-assets', function() {
-			var p = grunt.file.readJSON('package.json');
-			var options = this.options();
+		var p = grunt.file.readJSON('package.json');
 
 	    var paths = this.data.src;
 
@@ -29,8 +28,8 @@ module.exports = function(grunt) {
 	      var base = path.basename(file);
 	      var dir = path.dirname(file);
 
-		  	// Save each path with a corresponding key
-	      paths[base.toUpperCase()] = dir + path.sep + base;
+		  // Save each path with a corresponding key
+	      paths[base.toUpperCase()] = dir + path.sep + base + '?b=' + this.data.cacheBustingId;
 	    }
 
 	    // Write the contents of processing the previous template into config.js

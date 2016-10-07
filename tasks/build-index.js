@@ -12,12 +12,14 @@ module.exports = function(grunt) {
 		$('body').find('script').remove();
 		// Remove comment nodes
 		$('body').contents().each(function() {
-        if(this.nodeType == 8) {
-            $(this).remove()
-        }
-    });
+	        if(this.nodeType == 8) {
+	            $(this).remove();
+	        }
+   	 	});
 
-		p.body = $('body').html().replace(/^\s*[\r\n]/gm, '').trim(); 
+		p.body = $('body').html().replace(/^\s*[\r\n]/gm, '').trim();
+
+		p.cacheBustingId = options.cacheBustingId;
 
 		// Process the template 
 		var r = grunt.template.process(grunt.file.read('tasks/templates/index-template.txt'), { 

@@ -2,10 +2,10 @@
   <head>
     <meta charset="utf-8">
     <title><%= name %></title>
-    <link rel="stylesheet" href="styles/css/all_styles.css"/>
+    <link rel="stylesheet" href="styles/css/all_styles.css?b=<%= cacheBustingId %>"/>
   </head>
   <body>
   	<%= body %>
-    <script src="packaged.js"></script>
+    <script src="packaged.js?b=<%= cacheBustingId %>"></script>
   </body>
 </html>
