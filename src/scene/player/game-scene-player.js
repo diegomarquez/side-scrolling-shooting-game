@@ -159,6 +159,8 @@ define(function(require) {
 						onComplete: function() {
 							// Unblock controls when the start message is gone
 							player.unblockControls();
+							// Enable all player collisions
+							player.findComponents().firstWithProp('collider').enable();
 
 							// Set the main viewport to follow the player movement
 							viewportFollow.setFollow('Main', player);
