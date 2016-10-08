@@ -1,5 +1,6 @@
 define(function(require) {
 	var wrapper = require('wrap-in-div');
+	var util = require('util')
 
 	var DialogPagingField = require('class').extend({
 		init: function(options) {
@@ -225,7 +226,22 @@ define(function(require) {
 			var itemsPerPage = this.itemsPerPage();
 
 			for (var i = 0; i < itemsPerPage; i++) {
-				var text = data[(this.page * itemsPerPage) + i];
+				var text = "";
+				var d = data[(this.page * itemsPerPage) + i];
+
+				if (util.isObject(d)) {
+					if (!d.hasOwnProperty('displaytext'))
+						throw new Error('missing required property "displaytext"');
+
+					if (typeof d['displaytext'] !== 'string')
+						throw new Error('"displaytext" property must be a string');
+
+					text = d['displaytext'];
+				}
+				else {
+					text = d;
+				}
+
 				var label = $(this.html()).find('label[index="' + i + '"]');
 				var input = label.find('input');
 
@@ -236,6 +252,16 @@ define(function(require) {
 
     			if (text) {
 					label.append(document.createTextNode(text));
+					input.attr("text", text);
+
+					if (util.isObject(d)) {
+						input.attr("hasAttributes", true);
+
+						for (var k in d) {
+							input.attr(k, d[k]);							
+						}
+					}
+
 					input.attr("text", text);
 
 					$(input).attr("disabled", false).removeClass("ui-state-disabled");
@@ -257,7 +283,19 @@ define(function(require) {
 				var input = $(self.html()).find('input:checked');
 
 				if (input) {
-					return input.attr("text");
+					if (input.attr("hasAttributes")) {
+						var result = {};
+						
+						$.each(input.get(0).attributes, function() {
+							if(this.specified) {
+								result[this.name] = this.value;
+							}
+						});
+						
+						return result;
+					} else {
+						return input.attr("text");	
+					}
 				} else {
 					return 'no-data';
 				}
