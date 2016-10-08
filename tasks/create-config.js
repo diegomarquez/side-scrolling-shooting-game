@@ -1,4 +1,5 @@
 var path = require('path');
+var beautify = require('js-beautify').js_beautify;
 
 module.exports = function(grunt) {
     grunt.registerTask('create-config', function() {
@@ -50,6 +51,8 @@ module.exports = function(grunt) {
 				shim: grunt.file.read(options.configDir + 'shim-config.json')
 			}
 		});
+
+		r = beautify(r);
 
 	    // Write the contents of processing the previous template into config.js
 	    // If the file already exists, it is deleted

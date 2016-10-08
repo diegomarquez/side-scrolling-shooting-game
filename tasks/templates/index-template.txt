@@ -1,8 +1,9 @@
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+  	<%= head %>
+    <meta charset="utf-8"></meta>
     <title><%= name %></title>
-    <link rel="stylesheet" href="styles/css/all_styles.css?b=<%= cacheBustingId %>"/>
+    <link rel="stylesheet" href="styles/css/all_styles.css?b=<%= cacheBustingId %>"></link>
   </head>
   <body>
   	<%= body %>
