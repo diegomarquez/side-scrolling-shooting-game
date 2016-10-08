@@ -1,6 +1,7 @@
 define(function(require) {
 
 	var statusMessage = require('create-status-message');
+	var util = require("util");
 
 	var Dialog = require('ui-component').extend({
 		init: function() {
@@ -121,6 +122,9 @@ define(function(require) {
 				});
 
 				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
+
+				var activeTabIndex = $(tabs).tabs('option', 'active');
+				activateTab.call(dialog, options.tabs[activeTabIndex]);
 			}
 			
 			options.create = function (event, ui) {
@@ -188,6 +192,8 @@ define(function(require) {
 					$.each(options.tabs, function(index, tab) {
 						resetFeedback(tip, tab.fields, options);
 					});
+
+					activateTab.call(dialog, options.tabs[activeTabIndex]);
 				}
 			});
 
@@ -213,6 +219,12 @@ define(function(require) {
 			$(this.dialog).dialog('destroy').remove();
 		}
 	});
+
+	var activateTab = function(tab, options) {
+		if (util.isFunction(tab.activate)) {
+			tab.activate.call(this);
+		}
+	}
 
 	var validate = function(tip, actions, fields) {
 		try {
