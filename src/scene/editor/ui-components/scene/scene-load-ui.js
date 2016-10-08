@@ -75,6 +75,51 @@ define(function(require) {
 					{
 						name: 'Remote Scenes',	
 
+						activate: function() {
+							var self = this;
+							var dialogOptions = $(self).dialog('option');
+
+							dialogOptions.showLoadingFeedback();
+
+							if (!levelRequester.pingRemote(getRemoteUrl()))
+							{
+								dialogOptions.disableField('Remote Scenes', 'Remote Scene Selector');
+								dialogOptions.showErrorFeedback('Remote is not available');
+								dialogOptions.hideLoadingFeedback();
+
+								return;
+							}
+
+							// Initial Request
+							levelRequester.get(
+								getRemoteUrl() + "/view/" + getRemoteStartingIndex(),
+								function (data) {
+									dialogOptions.enableField('Remote Scenes', 'Remote Scene Selector');
+
+									var d = JSON.parse(data).map(function (pair) {
+										return {
+											"displaytext": pair.name,
+											"id": pair.id
+										}
+									});
+
+									if (lastConnectedRemote !== getRemoteUrl()) {
+										dialogOptions.resetField('Remote Scenes', 'Remote Scene Selector');
+									}
+
+									dialogOptions.updateField('Remote Scenes', 'Remote Scene Selector', d);
+									dialogOptions.hideLoadingFeedback();
+
+									lastConnectedRemote = getRemoteUrl();
+								},
+								function (error) {
+									dialogOptions.disableField('Remote Scenes', 'Remote Scene Selector');
+									dialogOptions.showErrorFeedback('Error connecting to the remote.');
+									dialogOptions.hideLoadingFeedback();
+								}
+							);
+						},
+
 						fields: [
 							new dialogPagingField({
 								name: 'Remote Scene Selector',
@@ -86,12 +131,15 @@ define(function(require) {
 									$(self).dialog('option').showLoadingFeedback();
 
 									levelRequester.get(
-										self.RemoteInput() + "/view/" + this.currentPage()+1,
+										getRemoteUrl() + "/view/" + this.currentPage() + getRemoteStartingIndex(),
 										function (data) {
 											$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
 
 											var d = JSON.parse(data).map(function (pair) {
-												return pair.name + " => " + pair.id;
+												return {
+													"displaytext": pair.name,
+													"id": pair.id
+												}
 											});
 
 											$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', d);
@@ -116,40 +164,15 @@ define(function(require) {
 									}
 								]
 							}),
-							new dialogTextField({
-								name: 'Remote Input',
-								value: window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'http://scene-store.herokuapp.com',
-								validations: [
-									{
-										check: function() {
-											return this.RemoteInput();
-										},
-										
-										tip: "Missing remote"
-									}
-								]
-							}),
 							new dialogHiddenField({
 								name: 'Remote Availability',
 								validations: [
 									{
 										check: function() {
-											return levelRequester.pingRemote(this.RemoteInput());
+											return levelRequester.pingRemote(getRemoteUrl());
 										 },
 
 										 tip: "Remote is not available"
-									}
-								]
-							}),
-							new dialogHiddenField({
-								name: 'Remote Url Validity',
-								validations: [
-									{
-										check: function() { 
-											return validateURL(this.RemoteInput());
-										},
-										
-										tip: "Remote url is not valid"
 									}
 								]
 							})
@@ -158,13 +181,13 @@ define(function(require) {
 						buttons: {
 							'Open Remote Scene': function () {
 								var self = this;
-								var sceneRemoteId = this.RemoteSceneSelector().match(/=>\s+(.*?)$/)[1];
+								var sceneRemoteId = this.RemoteSceneSelector()["id"];
 
 								// Store a backup of the current scene in case something goes wrong while loading the new one
 								localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
 
 								levelRequester.getLevel(
-									this.RemoteInput() + "/data/" + sceneRemoteId,
+									getRemoteUrl() + "/data/" + sceneRemoteId,
 									function (data) {
 										try {
 											sceneLoader.load(data);
@@ -183,43 +206,10 @@ define(function(require) {
 									}
 								);
 							},
-
-							'Connect With Remote': function() {           
-								var self = this;
-
-								$(self).dialog('option').showLoadingFeedback();
-
-								// Initial Request
-								levelRequester.get(
-									this.RemoteInput() + "/view/1",
-									function (data) {
-										$(self).dialog('option').enableField('Remote Scenes', 'Remote Scene Selector');
-
-										var d = JSON.parse(data).map(function (pair) {
-											return pair.name + " => " + pair.id;
-										});
-
-										if (lastConnectedRemote !== self.RemoteInput()) {
-											$(self).dialog('option').resetField('Remote Scenes', 'Remote Scene Selector');		
-										}
-
-										$(self).dialog('option').updateField('Remote Scenes', 'Remote Scene Selector', d);
-										$(self).dialog('option').hideLoadingFeedback();
-
-										lastConnectedRemote = self.RemoteInput();
-									},
-									function (error) {
-										$(self).dialog('option').disableField('Remote Scenes', 'Remote Scene Selector');
-										$(self).dialog('option').showErrorFeedback('Error connecting to the remote.');
-										$(self).dialog('option').hideLoadingFeedback();
-									}
-								);
-							}
 						},
 
 						validateOnAction: {
-							'Open Remote Scene': ['Remote Input', 'Remote Url Validity', 'Remote Availability', 'Remote Scene Selector'],
-							'Connect With Remote': ['Remote Url Validity', 'Remote Availability']
+							'Open Remote Scene': ['Remote Input', 'Remote Availability', 'Remote Scene Selector']
 						}
 					},
 					{
@@ -272,19 +262,24 @@ define(function(require) {
 						}
 					},
 					{
-						name: 'Known Remote Scenes',
+						name: 'My Remote Scenes',
 						
 						fields: [
 							new dialogPagingField({
-								name: 'Known Remote Scene Selector',
+								name: 'My Remote Scenes Selector',
 								itemsPerPage: 10,
-								data: function() {
-									return localStorageWrapper.getRemoteIdNames();
+								data: function() {  
+									return localStorageWrapper.getRemoteIdNames().map(function(nameAndId) {
+										return {
+											"displaytext": nameAndId.match(/^(.*) => .*$/)[1], 
+											"id": nameAndId.match(/^.* => (.*)$/)[1]
+										}
+									});
 								},
 								validations: [ 
 									{
 										check: function() {
-											return this.KnownRemoteSceneSelector();
+											return this.MyRemoteScenesSelector();
 										},
 										
 										tip: "No scene selected"
@@ -294,9 +289,10 @@ define(function(require) {
 						],
 						
 						buttons: {
-							'Open Known Remote Scene': function () {
-								var name = this.KnownRemoteSceneSelector().match(/^(.*) => .*$/)[1];
-								var id = this.KnownRemoteSceneSelector().match(/^.* => (.*)$/)[1];
+							'Open My Remote Scene': function () {
+								var name = this.MyRemoteScenesSelector()["displaytext"];
+								var id = this.MyRemoteScenesSelector()["id"];
+
 								var remote = localStorageWrapper.getRemoteIdRemote(name, id);
 
 								var self = this;
@@ -339,15 +335,28 @@ define(function(require) {
 		}
 	});
 	
-	validateURL = function(url) {
-		var parser = document.createElement('a');
-		
-		try {
-			parser.href = url;
-			return !!parser.hostname;
-		} catch (e) {
-			return false;
-		}
+	var getRemoteUrl = function() {
+		var hostname = window.location.hostname;
+
+		if (hostname === 'localhost')
+			return 'http://localhost:3000';
+
+		if (hostname === '')
+			return 'http://localhost:3000';
+
+		return 'http://scene-store.herokuapp.com';
+	}
+
+	var getRemoteStartingIndex = function() {
+		var hostname = window.location.hostname;
+
+		if (hostname === 'localhost')
+			return 0;
+
+		if (hostname === '')
+			return 0;
+
+		return 1;
 	}
 
 	return SceneLoad;

@@ -68,7 +68,12 @@ define(function(require) {
 								name: 'Remote Scene Selector',
 								itemsPerPage: 10,
 								data: function() {
-									return localStorageWrapper.getRemoteIdNames();
+									return localStorageWrapper.getRemoteIdNames().map(function(nameAndId) {
+										return {
+											"displaytext": nameAndId.match(/^(.*) => .*$/)[1], 
+											"id": nameAndId.match(/^.* => (.*)$/)[1]
+										}
+									});
 								},
 								validations: [ 
 									{
@@ -84,8 +89,8 @@ define(function(require) {
 
 						buttons: {
 							'Delete': function () {
-								var name = this.RemoteSceneSelector().match(/^(.*) => .*$/)[1];
-								var id = this.RemoteSceneSelector().match(/^.* => (.*)$/)[1];
+								var name = this.RemoteSceneSelector()["displaytext"];
+								var id = this.RemoteSceneSelector()["id"];
 								
 								localStorageWrapper.removeRemoteId(name, id);
 

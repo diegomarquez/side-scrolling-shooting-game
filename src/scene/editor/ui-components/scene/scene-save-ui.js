@@ -49,7 +49,7 @@ define(function(require) {
 										check: function() { 
 						            		return !localStorageWrapper.getScene(this.LocalSceneName()); 
 						          		},
-						          		tip: "To overwrite the old scene click the 'Update' button"
+						          		tip: "To overwrite the old scene click 'Update'"
 									}
 								]
 							})
@@ -89,20 +89,14 @@ define(function(require) {
 									}
 								]
 							}),
-							new dialogTextField({
+							new dialogHiddenField({
 								name: 'Remote Url',
-								value: window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'http://scene-store.herokuapp.com',
 								validations: [
 									{
-										check: function(remote) { 
-										    return validateURL(remote);  
+										check: function() {
+											return levelRequester.pingRemote(getRemoteUrl());  
 										},
-										tip: "Remote url is not valid"
-									},
-									{
-										check: function(remote) { 
-											return levelRequester.pingRemote(remote);  
-										},
+
 										tip: "Remote is not available"
 									}
 								]
@@ -128,6 +122,18 @@ define(function(require) {
 		}
 	});
 		
+	var getRemoteUrl = function() {
+		var hostname = window.location.hostname;
+
+		if (hostname === 'localhost')
+			return 'http://localhost:3000';
+
+		if (hostname === '')
+			return 'http://localhost:3000';
+
+		return 'http://scene-store.herokuapp.com';
+	}
+
 	var serializeAndStoreLocal = function() {
 		var name = this.LocalSceneName();
 
@@ -161,7 +167,7 @@ define(function(require) {
 			return;
 		}
 
-		levelRequester.post(serializedScene, this.RemoteUrl() + '/add',
+		levelRequester.post(serializedScene, getRemoteUrl() + '/add',
 			function (successResult) {
 				$(self).dialog('close');
 
@@ -174,17 +180,6 @@ define(function(require) {
 			});
 
 		sceneName.set(name);
-	}
-
-	var validateURL = function(url) {
-		var parser = document.createElement('a');
-		
-		try {
-			parser.href = url;
-			return !!parser.hostname;
-		} catch (e) {
-			return false;
-		}
 	}
 		
 	return SceneSave;
