@@ -1,7 +1,6 @@
 require.config({ 
 	shim: <%= shim %>,
 	paths: { 
-		<% paths.forEach(function(pathObject) { %>"<%= pathObject.alias %>": "<%= pathObject.path %>", 
-		<% }); %>  
+		<% paths.forEach(function(pathObject, index) { %>"<%= pathObject.alias %>": "<%= pathObject.path %>"<%= index < paths.length - 1 ? "," : ""%><% }); %>
 	}  
 });

@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 			}
 		});
 
-		r = beautify(r);
+		r = beautify(r, { preserve_newlines: false });
 
 	    // Write the contents of processing the previous template into config.js
 	    // If the file already exists, it is deleted
