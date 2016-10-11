@@ -186,7 +186,7 @@ define(function(require) {
 	SceneSave.serializeAndStoreRemoteShare = function(onComplete) {
 		var self = this;
 
-		var serializedScene = sceneSerializer.serialize('#' + util.generateUUID()); 
+		var serializedScene = sceneSerializer.serialize(util.generateUUID()); 
 		
 		if (serializedScene === false) {
 			// TODO: Implement this
