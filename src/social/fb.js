@@ -5,17 +5,18 @@ define(function(require)
 
 	var Facebook = function() {
 		this.initialized = false;
-		this.initializing = true;
 	};
 
 	Facebook.prototype.share = function() {
+		var self = this;
+
 		if (gb.getEnvironment() === 'dev') {
 			if (!this.initialized) {
 				window.fbAsyncInit = function() {
 					init("678625568980303");
 					share('http://www.treintipollo.com');
 
-					this.initialized = true;
+					self.initialized = true;
 				};
 
 			  	loadFacebookSdk(document, 'script', 'facebook-jssdk');
@@ -33,9 +34,9 @@ define(function(require)
 					init("1910504332510208");
 
 					sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-						share('http://www.treintipollo.com/' + sceneRemoteUrl + '/' + scenId);
+						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId);
 
-						this.initialized = true;
+						self.initialized = true;
 					});
 				};
 
@@ -86,3 +87,6 @@ define(function(require)
 
 	return new Facebook();
 });
+
+
+http://www.treintipollo.com/scene-store.herokuapp.com/F46ce2b30-900d-11e6-b8de-a7e3489deed5&locale=en_US&mobile_iframe=false&next=
