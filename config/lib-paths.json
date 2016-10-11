@@ -12,6 +12,5 @@
 	"EasePack": "./lib/gsap/src/uncompressed/easing/EasePack",
 	"pako": "./lib/pako/dist/pako",
 	"jquery-ui": "./lib/jquery-ui",
-	"bootstrap": "./lib/bootstrap",
-	"facebook": "http://connect.facebook.net/en_US/sdk"
+	"bootstrap": "./lib/bootstrap"
 }
