@@ -46,7 +46,7 @@ define(function(require)
 
 			if (this.initialized) {
 				sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-					share('http://www.treintipollo.com/' + sceneRemoteUrl + '/' + scenId);
+					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId);
 				});
 			}
 		}				
