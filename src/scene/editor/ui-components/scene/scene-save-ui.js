@@ -8,6 +8,7 @@ define(function(require) {
 	var dialogHiddenField = require('dialog-hidden-field');
 
 	var sceneName = require('scene-name');
+	var util = require('util');
 
 	var SceneSave = require('ui-component').extend({
 		init: function() {
@@ -181,6 +182,32 @@ define(function(require) {
 
 		sceneName.set(name);
 	}
+	
+	SceneSave.serializeAndStoreRemoteShare = function(onComplete) {
+		var self = this;
+
+		var serializedScene = sceneSerializer.serialize('#' + util.generateUUID()); 
 		
+		if (serializedScene === false) {
+			// TODO: Implement this
+			// Show proper feedback if there was a problem sharing
+
+			return;
+		}
+
+		levelRequester.post(serializedScene, getRemoteUrl() + '/add',
+			function (successResult) {
+				$(self).dialog('close');
+
+				var response = JSON.parse(successResult);
+
+				onComplete(response.name, response.id, response.remote);
+			},
+			function (failureResult) {
+				// TODO: Implement this
+				// Show proper feedback if there was a problem sharing
+			});
+	}
+
 	return SceneSave;
 });

@@ -218,6 +218,18 @@ define(function(require) {
 			));
 
 			items.push(createDivider());
+			items.push(createTitleItem('Share'));
+
+			items.push(createOptionItem(
+				'Facebook', 
+				'fa-facebook-official', 
+				function() { 
+					require('fb').share();
+				},
+				'fa fa-lg'
+			));
+
+			items.push(createDivider());
 			items.push(createTitleItem('Misc.'));
 
 			if (require('mode').isAdvanced()) {
@@ -301,7 +313,11 @@ define(function(require) {
 		return li; 
 	}
 
-	var createOptionItem = function(content, iconName, onClick) {
+	var createOptionItem = function(content, iconName, onClick, iconFamily) {
+		
+		if (!iconFamily)
+			iconFamily = 'glyphicon';
+
 		var li = document.createElement('li'); 
 		var a = document.createElement('a');
 
@@ -312,11 +328,12 @@ define(function(require) {
 		$(li).addClass('side-menu-item');
 		
 		$(li).on('click', onClick);
-	 
+
 		var icon = document.createElement('span');
 		$(icon).addClass('side-menu-icon');
 		$(icon).addClass('main-side-menu-icon');
-		$(icon).addClass('glyphicon icon-white');
+		$(icon).addClass('icon-white');
+		$(icon).addClass(iconFamily);
 		$(icon).addClass(iconName);
 		$(a).append(icon);
 

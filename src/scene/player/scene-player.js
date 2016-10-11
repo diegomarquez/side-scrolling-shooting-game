@@ -213,6 +213,8 @@ define(function(require) {
 	    		name = sceneData['name'];
 	    	}
 
+	    	name = 'Space Maze: ' + name;
+
 			document.getElementById('player-title').appendChild(document.createTextNode(name));
 		},
 
