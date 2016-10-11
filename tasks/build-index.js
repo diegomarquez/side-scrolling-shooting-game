@@ -7,10 +7,10 @@ module.exports = function(grunt) {
 	
 		var p = grunt.file.readJSON('package.json');
 
-		var $ = cheerio.load(grunt.file.read('index.html'), {xmlMode: true});
+		var $ = cheerio.load(grunt.file.read('index.html'), { xmlMode: true });
 		
-		var head = cheerio.load("<head></head>", {xmlMode: true});
-		var body = cheerio.load("<body></body>", {xmlMode: true});
+		var head = cheerio.load("<head></head>");
+		var body = cheerio.load("<body></body>");
 
    	 	head('head').append($('head').find('[package]').removeAttr('package'));
    	 	body('body').append($('body').find('[package]').removeAttr('package'));
