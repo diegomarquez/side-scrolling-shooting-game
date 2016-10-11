@@ -8,7 +8,7 @@
   "lib": "./lib",
   "frameworkTag": "master",
   "dependencies": {
-    "cheerio": "~0.18.0",
+    "cheerio": "^0.22.0",
     "connect": "^3.4.1",
     "connect-route": "~0.1.4",
     "cors": "^2.7.1",
