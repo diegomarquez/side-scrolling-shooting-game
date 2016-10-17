@@ -1,10 +1,10 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var explosionBundle = require('explosion-generator-bundle');;
 	var gb = require('gb');
 
 	var ShipBundle = require("bundle").extend({
-		create: function(args) {	
+		create: function(args) {
 			this.componentPool.createPool('ship-renderer', require("ship-renderer"));
 
 			this.componentPool.createPool('player-damage-feedback', require('player-damage-feedback'));
@@ -39,7 +39,7 @@ define(function(require) {
 					getResponse: true
 				});
 
-			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');			
+			this.componentPool.createConfiguration("ShipRenderer", 'ship-renderer');
 
 			this.componentPool.createConfiguration("ExhaustRenderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
@@ -51,7 +51,7 @@ define(function(require) {
 					path: gb.assetMap()["PLAYEREXHAUST.PNG"],
 					offset: 'center'
 				});
-			
+
 			this.gameObjectPool.createConfiguration("ShootingPosition", commonBundle.getGameObjectPoolId());
 
 			this.gameObjectPool.createConfiguration("SmallExhaust", "Exhaust")
@@ -62,19 +62,20 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")
 				.args({
-					rotation: 90
+					rotation: 90,
+					bulletsType: 'player-bullet'
 				})
 				.addChild('ShootingPosition', { name: 'middle', y: -35 })
 				.addChild('ShootingPosition', { name: 'right', x: 15, y: -25 })
 				.addChild('ShootingPosition', { name: 'left', x: -15, y: -25 })
-				
+
 				.addChild('SmallExhaust', { x: -21, y: 45, rotation: -58, scaleX: 0.6, scaleY: 0.6 })
 				.addChild('SmallExhaust', { x: 0, y: 55, rotation: -90, scaleX: 0.8, scaleY: 0.8 })
 				.addChild('SmallExhaust', { x: 21, y: 45, rotation: -122, scaleX: 0.6, scaleY: 0.6 })
-				
+
 				.addChild('MediumExhaust', { x: -21, y: 45, rotation: -58, scaleX: 0.7, scaleY: 0.7 })
 				.addChild('MediumExhaust', { x: 0, y: 60, rotation: -90, scaleX: 1, scaleY: 1 })
-				.addChild('MediumExhaust', { x: 21, y: 45, rotation: -122, scaleX: 0.7, scaleY: 0.7 })	
+				.addChild('MediumExhaust', { x: 21, y: 45, rotation: -122, scaleX: 0.7, scaleY: 0.7 })
 
 				.addComponent('ShipDamage')
 				.addComponent('ShipDestroy')
@@ -86,7 +87,7 @@ define(function(require) {
 				.addComponent('PlayerDestroyed')
 
 				.addComponent('PlayerStopCurrentBGM')
-				
+
 				.addComponent('ShipColliderCircle')
 				.setRenderer("ShipRenderer");
 		},

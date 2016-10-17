@@ -1,6 +1,7 @@
 define(function(require) {
 	var gb = require('gb');
 	var root = require('root');
+	var util = require('util');
 	
 	var playerLoader = require('player-scene-loader');
 	var viewportFollow = require('viewport-follow');
@@ -30,6 +31,10 @@ define(function(require) {
 
 			// Layout all the game objects in the scene
 			playerLoader.layout();
+		},
+
+		getSceneLoader: function() {
+			return playerLoader;
 		},
 
 		setCompleteEvents: function() {

@@ -5,6 +5,7 @@ define(function(require) {
 	var collisionResolver = require('collision-resolver');
 	var util = require('util');
 	var soundPlayer = require('sound-player');
+	var editorConfig = require('editor-config');
 
 	var ScenePlayer = require("ui-component").extend({
 		init: function() {
@@ -14,28 +15,28 @@ define(function(require) {
 		},
 
 		pools: function() {
-	    	require('common-bundle').create();
-	    	require('sound-bundle').create();
-	    	require('add-components-bundle').create();
-	    	require('hud-bundle').create();
-	    	require('explosion-bundle').create();
-	    	require('explosion-generator-bundle').create();
-	    	require('particle-generator-bundle').create();
-	    	require('particle-bundle').create();
-	    	require('ship-bundle').create();
-	    	require('cannon-bundle').create();
-	    	require('bullets-bundle').create();
-	    	require('obstacle-bundle').create();
-	    	require('boss-bundle').create();
-	    	require('messages-bundle').create();
-	    	require('control-objects-bundle').create();
-	    	require('items-bundle').create();
-	    	require('laser-effects-bundle').create();
-	    	require('mine-bundle').create();
-	    	require('generator-bundle').create();
-	    	require('enemy-ship-bundle').create();
-	    	require('blob-bundle').create();
-	    	require('spider-bundle').create();
+			require('common-bundle').create();
+			require('sound-bundle').create();
+			require('add-components-bundle').create();
+			require('hud-bundle').create();
+			require('explosion-bundle').create();
+			require('explosion-generator-bundle').create();
+			require('particle-generator-bundle').create();
+			require('particle-bundle').create();
+			require('ship-bundle').create();
+			require('cannon-bundle').create();
+			require('bullets-bundle').create();
+			require('obstacle-bundle').create();
+			require('boss-bundle').create();
+			require('messages-bundle').create();
+			require('control-objects-bundle').create();
+			require('items-bundle').create();
+			require('laser-effects-bundle').create();
+			require('mine-bundle').create();
+			require('generator-bundle').create();
+			require('enemy-ship-bundle').create();
+			require('blob-bundle').create();
+			require('spider-bundle').create();
 		},
 
 		setCollisionPairs: function() {
@@ -105,21 +106,21 @@ define(function(require) {
 		},
 
 		container: function() {
-		    this.mainContainer = document.getElementById('main-player-container');
+			this.mainContainer = document.getElementById('main-player-container');
 
-		    if (!this.mainContainer) {
-		    	this.mainContainer = document.createElement('div');
+			if (!this.mainContainer) {
+				this.mainContainer = document.createElement('div');
 				this.mainContainer.id = 'main-player-container';
-				document.body.appendChild(this.mainContainer);	
-		    }
+				document.body.appendChild(this.mainContainer);
+			}
 
-		    canvasContainer.detachCanvas();
+			canvasContainer.detachCanvas();
 			this.mainContainer.appendChild(canvasContainer.getCanvasContainer());
 		},
 
 		requiredViewports: function() {
 			if (!gb.groups.exists("Second")) {
-				gb.groups.add("Second");	
+				gb.groups.add("Second");
 			}
 
 			if (!gb.viewports.exists("Messages")) {
@@ -134,7 +135,7 @@ define(function(require) {
 		},
 
 		load: function(sceneData) {
-			
+
 		},
 
 		setKeyboardEvents: function() {
@@ -142,16 +143,16 @@ define(function(require) {
 		},
 
 		removeKeyboardEvents: function() {
-      		keyboard.removeKeyDown(keyboard.ESC, this, this.escape);
+			keyboard.removeKeyDown(keyboard.ESC, this, this.escape);
 		},
 
 		escape: function() {
-			
+
 			if (this.blockEscape)
 				return;
 
 			this.blockEscape = true;
-			
+
 			this.execute(this.ESCAPE);
 		},
 
@@ -160,11 +161,11 @@ define(function(require) {
 		},
 
 		setCompleteEvents: function() {
-			
+
 		},
 
 		removeCompleteEvents: function() {
-			
+
 		},
 
 		create: function(sceneData) {
@@ -174,6 +175,7 @@ define(function(require) {
 
 			this.container()
 			this.pools();
+			this.preloadAssets(sceneData);
 			this.setCollisionPairs();
 			this.load(sceneData);
 			this.requiredViewports();
@@ -184,8 +186,143 @@ define(function(require) {
 			soundPlayer.playLoop('INTRO');
 		},
 
+		getSceneLoader: function() {
+
+		},
+
+		preloadAssets: function(sceneData) {
+			function isAssetUrl(url) {
+				var pattern = /^assets\/.*?\/.*?\?b=.*?$/;
+
+				if(!pattern.test(url)) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+			function inspectStringArgument(value) {
+				if (util.isString(value)) {
+					// Does it look like a URL?
+					if (isAssetUrl(value)) {
+						if (urls.indexOf(value) === -1) {
+							urls.push(value);
+						}
+					}
+
+					// Is it a Configuration ID for a game object?
+					if (gb.goPool.configurationExists(value)) {
+						if (configurationsUsed.indexOf(value) === -1) {
+							configurationsUsed.push(value);
+						}
+					}
+
+					// Is it a configuration ID for a component?
+					if (gb.coPool.configurationExists(value)) {
+						if (configurationsUsed.indexOf(value) === -1) {
+							configurationsUsed.push(value);
+						}
+					}
+
+					// TODO: Is it a sound ID?
+				}
+			}
+
+			function inspectArguments(args) {
+				for (var k in args) {
+					inspectStringArgument(args[k]);
+				}
+			}
+
+			function inspectComponent(componentId) {
+				if (!gb.coPool.configurationExists(componentId))
+					return;
+
+				// Check the arguments of the renderer component
+				inspectArguments(gb.coPool.getConfigurationObject(componentId).componentArgs);
+			}
+
+			var configurationsUsed = this.getSceneLoader().getConfigurationsUsedInScene(sceneData);
+			var inspectedConfigurations = [];
+
+			var urls = [];
+
+			for (var i = 0; i < configurationsUsed.length; i++) {
+				var configurationId = configurationsUsed[i];
+
+				// Skip configuration which have already been inspected
+				if (inspectedConfigurations.indexOf(configurationId) !== -1)
+					continue;
+
+				inspectedConfigurations.push(configurationId);
+
+				// Filter out editor only objects
+				if (editorConfig.isEditorGameObject(configurationId))
+					continue;
+
+				var isGameObject = false;
+				var isComponent = false;
+
+				var configuration = null;
+
+				if (gb.goPool.configurationExists(configurationId)) {
+					isGameObject = true;
+					configuration = gb.goPool.getConfigurationObject(configurationId);
+				}
+
+				if (gb.coPool.configurationExists(configurationId)) {
+					isComponent = true;
+					configuration = gb.coPool.getConfigurationObject(configurationId);
+				}
+
+				if (isGameObject) {
+					// Check the arguments of this configuration
+					inspectArguments(configuration.hardArguments);
+
+					// Check the children, and query the game object pool to look at the hard arguments
+					if (configuration.childs) {
+						for (var j = 0; j < configuration.childs.length; j++) {
+							var childId = configuration.childs[j].childId;
+
+							// Check the argument of the configured child
+							inspectArguments(configuration.childs[j].args);
+
+							// Add the child to the check list
+							if (configurationsUsed.indexOf(childId) === -1) {
+								configurationsUsed.push(childId);
+							}
+						}
+					}
+
+					// Check the components, and query the component pool to look at hard arguments
+					if (configuration.components) {
+						for (var j = 0; j < configuration.components.length; j++) {
+							// Check the argument of the configured component
+							inspectArguments(configuration.components[j].args);
+							// Check the arguments of the component
+							inspectComponent(configuration.components[j].componentId);
+						}
+					}
+
+					if (configuration.renderer) {
+						// Check the arguments of the configured renderer
+						inspectArguments(configuration.renderer.args);
+						// Check the arguments of the renderer component
+						inspectComponent(configuration.renderer.componentId);
+					}
+				}
+
+				if (isComponent) {
+					// Check the arguments of the configured component
+					inspectArguments(configuration.componentArgs);
+					// Check the arguments of the component
+					inspectComponent(configuration.componentId);
+				}
+			}
+		},
+
 		start: function() {
-				
+
 		},
 
 		decorateContainer: function(sceneData) {
@@ -207,23 +344,22 @@ define(function(require) {
 			var name;
 
 			if (util.isString(sceneData)) {
-	    		name = JSON.parse(sceneData)['name'];
-	    	}
-	    	else if (util.isObject(sceneData)) {
-	    		name = sceneData['name'];
-	    	}
+				name = JSON.parse(sceneData)['name'];
+			}
+			else if (util.isObject(sceneData)) {
+				name = sceneData['name'];
+			}
 
-	    	name = 'Space Maze: ' + name;
+			name = 'Space Maze: ' + name;
 
 			document.getElementById('player-title').appendChild(document.createTextNode(name));
 		},
 
 		removeContainer: function() {
-  
+
 		},
 
 		cleanUp: function() {
-
 			var title = document.getElementById('player-title');
 			var controls = document.getElementById('player-controls');
 
@@ -241,9 +377,9 @@ define(function(require) {
 			// Remove collisions detection
 			this.removeCollisionPairs();
 			// Remove listeners to exit the scene
-			this.removeCompleteEvents()
+			this.removeCompleteEvents();
 			this.removeKeyboardEvents();
-			// Remove the canvas container from the DOM 
+			// Remove the canvas container from the DOM
 			this.removeContainer();
 			// Kill any tweens that are still running when the scene player is being destroyed
 			TimelineLite.exportRoot().kill();
@@ -255,6 +391,7 @@ define(function(require) {
 	Object.defineProperty(ScenePlayer.prototype, "EXIT", { get: function() { return 'exit'; } });
 	Object.defineProperty(ScenePlayer.prototype, "FAILURE", { get: function() { return 'failure'; } });
 	Object.defineProperty(ScenePlayer.prototype, "ESCAPE", { get: function() { return 'escape'; } });
+	Object.defineProperty(ScenePlayer.prototype, "CREATION_COMPLETE", { get: function() { return 'creation_complete'; } });
 
 	return new ScenePlayer();
 })

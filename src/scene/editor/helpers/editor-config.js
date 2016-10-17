@@ -207,13 +207,16 @@ define(function(require) {
 
 			editorOnlyGameObjects = [
 				require('outline-bundle').getOutlineId(),
-				require('grid-bundle').getGridId(),			
+				require('grid-bundle').getGridId(),
+				'GeneratorWayPoint',
+				'absolute-scroll-stopper'
 			]
 
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getControlGizmoObjects());
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getColliderGizmoGameObjects());
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getRotationGizmoGameObjects());
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getScaleGizmoGameObjects());
+			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getSoundObjects());
 
 			return editorOnlyGameObjects;
 		},

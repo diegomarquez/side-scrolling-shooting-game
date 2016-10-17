@@ -1,7 +1,7 @@
 define(
-	["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLite", "DirectionalRotationPlugin", "EasePack"], 
+	["editor-game-object-container", "keyboard", "gb", "matrix-3x3", "TweenLite", "DirectionalRotationPlugin", "EasePack"],
 	function(GameObjectContainer, Keyboard, Gb, Matrix, Tweenlite, DirectionalRotationPlugin, EasePack) {
-	
+
 	var transformResult = {};
 	var matrix = new Matrix();
 
@@ -49,22 +49,22 @@ define(
 		},
 
 		editorStart: function() {
-			
+
 			this.speed = 200;
 			this.hp = 5;
 			this.maxBulletAmount = 1;
 
 			this.leftShootingPositions = this.findChildren().first(function (child) {
 				return child.typeId == "ShootingPosition" && child.name == 'left';
- 			});
+			});
 
- 			this.middleShootingPositions = this.findChildren().first(function (child) {
+			this.middleShootingPositions = this.findChildren().first(function (child) {
 				return child.typeId == "ShootingPosition" && child.name == 'middle';
- 			});
+			});
 
- 			this.rightShootingPositions = this.findChildren().first(function (child) {
+			this.rightShootingPositions = this.findChildren().first(function (child) {
 				return child.typeId == "ShootingPosition" && child.name == 'right';
- 			});
+			});
 
 			Keyboard.onKeyDown(Keyboard.A, this, function() {
 				if (this.block) return;
@@ -82,7 +82,7 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 				}
 
 				if (this.maxBulletAmount == 2) {
@@ -94,7 +94,7 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 
 					this.rightShootingPositions.getTransform(transformResult, matrix);
 
@@ -104,7 +104,7 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 				}
 
 				if (this.maxBulletAmount == 3) {
@@ -116,7 +116,7 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 
 					this.leftShootingPositions.getTransform(transformResult, matrix);
 
@@ -126,7 +126,7 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 
 					this.rightShootingPositions.getTransform(transformResult, matrix);
 
@@ -136,13 +136,13 @@ define(
 					bulletArguments.rotation = this.rotation - 90;
 					bulletArguments.playerSpeed = this.maxForwardSpeed;
 
-					Gb.add('player-bullet', 'First', bulletsViewport, bulletArguments);
+					Gb.add(this.bulletsType, 'First', bulletsViewport, bulletArguments);
 				}
 
 			}, 'player-ship-keyboard');
 
 			this.smallExhausts = this.findChildren().allWithType("SmallExhaust");
-			this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");      
+			this.mediumExhausts = this.findChildren().allWithType("MediumExhaust");
 
 			this.findChildren().allWithType("Exhaust").forEach(function(exhaust) {
 				exhaust.turnOn();
@@ -155,8 +155,8 @@ define(
 				if (this.explodeComponent.isEnabled()) return;
 
 				if (this.rotation == 90) {
-					mediumExhausts.call(this);	
-				}				  
+					mediumExhausts.call(this);
+				}
 			}, 'player-ship-keyboard');
 
 			Keyboard.onKeyUp(Keyboard.GAME_RIGHT, this, function() {
@@ -177,7 +177,7 @@ define(
 
 				if (this.rotation == 270) {
 					mediumExhausts.call(this);
-				}  
+				}
 			}, 'player-ship-keyboard');
 
 			Keyboard.onKeyUp(Keyboard.GAME_LEFT, this, function() {
@@ -197,8 +197,8 @@ define(
 				if (this.explodeComponent.isEnabled()) return;
 
 				if (this.rotation == 0) {
-					mediumExhausts.call(this); 
-				} 
+					mediumExhausts.call(this);
+				}
 			}, 'player-ship-keyboard');
 
 			Keyboard.onKeyUp(Keyboard.GAME_UP, this, function() {
@@ -218,7 +218,7 @@ define(
 				if (this.explodeComponent.isEnabled()) return;
 
 				if (this.rotation == 180) {
-					mediumExhausts.call(this);  
+					mediumExhausts.call(this);
 				}
 			}, 'player-ship-keyboard');
 
@@ -244,7 +244,7 @@ define(
 					this.execute(this.DESTROYED);
 				}
 			});
-			
+
 			this.destroyComponent.once('complete', this, function() {
 				this.block = true;
 				this.execute(this.DESTROYED);
@@ -309,7 +309,7 @@ define(
 					this.viewportOffsetY -= response.overlapV.y;
 
 					break;
-				
+
 				case 'CannonBullet':
 
 					if (!this.damageComponent.isEnabled()) {
@@ -345,16 +345,16 @@ define(
 					}
 
 					break;
-				
+
 				case 'Missile':
-					
+
 					if (!this.damageComponent.isEnabled()) {
 						this.damageComponent.enable();
 						this.takeDamage(response.overlapV);
 					}
 
 					break;
-				
+
 				case 'Boss_1':
 
 					if (!this.damageComponent.isEnabled()) {
@@ -465,10 +465,10 @@ define(
 				}
 
 				this.angle = angle * (Math.PI/180);
-				
+
 				Tweenlite.to(this, 0.3, { directionalRotation : (angle + 90) + "_short" });
 			}
-			
+
 			Tweenlite.to(this, 1, { forwardSpeed : this.maxForwardSpeed });
 
 			this.execute(this.MOVE);
@@ -483,7 +483,7 @@ define(
 
 			this.forwardSpeed = 0;
 			this.maxForwardSpeed = 200;
-			
+
 			TweenLite.killTweensOf(this);
 
 			this.execute(this.STOP_MOVEMENT);
@@ -537,24 +537,24 @@ define(
 		},
 
 		takeDamage: function(hitDirection) {
-			
+
 			if (this.hp > 0) {
 				this.hp--;
 				this.execute(this.HEALTH_DOWN, this.hp);
 
 				if (this.hp == 0) {
 					this.execute(this.DAMAGE);
-					
+
 					this.damageComponent.disable();
-				
+
 					this.destroyComponent.enable();
 					this.destroyComponent.setDirection(hitDirection);
-					
+
 					noExhaust.call(this);
 
 					this.execute(this.NO_CONTROL);
 				} else {
-					
+
 					if (this.hp <= 0)
 						return;
 
@@ -569,7 +569,7 @@ define(
 					if (Math.random() > 0.5) {
 						if (this.maxBulletAmount > 1) {
 							this.maxBulletAmount--;
-							
+
 							p = Gb.create('PowerDown', 'First', bulletsViewport, powerupFeedbackArguments);
 						}
 					} else {
@@ -625,7 +625,7 @@ define(
 	Object.defineProperty(PlayerShip.prototype, "STOP_MOVEMENT", { get: function() { return 'stop_movement'; } });
 	Object.defineProperty(PlayerShip.prototype, "BLOCK", { get: function() { return 'block'; } });
 	Object.defineProperty(PlayerShip.prototype, "UNBLOCK", { get: function() { return 'unblock'; } });
-	
+
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_UP", { get: function() { return 'health_up'; } });
 	Object.defineProperty(PlayerShip.prototype, "HEALTH_DOWN", { get: function() { return 'health_down'; } });
 

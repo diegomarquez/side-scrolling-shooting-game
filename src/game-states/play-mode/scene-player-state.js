@@ -57,7 +57,7 @@ define(function(require) {
 			// Wait for the loader to complete a transition before playing the scene
 			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
 				scenePlayer.start();  
-			});
+			}); 
 
 			// Load the scene
 			scenePlayer.create(level);

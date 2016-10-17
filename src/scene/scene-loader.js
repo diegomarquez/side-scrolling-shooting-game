@@ -103,6 +103,60 @@ define(function(require) {
 			} 
 	    },
 
+	    getConfigurationsUsedInScene: function(scene) {
+	    	if (!scene) {
+	    		throw new Error('missing scene');
+	    	}
+
+	    	if (util.isString(scene)) {
+	    		scene = JSON.parse(scene);
+	    	}
+
+	    	if (util.isObject(scene)) {
+	    		scene = scene;
+	    	}
+
+	    	if (!scene.objects) 
+	    		return [];	
+
+	    	var result = {};
+
+	    	for(i = 0; i < scene.objects.length; i++) {
+				var serializedGameObject = scene.objects[i];
+
+				var configurationId = serializedGameObject["id"];
+
+				result[configurationId] = null;
+
+				var childrenJson = this.getChildrenArgs(serializedGameObject["properties"]);
+				result = util.shallow_merge(result, this.getChildConfigurationsUsedInScene(childrenJson));
+			}
+
+			returnArray = [];
+
+			for (var k in result) {
+				returnArray.push(k);
+			}
+
+			return returnArray;
+	    },
+
+	    getChildConfigurationsUsedInScene: function(childrenJson) {
+			var result = {};
+
+			if (childrenJson) {
+				for (var configurationId in childrenJson) {
+					result[configurationId] = null;
+
+					var cJson = this.getChildrenArgs(childrenJson[configurationId]);
+
+					result = util.shallow_merge(result, this.getChildConfigurationsUsedInScene(cJson))
+				}	
+			}
+
+			return result;
+	    },
+
 	    getComponentArgs: function(properties) {
 			return properties ? properties["componentArgs"] : null;
 		},

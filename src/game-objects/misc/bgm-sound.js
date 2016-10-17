@@ -1,12 +1,11 @@
 define(function(require) {
-
 	var soundPlayer = require("sound-player");
 	var lastBGMSoundId = "";
 
 	var BGMSound = require("editor-game-object-container").extend({
 		init: function() {
 			this._super();
-			
+
 			this.soundId = "";
 			this.playLast = false;
 			this.stopCurrent = false;
@@ -17,20 +16,25 @@ define(function(require) {
 
 		editorStart: function() {
 			if (this.stopCurrent) {
-				soundPlayer.stopAll().now();
-				
+				soundPlayer.stopAll().which(function(id, source) {
+					return id === 'INTRO' || id === 'LEVEL_1' || id === 'LEVEL_2' || id === 'LEVEL_3' || id === 'LEVEL_4' || id === 'BOSS';
+				});
+
 				return;
 			}
 
 			if (this.playLast) {
 				if (lastBGMSoundId !== "") {
-					soundPlayer.stopAll().now();
+					soundPlayer.stopAll().which(function(id, source) {
+						return id === 'INTRO' || id === 'LEVEL_1' || id === 'LEVEL_2' || id === 'LEVEL_3' || id === 'LEVEL_4' || id === 'BOSS';
+					});
+					
 					soundPlayer.playLoop(lastBGMSoundId);
 				}
 
 				return;
-			} 
-			
+			}
+
 			if (lastBGMSoundId !== "")
 				soundPlayer.stop(lastBGMSoundId);
 
@@ -45,12 +49,12 @@ define(function(require) {
 
 		deActivate: function() {
 
-    	},
+		},
 
-    	recycle: function() {
+		recycle: function() {
 			if (this.soundId !== "" && this.stopSoundOnRecycle)
 				soundPlayer.stop(this.soundId);
-			
+
 			this.playLast = false;
 			this.stopCurrent = false;
 			this.storeLast = true;
@@ -60,7 +64,7 @@ define(function(require) {
 			this.soundId = "";
 
 			this._super();
-    	}
+		}
 	});
 
 	BGMSound.clearLastBGMId = function() {

@@ -39,7 +39,7 @@ define(function(require) {
 				serializedGameObject.id, 
 				serializedGameObject.g, 
 				serializedGameObject.v, 
-				this.getGameObjectArgs(serializedGameObject.properties)
+				this.getGameObjectArgs(serializedGameObject["properties"])
 			)
 		},
 

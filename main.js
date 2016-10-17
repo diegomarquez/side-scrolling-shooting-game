@@ -20,7 +20,7 @@ define(function(require) {
 	this.game.add_extension(require("tweens-control"));
 
 	this.stateMachineFactory = require('state-machine');
-	this.mainStateMachine = this.stateMachineFactory.createFixedStateMachine(); 
+	this.mainStateMachine = this.stateMachineFactory.createFixedStateMachine();
 
 	this.mainStateMachine.add((require('splash-state'))('splash_state'));
 	this.mainStateMachine.add((require('game-modes-state'))('game_modes_state'));
@@ -33,7 +33,7 @@ define(function(require) {
 				this.mainStateMachine.start({ mode: 'url-mode', data: scene }, 1);
 			} catch (e) {
 				// Should there be any problems, fallback to the regular initialization
-				
+
 				// Start in the splash state
 				this.mainStateMachine.start();
 				// Open the loader
@@ -63,42 +63,45 @@ define(function(require) {
 			this.mainStateMachine.update(delta);
 		});
 
-		this.game.create();	
+		this.game.create();
 	}
 
 	assetPreloader.addGraphicAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
 
-	soundPlayer.createChannels(2);
+	soundPlayer.createChannels(10);
 
-	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
+	soundPlayer.assignChannels('INTRO', 1);
+
+	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], false);
+	
 	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
 	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
 	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG']);
 	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG']);
 	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG']);
 
-	soundPlayer.loadWithWebAudio('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
-	soundPlayer.loadWithWebAudio('POWER_UP', gb.assetMap()['POWERUP.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
-	soundPlayer.loadWithWebAudio('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
-	soundPlayer.loadWithWebAudio('BUG', gb.assetMap()['BUG.OGG']);
-	soundPlayer.loadWithWebAudio('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG']);
-	soundPlayer.loadWithWebAudio('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
-	soundPlayer.loadWithWebAudio('BLOOP', gb.assetMap()['BLOOB.OGG']);
-	soundPlayer.loadWithWebAudio('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
-	soundPlayer.loadWithWebAudio('HIT', gb.assetMap()['HIT.OGG']);
-	soundPlayer.loadWithWebAudio('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
-	soundPlayer.loadWithWebAudio('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG']);
-	soundPlayer.loadWithWebAudio('SELECT', gb.assetMap()['SELECT.OGG']);
-	soundPlayer.loadWithWebAudio('OK', gb.assetMap()['OK.OGG']);
-	soundPlayer.loadWithWebAudio('BACK', gb.assetMap()['BACK.OGG']);
-	soundPlayer.loadWithWebAudio('WARNING', gb.assetMap()['WARNING.OGG']);
-	soundPlayer.loadWithWebAudio('WIN', gb.assetMap()['WIN.OGG']);
+	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
+	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG']);
+	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
+	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
+	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
+	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
+	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
+	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
+	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
+	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG']);
+	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG']);
+	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
+	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG']);
+	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
+	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG']);
+	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
+	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG']);
+	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG']);
+	soundPlayer.add('OK', gb.assetMap()['OK.OGG']);
+	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG']);
+	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG']);
+	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG']);
 
 	assetPreloader.loadAll();
 	soundPlayer.loadAll();
@@ -125,8 +128,6 @@ define(function(require) {
 
 
 	function start() {
-		soundPlayer.assignChannels('INTRO', 1);
-
 		// Choose a start up routine according to what is found in the query string
 		queryString.hasScene(urlStartUp.bind(this), basicStartUp.bind(this));
 	}
