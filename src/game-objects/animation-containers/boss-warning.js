@@ -12,7 +12,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
 			Gb.create('WarningMessage', 'First', viewport, {
 				onComplete: function() {
-					Gb.create("bgm-boss", "First", viewport);
+					Gb.create(this.bossBGM, "First", viewport);
 
 					Gb.reclaimer.mark(this);
 				}.bind(this)

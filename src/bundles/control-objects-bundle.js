@@ -1,10 +1,10 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require("common-bundle");
 	var gb = require("gb");
 
 	var ControlObjectsBundle = require("bundle").extend({
-		create: function(args) {	
-				
+		create: function(args) {
+
 			this.componentPool.createPool("AutoHide", require('auto-hide'));
 			this.componentPool.createConfiguration("AutoHide", "AutoHide");
 
@@ -14,14 +14,14 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool("AbsoluteScrollStopper", require('absolute-scroll-stopper'));
 			this.gameObjectPool.createDynamicPool("BossWarning", require('boss-warning'));
 			this.gameObjectPool.createDynamicPool("DirectionSetter", require('direction-setter'));
-			this.gameObjectPool.createDynamicPool("StartPosition", require('start-position'));			
+			this.gameObjectPool.createDynamicPool("StartPosition", require('start-position'));
 			this.gameObjectPool.createDynamicPool("AngleDirectionSetter", require('angle-direction-setter'));
 
 			this.gameObjectPool.createDynamicPool("TwoWayDirectionSetter", require('two-way-direction-setter'));
 			this.gameObjectPool.createDynamicPool("BGMSound", require('bgm-sound'));
 
 			this.componentPool.createConfiguration("DirectionSetterCollider", commonBundle.getCircleColliderPoolId())
-				.args({ 
+				.args({
 					id:'directionSetterColliderId',
 					radius:10
 				});
@@ -74,13 +74,16 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("scroll-stopper", "ScrollStopper")
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("absolute-scroll-stopper", "AbsoluteScrollStopper")
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
 				.setRenderer("AbsoluteScrollStopperRenderer");
-				
+
 			this.gameObjectPool.createConfiguration("boss-warning", "BossWarning")
+				.args({
+					bossBGM: "bgm-boss"
+				})
 				.addComponent("ActivateControlOnView")
 				.addComponent("WarningSound")
 
@@ -92,7 +95,7 @@ define(function(require) {
 					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("direction-up", "DirectionSetter")
 				.args({
 					angle: 270,
@@ -101,7 +104,7 @@ define(function(require) {
 					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("direction-left", "DirectionSetter")
 				.args({
 					angle: 180,
@@ -110,7 +113,7 @@ define(function(require) {
 					cap: 200
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("direction-down", "DirectionSetter")
 				.args({
 					angle: 90,
@@ -129,7 +132,7 @@ define(function(require) {
 
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("fast-direction-up", "DirectionSetter")
 				.args({
 					angle: 270,
@@ -138,7 +141,7 @@ define(function(require) {
 					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("fast-direction-left", "DirectionSetter")
 				.args({
 					angle: 180,
@@ -147,7 +150,7 @@ define(function(require) {
 					cap: 2000
 				})
 				.addComponent("ActivateControlOnView");
-			
+
 			this.gameObjectPool.createConfiguration("fast-direction-down", "DirectionSetter")
 				.args({
 					angle: 90,
@@ -164,7 +167,7 @@ define(function(require) {
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
 				.setRenderer("TwoWayDirectionSetterRenderer1");
-			
+
 			this.gameObjectPool.createConfiguration("direction-down-right", "TwoWayDirectionSetter")
 				.args({
 					type: 'down-right'
@@ -172,7 +175,7 @@ define(function(require) {
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
 				.setRenderer("TwoWayDirectionSetterRenderer2");
-			
+
 			this.gameObjectPool.createConfiguration("direction-up-left", "TwoWayDirectionSetter")
 				.args({
 					type: 'up-left'
@@ -180,7 +183,7 @@ define(function(require) {
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
 				.setRenderer("TwoWayDirectionSetterRenderer3");
-			
+
 			this.gameObjectPool.createConfiguration("direction-up-right", "TwoWayDirectionSetter")
 				.args({
 					type: 'up-right'
@@ -189,7 +192,7 @@ define(function(require) {
 				.addComponent("ActivateControlOnView")
 				.setRenderer("TwoWayDirectionSetterRenderer4");
 
-			
+
 			this.gameObjectPool.createConfiguration("start-position-right", "StartPosition")
 				.args({
 					type: "right"
@@ -208,7 +211,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("choose-direction-right", "AngleDirectionSetter")
-				.args({ 
+				.args({
 					angle: 0,
 					rotation: 0
 				})
@@ -217,7 +220,7 @@ define(function(require) {
 				.setRenderer("AngleDirectionSetterRenderer");
 
 			this.gameObjectPool.createConfiguration("choose-direction-up", "AngleDirectionSetter")
-				.args({ 
+				.args({
 					angle: 270,
 					rotation: 270
 				})
@@ -226,7 +229,7 @@ define(function(require) {
 				.setRenderer("AngleDirectionSetterRenderer");
 
 			this.gameObjectPool.createConfiguration("choose-direction-left", "AngleDirectionSetter")
-				.args({ 
+				.args({
 					angle: 180,
 					rotation: 180
 				})
@@ -235,7 +238,7 @@ define(function(require) {
 				.setRenderer("AngleDirectionSetterRenderer");
 
 			this.gameObjectPool.createConfiguration("choose-direction-down", "AngleDirectionSetter")
-				.args({ 
+				.args({
 					angle: 90,
 					rotation: 90
 				})
