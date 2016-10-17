@@ -66,6 +66,8 @@ define(function(require) {
 		this.game.create();
 	}
 
+	// TODO: Add the assets that need to be preloaded because they are not part of any scene
+	// Stage Frames, Boss Frames, Intro music
 	assetPreloader.addGraphicAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
 
 	soundPlayer.createChannels(10);
@@ -74,12 +76,14 @@ define(function(require) {
 
 	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], false);
 	
+	// Background music
 	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
 	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
 	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG']);
 	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG']);
 	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG']);
 
+	// Sound effects
 	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
 	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG']);
 	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
