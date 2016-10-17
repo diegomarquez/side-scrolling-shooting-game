@@ -1,6 +1,6 @@
 define(function(require) {
 	var stateMachineFactory = require("state-machine");
-	
+
 	var gb = require("gb");
 	var viewportFollow = require('viewport-follow');
 	var scenePlayer = require('game-scene-player');
@@ -23,7 +23,7 @@ define(function(require) {
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
@@ -33,11 +33,11 @@ define(function(require) {
 			scenePlayer.once(scenePlayer.EXIT, this, function () {
 				// Save to local storage
 				levelStorage.completeLevel(level);
-				
+
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
@@ -48,16 +48,21 @@ define(function(require) {
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });	
+					state.execute(state.PREVIOUS, { nextInitArgs: null, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
 			});
 
-			// Wait for the loader to complete a transition before playing the scene
-			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
-				scenePlayer.start();  
-			}); 
+			// Wait for the scene player to complete before oepning the loader
+			scenePlayer.once(scenePlayer.CREATION_COMPLETE, this, function() {
+				loaderContainer.open();
+			});
+
+			// Once the loader is open, start the scene
+			loaderContainer.once(loaderContainer.OPEN, this, function() {
+				scenePlayer.start();
+			});
 
 			// Load the scene
 			scenePlayer.create(level);
@@ -72,7 +77,7 @@ define(function(require) {
 			gb.reclaimer.clearAllObjectsFromPools().now();
 			gb.reclaimer.clearAllPools().now();
 
-			// Clean up the scene player      
+			// Clean up the scene player
 			scenePlayer.cleanUp();
 
 			// Clean up loader events
@@ -81,6 +86,5 @@ define(function(require) {
 
 		return state;
 	};
-});   
+});
 
-	

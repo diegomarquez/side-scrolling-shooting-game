@@ -68,15 +68,24 @@ define(function(require) {
 
 	// TODO: Add the assets that need to be preloaded because they are not part of any scene
 	// Stage Frames, Boss Frames, Intro music
-	assetPreloader.addGraphicAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['INTRO.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['SELECT.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['OK.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['BACK.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['BOSS1PORTRAIT.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['BOSS2PORTRAIT.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['BOSS3PORTRAIT.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['BOSS4PORTRAIT.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['LEVELFRAME.PNG']);
 
+	// TODO: Rename this mehtod to createPublicChannels, to better reflect what you are doing when using it
 	soundPlayer.createChannels(10);
-
+	// TODO: Rename this method to createPrivateChannels, to better reflect what you are doing when using it
 	soundPlayer.assignChannels('INTRO', 1);
+	soundPlayer.assignChannels('PLAYER_SHOT', 10);
 
-	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], false);
-	
 	// Background music
+	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
 	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
 	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
 	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG']);
