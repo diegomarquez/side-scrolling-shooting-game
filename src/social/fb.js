@@ -87,6 +87,3 @@ define(function(require)
 
 	return new Facebook();
 });
-
-
-http://www.treintipollo.com/scene-store.herokuapp.com/F46ce2b30-900d-11e6-b8de-a7e3489deed5&locale=en_US&mobile_iframe=false&next=
