@@ -5,6 +5,7 @@ define(function(require) {
 	var collisionResolver = require('collision-resolver');
 	var util = require('util');
 	var soundPlayer = require('sound-player');
+	var assetPreloader = require('asset-preloader');
 	var editorConfig = require('editor-config');
 
 	var ScenePlayer = require("ui-component").extend({
@@ -183,6 +184,12 @@ define(function(require) {
 			this.setCompleteEvents();
 			this.decorateContainer(sceneData);
 
+			assetPreloader.once(assetPreloader.ON_LOAD_ALL_COMPLETE, this, function() {
+				this.execute(this.CREATION_COMPLETE);
+			});
+
+			assetPreloader.loadAll();
+
 			soundPlayer.playLoop('INTRO');
 		},
 
@@ -224,7 +231,13 @@ define(function(require) {
 						}
 					}
 
-					// TODO: Is it a sound ID?
+					if (soundPlayer.hasId(value)) {
+						var soundResourceUrl = soundPlayer.getResourcePath(value);
+
+						if (urls.indexOf(soundResourceUrl) === -1) {
+							urls.push(soundResourceUrl);
+						}
+					}
 				}
 			}
 
@@ -318,6 +331,12 @@ define(function(require) {
 					// Check the arguments of the component
 					inspectComponent(configuration.componentId);
 				}
+			}
+
+			for (var i = 0; i < urls.length; i++) {
+				var url = urls[i];
+
+				assetPreloader.addAsset(url);
 			}
 		},
 
