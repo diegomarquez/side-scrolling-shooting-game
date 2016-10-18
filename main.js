@@ -66,8 +66,6 @@ define(function(require) {
 		this.game.create();
 	}
 
-	// TODO: Add the assets that need to be preloaded because they are not part of any scene
-	// Stage Frames, Boss Frames, Intro music
 	assetPreloader.addAsset(gb.assetMap()['INTRO.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['SELECT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['OK.OGG']);
@@ -85,36 +83,36 @@ define(function(require) {
 	soundPlayer.assignChannels('PLAYER_SHOT', 10);
 
 	// Background music
-	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG']);
-	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG']);
-	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG']);
-	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG']);
-	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG']);
-	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG']);
+	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], true);
+	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], true);
+	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], true);
+	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], true);
+	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], true);
+	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], true);
 
 	// Sound effects
-	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG']);
-	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG']);
-	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG']);
-	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG']);
-	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG']);
-	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG']);
-	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG']);
-	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG']);
-	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG']);
-	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG']);
-	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG']);
-	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG']);
-	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG']);
-	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG']);
-	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG']);
-	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG']);
-	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG']);
-	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG']);
-	soundPlayer.add('OK', gb.assetMap()['OK.OGG']);
-	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG']);
-	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG']);
-	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG']);
+	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], true);
+	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG'], true);
+	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG'], true);
+	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG'], true);
+	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG'], true);
+	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG'], true);
+	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG'], true);
+	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG'], true);
+	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG'], true);
+	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG'], true);
+	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG'], true);
+	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG'], true);
+	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG'], true);
+	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG'], true);
+	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG'], true);
+	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG'], true);
+	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG'], true);
+	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], true);
+	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], true);
+	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], true);
+	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true);
+	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true);
 
 	assetPreloader.loadAll();
 	soundPlayer.loadAll();
