@@ -7,7 +7,7 @@ define(function(require)
 		this.initialized = false;
 	};
 
-	Facebook.prototype.share = function() {
+	Facebook.prototype.share = function(onComplete, onError) {
 		var self = this;
 
 		if (gb.getEnvironment() === 'dev') {
@@ -19,7 +19,7 @@ define(function(require)
 					self.initialized = true;
 				};
 
-			  	loadFacebookSdk(document, 'script', 'facebook-jssdk');
+			  	loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
 
 				return;
 			}
@@ -27,30 +27,30 @@ define(function(require)
 			if (this.initialized) {
 				share('http://www.treintipollo.com');
 			}
-			
+
 		} else {
 			if (!this.initialized) {
 				window.fbAsyncInit = function() {
 					init("1910504332510208");
 
 					sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId);
+						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete, onError);
 
 						self.initialized = true;
 					});
 				};
 
-			  	loadFacebookSdk(document, 'script', 'facebook-jssdk');
+			  	loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
 
 				return;
 			}
 
 			if (this.initialized) {
 				sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId);
+					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete, onError);
 				});
 			}
-		}				
+		}
 	}
 
 	var init = function(appId) {
@@ -60,25 +60,33 @@ define(function(require)
 		});
 	}
 
-	var share = function(url) {
+	var share = function(url, oncomplete) {
 		FB.ui({
 			method: 'share',
 			href: url
+		},
+		function() {
+			oncomplete();
 		});
 	}
 
-	var loadFacebookSdk = function(d, s, id) {
+	var loadFacebookSdk = function(d, s, id, onerror) {
 		var js, fjs = d.getElementsByTagName(s)[0];
-		
+
 		if (d.getElementById(id)) {
 			return;
 		}
 
 		js = d.createElement(s);
+
+		js.onerror = function() {
+			onerror();
+		}
+
 		js.id = id;
 		js.src = "//connect.facebook.net/en_US/sdk.js";
 
-		if (fjs) { 
+		if (fjs) {
 			fjs.parentNode.insertBefore(js, fjs);
 		} else {
 			d.body.appendChild(js);

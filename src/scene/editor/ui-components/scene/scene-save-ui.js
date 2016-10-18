@@ -2,8 +2,8 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 	var levelRequester = require('level-requester');
 	var sceneSerializer = require('scene-serializer');
-	
-	var dialogTabbedModular = require('dialog-tabbed-modular');	
+
+	var dialogTabbedModular = require('dialog-tabbed-modular');
 	var dialogTextField = require('dialog-text-field');
 	var dialogHiddenField = require('dialog-hidden-field');
 
@@ -13,7 +13,7 @@ define(function(require) {
 	var SceneSave = require('ui-component').extend({
 		init: function() {
 			// Scene Save Dialog
-			this.saveSceneDialog = new dialogTabbedModular().create({			
+			this.saveSceneDialog = new dialogTabbedModular().create({
 				id: 'save-scene-dialog',
 				title: 'Save the current scene',
 				tip: 'Set a name',
@@ -35,7 +35,7 @@ define(function(require) {
 								},
 								validations: [
 									{
-										check: function(sceneName) { 
+										check: function(sceneName) {
 											return sceneName != '';
 										},
 
@@ -47,8 +47,8 @@ define(function(require) {
 								name: 'Scene Already Exists',
 								validations: [
 									{
-										check: function() { 
-						            		return !localStorageWrapper.getScene(this.LocalSceneName()); 
+										check: function() {
+						            		return !localStorageWrapper.getScene(this.LocalSceneName());
 						          		},
 						          		tip: "To overwrite the old scene click 'Update'"
 									}
@@ -82,7 +82,7 @@ define(function(require) {
 								},
 								validations: [
 									{
-										check: function(sceneName) { 
+										check: function(sceneName) {
 											return sceneName != '';
 										},
 
@@ -95,7 +95,7 @@ define(function(require) {
 								validations: [
 									{
 										check: function() {
-											return levelRequester.pingRemote(getRemoteUrl());  
+											return levelRequester.pingRemote(getRemoteUrl());
 										},
 
 										tip: "Remote is not available"
@@ -115,14 +115,14 @@ define(function(require) {
 						}
 					}
 				]
-			});						
+			});
 		},
 
 		open: function() {
 			return this.saveSceneDialog.dialog('open');
 		}
 	});
-		
+
 	var getRemoteUrl = function() {
 		var hostname = window.location.hostname;
 
@@ -160,8 +160,8 @@ define(function(require) {
 
 		var self = this;
 
-		var serializedScene = sceneSerializer.serialize(name); 
-		
+		var serializedScene = sceneSerializer.serialize(name);
+
 		if (serializedScene === false) {
 			$(self).dialog('option').showErrorFeedback('Error saving the scene.');
 
@@ -182,16 +182,14 @@ define(function(require) {
 
 		sceneName.set(name);
 	}
-	
-	SceneSave.serializeAndStoreRemoteShare = function(onComplete) {
+
+	SceneSave.serializeAndStoreRemoteShare = function(onComplete, onError) {
 		var self = this;
 
-		var serializedScene = sceneSerializer.serialize(util.generateUUID()); 
-		
-		if (serializedScene === false) {
-			// TODO: Implement this
-			// Show proper feedback if there was a problem sharing
+		var serializedScene = sceneSerializer.serialize(util.generateUUID());
 
+		if (serializedScene === false) {
+			onError();
 			return;
 		}
 
@@ -204,8 +202,7 @@ define(function(require) {
 				onComplete(response.name, response.id, response.remote);
 			},
 			function (failureResult) {
-				// TODO: Implement this
-				// Show proper feedback if there was a problem sharing
+				onError();
 			});
 	}
 

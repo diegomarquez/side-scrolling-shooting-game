@@ -224,7 +224,19 @@ define(function(require) {
 				'Facebook',
 				'fa-facebook-official',
 				function() {
-					require('fb').share();
+					// TODO: Replace the facebook icon with a spinning icon
+					// TODO: Block the UI
+
+					require('fb').share(
+					function() {
+						// TODO: Add the facebook icon back
+						// TODO: UnBlock the UI
+					},
+					function() {
+						// TODO: Add the facebook icon back
+						// TODO: UnBlock the UI
+						// TODO: Show feedback dialog
+					});
 				},
 				'fa fa-lg'
 			));
