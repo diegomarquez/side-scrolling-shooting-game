@@ -85,7 +85,7 @@ define(function(require) {
 					{
 						type: 'item',
 						content: "Do stuff with viewports man."
-					}	
+					}
 				]
 			});
 		},
@@ -105,9 +105,9 @@ define(function(require) {
 			items.push(createTitleItem('Preview'));
 
 			items.push(createOptionItem(
-				'Play', 
-				'glyphicon-play-circle', 
-				function() { 
+				'Play',
+				'glyphicon-play-circle',
+				function() {
 					var storage = require('local-storage');
 					var serializer = require('scene-serializer');
 
@@ -130,23 +130,23 @@ define(function(require) {
 			items.push(createTitleItem('Sections'));
 
 			items.push(createRegionOptionItem(
-				'Canvas', 
+				'Canvas',
 				'glyphicon-question-sign',
 				null,
-				null, 
-				this.canvasTooltipContent.html.outerHTML, 
+				null,
+				this.canvasTooltipContent.html.outerHTML,
 				editorRegions.get().getTopLeft()[0],
 				function (event) {
-					
+
 				}
 			));
-			
+
 			var misc = createRegionOptionItem(
-				'Misc. Settings', 
+				'Misc. Settings',
 				'glyphicon-question-sign',
 				'glyphicon-eye-open',
 				'glyphicon-eye-close',
-				this.settingsTooltipContent.html.outerHTML, 
+				this.settingsTooltipContent.html.outerHTML,
 				editorRegions.get().getTopRight()[0],
 				function (event) {
 					toogleDisplay(editorRegions.get().getTopRightContainer()[0]);
@@ -154,13 +154,13 @@ define(function(require) {
 			);
 
 			items.push(misc);
-			
+
 			var gos = createRegionOptionItem(
-				'Game Objects', 
+				'Game Objects',
 				'glyphicon-question-sign',
 				'glyphicon-eye-open',
-				'glyphicon-eye-close', 
-				this.gameObjectsTooltipContent.html.outerHTML, 
+				'glyphicon-eye-close',
+				this.gameObjectsTooltipContent.html.outerHTML,
 				editorRegions.get().getBottomLeft()[0],
 				function (event) {
 					toogleDisplay(editorRegions.get().getBottomLeftContainer()[0]);
@@ -170,27 +170,27 @@ define(function(require) {
 			items.push(gos);
 
 			var viewports = createRegionOptionItem(
-				'Viewports', 
+				'Viewports',
 				'glyphicon-question-sign',
 				'glyphicon-eye-open',
-				'glyphicon-eye-close', 
-				this.viewportsTooltipContent.html.outerHTML, 
+				'glyphicon-eye-close',
+				this.viewportsTooltipContent.html.outerHTML,
 				editorRegions.get().getBottomRight()[0],
 				function (event) {
 					toogleDisplay(editorRegions.get().getBottomRightContainer()[0]);
 				}
 			)
-			
+
 			items.push(viewports);
-			
+
 			items.push(createDivider());
 
 			items.push(createTitleItem('Storage'));
-			
+
 			items.push(createOptionItem(
-				'New', 
-				'glyphicon-file', 
-				function() {  
+				'New',
+				'glyphicon-file',
+				function() {
 					require('scene-name').set('Untitled');
 					gb.reclaimer.clearAllObjectsFromPools().now();
 					// Re-Create editor specific game objects
@@ -200,20 +200,20 @@ define(function(require) {
 			));
 
 			items.push(createOptionItem(
-				'Save', 
-				'glyphicon-floppy-save', 
+				'Save',
+				'glyphicon-floppy-save',
 				function() { this.open() }.bind(this.saveDialog)
 			));
 
 			items.push(createOptionItem(
-				'Open', 
-				'glyphicon-folder-open', 
+				'Open',
+				'glyphicon-folder-open',
 				function() { this.open() }.bind(this.loadDialog)
 			));
-			
+
 			items.push(createOptionItem(
-				'Delete', 
-				'glyphicon-trash', 
+				'Delete',
+				'glyphicon-trash',
 				function() { this.open() }.bind(this.deleteDialog)
 			));
 
@@ -221,9 +221,9 @@ define(function(require) {
 			items.push(createTitleItem('Share'));
 
 			items.push(createOptionItem(
-				'Facebook', 
-				'fa-facebook-official', 
-				function() { 
+				'Facebook',
+				'fa-facebook-official',
+				function() {
 					require('fb').share();
 				},
 				'fa fa-lg'
@@ -234,20 +234,20 @@ define(function(require) {
 
 			if (require('mode').isAdvanced()) {
 				items.push(createToggleOptionItem(
-					'Activity Display', 
+					'Activity Display',
 					'glyphicon-eye-close',
 					'glyphicon-eye-open',
-					function() {  
+					function() {
 						gb.game.get_extension(require('activity-display')).toggle();
 					}.bind(this)
 				));
 			}
 
 			var loggerItem = createToggleOptionItem(
-				'Log', 
+				'Log',
 				'glyphicon-eye-close',
 				'glyphicon-eye-open',
-				function() {  
+				function() {
 					gb.game.get_extension(require('logger')).toggle();
 				}.bind(this)
 			);
@@ -269,8 +269,8 @@ define(function(require) {
 			items.push(createDivider());
 
 			items.push(createOptionItem(
-				'Exit', 
-				'glyphicon-log-out', 
+				'Exit',
+				'glyphicon-log-out',
 				function() { this.execute(this.EXIT) }.bind(this)
 			));
 
@@ -289,7 +289,7 @@ define(function(require) {
 					$(misc).click();
 					$(gos).click();
 					$(viewports).click();
-					
+
 					viewports.style.display = 'none';
 					gos.style.display = 'none';
 				}
@@ -301,7 +301,7 @@ define(function(require) {
 
 	var createTitleItem = function(content, className) {
 		var li = createItem(content);
-	
+
 		$(li).addClass('nav-header');
 
 		if (className) {
@@ -310,15 +310,15 @@ define(function(require) {
 			$(li).addClass('side-menu-title');
 		}
 
-		return li; 
+		return li;
 	}
 
 	var createOptionItem = function(content, iconName, onClick, iconFamily) {
-		
+
 		if (!iconFamily)
 			iconFamily = 'glyphicon';
 
-		var li = document.createElement('li'); 
+		var li = document.createElement('li');
 		var a = document.createElement('a');
 
 		a.href = '#'
@@ -326,7 +326,7 @@ define(function(require) {
 
 		$(li).append(a);
 		$(li).addClass('side-menu-item');
-		
+
 		$(li).on('click', onClick);
 
 		var icon = document.createElement('span');
@@ -342,20 +342,20 @@ define(function(require) {
 
 	var createToggleOptionItem = function(content, onIcon, offIcon, onClick) {
 		var li = createOptionItem(content, onIcon, function() {
-			onClick();	
+			onClick();
 
 			$(li).find('.side-menu-icon').toggle();
-		}); 
+		});
 
 		var iconAnchor = $(li).find('a');
 		var off = document.createElement('span');
-		
+
 		$(off).addClass('side-menu-icon');
 		$(off).addClass('glyphicon icon-white');
 		$(off).addClass(offIcon);
-		
+
 		off.style.display = 'none';
-		
+
 		$(iconAnchor).append(off);
 
 		return li;
@@ -363,12 +363,12 @@ define(function(require) {
 
 	var createRegionOptionItem = function(title, iconName, onIcon, offIcon, description, relatedRegionElement, onClick) {
 		var li = createOptionItem(title, iconName, function() {
-			onClick();	
+			onClick();
 
 			if (onIcon && offIcon) {
-				$(li).find('.secondary-side-menu-icon').toggle();					
+				$(li).find('.secondary-side-menu-icon').toggle();
 			}
-		}); 
+		});
 
 		var iconAnchor = $(li).find('a');
 		var on, off;
@@ -383,25 +383,25 @@ define(function(require) {
 			$(iconAnchor).append(on);
 
 			off = document.createElement('span');
-			
+
 			$(off).addClass('side-menu-icon');
 			$(off).addClass('secondary-side-menu-icon');
 			$(off).addClass('glyphicon icon-white');
 			$(off).addClass(offIcon);
 			off.style.display = 'none';
-			
+
 			$(iconAnchor).append(off);
 		}
 
 		var a = $(li).find('.main-side-menu-icon');
-		
+
 		a.attr('data-toogle', 'popover');
 		a.attr('data-placement', 'right');
 		a.attr('data-html', true);
 		a.attr('title', title);
 		a.attr('data-content', description);
 
-		$(a).on('mouseenter', function() {  
+		$(a).on('mouseenter', function() {
 			a.popover({
 				container: 'body'
 			}).on("show.bs.popover", function() {
@@ -416,7 +416,7 @@ define(function(require) {
 		});
 
 		$(li).on('mouseenter', function() {
-			relatedRegionElement.style.border = '1px solid #f0ad4e'; 
+			relatedRegionElement.style.border = '1px solid #f0ad4e';
 		});
 
 		$(li).on('mouseleave', function() {
@@ -448,7 +448,7 @@ define(function(require) {
 			element.style.display = 'none';
 			toggledCount--;
 		} else {
-			element.style.display = ''; 
+			element.style.display = '';
 			toggledCount++;
 		}
 
@@ -457,7 +457,7 @@ define(function(require) {
 		}
 
 		if (toggledCount == 2) {
-			$('.region').css({ width: '100%', height: '50%'});	
+			$('.region').css({ width: '100%', height: '50%'});
 		}
 
 		if (toggledCount == 3) {
@@ -469,7 +469,7 @@ define(function(require) {
 		}
 
 		if (gb.game.get_extension(require('fit-canvas-in-region'))) {
-			gb.game.get_extension(require('fit-canvas-in-region')).fit();	
+			gb.game.get_extension(require('fit-canvas-in-region')).fit();
 		}
 	}
 

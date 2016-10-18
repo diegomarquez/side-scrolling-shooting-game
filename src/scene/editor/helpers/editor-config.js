@@ -3,16 +3,16 @@ define(function(require) {
 	var GRID_HEIGHT = 12;
 	var EDITOR_ONLY_VIEWPORTS = ['Grid'];
 	var EDITOR_ONLY_LAYERS = [
-		'Outline', 
-		'GizmoIconFront', 
-		'GizmoCollidersBack', 
-		'GizmoCollidersFront', 
-		'GizmoRotationBack', 
-		'GizmoRotationFront', 
-		'GizmoScaleFront', 
+		'Outline',
+		'GizmoIconFront',
+		'GizmoCollidersBack',
+		'GizmoCollidersFront',
+		'GizmoRotationBack',
+		'GizmoRotationFront',
+		'GizmoScaleFront',
 		'GizmoScaleBack'
 	];
-	
+
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
 	var controlObjects = null;
@@ -37,13 +37,13 @@ define(function(require) {
 
 		// Gizmo Layers
 		getGizmoIconFrontLayerName: function() { return EDITOR_ONLY_LAYERS[1]; },
-		
+
 		getGizmoCollidersBackLayerName: function() { return EDITOR_ONLY_LAYERS[2]; },
 		getGizmoCollidersFrontLayerName: function() { return EDITOR_ONLY_LAYERS[3]; },
-		
+
 		getGizmoRotationBackLayerName: function() { return EDITOR_ONLY_LAYERS[4]; },
 		getGizmoRotationFrontLayerName: function() { return EDITOR_ONLY_LAYERS[5]; },
-		
+
 		getGizmoScaleBackLayerName: function() { return EDITOR_ONLY_LAYERS[6]; },
 		getGizmoScaleFrontLayerName: function() { return EDITOR_ONLY_LAYERS[7]; },
 		// Gizmo Layers
@@ -53,7 +53,7 @@ define(function(require) {
 		getDefaultBackLayerName: function() { return 'Back'; },
 
 		getDefaultGroupName: function() { return 'First'; },
-		
+
 		getMainViewportName: function() { return 'Main'; },
 		getGridViewportName: function() { return EDITOR_ONLY_VIEWPORTS[0]; },
 
@@ -74,7 +74,7 @@ define(function(require) {
 			var gb = require('gb');
 
 			cachedGridCellSize.width = gb.canvas.width / GRID_WIDTH;
-			cachedGridCellSize.height = gb.canvas.height / GRID_HEIGHT;       
+			cachedGridCellSize.height = gb.canvas.height / GRID_HEIGHT;
 
 			return cachedGridCellSize;
 		},
@@ -151,8 +151,8 @@ define(function(require) {
 
 		getViewportLayers: function(viewport) {
 			return viewport.getLayers()
-				.filter(function(layer) { 
-					return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1; 
+				.filter(function(layer) {
+					return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1;
 				}.bind(this))
 				.map(function(layer) {
 					return layer.name;
@@ -168,15 +168,15 @@ define(function(require) {
 				v = viewport;
 			}
 
-			var layers = v.getLayers().filter(function(layer) { 
-				return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1; 
+			var layers = v.getLayers().filter(function(layer) {
+				return EDITOR_ONLY_LAYERS.indexOf(layer.name) == -1;
 			}.bind(this));
 
 			return layers.pop().name;
 		},
 
 		getViewports: function() {
-			return require('gb').viewports.allAsArray().filter(function(viewport) { 
+			return require('gb').viewports.allAsArray().filter(function(viewport) {
 				return EDITOR_ONLY_VIEWPORTS.indexOf(viewport.name) == -1;
 			}.bind(this));
 		},
@@ -208,7 +208,6 @@ define(function(require) {
 			editorOnlyGameObjects = [
 				require('outline-bundle').getOutlineId(),
 				require('grid-bundle').getGridId(),
-				'GeneratorWayPoint',
 				'absolute-scroll-stopper'
 			]
 
@@ -241,7 +240,7 @@ define(function(require) {
 				'fast-direction-right',
 				'fast-direction-left',
 				'fast-direction-up',
-				'fast-direction-down',				
+				'fast-direction-down',
 				'choose-direction-right',
 				'choose-direction-left',
 				'choose-direction-up',
@@ -266,7 +265,7 @@ define(function(require) {
 				controlObjectsNameAliases = {
 					'boss-scroll-stopper': 'scroll-stopper',
 					'scroll-stopper': 'absolute-scroll-stopper',
-					'warning-sign': 'boss-warning' 
+					'warning-sign': 'boss-warning'
 				}
 			}
 
@@ -342,7 +341,7 @@ define(function(require) {
 			var gizmoBundle = require('gizmo-bundle');
 
 			colliderGizmoGameObjects = [
-				gizmoBundle.getCircleHandleId(), 
+				gizmoBundle.getCircleHandleId(),
 				gizmoBundle.getPolygonHandleId(),
 				gizmoBundle.getFixedPolygonHandleId(),
 				gizmoBundle.getCircleDisplayId(),
