@@ -54,7 +54,7 @@ define(function(require) {
 				loaderContainer.transition();
 			});
 
-			// Wait for the scene player to complete before oepning the loader
+			// Wait for the scene player to complete before opening the loader
 			scenePlayer.once(scenePlayer.CREATION_COMPLETE, this, function() {
 				loaderContainer.open();
 			});

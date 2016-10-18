@@ -54,20 +54,20 @@ define(function(require) {
 				// When the loader closes
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Do things needed after leaving this state
-					completeActions();      
-					// Signal the state is complete					
-					state.execute(state.BACK);   
+					completeActions();
+					// Signal the state is complete
+					state.execute(state.BACK);
 				}, 'enter-scene-editor');
 			}, 'enter-scene-editor');
 
 			// When the preview button is clicked
 			sceneEditor.once(sceneEditor.PREVIEW, this, function() {
-				// Trigger a loader transition
-				loaderContainer.transition();
+				// Close the loader
+				loaderContainer.close();
 
 				// When the loader closes
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
-					state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null });   
+					state.execute(state.NEXT, { nextInitArgs: null, lastCompleteArgs: null });
 				}, 'enter-scene-editor');
 			}, 'enter-scene-editor');
 		});
@@ -92,7 +92,7 @@ define(function(require) {
 			game.remove_extension(require("fit-canvas-in-region"));
 			game.remove_extension(require("patch-game-object-container"));
 
-			// Clean up the scene editor        
+			// Clean up the scene editor
 			sceneEditor.cleanUp();
 
 			// Signal that pools and the instances they hold should be cleared

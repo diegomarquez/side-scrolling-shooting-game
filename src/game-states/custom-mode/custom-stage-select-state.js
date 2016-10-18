@@ -2,7 +2,6 @@ define(function(require) {
 	var stateMachineFactory = require("state-machine");
 	var gb = require("gb");
 	var loaderContainer = require('loader-container');
-
 	var soundPlayer = require("sound-player");
 
   	return function (name) {
@@ -34,17 +33,19 @@ define(function(require) {
 		    // If the 'back' option is selected, go to the previous state
 		    customStageSelect.on(customStageSelect.BACK_EXIT, this, function() {
 		    	state.execute(state.BACK);
-		    }); 
+		    });
 
 		    // If the 'start' option is selected, go to the scene player state
 		    customStageSelect.on(customStageSelect.START_SELECTED, this, function (selectedStage) {
-		    	loaderContainer.once(loaderContainer.CLOSE, this, function () {
+				// Once the loader container is closed, move on to the custom scene player state
+				loaderContainer.once(loaderContainer.CLOSE, this, function () {
 		    		soundPlayer.stop("INTRO");
 
 		    		state.execute(state.NEXT, { nextInitArgs: selectedStage, lastCompleteArgs: null });
 		    	});
 
-		    	loaderContainer.transition();
+				// Close the loader container
+				loaderContainer.close();
 			});
 		});
 
@@ -52,12 +53,11 @@ define(function(require) {
 		 	// Signal that pools and the instances they hold should be cleared
 			gb.reclaimer.clearAllObjectsFromPools().now();
 			gb.reclaimer.clearAllPools().now();
-		}); 
+		});
 
 		Object.defineProperty(state, "BACK", { get: function() { return 'back'; } });
 
 		return state;
   	};
-});   
+});
 
-  

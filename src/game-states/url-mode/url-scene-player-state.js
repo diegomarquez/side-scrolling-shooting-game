@@ -1,6 +1,6 @@
 define(function(require) {
 	var stateMachineFactory = require("state-machine");
-	
+
 	var gb = require("gb");
 	var viewportFollow = require('viewport-follow');
 	var scenePlayer = require('game-scene-player');
@@ -17,13 +17,13 @@ define(function(require) {
 		});
 
 		state.addStartAction(function (sceneJsonString) {
-			
+
 			// Add extensions
 			gb.game.add_extension(require("center-canvas"));
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
-					state.execute(state.BACK);	
+					state.execute(state.BACK);
 				});
 
 				loaderContainer.transition();
@@ -31,7 +31,7 @@ define(function(require) {
 
 			scenePlayer.once(scenePlayer.EXIT, this, function () {
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
-					state.execute(state.BACK);	
+					state.execute(state.BACK);
 				});
 
 				loaderContainer.transition();
@@ -39,25 +39,28 @@ define(function(require) {
 
 			scenePlayer.once(scenePlayer.FAILURE, this, function () {
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
-					state.execute(state.BACK);	
+					state.execute(state.BACK);
 				});
 
 				loaderContainer.transition();
 			});
 
-			// Wait for the loader to complete a transition before playing the scene
+			// Wait for the loader to open before playing the scene
 			loaderContainer.once(loaderContainer.OPEN, this, function() {
 				scenePlayer.start();
 			});
 
+			// Wait for the scene player to complete before opening the loader
+			scenePlayer.once(scenePlayer.CREATION_COMPLETE, this, function() {
+				// Everything is setup, open the loader
+				loaderContainer.open();
+			});
+
 			// Load the scene
 			scenePlayer.create(JSON.parse(sceneJsonString));
-			
+
 			// Store the url scene in the local storage to be able to load it from other parts of the application
 			localStorageWrapper.setUrlScene(sceneJsonString);
-
-			// Everything is setup, open the loader
-			loaderContainer.open();
 		});
 
 		state.addUpdateAction(function (delta) {
@@ -71,7 +74,7 @@ define(function(require) {
 			gb.reclaimer.clearAllObjectsFromPools().now();
 			gb.reclaimer.clearAllPools().now();
 
-			// Clean up the scene player      
+			// Clean up the scene player
 			scenePlayer.cleanUp();
 
 			// Clean up loader events
@@ -82,6 +85,5 @@ define(function(require) {
 
 		return state;
 	};
-});   
+});
 
-	

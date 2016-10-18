@@ -1,6 +1,6 @@
 define(function(require) {
 	var stateMachineFactory = require("state-machine");
-	
+
 	var gb = require("gb");
 	var viewportFollow = require('viewport-follow');
 	var scenePlayer = require('preview-scene-player');
@@ -26,7 +26,7 @@ define(function(require) {
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: previewScene, lastCompleteArgs: null });	
+					state.execute(state.PREVIOUS, { nextInitArgs: previewScene, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
@@ -34,7 +34,7 @@ define(function(require) {
 
 			// When the scene is completed successfully
 			scenePlayer.once(scenePlayer.EXIT, this, function () {
-				scenePlayer.enableEscape();	
+				scenePlayer.enableEscape();
 			});
 
 			// When the scene is failed
@@ -42,9 +42,14 @@ define(function(require) {
 				scenePlayer.enableEscape();
 			});
 
-			// Wait for the loader to complete a transition before playing the scene
-			loaderContainer.once(loaderContainer.TRANSITION, this, function() {
-				scenePlayer.start();	
+			// Wait for the loader to open before playing the scene
+			loaderContainer.once(loaderContainer.OPEN, this, function() {
+				scenePlayer.start();
+			});
+
+			// Wait for the scene player to complete before opening the loader
+			scenePlayer.once(scenePlayer.CREATION_COMPLETE, this, function() {
+				loaderContainer.open();
 			});
 
 			// Load the scene
@@ -60,12 +65,11 @@ define(function(require) {
     		gb.reclaimer.clearAllObjectsFromPools().now();
     		gb.reclaimer.clearAllPools().now();
 
-	  		// Clean up the scene player    	
+	  		// Clean up the scene player
 		  	scenePlayer.cleanUp();
     	});
 
     	return state;
   	};
-});   
+});
 
-  
