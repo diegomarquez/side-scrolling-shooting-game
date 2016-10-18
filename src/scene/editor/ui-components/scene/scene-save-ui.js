@@ -39,7 +39,7 @@ define(function(require) {
 											return sceneName != '';
 										},
 
-								        tip: "Scene name can't be empty"
+										tip: "Scene name can't be empty"
 									}
 								]
 							}),
@@ -48,9 +48,9 @@ define(function(require) {
 								validations: [
 									{
 										check: function() {
-						            		return !localStorageWrapper.getScene(this.LocalSceneName());
-						          		},
-						          		tip: "To overwrite the old scene click 'Update'"
+											return !localStorageWrapper.getScene(this.LocalSceneName());
+										},
+										tip: "To overwrite the old scene click 'Update'"
 									}
 								]
 							})
@@ -86,7 +86,7 @@ define(function(require) {
 											return sceneName != '';
 										},
 
-								        tip: "Scene name can't be empty"
+										tip: "Scene name can't be empty"
 									}
 								]
 							}),
@@ -186,7 +186,7 @@ define(function(require) {
 	SceneSave.serializeAndStoreRemoteShare = function(onComplete, onError) {
 		var self = this;
 
-		var serializedScene = sceneSerializer.serialize(util.generateUUID());
+		var serializedScene = sceneSerializer.serialize("!@<share>@!");
 
 		if (serializedScene === false) {
 			onError();

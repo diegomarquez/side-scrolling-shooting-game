@@ -1,257 +1,257 @@
 define(function(require) {
 
-  var statusMessage = require('create-status-message'); 
+	var statusMessage = require('create-status-message');
 
-  var Dialog = require('ui-component').extend({
-    init: function() {
+	var Dialog = require('ui-component').extend({
+		init: function() {
 
-    },
+		},
 
-    create: function(options) {
-      var container = document.createElement('div');
-      container.id = options.id;
-      $(container).addClass('dialog');
+		create: function(options) {
+			var container = document.createElement('div');
+			container.id = options.id;
+			$(container).addClass('dialog');
 
-      var tip = statusMessage.createInfoMessage(options.tip);
-      
-      var form = document.createElement('form');
-      var fieldset = document.createElement('fieldset');
-      
-      tip.appendTo(container);
+			var tip = statusMessage.createInfoMessage(options.tip);
 
-      $(container).append(form);
-      $(form).append(fieldset);
+			var form = document.createElement('form');
+			var fieldset = document.createElement('fieldset');
 
-      var fieldGetters = {};
-      var inputFields = {};
-      var fieldLabels = {};
+			tip.appendTo(container);
 
-      $.each(options.fields, function(index, field) {
-        var lowerCaseName = field.name.toLowerCase();
+			$(container).append(form);
+			$(form).append(fieldset);
 
-        var label = document.createElement('label');
-        label.innerHTML = field.name;
-        $(label).attr('for', lowerCaseName);
+			var fieldGetters = {};
+			var inputFields = {};
+			var fieldLabels = {};
 
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.name = lowerCaseName;
-        input.id = lowerCaseName;
+			$.each(options.fields, function(index, field) {
+				var lowerCaseName = field.name.toLowerCase();
 
-        if (Object.prototype.toString.call(field.value) == '[object Function]') {
-          // Function values are assigned to the input when the dialog opens
-          $(input).data('valueGetter', field.value);
-        } else {
-          // Regular value is assigned on initialization
-          input.value = field.value;
-        }
+				var label = document.createElement('label');
+				label.innerHTML = field.name;
+				$(label).attr('for', lowerCaseName);
 
-        if (field.hidden) {
-          label.style.display = 'none'; 
-          input.style.display = 'none'; 
-        }
+				var input = document.createElement('input');
+				input.type = 'text';
+				input.name = lowerCaseName;
+				input.id = lowerCaseName;
 
-        $(input).addClass('ui-corner-all');
+				if (Object.prototype.toString.call(field.value) == '[object Function]') {
+					// Function values are assigned to the input when the dialog opens
+					$(input).data('valueGetter', field.value);
+				} else {
+					// Regular value is assigned on initialization
+					input.value = field.value;
+				}
 
-        $(fieldset).append(label);
-        $(fieldset).append(input);
+				if (field.hidden) {
+					label.style.display = 'none';
+					input.style.display = 'none';
+				}
 
-        // Set up getters for all the fields in the dialog.
-        // This will be easily accesible in button callbacks
-        fieldGetters[toMethodName(field.name)] = function(input) { 
-          return function() { 
-            return input.value; 
-          } 
-        }(input);
+				$(input).addClass('ui-corner-all');
 
-        fieldLabels[toMethodName(field.name)] = function(label) {
-          return function() {
-            return label; 
-          }
-        }(label);
+				$(fieldset).append(label);
+				$(fieldset).append(input);
 
-        inputFields[toMethodName(field.name)] = function(input) {
-          return function() {
-            return input; 
-          }
-        }(input);
-      });
+				// Set up getters for all the fields in the dialog.
+				// This will be easily accesible in button callbacks
+				fieldGetters[toMethodName(field.name)] = function(input) {
+					return function() {
+						return input.value;
+					}
+				}(input);
 
-      $.each(options.buttons, function(action, buttonCallback) {
-        options.buttons[action] = function(f, action) {
-          return function () {
-            // Remove any feedback styling
-            resetFeedback(tip, inputFields, options);
+				fieldLabels[toMethodName(field.name)] = function(label) {
+					return function() {
+						return label;
+					}
+				}(label);
 
-            // Validate the fields corresponding to this action
-            result = validate.call(dialog, tip, options.validateOnAction[action], options.fields, fieldGetters, inputFields);
+				inputFields[toMethodName(field.name)] = function(input) {
+					return function() {
+						return input;
+					}
+				}(input);
+			});
 
-            if (result === true) {
-              // Change the context of the dialog buttons callback so they point to this dialog instance
-              f.call(dialog);
-            }
-          }
-        }.call(this, buttonCallback, action);
-      });
+			$.each(options.buttons, function(action, buttonCallback) {
+				options.buttons[action] = function(f, action) {
+					return function () {
+						// Remove any feedback styling
+						resetFeedback(tip, inputFields, options);
 
-      options.close = function() {          
-        if (options.resetOnClose) {
-          // If the close butoon was pressed ...
-          if ($(arguments[0].currentTarget).attr('title') == 'Close') {
-            // Set all the values to the ones set when the dialog was opened
-            for (var m in inputFields) {
-              var input = inputFields[m]();
-              input.value = $(input).attr('default');
-            } 
-          } 
-        } else {
-          // Set all the values to the ones set when the dialog was opened
-          for (var m in inputFields) {
-            var input = inputFields[m]();
-            input.value = $(input).attr('default');
-          }
-        }
-      }
-      
-      options.create = function (event, ui) {
-        $(this).css("minWidth", options.minWidth);
-      }
+						// Validate the fields corresponding to this action
+						result = validate.call(dialog, tip, options.validateOnAction[action], options.fields, fieldGetters, inputFields);
 
-      options.open = function() { 
-        resetFeedback(tip, inputFields, options); 
+						if (result === true) {
+							// Change the context of the dialog buttons callback so they point to this dialog instance
+							f.call(dialog);
+						}
+					}
+				}.call(this, buttonCallback, action);
+			});
 
-        // Set the current values as defaults to go back to them in case the close button is pressed
-        for(var m in inputFields) {
-          var input = $(inputFields[m]());
+			options.close = function() {
+				if (options.resetOnClose) {
+					// If the close butoon was pressed ...
+					if ($(arguments[0].currentTarget).attr('title') == 'Close') {
+						// Set all the values to the ones set when the dialog was opened
+						for (var m in inputFields) {
+							var input = inputFields[m]();
+							input.value = $(input).attr('default');
+						}
+					}
+				} else {
+					// Set all the values to the ones set when the dialog was opened
+					for (var m in inputFields) {
+						var input = inputFields[m]();
+						input.value = $(input).attr('default');
+					}
+				}
+			}
 
-          // Function values are set dynamically when the dialog opens
-          var valueGetter = $(input).data('valueGetter');
-          if (valueGetter) {
-            input[0].value = valueGetter();
-          } 
+			options.create = function (event, ui) {
+				$(this).css("minWidth", options.minWidth);
+			}
 
-          input.attr('default', fieldGetters[m]());
-        }
-      }
+			options.open = function() {
+				resetFeedback(tip, inputFields, options);
 
-      options.resizeStop = function (event, ui) {
-        $(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
-      }
+				// Set the current values as defaults to go back to them in case the close button is pressed
+				for(var m in inputFields) {
+					var input = $(inputFields[m]());
 
-      options.disableField = function(name) {
-        var label = $(fieldLabels[toMethodName(name)]());
-        var input = $(inputFields[toMethodName(name)]());
+					// Function values are set dynamically when the dialog opens
+					var valueGetter = $(input).data('valueGetter');
 
-        label.addClass('ui-state-disabled');
-        input.addClass('ui-state-disabled');
+					if (valueGetter) {
+						input[0].value = valueGetter();
+					}
 
-        input.attr('disabled', true);
-      }
+					input.attr('default', fieldGetters[m]());
+				}
+			}
 
-      options.enableField = function(name) {
-        var label = $(fieldLabels[toMethodName(name)]());
-        var input = $(inputFields[toMethodName(name)]());
+			options.resizeStop = function (event, ui) {
+				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
+			}
 
-        label.removeClass('ui-state-disabled');
-        input.removeClass('ui-state-disabled');
+			options.disableField = function(name) {
+				var label = $(fieldLabels[toMethodName(name)]());
+				var input = $(inputFields[toMethodName(name)]());
 
-        input.attr('disabled', false);
-      }
+				label.addClass('ui-state-disabled');
+				input.addClass('ui-state-disabled');
 
-      options.setField = function(name, value) {
-        var input = inputFields[toMethodName(name)]();
+				input.attr('disabled', true);
+			}
 
-        input.value = value;
-      }
+			options.enableField = function(name) {
+				var label = $(fieldLabels[toMethodName(name)]());
+				var input = $(inputFields[toMethodName(name)]());
 
-      options.setErrorFeedback = function(message) {
-        setErrorTip(tip, message);
-      }
+				label.removeClass('ui-state-disabled');
+				input.removeClass('ui-state-disabled');
 
-      options.setInfoFeedback = function(message) {
-        setInfoTip(tip, message);
-      }
+				input.attr('disabled', false);
+			}
 
-      // Create the jQuery ui dialog
-      var dialog = $.extend($(container).dialog(options), fieldGetters);
+			options.setField = function(name, value) {
+				var input = inputFields[toMethodName(name)]();
 
-      // Prevent form submition
-      $(dialog).submit( function(e) {
-        e.preventDefault();
-      });
+				input.value = value;
+			}
 
-      // Center the dialog when width changes
-      $(dialog).on('autoCenter', function() {
-        $(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
-      });
+			options.setErrorFeedback = function(message) {
+				setErrorTip(tip, message);
+			}
 
-      this.dialog = dialog;
-      this.tip = tip;
+			options.setInfoFeedback = function(message) {
+				setInfoTip(tip, message);
+			}
 
-      return dialog;
-    },
+			// Create the jQuery ui dialog
+			var dialog = $.extend($(container).dialog(options), fieldGetters);
 
-    destroy: function() {
-      $(this.dialog).dialog('destroy').remove();
-    }
-  });
+			// Prevent form submition
+			$(dialog).submit( function(e) {
+				e.preventDefault();
+			});
 
-  var validate = function(tip, actions, fields, fieldGetters, inputFields) {
-    try {
-      var self = this;
+			// Center the dialog when width changes
+			$(dialog).on('autoCenter', function() {
+				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
+			});
 
-      $.each(actions, function(i, action) {
-        $.each(fields, function(j, field) {
+			this.dialog = dialog;
+			this.tip = tip;
 
-          // No validations to do
-          if (!field.validations) return;
+			return dialog;
+		},
 
-          if (field.name == action) {
-            $.each(field.validations, function(k, validation) {
-              var method = toMethodName(field.name);
+		destroy: function() {
+			$(this.dialog).dialog('destroy').remove();
+		}
+	});
 
-              if (!validation.check.call(self, fieldGetters[method]())) {
-                applyFeedback(tip, inputFields[method](), validation.tip);
+	var validate = function(tip, actions, fields, fieldGetters, inputFields) {
+		try {
+			var self = this;
 
-                $(self).trigger('autoCenter');
+			$.each(actions, function(i, action) {
+				$.each(fields, function(j, field) {
+					// No validations to do
+					if (!field.validations) return;
 
-                throw new Error(validation.tip);
-              }
-            });
-          }
-        });
-      });
-    } catch (e) {
-      return e.message;
-    }
+					if (field.name == action) {
+						$.each(field.validations, function(k, validation) {
+							var method = toMethodName(field.name);
 
-    return true;
-  }
+							if (!validation.check.call(self, fieldGetters[method]())) {
+								applyFeedback(tip, inputFields[method](), validation.tip);
 
-  var setErrorTip = function(tipContainer, message) {
-    tipContainer.toError(message);
-  }
+								$(self).trigger('autoCenter');
 
-  var setInfoTip = function(tipContainer, message) {
-    tipContainer.toInfo(message);
-  }
+								throw new Error(validation.tip);
+							}
+						});
+					}
+				});
+			});
+		} catch (e) {
+			return e.message;
+		}
 
-  var applyFeedback = function(tipContainer, inputField, validationTipMessage) {
-    $(inputField).addClass("ui-state-error");
-    setErrorTip(tipContainer, validationTipMessage);
-  }
+		return true;
+	}
 
-  var resetFeedback = function(tipContainer, inputFields, options) {
-    setInfoTip(tipContainer, options.tip);
+	var setErrorTip = function(tipContainer, message) {
+		tipContainer.toError(message);
+	}
 
-    $.each(inputFields, function (key, value) {
-      $(value()).removeClass('ui-state-error');
-    });
-  }
+	var setInfoTip = function(tipContainer, message) {
+		tipContainer.toInfo(message);
+	}
 
-  var toMethodName = function(name) {
-    return name.replace(/ /g,'');
-  }
+	var applyFeedback = function(tipContainer, inputField, validationTipMessage) {
+		$(inputField).addClass("ui-state-error");
+		setErrorTip(tipContainer, validationTipMessage);
+	}
 
-  return Dialog;
+	var resetFeedback = function(tipContainer, inputFields, options) {
+		setInfoTip(tipContainer, options.tip);
+
+		$.each(inputFields, function (key, value) {
+			$(value()).removeClass('ui-state-error');
+		});
+	}
+
+	var toMethodName = function(name) {
+		return name.replace(/ /g,'');
+	}
+
+	return Dialog;
 });

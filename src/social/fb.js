@@ -19,7 +19,7 @@ define(function(require)
 					self.initialized = true;
 				};
 
-			  	loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
+				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
 
 				return;
 			}
@@ -33,22 +33,26 @@ define(function(require)
 				window.fbAsyncInit = function() {
 					init("1910504332510208");
 
-					sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete, onError);
+					var onSuccess = function(sceneName, scenId, sceneRemoteUrl) {
+						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete);
 
 						self.initialized = true;
-					});
+					};
+
+					sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
 				};
 
-			  	loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
+				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
 
 				return;
 			}
 
 			if (this.initialized) {
-				sceneSaveUI.serializeAndStoreRemoteShare(function(sceneName, scenId, sceneRemoteUrl) {
-					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete, onError);
-				});
+				var onSuccess = function(sceneName, scenId, sceneRemoteUrl) {
+					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete);
+				};
+
+				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
 			}
 		}
 	}
@@ -56,7 +60,7 @@ define(function(require)
 	var init = function(appId) {
 		FB.init({
 			appId: appId,
-		   	version : "v2.8"
+			version : "v2.8"
 		});
 	}
 

@@ -6,6 +6,7 @@ define(function(require) {
 	var sceneSaveDialog = require('scene-save-ui');
 	var sceneLoadDialog = require('scene-load-ui');
 	var sceneDeleteDialog = require('scene-delete-ui');
+	var messageDialog = require('message');
 
 	var listCreator = require('list');
 
@@ -224,18 +225,28 @@ define(function(require) {
 				'Facebook',
 				'fa-facebook-official',
 				function() {
-					// TODO: Replace the facebook icon with a spinning icon
-					// TODO: Block the UI
+					var blocker = document.createElement('div');
+					blocker.id = 'blocker';
+
+					document.body.appendChild(blocker);
 
 					require('fb').share(
 					function() {
-						// TODO: Add the facebook icon back
-						// TODO: UnBlock the UI
+						document.body.removeChild(blocker);
 					},
 					function() {
-						// TODO: Add the facebook icon back
-						// TODO: UnBlock the UI
-						// TODO: Show feedback dialog
+						document.body.removeChild(blocker);
+
+						var dialog = (new messageDialog()).create({
+							title: "Share Failed",
+							message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+							modal: true,
+							buttons: {
+								Ok: function() {
+									dialog.destroy();
+								}
+							}
+						});
 					});
 				},
 				'fa fa-lg'

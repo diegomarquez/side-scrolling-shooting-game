@@ -369,7 +369,12 @@ define(function(require) {
 				name = sceneData['name'];
 			}
 
-			name = 'Space Maze: ' + name;
+			if (name === '!@<share>@!') {
+				name = 'Space Maze';
+			}
+			else {
+				name = 'Space Maze: ' + name;
+			}
 
 			document.getElementById('player-title').appendChild(document.createTextNode(name));
 		},

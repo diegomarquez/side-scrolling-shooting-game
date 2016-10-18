@@ -2,7 +2,7 @@ define(function(require) {
 	var gb = require('gb');
 	var root = require('root');
 	var util = require('util');
-	
+
 	var playerLoader = require('player-scene-loader');
 	var viewportFollow = require('viewport-follow');
 	var playerGetter = require('player-getter');
@@ -19,7 +19,7 @@ define(function(require) {
 		load: function(sceneData) {
 			// Load the Scene
 			playerLoader.load(sceneData);
-			
+
 			// Get a reference to the player ship, place it outside the screen and block it's controls
 			var player = playerGetter.get(-200, -200).blockControls();
 
@@ -39,7 +39,7 @@ define(function(require) {
 
 		setCompleteEvents: function() {
 			var levelItems = root.findChildren().recurse().all(function(child) {
-				return child.poolId == 'LevelItem' || child.poolId == 'AllBossDefeatLevelItem'; 
+				return child.poolId == 'LevelItem' || child.poolId == 'AllBossDefeatLevelItem';
 			});
 
 			var player = playerGetter.get();
@@ -55,7 +55,7 @@ define(function(require) {
 
 				// Show the fail message
 				gb.create('FailureMessage', 'Second', this.viewports, {
-					onComplete: function() { 
+					onComplete: function() {
 						this.blockEscape = false;
 						this.execute(this.FAILURE);
 					}.bind(this)
@@ -100,7 +100,7 @@ define(function(require) {
 							if (d === 0) {
 								// Tween the player out of the screen
 								TweenLite.to(player, 1.5, { viewportOffsetX: gb.canvas.width + 200, ease: Back.easeIn, onComplete: function() {
-									// Signal the scene player is done 
+									// Signal the scene player is done
 									this.execute(this.EXIT);
 								}.bind(this)});
 
@@ -111,7 +111,7 @@ define(function(require) {
 							if (d === 180) {
 								// Tween the player out of the screen
 								TweenLite.to(player, 1.5, { viewportOffsetX: -200, ease: Back.easeIn, onComplete: function() {
-									// Signal the scene player is done 
+									// Signal the scene player is done
 									this.execute(this.EXIT);
 								}.bind(this)});
 
@@ -122,7 +122,7 @@ define(function(require) {
 							if (d === 270) {
 								// Tween the player out of the screen
 								TweenLite.to(player, 1.5, { viewportOffsetY: -200, ease: Back.easeIn, onComplete: function() {
-									// Signal the scene player is done 
+									// Signal the scene player is done
 									this.execute(this.EXIT);
 								}.bind(this)});
 
@@ -133,7 +133,7 @@ define(function(require) {
 							if (d === 90) {
 								// Tween the player out of the screen
 								TweenLite.to(player, 1.5, { viewportOffsetY: gb.canvas.height + 200, ease: Back.easeIn, onComplete: function() {
-									// Signal the scene player is done 
+									// Signal the scene player is done
 									this.execute(this.EXIT);
 								}.bind(this)});
 
@@ -174,7 +174,7 @@ define(function(require) {
 
 							self.blockEscape = false;
 						}
-					}); 
+					});
 				}.bind(this)});
 
 				return;
@@ -204,7 +204,7 @@ define(function(require) {
 
 							self.blockEscape = false;
 						}
-					}); 
+					});
 				}.bind(this)});
 
 				return;
@@ -232,7 +232,7 @@ define(function(require) {
 
 							self.blockEscape = false;
 						}
-					}); 
+					});
 				}.bind(this)});
 
 				return;
@@ -260,7 +260,7 @@ define(function(require) {
 
 							self.blockEscape = false;
 						}
-					}); 
+					});
 				}.bind(this)});
 
 				return;
@@ -288,7 +288,7 @@ define(function(require) {
 
 							self.blockEscape = false;
 						}
-					}); 
+					});
 				}.bind(this)});
 
 				return;

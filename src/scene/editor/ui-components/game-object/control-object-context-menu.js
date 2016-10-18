@@ -3,7 +3,7 @@ define(function(require) {
 
 	var ControlObjectContextMenu = require('ui-component').extend({
 		init: function() {
-				
+
 		},
 
 		create: function() {
@@ -21,14 +21,14 @@ define(function(require) {
 										resolve(editorConfig.getControlObjectAliasName(menu.go.parent.typeId));
 									}
 									else {
-										resolve(editorConfig.getControlObjectAliasName(menu.go.typeId));	
+										resolve(editorConfig.getControlObjectAliasName(menu.go.typeId));
 									}
-									
+
 								});
 							});
 						},
 						icon: 'ui-icon-caret-1-e',
-						disable: true						
+						disable: true
 					},
 					{
 						name: 'Clone',
@@ -46,13 +46,13 @@ define(function(require) {
 							}
 
 							require(['game-object-cloner'], function(cloner) {
-								cloner.clone(menu.go);	
+								cloner.clone(menu.go);
 							});
-						}						
+						}
 					},
 					{
 						name: 'Remove',
-						icon: 'ui-icon-trash',		
+						icon: 'ui-icon-trash',
 						click: function(name, event) {
 							if (menu.go.poolId == 'AngleDirectionSetter') {
 								gb.reclaimer.mark(menu.go);
@@ -60,10 +60,16 @@ define(function(require) {
 							else if (menu.go.poolId == 'AbsoluteScrollStopper') {
 								gb.reclaimer.mark(menu.go);
 							}
+							else if (menu.go.poolId == 'TwoWayDirectionSetter') {
+								gb.reclaimer.mark(menu.go);
+							}
+							else if (menu.go.poolId == 'BGMSound') {
+								gb.reclaimer.mark(menu.go);
+							}
 							else {
 								gb.reclaimer.mark(menu.go.parent);
 							}
-						}		
+						}
 					}
 				]
 			});
@@ -74,7 +80,7 @@ define(function(require) {
 
 				show: function (mouseData) {
 					this.go = mouseData.go;
-					
+
 					this.menu.show(mouseData.globalMouseX, mouseData.globalMouseY);
 
 					this.removeHideEvents();
@@ -110,7 +116,7 @@ define(function(require) {
 					if (!this.belongs(event.target)) {
 						this.hide();
 					}
-				}  
+				}
 			};
 
 			return menu;
