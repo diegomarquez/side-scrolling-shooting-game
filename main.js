@@ -114,9 +114,6 @@ define(function(require) {
 	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true);
 	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true);
 
-	assetPreloader.loadAll();
-	soundPlayer.loadAll();
-
 	var complete = 0;
 
 	// Wait for assets to be ready
@@ -137,6 +134,8 @@ define(function(require) {
 		}
 	});
 
+	assetPreloader.loadAll();
+	soundPlayer.loadAll();
 
 	function start() {
 		// Choose a start up routine according to what is found in the query string
