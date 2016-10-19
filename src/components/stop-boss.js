@@ -1,5 +1,4 @@
 define(["editor-component", "gb", "player-getter"], function(Component, Gb, PlayerGetter) {
-	
 	var StopBoss = Component.extend({
 		init: function() {
 			this._super();
@@ -26,6 +25,9 @@ define(["editor-component", "gb", "player-getter"], function(Component, Gb, Play
 			if (this.isPlayerStopped)
 				return;
 
+			if (!this.isEnabled())
+				return;
+
 			this.isPlayerStopped = true;
 		},
 
@@ -37,6 +39,9 @@ define(["editor-component", "gb", "player-getter"], function(Component, Gb, Play
 				return;
 
 			if (!this.isPlayerStopped)
+				return;
+
+			if (!this.isEnabled())
 				return;
 
 			this.isPlayerStopped = false;
@@ -51,7 +56,7 @@ define(["editor-component", "gb", "player-getter"], function(Component, Gb, Play
 
 			if (PlayerGetter.exists()) {
 				PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
-				PlayerGetter.get().removeDelegate(PlayerGetter.get().MOVE, this, this.onPlayerMove);	
+				PlayerGetter.get().removeDelegate(PlayerGetter.get().MOVE, this, this.onPlayerMove);
 			}
 		}
 	});

@@ -28,7 +28,7 @@ define(function(require) {
 					soundPlayer.stopAll().which(function(id, source) {
 						return id === 'INTRO' || id === 'LEVEL_1' || id === 'LEVEL_2' || id === 'LEVEL_3' || id === 'LEVEL_4' || id === 'BOSS';
 					});
-					
+
 					soundPlayer.playLoop(lastBGMSoundId);
 				}
 

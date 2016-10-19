@@ -1,7 +1,7 @@
 define(function(require) {
 
 	var AngleDirectionSetter = require("editor-game-object-container").extend({
-		
+
 		init: function() {
 			this._super();
 		},
@@ -9,60 +9,60 @@ define(function(require) {
 		editorStart: function() {
 			this.mainViewport = require('gb').viewports.get("Main");
 			this.player = require('player-getter').get();
-			
+
 			this.renderer.play();
-			
+
 			this.player.on(this.player.STOP_MOVEMENT, this, this.onPlayerStop);
 
 			var collisionComponent = this.findComponents().firstWithProp('collider');
-		
+
 			if (collisionComponent)
 				collisionComponent.disable();
 		},
 
 		onPlayerStop: function() {
 			var collisionComponent = this.findComponents().firstWithProp('collider');
-		
+
 			if (collisionComponent)
 				collisionComponent.enable();
 		},
 
 		deActivate: function() {
 			this.player.removeDelegate(this.player.STOP_MOVEMENT, this, this.onPlayerStop);
-    	},
-
-    	recycle: function() {
-    		if (this.player) {
-    			this.player.removeDelegate(this.player.STOP_MOVEMENT, this, this.onPlayerStop);	
-    		}
-
-    		this._super();
-    	},
-
-		editorUpdate: function(delta) {
-			
 		},
 
-    	onCollide: function(other) {
-    		other.move(this.rotation)
+		recycle: function() {
+			if (this.player) {
+				this.player.removeDelegate(this.player.STOP_MOVEMENT, this, this.onPlayerStop);
+			}
 
-    		var self = this;
+			this._super();
+		},
 
-    		require('root').findChildren().recurse().all(function(child) {
-				return child.poolId == self.poolId && child.getViewportVisibility('Main'); 
+		editorUpdate: function(delta) {
+
+		},
+
+		onCollide: function(other) {
+			other.move(this.rotation)
+
+			var self = this;
+
+			require('root').findChildren().recurse().all(function(child) {
+				return child.poolId == self.poolId && child.getViewportVisibility('Main');
 			}).forEach(function(sibling) {
-				
+
 				var collisionComponent = sibling.findComponents().firstWithProp('collider');
-		
+
 				if (collisionComponent)
 					collisionComponent.disable();
-				
-			});
-    	},
 
-    	getDirection: function() {
-    		return this.rotation;
-    	}
+			});
+		},
+
+		getDirection: function() {
+			return this.rotation;
+		}
 
 	});
 

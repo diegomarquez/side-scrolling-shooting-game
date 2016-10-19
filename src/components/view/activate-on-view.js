@@ -1,6 +1,6 @@
 define(["editor-component", "player-getter"], function(EditorComponent, PlayerGetter) {
 	var p = {};
-	
+
 	var activateParent = function() {
 		// Re assign update anf start methods
 		this.parent.editorStart = this.parent.saveEditorStart;
@@ -30,15 +30,15 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		// Set some state
 		this.parent.activatedOnView = false;
 
-		deactivateComponents.call(this);	
+		deactivateComponents.call(this);
 	}
 
 	var deactivateComponents = function() {
 		var components = this.parent.findComponents().not().all(function(component) {
 			return component.poolId == require('common-bundle').getActivateOnViewPoolId() ||
-				   component.poolId == 'ConnectSimilar';
+				component.poolId == 'ConnectSimilar';
 		});
-		
+
 		if (components) {
 			for (var i = 0; i < components.length; i++) {
 				components[i].disable();
@@ -49,9 +49,9 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 	var activateComponents = function() {
 		var components = this.parent.findComponents().not().all(function(component) {
 			return component.poolId == require('common-bundle').getActivateOnViewPoolId() ||
-				   component.poolId == 'ConnectSimilar';
+				component.poolId == 'ConnectSimilar';
 		});
-		
+
 		if (components) {
 			for (var i = 0; i < components.length; i++) {
 				components[i].enable();
@@ -75,7 +75,7 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 		},
 
 		editorStart: function(parent) {
-			
+
 		},
 
 		editorAdded: function(parent) {
@@ -103,14 +103,14 @@ define(["editor-component", "player-getter"], function(EditorComponent, PlayerGe
 				activateParent.call(this);
 				// Call start on the parent
 				this.parent.editorStart();
-    		}
+			}
 
-    		// Was active and just became invisible
-    		if (this.parent.activatedOnView && !this.parent.getViewportVisibility('Main')) {
-    			deActivateParent.call(this);
+			// Was active and just became invisible
+			if (this.parent.activatedOnView && !this.parent.getViewportVisibility('Main')) {
+				deActivateParent.call(this);
 				// Call deactivate on the parent
 				this.parent.deActivate();
-    		}
+			}
 		},
 
 		recycle: function(parent) {
