@@ -28,7 +28,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		deActivate: function() {
 			this.hasStopListener = false;
 			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
-    	},
+		},
 
 		editorUpdate: function(delta) {
 
@@ -50,12 +50,12 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 
 						if (this.otherBosses && this.otherBosses.length == 0) {
 							this.execute('last-boss-destroyed', this);
-							
+
 							// Signal all cannons that the boss has been destroyed
 							if (this.cannons) {
 								for (var i=0; i < this.cannons.length; i++) {
 									if (this.cannons[i].getViewportVisibility('Main')) {
-										this.cannons[i].onBossDestroy();   
+										this.cannons[i].onBossDestroy();
 									}
 								}
 
@@ -66,7 +66,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 						if (this.body.isActive()) {
 							this.body.onBossDestroy();
 						}
-					}	
+					}
 				}
 			}
 		},
@@ -74,7 +74,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 		recycle: function() {
 			if (PlayerGetter.exists()) {
 				if (this.otherBosses && this.otherBosses.length == 0) {
-					
+
 					this.execute('all-bosses-destroyed', this);
 
 					this.hasStopListener = false;
@@ -87,7 +87,7 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 			this.body = null;
 			this.cannons = null;
 			this.otherBosses = null;
-			
+
 			this._super();
 		},
 
@@ -115,19 +115,19 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 			this.hasStopListener = false;
 
 			if (this.body === null) {
-				this.body = this.findChildren().firstWithType("boss-body");		
+				this.body = this.findChildren().firstWithType("boss-body");
 			}
 
 			if (this.cannons === null) {
 				this.cannons = Root.findChildren().recurse().all(function(child) {
 					return (
-						child.poolId == "BossCannonBase" || 
+						child.poolId == "BossCannonBase" ||
 						child.poolId == "BossDoubleCannonBase" ||
 						child.poolId == "BossGeneratorType"
-					) && child.getViewportVisibility('Main'); 
-				});	
+					) && child.getViewportVisibility('Main');
+				});
 			}
-			
+
 			// Start the body
 			this.body.onBossStart();
 
@@ -144,16 +144,16 @@ define(["editor-game-object-container", "player-getter", "root"], function(GameO
 					return (child.typeId == "boss-1" || child.typeId == "boss-2" || child.typeId == "boss-3" || child.typeId == "boss-4") && child.getViewportVisibility('Main');
 				});
 
-				if (this.otherBosses) {		
+				if (this.otherBosses) {
 					for (var i=0; i < this.otherBosses.length; i++) {
 						this.otherBosses[i].once('destroyed', this, function(boss) {
 							if (this.isActive()) {
-								this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
+								this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);
 							}
 						});
-					}	
-				}	
-			} 
+					}
+				}
+			}
 		}
 	});
 

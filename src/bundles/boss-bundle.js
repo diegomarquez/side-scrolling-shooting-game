@@ -1,12 +1,12 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var particleBundle = require('particle-generator-bundle');
 	var explosionsBundle = require('explosion-generator-bundle');
 	var gb = require('gb');
 
 	var Boss = require("bundle").extend({
-		create: function(args) {			
-			
+		create: function(args) {
+
 			this.componentPool.createPool("StopBoss", require("stop-boss"));
 			this.componentPool.createConfiguration("StopBoss", "StopBoss");
 
@@ -19,27 +19,27 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('Boss_1', require("boss-1"));
 			this.gameObjectPool.createDynamicPool('Boss_1_Cables', require("boss-1-cables"));
 			this.gameObjectPool.createDynamicPool('Boss_1_Icon', require("boss-1-icon"));
-			
+
 			this.componentPool.createConfiguration("Boss_1_Collider", commonBundle.getPolygonColliderPoolId())
-				.args({ 
-					id:'bossColliderId', 
+				.args({
+					id:'bossColliderId',
 					points: [
 						{ x: -50 , y: -65 },
 						{ x:  50 , y: -65 },
 						{ x:  50 , y:  65 },
 						{ x: -50 , y:  65 }
-					] 
+					]
 				});
 
 			this.componentPool.createConfiguration("Boss_1_Cables_Collider", commonBundle.getPolygonColliderPoolId())
-				.args({ 
-					id:'bossColliderId', 
+				.args({
+					id:'bossColliderId',
 					points: [
 						{ x: -15 , y: -40 },
 						{ x:  15 , y: -40 },
 						{ x:  15 , y:  40 },
 						{ x: -15 , y:  40 }
-					] 
+					]
 				});
 
 			this.componentPool.createConfiguration("Boss_1_Renderer", commonBundle.getBitmapRendererPoolId())
@@ -61,7 +61,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("boss-1-cables", "Boss_1_Cables")
-				.args({ 
+				.args({
 					damageRendererId: "Boss_1_Cables_Damage_Renderer",
 					colliderId: "Boss_1_Cables_Collider",
 					destroyEffect: explosionsBundle.getMediumExplosionsEffectId(),
@@ -111,7 +111,7 @@ define(function(require) {
 			// Boss 2
 			// =================================
 			// =================================
-			
+
 			this.gameObjectPool.createDynamicPool('Boss_2_Core', require("boss-2-core"));
 			this.gameObjectPool.createDynamicPool('Boss_2_Body', require("boss-2-body"));
 
@@ -268,7 +268,7 @@ define(function(require) {
 						{ x: 75, y: 75 },
 						{ x: -75, y: 75 },
 						{ x: -75, y: -75 }
-					] 
+					]
 				});
 
 			this.gameObjectPool.createConfiguration("boss-3", "Boss_3_Body")
@@ -298,7 +298,7 @@ define(function(require) {
 
 			// Boss 3 Eye
 			// =======================
-			
+
 			this.componentPool.createConfiguration("OuterEyeRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["BOSS3OUTEREYE.PNG"],
@@ -318,7 +318,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("Boss3EyeCollider", commonBundle.getCircleColliderPoolId())
 				.args({
 					id:'cannonColliderId',
-					radius:30 
+					radius:30
 				});
 
 			this.gameObjectPool.createConfiguration("boss-3-inner-eye", "Boss3InnerEye")
@@ -355,7 +355,7 @@ define(function(require) {
 
 			// Boss 4 Spider
 			// =======================
-			
+
 			this.gameObjectPool.createDynamicPool('Boss_4_Body', require("boss-4-body"));
 
 			this.gameObjectPool.createDynamicPool('editor-game-object', require('editor-game-object'));
@@ -456,8 +456,8 @@ define(function(require) {
 				.addChild("FirePosition", { y: 30 })
 				.setRenderer("Boss_4_Body_Renderer")
 				.enemyCategory()
-				.bossEnemyTier(); 
-			
+				.bossEnemyTier();
+
 		},
 	});
 
@@ -468,7 +468,7 @@ define(function(require) {
 		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
-			point.x = Math.sin(step*i) * radius; 
+			point.x = Math.sin(step*i) * radius;
 			point.y = Math.cos(step*i) * radius;
 
 			result.push(point);

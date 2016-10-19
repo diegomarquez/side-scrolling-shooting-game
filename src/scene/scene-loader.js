@@ -1,27 +1,27 @@
 define(function(require) {
 
-  	var gb = require('gb');
- 	var util = require('util');
+	var gb = require('gb');
+	var util = require('util');
 
-  	var SceneLoader = require("delegate").extend({
-	    init: function() {
-	    	this._super();
-	    },
+	var SceneLoader = require("delegate").extend({
+		init: function() {
+			this._super();
+		},
 
-	    load: function(scene) {
-	    	var s;
+		load: function(scene) {
+			var s;
 
-	    	if (!scene) {
-	    		throw new Error('missing scene');
-	    	}
+			if (!scene) {
+				throw new Error('missing scene');
+			}
 
-	    	if (util.isString(scene)) {
-	    		s = JSON.parse(scene);
-	    	}
+			if (util.isString(scene)) {
+				s = JSON.parse(scene);
+			}
 
-	    	if (util.isObject(scene)) {
-	    		s = scene;
-	    	}
+			if (util.isObject(scene)) {
+				s = scene;
+			}
 
 			this.cleanUp();
 			this.sceneName(s);
@@ -34,53 +34,53 @@ define(function(require) {
 				this.addGameObjects(s);
 				this.execute(this.LOAD_COMPLETE);
 			}.bind(this);
-	    },
+		},
 
-	    cleanUp: function () {
+		cleanUp: function () {
 
-	    },
+		},
 
-	    sceneName: function (scene) {
+		sceneName: function (scene) {
 
-	    },
+		},
 
-	    world: function (scene) {
+		world: function (scene) {
 
-	    },
+		},
 
-	    groups: function (scene) {
-	    	var groups = scene.groups;
+		groups: function (scene) {
+			var groups = scene.groups;
 
-            for(var i = 0; i < groups.length; i++) {
-                gb.groups.add(groups[i]);
-            }
-	    },
+			for(var i = 0; i < groups.length; i++) {
+				gb.groups.add(groups[i]);
+			}
+		},
 
-	    viewports: function (scene) {
+		viewports: function (scene) {
 
-	    },
+		},
 
-	    configurations: function(scene) {
-            // Add game object configurations
-            addConfigurations(gb.goPool, scene.goConfig);
-            // Add component configurations
-            addConfigurations(gb.coPool, scene.coConfig);
-	    },
+		configurations: function(scene) {
+			// Add game object configurations
+			addConfigurations(gb.goPool, scene.goConfig);
+			// Add component configurations
+			addConfigurations(gb.coPool, scene.coConfig);
+		},
 
-	    getGameObject: function (serializedGameObject) {
+		getGameObject: function (serializedGameObject) {
 
-	    },
+		},
 
-	    addChildGameObject: function (childId, go) {
+		addChildGameObject: function (childId, go) {
 
-	    },
+		},
 
-	    decorateGameObject: function (go) {
+		decorateGameObject: function (go) {
 
-	    },
+		},
 
-	    addGameObjects: function(scene) {
-	    	if (!scene.objects) return;
+		addGameObjects: function(scene) {
+			if (!scene.objects) return;
 
 			for(i = 0; i < scene.objects.length; i++) {
 				var serializedGameObject = scene.objects[i];
@@ -101,27 +101,27 @@ define(function(require) {
 
 				require('object-counter').count(gameObject);
 			}
-	    },
+		},
 
-	    getConfigurationsUsedInScene: function(scene) {
-	    	if (!scene) {
-	    		throw new Error('missing scene');
-	    	}
+		getConfigurationsUsedInScene: function(scene) {
+			if (!scene) {
+				throw new Error('missing scene');
+			}
 
-	    	if (util.isString(scene)) {
-	    		scene = JSON.parse(scene);
-	    	}
+			if (util.isString(scene)) {
+				scene = JSON.parse(scene);
+			}
 
-	    	if (util.isObject(scene)) {
-	    		scene = scene;
-	    	}
+			if (util.isObject(scene)) {
+				scene = scene;
+			}
 
-	    	if (!scene.objects)
-	    		return [];
+			if (!scene.objects)
+				return [];
 
-	    	var result = {};
+			var result = {};
 
-	    	for(i = 0; i < scene.objects.length; i++) {
+			for(i = 0; i < scene.objects.length; i++) {
 				var serializedGameObject = scene.objects[i];
 
 				var configurationId = serializedGameObject["id"];
@@ -139,9 +139,9 @@ define(function(require) {
 			}
 
 			return returnArray;
-	    },
+		},
 
-	    getChildConfigurationsUsedInScene: function(childrenJson) {
+		getChildConfigurationsUsedInScene: function(childrenJson) {
 			var result = {};
 
 			if (childrenJson) {
@@ -155,9 +155,9 @@ define(function(require) {
 			}
 
 			return result;
-	    },
+		},
 
-	    getComponentArgs: function(properties) {
+		getComponentArgs: function(properties) {
 			return properties ? properties["componentArgs"] : null;
 		},
 
@@ -168,43 +168,43 @@ define(function(require) {
 		getChildrenArgs: function(properties) {
 			return properties ? properties["children"] : null;
 		}
-  	});
+	});
 
 	var applyStructuralChanges = function(go, hasStructuralChanges, properties) {
 		if (hasStructuralChanges) {
-	  		// Remove everything from from the created game object, components and children
-	  		go.removeComponents();
-	  		gb.reclaimer.claimChildren(go);
+			// Remove everything from from the created game object, components and children
+			go.removeComponents();
+			gb.reclaimer.claimChildren(go);
 
-	  		// Add the serialized components
-	  		addComponentsToGameObject.call(this, go, this.getComponentArgs(properties));
-	  		// Recursively add the serialized children
+			// Add the serialized components
+			addComponentsToGameObject.call(this, go, this.getComponentArgs(properties));
+			// Recursively add the serialized children
 			addChildrenToGameObject.call(this, go, this.getChildrenArgs(properties));
 
 			this.decorateGameObject(go)
-	  	}
+		}
 	}
 
 	var addConfigurations = function(pool, config) {
 		if (!config) return
 
-	  	for (var i = 0; i < config.length; i++) {
-	  		pool.createConfigurationFromObject(config[i]);
-	  	}
+		for (var i = 0; i < config.length; i++) {
+			pool.createConfigurationFromObject(config[i]);
+		}
 	}
 
 	var addComponentsToGameObject = function(go, componentArgs) {
 		if (!componentArgs) return;
 
 		for (var k in componentArgs) {
-	  		for (var i = 0; i < componentArgs[k].length; i++) {
-	  			var serializedComponent = componentArgs[k][i];
+			for (var i = 0; i < componentArgs[k].length; i++) {
+				var serializedComponent = componentArgs[k][i];
 				// Add a new component to the game object
 				var component = gb.addComponentTo(go, k);
 				// Apply serialized attributes to the component
-	  			applyAttributes.call(this, component, serializedComponent["attributes"]);
-	  		}
- 		}
+				applyAttributes.call(this, component, serializedComponent["attributes"]);
+			}
+		}
 	}
 
 	var addChildrenToGameObject = function(go, children) {
@@ -224,7 +224,7 @@ define(function(require) {
 				var childGo = this.addChildGameObject(childId, go)
 
 				// If any structural changes, modify the game object to look like the serialized data
-      			applyStructuralChanges.call(this, childGo, allChildProperties["hasStructuralChanges"], allChildProperties);
+				applyStructuralChanges.call(this, childGo, allChildProperties["hasStructuralChanges"], allChildProperties);
 				// Apply serialized arguments to child game object
 				applyAttributes.call(this, childGo, childArgs);
 				// Apply serialized arguments to child components
@@ -243,13 +243,13 @@ define(function(require) {
 
 		// Set arguments that go through the Attributes interface method
 		if (object.Attributes) {
-  			object.Attributes = args;
+			object.Attributes = args;
 		}
 
 		// Set all other arguments
-	  	for (var k in args) {
-	  		object[k] = args[k];
-	  	}
+		for (var k in args) {
+			object[k] = args[k];
+		}
 	}
 
 	var applyAttributesToComponents = function(go, componentArgs) {
@@ -257,12 +257,12 @@ define(function(require) {
 
 		var goComponents = go.findComponents().all();
 
-	  	for (var k in componentArgs) {
-	  		for (var i = 0; i < componentArgs[k].length; i++) {
-	  			var serializedComponent = componentArgs[k][i];
-	  			applyAttributes(goComponents[serializedComponent["indexInParent"]], serializedComponent["attributes"])
-	  		}
-	  	}
+		for (var k in componentArgs) {
+			for (var i = 0; i < componentArgs[k].length; i++) {
+				var serializedComponent = componentArgs[k][i];
+				applyAttributes(goComponents[serializedComponent["indexInParent"]], serializedComponent["attributes"])
+			}
+		}
 	}
 
 	var applyAttributesToChildren = function(go, children) {
@@ -293,10 +293,10 @@ define(function(require) {
 					applyAttributesToChildren(childGo, childrenArgs);
 				}
 			}
-    	}
+		}
 	}
 
 	Object.defineProperty(SceneLoader.prototype, "LOAD_COMPLETE", { get: function() { return 'load_complete'; } });
 
-  	return SceneLoader;
+	return SceneLoader;
 });

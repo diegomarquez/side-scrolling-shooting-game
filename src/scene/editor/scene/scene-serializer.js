@@ -32,8 +32,8 @@ define(function(require) {
 						"g": go.getUpdateGroup(),
 						"v": go.getViewportList(),
 						"x": go.x,
-						"y": go.y 
-					} 
+						"y": go.y
+					}
 
 					if (go.hasStructuralChanges()) {
 						// Game object with structural changes are serialized entirely to ensure they can be reconstructed
@@ -64,14 +64,14 @@ define(function(require) {
 						"width": v.Width,
 						"height": v.Height,
 						"offsetX": v.OffsetX,
-						"offsetY": v.OffsetY, 
+						"offsetY": v.OffsetY,
 						"scaleX": v.ScaleX,
 						"scaleY": v.ScaleY,
 						"stroke": v.getStroke(),
 						"worldFit": v.WorldFit,
 						"layers": editorConfig.getViewportLayers(v)
 					});
-				}      
+				}
 
 				// Build the object that will actually be serialized into a JSON string
 				var scene = {
@@ -96,16 +96,17 @@ define(function(require) {
 							if (util.isObject(value[k])) {
 								if (Object.keys(value[k]).length == 0) {
 									delete value[k];
-								} 
+								}
 							}
 						}
 
 						// If after the filtering there are no properties left in the object, ignore it
 						if (Object.keys(value).length == 0) {
-							return undefined; 
+							return undefined;
 						}
-					} 
+					}
 
+					// Empty arrays are ignored
 					if (util.isArray(value)) {
 						if (value.length == 0) {
 							return undefined;
@@ -132,7 +133,7 @@ define(function(require) {
 		var result = [];
 
 		for (var i = 0; i < configurations.length; i++) {
-			result.push(pool.getConfigurationObject(configurations[i]));  
+			result.push(pool.getConfigurationObject(configurations[i]));
 		}
 
 		return result;
@@ -147,12 +148,12 @@ define(function(require) {
 	}
 
 	var saveAllPropertiesToArray = function(object, array, index) {
-		var attributes; 
+		var attributes;
 
 		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
 			attributes = util.shallow_merge_many(object.args, object.Attributes);
 		} else {
-			attributes = util.shallow_merge_many(object.args, object.Attributes, { "x": object.x, "y": object.y, "rotation": object.rotation, "scaleX": object.scaleX, "scaleY": object.scaleY });  
+			attributes = util.shallow_merge_many(object.args, object.Attributes, { "x": object.x, "y": object.y, "rotation": object.rotation, "scaleX": object.scaleX, "scaleY": object.scaleY });
 		}
 
 		array.push({"attributes": attributes, "indexInParent": index});
@@ -166,7 +167,7 @@ define(function(require) {
 		}
 
 		if (object.x !== undefined && object.y !== undefined && object.rotation !== undefined && object.scaleX !== undefined && object.scaleY !== undefined) {
-			if (!to[prop]) 
+			if (!to[prop])
 				to[prop] = {};
 
 			to[prop]["x"] = object.x;
@@ -183,7 +184,7 @@ define(function(require) {
 		if (changes) {
 			array.push({"attributes": changes, "indexInParent": index});
 		}
-	} 
+	}
 
 	var serializeGameObject = function(go) {
 		var serializableArguments = {};
@@ -198,19 +199,19 @@ define(function(require) {
 			var componentIndex = -1;
 
 			for (var i = 0; i < go.components.length; i++) {
-				var component = go.components[i];       
+				var component = go.components[i];
 
 				// Skip editor components
 				if (editorConfig.isEditorComponent(component.typeId)) continue;
 				componentIndex++;
 
-				// Create a collection where to store components, if a game object have several components of the same type, 
+				// Create a collection where to store components, if a game object have several components of the same type,
 				// they will be grouped together in the same collection
 				createArrayInKey(serializableArguments["componentArgs"], component.typeId);
 
 				// Save component attributes for each component
 				saveAllPropertiesToArray(component, serializableArguments["componentArgs"][component.typeId], componentIndex);
-			} 
+			}
 		}
 
 		serializableArguments["children"] = serializeGameObjectChildren(go);
@@ -226,7 +227,7 @@ define(function(require) {
 
 			for (var i = 0; i < go.childs.length; i++) {
 				var child = go.childs[i];
-				var id = child.typeId; 
+				var id = child.typeId;
 
 				// Skip editor game objects
 				if (editorConfig.isEditorGameObject(child.typeId)) continue;
@@ -242,7 +243,7 @@ define(function(require) {
 				serializedChild["hasStructuralChanges"] = child.hasStructuralChanges();
 
 				// Store the child changes as well as the index in the parent
-				serializableChildArguments[id].push(serializedChild); 
+				serializableChildArguments[id].push(serializedChild);
 			}
 
 			// After everythin is complete, get rid of all objects which ended up empty, be them objects or arrays.
@@ -264,22 +265,22 @@ define(function(require) {
 			var componentIndex = -1;
 
 			for (var i = 0; i < go.components.length; i++) {
-				var component = go.components[i];       
+				var component = go.components[i];
 
 				// Skip editor components
 				if (editorConfig.isEditorComponent(component.typeId)) continue;
 				componentIndex++;
 
-				// Create a collection where to store changes, if a game object have several components of the same type, 
+				// Create a collection where to store changes, if a game object have several components of the same type,
 				// they will be grouped together in the same collection
 				createArrayInKey(serializableArguments["componentArgs"], component.typeId);
 
 				// Save changes for each component, if any
 				saveAttributeChangesToArray(component, serializableArguments["componentArgs"][component.typeId], componentIndex);
-			} 
+			}
 
 			serializableArguments["componentArgs"] = cleanUpArguments(serializableArguments["componentArgs"]);
-			serializableArguments["children"] = serializeGameObjectChildrenDifference(go); 
+			serializableArguments["children"] = serializeGameObjectChildrenDifference(go);
 		}
 
 		return serializableArguments;
@@ -293,7 +294,7 @@ define(function(require) {
 
 			for (var i = 0; i < go.childs.length; i++) {
 				var child = go.childs[i];
-				var id = child.typeId; 
+				var id = child.typeId;
 
 				// Skip editor game objects
 				if (editorConfig.isEditorGameObject(id)) continue;
@@ -310,9 +311,9 @@ define(function(require) {
 				if (Object.keys(serializedChild).length > 0) {
 					serializedChild["indexInParent"] = childIndex;
 					serializedChild["hasStructuralChanges"] = child.hasStructuralChanges();
-					 
+
 					// Store the child changes as well as the index in the parent
-					serializableChildArguments[id].push(serializedChild); 
+					serializableChildArguments[id].push(serializedChild);
 				}
 			}
 
@@ -330,7 +331,7 @@ define(function(require) {
 		if (Object.keys(childArgs).length == 0) {
 			return null;
 		} else {
-			return childArgs; 
+			return childArgs;
 		}
 	}
 

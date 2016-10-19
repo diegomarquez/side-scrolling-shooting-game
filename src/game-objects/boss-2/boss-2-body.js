@@ -1,5 +1,5 @@
 define(["editor-game-object-container", "timer-factory", "util", "gb"], function(GameObject, TimerFactory, Util, Gb) {
-	
+
 	var selfDecompose = {};
 
 	var Boss_2_Body = GameObject.extend({
@@ -16,7 +16,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.laser1 = null;
 			this.laser2 = null;
 			this.laser3 = null;
-			
+
 			this.mine1 = null;
 			this.mine2 = null;
 			this.mine3 = null;
@@ -36,25 +36,25 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		editorUpdate: function(delta) {
-								
+
 		},
 
 		deActivate: function() {
 			if (this.openTimer)
 				this.openTimer.remove();
-			
+
 			if (this.attackTimer)
 				this.attackTimer.remove();
-			
+
 			if (this.closeTimer)
 				this.closeTimer.remove();
-			
+
 			if (this.laserTimer)
 				this.laserTimer.remove();
 
 			if (this.laser1)
 				Gb.reclaimer.mark(this.laser1);
-			
+
 			if (this.laser2)
 				Gb.reclaimer.mark(this.laser2);
 
@@ -105,7 +105,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			});
 
 			this.attackTimer.on(this.attackTimer.COMPLETE, function() {
-				
+
 				this.attackCount++;
 
 				if (this.attackCount % 3 == 0) {
@@ -123,7 +123,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 							this.doMineAttack();
 							return;
 						}
-						
+
 						this.doLaserAttack();
 
 					} else {
@@ -131,10 +131,10 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 						// Try mine attack and fall back to laser attack
 
 						if (!this.mineAttacks) {
-							this.doLaserAttack();							
+							this.doLaserAttack();
 							return;
 						}
-						
+
 						this.doMineAttack();
 
 					}
@@ -157,7 +157,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.laserTimer.on(this.laserTimer.COMPLETE, function() {
 				if (this.laser1)
 					Gb.reclaimer.mark(this.laser1);
-				
+
 				if (this.laser2)
 					Gb.reclaimer.mark(this.laser2);
 
@@ -175,9 +175,9 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		onBossStop: function() {
 			if (!this.renderer)
 				return;
-			
+
 			this.collider.enable();
-			
+
 			this.cleanUpRendererDelegates();
 			this.deActivate();
 			this.closingAnimation();
@@ -185,20 +185,20 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 
 		closingAnimation: function() {
 			if (!this.renderer)
-				return;	
-			
+				return;
+
 			this.execute("closing");
 
 			if (this.renderer.isAtLabel('opened')) {
 				this.renderer.play('closing');
-				
+
 				this.addRendererDelegate('complete', function() {
 					this.renderer.play('closed');
 				});
 			}
 			else if (this.renderer.isAtLabel('opening')) {
 				this.renderer.reverse();
-				
+
 				this.addRendererDelegate('complete_back', function() {
 					this.renderer.play('closed');
 				});
@@ -210,7 +210,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			}
 			else if (this.renderer.isAtLabel('half-open')) {
 				this.renderer.play('half-open-close');
-				
+
 				this.addRendererDelegate('complete', function() {
 					this.renderer.play('closed');
 				});
@@ -218,7 +218,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		},
 
 		onCollide: function(other) {
-			
+
 		},
 
 		recycle: function() {
@@ -244,7 +244,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			}
 
 			if (this.laserAttacks[this.laserAttackIndex] == 'x2') {
-				
+
 				this.laser1 = Gb.create('Laser', this.getUpdateGroup(), this.getViewportList(), {
 					rotation: selfDecompose.rotation+90+35,
 					x: selfDecompose.x,
@@ -259,7 +259,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			}
 
 			if (this.laserAttacks[this.laserAttackIndex] == 'x3') {
-				
+
 				this.laser1 = Gb.create('Laser', this.getUpdateGroup(), this.getViewportList(), {
 					rotation: selfDecompose.rotation+90+35,
 					x: selfDecompose.x,
@@ -293,7 +293,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.execute("mine-attack");
 
 			selfDecompose = this.getMatrix().decompose(selfDecompose);
-			
+
 			if (this.mineAttacks[this.mineAttackIndex] == 'x3') {
 
 				this.clearMines();
@@ -355,7 +355,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			this.closeTimer.start();
 
 			if (this.mineAttackIndex < this.mineAttacks.length-1) {
-				this.mineAttackIndex++;	
+				this.mineAttackIndex++;
 			} else {
 				this.mineAttackIndex = 0;
 			}
@@ -381,7 +381,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		clearMines: function() {
 			if (this.mine1)
 				this.mine1.destroyMine();
-			
+
 			if (this.mine2)
 				this.mine2.destroyMine();
 
@@ -408,7 +408,7 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 		cleanUpRendererDelegates: function() {
 			if (!this.renderer)
 				return;
-			
+
 			this.renderer.levelCleanUp("boss-2-renderer-handler");
 		}
 

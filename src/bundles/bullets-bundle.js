@@ -1,15 +1,15 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var explosionsBundle = require('explosion-generator-bundle');
 	var gb = require('gb')
-	
+
 	var Bullets = require("bundle").extend({
-		create: function(args) {						
+		create: function(args) {
 			this.componentPool.createPool('laser-renderer', require('laser-renderer'));
 			this.componentPool.createPool('rotate-component', require('rotate'));
 
 			this.gameObjectPool.createDynamicPool('Bullet', require("basic-bullet"));
-			this.gameObjectPool.createDynamicPool('CannonBullet', require("cannon-bullet"));			
+			this.gameObjectPool.createDynamicPool('CannonBullet', require("cannon-bullet"));
 			this.gameObjectPool.createDynamicPool('Laser', require("laser"));
 			this.gameObjectPool.createDynamicPool('Missile', require("missile"));
 
@@ -24,7 +24,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("DestroyOnHpDepleted", "DestroyOnHpDepleted");
 
 			this.componentPool.createConfiguration("BulletCollider", commonBundle.getCircleColliderPoolId())
-				.args({ 
+				.args({
 					id:'basicBulletColliderId',
 					radius:10,
 					getResponse: true
@@ -32,14 +32,14 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("CannonBulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id:'cannonBulletColliderId', 
+					id:'cannonBulletColliderId',
 					radius:10,
 					getResponse: true
 				});
 
 			this.componentPool.createConfiguration("WebBulletCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id:'webBulletColliderId', 
+					id:'webBulletColliderId',
 					radius:10,
 					getResponse: true
 				});
@@ -57,7 +57,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("MissileCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id:'missilleColliderId', 
+					id:'missilleColliderId',
 					radius:5,
 					getResponse: true
 				});
@@ -66,7 +66,7 @@ define(function(require) {
 				.args({
 					amount: 6
 				});
-			
+
 			this.componentPool.createConfiguration("PlayerBullet1Renderer", commonBundle.getAnimationBitmapRendererPoolId())
 				.args({
 					pingPong: true,
@@ -89,7 +89,7 @@ define(function(require) {
 					path: gb.assetMap()["MINIBLOB.PNG"],
 					offset: 'center',
 				});
-			
+
 			this.componentPool.createConfiguration("ArrowBulletRenderer", commonBundle.getBitmapRendererPoolId())
 				.args({
 					path: gb.assetMap()["ARROWBULLET.PNG"],
@@ -216,7 +216,7 @@ define(function(require) {
 				.addComponent("WebBulletCollider")
 				.setRenderer("WebBulletRenderer");
 
-			
+
 		},
 	});
 

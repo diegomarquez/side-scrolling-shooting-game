@@ -1,7 +1,7 @@
 define(function(require) {
 	require('jquery');
 	require('jquery-ui');
-	
+
 	require('bootstrap');
 	require('bootstrap-toogle');
 
@@ -20,7 +20,7 @@ define(function(require) {
 			this._super();
 		},
 
-		create: function(initialScene) {      
+		create: function(initialScene) {
 			// Create all the objects needed
 			// Main Layout
 			this.editorSideMenu = new (require('editor-side-menu'));
@@ -28,19 +28,19 @@ define(function(require) {
 
 			// Top Left Components
 			this.canvasScrollBarsUI = new (require('canvas-scroll-bars-ui'));
-			
+
 			// Top Right Components
 			this.gridControlsUI = new (require('grid-controls-ui'));
 			this.gameObjectControlsUI = new (require('game-object-controls-ui'));
 			this.worldEditUI = new (require('world-edit-ui'));
-			
+
 			// Bottom Left Components
 			this.gameObjectSelectorUI = new (require('game-object-selector-ui'));
 			this.controlObjectSelectorUI = new (require('control-objects-selector-ui'));
 			this.gameObjectCreatorUI = new (require('game-object-creator-ui'));
 			this.customTypesEditorUI = new (require('edit-custom-types-ui'));
 			this.gameObjectRemoveUI = new (require('game-object-remove-ui'));
-			
+
 			// Bottom Right Components
 			this.viewportsUI = new (require('viewport-selector-ui'));
 			// Current
@@ -57,7 +57,7 @@ define(function(require) {
 
 			this.editorRegionsController = this.editorRegions.create();
 			this.editorSideMenuController = this.editorSideMenu.create();
-			
+
 			// Append the side menu container
 			this.mainContainer.appendChild(this.editorSideMenuController.html);
 			// Append the regions container
@@ -76,7 +76,7 @@ define(function(require) {
 			this.editorRegionsController.appendToTopRight(this.gameObjectControlsUI.create());
 			// World Size
 			this.editorRegionsController.appendToTopRight(this.worldEditUI.create());
-			
+
 			// Bottom Left Region
 			// Game Object Selector
 			this.editorRegionsController.appendToBottomLeft(this.gameObjectSelectorUI.create());
@@ -111,10 +111,10 @@ define(function(require) {
 
 			// Remove the UI component from it's parent when a viewport is removed
 			editorDelegates.add(world, world.CHANGE, this, function () {
-				gb.viewports.iterate(this, function (v) { 
+				gb.viewports.iterate(this, function (v) {
 					if (v.WorldFit) {
-						world.scaleViewportToFit(v); 
-					} 
+						world.scaleViewportToFit(v);
+					}
 				});
 			});
 
@@ -124,7 +124,7 @@ define(function(require) {
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
 				this.execute(this.PREVIEW);
-			});				
+			});
 
 			// Finalize the setup of the editor
 			editorSetup.end();
@@ -143,7 +143,7 @@ define(function(require) {
 			});
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(
-				this.gameObjectSelectorUI, 
+				this.gameObjectSelectorUI,
 				this.controlObjectSelectorUI,
 				this.customTypesEditorUI,
 				this.gridControlsUI,
@@ -152,7 +152,7 @@ define(function(require) {
 
 			// The context menu that appears when clicking on empty space in the canvas
 			editorDelegates.add(gb.Mouse, gb.Mouse.CANVAS_CONTEXT_MENU, this, function(event) {
-				this.globalContextMenu.show(event.clientX, event.clientY);  
+				this.globalContextMenu.show(event.clientX, event.clientY);
 			});
 
 			// Update the side menu after adding it to the DOM
@@ -161,7 +161,7 @@ define(function(require) {
 			this.gridControlsUI.toggleGrid();
 			// Toggle the bounding rectangles on start
 			this.gameObjectControlsUI.toggleBoundings();
-		}, 
+		},
 
 		cleanUp: function() {
 			// Destroy viewport related dialogs
