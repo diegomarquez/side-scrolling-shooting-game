@@ -7,26 +7,27 @@ define(function(require) {
 	var localStorageWrapper = require('local-storage');
 	var loaderContainer = require('loader-container');
 
-  	return function (name) {
+	return function (name) {
 		var state = stateMachineFactory.createState(this, name);
 
 		state.addStartAction(function (args) {
 			// Clear update groups and viewports before doing anything else
 			gb.groups.removeAll();
-		  	gb.viewports.removeAll();
+			gb.viewports.removeAll();
 
-		  	// Add extensions
-		    gb.game.add_extension(require("center-canvas"));
+			// Add extensions
+			gb.game.add_extension(require("center-canvas"));
 		});
 
 		state.addStartAction(function (args) {
-			var previewScene = JSON.parse(localStorageWrapper.getPreviewScene());
+			var previewSceneString = localStorageWrapper.getPreviewScene();
+			var previewScene = JSON.parse(previewSceneString);
 
 			scenePlayer.once(scenePlayer.ESCAPE, this, function () {
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: previewScene, lastCompleteArgs: null });
+					state.execute(state.PREVIOUS, { nextInitArgs: previewSceneString, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
@@ -60,16 +61,16 @@ define(function(require) {
 			viewportFollow.update(delta);
 		});
 
-    	state.addCompleteAction(function (args) {
-      		// Signal that pools and the instances they hold should be cleared
-    		gb.reclaimer.clearAllObjectsFromPools().now();
-    		gb.reclaimer.clearAllPools().now();
+		state.addCompleteAction(function (args) {
+			// Signal that pools and the instances they hold should be cleared
+			gb.reclaimer.clearAllObjectsFromPools().now();
+			gb.reclaimer.clearAllPools().now();
 
-	  		// Clean up the scene player
-		  	scenePlayer.cleanUp();
-    	});
+			// Clean up the scene player
+			scenePlayer.cleanUp();
+		});
 
-    	return state;
-  	};
+		return state;
+	};
 });
 
