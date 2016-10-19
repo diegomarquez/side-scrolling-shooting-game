@@ -70,6 +70,7 @@ define(function(require) {
 	assetPreloader.addAsset(gb.assetMap()['SELECT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['OK.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['BACK.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['BOSS1PORTRAIT.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['BOSS2PORTRAIT.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['BOSS3PORTRAIT.PNG']);
