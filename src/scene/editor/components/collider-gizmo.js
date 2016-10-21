@@ -23,7 +23,7 @@ define(["component", "gb", "collision-resolver", "editor-gizmos"], function(Comp
 			}
 
 			// Add the components to edit a fixed polygon collider
-			if (parentCollider.colliderType == CollisionResolver.fixedPolygonCollider) {	
+			if (parentCollider.colliderType == CollisionResolver.fixedPolygonCollider) {
 				this.gizmoComponents = this.gizmoComponents.concat(EditorGizmos.addFixedPolygonColliderGizmo(go));
 			}
 

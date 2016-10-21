@@ -26,7 +26,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			// Store current context
 			context.save();
 			// Reset transformation
-			context.setTransform(1, 0, 0, 1, 0, 0);     
+			context.setTransform(1, 0, 0, 1, 0, 0);
 			// Apply transformations for the current [viewport](@@viewport@@)
 			viewport.transformContext(context);
 			// Applying transformations of parent
@@ -37,28 +37,28 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			context.restore();
 		},
 
-		rendererWidth: function() { 
+		rendererWidth: function() {
 			if (!this.parentColliderPoints)
 				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
 
 			return getPolygonSize(this.parentColliderPoints, 'width');
 		},
 		
-		rendererHeight: function() { 
+		rendererHeight: function() {
 			if (!this.parentColliderPoints)
 				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
 
 			return getPolygonSize(this.parentColliderPoints, 'height');
 		},
 
-		rendererOffsetX: function() { 
+		rendererOffsetX: function() {
 			if (!this.parentColliderPoints)
 				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
 
 			return getOffset(this.parentColliderPoints, 'x');
 		},
 
-		rendererOffsetY: function() { 
+		rendererOffsetY: function() {
 			if (!this.parentColliderPoints)
 				this.parentColliderPoints = this.parent.findComponents().firstWithProp('collider').Points;
 
@@ -69,17 +69,15 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			if (!gb.rendererDebug) return;
 
 			context.save();
-			context.beginPath();
 			
-			context.strokeStyle = this.debugColor;
-			context.lineWidth = 1;
-
 			m = this.parent.matrix;
 			// Applying transformations of parent
+			context.save();
+			context.beginPath();
 			context.transform(m.a, m.b, m.c, m.d, m.tx, m.ty);
 			context.translate(-0.5, -0.5);
 
-			// Top Left 
+			// Top Left
 			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY(), 'moveTo');
 			// Top Right
 			drawLineAndPoint.call(this, context, this.rendererOffsetX() + this.rendererWidth(), this.rendererOffsetY(), 'lineTo');
@@ -89,8 +87,12 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 			drawLineAndPoint.call(this, context, this.rendererOffsetX(), this.rendererOffsetY() + this.rendererHeight(), 'lineTo');
 
 			context.closePath();
-
+			context.restore();
+			
+			context.strokeStyle = this.debugColor;
+			context.lineWidth = 1;
 			context.stroke();
+			
 			context.restore();
 		}
 	});
@@ -112,7 +114,7 @@ define(["path-renderer", "draw"], function(PathRenderer, Draw) {
 	}
 
 	var getPolygonSize = function (points, axis) {
-		axis = axis == 'width' ? 'x' : 'y'; 
+		axis = axis == 'width' ? 'x' : 'y';
 
 		var min = points[0][axis];
 		var max = points[0][axis];

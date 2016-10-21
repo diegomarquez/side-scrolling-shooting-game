@@ -1,15 +1,12 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 
-	var obstacle = require("obstacle");
-	var obstacleRenderer = require('obstacle-renderer');
-
 	var Obstacles = require("bundle").extend({
-		create: function(args) {			
-			this.componentPool.createPool('obstacle-renderer', obstacleRenderer);
+		create: function(args) {
+			this.componentPool.createPool('obstacle-renderer', require('obstacle-renderer'));
 			this.componentPool.createConfiguration("ActivateObstancleOnView", commonBundle.getActivateOnViewPoolId());
 
-			this.gameObjectPool.createDynamicPool('Obstacle', obstacle);
+			this.gameObjectPool.createDynamicPool('Obstacle', require("obstacle"));
 			
 			this.componentPool.createConfiguration("ObstacleCollider3", commonBundle.getPolygonColliderPoolId())
 				.args({ id:'obstacleColliderId', points: getPolygon(3, 20) });
@@ -40,7 +37,7 @@ define(function(require) {
 		for (var i = vertexes-1; i >= 0; i--) {
 			var point = {};
 
-			point.x = Math.sin(step*i) * radius; 
+			point.x = Math.sin(step*i) * radius;
 			point.y = Math.cos(step*i) * radius;
 
 			result.push(point);

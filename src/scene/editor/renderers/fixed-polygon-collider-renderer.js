@@ -18,9 +18,11 @@ define(["path-renderer", "draw", "vector-2D"], function(PathRenderer, Draw, Vect
 			// Store current context
 			context.save();
 			// Reset transformation
-			context.setTransform(1, 0, 0, 1, 0, 0);     
-			// Apply transformations for the current [viewport](@@viewport@@)
+			context.setTransform(1, 0, 0, 1, 0, 0);
+			
 			viewport.transformContext(context);
+			
+			console.log("FIXED POLYGON");
 			
 			// Get a position from the matrix of the parent game object
 			p = this.parent.matrix.transformPoint(0, 0, p);
@@ -98,7 +100,7 @@ define(["path-renderer", "draw", "vector-2D"], function(PathRenderer, Draw, Vect
 	}
 
 	var getPolygonSize = function (points, axis) {
-		axis = axis == 'width' ? 'x' : 'y'; 
+		axis = axis == 'width' ? 'x' : 'y';
 
 		var min = points[0][axis];
 		var max = points[0][axis];
