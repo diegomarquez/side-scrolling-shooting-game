@@ -32,6 +32,7 @@ define(["editor-game-object-container", "reclaimer", "util"], function(GameObjec
 			this.angle = 0;
 			this.playerSpeed = 0;
 			this.disableTimeoutId = -1;
+			this.deflected = false;
 		},
 
 		editorStart: function() {
@@ -39,6 +40,7 @@ define(["editor-game-object-container", "reclaimer", "util"], function(GameObjec
 			this.renderer.play();
 
 			this.angle = (this.rotation) * (Math.PI/180);
+			this.deflected = false;
 		},
 
 		editorUpdate: function(delta) {
@@ -53,12 +55,20 @@ define(["editor-game-object-container", "reclaimer", "util"], function(GameObjec
 			}
 		},
 
-		onCollide: function(other) {
+		onCollide: function(other, response) {
+			if (this.deflected) {
+				if (other.poolId === "Boss_1" || other.poolId === "Boss_2_Body") {
+					return;
+				}
+			}
+
+			this.x -= response.overlapV.x;
+			this.y -= response.overlapV.y;
 
 			if (damageableObjects.indexOf(other.poolId) !== -1) {
 				this.execute("hit");
 				other.execute("hit");
-	
+
 				Reclaimer.mark(this);
 				return;
 			}
@@ -89,18 +99,10 @@ define(["editor-game-object-container", "reclaimer", "util"], function(GameObjec
 		},
 
 		deflect: function() {
-			this.findComponents().firstWithProp('collider').disable();
+			this.deflected = true;
+
 			this.angle += Math.PI + ((Math.PI/180) * Util.rand_i(-45, 45));
 			this.rotation = this.angle * (180/Math.PI);
-
-			this.disableTimeoutId = setTimeout(function() {
-				this.findComponents().firstWithProp('collider').enable();
-			}.bind(this), 200);
-		},
-
-		recycle: function() {
-			clearTimeout(this.disableTimeoutId);
-			this._super();
 		}
 	});
 
