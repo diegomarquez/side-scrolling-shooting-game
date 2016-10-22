@@ -16,7 +16,12 @@ define(function(require) {
 		},
 
 		sceneName: function (scene) {
-			sceneName.set(scene.name);
+			var name = scene.name;
+
+			if (name === '!@<share>@!')
+				name = 'Shared Scene';
+
+			sceneName.set(name);
 		},
 
 		world: function (scene) {

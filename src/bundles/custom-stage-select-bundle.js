@@ -1,8 +1,8 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 
 	var CustomStageSelect = require("bundle").extend({
-		create: function(args) {	
+		create: function(args) {
 			this.componentPool.createPool("MarkerArrowRenderer", require('arrow-renderer'));
 			this.componentPool.createPool("CustomStagesMenuRenderer", require('custom-stages-menu-renderer'));
 			this.componentPool.createPool('ShipRenderer', require('ship-renderer'));
@@ -24,7 +24,7 @@ define(function(require) {
 			this.componentPool.createConfiguration("CustomStagesMenuRenderer", "CustomStagesMenuRenderer");
 
 			this.gameObjectPool.createConfiguration("CurrentStageMarker", commonBundle.getGameObjectPoolId())
-				.args({ rotation: 90 }) 
+				.args({ rotation: 90 })
 				.setRenderer("ShipRenderer")
 
 			this.gameObjectPool.createConfiguration("StageName1", commonBundle.getGameObjectPoolId())
@@ -63,7 +63,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Back", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90, x: 100, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'back-button',
@@ -77,7 +77,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Start", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 100, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90, x: 100, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -100, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'start-button',
