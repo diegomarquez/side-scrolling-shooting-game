@@ -55,7 +55,7 @@ define(function(require) {
 				.args({
 					endX: 0,
 					endY: -100,
-					time: 1
+					time: 1.5
 				});
 
 			this.componentPool.createConfiguration("ClaimOnDelegate", "ClaimOnDelegate")
@@ -71,13 +71,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'power-down',
 					text: 'Power Down',
-					fillColor: "none",
+					fillColor: "#FF0000",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 
 			this.gameObjectPool.createConfiguration("SpeedDown", commonBundle.getGameObjectPoolId())
@@ -86,13 +86,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'speed-down',
 					text: 'Speed Down',
-					fillColor: "none",
+					fillColor: "#FF0000",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 
 			this.gameObjectPool.createConfiguration("HpDown", commonBundle.getGameObjectPoolId())
@@ -101,13 +101,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'hp-down',
 					text: 'Hp Down',
-					fillColor: "none",
+					fillColor: "#FF0000",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 
 			this.gameObjectPool.createConfiguration("PowerUp", commonBundle.getGameObjectPoolId())
@@ -116,13 +116,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'power-up',
 					text: 'Power Up!',
-					fillColor: "none",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 
 			this.gameObjectPool.createConfiguration("SpeedUp", commonBundle.getGameObjectPoolId())
@@ -131,13 +131,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'speed-up',
 					text: 'Speed Up!',
-					fillColor: "none",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 
 			this.gameObjectPool.createConfiguration("HpUp", commonBundle.getGameObjectPoolId())
@@ -146,13 +146,13 @@ define(function(require) {
 				.setRenderer("TextRenderer", {
 					name: 'hp-up',
 					text: 'Hp Up!',
-					fillColor: "none",
+					fillColor: "#ec751e",
 					strokeColor: "#FFFFFF",
 					font: 'Russo One',
 					padding: 3,
 					size: 20,
 					offset: 'center',
-					lineWidth: 0.5
+					lineWidth: 1
 				});
 		},
 	});

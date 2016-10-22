@@ -1,43 +1,43 @@
 define(["editor-game-object-container", "reclaimer"], function(GameObject, Reclaimer) {
-  var PowerUpItem = GameObject.extend({
-    init: function() {
-      this._super();
+	var PowerUpItem = GameObject.extend({
+		init: function() {
+			this._super();
 
-      this.powerUpType = '';
-      this.counter = 0;
-      this.startY = 0;
-    },
+			this.powerUpType = '';
+			this.counter = 0;
+			this.startY = 0;
+		},
 
-    editorStart: function() {
-      this.counter = 0;
-      this.startY = this.y;
-    },
+		editorStart: function() {
+			this.counter = 0;
+			this.startY = this.y;
+		},
 
-    editorUpdate: function(delta) {
-    	this.y = this.startY + Math.cos(this.counter/20) * 10;
-    	this.counter += 100 * delta;
-    },
+		editorUpdate: function(delta) {
+			this.y = this.startY + Math.cos(this.counter/20) * 10;
+			this.counter += 100 * delta;
+		},
 
-    onCollide: function(other) {
-    	switch (this.powerUpType) {
-    		case 'power-up':
-    			this.execute('pick-up');
-    			other.powerUp();
-    			break;
-    		case 'speed-up':
-    			this.execute('pick-up');
-    			other.speedUp();
-    			break;
-    		case 'health-up':
-    			this.execute('pick-up');
-    			other.healthUp();
-    			break;
-    	}
+		onCollide: function(other) {
+			switch (this.powerUpType) {
+				case 'power-up':
+					this.execute('pick-up');
+					other.powerUp();
+					break;
+				case 'speed-up':
+					this.execute('pick-up');
+					other.speedUp();
+					break;
+				case 'health-up':
+					this.execute('pick-up');
+					other.healthUp();
+					break;
+			}
 
-    	Reclaimer.mark(this);
-    }
-  });
+			Reclaimer.mark(this);
+		}
+	});
 
-  return PowerUpItem;
+	return PowerUpItem;
 });
 
