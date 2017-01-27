@@ -284,6 +284,8 @@ define(function(require) {
 					extension.onHide = function() {
 						$(loggerItem).find('.side-menu-icon').toggle();
 					};
+					
+					$(loggerItem).click();
 				}
 			});
 
