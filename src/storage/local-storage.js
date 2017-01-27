@@ -18,6 +18,14 @@ define(function(require) {
 				this.available = false;
 			}
 		},
+		
+		setDropboxToken: function(token) {
+			setItem.call(this, 'dropbox_token', token);
+		},
+		
+		getDropboxToken: function(key) {
+			return getItem.call(this, 'dropbox_token');
+		},
 
 		setScene: function (key, value) {
 			var data = compresor.compress(value);
@@ -105,52 +113,6 @@ define(function(require) {
 
 		isLevelComplete: function(key) {
 			return getItem.call(this, key + '-complete-flag') === 'true';
-		},
-
-		setRemoteId: function(name, id, remote) {
-			var data = name + "@@" + id;
-
-			setItem.call(this, data + "@@remote-id", remote);
-		},
-
-		getRemoteIdRemote: function(name, id) {
-			available.call(this);
-
-			var id = Object.keys(localStorage).filter(function(key) {
-				var regex = new RegExp(name + "@@" + id + "@@remote-id");
-
-				return key.search(regex) != -1;
-			});
-
-			return 'http://' + getItem.call(this, id[0]);
-		},
-
-		getRemoteIdNames: function() {
-			available.call(this);
-
-			return Object.keys(localStorage).filter(function(key) {
-				return key.search(/@@remote-id/) != -1;
-			}).map(function(key) {
-				var match = key.match(/(.+)@@(.+)@@remote-id/);
-
-				return match[1] + " => " + match[2];
-			});
-		},
-
-		removeRemoteId: function(name, id) {
-			var data = name + "@@" + id;
-
-			removeItem.call(this, data + "@@remote-id");
-		},
-
-		removeAllRemoteIds: function() {
-			var self = this;
-
-			return Object.keys(localStorage).filter(function(key) {
-				return key.search(/@@remote-id/) != -1;
-			}).forEach(function(key) {
-				removeItem.call(self, key);		
-			});
 		}
 	});
 
@@ -168,7 +130,9 @@ define(function(require) {
 
 			return true;
 		} catch (e) {
-			this.execute(this.STORAGE_LIMIT_REACHED, {
+			
+			// TODO: Este event tiene que ser contemplado cuando guardas escenas al local storage
+			this.execute(this.LOCAL_STORAGE_LIMIT_REACHED, {
 				key: key,
 				value: value
 			});

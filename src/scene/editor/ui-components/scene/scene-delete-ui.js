@@ -1,5 +1,6 @@
 define(function(require) {
 	var localStorageWrapper = require('local-storage');
+	var levelRequester = require('level-requester');
 	
 	var dialogTabbedModular = require('dialog-tabbed-modular');
 	
@@ -29,7 +30,7 @@ define(function(require) {
 								data: function() {
 									return localStorageWrapper.getAllScenes();
 								},
-								validations: [ 
+								validations: [
 									{
 										check: function() {
 											return this.LocalSceneSelector();
@@ -61,24 +62,84 @@ define(function(require) {
 						}
 					},
 					{
-						name: "Delete Remote",
+						name: "Delete Dropbox",
+
+						activate: function() {
+							var self = this;
+							var dialogOptions = $(self).dialog('option');
+
+							dialogOptions.showLoadingFeedback();
+
+							// Initial Request
+							levelRequester.list(
+								function (data) {
+									dialogOptions.enableField('Delete Dropbox', 'Dropbox Scene Selector');
+
+									var d = data.map(function (pair) {
+										return {
+											"displaytext": pair['name'].replace('.bin', ''),
+											"id": pair['path_lower']
+										}
+									});
+
+									dialogOptions.updateField('Delete Dropbox', 'Dropbox Scene Selector', d);
+									dialogOptions.hideLoadingFeedback();
+								},
+								function (error) {
+									dialogOptions.disableField('Delete Dropbox', 'Dropbox Scene Selector');
+									dialogOptions.showErrorFeedback('Error connecting to Dropbox.');
+									dialogOptions.hideLoadingFeedback();
+								}
+							);
+						},
 
 						fields: [
 							new dialogPagingField({
-								name: 'Remote Scene Selector',
+								name: 'Dropbox Scene Selector',
 								itemsPerPage: 10,
-								data: function() {
-									return localStorageWrapper.getRemoteIdNames().map(function(nameAndId) {
-										return {
-											"displaytext": nameAndId.match(/^(.*) => .*$/)[1], 
-											"id": nameAndId.match(/^.* => (.*)$/)[1]
+								
+								disabled: true,
+								next: function() {
+									var self = this.getDialog();
+									var dialogOptions = $(self).dialog('option');
+
+									dialogOptions.showLoadingFeedback();
+
+									levelRequester.listMore(
+										function (data) {
+											dialogOptions.enableField('Delete Dropbox', 'Dropbox Scene Selector');
+
+											if (data === false)
+											{
+												dialogOptions.updateField('Delete Dropbox', 'Dropbox Scene Selector', []);
+												dialogOptions.hideLoadingFeedback();
+											}
+											else
+											{
+												var d = data.map(function (pair) {
+													return {
+														"displaytext": pair['name'].replace('.bin', ''),
+														"id": pair['path_lower']
+													}
+												});
+												
+												dialogOptions.updateField('Delete Dropbox', 'Dropbox Scene Selector', d);
+												dialogOptions.hideLoadingFeedback();
+											}
+										},
+										function (error) {
+											dialogOptions.disableField('Delete Dropbox', 'Dropbox Scene Selector');
+											dialogOptions.updateField('Delete Dropbox', 'Dropbox Scene Selector', []);
+											dialogOptions.showErrorFeedback('Error getting more scenes.');
+											dialogOptions.hideLoadingFeedback();
 										}
-									});
+									);
 								},
-								validations: [ 
+								
+								validations: [
 									{
 										check: function() {
-											return this.RemoteSceneSelector();
+											return this.DropboxSceneSelector();
 										},
 										
 										tip: "No scene selected"
@@ -89,23 +150,39 @@ define(function(require) {
 
 						buttons: {
 							'Delete': function () {
-								var name = this.RemoteSceneSelector()["displaytext"];
-								var id = this.RemoteSceneSelector()["id"];
-								
-								localStorageWrapper.removeRemoteId(name, id);
+								var path = this.DropboxSceneSelector()["id"];
+								var self = this;
+								var dialogOptions = $(self).dialog('option');
 
-								$(this).dialog('close');
+								dialogOptions.showLoadingFeedback();
+								
+								levelRequester.deleteScene(path,
+								function() {
+									dialogOptions.hideLoadingFeedback();
+									$(self).dialog('close');
+								}, function() {
+									dialogOptions.hideLoadingFeedback();
+									dialogOptions.showErrorFeedback('Error deleting scene.');
+								});
 							},
 
 							'Delete All': function () {
-								localStorageWrapper.removeAllRemoteIds();
+								var self = this;
+								var dialogOptions = $(self).dialog('option');
 
-								$(this).dialog('close');								
+								dialogOptions.showLoadingFeedback();
+								
+								levelRequester.deleteAllScenes(function() {
+									$(self).dialog('close');
+								}, function() {
+									dialogOptions.hideLoadingFeedback();
+									dialogOptions.showErrorFeedback('Error deleting scenes.');
+								});
 							}
 						},
 
 						validateOnAction: {
-							'Delete': ['Remote Scene Selector'],
+							'Delete': ['Dropbox Scene Selector'],
 							'Delete All': []
 						}
 					}

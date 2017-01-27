@@ -174,7 +174,7 @@ define(function(require) {
 			for (var tab in fieldObjects) {
 				for (var field in fieldObjects[tab]) {
 					valueGetters[toMethodName(fieldObjects[tab][field].name())] = fieldObjects[tab][field].valueGetter();
-				}		
+				}
 			}
 
 			// Set the buttons of the first tab

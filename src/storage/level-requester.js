@@ -3,133 +3,42 @@ define(function(require) {
 	var levelCompressor = require('level-compressor');
 
 	var LevelRequester = function() {}
-
-	LevelRequester.prototype.pingRemote = function(remote) {
-		var isValid = false;
-
-		var x = new XMLHttpRequest();
-	    
-		x.onload = function (e) {
-			if (x.readyState === 4) {
-				if (x.status === 200) {
-					if (x.responseText === "spacemaze-scene-store-available") {
-						isValid = true;
-					} else {
-						isValid = false;
-					}
-				} else {
-					isValid = false;
-				}
-			}
-		};
-
-		x.onerror = function (e) {
-			isValid = false;
-		};
-
-		try {
-			x.open("GET", remote, false);
-			x.send();
-		} catch (e) {
-			return false;			
-		}
-
-		return isValid;
+	
+	LevelRequester.prototype.list = function(success, failure) {
+		require('db').list(function(results) {
+			success(JSON.parse(results)["entries"]);
+		}, failure);
 	};
-
-	LevelRequester.prototype.pingRemoteAsync = function(remote, success, failure) {
-		var x = new XMLHttpRequest();
-	    
-		x.onload = function (e) {
-			if (x.readyState === 4) {
-				if (x.status === 200) {
-					if (x.responseText === "spacemaze-scene-store-available") {
-						success();
-					} else {
-						failure();
-					}
-				} else {
-					failure();
-				}
+	
+	LevelRequester.prototype.listMore = function(success, failure) {
+		require('db').listMore(function(results) {
+			if (results) {
+				success(JSON.parse(results)["entries"]);
+			} else {
+				success(false);
 			}
-		};
-
-		x.onerror = function (e) {
-			failure();
-		};
-
-		try {
-			x.open("GET", remote, true);
-			x.send();
-		} catch (e) {
-			failure();			
-		}
-	};
-
-	LevelRequester.prototype.get = function(remote, success, failure) {
-		var x = new XMLHttpRequest();
-	    
-		x.onload = function (e) {
-			if (x.readyState === 4) {
-				if (x.status === 200) {
-					success(x.responseText);
-				} else {
-					failure();
-				}
-			}
-		};
-
-		x.onerror = function (e) {
-			failure();
-		};
-
-		try {
-			x.open("GET", remote, true);
-			x.send();
-		} catch (e) {
-			failure();				
-		}
-	};
-
-	LevelRequester.prototype.getLevel = function(remote, success, failure) {
-		this.get(remote, function (data) {
-			success(levelCompressor.decompress(data))
 		}, failure);
 	};
 
-	LevelRequester.prototype.post = function(levelJson, remote, success, failure) {
+	LevelRequester.prototype.getScene = function(id, success, failure) {
+		require('db').download(id, function(data) {
+			success(levelCompressor.decompress(data));
+		}, failure);
+	};
+	
+	LevelRequester.prototype.deleteScene = function(id, success, failure) {
+		require('db').delete(id, success, failure);
+	};
+	
+	LevelRequester.prototype.deleteAllScenes = function(success, failure) {
+		require('db').delete("/scenes", success, failure);
+	};
+	
+	LevelRequester.prototype.post = function(levelJson, success, failure) {
 		var compressedLevel = levelCompressor.compress(levelJson);
-
-		var x = new XMLHttpRequest();
-	    
-		x.onload = function (e) {
-			if (x.readyState === 4) {
-				if (x.status === 200) {
-					success(x.responseText);
-				} else {
-					failure();
-				}
-			}
-		};
-
-		x.onerror = function (e) {
-			failure();
-		};
-
-		var boundary = "---------" + (parseInt(Math.random() * 100000000)).toString();
-
-		var body  = "--" + boundary + '\r\n' + 
-		'Content-Disposition: form-data; name="data"' + '"\r\n\r\n' + 
-		compressedLevel + '\r\n' +
-		'--' + boundary + '--';
-
-		try {
-			x.open("POST", remote, true);
-			x.setRequestHeader("Content-Type", "multipart\/form-data; boundary=" + boundary);
-			x.send(body);
-		} catch (e) {
-			failure();				
-		}
+		var levelJsonObject = JSON.parse(levelJson);
+		
+		require('db').upload(levelJsonObject["name"], compressedLevel, success, failure);
 	};
 
 	return new LevelRequester();

@@ -154,9 +154,9 @@ define(function(require) {
 			$(aNext).on("click", function() {
 				this.page++;
 
-				if (this.unknownPageLimit()) {	
+				if (this.unknownPageLimit()) {
 					if (this.cachedPages.indexOf(this.page) === -1) {
-						this.options.next.call(this);	
+						this.options.next.call(this);
 					} else {
 						this.update();
 					}
@@ -164,7 +164,7 @@ define(function(require) {
 					if (this.page > this.pages()-1) {
 						this.page = this.pages()-1;
 					} else {
-						this.update();	
+						this.update();
 					}
 				}
 			}.bind(this));
@@ -208,7 +208,18 @@ define(function(require) {
 					
 					if (data.length > 0) {
 						if (this.cachedPages.indexOf(this.page) === -1) {
-							this.cachedData = this.cachedData.concat(data);
+							
+							var p = this.page;
+							
+							for (var i = 0; i < data.length; i++) {
+								this.cachedData.push(data[i]);
+								
+								if (this.cachedData.length % this.itemsPerPage() === 0) {
+									p++;
+									this.cachedPages.push(p);
+								}
+							}
+							
 							this.cachedPages.push(this.page);
 						}
 					}
@@ -258,7 +269,7 @@ define(function(require) {
 						input.attr("hasAttributes", true);
 
 						for (var k in d) {
-							input.attr(k, d[k]);							
+							input.attr(k, d[k]);
 						}
 					}
 

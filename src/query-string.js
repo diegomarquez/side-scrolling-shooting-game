@@ -52,37 +52,27 @@ define(function(require) {
 				return;
 			}
 
-			var sceneMatch = window.location.search.match(/[?&]?url=(.*?)@(.*?)$/);
+			var sceneMatch = window.location.search.match(/[?&]?scene=(.*?)@(.*?)$/);
 
 			if (!sceneMatch) {
 				failure();
 				return;
 			}
-
-			var id = sceneMatch[1];
-			var remote = sceneMatch[2];
-
-			if (!id) {
-				failure();
-				return;
-			}
-
-			if (!remote) {
-				failure();
-				return;
-			}
-
-			var remoteBaseUrl = remote;
 			
-			if (remote.search(/^http:\/\//) === -1) {
-				remoteBaseUrl = 'http://' + remote;
-			}
+			throw new Error("Should get the scene directly from the query string")
 
-			var remoteDataUrl = remoteBaseUrl + '/data/' + id;
-
-			levelRequester.pingRemoteAsync(remoteBaseUrl, function() {
-				levelRequester.getLevel(remoteDataUrl, success, failure);
-			}, failure);
+			// var id = sceneMatch[1];
+			// var remote = sceneMatch[2];
+			// 
+			// if (!id) {
+			// 	failure();
+			// 	return;
+			// }
+			// 
+			// if (!remote) {
+			// 	failure();
+			// 	return;
+			// }
 		}
 	}
 });

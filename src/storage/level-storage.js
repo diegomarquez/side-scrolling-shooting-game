@@ -55,7 +55,7 @@ define(function(require) {
 			for (var i = 0; i < levels.length; i++) {
 				var name = levels[i].name();
 
-				if (!localStorageWrapper.isLevelComplete(name)) {		
+				if (!localStorageWrapper.isLevelComplete(name)) {
 					return levels[i].get(); 
 				}
 			}
@@ -69,7 +69,7 @@ define(function(require) {
 			for (var i = 0; i < levels.length; i++) {
 				var name = levels[i].name();
 
-				if (!localStorageWrapper.isLevelComplete(name)) {		
+				if (!localStorageWrapper.isLevelComplete(name)) {
 					return i; 
 				}
 			}
