@@ -38,7 +38,22 @@ define(function(require) {
 		var compressedLevel = levelCompressor.compress(levelJson);
 		var levelJsonObject = JSON.parse(levelJson);
 		
-		require('db').upload(levelJsonObject["name"], compressedLevel, success, failure);
+		require('db').upload("scenes", levelJsonObject["name"], compressedLevel, success, failure);
+	};
+	
+	LevelRequester.prototype.postToFacebook = function(levelJson, success, failure) {
+		var compressedLevel = levelCompressor.compress(levelJson);
+		var levelJsonObject = JSON.parse(levelJson);
+		
+		var db = require('db');
+		var sceneName = levelJsonObject["name"];
+		
+		db.upload("facebook shares", sceneName, compressedLevel,
+		function() {
+			db.getLink("facebook shares/" + sceneName + ".bin", function(response) {
+				success(JSON.parse(response)["url"]);
+			}, failure);
+		}, failure);
 	};
 
 	return new LevelRequester();

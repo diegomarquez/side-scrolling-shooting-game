@@ -130,6 +130,9 @@ define(function(require) {
 
 		if (localStorageWrapper.setScene(name, serializedScene)) {
 			$(this).dialog('close');
+			
+			require('gb').game.get_extension(require('logger')).success('Scene saved to local storage successfully!');
+			require('gb').game.get_extension(require('logger')).show();
 		} else {
 			dialogOptions.showErrorFeedback('No more space in local storage.');
 		}
@@ -158,6 +161,9 @@ define(function(require) {
 			function (successResult) {
 				dialogOptions.hideLoadingFeedback();
 				$(self).dialog('close');
+				
+				require('gb').game.get_extension(require('logger')).success('Scene saved to Dropbox successfully!');
+				require('gb').game.get_extension(require('logger')).show();
 			},
 			function (failureResult) {
 				dialogOptions.hideLoadingFeedback();
@@ -167,32 +173,60 @@ define(function(require) {
 		sceneName.set(name);
 	}
 	
-	// TODO: Create a URL with the scene in the query string to avoid having to store the shared scene
-	// ===============================================================================================
-	// ===============================================================================================
+	SceneSave.serializeAndStoreLocal = function(onComplete, onError) {
+		var hasScene = localStorageWrapper.getScene(sceneName.get());
+		var d = new Date();
+		
+		var name = "";
+		
+		if (hasScene) {
+			name = sceneName.get() + " " + d.toLocaleString();
+		} else {
+			name = sceneName.get();
+		}
+		
+		serializedScene = sceneSerializer.serialize(name);
+		
+		if (serializedScene === false) {
+			onError();
+			return;
+		}
+
+		if (localStorageWrapper.setScene(name, serializedScene)) {
+			require('gb').game.get_extension(require('logger')).success('Scene saved to local storage successfully!');
+			require('gb').game.get_extension(require('logger')).show();
+			
+			onComplete();
+		} else {
+			onError();
+		}
+	}
 	
-	// SceneSave.serializeAndStoreRemoteShare = function(onComplete, onError) {
-	// 	var self = this;
-	// 
-	// 	var serializedScene = sceneSerializer.serialize("!@<share>@!");
-	// 
-	// 	if (serializedScene === false) {
-	// 		onError();
-	// 		return;
-	// 	}
-	// 
-	// 	levelRequester.post(serializedScene, getRemoteUrl() + '/add',
-	// 		function (successResult) {
-	// 			$(self).dialog('close');
-	// 
-	// 			var response = JSON.parse(successResult);
-	// 
-	// 			onComplete(response.name, response.id, response.remote);
-	// 		},
-	// 		function (failureResult) {
-	// 			onError();
-	// 		});
-	// }
+	SceneSave.serializeAndStoreRemoteShare = function(onComplete, onError) {
+		var self = this;
+		var dialogOptions = $(self).dialog('option');
+
+		dialogOptions.showLoadingFeedback();
+	
+		var serializedScene = sceneSerializer.serialize(sceneName.get());
+	
+		if (serializedScene === false) {
+			onError();
+			return;
+		}
+	
+		levelRequester.postToFacebook(serializedScene,
+			function (successResult) {
+				dialogOptions.hideLoadingFeedback();
+				$(self).dialog('close');
+				
+				onComplete(successResult);
+			},
+			function (failureResult) {
+				dialogOptions.hideLoadingFeedback();
+				onError();
+			});
+	}
 
 	return SceneSave;
 });

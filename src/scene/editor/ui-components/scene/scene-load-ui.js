@@ -63,6 +63,9 @@ define(function(require) {
 									
 									dialogOptions.hideLoadingFeedback();
 									$(this).dialog('close');
+									
+									require('gb').game.get_extension(require('logger')).success('Local scene loaded successfully!');
+									require('gb').game.get_extension(require('logger')).show();
 								} catch (e) {
 									// Restore the initial scene and show error feedback
 									sceneLoader.load(localStorageWrapper.getBackUpScene());
@@ -183,6 +186,9 @@ define(function(require) {
 											
 											dialogOptions.hideLoadingFeedback();
 											$(self).dialog('close');
+											
+											require('gb').game.get_extension(require('logger')).success('Dropbox scene loaded successfully!');
+											require('gb').game.get_extension(require('logger')).show();
 										} catch (e) {
 											// Restore the initial scene and show error feedback
 											sceneLoader.load(localStorageWrapper.getBackUpScene());
@@ -242,6 +248,9 @@ define(function(require) {
 									
 									dialogOptions.hideLoadingFeedback();
 									$(this).dialog('close');
+									
+									require('gb').game.get_extension(require('logger')).success('Built-in scene loaded successfully!');
+									require('gb').game.get_extension(require('logger')).show();
 								} catch (e) {
 									// Restore the initial scene and show error feedback
 									sceneLoader.load(localStorageWrapper.getBackUpScene());

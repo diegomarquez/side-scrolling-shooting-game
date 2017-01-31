@@ -192,11 +192,44 @@ define(function(require) {
 				'New',
 				'glyphicon-file',
 				function() {
-					require('scene-name').set('Untitled');
-					gb.reclaimer.clearAllObjectsFromPools().now();
-					// Re-Create editor specific game objects
-					require('editor-setup').setupGameObjects();
-					$('#remove-toggle-button input').bootstrapToggle('off');
+					
+					var dialog = new messageDialog();
+					
+					dialog.create({
+						title: "Save Current Scene?",
+						message: "If you choose to, the current scene will be saved to local storage. Otherwise it will be discarded.",
+						modal: true,
+						buttons: {
+							"Save": function() {
+								sceneSaveDialog.serializeAndStoreLocal(
+								function() {
+									require('scene-name').set('Untitled');
+									gb.reclaimer.clearAllObjectsFromPools().now();
+									// Re-Create editor specific game objects
+									require('editor-setup').setupGameObjects();
+									$('#remove-toggle-button input').bootstrapToggle('off');
+									
+									dialog.destroy();
+								}, function() {
+									
+									require('gb').game.get_extension(require('logger')).error('Failed to save the current scene.');
+									require('gb').game.get_extension(require('logger')).show();
+									
+									dialog.destroy();
+								});
+							},
+							
+							"Don't Save": function() {
+								require('scene-name').set('Untitled');
+								gb.reclaimer.clearAllObjectsFromPools().now();
+								// Re-Create editor specific game objects
+								require('editor-setup').setupGameObjects();
+								$('#remove-toggle-button input').bootstrapToggle('off');
+								
+								dialog.destroy();
+							}
+						}
+					});
 				}
 			));
 
@@ -237,7 +270,9 @@ define(function(require) {
 					function() {
 						document.body.removeChild(blocker);
 
-						var dialog = (new messageDialog()).create({
+						var dialog = new messageDialog();
+
+						dialog.create({
 							title: "Share Failed",
 							message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
 							modal: true,

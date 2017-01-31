@@ -47,32 +47,36 @@ define(function(require) {
 		},
 
 		hasScene: function(success, failure) {
+			// TODO: This needs to be updated
+			
 			if (!window.location.search) {
 				failure();
 				return;
 			}
-
-			var sceneMatch = window.location.search.match(/[?&]?scene=(.*?)@(.*?)$/);
-
+			 
+			var sceneMatch = window.location.search.match(/[?&]?url=(.*?)/);
+			 
 			if (!sceneMatch) {
 				failure();
 				return;
 			}
 			
-			throw new Error("Should get the scene directly from the query string")
-
-			// var id = sceneMatch[1];
-			// var remote = sceneMatch[2];
-			// 
-			// if (!id) {
-			// 	failure();
-			// 	return;
-			// }
-			// 
-			// if (!remote) {
-			// 	failure();
-			// 	return;
-			// }
+			var url = sceneMatch[1];
+			
+			if (!url) {
+				failure();
+				return;
+			}
+			
+			var decodedUrl = decodeURIComponent(url);
+			
+			// TODO: Request the scene to dropbox
+			
+			failure();
+			
+			// levelRequester.pingRemoteAsync(remoteBaseUrl, function() {
+			// 	levelRequester.getLevel(remoteDataUrl, success, failure);
+			// }, failure);
 		}
 	}
 });

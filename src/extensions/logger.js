@@ -90,7 +90,7 @@ define(function(require) {
 
 				if (callbacks)
 					self.onHide();
-			}		
+			}
 		},
 
 		success: function(message) {

@@ -33,8 +33,8 @@ define(function(require)
 				window.fbAsyncInit = function() {
 					init("1910504332510208");
 
-					var onSuccess = function(sceneName, scenId, sceneRemoteUrl) {
-						share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete);
+					var onSuccess = function(sceneRemoteUrl) {
+						share('http://www.treintipollo.com/space-maze/' + encodeURIComponent(sceneRemoteUrl), onComplete);
 
 						self.initialized = true;
 					};
@@ -48,8 +48,8 @@ define(function(require)
 			}
 
 			if (this.initialized) {
-				var onSuccess = function(sceneName, scenId, sceneRemoteUrl) {
-					share('http://www.treintipollo.com/space-maze/' + sceneRemoteUrl + '/' + scenId, onComplete);
+				var onSuccess = function(sceneRemoteUrl) {node 
+					share('http://www.treintipollo.com/space-maze/' + encodeURIComponent(sceneRemoteUrl), onComplete);
 				};
 
 				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);

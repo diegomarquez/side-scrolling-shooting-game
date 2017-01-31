@@ -47,12 +47,18 @@ define(function(require) {
 								localStorageWrapper.removeScene(this.LocalSceneSelector());
 
 								$(this).dialog('close');
+								
+								require('gb').game.get_extension(require('logger')).info('Local scene deleted.');
+								require('gb').game.get_extension(require('logger')).show();
 							},
 
 							'Delete All': function () {
 								localStorageWrapper.clearScenes();
 
 								$(this).dialog('close');
+								
+								require('gb').game.get_extension(require('logger')).info('All Locals scenes deleted.');
+								require('gb').game.get_extension(require('logger')).show();
 							}
 						},
 
@@ -160,6 +166,9 @@ define(function(require) {
 								function() {
 									dialogOptions.hideLoadingFeedback();
 									$(self).dialog('close');
+									
+									require('gb').game.get_extension(require('logger')).info('Dropbox scene deleted.');
+									require('gb').game.get_extension(require('logger')).show();
 								}, function() {
 									dialogOptions.hideLoadingFeedback();
 									dialogOptions.showErrorFeedback('Error deleting scene.');
@@ -174,6 +183,8 @@ define(function(require) {
 								
 								levelRequester.deleteAllScenes(function() {
 									$(self).dialog('close');
+									require('gb').game.get_extension(require('logger')).info('All Dropbox scenes deleted.');
+									require('gb').game.get_extension(require('logger')).show();
 								}, function() {
 									dialogOptions.hideLoadingFeedback();
 									dialogOptions.showErrorFeedback('Error deleting scenes.');

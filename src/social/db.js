@@ -25,7 +25,7 @@ define(function(require)
 		}
 	}
 	
-	Dropbox.prototype.upload = function(name, content, onSuccess, onError) {
+	Dropbox.prototype.upload = function(folder, name, content, onSuccess, onError) {
 		this.auth(function() {
 			var token = require('local-storage').getDropboxToken();
 			
@@ -37,7 +37,7 @@ define(function(require)
 				},
 				'method': "POST",
 				'data': extraSafeJSONEncode({
-					'path': '/scenes',
+					'path': '/' + folder,
 					'autorename': false
 				})
 			}, function(response) {
@@ -48,7 +48,7 @@ define(function(require)
 						"Content-Type": 'application/octet-stream',
 						"Dropbox-API-Arg": extraSafeJSONEncode({
 							"autorename": true,
-							"path": "/scenes/" + name + ".bin"
+							"path": "/" + folder + "/" + name + ".bin"
 						})
 					},
 					'method': "POST",
@@ -71,7 +71,7 @@ define(function(require)
 							"Content-Type": 'application/octet-stream',
 							"Dropbox-API-Arg": extraSafeJSONEncode({
 								"autorename": true,
-								"path": "/scenes/" + name + ".bin"
+								"path": "/" + folder + "/" + name + ".bin"
 							})
 						},
 						'method': "POST",
@@ -88,6 +88,30 @@ define(function(require)
 					console.log(response);
 					onError();
 				}
+			});
+		}, onError);
+	}
+	
+	Dropbox.prototype.getLink = function(path, onSuccess, onError) {
+		this.auth(function() {
+			var token = require('local-storage').getDropboxToken();
+			
+			request({
+				'url': 'https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings',
+				'headers': {
+					"Authorization": "Bearer " + token,
+					"Content-Type": "application/json",
+				},
+				'method': "POST",
+				"data": extraSafeJSONEncode({
+					"path": "/" + path
+				})
+			}, function(response) {
+				onSuccess(response);
+			}, function(response) {
+				console.log(response);
+				
+				onError();
 			});
 		}, onError);
 	}
