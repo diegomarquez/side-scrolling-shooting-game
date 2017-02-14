@@ -16,7 +16,7 @@ define(function(require)
 					init("678625568980303");
 					
 					var onSuccess = function(sceneRemoteUrl) {
-						share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+						share('http://www.treintipollo.com/spacemaze/fb/share?dbid=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 
 						self.initialized = true;
 					};
@@ -31,7 +31,7 @@ define(function(require)
 
 			if (this.initialized) {
 				var onSuccess = function(sceneRemoteUrl) {
-					share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+					share('http://www.treintipollo.com/spacemaze/fb/share?dbid=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 				};
 
 				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
@@ -43,7 +43,7 @@ define(function(require)
 					init("1910504332510208");
 
 					var onSuccess = function(sceneRemoteUrl) {
-						share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+						share('http://www.treintipollo.com/spacemaze/fb/share?dbid=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 
 						self.initialized = true;
 					};
@@ -58,7 +58,7 @@ define(function(require)
 
 			if (this.initialized) {
 				var onSuccess = function(sceneRemoteUrl) {
-					share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+					share('http://www.treintipollo.com/spacemaze/fb/share?dbid=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 				};
 
 				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
