@@ -51,7 +51,11 @@ define(function(require) {
 		db.upload("facebook shares", sceneName, compressedLevel,
 		function() {
 			db.getLink("facebook shares/" + sceneName + ".bin", function(response) {
-				success(JSON.parse(response)["url"]);
+				if (typeof response === "string") {
+					success(JSON.parse(response)["id"]);
+				} else {
+					success(response["id"]);
+				}
 			}, failure);
 		}, failure);
 	};

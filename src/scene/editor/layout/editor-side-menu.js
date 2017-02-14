@@ -263,25 +263,38 @@ define(function(require) {
 
 					document.body.appendChild(blocker);
 
-					require('fb').share(
-					function() {
-						document.body.removeChild(blocker);
-					},
-					function() {
-						document.body.removeChild(blocker);
+					var dialog = new messageDialog();
 
-						var dialog = new messageDialog();
-
-						dialog.create({
-							title: "Share Failed",
-							message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
-							modal: true,
-							buttons: {
-								Ok: function() {
-									dialog.destroy();
-								}
+					dialog.create({
+						title: "Upload to Dropbox required",
+						message: "In order to share a scene it must first be uploaded to Dropbox. If you have an account you will be prompted to login. If you don't have an account you will need to create one first.",
+						modal: true,
+						buttons: {
+							Ok: function() {
+								dialog.destroy();
+								
+								require('fb').share(
+								function() {
+									document.body.removeChild(blocker);
+								},
+								function() {
+									document.body.removeChild(blocker);
+									
+									var dialog = new messageDialog();
+									
+									dialog.create({
+										title: "Share Failed",
+										message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+										modal: true,
+										buttons: {
+											Ok: function() {
+												dialog.destroy();
+											}
+										}
+									});
+								});
 							}
-						});
+						}
 					});
 				},
 				'fa fa-lg'

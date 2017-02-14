@@ -14,27 +14,9 @@ define(function(require)
 			if (!this.initialized) {
 				window.fbAsyncInit = function() {
 					init("678625568980303");
-					share('http://www.treintipollo.com');
-
-					self.initialized = true;
-				};
-
-				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
-
-				return;
-			}
-
-			if (this.initialized) {
-				share('http://www.treintipollo.com');
-			}
-
-		} else {
-			if (!this.initialized) {
-				window.fbAsyncInit = function() {
-					init("1910504332510208");
-
+					
 					var onSuccess = function(sceneRemoteUrl) {
-						share('http://www.treintipollo.com/space-maze/' + encodeURIComponent(sceneRemoteUrl), onComplete);
+						share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 
 						self.initialized = true;
 					};
@@ -48,8 +30,35 @@ define(function(require)
 			}
 
 			if (this.initialized) {
-				var onSuccess = function(sceneRemoteUrl) {node 
-					share('http://www.treintipollo.com/space-maze/' + encodeURIComponent(sceneRemoteUrl), onComplete);
+				var onSuccess = function(sceneRemoteUrl) {
+					share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+				};
+
+				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
+			}
+
+		} else {
+			if (!this.initialized) {
+				window.fbAsyncInit = function() {
+					init("1910504332510208");
+
+					var onSuccess = function(sceneRemoteUrl) {
+						share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
+
+						self.initialized = true;
+					};
+
+					sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
+				};
+
+				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
+
+				return;
+			}
+
+			if (this.initialized) {
+				var onSuccess = function(sceneRemoteUrl) {
+					share('http://www.treintipollo.com/spacemaze/index.html?url=' + encodeURIComponent(sceneRemoteUrl), onComplete);
 				};
 
 				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);

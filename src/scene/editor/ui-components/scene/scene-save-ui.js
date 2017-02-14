@@ -203,11 +203,6 @@ define(function(require) {
 	}
 	
 	SceneSave.serializeAndStoreRemoteShare = function(onComplete, onError) {
-		var self = this;
-		var dialogOptions = $(self).dialog('option');
-
-		dialogOptions.showLoadingFeedback();
-	
 		var serializedScene = sceneSerializer.serialize(sceneName.get());
 	
 		if (serializedScene === false) {
@@ -217,13 +212,9 @@ define(function(require) {
 	
 		levelRequester.postToFacebook(serializedScene,
 			function (successResult) {
-				dialogOptions.hideLoadingFeedback();
-				$(self).dialog('close');
-				
 				onComplete(successResult);
 			},
 			function (failureResult) {
-				dialogOptions.hideLoadingFeedback();
 				onError();
 			});
 	}

@@ -3,8 +3,7 @@ define(function(require)
 	var clientId = '03e66s4e6ka9n6i';
 	var authUri = 'https://www.dropbox.com/oauth2/authorize';
 	var checkTokenUri = 'https://api.dropboxapi.com/2/users/get_current_account';
-	// This should change depending on the environment
-	var redirectUri = 'http://localhost:5000';
+	var redirectUri = require('gb').getEnvironment() === 'dev' ? 'http://localhost:5000' : 'https://www.treintipollo.com';
 
 	var moreEntries = false;
 	var cursor = "";
@@ -80,11 +79,9 @@ define(function(require)
 						onSuccess(response);
 					}, function(response) {
 						console.log(response);
-						
 						onError();
 					});
 				} else {
-					
 					console.log(response);
 					onError();
 				}
@@ -109,9 +106,30 @@ define(function(require)
 			}, function(response) {
 				onSuccess(response);
 			}, function(response) {
-				console.log(response);
+				var error = JSON.parse(response.response)["error_summary"];
 				
-				onError();
+				if (error.match("shared_link_already_exists")) {
+					request({
+						'url': 'https://api.dropboxapi.com/2/sharing/list_shared_links',
+						'headers': {
+							"Authorization": "Bearer " + token,
+							"Content-Type": "application/json",
+						},
+						'method': "POST",
+						"data": extraSafeJSONEncode({
+							"path": "/" + path
+						})
+					}, function(response) {
+						onSuccess(JSON.parse(response)["links"][0]);
+					}, function(response) {
+						console.log(response);
+						
+						onError();
+					});
+				}
+				else {
+					onError();
+				}
 			});
 		}, onError);
 	}
@@ -261,7 +279,7 @@ function getToken(clientId, redirectUri, authUri, onSuccess, onError) {
 	
 	if (!CHILD)
 		onError();
-		
+	
 	var POLL = function() {
 		var QS;
 		var TOKEN;
@@ -271,8 +289,12 @@ function getToken(clientId, redirectUri, authUri, onSuccess, onError) {
 			URL = CHILD.location.href;
 			
 			if (!URL)
+			{
 				onError();
 				
+				return;
+			}
+			
 			if (URL.indexOf(redirectUri) === 0) {
 				QS = URL.slice(redirectUri.length).replace('#', '').replace('?', ''); // removes the querystring and anchor separator
 				TOKEN = urlDecode(QS);
