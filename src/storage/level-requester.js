@@ -49,8 +49,8 @@ define(function(require) {
 		var sceneName = levelJsonObject["name"];
 		
 		db.upload("facebook shares", sceneName, compressedLevel,
-		function() {
-			db.getLink("facebook shares/" + sceneName + ".bin", function(response) {
+		function(response) {
+			db.getLink("facebook shares/" + JSON.parse(response)["name"], function(response) {
 				if (typeof response === "string") {
 					success(JSON.parse(response)["id"]);
 				} else {

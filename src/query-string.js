@@ -52,7 +52,7 @@ define(function(require) {
 				return;
 			}
 			 
-			var sceneMatch = window.location.search.match(/[?&]?dbid=(.*?)/);
+			var sceneMatch = window.location.search.match(/[?&]?dbid=(.*?)$/);
 			 
 			if (!sceneMatch) {
 				failure();
