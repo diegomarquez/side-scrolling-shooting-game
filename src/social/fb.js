@@ -1,109 +1,64 @@
 define(function(require)
 {
 	var gb = require('gb');
-	var sceneSaveUI = require('scene-save-ui');
-
+	
 	var Facebook = function() {
 		this.initialized = false;
 	};
 
-	Facebook.prototype.share = function(onComplete, onError) {
+	Facebook.prototype.load = function(oncomplete, onerror) {
 		var self = this;
-
-		if (gb.getEnvironment() === 'dev') {
-			if (!this.initialized) {
-				window.fbAsyncInit = function() {
-					init("678625568980303");
-					
-					var onSuccess = function(sceneRemoteUrl) {
-						share('https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(sceneRemoteUrl), onComplete);
-
-						self.initialized = true;
-					};
-
-					sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
-				};
-
-				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
-
-				return;
-			}
-
-			if (this.initialized) {
-				var onSuccess = function(sceneRemoteUrl) {
-					share('https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(sceneRemoteUrl), onComplete);
-				};
-
-				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
-			}
-
+		
+		if (this.initialized) {
+			oncomplete();
 		} else {
-			if (!this.initialized) {
-				window.fbAsyncInit = function() {
-					init("1910504332510208");
+			window.fbAsyncInit = function() {
+				
+				FB.init({
+					appId: gb.getEnvironment() === 'dev' ? '678625568980303' : '1910504332510208',
+					version : 'v2.8'
+				});
+				
+				self.initialized = true;
 
-					var onSuccess = function(sceneRemoteUrl) {
-						share('https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(sceneRemoteUrl), onComplete);
+				oncomplete();
+			};
 
-						self.initialized = true;
-					};
-
-					sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
-				};
-
-				loadFacebookSdk(document, 'script', 'facebook-jssdk', onError);
-
+			var js, fjs = document.getElementsByTagName('script')[0];
+	
+			if (document.getElementById('facebook-jssdk')) {
 				return;
 			}
-
-			if (this.initialized) {
-				var onSuccess = function(sceneRemoteUrl) {
-					share('https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(sceneRemoteUrl), onComplete);
-				};
-
-				sceneSaveUI.serializeAndStoreRemoteShare(onSuccess, onError);
+	
+			js = document.createElement('script');
+	
+			js.onerror = function() {
+				onerror();
+			}
+	
+			js.id = 'facebook-jssdk';
+			js.src = '//connect.facebook.net/en_US/sdk.js';
+	
+			if (fjs) {
+				fjs.parentNode.insertBefore(js, fjs);
+			} else {
+				document.body.appendChild(js);
 			}
 		}
 	}
 
-	var init = function(appId) {
-		FB.init({
-			appId: appId,
-			version : "v2.8"
-		});
-	}
-
-	var share = function(url, oncomplete) {
+	Facebook.prototype.share = function(dropboxFileId, oncomplete, onerror) {
 		FB.ui({
 			method: 'share',
-			href: url
+			href: 'https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxFileId)
 		},
-		function() {
-			oncomplete();
+		function(response) {
+			if (response && !response.error_code) {
+				oncomplete();
+			} else {
+				onerror();
+			}
 		});
-	}
-
-	var loadFacebookSdk = function(d, s, id, onerror) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-
-		if (d.getElementById(id)) {
-			return;
-		}
-
-		js = d.createElement(s);
-
-		js.onerror = function() {
-			onerror();
-		}
-
-		js.id = id;
-		js.src = "//connect.facebook.net/en_US/sdk.js";
-
-		if (fjs) {
-			fjs.parentNode.insertBefore(js, fjs);
-		} else {
-			d.body.appendChild(js);
-		}
 	}
 
 	return new Facebook();

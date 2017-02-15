@@ -94,7 +94,7 @@ define(function(require) {
 				});	
 			});
 
-			options.close = function() {          
+			options.close = function() {
 				var title = $(arguments[0].currentTarget).attr('title');
 
 				$.each(options.tabs, function(index, tab) {
@@ -103,8 +103,8 @@ define(function(require) {
 					$.each(tab.fields, function(index, field) {
 						if (options.resetOnClose) {
 							if (title == 'Close') {
-								field.reset();    
-							} 
+								field.reset();
+							}
 						} else {
 							field.reset();
 						}

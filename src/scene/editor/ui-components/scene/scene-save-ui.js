@@ -215,7 +215,7 @@ define(function(require) {
 				onComplete(successResult);
 			},
 			function (failureResult) {
-				onError();
+				onError(failureResult);
 			});
 	}
 

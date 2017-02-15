@@ -277,8 +277,8 @@ function getToken(clientId, redirectUri, authUri, onSuccess, onError) {
 		'redirect_uri': redirectUri
 	}), windowName, windowFeatures);
 	
-	if (!CHILD)
-		onError();
+	if(!CHILD || CHILD.closed || typeof CHILD.closed === 'undefined')
+		return onError("popup-blocked");
 	
 	var POLL = function() {
 		var QS;
@@ -289,11 +289,11 @@ function getToken(clientId, redirectUri, authUri, onSuccess, onError) {
 			URL = CHILD.location.href;
 			
 			if (!URL)
-			{
-				onError();
-				
-				return;
-			}
+				return onError();
+			
+			// TODO: Detect if popup window was closed by the user
+			// listenr to the unload event, and if a flag set in the block below is not true
+			// then it means the popup was closed by other means, most likely a user action
 			
 			if (URL.indexOf(redirectUri) === 0) {
 				QS = URL.slice(redirectUri.length).replace('#', '').replace('?', ''); // removes the querystring and anchor separator
