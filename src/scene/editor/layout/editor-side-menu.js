@@ -305,8 +305,13 @@ define(function(require) {
 															require('gb').game.get_extension(require('logger')).show();
 														},
 														function(error) {
+															if (error === "user-closed") {
+																document.body.removeChild(blocker);
+																return;
+															}
+															
 															var failureDialog = new messageDialog();
-										
+															
 															failureDialog.create({
 																title: "Share Failed",
 																message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
@@ -333,9 +338,14 @@ define(function(require) {
 												}
 											});
 										},
-										function() {
+										function(error) {
+											if (error === "user-closed") {
+												document.body.removeChild(blocker);
+												return;
+											}
+											
 											var failureDialog = new messageDialog();
-								
+											
 											failureDialog.create({
 												title: "Share Failed",
 												message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
@@ -363,7 +373,12 @@ define(function(require) {
 							}
 						});
 					},
-					function() {
+					function(error) {
+						if (error === "user-closed") {
+							document.body.removeChild(blocker);
+							return;
+						}
+						
 						var failureDialog = new messageDialog();
 			
 						failureDialog.create({

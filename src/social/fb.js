@@ -53,8 +53,12 @@ define(function(require)
 			href: 'https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxFileId)
 		},
 		function(response) {
-			if (response && !response.error_code) {
+			if (response === undefined) {
+				onerror("user-closed");
+			} else if (response && !response.error_code) {
 				oncomplete();
+			} else if (response && response.error_code) {
+				onerror();
 			} else {
 				onerror();
 			}
