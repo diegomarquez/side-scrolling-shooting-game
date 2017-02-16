@@ -61,7 +61,7 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 						if (this.startingPositionTransformation) {
 							for (var j = 0; j < this.startingPositionTransformation.length; j++) {
 								this.startingPositionTransformation[j].call(this, args);
-							}	
+							}
 						}
 
 						if (Util.isArray(this.objectType)) {
@@ -70,10 +70,7 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 							this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
 
 						} else {
-							if (this.typeId === "Boss_1_Destroy_Particle_1_Generator")
-								debugger;
-
-							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
+							this.gb.create(this.objectType, this.updateGroup, this.viewports, args);
 						}
 
 						this.currentSprayCount++;
@@ -105,9 +102,6 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 								this.gb.create(this.objectType[index], this.updateGroup, this.viewports, args);
 
 							} else {
-								if (this.typeId === "Boss_1_Destroy_Particle_1_Generator")
-									debugger;
-
 								this.gb.create(this.objectType, this.updateGroup, this.viewports, args);	
 							}
 
