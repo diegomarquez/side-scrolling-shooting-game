@@ -34,6 +34,10 @@ define(function(require) {
 		require('db').delete("/scenes", success, failure);
 	};
 	
+	LevelRequester.prototype.deleteAllSharedScenes = function(success, failure) {
+		require('db').delete("/facebook shares", success, failure);
+	};
+	
 	LevelRequester.prototype.post = function(levelJson, success, failure) {
 		var compressedLevel = levelCompressor.compress(levelJson);
 		var levelJsonObject = JSON.parse(levelJson);
@@ -50,13 +54,11 @@ define(function(require) {
 		
 		db.upload("facebook shares", sceneName, compressedLevel,
 		function(response) {
-			db.getLink("facebook shares/" + JSON.parse(response)["name"], function(response) {
-				if (typeof response === "string") {
-					success(JSON.parse(response)["id"]);
-				} else {
-					success(response["id"]);
-				}
-			}, failure);
+			if (typeof response === "string") {
+				success(JSON.parse(response)["id"]);
+			} else {
+				success(response["id"]);
+			}
 		}, failure);
 	};
 

@@ -3,8 +3,6 @@ define(function(require) {
 	var levelRequester = require('level-requester');
 	
 	var dialogTabbedModular = require('dialog-tabbed-modular');
-	
-	var dialogTextField = require('dialog-text-field');
 	var dialogPagingField = require('dialog-paging-field');
 
 	var SceneDelete = require('ui-component').extend({
