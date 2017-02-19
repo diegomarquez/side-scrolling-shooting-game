@@ -18,17 +18,20 @@
 		height: 100%;
 		background: @section-bgcolor;
 		z-index: 1000;
-		will-change: transform;
 	}
 
 	.loader-section.section-left {
 		.section;
+		
 		left: 0;
+		will-change: left, transform;
 	}
 
 	.loader-section.section-right {
 		.section;
+
 		right: 0;
+		will-change: right, transform;
 	}
 }
  

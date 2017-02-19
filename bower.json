@@ -6,7 +6,6 @@
     "requirejs-domready": "2.x.x",
     "bootstrap-toggle": "~2.0.0",
     "almond": "~0.3.0",
-    "jquery.transit": "~0.9.12",
     "jscrollpane": "~2.0.20",
     "gsap": "~1.15.1",
     "pako": "~0.2.8"

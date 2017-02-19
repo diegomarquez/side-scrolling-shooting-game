@@ -1,23 +1,23 @@
 define(function(require) {
 	require('jquery');
-	require('jquery-transit');
 
-	var TRANSITION_DURATION = 1000;
-	var TRANSITION_WAIT = 2000;
-	var INITIAL_DELAY = 2500;
+	var TRANSITION_DURATION = '1.0s';
+	var HALF_TRANSITION_DURATION = '0.5s';
+	var TRANSITION_WAIT = '2.0s';
+	var INITIAL_DELAY = '2.5s';
 
 	if(require('query-string').skipLoader()) {
-		TRANSITION_DURATION = 1;
-		TRANSITION_WAIT = 1;
-		INITIAL_DELAY = 1;
+		TRANSITION_DURATION = '0s';
+		TRANSITION_WAIT = '0s';
+		INITIAL_DELAY = '0s';
 	}
 
-	var LoaderContainer = require("delegate").extend({
+	var LoaderContainer = require('delegate').extend({
 		init: function() {
 			this._super();
 
 			this.state = this.CLOSED;
-				this.loader = $('#loader-wrapper');
+			this.loader = $('#loader-wrapper');
 		},
 
 		detachLoader: function() {
@@ -33,59 +33,112 @@ define(function(require) {
 		},
 
 		open: function(event, delay) {
-			var e = event || this.OPEN;
-			var d = delay || INITIAL_DELAY;
+			this.doTransition(
+				$('#loader'),
+				{ 'opacity' : 1 },
+				{ 'opacity' : 0 },
+				delay || INITIAL_DELAY,
+				HALF_TRANSITION_DURATION,
+				function() {
+					this.doTransition(
+						$('.section-left'),
+						{ 'transform': 'translateX(100%)', 'left': '-50%' },
+						{ 'transform': 'translateX(-100%)', 'left': '0' },
+						'0s',
+						TRANSITION_DURATION
+					);
 
-			// Hide Loader
-			$('#loader').transition( { delay: d, opacity: 0, complete: function() {
-				// Trigger open animation
-				$('.section-left').transition({ delay: 0, left: '0px', x: '-100%'}, TRANSITION_DURATION);
-				$('.section-right').transition({ delay: 0, right: '0px', x: '100%', complete: function() {
-					// Remove the loader
-					this.detachLoader();
-					// Set the state of the loader to OPEN
-					this.state = this.OPEN;
-					// Trigger a delegate to do things once the animation is complete
-					this.execute(e);
-				}.bind(this)}, TRANSITION_DURATION);
-			}.bind(this) }, TRANSITION_DURATION / 2);
+					this.doTransition(
+						$('.section-right'),
+						{ 'transform': 'translateX(-100%)', 'right': '-50%' },
+						{ 'transform': 'translateX(100%)', 'right': '0' },
+						'0s',
+						TRANSITION_DURATION,
+						function () {
+							// Remove the loader
+							this.detachLoader();
+							// Set the state of the loader to OPEN
+							this.state = this.OPEN;
+							// Trigger a delegate to do things once the animation is complete
+							this.execute(event || this.OPEN);
+						}.bind(this)
+					);
+				}.bind(this)
+			)
 		},
 
 		close: function() {
 			// Attach the loader
 			this.attachLoader();
 
-			// Trigger close animation
-			$('.section-left').transition({ left: '-50%', x: '100%'}, TRANSITION_DURATION);
-			$('.section-right').transition({ right: '-50%', x: '-100%', complete: function() {
-				// Set the state of the loader to CLOSED
-				this.state = this.CLOSED;
-				// Trigger CLOSE delegate when completed to do stuff while everything is hidden
-				this.execute(this.CLOSE);
+			this.doTransition(
+				$('.section-left'),
+				{ 'transform': 'translateX(-100%)', 'left': '0' },
+				{ 'transform': 'translateX(100%)', 'left': '-50%' },
+				'0s',
+				TRANSITION_DURATION
+			);
 
-				$('#loader').transition( { opacity: 1 }, TRANSITION_WAIT);
-
-			}.bind(this)}, TRANSITION_DURATION);
+			this.doTransition(
+				$('.section-right'),
+				{ 'transform': 'translateX(100%)', 'right': '0' },
+				{ 'transform': 'translateX(-100%)', 'right': '-50%' },
+				'0s',
+				TRANSITION_DURATION,
+				function () {
+					this.doTransition(
+						$('#loader'),
+						{ 'opacity': 0 },
+						{ 'opacity': 1 },
+						'0s',
+						TRANSITION_WAIT,
+						function() {
+							// Set the state of the loader to CLOSED
+							this.state = this.CLOSED;
+							// Trigger CLOSE delegate when completed to do stuff while everything is hidden
+							this.execute(this.CLOSE);
+						}.bind(this)
+					);
+				}.bind(this)
+			);
 		},
 
 		transition: function() {
 			// Attach the loader
 			this.attachLoader();
 
-			// Trigger close animation
-			$('.section-left').transition({ left: '-50%', x: '100%'}, TRANSITION_DURATION);
-			$('.section-right').transition({ right: '-50%', x: '-100%', complete: function() {
-				// Set the state of the loader to CLOSED
-				this.state = this.CLOSED;
-				// Trigger CLOSE delegate when completed to do stuff while everything is hidden
-				this.execute(this.CLOSE);
+			this.doTransition(
+				$('.section-left'),
+				{ 'transform': 'translateX(-100%)', 'left': '0' },
+				{ 'transform': 'translateX(100%)', 'left': '-50%' },
+				'0s',
+				TRANSITION_DURATION
+			);
 
-				$('#loader').transition( { opacity: 1, complete: function() {
-					// Open the loader to show what ever is behind
-					this.open(this.TRANSITION, 1);
-				}.bind(this) }, TRANSITION_WAIT);
+			this.doTransition(
+				$('.section-right'),
+				{ 'transform': 'translateX(100%)', 'right': '0' },
+				{ 'transform': 'translateX(-100%)', 'right': '-50%' },
+				'0s',
+				TRANSITION_DURATION,
+				function () {
+					// Set the state of the loader to CLOSED
+					this.state = this.CLOSED;
+					// Trigger CLOSE delegate when completed to do stuff while everything is hidden
+					this.execute(this.CLOSE);
 
-			}.bind(this)}, TRANSITION_DURATION);
+					this.doTransition(
+						$('#loader'),
+						{ 'opacity': 0 },
+						{ 'opacity': 1 },
+						'0s',
+						TRANSITION_WAIT,
+						function() {
+							this.open(this.TRANSITION, TRANSITION_DURATION);
+						}.bind(this)
+					);
+				}.bind(this)
+			);
 		},
 
 		show: function() {
@@ -102,14 +155,50 @@ define(function(require) {
 
 		isOpen: function() {
 			return this.state == this.OPEN;
+		},
+
+		doTransition(element, startProperties, endProperties, delay, duration, onComplete) {
+			var onTransitionComplete = function() {
+				element.off('transitionend', onTransitionComplete);
+
+				element.css({ 'trasition': 'none' });
+
+				element[0].offsetHeight;
+
+				element.css(endProperties);
+
+				if (onComplete)
+					onComplete()
+			}
+
+			element.on('transitionend', onTransitionComplete);
+
+			var props = [];
+
+			for (var prop in startProperties) {
+				props.push(prop);
+			}
+
+			element.css(startProperties);
+
+			element.css({
+				'trasition-delay': delay,
+				'transition-duration': duration,
+				'transition-timing-function': 'ease',
+				'transition-property': props.join(", "),
+			});
+
+			element[0].offsetHeight;
+
+			element.css(endProperties);
 		}
 	});
 
-	Object.defineProperty(LoaderContainer.prototype, "CLOSE", { get: function() { return 'close'; } });
-	Object.defineProperty(LoaderContainer.prototype, "TRANSITION", { get: function() { return 'transition'; } });
+	Object.defineProperty(LoaderContainer.prototype, 'CLOSE', { get: function() { return 'close'; } });
+	Object.defineProperty(LoaderContainer.prototype, 'TRANSITION', { get: function() { return 'transition'; } });
 
-	Object.defineProperty(LoaderContainer.prototype, "CLOSED", { get: function() { return 'closed'; } });
-	Object.defineProperty(LoaderContainer.prototype, "OPEN", { get: function() { return 'open'; } });
+	Object.defineProperty(LoaderContainer.prototype, 'CLOSED', { get: function() { return 'closed'; } });
+	Object.defineProperty(LoaderContainer.prototype, 'OPEN', { get: function() { return 'open'; } });
 
 	return new LoaderContainer();
 });
