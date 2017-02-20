@@ -4,14 +4,6 @@
 		"deps": ["jquery"]
 	},
 
-	"jquery-selectBoxIt": {
-		"deps": ["jquery", "jquery-ui"]
-	},
-
-	"jquery-transit": {
-		"deps": ["jquery"]
-	},
-
 	"jscrollpane": {
 		"deps": ["jquery", "jquery-mousewheel"]
 	},

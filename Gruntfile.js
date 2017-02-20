@@ -36,6 +36,8 @@ module.exports = function(grunt) {
 		return path.trim() != "";
 	});
 
+	var libPathsJson = grunt.file.readJSON('./config/lib-paths.json');
+
 	var assetSelectorsProd = assetPaths.map(function(path) {
 		return {
 			expand: true,
@@ -48,6 +50,14 @@ module.exports = function(grunt) {
 	assetSelectorsProd.push({ expand: true, src: stylesCssDir + allStylesFilename, dest: buildProdDir });
 	assetSelectorsProd.push({ expand: true, cwd: stylesDir, src: assetsDir + '/**', dest: buildProdDir + stylesDir });
 
+	// Copy all the 3rd party libaries to the prod build dir
+	for (var libName in libPathsJson) {
+		assetSelectorsProd.push({
+			src: libPathsJson[libName] + '.js',
+			dest: buildProdDir
+		});
+	}
+
 	var assetSelectorsDev = assetPaths.map(function(path) {
 		return {
 			expand: true,
@@ -59,6 +69,14 @@ module.exports = function(grunt) {
 
 	assetSelectorsDev.push({ expand: true, src: stylesCssDir + allStylesFilename, dest: buildDevDir });
 	assetSelectorsDev.push({ expand: true, cwd: stylesDir, src: assetsDir + '/**', dest: buildDevDir + stylesDir });
+
+	// Copy all the 3rd party libaries to the dev build dir
+	for (var libName in libPathsJson) {
+		assetSelectorsDev.push({ 
+			src: libPathsJson[libName] + '.js',
+			dest: buildDevDir
+		});
+	}
 
 	// Making sure that this path has the correct separator. Just in case.
 	p.framework = p.framework.split(/[/|\\]/).join(path.sep);
@@ -234,6 +252,16 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// TODO: Usar esto para agregar require.config({})
+		// con los paths de todas las cosas que estan en ./lib
+		// del build
+		// acar la opcion insertRequire, y agregar lo que esta agregando en la
+		// propieaded 'end'
+		// wrap: {
+	 	//        start: "(function() {",
+	 	//        end: "}());"
+	 	//    },
+
 		'requirejs': {
 			'options': {
 				baseUrl: './',
@@ -248,7 +276,11 @@ module.exports = function(grunt) {
 				options: {
 					out: buildDevDir + 'packaged.js',
 					optimize: 'none',
-					preserveLicenseComments: true
+					preserveLicenseComments: true,
+					paths: {
+                        'jquery': 'empty:',
+                        'jscrollpane': 'empty:'
+                    }
 				}
 			},
 
@@ -256,7 +288,11 @@ module.exports = function(grunt) {
 				options: {
 					out: buildProdDir + 'packaged.js',
 					optimize: 'uglify2',
-					preserveLicenseComments: false
+					preserveLicenseComments: false,
+					paths: {
+                        'jquery': 'empty:',
+                        'jscrollpane': 'empty:'
+                    }
 				}
 			}
 		},
@@ -314,7 +350,7 @@ module.exports = function(grunt) {
 			},
 			'font-data': {
 				options: {
-					   template: "json-data-module-template.txt"
+						template: "json-data-module-template.txt"
 				},
 				files: [
 					{

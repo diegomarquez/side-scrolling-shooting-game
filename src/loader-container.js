@@ -157,7 +157,7 @@ define(function(require) {
 			return this.state == this.OPEN;
 		},
 
-		doTransition(element, startProperties, endProperties, delay, duration, onComplete) {
+		doTransition: function (element, startProperties, endProperties, delay, duration, onComplete) {
 			var onTransitionComplete = function() {
 				element.off('transitionend', onTransitionComplete);
 
