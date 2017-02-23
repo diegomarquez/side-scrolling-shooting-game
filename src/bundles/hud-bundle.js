@@ -1,10 +1,9 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 
 	var Hud = require("bundle").extend({
-		create: function(args) {			
-			
+		create: function(args) {
 			this.gameObjectPool.createDynamicPool('HpMeterType', require('hp-meter'));
 
 			this.componentPool.createConfiguration("HpMeterRenderer", commonBundle.getAnimationsBitmapRendererPoolId())
@@ -46,6 +45,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration('HpMeter', 'HpMeterType')
+				.addComponent('LowHpColorBlink', { enabled: false, interval: 30 })
 				.setRenderer('HpMeterRenderer');
 
 			this.componentPool.createPool("UpwardsMovement", require('upwards-movement'));

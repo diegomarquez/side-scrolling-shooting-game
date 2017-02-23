@@ -1,13 +1,23 @@
-define(function(require) {	
+define(function(require) {
 	
 	var commonBundle = require("common-bundle");
 	var particleBundle = require('particle-generator-bundle');
 	var explosionBundle = require('explosion-generator-bundle');
 
 	var AddComponentsBundle = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.componentPool.createConfiguration("BossTwitch", commonBundle.getTwitchPoolId());
+			
+			this.componentPool.createConfiguration("LowHpColorBlink", commonBundle.getColorBlinkPoolId())
+				.args({
+					r: 255,
+					g: 0,
+					b: 0,
+					interval: 10
+				});
+
+			this.componentPool.createConfiguration("BulletHitFlash", commonBundle.getDamageFlashPoolId());
 
 			this.componentPool.createConfiguration("AddBossOnDestroyLastExplosions", commonBundle.getAddComponentPoolId())
 				.args({
@@ -90,8 +100,6 @@ define(function(require) {
 						amount: 5
 					}
 				});
-
-			this.componentPool.createConfiguration("BulletHitFlash", commonBundle.getDamageFlashPoolId());
 
 			this.componentPool.createConfiguration("AddBulletHitFlash", commonBundle.getAddComponentPoolId())
 				.args({

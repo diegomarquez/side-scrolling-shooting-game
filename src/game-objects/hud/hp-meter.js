@@ -2,6 +2,8 @@ define(["editor-game-object-container", "player-getter"], function(GameObject, P
 	var HpMeter = GameObject.extend({
 		init: function() {
 			this._super();
+			
+			this.lowHpComponent = null;
 		},
 
 		editorStart: function() {
@@ -9,11 +11,20 @@ define(["editor-game-object-container", "player-getter"], function(GameObject, P
 
 			var player = PlayerGetter.get();
 
-			PlayerGetter.get().on(player.HEALTH_DOWN, this, function(playerHp) {
+			this.lowHpComponent = this.findComponents().firstWithType('LowHpColorBlink');
+
+			player.on(player.HEALTH_DOWN, this, function(playerHp) {
+				
+				if (playerHp === 1)
+					this.lowHpComponent.enable();
+				
 				this.renderer.play(playerHp + 'Hp');
 			});
 
-			PlayerGetter.get().on(player.HEALTH_UP, this, function(playerHp) {
+			player.on(player.HEALTH_UP, this, function(playerHp) {
+				
+				this.lowHpComponent.disable();
+				
 				this.renderer.play(playerHp + 'Hp');
 			});
 		},

@@ -54,6 +54,9 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 		spray: function(args) {
 			if (this.stopped)
 				return;
+			
+			if (!this.isEnabled())
+				return;
 
 			if (!this.maxAmountToSpray) {
 				if (this.isEnabled()) {
@@ -64,7 +67,7 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 						if (this.startingPositionTransformation) {
 							for (var j = 0; j < this.startingPositionTransformation.length; j++) {
 								this.startingPositionTransformation[j].call(this, args);
-							}	
+							}
 						}
 
 						var go = this.gb.addChildTo(this.parent, this.objectType, this.viewports, args, 'create');

@@ -22,9 +22,10 @@ define(function(require) {
 			createComponentPool.call(this, function() { return require('twitch') });
 			createComponentPool.call(this, function() { return require('tween') });
 			createComponentPool.call(this, function() { return require("damage-flash") });
+			createComponentPool.call(this, function() { return require("color-blink") });
 
 			createGameObjectPool.call(this, function() { return require('game-object') });
-			createGameObjectPool.call(this, function() { return require('game-object-container') });			
+			createGameObjectPool.call(this, function() { return require('game-object-container') });
 		}
 	});
 

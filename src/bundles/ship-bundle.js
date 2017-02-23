@@ -7,9 +7,17 @@ define(function(require) {
 		create: function(args) {
 			this.componentPool.createPool('ship-renderer', require("ship-renderer"));
 
+			this.componentPool.createPool('player-low-hp-feedback', require('player-low-hp-feedback'));
 			this.componentPool.createPool('player-damage-feedback', require('player-damage-feedback'));
 			this.componentPool.createPool('player-destroy-feedback', require('player-destroy-feedback'));
 			this.componentPool.createPool('player-explode-feedback', require('player-explode-feedback'));
+
+			this.componentPool.createConfiguration("ShipLowHp", 'player-low-hp-feedback')
+				.args({
+					damageExplosions: explosionBundle.getPlayerLowHpEffectId(),
+					colorBlinkComponent: "LowHpColorBlink",
+					enabled: false
+				});
 
 			this.componentPool.createConfiguration("ShipDamage", 'player-damage-feedback')
 				.args({
@@ -55,9 +63,11 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("ShootingPosition", commonBundle.getGameObjectPoolId());
 
 			this.gameObjectPool.createConfiguration("SmallExhaust", "Exhaust")
+				.addComponent('LowHpColorBlink', { enabled: false })
 				.setRenderer("ExhaustRenderer");
 
 			this.gameObjectPool.createConfiguration("MediumExhaust", "Exhaust")
+				.addComponent('LowHpColorBlink', { enabled: false })
 				.setRenderer("ExhaustRenderer");
 
 			this.gameObjectPool.createConfiguration("player-ship", "Ship")
@@ -77,6 +87,7 @@ define(function(require) {
 				.addChild('MediumExhaust', { x: 0, y: 60, rotation: -90, scaleX: 1, scaleY: 1 })
 				.addChild('MediumExhaust', { x: 21, y: 45, rotation: -122, scaleX: 0.7, scaleY: 0.7 })
 
+				.addComponent('ShipLowHp')
 				.addComponent('ShipDamage')
 				.addComponent('ShipDestroy')
 				.addComponent('ShipExplode')

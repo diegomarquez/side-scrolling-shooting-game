@@ -37,13 +37,13 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
 			}, true);
 
       		this.explosionsGenerator.once(this.explosionsGenerator.STOP_CREATION, this, function() {
-      			this.parent.removeComponent(this.explosionsGenerator);	
+      			this.parent.removeComponent(this.explosionsGenerator);
       			this.disableTimer.start();
       			this.explosionsGenerator = null;
 
       			this.execute('complete_explosions');
       		});
-		},	
+		},
 
 		update: function(delta) {
 			if(this.startPos) {

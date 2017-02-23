@@ -43,6 +43,7 @@ define(
 			this.middleShootingPositions = null;
 			this.rightShootingPositions = null;
 
+			this.lowHpComponent = null;
 			this.damageComponent = null;
 			this.destroyComponent = null;
 			this.explodeComponent = null;
@@ -234,6 +235,7 @@ define(
 
 			smallExhausts.call(this);
 
+			this.lowHpComponent = this.findComponents().firstWithType('ShipLowHp');
 			this.damageComponent = this.findComponents().firstWithType('ShipDamage');
 			this.destroyComponent = this.findComponents().firstWithType('ShipDestroy');
 			this.explodeComponent = this.findComponents().firstWithType('ShipExplode');
@@ -524,6 +526,8 @@ define(
 		},
 
 		healthUp: function() {
+			this.lowHpComponent.disable();
+			
 			if (this.hp < 5) {
 				this.hp++;
 
@@ -541,11 +545,17 @@ define(
 			if (this.hp > 0) {
 				this.hp--;
 				this.execute(this.HEALTH_DOWN, this.hp);
-
-				if (this.hp == 0) {
+				
+				if (this.hp == 1) {
+					this.execute(this.DAMAGE);
+					
+					this.lowHpComponent.enable();
+				}
+				else if (this.hp == 0) {
 					this.execute(this.DAMAGE);
 
 					this.damageComponent.disable();
+					this.lowHpComponent.disable();
 
 					this.destroyComponent.enable();
 					this.destroyComponent.setDirection(hitDirection);

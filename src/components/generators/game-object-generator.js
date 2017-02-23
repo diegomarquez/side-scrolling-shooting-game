@@ -51,8 +51,10 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 		},
 
 		spray: function(args) {
+			if (!this.isEnabled())
+				return;
+			
 			if (!this.maxAmountToSpray) {
-				
 				if (this.isEnabled()) {
 					for (var i=0; i < this.amountPerSpray; i++) {
 						args['x'] = this.parent.X;

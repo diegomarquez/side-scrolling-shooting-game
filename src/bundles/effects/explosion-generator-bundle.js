@@ -1,8 +1,8 @@
-define(function(require) {	
+define(function(require) {
 	var explosionBundle = require('explosion-bundle');
 	
 	var ExplosionGeneratorBundle = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			this.componentPool.createPool('child-explosions-generator', require('child-tracking-generator'));
 			this.componentPool.createPool('explosions-generator', require('game-object-generator'));
 
@@ -13,18 +13,6 @@ define(function(require) {
 					amountPerSpray: 1,
 					maxAmountToSpray: 1,
 					startingPositionTransformation: [],
-					viewports: [{viewport: "Main", layer: "Effects"}]
-				});
-
-			this.componentPool.createConfiguration(this.getPlayerDestroyExplosionsEffectId(), 'explosions-generator')
-				.args({
-					objectType: explosionBundle.getMicroExplosionsId(),
-					sprayDelay: 0.03,
-					amountPerSpray: 2,
-					maxAmountToSpray: 30,
-					startingPositionTransformation: [
-						require('rectangle-generation')(35, 35)
-					],
 					viewports: [{viewport: "Main", layer: "Effects"}]
 				});
 
@@ -39,7 +27,7 @@ define(function(require) {
 					],
 					viewports: [{viewport: "Main", layer: "Effects"}]
 				});
-
+			
 			this.componentPool.createConfiguration(this.getSmallExplosionsEffectId(), 'child-explosions-generator')
 				.args({
 					objectType: explosionBundle.getSmallExplosionsId(),
@@ -75,10 +63,37 @@ define(function(require) {
 					],
 					viewports: [{viewport: "Main", layer: "Effects"}]
 				});
+			
+			this.componentPool.createConfiguration(this.getPlayerDestroyExplosionsEffectId(), 'explosions-generator')
+				.args({
+					objectType: explosionBundle.getMicroExplosionsId(),
+					sprayDelay: 0.03,
+					amountPerSpray: 2,
+					maxAmountToSpray: 30,
+					startingPositionTransformation: [
+						require('rectangle-generation')(35, 35)
+					],
+					viewports: [{viewport: "Main", layer: "Effects"}]
+				});
+			
+			this.componentPool.createConfiguration(this.getPlayerLowHpEffectId(), 'explosions-generator')
+				.args({
+					objectType: explosionBundle.getMicroExplosionsId(),
+					sprayDelay: 0.5,
+					amountPerSpray: 2,
+					startingPositionTransformation: [
+						require('rectangle-generation')(20, 20)
+					],
+					viewports: [{viewport: "Main", layer: "Effects"}]
+				});
 		},
 
 		getPlayerDestroyExplosionsEffectId: function() {
 			return "PlayerDestroyExplosionsEffectId";
+		},
+		
+		getPlayerLowHpEffectId: function() {
+			return "PlayerLowHpEffectEffectId";
 		},
 
 		getSingleSmallExplosionEffectId: function() {
