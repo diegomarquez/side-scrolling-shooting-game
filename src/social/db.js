@@ -268,7 +268,12 @@ function getToken(clientId, redirectUri, authUri, onSuccess, onError) {
 	var winX = window.screenX + (window.outerWidth / 2) - (width / 2);
 	var winY = window.screenY + (window.outerHeight / 2) - (height / 2);
 	
-	var windowFeatures = `width=${width},height=${height},left=${winX},top=${winY},menubar=no,toolbar=no,location=no,personalbar=no,status=no,dependent=yes,dialog=yes,resizable=yes,scrollbars=no`;
+	var windowFeatures = 'width=' + width + 
+						 ',height=' + height + 
+						 ',left=' + winX + 
+						 ',top=' + winY + 
+						 ',menubar=no,toolbar=no,location=no,personalbar=no,status=no,dependent=yes,dialog=yes,resizable=yes,scrollbars=no';
+
 	var windowName = 'Dropbox Auth';
 	
 	var CHILD = window.open(authUri + '?' + urlEncode({
@@ -327,7 +332,7 @@ function checkToken(checkTokenUri, onSuccess, onError) {
 function urlEncode(obj) {
 	var props = [];
 	
-	for (let i in obj) {
+	for (var i in obj) {
 		obj[i] && props.push(i + '=' + encodeURIComponent(obj[i]));
 	}
 	
@@ -338,13 +343,13 @@ function urlDecode(str) {
 	var parts = str.split('&');
 	var obj = {};
 	
-	for (let part of parts) {
-		part = part.split('=');
+	for (var i = 0; i < parts.length; i++) {
+		var part = parts[i].split('=');
 		part[0] = part[0].replace(/\W/g, '');
 		
 		obj[part[0]] = decodeURIComponent(part[1]);
 	}
-	
+
 	return obj;
 }
 
@@ -373,7 +378,7 @@ function request(arg, onSuccess, onError) {
 		req.responseType = 'blob';
 	
 	if (arg.headers) {
-		for (let i in arg.headers) {
+		for (var i in arg.headers) {
 			arg.headers.hasOwnProperty(i) && req.setRequestHeader(i, arg.headers[i]);
 		}
 	}
@@ -426,6 +431,7 @@ function request(arg, onSuccess, onError) {
 
 function extraSafeJSONEncode(obj)
 {
-	return JSON.stringify(obj)
-		.replace(/[\u007f-\uffff]/g, c => '\\u' + ('000' + c.charCodeAt(0).toString(16)).slice(-4));
+	return JSON.stringify(obj).replace(/[\u007f-\uffff]/g, function(c) {
+		return '\\u' + ('000' + c.charCodeAt(0).toString(16)).slice(-4);
+	});
 }
