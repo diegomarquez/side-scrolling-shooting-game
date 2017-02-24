@@ -46,17 +46,19 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
 		},
 
 		update: function(delta) {
+			var renderer = this.parent.renderer;
+
 			if(this.startPos) {
-				this.parent.viewportOffsetX = this.lastX;
-				this.parent.viewportOffsetY = this.lastY;
+				renderer.offsetX = this.lastX;
+				renderer.offsetY = this.lastY;
 			} else {
-				this.lastX = this.parent.viewportOffsetX;
-				this.lastY = this.parent.viewportOffsetY;
+				this.lastX = renderer.offsetX;
+				this.lastY = renderer.offsetY;
 
 				this.amount *= -1
 
-				this.parent.viewportOffsetX += Math.random() * this.amount;
-				this.parent.viewportOffsetY += Math.random() * this.amount;
+				renderer.offsetX += Math.random() * this.amount;
+				renderer.offsetY += Math.random() * this.amount;
 			}
 
 			this.startPos = !this.startPos;

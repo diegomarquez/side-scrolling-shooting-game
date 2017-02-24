@@ -14,6 +14,12 @@ define(["editor-component", "gb"], function(Component, Gb) {
 			});
 
 			setTimeout(function() {
+				if (!parent)
+					return;
+
+				if (!parent.renderer)
+					return;
+
 				parent.renderer.disableTint();
 
 				parent.findChildren().recurse().all(function(child) { return child.hasRenderer(); }).forEach(function(child) {
