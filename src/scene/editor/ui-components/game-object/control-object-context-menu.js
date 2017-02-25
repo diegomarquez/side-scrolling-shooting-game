@@ -19,8 +19,7 @@ define(function(require) {
 
 									if (menu.go.poolId === "IconGizmoHandle") {
 										resolve(editorConfig.getControlObjectAliasName(menu.go.parent.typeId));
-									}
-									else {
+									} else {
 										resolve(editorConfig.getControlObjectAliasName(menu.go.typeId));
 									}
 
@@ -46,7 +45,17 @@ define(function(require) {
 							}
 
 							require(['game-object-cloner'], function(cloner) {
-								cloner.clone(menu.go);
+								if (menu.go.poolId == 'AngleDirectionSetter') {
+									cloner.clone(menu.go);
+								} else if (menu.go.poolId == 'AbsoluteScrollStopper') {
+									cloner.clone(menu.go);
+								} else if (menu.go.poolId == 'TwoWayDirectionSetter') {
+									cloner.clone(menu.go);
+								} else if (menu.go.poolId == 'BGMSound') {
+									cloner.clone(menu.go);
+								} else {
+									cloner.clone(menu.go.parent);
+								}
 							});
 						}
 					},
@@ -56,17 +65,13 @@ define(function(require) {
 						click: function(name, event) {
 							if (menu.go.poolId == 'AngleDirectionSetter') {
 								gb.reclaimer.mark(menu.go);
-							}
-							else if (menu.go.poolId == 'AbsoluteScrollStopper') {
+							} else if (menu.go.poolId == 'AbsoluteScrollStopper') {
 								gb.reclaimer.mark(menu.go);
-							}
-							else if (menu.go.poolId == 'TwoWayDirectionSetter') {
+							} else if (menu.go.poolId == 'TwoWayDirectionSetter') {
 								gb.reclaimer.mark(menu.go);
-							}
-							else if (menu.go.poolId == 'BGMSound') {
+							} else if (menu.go.poolId == 'BGMSound') {
 								gb.reclaimer.mark(menu.go);
-							}
-							else {
+							} else {
 								gb.reclaimer.mark(menu.go.parent);
 							}
 						}
