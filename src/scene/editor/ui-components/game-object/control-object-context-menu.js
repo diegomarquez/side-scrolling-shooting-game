@@ -1,5 +1,6 @@
 define(function(require) {
 	var gb = require('gb');
+	var root = require('root');
 
 	var ControlObjectContextMenu = require('ui-component').extend({
 		init: function() {
@@ -54,6 +55,15 @@ define(function(require) {
 								} else if (menu.go.poolId == 'BGMSound') {
 									cloner.clone(menu.go);
 								} else {
+									if (menu.go.parent.poolId == 'StartPosition') {
+										if (root.findChildren().recurse().firstWithType("StartPosition")) {
+											require('gb').game.get_extension(require('logger')).error('Only one start position object is allowed');
+											require('gb').game.get_extension(require('logger')).show();
+
+											return;
+										}
+									}
+
 									cloner.clone(menu.go.parent);
 								}
 							});
