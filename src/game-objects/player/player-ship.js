@@ -258,6 +258,11 @@ define(
 			if (this.destroyComponent.isEnabled()) return;
 			if (this.explodeComponent.isEnabled()) return;
 
+			if (!this.getViewportVisibility('Main')) {
+				this.hp = 1;
+				this.takeDamage();
+			}
+
 			// Auto scrolling
 			this.x += Math.cos(this.angle) * this.forwardSpeed/4 * delta;
 			this.y += Math.sin(this.angle) * this.forwardSpeed/4 * delta;
