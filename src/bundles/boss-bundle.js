@@ -178,6 +178,7 @@ define(function(require) {
 				.addComponent("Boss2Mines")
 				.addComponent("Boss2Open")
 				.addComponent("Boss2Close")
+				.addComponent('LaserAttack')
 				.setRenderer("Boss_2_Body_Renderer")
 				.enemyCategory()
 				.disableMouseSupport()

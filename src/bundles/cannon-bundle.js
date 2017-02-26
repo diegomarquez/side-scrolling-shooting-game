@@ -219,6 +219,7 @@ define(function(require) {
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
+				.addComponent('LaserAttack')
 				.setRenderer("LaserShooterRenderer")
 				.childOnly();
 
@@ -229,6 +230,7 @@ define(function(require) {
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
+				.addComponent('LaserAttack')
 				.setRenderer("LaserShooterRenderer")
 				.childOnly();
 
@@ -239,6 +241,7 @@ define(function(require) {
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
+				.addComponent('LaserAttack')
 				.setRenderer("BossLaserShooterRenderer")
 				.childOnly();
 
@@ -249,6 +252,7 @@ define(function(require) {
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
+				.addComponent('LaserAttack')
 				.setRenderer("BossLaserShooterRenderer")
 				.childOnly();
 

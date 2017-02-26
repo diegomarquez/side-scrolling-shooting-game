@@ -114,6 +114,7 @@ define(function(require) {
 	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], true);
 	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true);
 	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true);
+	soundPlayer.add('LASER', gb.assetMap()['LASER.OGG'], true);
 
 	var complete = 0;
 

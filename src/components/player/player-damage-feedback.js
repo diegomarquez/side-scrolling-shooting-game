@@ -64,6 +64,15 @@ define(['component', 'gb', 'timer-factory'], function(Component, Gb, TimerFactor
 			this.startPos = !this.startPos;
 		},
 
+		disable: function() {
+			this._super();
+
+			var renderer = this.parent.renderer;
+
+			renderer.offsetX = 0;
+			renderer.offsetY = 0;
+		},
+
 		recycle: function(parent) {
 			if (this.disableTimer)
 				this.disableTimer.remove();

@@ -24,6 +24,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 		},
 
 		recycle: function() {
+			this.execute("end-laser-attack");
+
 			if (this.laser)
 				Gb.reclaimer.mark(this.laser);
 			
@@ -40,6 +42,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
 			if (this.laser) {
 				setTimeout(function() {
+					this.execute("end-laser-attack");
+					
 					Gb.reclaimer.mark(this.laser);
 					this.laser = null;
 				}.bind(this), 1000);	
@@ -73,6 +77,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 				this.shootTimer = 0;
 				this.burstTimer = 0;
 				
+				this.execute("end-laser-attack");
+
 				if (this.laser)
 					Gb.reclaimer.mark(this.laser);
 				
@@ -101,6 +107,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 				if (this.shootTimer % this.shootTime == 0) {
 					this.bursting = true;
 					this.burtsTimer = 0;
+
+					this.execute("laser-attack");
 
 					var laserStartPosition = this.findChildren().firstWithType("FirePosition");
 
@@ -132,6 +140,8 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 				if (this.burtsTimer % this.burstTime == 0) {
 					this.bursting = false;
 					this.shootTimer = 0;
+
+					this.execute("end-laser-attack");
 
 					if (this.laser)
 						Gb.reclaimer.mark(this.laser);

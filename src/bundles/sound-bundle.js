@@ -130,6 +130,14 @@ define(function(require) {
 					playMode: 'single'
 				});
 
+			this.componentPool.createConfiguration("LaserAttack", commonBundle.getSoundComponentPoolId())
+				.args({
+					soundId: 'LASER',
+					parentEvent: 'laser-attack',
+					playMode: 'loop',
+					stopParentEvent: 'end-laser-attack'
+				});
+
 			this.componentPool.createConfiguration("ShotSound", commonBundle.getSoundComponentPoolId())
 				.args({
 					soundId: 'PLAYER_SHOT',

@@ -99,6 +99,7 @@ define(function() {
 	"HIT.OGG": "assets/sound/hit.ogg?b=test",
 	"INTRO.OGG": "assets/sound/intro.ogg?b=test",
 	"LARGEBUG.OGG": "assets/sound/largeBug.ogg?b=test",
+	"LASER.OGG": "assets/sound/laser.ogg?b=test",
 	"LEVEL1.OGG": "assets/sound/level1.ogg?b=test",
 	"LEVEL2.OGG": "assets/sound/level2.ogg?b=test",
 	"LEVEL3.OGG": "assets/sound/level3.ogg?b=test",

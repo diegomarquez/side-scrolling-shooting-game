@@ -52,6 +52,8 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			if (this.laserTimer)
 				this.laserTimer.remove();
 
+			this.execute("end-laser-attack");
+
 			if (this.laser1)
 				Gb.reclaimer.mark(this.laser1);
 
@@ -155,6 +157,9 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 			});
 
 			this.laserTimer.on(this.laserTimer.COMPLETE, function() {
+				
+				this.execute("end-laser-attack");
+				
 				if (this.laser1)
 					Gb.reclaimer.mark(this.laser1);
 
