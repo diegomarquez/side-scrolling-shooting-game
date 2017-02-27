@@ -119,15 +119,23 @@ define(function(require) {
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.EXIT, this, function() {
+				// TODO: Guardar la escena actual de una forma similar a la preview scene
+				// TODO: Guardar el scrolling actual
+
 				this.execute(this.EXIT);
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
+				// TODO: Guardar el scrolling actual
+
 				this.execute(this.PREVIEW);
 			});
 
 			// Finalize the setup of the editor
 			editorSetup.end();
+
+			// TODO: Si hay una "ultima escena" guardada usarla en vez de lo que sea que entro
+			// Nullearla despues de terminar
 
 			// Set up the initial scene
 			sceneLoader.load(initialScene);
@@ -140,6 +148,9 @@ define(function(require) {
 				this.gridControlsUI.toggleGrid();
 				// Toggle back the bounding rectangles
 				this.gameObjectControlsUI.toggleBoundings();
+
+				// TODO: Aplicar el scroll de local storage
+
 			});
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(

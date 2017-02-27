@@ -30,6 +30,9 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 		},
 
 		editorUpdate: function(delta) {
+			if (!this.isEnabled())
+				return;
+
 			this.delayTime += delta;
 
 			if (this.delayTime >= this.sprayDelay) {

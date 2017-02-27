@@ -24,7 +24,6 @@ define(function(require) {
 				icon: 'plus',
 				defaultMessage: 'Add a Control Object',
 				buttons: true,
-				height: 200,
 				data: function() {
 					if (!dataSource)
 						return require('editor-config').getControlObjects();
