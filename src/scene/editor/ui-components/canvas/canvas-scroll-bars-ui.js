@@ -32,6 +32,24 @@ define(function(require) {
 				this.gridBundle.setOffsetX(left);
 				this.gridBundle.setOffsetY(top);
 			}.bind(scrollContext);
+
+			this.scrollingContainer = null;
+		},
+
+		getScrollingLeft() {
+			return this.scrollingContainer.scrollLeft;
+		},
+
+		getScrollingTop() {
+			return this.scrollingContainer.scrollTop;
+		},
+
+		setScrollingLeft(scroll) {
+			this.scrollingContainer.scrollLeft = scroll;
+		},
+
+		setScrollingTop(scroll) {
+			this.scrollingContainer.scrollTop = scroll;
 		},
 
 		create: function() {
@@ -51,8 +69,10 @@ define(function(require) {
 			var main = document.querySelector('#main');
 			main.style.overflowX = 'scroll';
 			main.style.overflowY = 'scroll';
-			main.appendChild(scrollContainer);			
+			main.appendChild(scrollContainer);
 			main.addEventListener('scroll', this.onScroll);
+
+			this.scrollingContainer = main;
 
 			// Stuff to do when a new 'Main' viewport is added. AKA, load a new scene
 			editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
@@ -77,7 +97,7 @@ define(function(require) {
 				}
 			});
 
-			editorDelegates.add(world, world.CHANGE_WIDTH, this, function (width) {				
+			editorDelegates.add(world, world.CHANGE_WIDTH, this, function (width) {
 				updateScrollWidth(scrollContainer, main, width, gb.game.WIDTH);
 			});
 

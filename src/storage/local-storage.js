@@ -1,6 +1,7 @@
 define(function(require) {
 	var previewScene = null;
 	var backupScene = null;
+	var lastScene = null;
 	var urlScene = null;
 
 	var compresor = require('level-compressor');
@@ -19,11 +20,27 @@ define(function(require) {
 			}
 		},
 		
+		setScrolling: function(scrollingLeft, scrollingTop) {
+			setItem.call(this, 'scrolling', JSON.stringify({
+				"left": scrollingLeft,
+				"top": scrollingTop
+			}));
+		},
+
+		getScrolling: function() {
+			var ret = getItem.call(this, 'scrolling');
+
+			if (!ret)
+				return;
+
+			return JSON.parse(ret);
+		},
+
 		setDropboxToken: function(token) {
 			setItem.call(this, 'dropbox_token', token);
 		},
 		
-		getDropboxToken: function(key) {
+		getDropboxToken: function() {
 			return getItem.call(this, 'dropbox_token');
 		},
 
@@ -37,6 +54,14 @@ define(function(require) {
 			var data = getItem.call(this, 'scene_' + key.replace(/^scene_/, ''));
 
 			return compresor.decompress(data);
+		},
+
+		setLastScene: function(scene) {
+			lastScene = scene;
+		},
+
+		getLastScene: function() {
+			return lastScene;
 		},
 
 		setPreviewScene: function(scene) {

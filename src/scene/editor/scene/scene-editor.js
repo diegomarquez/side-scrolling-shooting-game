@@ -15,6 +15,9 @@ define(function(require) {
 	var canvasContainer = require('canvas-container');
 	var sceneLoader = require('editor-scene-loader');
 
+	var storage = require('local-storage');
+	var serializer = require('scene-serializer');
+
 	var SceneEditor = require("ui-component").extend({
 		init: function() {
 			this._super();
@@ -119,14 +122,14 @@ define(function(require) {
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.EXIT, this, function() {
-				// TODO: Guardar la escena actual de una forma similar a la preview scene
-				// TODO: Guardar el scrolling actual
+				storage.setLastScene(serializer.serialize(require('scene-name').get()));
+				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
 
 				this.execute(this.EXIT);
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
-				// TODO: Guardar el scrolling actual
+				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
 
 				this.execute(this.PREVIEW);
 			});
@@ -134,24 +137,33 @@ define(function(require) {
 			// Finalize the setup of the editor
 			editorSetup.end();
 
-			// TODO: Si hay una "ultima escena" guardada usarla en vez de lo que sea que entro
-			// Nullearla despues de terminar
-
 			// Set up the initial scene
-			sceneLoader.load(initialScene);
-			sceneLoader.layout();
+			if (storage.getLastScene()) {
+				sceneLoader.load(storage.getLastScene());
+				storage.setLastScene(null);
+			} else {
+				sceneLoader.load(initialScene);
+			}
 
 			// Reset things that need reseting when a new scene is loaded
 			editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
 				editorSetup.reset();
+				
 				// Toggle back on after the reset
 				this.gridControlsUI.toggleGrid();
 				// Toggle back the bounding rectangles
 				this.gameObjectControlsUI.toggleBoundings();
 
-				// TODO: Aplicar el scroll de local storage
+				var scrolling = storage.getScrolling();
 
+				// TODO: Find the correct place to do this
+				if (scrolling) {
+					this.canvasScrollBarsUI.setScrollingLeft(scrolling['left']);
+					this.canvasScrollBarsUI.setScrollingTop(scrolling['top']);
+				}
 			});
+
+			sceneLoader.layout();
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(
 				this.gameObjectSelectorUI,
