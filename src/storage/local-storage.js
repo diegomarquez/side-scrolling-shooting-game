@@ -24,13 +24,48 @@ define(function(require) {
 		
 		setScrolling: function(scrollingLeft, scrollingTop) {
 			setItem.call(this, 'scrolling', JSON.stringify({
-				"left": scrollingLeft,
-				"top": scrollingTop
+				'left': scrollingLeft,
+				'top': scrollingTop
 			}));
 		},
 
 		getScrolling: function() {
 			var ret = getItem.call(this, 'scrolling');
+
+			if (!ret)
+				return;
+
+			return JSON.parse(ret);
+		},
+		
+		setGridControls: function(grid, snap) {
+			setItem.call(this, 'grid', JSON.stringify({
+				'grid': grid,
+				'snap': snap
+			}));
+		},
+		
+		getGridControls: function() {
+			var ret = getItem.call(this, 'grid');
+
+			if (!ret)
+				return;
+
+			return JSON.parse(ret);
+		},
+		
+		setGameObjectControls: function(boxes, centers, scales, colliders, rotations) {
+			setItem.call(this, 'gameobject_controls', JSON.stringify({
+				'boxes': boxes,
+				'centers': centers,
+				'scales': scales,
+				'colliders': colliders,
+				'rotations': rotations,
+			}));
+		},
+		
+		getGameObjectControls: function() {
+			var ret = getItem.call(this, 'gameobject_controls');
 
 			if (!ret)
 				return;

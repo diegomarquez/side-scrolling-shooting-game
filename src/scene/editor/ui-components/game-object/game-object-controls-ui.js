@@ -68,8 +68,8 @@ define(function(require) {
 				if (scalesToggleUI.isOn()) {
 					go.toggleVisibility(true).recurse().ommitSelf().all(function (child) {
 						return require('editor-config').isScaleGizmoGameObject(child.typeId);
-					});	
-				}							
+					});
+				}
 			});
 
 			return wrapper.wrap([label, this.boundings, this.colliders, this.centers, this.rotations, this.scales], {
@@ -84,8 +84,8 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
 		},
 
 		toggleRotations: function() {
@@ -94,8 +94,8 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
 		},
 
 		toggleScales: function() {
@@ -104,8 +104,8 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
 		},
 
 		toggleBoundings: function() {
@@ -114,8 +114,8 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
 		},
 
 		toggleCenters: function() {
@@ -124,8 +124,28 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
+		},
+		
+		isShowingBoundindBoxes: function() {
+			return $(this.boundings).find('input').prop('checked');
+		},
+		
+		isShowingCenters: function() {
+			return $(this.centers).find('input').prop('checked');
+		},
+		
+		isShowingScaleHandles: function() {
+			return $(this.scales).find('input').prop('checked');
+		},
+		
+		isShowingColliderHandles: function() {
+			return $(this.colliders).find('input').prop('checked');
+		},
+		
+		isShowingRotationHandles: function() {
+			return $(this.rotations).find('input').prop('checked');
 		}
 	});
   

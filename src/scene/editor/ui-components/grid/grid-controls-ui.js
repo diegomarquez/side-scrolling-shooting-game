@@ -29,8 +29,8 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
-			}		
+				toggle.bootstrapToggle('off');
+			}
 		},
 
 		toggleSnap: function() {
@@ -39,10 +39,17 @@ define(function(require) {
 			if(!toggle.prop('checked')) {
 				toggle.bootstrapToggle('on');
 			} else {
-				toggle.bootstrapToggle('off');	
+				toggle.bootstrapToggle('off');
 			}
 		},
-
+		
+		isShowingGrid: function() {
+			return $(this.grid).find('input').prop('checked');
+		},
+		
+		isGridSnapping: function() {
+			return $(this.snap).find('input').prop('checked');
+		}
 	});
 	
 	return GridControls;

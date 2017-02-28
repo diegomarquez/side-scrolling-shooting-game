@@ -123,13 +123,14 @@ define(function(require) {
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.EXIT, this, function() {
 				storage.setRestoreScene(serializer.serialize(require('scene-name').get()));
-				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
+				
+				this.storeUI();
 
 				this.execute(this.EXIT);
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
-				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
+				this.storeUI();
 
 				this.execute(this.PREVIEW);
 			});
@@ -182,7 +183,8 @@ define(function(require) {
 			// no matter what happens
 			window.onbeforeunload = function (event) {
 				storage.setRestoreScene(serializer.serialize(require('scene-name').get()));
-				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
+				
+				this.storeUI();
 			}.bind(this);
 
 			// Update the side menu after adding it to the DOM
@@ -205,6 +207,26 @@ define(function(require) {
 			// Remove the editor container from the DOM
 			// This should take care of any lingering references to events
 			$('#main-editor-container').remove();
+		},
+		
+		storeUI: function() {
+			storage.setScrolling(
+				this.canvasScrollBarsUI.getScrollingLeft(),
+				this.canvasScrollBarsUI.getScrollingTop()
+			);
+			
+			storage.setGridControls(
+				this.gridControlsUI.isShowingGrid(),
+				this.gridControlsUI.isGridSnapping()
+			);
+			
+			storage.setGameObjectControls(
+				this.gameObjectControlsUI.isShowingBoundindBoxes(),
+				this.gameObjectControlsUI.isShowingCenters(),
+				this.gameObjectControlsUI.isShowingScaleHandles(),
+				this.gameObjectControlsUI.isShowingColliderHandles(),
+				this.gameObjectControlsUI.isShowingRotationHandles()
+			);
 		}
 	});
 
