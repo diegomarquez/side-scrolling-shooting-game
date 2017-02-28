@@ -177,6 +177,13 @@ define(function(require) {
 			editorDelegates.add(gb.Mouse, gb.Mouse.CANVAS_CONTEXT_MENU, this, function(event) {
 				this.globalContextMenu.show(event.clientX, event.clientY);
 			});
+			
+			// Save setting to local storage right before the window context is unloaded to be able to restore the state
+			// no matter what happens
+			window.onbeforeunload = function (event) {
+				storage.setRestoreScene(serializer.serialize(require('scene-name').get()));
+				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
+			}.bind(this);
 
 			// Update the side menu after adding it to the DOM
 			this.editorSideMenuController.update();
@@ -187,6 +194,8 @@ define(function(require) {
 		},
 
 		cleanUp: function() {
+			window.onbeforeunload = null;
+			
 			// Destroy viewport related dialogs
 			require('viewport-editor-ui').destroy();
 

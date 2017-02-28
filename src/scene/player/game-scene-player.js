@@ -151,8 +151,9 @@ define(function(require) {
 			var self = this;
 
 			var startPosition = root.findChildren().recurse().firstWithType("StartPosition");
-
-			gb.reclaimer.mark(startPosition);
+			
+			if (startPosition)
+				gb.reclaimer.mark(startPosition);
 
 			if (!startPosition) {
 				player.viewportOffsetX = -300;
