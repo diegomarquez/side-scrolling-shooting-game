@@ -54,7 +54,7 @@ define(function(require) {
 			});
 
 			// Load the scene
-			scenePlayer.create(previewScene);
+			scenePlayer.create(previewScene, true);
 		});
 
 		state.addUpdateAction(function (delta) {

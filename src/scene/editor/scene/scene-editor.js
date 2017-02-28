@@ -23,7 +23,7 @@ define(function(require) {
 			this._super();
 		},
 
-		create: function(initialScene) {
+		create: function(initialScene, backFromPreview) {
 			// Create all the objects needed
 			// Main Layout
 			this.editorSideMenu = new (require('editor-side-menu'));
@@ -137,14 +137,20 @@ define(function(require) {
 			// Finalize the setup of the editor
 			editorSetup.end();
 
-			var restoreScene = storage.getRestoreScene();
-
-			// Set up the initial scene
-			if (restoreScene) {
-				sceneLoader.load(restoreScene);
-				storage.deleteRestoreScene();
-			} else {
+			if (backFromPreview) {
+				// Use the preview scene when coming back from the preview
 				sceneLoader.load(initialScene);
+			} else {
+				var restoreScene = storage.getRestoreScene();
+
+				if (restoreScene) {
+					// If there is a restore scene, use it
+					sceneLoader.load(restoreScene);
+					storage.deleteRestoreScene();
+				} else {
+					// Otherwise use the passed in scene
+					sceneLoader.load(initialScene);
+				}
 			}
 
 			sceneLoader.layout();
