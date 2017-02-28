@@ -122,7 +122,7 @@ define(function(require) {
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.EXIT, this, function() {
-				storage.setLastScene(serializer.serialize(require('scene-name').get()));
+				storage.setRestoreScene(serializer.serialize(require('scene-name').get()));
 				storage.setScrolling(this.canvasScrollBarsUI.getScrollingLeft(), this.canvasScrollBarsUI.getScrollingTop());
 
 				this.execute(this.EXIT);
@@ -137,13 +137,17 @@ define(function(require) {
 			// Finalize the setup of the editor
 			editorSetup.end();
 
+			var restoreScene = storage.getRestoreScene();
+
 			// Set up the initial scene
-			if (storage.getLastScene()) {
-				sceneLoader.load(storage.getLastScene());
-				storage.setLastScene(null);
+			if (restoreScene) {
+				sceneLoader.load(restoreScene);
+				storage.deleteRestoreScene();
 			} else {
 				sceneLoader.load(initialScene);
 			}
+
+			sceneLoader.layout();
 
 			// Reset things that need reseting when a new scene is loaded
 			editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
@@ -153,17 +157,7 @@ define(function(require) {
 				this.gridControlsUI.toggleGrid();
 				// Toggle back the bounding rectangles
 				this.gameObjectControlsUI.toggleBoundings();
-
-				var scrolling = storage.getScrolling();
-
-				// TODO: Find the correct place to do this
-				if (scrolling) {
-					this.canvasScrollBarsUI.setScrollingLeft(scrolling['left']);
-					this.canvasScrollBarsUI.setScrollingTop(scrolling['top']);
-				}
 			});
-
-			sceneLoader.layout();
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(
 				this.gameObjectSelectorUI,

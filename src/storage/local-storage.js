@@ -1,7 +1,9 @@
 define(function(require) {
+	// Session storage for the preview scene
 	var previewScene = null;
+	// Session storage to revert to the last known scene in case something goes wrong
 	var backupScene = null;
-	var lastScene = null;
+	// Session storage for the scene that was loaded from a url qury string
 	var urlScene = null;
 
 	var compresor = require('level-compressor');
@@ -56,12 +58,23 @@ define(function(require) {
 			return compresor.decompress(data);
 		},
 
-		setLastScene: function(scene) {
-			lastScene = scene;
+		setRestoreScene: function (scene) {
+			var data = compresor.compress(scene);
+
+			return setItem.call(this, 'restore', data);
 		},
 
-		getLastScene: function() {
-			return lastScene;
+		getRestoreScene: function () {
+			var data = getItem.call(this, 'restore');
+
+			if (!data)
+				return;
+
+			return compresor.decompress(data);
+		},
+
+		deleteRestoreScene: function() {
+			removeItem.call(this, 'restore');
 		},
 
 		setPreviewScene: function(scene) {

@@ -75,7 +75,7 @@ define(function(require) {
 		state.addStartAction(function (args) {
 			// Add editor extensions
 			game.add_extension(require("activity-display"), { hide: true });
-			game.add_extension(require("logger"), { hide: true });
+			game.add_extension(require("logger"), { hide: false });
 			game.add_extension(require("fit-canvas-in-region"));
 		});
 

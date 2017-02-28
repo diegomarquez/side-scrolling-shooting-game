@@ -51,6 +51,15 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 		},
 
 		recycle: function(parent) {
+			this.maxAmountToSpray = null;
+			this.sprayDelay = null;
+			this.amountPerSpray = null;
+			this.objectType = null;
+			this.startingPositionTransformation = null;
+			this.currentSprayCount = null;
+			this.delayTime = null;
+			this.createdObjects = [];
+			this.stopped = false;
 			this.viewports = null;
 		},
 

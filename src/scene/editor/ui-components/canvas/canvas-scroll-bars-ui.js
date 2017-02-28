@@ -4,6 +4,7 @@ define(function(require) {
 	var editorConfig = require('editor-config');
 	var editorDelegates = require('editor-delegates');
 	var canvasContainer = require('canvas-container');
+	var storage = require('local-storage');
 
 	var CanvasScrollBars = require('ui-component').extend({
 		init: function() {
@@ -45,11 +46,15 @@ define(function(require) {
 		},
 
 		setScrollingLeft(scroll) {
-			this.scrollingContainer.scrollLeft = scroll;
+			requestAnimationFrame(function() {
+				this.scrollingContainer.scrollLeft = scroll;
+			}.bind(this));
 		},
 
 		setScrollingTop(scroll) {
-			this.scrollingContainer.scrollTop = scroll;
+			requestAnimationFrame(function() {
+				this.scrollingContainer.scrollTop = scroll;
+			}.bind(this));
 		},
 
 		create: function() {
@@ -94,6 +99,13 @@ define(function(require) {
 
 					diff = (world.getHeight() - gb.game.HEIGHT);
 					scrollContainer.style.height = diff > 0 ? gb.game.HEIGHT + diff : gb.game.HEIGHT;
+
+					var scrolling = storage.getScrolling();
+
+					if (scrolling) {
+						this.setScrollingLeft(scrolling['left']);
+						this.setScrollingTop(scrolling['top']);
+					}
 				}
 			});
 
