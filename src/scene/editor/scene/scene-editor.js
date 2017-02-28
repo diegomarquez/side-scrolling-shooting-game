@@ -160,10 +160,7 @@ define(function(require) {
 			editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
 				editorSetup.reset();
 				
-				// Toggle back on after the reset
-				this.gridControlsUI.toggleGrid();
-				// Toggle back the bounding rectangles
-				this.gameObjectControlsUI.toggleBoundings();
+				this.restoreUI();
 			});
 
 			this.globalContextMenu = new (require('global-context-menu'))().create(
@@ -189,10 +186,8 @@ define(function(require) {
 
 			// Update the side menu after adding it to the DOM
 			this.editorSideMenuController.update();
-			// Toggle the grid at start
-			this.gridControlsUI.toggleGrid();
-			// Toggle the bounding rectangles on start
-			this.gameObjectControlsUI.toggleBoundings();
+
+			this.restoreUI();
 		},
 
 		cleanUp: function() {
@@ -227,6 +222,58 @@ define(function(require) {
 				this.gameObjectControlsUI.isShowingColliderHandles(),
 				this.gameObjectControlsUI.isShowingRotationHandles()
 			);
+		},
+
+		restoreUI: function() {
+			var gridControlsState = storage.getGridControls();
+
+			if (gridControlsState) {
+				// Toggle the grid at start
+				if (gridControlsState['grid']) {
+					this.gridControlsUI.toggleGrid();
+				}
+
+				// Toggle grid snap at start
+				if (gridControlsState['snap']) {
+					this.gridControlsUI.toggleSnap();
+				}
+			} else {
+				// Default state
+				this.gridControlsUI.toggleGrid();
+			}
+
+
+			var gameObjectControlsState = storage.getGameObjectControls();
+
+			if (gameObjectControlsState) {
+				// Toggle bounding boxes at start
+				if (gameObjectControlsState['boxes']) {
+					this.gameObjectControlsUI.toggleBoundings();
+				}
+
+				// Toggle centers at start
+				if (gameObjectControlsState['centers']) {
+					this.gameObjectControlsUI.toggleCenters();
+				}
+
+				// Toggle scale handles at start
+				if (gameObjectControlsState['scales']) {
+					this.gameObjectControlsUI.toggleScales();
+				}
+
+				// Toggle colliders at start
+				if (gameObjectControlsState['colliders']) {
+					this.gameObjectControlsUI.toggleColliders();
+				}
+
+				// Toggle rotation handles at start
+				if (gameObjectControlsState['rotations']) {
+					this.gameObjectControlsUI.toggleRotations();
+				}
+			} else {
+				// Default state
+				this.gameObjectControlsUI.toggleBoundings();
+			}
 		}
 	});
 

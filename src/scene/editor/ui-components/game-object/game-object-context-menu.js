@@ -12,8 +12,8 @@ define(function(require) {
 
 	var GameObjectContextMenu = require('ui-component').extend({
 		init: function() {
-			this.newTypeDialog = null;	
-			this.editTypeDialog = null;		
+			this.newTypeDialog = null;
+			this.editTypeDialog = null;
 		},
 
 		create: function() {
@@ -27,7 +27,7 @@ define(function(require) {
 							return menu.go.typeId;
 						},
 						icon: 'ui-icon-caret-1-e',
-						disable: true						
+						disable: true
 					},
 					{
 						name: 'Clone',
@@ -45,7 +45,7 @@ define(function(require) {
 							}
 
 							gameObjectCloner.clone(menu.go);
-						}						
+						}
 					},
 					{
 						name: 'Create',
@@ -80,9 +80,9 @@ define(function(require) {
 									self.newTypeDialog.open(configurationCreator.getNewConfigurationName(go), function(configurationName) {
 										// Create a new configuration for the game object that was clicked on
 										configurationCreator.createFromGameObject(
-											go, 
+											go,
 											{
-												force: true, 
+												force: true,
 												configurationId: configurationName
 											}
 										);

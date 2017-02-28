@@ -8,12 +8,12 @@ define(function(require) {
 	var CollidersToggle = require('ui-component').extend({
 		init: function() {},
 
-		create: function() {      
+		create: function() {
 			return toggle.create({
 				id: 'colliders-toggle-button',
 				on: 'Hide Colliders',
 				off: 'Show Colliders',
-				onChange: function() {					
+				onChange: function() {
 					isOn = $(this).prop('checked');
 
 					if (isOn) {
