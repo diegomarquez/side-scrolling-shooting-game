@@ -22,8 +22,8 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 			this.shortestCollisionPointY = 0;
 		},
 
-		editorStart: function() {		 	
-		 	this.collisionPointFound = false;
+		editorStart: function() {
+			this.collisionPointFound = false;
 			this.collisionDistance = 0;
 
 			this.collisionPoint.x = 0;
@@ -34,12 +34,12 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 			this.dirX = 0;
 			this.dirY = 0;
 
-		 	this.renderer.disable();
+			this.renderer.disable();
 
-		 	TimerFactory.get(this, 'collisionTimer', 'collisionTimer');
-		 	this.collisionTimer.configure({ delay: 50, removeOnComplete:true });
+			TimerFactory.get(this, 'collisionTimer', 'collisionTimer');
+			this.collisionTimer.configure({ delay: 50, removeOnComplete:true });
 
-		 	this.collisionTimer.on(this.collisionTimer.COMPLETE, function() {
+			this.collisionTimer.on(this.collisionTimer.COMPLETE, function() {
 				if (this.collisionPointFound) {
 					return;
 				}
@@ -49,7 +49,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 				this.renderer.enable();
 			}, true);
 
-		 	this.collisionTimer.start();
+			this.collisionTimer.start();
 		},
 
 		editorUpdate: function(delta) {
@@ -81,15 +81,17 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 		onCollide: function(other) {
 			if (other.poolId == 'Obstacle' && !this.collisionPointFound) {
 				
+				this.collisionTimer.stop();
+
 				if (this.collidingObstacles.indexOf(other) === -1) {
 					// Push each new obstacle that the laser is colliding against
-					this.collidingObstacles.push(other);	
+					this.collidingObstacles.push(other);
 				} else {
 
 					// Once a repeated obstacle is collided agaist, find the closest one of the collection
 				 
-					this.dirX = Math.cos(this.rotation * (Math.PI/180)) * step; 
-				 	this.dirY = Math.sin(this.rotation * (Math.PI/180)) * step;
+					this.dirX = Math.cos(this.rotation * (Math.PI/180)) * step;
+					this.dirY = Math.sin(this.rotation * (Math.PI/180)) * step;
 
 					obstacles: for (var j = 0; j < this.collidingObstacles.length; j++) {
 						
@@ -99,7 +101,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 						// Get the initial point from which to start testing for a collision
 						this.concatenateMatrix(this.getMatrix()).transformPoint(0, 0, this.collisionPoint);
 
-				 		var collider = obstacle.findComponents().firstWithProp('collider').collider;
+						var collider = obstacle.findComponents().firstWithProp('collider').collider;
 
 						for (var i = 0; i < this.renderer.rendererWidth()/step; i++) {
 
@@ -123,7 +125,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 								this.collisionPoint.x += this.dirX;
 								this.collisionPoint.y += this.dirY;
 								// Increase the distance
-								collisionDistance += step;	
+								collisionDistance += step;
 							}
 						}
 					}
