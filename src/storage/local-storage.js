@@ -108,10 +108,6 @@ define(function(require) {
 			return compresor.decompress(data);
 		},
 
-		deleteRestoreScene: function() {
-			removeItem.call(this, 'restore');
-		},
-
 		setPreviewScene: function(scene) {
 			previewScene = scene;
 		},

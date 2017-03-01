@@ -147,7 +147,6 @@ define(function(require) {
 				if (restoreScene) {
 					// If there is a restore scene, use it
 					sceneLoader.load(restoreScene);
-					storage.deleteRestoreScene();
 				} else {
 					// Otherwise use the passed in scene
 					sceneLoader.load(initialScene);
