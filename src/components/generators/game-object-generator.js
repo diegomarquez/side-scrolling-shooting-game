@@ -90,14 +90,15 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 					}
 				}
 
-				this.execute(this.SPRAY);
 				this.parent.execute(this.SPRAY);
+				this.execute(this.SPRAY);
 			} else {
-				if (this.currentSprayCount > this.maxAmountToSpray) {
+				if (this.currentSprayCount >= this.maxAmountToSpray) {
 					this.disable();
+
+					this.parent.execute(this.STOP_CREATION);
 					this.execute(this.STOP_CREATION);
 				} else {
-					
 					if (this.isEnabled()) {
 						for (var i=0; i < this.amountPerSpray; i++) {
 							args['x'] = this.parent.X;
@@ -106,7 +107,7 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 							if (this.startingPositionTransformation) {
 								for (var j = 0; j < this.startingPositionTransformation.length; j++) {
 									this.startingPositionTransformation[j].call(this, args);
-								}	
+								}
 							}
 
 							if (Util.isArray(this.objectType)) {
@@ -119,15 +120,25 @@ define(["editor-component", "gb", "util"], function(EditorComponent, Gb, Util) {
 							}
 
 							this.currentSprayCount++;
+
+							if (this.currentSprayCount >= this.maxAmountToSpray) {
+								this.disable();
+
+								this.parent.execute(this.STOP_CREATION);
+								this.execute(this.STOP_CREATION);
+								
+								return;
+							}
 						}
 					}
 					
-					this.execute(this.SPRAY);
 					this.parent.execute(this.SPRAY);
-				}	
+					this.execute(this.SPRAY);
+					
+				}
 			}
 		}
-	}); 
+	});
 
 	GameObjectGenerator.args = {
 		x: null,

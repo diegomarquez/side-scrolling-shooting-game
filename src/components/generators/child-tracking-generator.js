@@ -91,14 +91,15 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 						this.currentSprayCount++;
 					}
 
-					this.execute(this.SPRAY);
 					this.parent.execute(this.SPRAY);
+					this.execute(this.SPRAY);
 				}
 			} else {
-				if (this.currentSprayCount > this.maxAmountToSpray) {
+				if (this.currentSprayCount >= this.maxAmountToSpray) {
 					this.disable();
-					this.execute(this.STOP_CREATION);
+
 					this.parent.execute(this.STOP_CREATION);
+					this.execute(this.STOP_CREATION);
 				} else {
 					if (this.isEnabled()) {
 						for (var i=0; i < this.amountPerSpray; i++) {
@@ -118,15 +119,24 @@ define(["editor-component", "gb"], function(EditorComponent, Gb) {
 							go.once(go.RECYCLE, this, onRecycle);
 
 							this.currentSprayCount++;
+
+							if (this.currentSprayCount >= this.maxAmountToSpray) {
+								this.disable();
+								
+								this.parent.execute(this.STOP_CREATION);
+								this.execute(this.STOP_CREATION);
+
+								return;
+							}
 						}
 
-						this.execute(this.SPRAY);
 						this.parent.execute(this.SPRAY);
+						this.execute(this.SPRAY);
 					}
-				}	
+				}
 			}
 		}
-	}); 
+	});
 
 	var onRecycle = function(go) {
 		if (this.stopped)

@@ -17,7 +17,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 
 				this.hasStopListener = false;
 
-				// Set up cables				
+				// Set up cables
 				if (this.cables === null) {
 					this.cables = this.findChildren().allWithType("boss-1-cables");
 
@@ -28,7 +28,7 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					for (var i = 0; i < this.cables.length; i++) {
 						this.cables[i].onBossStart();
 						this.cables[i].on(this.cables[i].DAMAGE, this, this.onDamage);
-					}	
+					}
 				} else {
 					// Signal boss weak spots to start
 					for (var i = 0; i < this.cables.length; i++) {
@@ -41,10 +41,10 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 				if (this.cannons === null) {
 					// Get all the nearby Boss helpers
 					this.cannons = Root.findChildren().recurse().all(function(child) {
-						return (child.poolId == "BossCannonBase" ||  child.poolId == "BossDoubleCannonBase" || child.poolId == "BossGeneratorType") && child.getViewportVisibility('Main'); 
-					});	
+						return (child.poolId == "BossCannonBase" || child.poolId == "BossDoubleCannonBase" || child.poolId == "BossGeneratorType") && child.getViewportVisibility('Main'); 
+					});
 				}
-				
+
 				// Signal boss cannons to start
 				for (var i = 0; i < this.cannons.length; i++) {
 					if (this.cannons[i].isActive()) {
@@ -61,14 +61,14 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 					});
 
 					// If there are other bosses present, set up a delegate to get informed when they are destroyed
-					if (this.otherBosses) {		
+					if (this.otherBosses) {
 						for (var i=0; i < this.otherBosses.length; i++) {
 							this.otherBosses[i].once('destroyed', this, function(boss) {
 								if (this.isActive()) {
-									this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);	
+									this.otherBosses.splice(this.otherBosses.indexOf(boss), 1);
 								}
 							});
-						}	
+						}
 					}
 				}
 			}
@@ -87,17 +87,17 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 		},
 
 		editorUpdate: function(delta) {
-								
+		
 		},
 
 		deActivate: function() {
 			this.hasStopListener = false;
 			PlayerGetter.get().removeDelegate(PlayerGetter.get().STOP_MOVEMENT, this, this.onPlayerStop);
-    	},
+		},
 
-    	canBeDamaged: function() {
-    		return this.cableCount === 0;
-    	},
+		canBeDamaged: function() {
+			return this.cableCount === 0;
+		},
 
 		onDamage: function (cable) {
 			this.cableCount--;
@@ -109,13 +109,13 @@ define(["editor-game-object-container", "player-getter", "root", "gb"], function
 
 			if (this.cableCount !== null && this.cableCount <= 0) {
 				if (this.health > 0) {
-					this.health--;  
-				} 
+					this.health--;
+				}
 				else {
 					var explosionsGenerator = Gb.addComponentTo(this, this.destroyEffect);
 
 					// Remove collision component
-					this.removeComponent(this.findComponents().firstWithType(this.colliderId));  
+					this.removeComponent(this.findComponents().firstWithType(this.colliderId));
 
 					// When the last explosion is done with it's animation, check if this is the last boss standing
 					explosionsGenerator.once(explosionsGenerator.STOP_AND_ALL_RECYCLED, this, function() {

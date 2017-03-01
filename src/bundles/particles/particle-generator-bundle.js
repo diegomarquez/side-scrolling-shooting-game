@@ -3,7 +3,7 @@ define(function(require) {
 	var particleBundle = require('particle-bundle');
 
 	var ParticleGenertor = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			this.componentPool.createPool('particle-generator', require('game-object-generator'));
 			this.componentPool.createPool('child-particle-generator', require('child-generator'));
 			this.componentPool.createPool('particle-collision-generator', require('on-collision-game-object-generator'));
