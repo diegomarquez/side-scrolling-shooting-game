@@ -14,7 +14,8 @@ define(function(require) {
 				canvas: gb.canvas,
 				viewports: gb.viewports,
 				config: editorConfig,
-				gridBundle: require('grid-bundle')
+				gridBundle: require('grid-bundle'),
+				self: this
 			}
 
 			this.onScroll = function (event) {
@@ -24,6 +25,8 @@ define(function(require) {
 
 				var translate = "translate(" + left + "px," + top + "px" + ")";
 
+				console.log(left, top);
+
 				this.canvas.style.webkitTransform = translate;
 				this.canvas.style.transform = translate;
 
@@ -32,29 +35,82 @@ define(function(require) {
 
 				this.gridBundle.setOffsetX(left);
 				this.gridBundle.setOffsetY(top);
+
+				this.self.latestScrollLeft = left;
+				this.self.latestScrollTop = top;
 			}.bind(scrollContext);
 
 			this.scrollingContainer = null;
+
+			this.scrollLeftRafId = -1;
+			this.scrollTopRafId = -1;
+			this.latestScrollLeft = 0;
+			this.latestScrollTop = 0;
+
+			this.onScrollLeftFinished = null;
+			this.onScrollTopFinished = null;
 		},
 
 		getScrollingLeft() {
-			return this.scrollingContainer.scrollLeft;
+			return this.latestScrollLeft;
 		},
 
 		getScrollingTop() {
-			return this.scrollingContainer.scrollTop;
+			return this.latestScrollTop
 		},
 
 		setScrollingLeft(scroll) {
-			requestAnimationFrame(function() {
-				this.scrollingContainer.scrollLeft = scroll;
-			}.bind(this));
+			this.latestScrollLeft = scroll;
+
+			if (this.scrollLeftRafId !== -1)
+				return;
+
+			if (this.scrollTopRafId === -1) {
+				this.onScrollTopFinished = null;
+
+				this.scrollLeftRafId = setTimeout(function() {
+					this.scrollLeftRafId = -1;
+
+					this.scrollingContainer.scrollLeft = this.latestScrollLeft;
+
+					if (this.onScrollLeftFinished)
+						this.onScrollLeftFinished();
+
+					this.onScrollLeftFinished = null;
+
+				}.bind(this), 1000);
+			} else {
+				this.onScrollTopFinished = function() {
+					this.setScrollingLeft(this.latestScrollLeft);
+				}.bind(this);
+			}
 		},
 
 		setScrollingTop(scroll) {
-			requestAnimationFrame(function() {
-				this.scrollingContainer.scrollTop = scroll;
-			}.bind(this));
+			this.latestScrollTop = scroll;
+
+			if (this.scrollTopRafId !== -1)
+				return;
+
+			if (this.scrollLeftRafId === -1) {
+				this.onScrollLeftFinished = null;
+
+				this.scrollTopRafId = setTimeout(function() {
+					this.scrollTopRafId = -1;
+
+					this.scrollingContainer.scrollTop = this.latestScrollTop;
+
+					if (this.onScrollTopFinished)
+						this.onScrollTopFinished();
+
+					this.onScrollTopFinished = null;
+
+				}.bind(this), 1000);
+			} else {
+				this.onScrollLeftFinished = function() {
+					this.setScrollingTop(this.latestScrollTop)
+				}.bind(this);
+			}
 		},
 
 		create: function() {
@@ -78,6 +134,11 @@ define(function(require) {
 			main.addEventListener('scroll', this.onScroll);
 
 			this.scrollingContainer = main;
+			this.scrollLeftRafId = -1;
+			this.scrollTopRafId = -1;
+
+			this.latestScrollLeft = 0;
+			this.latestScrollTop = 0;
 
 			// Stuff to do when a new 'Main' viewport is added. AKA, load a new scene
 			editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
@@ -87,9 +148,6 @@ define(function(require) {
 					viewport = v;
 					viewport.X = 0;
 					viewport.Y = 0;
-
-					main.scrollLeft = 0;
-					main.scrollTop = 0;
 
 					gb.canvas.style.webkitTransform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					gb.canvas.style.transform = "translate(" + 0 + "px," + 0 + "px" + ")";
@@ -105,24 +163,27 @@ define(function(require) {
 					if (scrolling) {
 						this.setScrollingLeft(scrolling['left']);
 						this.setScrollingTop(scrolling['top']);
+					} else {
+						this.setScrollingLeft(0);
+						this.setScrollingTop(0);
 					}
 				}
 			});
 
 			editorDelegates.add(world, world.CHANGE_WIDTH, this, function (width) {
-				updateScrollWidth(scrollContainer, main, width, gb.game.WIDTH);
+				updateScrollWidth(scrollContainer, main, width, gb.game.WIDTH, this);
 			});
 
 			editorDelegates.add(world, world.CHANGE_HEIGHT, this, function (height) {
-				updateScrollHeight(scrollContainer, main, height, gb.game.HEIGHT);
+				updateScrollHeight(scrollContainer, main, height, gb.game.HEIGHT, this);
 			});
 
 			editorDelegates.add(gb.game, gb.game.CHANGE_WIDTH, this, function (width) {
-				updateScrollWidth(scrollContainer, main, world.getWidth(), width);
+				updateScrollWidth(scrollContainer, main, world.getWidth(), width, this);
 			});
 
 			editorDelegates.add(gb.game, gb.game.CHANGE_HEIGHT, this, function (height) {
-				updateScrollHeight(scrollContainer, main, world.getHeight(), height);
+				updateScrollHeight(scrollContainer, main, world.getHeight(), height, this);
 			});
 		},
 
@@ -140,7 +201,7 @@ define(function(require) {
 		}
 	});
 
-	var updateScrollWidth = function (scroller, canvasContainer, worldWidth, canvasWidth) {
+	var updateScrollWidth = function (scroller, canvasContainer, worldWidth, canvasWidth, ui) {
 		var diff = (worldWidth - canvasWidth);
 
 		if (diff > 0) {
@@ -152,11 +213,11 @@ define(function(require) {
 		diff = parseInt(scroller.style.width) - main.scrollWidth;
 
 		if (diff < 0) {
-			canvasContainer.scrollLeft += diff;
+			ui.setScrollingLeft(canvasContainer.scrollLeft + diff);
 		}
 	}
 
-	var updateScrollHeight = function (scroller, canvasContainer, worldHeight, canvasHeight) {
+	var updateScrollHeight = function (scroller, canvasContainer, worldHeight, canvasHeight, ui) {
 		var diff = (worldHeight - canvasHeight);
 
 		if (diff > 0) {
@@ -168,7 +229,7 @@ define(function(require) {
 		diff = parseInt(scroller.style.height) - main.scrollWidth;
 
 		if (diff < 0) {
-			canvasContainer.scrollTop += diff;
+			ui.setScrollingTop(canvasContainer.scrollTop + diff);
 		}
 	}
 

@@ -14,7 +14,7 @@ define(function(require) {
 			return gb.game.CREATE;
 		},
 
-		execute: function() { 
+		execute: function() {
 			this.originalWidth = gb.game.WIDTH;
 			this.originalHeight = gb.game.HEIGHT;
 

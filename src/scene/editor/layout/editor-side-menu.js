@@ -251,161 +251,161 @@ define(function(require) {
 				function() { this.open() }.bind(this.deleteDialog)
 			));
 
-			items.push(createDivider());
-			items.push(createTitleItem('Share'));
+			// items.push(createDivider());
+			// items.push(createTitleItem('Share'));
 
-			items.push(createOptionItem(
-				'Facebook',
-				'fa-facebook-official',
-				function() {
-					var blocker = document.createElement('div');
-					blocker.id = 'blocker';
+			// items.push(createOptionItem(
+			// 	'Facebook',
+			// 	'fa-facebook-official',
+			// 	function() {
+			// 		var blocker = document.createElement('div');
+			// 		blocker.id = 'blocker';
 					
-					document.body.appendChild(blocker);
+			// 		document.body.appendChild(blocker);
 					
-					var fb = require('fb');
+			// 		var fb = require('fb');
 					
-					fb.load(
-					function() {
-						var uploadDialog = new messageDialog();
+			// 		fb.load(
+			// 		function() {
+			// 			var uploadDialog = new messageDialog();
 
-						uploadDialog.create({
-							title: "Upload to Dropbox required",
-							message: "In order to share a scene it must first be uploaded to Dropbox. If you have an account you will be prompted to login. If you don't have an account you will need to create one first.",
-							modal: true,
-							close: function() {
-								uploadDialog.destroy();
-								document.body.removeChild(blocker);
-							},
-							buttons: {
-								Ok: function() {
-									uploadDialog.destroy();
+			// 			uploadDialog.create({
+			// 				title: "Upload to Dropbox required",
+			// 				message: "In order to share a scene it must first be uploaded to Dropbox. If you have an account you will be prompted to login. If you don't have an account you will need to create one first.",
+			// 				modal: true,
+			// 				close: function() {
+			// 					uploadDialog.destroy();
+			// 					document.body.removeChild(blocker);
+			// 				},
+			// 				buttons: {
+			// 					Ok: function() {
+			// 						uploadDialog.destroy();
 									
-									sceneSaveDialog.serializeAndStoreRemoteShare(
-										function(dropboxFileId) {
-											var sceneReadyDialog = new messageDialog();
+			// 						sceneSaveDialog.serializeAndStoreRemoteShare(
+			// 							function(dropboxFileId) {
+			// 								var sceneReadyDialog = new messageDialog();
 											
-											sceneReadyDialog.create({
-												title: "Scene is ready to be shared",
-												message: "Click 'Ok' to share the scene.",
-												modal: true,
-												close: function() {
-													document.body.removeChild(blocker);
-													sceneReadyDialog.destroy();
-												},
-												buttons: {
-													Ok: function() {
-														sceneReadyDialog.destroy();
+			// 								sceneReadyDialog.create({
+			// 									title: "Scene is ready to be shared",
+			// 									message: "Click 'Ok' to share the scene.",
+			// 									modal: true,
+			// 									close: function() {
+			// 										document.body.removeChild(blocker);
+			// 										sceneReadyDialog.destroy();
+			// 									},
+			// 									buttons: {
+			// 										Ok: function() {
+			// 											sceneReadyDialog.destroy();
 														
-														fb.share(dropboxFileId,
-														function() {
-															document.body.removeChild(blocker);
+			// 											fb.share(dropboxFileId,
+			// 											function() {
+			// 												document.body.removeChild(blocker);
 
-															require('gb').game.get_extension(require('logger')).success('Scene shared to Facebook successfully!');
-															require('gb').game.get_extension(require('logger')).show();
-														},
-														function(error) {
-															if (error === "user-closed") {
-																document.body.removeChild(blocker);
-																return;
-															}
+			// 												require('gb').game.get_extension(require('logger')).success('Scene shared to Facebook successfully!');
+			// 												require('gb').game.get_extension(require('logger')).show();
+			// 											},
+			// 											function(error) {
+			// 												if (error === "user-closed") {
+			// 													document.body.removeChild(blocker);
+			// 													return;
+			// 												}
 															
-															var failureDialog = new messageDialog();
+			// 												var failureDialog = new messageDialog();
 															
-															failureDialog.create({
-																title: "Share Failed",
-																message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
-																modal: true,
-																close: function () {
-																	document.body.removeChild(blocker);
-																	failureDialog.destroy();
+			// 												failureDialog.create({
+			// 													title: "Share Failed",
+			// 													message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+			// 													modal: true,
+			// 													close: function () {
+			// 														document.body.removeChild(blocker);
+			// 														failureDialog.destroy();
 																	
-																	require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-																	require('gb').game.get_extension(require('logger')).show();
-																},
-																buttons: {
-																	Ok: function() {
-																		document.body.removeChild(blocker);
-																		failureDialog.destroy();
+			// 														require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 														require('gb').game.get_extension(require('logger')).show();
+			// 													},
+			// 													buttons: {
+			// 														Ok: function() {
+			// 															document.body.removeChild(blocker);
+			// 															failureDialog.destroy();
 																		
-																		require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-																		require('gb').game.get_extension(require('logger')).show();
-																	}
-																}
-															});
-														});
-													}
-												}
-											});
-										},
-										function(error) {
-											if (error === "user-closed") {
-												document.body.removeChild(blocker);
-												return;
-											}
+			// 															require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 															require('gb').game.get_extension(require('logger')).show();
+			// 														}
+			// 													}
+			// 												});
+			// 											});
+			// 										}
+			// 									}
+			// 								});
+			// 							},
+			// 							function(error) {
+			// 								if (error === "user-closed") {
+			// 									document.body.removeChild(blocker);
+			// 									return;
+			// 								}
 											
-											var failureDialog = new messageDialog();
+			// 								var failureDialog = new messageDialog();
 											
-											failureDialog.create({
-												title: "Share Failed",
-												message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
-												modal: true,
-												close: function() {
-													uploadDialog.destroy();
-													document.body.removeChild(blocker);
+			// 								failureDialog.create({
+			// 									title: "Share Failed",
+			// 									message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+			// 									modal: true,
+			// 									close: function() {
+			// 										uploadDialog.destroy();
+			// 										document.body.removeChild(blocker);
 													
-													require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-													require('gb').game.get_extension(require('logger')).show();
-												},
-												buttons: {
-													Ok: function() {
-														document.body.removeChild(blocker);
-														failureDialog.destroy();
+			// 										require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 										require('gb').game.get_extension(require('logger')).show();
+			// 									},
+			// 									buttons: {
+			// 										Ok: function() {
+			// 											document.body.removeChild(blocker);
+			// 											failureDialog.destroy();
 														
-														require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-														require('gb').game.get_extension(require('logger')).show();
-													}
-												}
-											});
-										}
-									);
-								}
-							}
-						});
-					},
-					function(error) {
-						if (error === "user-closed") {
-							document.body.removeChild(blocker);
-							return;
-						}
+			// 											require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 											require('gb').game.get_extension(require('logger')).show();
+			// 										}
+			// 									}
+			// 								});
+			// 							}
+			// 						);
+			// 					}
+			// 				}
+			// 			});
+			// 		},
+			// 		function(error) {
+			// 			if (error === "user-closed") {
+			// 				document.body.removeChild(blocker);
+			// 				return;
+			// 			}
 						
-						var failureDialog = new messageDialog();
+			// 			var failureDialog = new messageDialog();
 			
-						failureDialog.create({
-							title: "Share Failed",
-							message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
-							modal: true,
-							close: function() {
-								failureDialog.destroy();
-								document.body.removeChild(blocker);
+			// 			failureDialog.create({
+			// 				title: "Share Failed",
+			// 				message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+			// 				modal: true,
+			// 				close: function() {
+			// 					failureDialog.destroy();
+			// 					document.body.removeChild(blocker);
 								
-								require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-								require('gb').game.get_extension(require('logger')).show();
-							},
-							buttons: {
-								Ok: function() {
-									document.body.removeChild(blocker);
-									failureDialog.destroy();
+			// 					require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 					require('gb').game.get_extension(require('logger')).show();
+			// 				},
+			// 				buttons: {
+			// 					Ok: function() {
+			// 						document.body.removeChild(blocker);
+			// 						failureDialog.destroy();
 									
-									require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
-									require('gb').game.get_extension(require('logger')).show();
-								}
-							}
-						});
-					})
-				},
-				'fa fa-lg'
-			));
+			// 						require('gb').game.get_extension(require('logger')).error('Share to Facebook failed');
+			// 						require('gb').game.get_extension(require('logger')).show();
+			// 					}
+			// 				}
+			// 			});
+			// 		})
+			// 	},
+			// 	'fa fa-lg'
+			// ));
 
 			items.push(createDivider());
 			items.push(createTitleItem('Misc.'));
