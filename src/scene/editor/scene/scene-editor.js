@@ -224,6 +224,16 @@ define(function(require) {
 		},
 
 		restoreUI: function() {
+			var scrolling = storage.getScrolling();
+
+			if (scrolling) {
+				this.canvasScrollBarsUI.setScrollingLeft(scrolling['left']);
+				this.canvasScrollBarsUI.setScrollingTop(scrolling['top']);
+			} else {
+				this.canvasScrollBarsUI.setScrollingLeft(0);
+				this.canvasScrollBarsUI.setScrollingTop(0);
+			}
+
 			var gridControlsState = storage.getGridControls();
 
 			if (gridControlsState) {
