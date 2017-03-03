@@ -36,7 +36,7 @@ define(function(require) {
         },
 
         getTopLeft: function() {
-          return $(this.html).find('#topLeft'); 
+          return $(this.html).find('#topLeft');
         },
 
         getTopRight: function() {
@@ -52,7 +52,7 @@ define(function(require) {
         },
 
         getTopLeftContainer: function() {
-          return this.getTopLeft().parent('.region'); 
+          return this.getTopLeft().parent('.region');
         },
 
         getTopRightContainer: function() {

@@ -22,6 +22,24 @@ define(function(require) {
 			}
 		},
 		
+		setRegions: function(topLeft, topRight, bottomLeft, bottomRight) {
+			setItem.call(this, 'regions', JSON.stringify({
+				'topLeft': !topLeft,
+				'topRight': !topRight,
+				'bottomRight': !bottomLeft,
+				'bottomLeft': !bottomRight
+			}));
+		},
+
+		getRegions: function() {
+			var ret = getItem.call(this, 'regions');
+
+			if (!ret)
+				return;
+
+			return JSON.parse(ret);
+		},
+
 		setScrolling: function(scrollingLeft, scrollingTop) {
 			setItem.call(this, 'scrolling', JSON.stringify({
 				'left': scrollingLeft,

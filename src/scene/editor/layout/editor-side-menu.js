@@ -462,11 +462,14 @@ define(function(require) {
 
 			var component = componentFactory.getController(wrapper.wrap(ul, { id: 'editor-side-menu-wrapper' }));
 
-			component.update = function() {
+			component.update = function(topLeft, topRight, bottomLeft, bottomRight) {
 				toggledCount = 4;
 
 				if (require('mode').isBasic()) {
-					$(misc).click();
+					if (!topRight) {
+						$(misc).click();
+					}
+
 					$(gos).click();
 					$(viewports).click();
 

@@ -183,9 +183,6 @@ define(function(require) {
 				this.storeUI();
 			}.bind(this);
 
-			// Update the side menu after adding it to the DOM
-			this.editorSideMenuController.update();
-
 			this.restoreUI();
 		},
 
@@ -204,6 +201,13 @@ define(function(require) {
 		},
 		
 		storeUI: function() {
+			storage.setRegions(
+				this.editorRegions.get().getTopLeftContainer()[0].style.display,
+				this.editorRegions.get().getTopRightContainer()[0].style.display,
+				this.editorRegions.get().getBottomLeftContainer()[0].style.display,
+				this.editorRegions.get().getBottomRightContainer()[0].style.display
+			);
+
 			storage.setScrolling(
 				this.canvasScrollBarsUI.getScrollingLeft(),
 				this.canvasScrollBarsUI.getScrollingTop()
@@ -282,6 +286,16 @@ define(function(require) {
 			} else {
 				// Default state
 				this.gameObjectControlsUI.toggleBoundings();
+			}
+
+			var regions = storage.getRegions();
+
+			if (regions) {
+				// Update the side menu after adding it to the DOM
+				this.editorSideMenuController.update(regions['topLeft'], regions['topRight'], regions['bottomLeft'], regions['bottomRight']);
+			} else {
+				// Update the side menu after adding it to the DOM
+				this.editorSideMenuController.update();
 			}
 		}
 	});
