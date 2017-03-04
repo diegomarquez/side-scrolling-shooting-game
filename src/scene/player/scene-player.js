@@ -336,8 +336,6 @@ define(function(require) {
 			for (var i = 0; i < urls.length; i++) {
 				var url = urls[i];
 
-				console.log(url);
-
 				assetPreloader.addAsset(url);
 			}
 		},
