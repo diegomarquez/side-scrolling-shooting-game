@@ -1,4 +1,4 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 
@@ -6,7 +6,7 @@ define(function(require) {
 	var explosionBundle = require('explosion-generator-bundle');
 
 	var CannonBundle = require("bundle").extend({
-		create: function(args) {	
+		create: function(args) {
 			// Misc
 			// =======================
 			
@@ -48,14 +48,14 @@ define(function(require) {
 			this.gameObjectPool.createPool('CannonShooter', require("cannon-shooter"));
 
 			this.componentPool.createConfiguration("CannonBaseCollider", commonBundle.getCircleColliderPoolId())
-				.args({ 
-					id:'cannonColliderId', 
-					radius:20 
+				.args({
+					id:'cannonColliderId',
+					radius:20
 				});
 
 			this.gameObjectPool.createConfiguration("cannon-shooter-0", "CannonShooter")
-				.args({ 
-					rate: 150, 
+				.args({
+					rate: 150,
 					bullets: 5,
 					burstAmount: 1,
 					x: 0,
@@ -70,8 +70,8 @@ define(function(require) {
 				.childOnly();
 
 			this.gameObjectPool.createConfiguration("cannon-shooter-1", "CannonShooter")
-				.args({ 
-					rate: 120, 
+				.args({
+					rate: 120,
 					bullets: 8,
 					burstAmount: 1,
 					x: 0,

@@ -15,6 +15,7 @@ define(function(require) {
 
 	var editorOnlyComponents = null;
 	var editorOnlyGameObjects = null;
+	var nonInspectableGameObjects = null;
 	var controlObjects = null;
 	var controlObjectsNameAliases = null;
 	var controlObjectOriginalNames = null;
@@ -111,6 +112,10 @@ define(function(require) {
 
 		isMainViewport: function(viewport) {
 			return viewport.name == this.getMainViewportName();
+		},
+
+		isNonInspectableGameObject: function(id) {
+			return checkExistance(id, this.getNonInspectableGameObjects());
 		},
 
 		isEditorGameObject: function(id) {
@@ -218,6 +223,25 @@ define(function(require) {
 			editorOnlyGameObjects = editorOnlyGameObjects.concat(this.getSoundObjects());
 
 			return editorOnlyGameObjects;
+		},
+
+		getNonInspectableGameObjects: function() {
+			if (nonInspectableGameObjects) {
+				return nonInspectableGameObjects;
+			}
+
+			nonInspectableGameObjects = [
+				require('outline-bundle').getOutlineId(),
+				require('grid-bundle').getGridId(),
+				'absolute-scroll-stopper'
+			]
+
+			nonInspectableGameObjects = nonInspectableGameObjects.concat(this.getControlGizmoObjects());
+			nonInspectableGameObjects = nonInspectableGameObjects.concat(this.getColliderGizmoGameObjects());
+			nonInspectableGameObjects = nonInspectableGameObjects.concat(this.getRotationGizmoGameObjects());
+			nonInspectableGameObjects = nonInspectableGameObjects.concat(this.getScaleGizmoGameObjects());
+
+			return nonInspectableGameObjects;
 		},
 
 		getControlObjects: function() {

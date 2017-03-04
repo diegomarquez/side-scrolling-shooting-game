@@ -269,8 +269,8 @@ define(function(require) {
 
 				inspectedConfigurations.push(configurationId);
 
-				// Filter out editor only objects
-				if (editorConfig.isEditorGameObject(configurationId))
+				// Filter out non inspectable objects
+				if (editorConfig.isNonInspectableGameObject(configurationId))
 					continue;
 
 				var isGameObject = false;
@@ -335,6 +335,8 @@ define(function(require) {
 
 			for (var i = 0; i < urls.length; i++) {
 				var url = urls[i];
+
+				console.log(url);
 
 				assetPreloader.addAsset(url);
 			}

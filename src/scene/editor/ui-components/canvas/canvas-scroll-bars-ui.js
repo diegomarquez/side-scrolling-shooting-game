@@ -45,15 +45,15 @@ define(function(require) {
 			this.latestScrollTop = 0;
 		},
 
-		getScrollingLeft() {
+		getScrollingLeft: function() {
 			return this.latestScrollLeft;
 		},
 
-		getScrollingTop() {
+		getScrollingTop: function() {
 			return this.latestScrollTop
 		},
 
-		setScrollingLeft(scroll, skip) {
+		setScrollingLeft: function(scroll, skip) {
 			if (skip) {
 				this.latestScrollLeft = scroll;
 			} else {
@@ -64,7 +64,7 @@ define(function(require) {
 			}
 		},
 
-		setScrollingTop(scroll, skip) {
+		setScrollingTop: function(scroll, skip) {
 			if (skip) {
 				this.latestScrollTop = scroll;
 			} else {

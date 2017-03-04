@@ -18,6 +18,8 @@ define(function(require) {
 	var storage = require('local-storage');
 	var serializer = require('scene-serializer');
 
+	var exitToPreview = false;
+
 	var SceneEditor = require("ui-component").extend({
 		init: function() {
 			this._super();
@@ -126,11 +128,15 @@ define(function(require) {
 				
 				this.storeUI();
 
+				exitToPreview = false;
+
 				this.execute(this.EXIT);
 			});
 
 			editorDelegates.add(this.editorSideMenu, this.editorSideMenu.PREVIEW, this, function() {
 				this.storeUI();
+
+				exitToPreview = true;
 
 				this.execute(this.PREVIEW);
 			});
@@ -187,8 +193,17 @@ define(function(require) {
 		},
 
 		cleanUp: function() {
-			window.onbeforeunload = null;
-			
+			if (exitToPreview) {
+				// If exiting to preview, change the on before unload callback to store the preview scene
+				// in local storage
+				window.onbeforeunload = function (event) {
+					storage.setRestoreScene(storage.getPreviewScene());
+				}.bind(this);
+			} else {
+				// If exiting the editor completely remove the on before unload callback completely
+				window.onbeforeunload = null;
+			}
+
 			// Destroy viewport related dialogs
 			require('viewport-editor-ui').destroy();
 
