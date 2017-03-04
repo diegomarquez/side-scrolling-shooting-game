@@ -42,9 +42,14 @@ define(function(require) {
 			game.add_extension(require("patch-game-object-container"));
 		});
 
-		state.addStartAction(function (initialScene) {
+		state.addStartAction(function (args) {
 			canvasContainer.detachCanvas();
-			sceneEditor.create(initialScene);
+
+			if (typeof args === "string") {
+				sceneEditor.create(args, false);
+			} else if (typeof args === "object") {
+				sceneEditor.create(args.scene, args.preview);
+			}
 
 			// When the scene editor exits
 			sceneEditor.once(sceneEditor.EXIT, this, function() {

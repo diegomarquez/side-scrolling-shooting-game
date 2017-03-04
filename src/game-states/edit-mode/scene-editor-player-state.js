@@ -27,7 +27,7 @@ define(function(require) {
 				// Wait for the loader to close before going back to the previous state
 				loaderContainer.once(loaderContainer.CLOSE, this, function() {
 					// Go back to the overview state
-					state.execute(state.PREVIOUS, { nextInitArgs: previewSceneString, lastCompleteArgs: null });
+					state.execute(state.PREVIOUS, { nextInitArgs: { scene: previewSceneString, preview: true }, lastCompleteArgs: null });
 				});
 
 				loaderContainer.transition();
@@ -54,7 +54,7 @@ define(function(require) {
 			});
 
 			// Load the scene
-			scenePlayer.create(previewScene, true);
+			scenePlayer.create(previewScene);
 		});
 
 		state.addUpdateAction(function (delta) {

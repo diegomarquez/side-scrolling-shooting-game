@@ -10,13 +10,11 @@ define(function(require) {
 		init: function() {
 			this._super();
 
-			this.gridBundle = require('grid-bundle');
-
 			var scrollContext = {
 				canvas: gb.canvas,
 				viewports: gb.viewports,
 				config: editorConfig,
-				gridBundle: this.gridBundle,
+				gridBundle: require('grid-bundle'),
 				self: this
 			}
 
