@@ -258,7 +258,7 @@ define(function(require) {
 
 			function inspectArguments(args) {
 				for (var k in args) {
-					let arg = args[k];
+					var arg = args[k];
 					
 					// Inspect strings looking for paths and configuration ids
 					inspectStringArgument(arg);
@@ -359,8 +359,6 @@ define(function(require) {
 
 			for (var i = 0; i < urls.length; i++) {
 				var url = urls[i];
-
-				console.log(url);
 
 				assetPreloader.addAsset(url);
 			}
