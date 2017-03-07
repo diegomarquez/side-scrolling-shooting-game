@@ -208,42 +208,66 @@ define(function(require) {
 				}
 			}
 
-			function inspectStringArgument(value) {
-				if (util.isString(value)) {
-					// Does it look like a URL?
-					if (isAssetUrl(value)) {
-						if (urls.indexOf(value) === -1) {
-							urls.push(value);
-						}
-					}
-
-					// Is it a Configuration ID for a game object?
-					if (gb.goPool.configurationExists(value)) {
-						if (configurationsUsed.indexOf(value) === -1) {
-							configurationsUsed.push(value);
-						}
-					}
-
-					// Is it a configuration ID for a component?
-					if (gb.coPool.configurationExists(value)) {
-						if (configurationsUsed.indexOf(value) === -1) {
-							configurationsUsed.push(value);
-						}
-					}
-
-					if (soundPlayer.hasId(value)) {
-						var soundResourceUrl = soundPlayer.getResourcePath(value);
-
-						if (urls.indexOf(soundResourceUrl) === -1) {
-							urls.push(soundResourceUrl);
-						}
+			function inspectStringArgument(string) {
+				if (!util.isString(string))
+					return;
+				
+				// Does it look like a URL?
+				if (isAssetUrl(string)) {
+					if (urls.indexOf(string) === -1) {
+						urls.push(string);
 					}
 				}
+
+				// Is it a Configuration ID for a game object?
+				if (gb.goPool.configurationExists(string)) {
+					if (configurationsUsed.indexOf(string) === -1) {
+						configurationsUsed.push(string);
+					}
+				}
+
+				// Is it a configuration ID for a component?
+				if (gb.coPool.configurationExists(string)) {
+					if (configurationsUsed.indexOf(string) === -1) {
+						configurationsUsed.push(string);
+					}
+				}
+
+				if (soundPlayer.hasId(string)) {
+					var soundResourceUrl = soundPlayer.getResourcePath(string);
+
+					if (urls.indexOf(soundResourceUrl) === -1) {
+						urls.push(soundResourceUrl);
+					}
+				}
+			}
+			
+			function inspectObjectArgument(object) {
+				if (!util.isObject(object))
+					return;
+				
+				inspectArguments(object);
+			}
+			
+			function inspectArrayArgument(array) {
+				if (!util.isArray(array))
+					return;
+				
+				inspectArguments(array);
 			}
 
 			function inspectArguments(args) {
 				for (var k in args) {
-					inspectStringArgument(args[k]);
+					let arg = args[k];
+					
+					// Inspect strings looking for paths and configuration ids
+					inspectStringArgument(arg);
+					
+					// Inspect object recusively looking for string arguments
+					inspectObjectArgument(arg);
+					
+					// Inspect arrays recursively looking for string arguments
+					inspectArrayArgument(arg);
 				}
 			}
 
@@ -335,6 +359,8 @@ define(function(require) {
 
 			for (var i = 0; i < urls.length; i++) {
 				var url = urls[i];
+
+				console.log(url);
 
 				assetPreloader.addAsset(url);
 			}
