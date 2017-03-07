@@ -71,6 +71,7 @@ define(function(require) {
 	assetPreloader.addAsset(gb.assetMap()['OK.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['BACK.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['DEFLECT.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['PLAYERSHOT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['HIT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['PLAYERDAMAGE.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
