@@ -163,6 +163,9 @@ define(function(require) {
 				.setRenderer("RoundBulletRenderer");
 
 			this.gameObjectPool.createConfiguration("Laser", "Laser")
+				.args({
+					laserHitObjectId: "LaserHit"
+				})
 				.addComponent("LaserCollider")
 				.addComponent("LaserTwitch")
 				.setRenderer("LaserRender");

@@ -4,7 +4,7 @@ define(function(require) {
 	var explosionsBundle = require('explosion-generator-bundle');
 
 	var Mine = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.gameObjectPool.createDynamicPool('MineType', require('mine'));
 
@@ -14,7 +14,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("MineCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id: 'mineColliderId', 
+					id: 'mineColliderId',
 					radius: 13
 				});
 

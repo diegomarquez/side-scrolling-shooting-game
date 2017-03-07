@@ -12,7 +12,8 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 
 			this.dirX = 0;
 			this.dirY = 0;
-
+			
+			this.laserHitObjectId = "";
 			this.laserHit = null;
 
 			this.collidingObstacles = [];
@@ -143,7 +144,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 					this.renderer.enable();
 
 					// Create the laser hit game object
-					this.laserHit = Gb.create('LaserHit', this.getUpdateGroup(), this.getViewportList(), {
+					this.laserHit = Gb.create(this.laserHitObjectId, this.getUpdateGroup(), this.getViewportList(), {
 						x: this.shortestCollisionPointX,
 						y: this.shortestCollisionPointY
 					});

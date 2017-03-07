@@ -199,7 +199,7 @@ define(function(require) {
 
 		preloadAssets: function(sceneData) {
 			function isAssetUrl(url) {
-				var pattern = /^assets\/.*?\/.*?\?b=.*?$/;
+				var pattern = /^assets[\/|\\].*?[\/|\\].*?\?b=.*?$/;
 
 				if(!pattern.test(url)) {
 					return false;

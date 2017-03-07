@@ -4,7 +4,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 	var selfMatrix = null;
 
 	var startPositionDecompose = {};
-	var startPositionMatrix = null; 
+	var startPositionMatrix = null;
 
 	var LaserShooter = GameObject.extend({
 		init: function() {
@@ -18,6 +18,9 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 			
 			this.shootTime = 0;
 			this.burstTime = 0;
+
+			this.laserObjectId = "";
+			this.burstObjectId = "";
 
 			this.laser = null;
 			this.laserBurst = null;
@@ -46,7 +49,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 					
 					Gb.reclaimer.mark(this.laser);
 					this.laser = null;
-				}.bind(this), 1000);	
+				}.bind(this), 1000);
 			}
 			
 			if (this.laserBurst) {
@@ -69,7 +72,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
 			this.shootTimer = 0;
 			this.burstTimer = 0;
-						
+			
 			this.parent.on(this.parent.DAMAGE, this, function() {
 				this.damaged = true;
 				this.bursting = false;
@@ -91,7 +94,7 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 
 			this.parent.on(this.parent.REPAIR, this, function() {
 				this.damaged = false;
-			});			
+			});
 		},
 
 		editorUpdate: function(delta) {
@@ -118,13 +121,13 @@ define(["editor-game-object-container", "gb"], function(GameObject, Gb) {
 					selfMatrix = this.getMatrix(selfMatrix);
 					selfDecompose = selfMatrix.decompose(selfDecompose);
 
-					this.laser = Gb.create('Laser', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+					this.laser = Gb.create(this.laserObjectId, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 						rotation: selfDecompose.rotation-90,
 						x: startPositionDecompose.x,
 						y: startPositionDecompose.y
 					});
 
-					this.laserBurst = Gb.create('LaserBurst', this.parent.getUpdateGroup(), this.parent.getViewportList(), {
+					this.laserBurst = Gb.create(this.burstObjectId, this.parent.getUpdateGroup(), this.parent.getViewportList(), {
 						rotation: selfDecompose.rotation,
 						x: startPositionDecompose.x,
 						y: startPositionDecompose.y

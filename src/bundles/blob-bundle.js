@@ -1,10 +1,10 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 	var explosionsBundle = require('explosion-generator-bundle');
 
 	var Blob = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 
 			this.gameObjectPool.createDynamicPool('BlobType', require('blob'));
 			
@@ -17,7 +17,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("BlobCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id: 'blobColliderId', 
+					id: 'blobColliderId',
 					radius: 10
 				});
 

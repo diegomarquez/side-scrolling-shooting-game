@@ -1,10 +1,10 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 	var explosionsBundle = require('explosion-generator-bundle');
 
 	var EnemyShip = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.gameObjectPool.createDynamicPool('EnemyShip_1_Type', require('enemy-ship-1'));
 			this.gameObjectPool.createDynamicPool('EnemyShip_2_Type', require('enemy-ship-2'));
@@ -16,7 +16,7 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("EnemyShipRectangleCollider", commonBundle.getPolygonColliderPoolId())
 				.args({ 
-					id:'enemyShipColliderId', 
+					id:'enemyShipColliderId',
 					points: [
 						{ x: -30 , y: -10  },
 						{ x:  30 , y: -10  },
@@ -27,13 +27,13 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("EnemyShipCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id: 'enemyShipColliderId', 
+					id: 'enemyShipColliderId',
 					radius: 12
 				});
 
 			this.componentPool.createConfiguration("EnemySpiderCircleCollider", commonBundle.getCircleColliderPoolId())
 				.args({
-					id: 'enemySpiderColliderId', 
+					id: 'enemySpiderColliderId',
 					radius: 15
 				});
 

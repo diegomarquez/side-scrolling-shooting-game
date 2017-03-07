@@ -1,10 +1,10 @@
-define(function(require) {	
+define(function(require) {
 
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 
 	var LaserEffects = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.componentPool.createPool('burst-twich-component', require('twitch'));
 

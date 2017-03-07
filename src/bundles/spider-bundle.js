@@ -4,7 +4,7 @@ define(function(require) {
 	var explosionsBundle = require('explosion-generator-bundle');
 
 	var SpiderBundle = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.gameObjectPool.createDynamicPool('Spider_Follow_Type', require('follow-spider'));
 			this.gameObjectPool.createDynamicPool('Spider_Shooting_Type', require('shooting-spider'));

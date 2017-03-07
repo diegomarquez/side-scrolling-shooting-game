@@ -1,11 +1,11 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 	var gb = require('gb');
 	var explosionsBundle = require('explosion-generator-bundle');
 	var particleBundle = require('particle-generator-bundle');
 	
 	var Generator = require("bundle").extend({
-		create: function(args) {			
+		create: function(args) {
 			
 			this.gameObjectPool.createDynamicPool('GeneratorType', require('generator'));
 			this.gameObjectPool.createDynamicPool('BossGeneratorType', require('boss-generator'));
@@ -16,8 +16,8 @@ define(function(require) {
 			this.componentPool.createPool('DamageOnHpDepleted', require('damage-on-hp-depleted'));
 
 			this.componentPool.createConfiguration("GeneratorCircleCollider", commonBundle.getPolygonColliderPoolId())
-				.args({ 
-					id:'generatorColliderId', 
+				.args({
+					id:'generatorColliderId',
 					points: [
 						{ x: -32 , y: -15  },
 						{ x:  32 , y: -15  },

@@ -208,14 +208,16 @@ define(function(require) {
 
 			this.componentPool.createConfiguration("LaserBaseCollider", commonBundle.getCircleColliderPoolId())
 				.args({ 
-					id:'cannonColliderId', 
+					id:'cannonColliderId',
 					radius:25
 				});
 
 			this.gameObjectPool.createConfiguration("laser-shooter-0", "LaserShooter")
 				.args({
 					shootTime: 300,
-					burstTime: 50
+					burstTime: 50,
+					laserObjectId: "Laser",
+					burstObjectId: "LaserBurst"
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
@@ -226,7 +228,9 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("laser-shooter-1", "LaserShooter")
 				.args({
 					shootTime: 200,
-					burstTime: 200
+					burstTime: 200,
+					laserObjectId: "Laser",
+					burstObjectId: "LaserBurst"
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
@@ -237,7 +241,9 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("boss-laser-shooter-0", "LaserShooter")
 				.args({
 					shootTime: 250,
-					burstTime: 250
+					burstTime: 250,
+					laserObjectId: "Laser",
+					burstObjectId: "LaserBurst"
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
@@ -248,7 +254,9 @@ define(function(require) {
 			this.gameObjectPool.createConfiguration("boss-laser-shooter-1", "LaserShooter")
 				.args({
 					shootTime: 250,
-					burstTime: 400
+					burstTime: 400,
+					laserObjectId: "Laser",
+					burstObjectId: "LaserBurst"
 				})
 				.addChild('FirePosition', { x: 0, y: -28 })
 				.addComponent('ActivateShooterOnView')
@@ -330,8 +338,8 @@ define(function(require) {
 			this.gameObjectPool.createDynamicPool('BossDoubleCannonBase', require("boss-double-cannon-base"));
 
 			this.componentPool.createConfiguration("DoubleBaseCollider", commonBundle.getPolygonColliderPoolId())
-				.args({ 
-					id:'cannonColliderId', 
+				.args({
+					id:'cannonColliderId',
 					points: [
 						{ x: -32 , y: 5  },
 						{ x:  32 , y: 5  },
