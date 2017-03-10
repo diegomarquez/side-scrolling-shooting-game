@@ -31,6 +31,8 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 			this.collisionPoint.y = 0;
 
 			this.shortestDistance = -1;
+			this.shortestCollisionPointX = 0;
+			this.shortestCollisionPointY = 0;
 
 			this.dirX = 0;
 			this.dirY = 0;
@@ -45,7 +47,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 					return;
 				}
 
-				this.collisionDistance = 1500;
+				this.collisionDistance = 2000;
 				this.collisionPointFound = true;
 				this.renderer.enable();
 			}, true);
@@ -58,6 +60,10 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 		},
 
 		recycle: function() {
+			this.shortestDistance = -1;
+			this.shortestCollisionPointX = 0;
+			this.shortestCollisionPointY = 0;
+			
 			this.collisionPointFound = false;
 			this.collisionDistance = 0;
 
@@ -71,7 +77,10 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 				Gb.reclaimer.mark(this.laserHit);
 			
 			if (this.collisionTimer)
+			{
+				this.collisionTimer.stop();
 				this.collisionTimer.remove();
+			}
 
 			this.laserHit = null;
 			this.collidingObstacles.length = 0;
@@ -104,7 +113,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 
 						var collider = obstacle.findComponents().firstWithProp('collider').collider;
 
-						for (var i = 0; i < this.renderer.rendererWidth()/step; i++) {
+						for (var i = 0; i < this.renderer.rendererWidth() / step; i++) {
 
 							if (SAT.pointInPolygon(this.collisionPoint, collider)) {
 								if (this.shortestDistance != -1 && collisionDistance < this.shortestDistance) {
@@ -132,6 +141,10 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 					}
 
 					this.collisionDistance = this.shortestDistance;
+					
+					if (this.collisionDistance <= 0)
+						this.collisionDistance = 2000;
+					
 					// Mark that a collision point has been found
 					this.collisionPointFound = true;
 					
@@ -139,6 +152,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 					var laserCollider = this.findComponents().firstWithProp('collider');
 					laserCollider.pointsCopy[1].x = this.collisionDistance;
 					laserCollider.pointsCopy[2].x = this.collisionDistance;
+					laserCollider.collider.update(laserCollider.pointsCopy);
 
 					// Activate the laser renderer
 					this.renderer.enable();

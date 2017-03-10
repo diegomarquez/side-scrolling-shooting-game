@@ -345,6 +345,8 @@ define(
 					break;
 
 				case 'Laser':
+					if (!other.collisionPointFound)
+						break;
 
 					if (!this.damageComponent.isEnabled()) {
 						this.damageComponent.enable();

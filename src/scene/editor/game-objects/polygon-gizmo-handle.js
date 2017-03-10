@@ -7,11 +7,11 @@ define(function (require) {
 	var startOffsetX = null;
 	var startOffsetY = null;
 
-	var PolygonGizmoHandle = require("gizmo-handle").extend({		
+	var PolygonGizmoHandle = require("gizmo-handle").extend({
 		init: function() {
 			this._super();
 
-			this.pointIndex = null;			
+			this.pointIndex = null;
 		},
 
 		added: function() {
