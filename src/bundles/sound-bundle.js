@@ -78,7 +78,8 @@ define(function(require) {
 				.args({
 					soundId: 'EXPLOSION_6',
 					parentEvent: 'destroyed',
-					playMode: 'single'
+					playMode: 'single',
+					offScreenPlay: false
 				});
 
 			this.componentPool.createConfiguration("BossStartExplosion", commonBundle.getSoundComponentPoolId())

@@ -50,9 +50,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2 }, 'title');
 		this.tl.to(this.controls_1, 0.5, { x: Gb.canvas.width/2 }, 'controls');
 		this.tl.to(this.controls_2, 0.5, { x: Gb.canvas.width/2 }, 'controls');
-	    this.tl.to(this.play, 0.3, { y: '-=250' }, 'options');
-	    this.tl.to(this.edit, 0.3, { y: '-=250' }, 'options');
-	    this.tl.to(this.custom, 0.3, { y: '-=250' }, 'options');
+	    this.tl.to(this.play, 0.3, { y: '-=230' }, 'options');
+	    this.tl.to(this.edit, 0.3, { y: '-=230' }, 'options');
+	    this.tl.to(this.custom, 0.3, { y: '-=230' }, 'options');
         this.tl.to(this.credits_1, 0.5, { y: '-=200' }, 'credits');
         
 		this.tl.play();
