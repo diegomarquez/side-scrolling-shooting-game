@@ -1,8 +1,8 @@
-define(function(require) {	
+define(function(require) {
 	var commonBundle = require('common-bundle');
 
 	var Splash = require("bundle").extend({
-		create: function(args) {	
+		create: function(args) {
 			this.componentPool.createPool("MarkerArrowRenderer", require('arrow-renderer'));
 
 			this.gameObjectPool.createDynamicPool("Title", require('splash-title-animation'));
@@ -97,6 +97,18 @@ define(function(require) {
 					font: 'Russo One',
 					padding: 5,
 					size: 45,
+					offset: 'center'
+				});
+			
+			this.gameObjectPool.createConfiguration("Credits_1", commonBundle.getGameObjectContainerPoolId())
+				.setRenderer("TextRenderer", {
+					name: 'credits-1',
+					fillColor: "none",
+					strokeColor: "#FFFFFF",
+					text: '  Programming: Diego E. Marquez / Music: Nicole Marie T',
+					font: 'Exo',
+					padding: 10,
+					size: 18,
 					offset: 'center'
 				});
 

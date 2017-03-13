@@ -1,4 +1,10 @@
 define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage) {
+  
+  var heightOffset = -60;
+  var heightOffse4 = -90;
+  var heightOffset2 = -30;
+  var heightOffset3 = -20;
+  
   var Title = GameObject.extend({
     init: function() {
       this._super();
@@ -10,14 +16,16 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     	this.options = [];
 
     	this.fly = Gb.create('Fly', 'First', viewports, { x: -1000, y: 50 });
-    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -1000, y: 230 });
+    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -1000, y: 230 + heightOffset });
 
-    	this.controls_1 = Gb.create('Controls_1', 'First', viewports, { x: -1000, y: 350 });
-    	this.controls_2 = Gb.create('Controls_2', 'First', viewports, { x: -1000, y: 390 });
+    	this.controls_1 = Gb.create('Controls_1', 'First', viewports, { x: -1000, y: 350 + heightOffse4 });
+    	this.controls_2 = Gb.create('Controls_2', 'First', viewports, { x: -1000, y: 390 + heightOffse4 });
 
-    	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 });
-    	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 });
-    	this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 160 });			
+    	this.addOption('play', 'Play', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 60 + heightOffset2 });
+    	this.addOption('edit', 'Edit', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 110 + heightOffset2 });
+    	this.addOption('custom', 'PlayCustom', viewports, { x: Gb.canvas.width/2, y: Gb.canvas.height + 160 + heightOffset2});
+
+        this.credits_1 = Gb.create('Credits_1', 'First', viewports, { x: Gb.canvas.width / 2, y: Gb.canvas.height + 200 + heightOffset3});
 
     	this.tl = new TimelineLite({
     		onComplete: function() {
@@ -31,22 +39,22 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     		onReverseComplete: function() {
     			if (this.play.selected) {
 	    			this.execute(this.PLAY);
-				} 
+				}
 				else if (this.custom.selected) {
 					this.execute(this.CUSTOM);
 				}
-    		}.bind(this) 
+    		}.bind(this)
     	});
 
 		this.tl.to(this.fly, 0.5, { x: 100 }, 'title');
 		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2 }, 'title');
 		this.tl.to(this.controls_1, 0.5, { x: Gb.canvas.width/2 }, 'controls');
 		this.tl.to(this.controls_2, 0.5, { x: Gb.canvas.width/2 }, 'controls');
-	    this.tl.to(this.play, 0.3, { y: '-=200' }, 'options');
-	    this.tl.to(this.edit, 0.3, { y: '-=200' }, 'options');
-	    this.tl.to(this.custom, 0.3, { y: '-=200' }, 'options');
+	    this.tl.to(this.play, 0.3, { y: '-=250' }, 'options');
+	    this.tl.to(this.edit, 0.3, { y: '-=250' }, 'options');
+	    this.tl.to(this.custom, 0.3, { y: '-=250' }, 'options');
+        this.tl.to(this.credits_1, 0.5, { y: '-=200' }, 'credits');
         
-
 		this.tl.play();
 
 		this.currentOption = 0;
