@@ -49,8 +49,8 @@ define(function(require) {
 					id:'laserBulletColliderId',
 					points: [
 						{ x: 0, y: 0 },
-						{ x: 800, y: 0 },
-						{ x: 800, y: 10 },
+						{ x: 2000, y: 0 },
+						{ x: 2000, y: 10 },
 						{ x: 0 , y: 10 }
 					]
 				});
