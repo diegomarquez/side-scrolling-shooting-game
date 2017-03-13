@@ -248,7 +248,8 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("bgm-1", "BGMSound")
 				.args({
-					soundId: 'LEVEL_1'
+					soundId: 'LEVEL_1',
+					messageGameObjectId: "BGM1Message"
 				})
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
@@ -256,7 +257,8 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("bgm-2", "BGMSound")
 				.args({
-					soundId: 'LEVEL_2'
+					soundId: 'LEVEL_2',
+					messageGameObjectId: "BGM2Message"
 				})
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
@@ -264,7 +266,8 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("bgm-3", "BGMSound")
 				.args({
-					soundId: 'LEVEL_3'
+					soundId: 'LEVEL_3',
+					messageGameObjectId: "BGM3Message"
 				})
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")
@@ -272,7 +275,8 @@ define(function(require) {
 
 			this.gameObjectPool.createConfiguration("bgm-4", "BGMSound")
 				.args({
-					soundId: 'LEVEL_4'
+					soundId: 'LEVEL_4',
+					messageGameObjectId: "BGM4Message"
 				})
 				.addComponent("AutoHide")
 				.addComponent("ActivateControlOnView")

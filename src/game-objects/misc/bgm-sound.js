@@ -1,6 +1,9 @@
 define(function(require) {
 	var soundPlayer = require("sound-player");
+	var gb = require("gb");
 	var lastBGMSoundId = "";
+
+	var viewport = [{viewport: 'Main', layer: 'Front'}];
 
 	var BGMSound = require("editor-game-object-container").extend({
 		init: function() {
@@ -12,6 +15,9 @@ define(function(require) {
 			this.storeLast = true;
 			this.inmediateRecycle = false;
 			this.stopSoundOnRecycle = false;
+
+			this.messageGameObjectId = null;
+			this.messageGameObject = null;
 		},
 
 		editorStart: function() {
@@ -38,6 +44,16 @@ define(function(require) {
 			if (lastBGMSoundId !== "")
 				soundPlayer.stop(lastBGMSoundId);
 
+			if (this.messageGameObjectId) {
+				this.messageGameObject = gb.create(this.messageGameObjectId, 'First', viewport, {
+					onComplete: function() {
+
+						gb.reclaimer.mark(this.messageGameObject);
+
+					}.bind(this)
+				});
+			}
+
 			soundPlayer.playLoop(this.soundId);
 
 			if (this.storeLast && this.soundId !== "")
@@ -62,6 +78,7 @@ define(function(require) {
 			this.stopSoundOnRecycle = false;
 
 			this.soundId = "";
+			this.messageGameObjectId = null;
 
 			this._super();
 		}
