@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = function(grunt) {
-  grunt.registerMultiTask('create-data-modules', function() {		
+  grunt.registerMultiTask('create-data-modules', function() {
 		
   		var template = this.options().template;
 
@@ -32,10 +32,10 @@ module.exports = function(grunt) {
 			 	var extension = path.extname(src);
 			 	var baseName = path.basename(src, extension);
 
-				// Process the template 
-				var r = grunt.template.process(grunt.file.read('tasks/templates/' + template), { 
+				// Process the template
+				var r = grunt.template.process(grunt.file.read('tasks/templates/' + template), {
 					data: {
-						name: baseName,	
+						name: baseName,
 						data: data
 					}
 				});
@@ -45,11 +45,11 @@ module.exports = function(grunt) {
 
 				// Delete the file if it already exists
 				if (grunt.file.isFile(name)) {
-		     		grunt.file.delete(name, {force: true});  
+		     		grunt.file.delete(name, {force: true}); 
 		    	}
 
-		    	grunt.file.write(name, r);	
-			}			
+		    	grunt.file.write(name, r);
+			}
 		};
 	});
 }

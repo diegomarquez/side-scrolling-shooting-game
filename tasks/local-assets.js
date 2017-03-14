@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     	for(var i = 0; i < paths.length; i++) {
 	      if(paths[i] != "") {
 	      	files = files.concat(grunt.file.expandMapping(paths[i] + '/**/*.*', '', options).map(function(match) {
-	      		return match.dest; 
+	      		return match.dest;
 	      	}));
 	      }
 	    }
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 	    var name = this.options().generatedDir + 'asset-map.json';
 
 	    if (grunt.file.isFile(name)) {
-	      grunt.file.delete(name, {force: true});  
+	      grunt.file.delete(name, {force: true});
 	    }
 
 	    grunt.file.write(name, JSON.stringify(paths, null, '\t'));

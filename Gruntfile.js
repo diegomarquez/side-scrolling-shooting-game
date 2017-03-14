@@ -274,13 +274,13 @@ module.exports = function(grunt) {
 			},
 
 			'build-dev': {
-				src: [assetsDir],
+				src: [assetsDir, assetPaths],
 				cwd: buildDevDir,
 				cacheBustingId: cacheBustingId
 			},
 
 			'build-prod': {
-				src: [assetsDir],
+				src: [assetsDir, assetPaths],
 				cwd: buildProdDir,
 				cacheBustingId: cacheBustingId
 			},

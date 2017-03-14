@@ -2,7 +2,7 @@
   "name": "Space Maze",
   "version": "0.1.0",
   "additionalSrcPaths": "",
-  "additionalAssetPaths": "",
+  "additionalAssetPaths": "./game-builder/assets",
   "frameworkRepo": "git@github.com:diegomarquez/game-builder.git",
   "framework": "./game-builder",
   "lib": "./lib",
