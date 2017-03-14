@@ -81,17 +81,20 @@ define(function(require) {
 			gb.canvas.style.position = 'absolute';
 			gb.canvas.style.left = '0px';
 			gb.canvas.style.top = '0px';
+			gb.canvas.style.transition = 'none';
 
 			var scrollContainer = document.createElement('div');
 			scrollContainer.id = 'scroller';
 			scrollContainer.style.position = 'absolute';
 			scrollContainer.style.top = '0px';
 			scrollContainer.style.left = '0px';
+			scrollContainer.style.transition = 'none';
 			scrollContainer.style.pointerEvents = 'none';
 			
 			var main = document.querySelector('#main');
 			main.style.overflowX = 'scroll';
 			main.style.overflowY = 'scroll';
+			main.style.transition = 'none';
 			main.appendChild(scrollContainer);
 			main.addEventListener('scroll', this.onScroll);
 
@@ -117,10 +120,10 @@ define(function(require) {
 					gb.canvas.style.transform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					
 					var diff = (world.getWidth() - gb.game.WIDTH);
-					scrollContainer.style.width = diff > 0 ? gb.game.WIDTH + diff : gb.game.WIDTH;
+					scrollContainer.style.width = diff > 0 ? (gb.game.WIDTH + diff).toString() + "px" : gb.game.WIDTH + "px";
 
 					diff = (world.getHeight() - gb.game.HEIGHT);
-					scrollContainer.style.height = diff > 0 ? gb.game.HEIGHT + diff : gb.game.HEIGHT;
+					scrollContainer.style.height = diff > 0 ? (gb.game.HEIGHT + diff).toString() + "px" : gb.game.HEIGHT + "px";
 				}
 			});
 
@@ -159,9 +162,9 @@ define(function(require) {
 		var diff = (worldWidth - canvasWidth);
 
 		if (diff > 0) {
-			scroller.style.width = canvasWidth + diff;
+			scroller.style.width = (canvasWidth + diff) + "px";
 		} else {
-			scroller.style.width = canvasWidth;
+			scroller.style.width = canvasWidth + "px";
 		}
 
 		diff = parseInt(scroller.style.width) - main.scrollWidth;
@@ -175,9 +178,9 @@ define(function(require) {
 		var diff = (worldHeight - canvasHeight);
 
 		if (diff > 0) {
-			scroller.style.height = canvasHeight + diff;
+			scroller.style.height = (canvasHeight + diff) + "px";
 		} else {
-			scroller.style.height = canvasHeight;
+			scroller.style.height = canvasHeight + "px";
 		}
 
 		diff = parseInt(scroller.style.height) - main.scrollWidth;

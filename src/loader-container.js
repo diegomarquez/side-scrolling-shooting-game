@@ -181,6 +181,8 @@ define(function(require) {
 
 			element.css(startProperties);
 
+			element[0].offsetHeight;
+
 			element.css({
 				'trasition-delay': delay,
 				'transition-duration': duration,
