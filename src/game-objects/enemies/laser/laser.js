@@ -152,8 +152,7 @@ define(["editor-game-object-container", "gb", "sat", "timer-factory", "vector-2D
 					var laserCollider = this.findComponents().firstWithProp('collider');
 					laserCollider.pointsCopy[1].x = this.collisionDistance;
 					laserCollider.pointsCopy[2].x = this.collisionDistance;
-					laserCollider.collider.update(laserCollider.pointsCopy);
-
+					
 					// Activate the laser renderer
 					this.renderer.enable();
 
