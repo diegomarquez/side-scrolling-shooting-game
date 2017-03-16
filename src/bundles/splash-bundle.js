@@ -59,7 +59,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Play", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 200, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90, x: 200, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -200, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'play-button',
@@ -73,7 +73,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("Edit", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 200, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90, x: 200, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -200, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'edit-button',
@@ -87,7 +87,7 @@ define(function(require) {
 				});
 
 			this.gameObjectPool.createConfiguration("PlayCustom", commonBundle.getGameObjectContainerPoolId())
-				.addChild("MarkerArrow", { rotation: 90,  x: 200, y: 0 })
+				.addChild("MarkerArrow", { rotation: 90, x: 200, y: 0 })
 				.addChild("MarkerArrow", { rotation: 270, x: -200, y: 0 })
 				.setRenderer("TextRenderer", {
 					name: 'play-custom-button',
