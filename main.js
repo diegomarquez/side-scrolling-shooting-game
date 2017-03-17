@@ -88,38 +88,41 @@ define(function(require) {
 	soundPlayer.assignChannels('PLAYER_SHOT', 10);
 
 	// Background music
-	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], true);
-	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], true);
-	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], true);
-	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], true);
-	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], true);
-	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], true);
+	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], true, 'bgm');
+	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], true, 'bgm');
+	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], true, 'bgm');
+	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], true, 'bgm');
+	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], true, 'bgm');
+	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], true, 'bgm');
+	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true, 'bgm');
 
 	// Sound effects
-	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], true);
-	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG'], true);
-	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG'], true);
-	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG'], true);
-	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG'], true);
-	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG'], true);
-	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG'], true);
-	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG'], true);
-	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG'], true);
-	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG'], true);
-	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG'], true);
-	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG'], true);
-	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG'], true);
-	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG'], true);
-	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG'], true);
-	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG'], true);
-	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG'], true);
-	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], true);
-	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], true);
-	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], true);
-	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true);
-	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true);
-	soundPlayer.add('LASER', gb.assetMap()['LASER.OGG'], true);
-
+	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], true, 'player');
+	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG'], true, 'player');
+	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG'], true, 'player');
+	
+	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG'], true, 'explosion');
+	
+	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG'], true, 'enemy');
+	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG'], true, 'enemy');
+	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG'], true, 'enemy');
+	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG'], true, 'enemy');
+	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG'], true, 'enemy');
+	soundPlayer.add('LASER', gb.assetMap()['LASER.OGG'], true, 'enemy');
+	
+	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG'], true, 'sfx');
+	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG'], true, 'sfx');
+	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], true, 'sfx');
+	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], true, 'sfx');
+	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], true, 'sfx');
+	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true, 'sfx');
+	
 	var complete = 0;
 
 	// Wait for assets to be ready
