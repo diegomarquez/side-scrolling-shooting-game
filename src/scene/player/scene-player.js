@@ -418,7 +418,8 @@ define(function(require) {
 			if (controls) {
 				controls.parentNode.removeChild(controls);
 			}
-
+			
+			soundPlayer.enableNewPlayback();
 			soundPlayer.stopAll().now();
 			require("bgm-sound").clearLastBGMId();
 

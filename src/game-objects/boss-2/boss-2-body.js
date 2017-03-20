@@ -69,6 +69,38 @@ define(["editor-game-object-container", "timer-factory", "util", "gb"], function
 
 			this.clearMines();
 		},
+		
+		stop: function(skipEvent) {
+			this._super(skipEvent);
+			
+			if (this.openTimer)
+				this.openTimer.pause();
+			
+			if (this.attackTimer)
+				this.openTimer.pause();
+			
+			if (this.closeTimer)
+				this.closeTimer.pause();
+			
+			if (this.laserTimer)
+				this.laserTimer.pause();
+		},
+		
+		run: function(skipEvent) {
+			this._super(skipEvent);
+			
+			if (this.openTimer)
+				this.openTimer.resume();
+			
+			if (this.attackTimer)
+				this.openTimer.resume();
+			
+			if (this.closeTimer)
+				this.closeTimer.resume();
+			
+			if (this.laserTimer)
+				this.laserTimer.resume();
+		},
 
 		onBossStart: function() {
 			this.attackCount = 0;

@@ -50,7 +50,10 @@ define(function(require) {
 
 			player.once(player.DESTROYED, this, function() {
 				gb.groups.stop_update('First');
-
+				
+				soundPlayer.disableNewPlayback();
+				soundPlayer.stop("enemy");
+				
 				this.blockEscape = true;
 
 				// Show the fail message
@@ -72,7 +75,10 @@ define(function(require) {
 				levelItem.once('collide', this, function () {
 					// Block the player controls
 					player.blockControls();
-
+					
+					// TODO: Stop current sounds, except the win jingle
+					// TODO: Prevent further playback of anything except the win jingle
+					
 					// Stop updating the logic of all the objects in the first group
 					gb.groups.stop_update('First');
 

@@ -13,8 +13,8 @@ define(function(require) {
 			document.getElementById('player-title').appendChild(document.createTextNode('Scene Preview'));
 		},
 
-		removeContainer: function() {		
-    		canvasContainer.detachCanvas();	
+		removeContainer: function() {
+    		canvasContainer.detachCanvas();
      	 	$(this.mainContainer).remove();
 		},
 	});
