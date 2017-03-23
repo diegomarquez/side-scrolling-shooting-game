@@ -51,8 +51,9 @@ define(function(require) {
 			player.once(player.DESTROYED, this, function() {
 				gb.groups.stop_update('First');
 				
-				soundPlayer.disableNewPlayback();
 				soundPlayer.stop("enemy");
+				soundPlayer.playSingle("FAIL");
+				soundPlayer.disableNewPlayback();
 				
 				this.blockEscape = true;
 

@@ -73,6 +73,7 @@ define(function(require) {
 	assetPreloader.addAsset(gb.assetMap()['DEFLECT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['PLAYERSHOT.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['HIT.OGG']);
+	assetPreloader.addAsset(gb.assetMap()['FAIL.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['PLAYERDAMAGE.OGG']);
 	assetPreloader.addAsset(gb.assetMap()['PLAYERBULLET1.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['BOSS1PORTRAIT.PNG']);
@@ -85,6 +86,7 @@ define(function(require) {
 	soundPlayer.createChannels(10);
 	// TODO: Rename this method to createPrivateChannels, to better reflect what you are doing when using it
 	soundPlayer.assignChannels('INTRO', 1);
+	soundPlayer.assignChannels('FAIL', 1);
 	soundPlayer.assignChannels('PLAYER_SHOT', 10);
 
 	// Background music
@@ -95,6 +97,7 @@ define(function(require) {
 	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], true, 'bgm');
 	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], true, 'bgm');
 	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true, 'bgm');
+	soundPlayer.add('FAIL', gb.assetMap()['FAIL.OGG'], true, 'bgm');
 
 	// Sound effects
 	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], true, 'player');
