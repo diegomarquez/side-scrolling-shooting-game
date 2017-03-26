@@ -51,8 +51,11 @@ define(function(require) {
 			player.once(player.DESTROYED, this, function() {
 				gb.groups.stop_update('First');
 				
+				// Stop playback of sounds in the "enemy" group
 				soundPlayer.stop("enemy");
+				// Play the failure jibgle
 				soundPlayer.playSingle("FAIL");
+				// Disable all further playback
 				soundPlayer.disableNewPlayback();
 				
 				this.blockEscape = true;
@@ -77,8 +80,10 @@ define(function(require) {
 					// Block the player controls
 					player.blockControls();
 					
-					// TODO: Stop current sounds, except the win jingle
-					// TODO: Prevent further playback of anything except the win jingle
+					// Stop playback of sounds in the "enemy" group
+					soundPlayer.stop("enemy");
+					// Disable all further playback, except for the "bgm" group
+					soundPlayer.disableNewPlayback(["bgm"]);
 					
 					// Stop updating the logic of all the objects in the first group
 					gb.groups.stop_update('First');
