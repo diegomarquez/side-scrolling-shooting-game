@@ -161,6 +161,11 @@ define(function(require) {
 
 			sceneLoader.layout();
 
+			// Store the current state of the UI before loading a new scene
+			editorDelegates.add(sceneLoader, sceneLoader.START, this, function() {
+				this.storeUI();
+			});
+
 			// Reset things that need reseting when a new scene is loaded
 			editorDelegates.add(sceneLoader, sceneLoader.LOAD_COMPLETE, this, function() {
 				editorSetup.reset();
@@ -216,11 +221,13 @@ define(function(require) {
 		},
 		
 		storeUI: function() {
+			var regionVisibility = this.editorRegions.get().regionsVisibility();
+
 			storage.setRegions(
-				this.editorRegions.get().getTopLeftContainer()[0].style.display,
-				this.editorRegions.get().getTopRightContainer()[0].style.display,
-				this.editorRegions.get().getBottomLeftContainer()[0].style.display,
-				this.editorRegions.get().getBottomRightContainer()[0].style.display
+				regionVisibility[0],
+				regionVisibility[1],
+				regionVisibility[2],
+				regionVisibility[3]
 			);
 
 			storage.setScrolling(
@@ -304,6 +311,8 @@ define(function(require) {
 			}
 
 			var regions = storage.getRegions();
+
+			this.editorRegions.get().setRegionVisibility(regions['topLeft'], regions['topRight'], regions['bottomLeft'], regions['bottomRight']);
 
 			if (regions) {
 				// Update the side menu after adding it to the DOM

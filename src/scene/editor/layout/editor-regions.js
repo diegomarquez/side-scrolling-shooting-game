@@ -1,127 +1,214 @@
 define(function(require) {
-  var wrapper = require('wrap-in-div');
-  var util = require('util');
-  var statusMessage = require('create-status-message');
-  var componentFactory = require('ui-component-factory');
+	var wrapper = require('wrap-in-div');
+	var util = require('util');
+	var statusMessage = require('create-status-message');
+	var componentFactory = require('ui-component-factory');
 
-  var EditorRegions = require('ui-component').extend({
-    init: function() {
-      this.controller = null;
-    },
+	var topLeftVisible = true;
+	var topRightVisible = true;
+	var bottomLeftVisible = true;
+	var bottomRightVisible = true;
 
-    get: function() {
-      if (!this.controller) {
-        this.controller = this.create();
-      }
+	if (require('mode').isBasic()) {
+		var topLeftVisible = true;
+		var topRightVisible = false;
+		var bottomLeftVisible = false;
+		var bottomRightVisible = false;
+	}
 
-      return this.controller;
-    },
+	var EditorRegions = require('ui-component').extend({
+		init: function() {
+			this.controller = null;
+		},
 
-    create: function() {
-      var regionsComponentExtension = {
-        appendToTopLeft: function(content) {
-          this.getTopLeft().append(content); 
-        },
+		get: function() {
+			if (!this.controller) {
+				this.controller = this.create();
+			}
 
-        appendToTopRight: function(content) {
-          this.getTopRight().append(content);
-        },
+			return this.controller;
+		},
 
-        appendToBottomLeft: function(content) {
-          this.getBottomLeft().append(content);
-        },
+		create: function() {
+			var regionsComponentExtension = {
+				appendToTopLeft: function(content) {
+					this.getTopLeft().append(content);
+				},
 
-        appendToBottomRight: function(content) {
-          this.getBottomRight().append(content);
-        },
+				appendToTopRight: function(content) {
+					this.getTopRight().append(content);
+				},
 
-        getTopLeft: function() {
-          return $(this.html).find('#topLeft');
-        },
+				appendToBottomLeft: function(content) {
+					this.getBottomLeft().append(content);
+				},
 
-        getTopRight: function() {
-          return $(this.html).find('#topRight');
-        },
+				appendToBottomRight: function(content) {
+					this.getBottomRight().append(content);
+				},
 
-        getBottomLeft: function() {
-          return $(this.html).find('#bottomLeft');
-        },
+				getTopLeft: function() {
+					return $(this.html).find('#topLeft');
+				},
 
-        getBottomRight: function() {
-          return $(this.html).find('#bottomRight');
-        },
+				getTopRight: function() {
+					return $(this.html).find('#topRight');
+				},
 
-        getTopLeftContainer: function() {
-          return this.getTopLeft().parent('.region');
-        },
+				getBottomLeft: function() {
+					return $(this.html).find('#bottomLeft');
+				},
 
-        getTopRightContainer: function() {
-          return this.getTopRight().parent('.region');
-        },
+				getBottomRight: function() {
+					return $(this.html).find('#bottomRight');
+				},
 
-        getBottomLeftContainer: function() {
-          return this.getBottomLeft().parent('.region');
-        },
+				getTopLeftContainer: function() {
+					return this.getTopLeft().parent('.region');
+				},
 
-        getBottomRightContainer: function() {
-          return this.getBottomRight().parent('.region');
-        },
+				getTopRightContainer: function() {
+					return this.getTopRight().parent('.region');
+				},
 
-        getRegion: function(child) {
-          var getters = this.regionGetters();
+				getBottomLeftContainer: function() {
+					return this.getBottomLeft().parent('.region');
+				},
 
-          for (var i = 0; i < getters.length; i++) {
-            var r = isInRegion(getters[i].call(this), child);
-            
-            if (r.contains) {
-              return r.region;
-            }
-          }
-        },
+				getBottomRightContainer: function() {
+					return this.getBottomRight().parent('.region');
+				},
 
-        regionGetters: util.cache(function() {
-          return [this.getTopLeft, this.getTopRight, this.getBottomLeft, this.getBottomRight];
-        })
-      }
+				getRegion: function(child) {
+					var getters = this.regionGetters();
 
-      this.controller = componentFactory.getController(regionsComponentExtension, getHTML());
+					for (var i = 0; i < getters.length; i++) {
+						var r = isInRegion(getters[i].call(this), child);
 
-      return this.controller;
-    }
-  });
+						if (r.contains) {
+							return r.region;
+						}
+					}
+				},
 
-  var getHTML = function() {
-    return wrapper.wrap(wrapper.wrap(
-      [ 
-        createRegion('topLeft'), 
-        createRegion('topRight'), 
-        createRegion('bottomLeft'), 
-        createRegion('bottomRight')
-      ], 
-      {
-        id: 'editor-regions',
-        classNames: ['ui-widget']
-      }
-    ), {
-      id: 'editor-regions-wrapper'
-    }); 
-  }
+				toggleRegion: function(regionElement) {
+					var style = regionElement.style;
 
-  var isInRegion = function(region, child) {
-    return {
-      contains: $(region).find(child).length == 1,
-      region: $(region)[0]
-    };
-  }
+					if (this.getTopLeftContainer()[0] === regionElement) {
+						if (style.display === '') {
+							style.display = 'none';
+							topLeftVisible = false;
+						} else {
+							style.display = '';
+							topLeftVisible = true;
+						}
+					} else if (this.getTopRightContainer()[0] === regionElement) {
+						if (style.display === '') {
+							style.display = 'none';
+							topRightVisible = false;
+						} else {
+							style.display = '';
+							topRightVisible = true;
+						}
+					} else if (this.getBottomLeftContainer()[0] === regionElement) {
+						if (style.display === '') {
+							style.display = 'none';
+							bottomLeftVisible = false;
+						} else {
+							style.display = '';
+							bottomLeftVisible = true;
+						}
 
-  var createRegion = function(id) {
-    var content = document.createElement('div');
+						if (require('mode').isBasic()) {
+							style.display = 'none';
+							bottomLeftVisible = false;
+						}
 
-    content.id = id;
-    $(content).addClass('region-container'); 
-    
-    return wrapper.wrap([content], { className: 'region'});
-  }
+					} else if (this.getBottomRightContainer()[0] === regionElement) {
+						if (style.display === '') {
+							style.display = 'none';
+							bottomRightVisible = false;
+						} else {
+							style.display = '';
+							bottomRightVisible = true;
+						}
 
-  return new EditorRegions();
+						if (require('mode').isBasic()) {
+							bottomRightVisible = false;
+							style.display = 'none';
+						}
+					}
+				},
+
+				showAll: function() {
+					this.getTopLeftContainer()[0].style.display = '';
+					topLeftVisible = true;
+
+					this.getTopRightContainer()[0].style.display = '';
+					topRightVisible = true;
+					
+					this.getBottomLeftContainer()[0].style.display = '';
+					bottomLeftVisible = true;
+					
+					this.getBottomRightContainer()[0].style.display = '';
+					bottomRightVisible = true;
+				},
+
+				regionsVisibility: function() {
+					return [topLeftVisible, topRightVisible, bottomLeftVisible, bottomRightVisible];
+				},
+
+				setRegionVisibility: function(topLeft, topRight, bottomLeft, bottomRight) {
+					topLeftVisible = topLeft;
+					topRightVisible = topRight;
+					bottomLeftVisible = bottomLeft;
+					bottomRightVisible = bottomRight;
+				},
+
+				regionGetters: util.cache(function() {
+					return [this.getTopLeft, this.getTopRight, this.getBottomLeft, this.getBottomRight];
+				})
+			}
+
+			this.controller = componentFactory.getController(regionsComponentExtension, getHTML());
+
+			return this.controller;
+		}
+	});
+
+	var getHTML = function() {
+		return wrapper.wrap(wrapper.wrap(
+		[
+			createRegion('topLeft'),
+			createRegion('topRight'),
+			createRegion('bottomLeft'),
+			createRegion('bottomRight')
+		],
+		{
+			id: 'editor-regions',
+			classNames: ['ui-widget']
+		}
+		),
+		{
+			id: 'editor-regions-wrapper'
+		});
+	}
+
+	var isInRegion = function(region, child) {
+		return {
+			contains: $(region).find(child).length == 1,
+			region: $(region)[0]
+		};
+	}
+
+	var createRegion = function(id) {
+		var content = document.createElement('div');
+
+		content.id = id;
+		$(content).addClass('region-container');
+
+		return wrapper.wrap([content], { className: 'region'});
+	}
+
+	return new EditorRegions();
 });

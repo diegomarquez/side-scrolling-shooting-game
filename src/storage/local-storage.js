@@ -3,7 +3,7 @@ define(function(require) {
 	var previewScene = null;
 	// Session storage to revert to the last known scene in case something goes wrong
 	var backupScene = null;
-	// Session storage for the scene that was loaded from a url qury string
+	// Session storage for the scene that was loaded from a url query string
 	var urlScene = null;
 
 	var compresor = require('level-compressor');
@@ -24,10 +24,10 @@ define(function(require) {
 		
 		setRegions: function(topLeft, topRight, bottomLeft, bottomRight) {
 			setItem.call(this, 'regions', JSON.stringify({
-				'topLeft': !topLeft,
-				'topRight': !topRight,
-				'bottomRight': !bottomLeft,
-				'bottomLeft': !bottomRight
+				'topLeft': topLeft,
+				'topRight': topRight,
+				'bottomRight': bottomLeft,
+				'bottomLeft': bottomRight
 			}));
 		},
 

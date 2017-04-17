@@ -23,6 +23,8 @@ define(function(require) {
 				s = scene;
 			}
 
+			this.execute(this.START);
+
 			this.cleanUp();
 			this.sceneName(s);
 			this.world(s);
@@ -297,6 +299,7 @@ define(function(require) {
 	}
 
 	Object.defineProperty(SceneLoader.prototype, "LOAD_COMPLETE", { get: function() { return 'load_complete'; } });
+	Object.defineProperty(SceneLoader.prototype, "START", { get: function() { return 'start'; } });
 
 	return SceneLoader;
 });
