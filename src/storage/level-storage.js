@@ -3,10 +3,10 @@ define(function(require) {
 	var util = require('util');
 
 	var levels = [
-		require('stage-1'),
-		require('stage-2'),
-		require('stage-3'),
-		require('stage-4')
+		require('maze-1'),
+		require('maze-2'),
+		require('maze-3'),
+		require('maze-4')
 	]
 
 	var LevelStorage = require('delegate').extend({
@@ -16,8 +16,8 @@ define(function(require) {
 
 		getLevelNames: function() {
 			return levels.map(function(level) {
-		    	return level.name().toUpperCase();
-		    });
+				return level.name().toUpperCase();
+			});
 		},
 
 		getLevel: function(index) {
@@ -56,7 +56,7 @@ define(function(require) {
 				var name = levels[i].name();
 
 				if (!localStorageWrapper.isLevelComplete(name)) {
-					return levels[i].get(); 
+					return levels[i].get();
 				}
 			}
 
@@ -70,7 +70,7 @@ define(function(require) {
 				var name = levels[i].name();
 
 				if (!localStorageWrapper.isLevelComplete(name)) {
-					return i; 
+					return i;
 				}
 			}
 
@@ -80,11 +80,11 @@ define(function(require) {
 
 		getLevelName: function(level) {
 			if (util.isString(level)) {
-	    		return JSON.parse(level)['name'];
-	    	}
-	    	else if (util.isObject(level)) {
-	    		return level['name'];
-	    	}
+				return JSON.parse(level)['name'];
+			}
+			else if (util.isObject(level)) {
+				return level['name'];
+			}
 		}
 	});
 

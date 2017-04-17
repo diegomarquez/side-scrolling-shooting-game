@@ -14,13 +14,13 @@ define(["editor-component", "TweenLite", "BezierPlugin", "EasePack", "util"], fu
 			var time = Util.polylineLength(this.parent.wayPoints) / this.parent.speed;
 
 			TweenLite.to(this.parent, time, {
-			    bezier: {
-			        curviness: 0,
-			        autoRotate: true,
-			        values: this.parent.wayPoints
-			    },
-			    ease: Linear.easeNone,
-			    onCompleteScope: this, 
+				bezier: {
+					curviness: 0,
+					autoRotate: true,
+					values: this.parent.wayPoints
+				},
+				ease: Linear.easeNone,
+				onCompleteScope: this,
 				onComplete: function() {
 					if (this.parent)
 						this.parent.execute('finish-movement');
