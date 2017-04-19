@@ -90,41 +90,41 @@ define(function(require) {
 	soundPlayer.assignChannels('PLAYER_SHOT', 10);
 
 	// Background music
-	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], true, 'bgm');
-	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], true, 'bgm');
-	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], true, 'bgm');
-	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], true, 'bgm');
-	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], true, 'bgm');
-	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], true, 'bgm');
-	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], true, 'bgm');
-	soundPlayer.add('FAIL', gb.assetMap()['FAIL.OGG'], true, 'bgm');
+	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.7 });
+	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.25 });
+	soundPlayer.add('FAIL', gb.assetMap()['FAIL.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.25 });
 
 	// Sound effects
-	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], true, 'player');
-	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG'], true, 'player');
-	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG'], true, 'player');
+	soundPlayer.add('PLAYER_SHOT', gb.assetMap()['PLAYERSHOT.OGG'], { dynamicLoad: true, group: 'player' });
+	soundPlayer.add('POWER_UP', gb.assetMap()['POWERUP.OGG'], { dynamicLoad: true, group: 'player' });
+	soundPlayer.add('PLAYER_DAMAGE', gb.assetMap()['PLAYERDAMAGE.OGG'], { dynamicLoad: true, group: 'player' });
 	
-	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG'], true, 'explosion');
-	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG'], true, 'explosion');
+	soundPlayer.add('EXPLOSION_1', gb.assetMap()['EXPLOSION1.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_2', gb.assetMap()['EXPLOSION2.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_3', gb.assetMap()['EXPLOSION3.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_4', gb.assetMap()['EXPLOSION4.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_5', gb.assetMap()['EXPLOSION5.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_6', gb.assetMap()['EXPLOSION6.OGG'], { dynamicLoad: true, group: 'explosion' });
+	soundPlayer.add('EXPLOSION_7', gb.assetMap()['EXPLOSION7.OGG'], { dynamicLoad: true, group: 'explosion' });
 	
-	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG'], true, 'enemy');
-	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG'], true, 'enemy');
-	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG'], true, 'enemy');
-	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG'], true, 'enemy');
-	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG'], true, 'enemy');
-	soundPlayer.add('LASER', gb.assetMap()['LASER.OGG'], true, 'enemy');
+	soundPlayer.add('BUG', gb.assetMap()['BUG.OGG'], { dynamicLoad: true, group: 'enemy' });
+	soundPlayer.add('LARGE_BUG', gb.assetMap()['LARGEBUG.OGG'], { dynamicLoad: true, group: 'enemy' });
+	soundPlayer.add('SMALL_LAUNCH', gb.assetMap()['SMALLLAUNCH.OGG'], { dynamicLoad: true, group: 'enemy' });
+	soundPlayer.add('BLOOP', gb.assetMap()['BLOOB.OGG'], { dynamicLoad: true, group: 'enemy' });
+	soundPlayer.add('OPEN_HATCH', gb.assetMap()['OPENHATCH.OGG'], { dynamicLoad: true, group: 'enemy' });
+	soundPlayer.add('LASER', gb.assetMap()['LASER.OGG'], { dynamicLoad: true, group: 'enemy' });
 	
-	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG'], true, 'sfx');
-	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG'], true, 'sfx');
-	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], true, 'sfx');
-	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], true, 'sfx');
-	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], true, 'sfx');
-	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], true, 'sfx');
+	soundPlayer.add('HIT', gb.assetMap()['HIT.OGG'], { dynamicLoad: true, group: 'sfx' });
+	soundPlayer.add('DEFLECT', gb.assetMap()['DEFLECT.OGG'], { dynamicLoad: true, group: 'sfx' });
+	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], { dynamicLoad: true, group: 'sfx' });
+	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], { dynamicLoad: true, group: 'sfx' });
+	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], { dynamicLoad: true, group: 'sfx' });
+	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], { dynamicLoad: true, group: 'sfx', volume: 0.7 });
 	
 	var complete = 0;
 
