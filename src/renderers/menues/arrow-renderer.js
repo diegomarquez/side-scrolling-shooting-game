@@ -20,7 +20,7 @@ define(["path-renderer", "path-cache", "draw", "timer-factory"], function(PathRe
 
       	this.offset = 'center';
 
-      	this.color1 = "#ec751e";
+      	this.color1 = "white";
       	this.color2 = null;
       	this.color = this.color2;
 

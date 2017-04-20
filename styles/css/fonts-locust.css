@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'CGFLocustResistance';
+  font-style: normal;
+  src: url('../assets/fonts/cgf-locust-resistance.eot');
+  src: url('../assets/fonts/cgf-locust-resistance.eot?#iefix') format('embedded-opentype'),
+       local('CGFLocustResistance'),
+       local('cgf-locust-resistance'),
+       url('../assets/fonts/cgf-locust-resistance.woff2') format('woff2'),
+       url('../assets/fonts/cgf-locust-resistance.woff') format('woff'),
+       url('../assets/fonts/cgf-locust-resistance.ttf') format('truetype'),
+       url('../assets/fonts/cgf-locust-resistance.svg#CGFLocustResistance') format('svg');
+}
+

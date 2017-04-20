@@ -70,10 +70,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'power-down',
-					text: 'Power Down',
-					fillColor: "#FF0000",
+					text: 'POWER DOWN',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',
@@ -85,10 +85,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'speed-down',
-					text: 'Speed Down',
-					fillColor: "#FF0000",
+					text: 'SPEED DOWN',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',
@@ -100,10 +100,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'hp-down',
-					text: 'Hp Down',
-					fillColor: "#FF0000",
+					text: 'HP DOWN',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',
@@ -115,10 +115,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'power-up',
-					text: 'Power Up!',
-					fillColor: "#ec751e",
+					text: 'POWER UP',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',
@@ -130,10 +130,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'speed-up',
-					text: 'Speed Up!',
-					fillColor: "#ec751e",
+					text: 'SPEED UP',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',
@@ -145,10 +145,10 @@ define(function(require) {
 				.addComponent('ClaimOnDelegate')
 				.setRenderer("TextRenderer", {
 					name: 'hp-up',
-					text: 'Hp Up!',
-					fillColor: "#ec751e",
+					text: 'HP UP',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					size: 20,
 					offset: 'center',

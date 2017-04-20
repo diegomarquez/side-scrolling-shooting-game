@@ -9,10 +9,10 @@ define(function(require) {
 			this.componentPool.createConfiguration("StartMessageRenderer", commonBundle.getTextRendererPoolId())
 				.args({
 					name: 'start-message',
-					text: 'Get Ready',
-					fillColor: "#ec751e",
+					text: 'GET READY',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					lineWidth: 2,
 					size: 55,
@@ -22,10 +22,10 @@ define(function(require) {
 			this.componentPool.createConfiguration("WarningMessageRenderer", commonBundle.getTextRendererPoolId())
 				.args({
 					name: 'warning-message',
-					text: 'Warning',
-					fillColor: "#ec751e",
+					text: 'WARNING',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					lineWidth: 2,
 					size: 55,
@@ -35,10 +35,10 @@ define(function(require) {
 			this.componentPool.createConfiguration("CompleteMessageRenderer", commonBundle.getTextRendererPoolId())
 				.args({
 					name: 'complete-message',
-					text: 'Complete!',
-					fillColor: "#ec751e",
+					text: 'COMPLETE',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					lineWidth: 2,
 					size: 55,
@@ -48,10 +48,10 @@ define(function(require) {
 			this.componentPool.createConfiguration("FailureMessageRenderer", commonBundle.getTextRendererPoolId())
 				.args({
 					name: 'failure-message',
-					text: 'Failure!',
-					fillColor: "#ec751e",
+					text: 'FAILURE',
+					fillColor: "#000000",
 					strokeColor: "#FFFFFF",
-					font: 'Russo One',
+					font: 'CGFLocustResistance',
 					padding: 3,
 					lineWidth: 2,
 					size: 55,
