@@ -91,11 +91,11 @@ define(function(require) {
 
 	// Background music
 	soundPlayer.add('INTRO', gb.assetMap()['INTRO.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.7 });
-	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
-	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
-	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
-	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
-	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.15 });
+	soundPlayer.add('LEVEL_1', gb.assetMap()['LEVEL1.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.3 });
+	soundPlayer.add('LEVEL_2', gb.assetMap()['LEVEL2.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.3 });
+	soundPlayer.add('LEVEL_3', gb.assetMap()['LEVEL3.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.3 });
+	soundPlayer.add('LEVEL_4', gb.assetMap()['LEVEL5.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.3 });
+	soundPlayer.add('BOSS', gb.assetMap()['COSMICDANCE.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.3 });
 	soundPlayer.add('WIN', gb.assetMap()['WIN.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.25 });
 	soundPlayer.add('FAIL', gb.assetMap()['FAIL.OGG'], { dynamicLoad: true, group: 'bgm', volume: 0.25 });
 
@@ -124,7 +124,7 @@ define(function(require) {
 	soundPlayer.add('SELECT', gb.assetMap()['SELECT.OGG'], { dynamicLoad: true, group: 'sfx' });
 	soundPlayer.add('OK', gb.assetMap()['OK.OGG'], { dynamicLoad: true, group: 'sfx' });
 	soundPlayer.add('BACK', gb.assetMap()['BACK.OGG'], { dynamicLoad: true, group: 'sfx' });
-	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], { dynamicLoad: true, group: 'sfx', volume: 0.7 });
+	soundPlayer.add('WARNING', gb.assetMap()['WARNING.OGG'], { dynamicLoad: true, group: 'sfx', volume: 0.8 });
 	
 	var complete = 0;
 

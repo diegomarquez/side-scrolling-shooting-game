@@ -44,19 +44,19 @@ define(function(require) {
 			if (!document.getElementById('main-player-container')) {
 				this.mainContainer = document.createElement('div');
 				this.mainContainer.id = 'main-player-container';
-				document.body.appendChild(this.mainContainer);	   
+				document.body.appendChild(this.mainContainer);
 			}
 
 			canvasContainer.detachCanvas();
 			document.getElementById('main-player-container').appendChild(canvasContainer.getCanvasContainer());
-				
+			
 			if (loaderContainer.isOpen()) {
 				// If the loader is already open, do the splash animation
 				doSplash();
 			} else {
 				// If the loader is closed setup the loader events
 				loaderContainer.once(loaderContainer.TRANSITION, this, doSplash);
-				loaderContainer.once(loaderContainer.OPEN, this, doSplash);     
+				loaderContainer.once(loaderContainer.OPEN, this, doSplash);
 			}
 		});
 
@@ -117,7 +117,7 @@ define(function(require) {
 			splash.on(splash.EDIT, this, function(advanced) {
 
 				if (advanced) {
-					require('mode').setAdvanced();	
+					require('mode').setAdvanced();
 				} else {
 					require('mode').setBasic();
 				}

@@ -1,8 +1,8 @@
 define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage) {
   
   var heightOffset = -60;
-  var heightOffse4 = -90;
-  var heightOffset2 = -30;
+  var heightOffse4 = -20;
+  var heightOffset2 = -5;
   var heightOffset3 = -20;
   
   var Title = GameObject.extend({
@@ -15,8 +15,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 
     	this.options = [];
 
-    	this.fly = Gb.create('Fly', 'First', viewports, { x: -1000, y: 50 });
-    	this.shoot = Gb.create('Shoot', 'First', viewports, { x: -1000, y: 230 + heightOffset });
+        this.splashImage = Gb.create('SplashImage', 'First', viewports, { x: 0, y: -300 });
 
     	this.controls_1 = Gb.create('Controls_1', 'First', viewports, { x: -1000, y: 350 + heightOffse4 });
     	this.controls_2 = Gb.create('Controls_2', 'First', viewports, { x: -1000, y: 390 + heightOffse4 });
@@ -46,8 +45,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     		}.bind(this)
     	});
 
-		this.tl.to(this.fly, 0.5, { x: 100 }, 'title');
-		this.tl.to(this.shoot, 0.5, { x: Gb.canvas.width/2 }, 'title');
+        this.tl.to(this.splashImage, 0.5, { y: 0 }, 'title');
 		this.tl.to(this.controls_1, 0.5, { x: Gb.canvas.width/2 }, 'controls');
 		this.tl.to(this.controls_2, 0.5, { x: Gb.canvas.width/2 }, 'controls');
 	    this.tl.to(this.play, 0.3, { y: '-=230' }, 'options');
@@ -106,7 +104,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
 			if (Keyboard.isKeyDown(Keyboard.P) && Keyboard.isKeyDown(Keyboard.O) && Keyboard.isKeyDown(Keyboard.I)) {
 				this.execute(this.EDIT, true);
 			} else {
-				this.execute(this.EDIT, false);	
+				this.execute(this.EDIT, false);
 			}
 		}
 
@@ -129,8 +127,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "Tween
     	this.tl.kill();
 
     	this.tl = null;
-    	this.fly = null;
-    	this.shoot = null;
+        this.splashImage = null;
     	this.play = null;
     	this.edit = null;
     	this.custom = null;

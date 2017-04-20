@@ -1,4 +1,5 @@
 define(function(require) {
+	var gb = require('gb');
 	var commonBundle = require('common-bundle');
 
 	var Splash = require("bundle").extend({
@@ -10,31 +11,22 @@ define(function(require) {
 			this.componentPool.createConfiguration("TextRenderer", commonBundle.getTextRendererPoolId());
 			this.componentPool.createConfiguration("ArrowRenderer", "ArrowRenderer");
 			this.componentPool.createConfiguration("MarkerArrowRenderer", "MarkerArrowRenderer");
+			this.componentPool.createConfiguration("MarkerArrowRenderer", commonBundle.getGameObjectPoolId());
+
+			this.componentPool.createConfiguration("SplashImageRenderer", commonBundle.getBitmapRendererPoolId())
+				.args({
+					path: gb.assetMap()["SPLASH.PNG"],
+				});
+
+			this.gameObjectPool.createConfiguration("SplashImage", commonBundle.getGameObjectPoolId())
+				.args({
+					x: 0,
+					y: 0
+				})
+				.setRenderer("SplashImageRenderer")
 
 			this.gameObjectPool.createConfiguration("MarkerArrow", commonBundle.getGameObjectPoolId())
 				.setRenderer("MarkerArrowRenderer")
-
-			this.gameObjectPool.createConfiguration("Fly", commonBundle.getGameObjectPoolId())
-				.setRenderer("TextRenderer", {
-					name: 'splash-line-1',
-					text: 'Enter the ...',
-					fillColor: "none",
-					strokeColor: "#FFFFFF",
-					font: 'Russo One',
-					padding: 3,
-					size: 30
-				});
-
-			this.gameObjectPool.createConfiguration("Shoot", commonBundle.getGameObjectPoolId())
-				.setRenderer("TextRenderer", {
-					name: 'splash-line-2',
-					fillColor: "none",
-					strokeColor: "#FFFFFF",
-					text: 'Space Maze',
-					font: 'Russo One',
-					offset: 'center',
-					size: 120
-				});
 
 			this.gameObjectPool.createConfiguration("Controls_1", commonBundle.getGameObjectPoolId())
 				.setRenderer("TextRenderer", {
