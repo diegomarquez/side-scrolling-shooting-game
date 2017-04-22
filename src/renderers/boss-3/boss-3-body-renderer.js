@@ -16,7 +16,7 @@ define(["editor-component","path-renderer", "player-getter", "draw"], function(E
 		this.largeAnchor = 20;
 		this.largeAnchorMultiplier = 40;
 		this.pointOffsetMultiplier = 6;
-		this.horizontalCounterMultiplier = 30;
+		this.horizontalCounterMultiplier = 20;
 		this.offset1 = 75;
 		this.offset2 = 100;
 		this.lineWidth = 3;
@@ -58,7 +58,7 @@ define(["editor-component","path-renderer", "player-getter", "draw"], function(E
     	if (typeof this.args.lineWidth !== 'number')
     		throw new Error('missing lineWidth');
 
-    	this.halfHorizontalCounterMultiplier = this.horizontalCounterMultiplier / 2;
+    	this.halfHorizontalCounterMultiplier = ((this.horizontalCounterMultiplier + Math.random() * 10) / 2);
     	this.offset = 'center';
 
     	this.pointsInit = [
@@ -73,8 +73,7 @@ define(["editor-component","path-renderer", "player-getter", "draw"], function(E
 			{ x: this.offset1 + (this.offset2 - this.offset1)/2, y: this.offset1/2 },
 			{ x: this.offset2, y: 0 },
 			{ x: this.offset1 + (this.offset2 - this.offset1)/2, y: -this.offset1/2 },
-			{ x: this.offset1, y: -this.offset1 },
-			{ x: 0, y: -this.offset1 }
+			{ x: this.offset1, y: -this.offset1 }
 		];
 
 		this.points = [
@@ -89,8 +88,7 @@ define(["editor-component","path-renderer", "player-getter", "draw"], function(E
 			{ x: this.offset1 + (this.offset2 - this.offset1)/2, y: this.offset1/2 },
 			{ x: this.offset2, y: 0 },
 			{ x: this.offset1 + (this.offset2 - this.offset1)/2, y: -this.offset1/2 },
-			{ x: this.offset1, y: -this.offset1 },
-			{ x: 0, y: -this.offset1 }
+			{ x: this.offset1, y: -this.offset1 }
 		];
     },
 
@@ -120,11 +118,9 @@ define(["editor-component","path-renderer", "player-getter", "draw"], function(E
 		context.save();
 
 		context.translate(0, 0);
+		context.rotate(this.horizontalCounter / 10);
 
-		context.lineJoin = 'round';
-		context.lineCap = 'round';
-
-		Draw.quadraticPolygonAuto(context, 0, 0, this.largeAnchor, this.points, null, '#FFFFFF', this.lineWidth, 1, true, true);
+		Draw.quadraticPolygonAutoSmooth(context, 0, 0, this.largeAnchor, this.points, null, '#FFFFFF', this.lineWidth, 1, true, false);
 		context.restore();
     }
   });
