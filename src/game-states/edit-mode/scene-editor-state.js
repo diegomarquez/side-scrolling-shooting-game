@@ -38,7 +38,10 @@ define(function(require) {
 
 		state.addStartAction(function (args) {
 			// Add editor extensions
-			game.add_extension(require("mouse-events"));
+			game.add_extension(require("mouse-events"), {
+				gridSize: require('editor-config').getGridCellSize,
+				snapGetter: require('snap-to-grid-value').get
+			});
 			game.add_extension(require("patch-game-object-container"));
 		});
 

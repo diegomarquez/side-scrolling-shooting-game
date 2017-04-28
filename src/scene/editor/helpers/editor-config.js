@@ -80,6 +80,14 @@ define(function(require) {
 			return cachedGridCellSize;
 		},
 
+		getGridCellWidth: function() {
+			return require('gb').canvas.width / GRID_WIDTH;
+		},
+
+		getGridCellHeight: function() {
+			return require('gb').canvas.height / GRID_HEIGHT;
+		},
+
 		getGridViewport: function() {
 			return require('gb').viewports.get(this.getGridViewportName());
 		},

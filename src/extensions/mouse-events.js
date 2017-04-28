@@ -37,13 +37,21 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			this.onMouseUp = null;
 			this.onMouseOut = null;
 			this.documentMouseUp = null;
+
+			this.snapGetter = null;
+			this.gridSize = null;
 		},
 
 		type: function() {
 			return Gb.game.CREATE;
 		},
 
-		execute: function() {
+		execute: function(args) {
+			var self = this;
+
+			this.snapGetter = args.snapGetter;
+			this.gridSize = args.gridSize;
+
 			// Reference to the last object that executed a delegate on the MOUSE_DOWN event
 			var currentMouseDownData = null;
 
@@ -79,7 +87,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 					// It contains a Game Object and the viewport it belongs to
 					mouseDownData.go.execute(mouseDownData.go.MOUSE_DOWN, mouseDownData);
 					// Start the dragging sequence if the game objects has registered events
-					startDrag(event, mouseDownData, function (event, mouseData) {
+					startDrag.call(self, event, mouseDownData, function (event, mouseData) {
 						stopDrag(event, mouseData);
 						currentMouseDownData = null;
 					});
@@ -158,6 +166,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			this.onMouseUp = null;
 			this.onMouseOut = null;
 			this.documentMouseUp = null;
+
+			this.gridSize = null;
+			this.snapGetter = null;
+
 			Gb.Mouse = null;
 
 			delete this['onContextMenu'];
@@ -165,6 +177,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			delete this['onMouseUp'];
 			delete this['onMouseOut'];
 			delete this['documentMouseUp'];
+			delete this['gridSize'];
+			delete this['snapGetter'];
+
 			delete Gb['Mouse'];
 		}
 	});
@@ -179,7 +194,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	var startDrag = function(event, mouseData, onOutOfViewport) {
 		// If the specified game object is set to be draggable
 		if (mouseData.go.Dragable) {
-			var mouseMovehandler = getMouseMoveHandler(event, mouseData, onOutOfViewport);
+			var mouseMovehandler = getMouseMoveHandler.call(this, event, mouseData, onOutOfViewport);
 			// Dragging requires registering to the mousemove event, so we do so.
 			Gb.canvas.addEventListener('mousemove', mouseMovehandler);
 			// Execute MOUSE_DRAG_START event with the current mouseUpData object
@@ -197,7 +212,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 		}
 
 		if(mouseMovehandlers.length > 0) {
-			// Remove the mousemove handlers    
+			// Remove the mousemove handlers
 			while(mouseMovehandlers.length) {
 				// Remove mousemove event because it can be quite expensive
 				Gb.canvas.removeEventListener('mousemove', mouseMovehandlers.pop());
@@ -225,8 +240,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 		if (!mouseData.go.isIndependantWhenDragging) {
 			adjustedCoordinates = adjustToParentRotationMatrix(
-				mouseData.go.parent.getMatrix(), 
-				mouseData.go.X, 
+				mouseData.go.parent.getMatrix(),
+				mouseData.go.X,
 				mouseData.go.Y,
 				1
 			);
@@ -235,12 +250,40 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	    	initY = adjustedCoordinates.y;
 		} else {
 			initX = mouseData.go.X;
-			initY = mouseData.go.Y;	
+			initY = mouseData.go.Y;
 		}
 
-		var lastX = event.pageX;
-		var lastY = event.pageY;
+		var parentOffset = event.target.getBoundingClientRect();
 		
+		var initCanvasX;
+		var initCanvasY;
+
+		var stepX;
+		var stepY;
+
+		var lastX;
+		var lastY;
+
+		if (this.snapGetter()) {
+			var p = mouseData.go.localToGlobal(null, 0, 0);
+			var initCanvasX = p.x;
+			var initCanvasY = p.y;
+			
+			var gridCellSize = this.gridSize();
+
+			var stepX = Number(gridCellSize.width.toFixed(2));
+			var stepY = Number(gridCellSize.height.toFixed(2));
+
+			var lastX = (stepX * Math.floor(initCanvasX / stepX)) + (initCanvasX % stepX);
+			var lastY = (stepY * Math.floor(initCanvasY / stepY)) + (initCanvasY % stepY);
+		} else {
+			var initCanvasX = event.clientX - parentOffset.left;
+			var initCanvasY = event.clientY - parentOffset.top;
+
+			var lastX = initCanvasX;
+			var lastY = initCanvasY;
+		}
+
 		var totalDeltaX = 0;
 		var totalDeltaY = 0;
 
@@ -257,21 +300,41 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				return;
 			}
 
+			var currentCanvasX;
+			var currentCanvasY;
+
+			var clientX;
+			var clientY;
+
+			if (this.snapGetter()) {
+				currentCanvasX = event.clientX - parentOffset.left - mouseData.viewport.X;
+				currentCanvasY = event.clientY - parentOffset.top - mouseData.viewport.Y;
+
+				clientX = stepX * Math.floor(currentCanvasX / stepX);
+				clientY = stepY * Math.floor(currentCanvasY / stepY);
+			} else {
+				currentCanvasX = event.clientX - parentOffset.left;
+				currentCanvasY = event.clientY - parentOffset.top;
+
+				clientX = currentCanvasX;
+				clientY = currentCanvasY;
+			}
+
 			// Get difference between last and current mouse position
 			if (!mouseData.go.isIndependantWhenDragging) {
 				var r = mouseData.go.parent.matrix.decompose(t);
 
-		      	deltaX = (event.pageX - lastX) / r.scaleX; 
-		      	deltaY = (event.pageY - lastY) / r.scaleY;
-			} 
+				deltaX = (clientX - lastX) / r.scaleX;
+				deltaY = (clientY - lastY) / r.scaleY;
+			}
 			else {
-				deltaX = (event.pageX - lastX); 
-				deltaY = (event.pageY - lastY);
+				deltaX = (clientX - lastX);
+				deltaY = (clientY - lastY);
 			}
 
 			// Save mouse last position
-			lastX = event.pageX;
-			lastY = event.pageY;
+			lastX = clientX;
+			lastY = clientY;
 
 			// Accumulate deltas
 			totalDeltaX += deltaX;
@@ -296,7 +359,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 			// Execute MOUSE_DRAG event with current mouseData plus the current X and Y delta
 			mouseData.go.execute(mouseData.go.MOUSE_DRAG, mouseData);
-		}
+		}.bind(this);
 	}
 
 	var localX, localY;
@@ -336,7 +399,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			if (!viewport.isVisible()) continue;
 
 			// Work only with viewports configured to interect with the mouse and only if the event occured inside the viewport
-			// If the viewport is configured to not pay attention it's bounds, basically all clicks on the canvas are processed
+			// If the viewport is configured to not pay attention to it's bounds, basically all clicks on the canvas are processed
 			if (viewport.MouseEnabled && (!viewport.MouseBounded || viewport.isPointInside(localX, localY))) {
 				// Convert the mouse position to local viewport coordinates
 				viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 

@@ -2,15 +2,9 @@ define(function(require) {
 	var gb = require('gb');
 
 	var editorConfig = require('editor-config');
-	var snapToGridValue = require('snap-to-grid-value');
 	
 	var gameObjectContextMenu = require('game-object-context-menu');
 	var controlObjectContextMenu = require('control-object-context-menu');
-
-	var stepX = null;
-	var stepY = null;
-
-	var gridCellSize = editorConfig.getGridCellSize();
 	
 	var GameObjectMouseInteraction = require("class").extend({
 		init: function() {
@@ -70,17 +64,6 @@ define(function(require) {
 
 		go.single(go.MOUSE_DRAG_END, this, function(mouseData) {
 			mouseData.go.Selected = false;
-		});
-
-		go.single(go.MOUSE_DRAG, this, function(mouseData) {
-			if (snapToGridValue.get()) {
-
-				stepX = Number(gridCellSize.width.toFixed(2));
-				stepY = Number(gridCellSize.height.toFixed(2));
-
-				mouseData.go.x = stepX * Math.floor((mouseData.go.x / stepX) + 0.5);
-				mouseData.go.y = stepY * Math.floor((mouseData.go.y / stepY) + 0.5);				
-			}
 		});
 
 		if (go.childs) {
