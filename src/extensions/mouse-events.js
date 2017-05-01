@@ -194,6 +194,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	var startDrag = function(event, mouseData, onOutOfViewport) {
 		// If the specified game object is set to be draggable
 		if (mouseData.go.Dragable) {
+			mouseData.go.Draging = true;
+
 			var mouseMovehandler = getMouseMoveHandler.call(this, event, mouseData, onOutOfViewport);
 			// Dragging requires registering to the mousemove event, so we do so.
 			Gb.canvas.addEventListener('mousemove', mouseMovehandler);
@@ -207,6 +209,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 	var stopDrag = function(event, mouseData) {
 		if (mouseData) {
+			mouseData.go.Draging = false;
+
 			// Execute MOUSE_DRAG_END event with the current mouseUpData object
 			mouseData.go.execute(mouseData.go.MOUSE_DRAG_END, mouseData);
 		}
@@ -561,6 +565,15 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 		},
 		set: function(value) { 
 			this.dragable = value; 
+		} 
+	});
+
+	Object.defineProperty(GameObject.prototype, "Draging", { 
+		get: function() { 
+			return this.draging || false; 
+		},
+		set: function(value) { 
+			this.draging = value; 
 		} 
 	});
 

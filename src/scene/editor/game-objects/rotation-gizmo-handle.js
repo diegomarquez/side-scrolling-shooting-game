@@ -12,7 +12,7 @@ define(function (require) {
 	var m = new (require("matrix-3x3"))();
 	var r = new (require("vector-2D"))();
 
-	var RotationGizmoHandle = require("fixed-gizmo-handle").extend({		
+	var RotationGizmoHandle = require("fixed-gizmo-handle").extend({
 		init: function() {
 			this._super();
 		},
@@ -57,8 +57,28 @@ define(function (require) {
 				selfTransform = selfMatrix.decompose(selfTransform);
 				parentTransform = parentMatrix.decompose(parentTransform);
 		
-				this.parent.rotation = Math.atan2(selfTransform.y - parentTransform.y, selfTransform.x - parentTransform.x) * (180 / Math.PI);   	
+				this.parent.rotation = Math.atan2(selfTransform.y - parentTransform.y, selfTransform.x - parentTransform.x) * (180 / Math.PI);
+
+				if (this.parent.parent !== require('root')) {
+					this.parent.rotation -= this.parent.parent.rotation;
+				}
 			});
+		},
+
+		getMatrix: function() {
+			parentMatrix = this.parent.getMatrix(parentMatrix);
+
+			if (!this.Draging)
+			{
+				parentTransform = parentMatrix.decompose(parentTransform);
+
+				this.x = Math.cos(parentTransform.rotation * (Math.PI/180)) * 50;
+				this.y = Math.sin(parentTransform.rotation * (Math.PI/180)) * 50;
+			}
+			
+			this.matrix.initialize(1, 0, 0, 1, parentMatrix.tx + this.x, parentMatrix.ty + this.y);
+
+			return this.matrix;
 		},
 
 		start: function() {

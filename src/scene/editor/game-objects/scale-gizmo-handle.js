@@ -84,6 +84,20 @@ define(function (require) {
 			});
 		},
 
+		getMatrix: function() {
+			parentMatrix = this.parent.getMatrix(parentMatrix);
+
+			if (!this.Draging)
+			{
+				this.x = 0;
+				this.y = 50;
+			}
+			
+			this.matrix.initialize(1, 0, 0, 1, parentMatrix.tx + this.x, parentMatrix.ty + this.y);
+
+			return this.matrix;
+		},
+
 		start: function() {
 			this._super();
 
