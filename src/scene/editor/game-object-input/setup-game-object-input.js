@@ -18,19 +18,19 @@ define(function(require) {
 	});
 
 	Object.defineProperty(require('game-object').prototype, "Selected", { 
-		get: function() {  
-			return this.selected; 
+		get: function() {
+			return this.selected;
 		},
 		
-		set: function(value) { 
+		set: function(value) {
 			if (value) {
 				this.renderer.debugColor = "#00FF00";
 			} else {
 				this.renderer.debugColor = "#FFFF00";
 			}
 
-			this.selected = value; 
-		} 
+			this.selected = value;
+		}
 	});
 
 	var setUpMouseEvents = function(go) {
@@ -49,7 +49,7 @@ define(function(require) {
 
 			}
 			else {
-				this.contextMenu.show(mouseData);	
+				this.contextMenu.show(mouseData);
 			}
 		});
 
@@ -70,7 +70,7 @@ define(function(require) {
 			for (var i = 0; i < go.childs.length; i++) {
 				// Editor only game objects are skipped, only logic game only objects need all this event hooking
 				if (!editorConfig.isEditorGameObject(go.childs[i].typeId)) {
-					setUpMouseEvents.call(this, go.childs[i]);  
+					setUpMouseEvents.call(this, go.childs[i]);
 				}
 			}
 		}

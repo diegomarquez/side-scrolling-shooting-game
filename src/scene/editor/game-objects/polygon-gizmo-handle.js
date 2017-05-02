@@ -8,12 +8,12 @@ define(function (require) {
 
 		added: function() {
 			this._super();
-		 
+			
 			var parentCollider = this.parent.findComponents().firstWithProp('collider');
 
 			this.x = parentCollider.Points[this.pointIndex].x;
 			this.y = parentCollider.Points[this.pointIndex].y;
-		
+			
 			var startX, startY;
 
 			this.on(this.MOUSE_DRAG_START, this, function(mouseData) {
