@@ -81,6 +81,7 @@ define(function(require) {
 	assetPreloader.addAsset(gb.assetMap()['BOSS3PORTRAIT.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['BOSS4PORTRAIT.PNG']);
 	assetPreloader.addAsset(gb.assetMap()['LEVELFRAME.PNG']);
+	assetPreloader.addAsset(gb.assetMap()['SPLASH.PNG']);
 
 	// TODO: Rename this mehtod to createPublicChannels, to better reflect what you are doing when using it
 	soundPlayer.createChannels(10);
