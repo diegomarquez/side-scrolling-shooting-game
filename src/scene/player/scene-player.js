@@ -378,11 +378,16 @@ define(function(require) {
 			this.mainContainer.appendChild(titleContainer);
 			this.mainContainer.appendChild(controlsContainer);
 
-			document.getElementById('player-controls').appendChild(document.createTextNode('ESC to Exit'));
-			document.getElementById('player-controls').appendChild(document.createElement('br'));
-			document.getElementById('player-controls').appendChild(document.createTextNode('Arrows to Move'));
-			document.getElementById('player-controls').appendChild(document.createElement('br'));
-			document.getElementById('player-controls').appendChild(document.createTextNode('A to Shoot'));
+			let controls = document.getElementById('player-controls');
+
+			this.addText(controls, '"← ↑ → ↓"');
+			this.addText(controls, ' to Move');
+			controls.appendChild(document.createElement('br'));
+			this.addText(controls, '"A"');
+			this.addText(controls, ' to Shoot');
+			controls.appendChild(document.createElement('br'));
+			this.addText(controls, '"ESC"');
+			this.addText(controls, ' to Exit');
 
 			var name;
 
@@ -401,6 +406,14 @@ define(function(require) {
 			}
 
 			document.getElementById('player-title').appendChild(document.createTextNode(name));
+		},
+
+		addText: function(parent, text) {
+			var child = document.createElement('span');
+
+			child.textContent = text;
+
+			parent.appendChild(child);
 		},
 
 		removeContainer: function() {
