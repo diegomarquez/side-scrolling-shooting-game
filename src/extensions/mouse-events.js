@@ -1,6 +1,6 @@
 define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "delegate", "matrix-3x3"], 
 	function(Extension, Viewports, SAT, Vector2D, Gb, GameObject, Delegate, Matrix) {
- 
+	
 	var p1 = new Vector2D();
 	var p2 = new Vector2D();
 	var p3 = new Vector2D();
@@ -55,24 +55,24 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Reference to the last object that executed a delegate on the MOUSE_DOWN event
 			var currentMouseDownData = null;
 
-			this.onContextMenu = function (event) {		
+			this.onContextMenu = function (event) {
 				// Prevent the menu from appearing
 				event.preventDefault();
 
 				// If a game object was clicked on when triggering the context menu event
 				if (currentMouseDownData) {
-					currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);  
+					currentMouseDownData.go.execute(currentMouseDownData.go.CONTEXT_MENU, currentMouseDownData);
 
 					// Global event to notify a game object has triggered a context menu
 					Gb.Mouse.execute(Gb.Mouse.GAME_OBJECT_CONTEXT_MENU, currentMouseDownData.go);
 
 					// Stop the dragging sequence
 					stopDrag(event, currentMouseDownData);
-					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
+					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over
 					currentMouseDownData = null;
 				} else {
 					// Override the default context menu
-					Gb.Mouse.execute(Gb.Mouse.CANVAS_CONTEXT_MENU, event);					
+					Gb.Mouse.execute(Gb.Mouse.CANVAS_CONTEXT_MENU, event);
 				}
 			}
 
@@ -117,9 +117,9 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				// Stop the dragging sequence
 				stopDrag(event, currentMouseDownData);
 				
-				// If the this is a right click, keep the mouse data because it is going to be used by the context menu handler				
+				// If the this is a right click, keep the mouse data because it is going to be used by the context menu handler
 				if (event.button != 2) {
-					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over 
+					// Reset current MOUSE_DOWN data because by now the whole clicking cycle is over
 					currentMouseDownData = null;
 				}
 			}
@@ -134,10 +134,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				if(event.target !== Gb.canvas) {
 					setGlobalMouseCoordinates(event);
 
-					var bRect = Gb.canvas.getBoundingClientRect(); 
+					var bRect = Gb.canvas.getBoundingClientRect();
 
 					if (globalX < bRect.left || globalX > bRect.right || globalY < bRect.top || globalY > bRect.bottom) {
-						Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS, event);  
+						Gb.Mouse.execute(Gb.Mouse.CLICKED_OUTSIDE_CANVAS, event);
 					}
 				}
 			}
@@ -220,7 +220,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			while(mouseMovehandlers.length) {
 				// Remove mousemove event because it can be quite expensive
 				Gb.canvas.removeEventListener('mousemove', mouseMovehandlers.pop());
-			} 
+			}
 		}
 	}
 
@@ -347,8 +347,8 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			if (!mouseData.go.isIndependantWhenDragging) {
 				// Account for the rotation of the parent when dragging
 				adjustedCoordinates = adjustToParentRotationMatrix(
-					mouseData.go.parent.getMatrix(), 
-					initX + (totalDeltaX / mouseData.viewport.ScaleX), 
+					mouseData.go.parent.getMatrix(),
+					initX + (totalDeltaX / mouseData.viewport.ScaleX),
 					initY + (totalDeltaY / mouseData.viewport.ScaleY),
 					-1
 				);
@@ -371,7 +371,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	var setLocalMouseCoordinates = function(event) {
 		setGlobalMouseCoordinates(event);
 
-		var parentOffset = event.target.getBoundingClientRect(); 
+		var parentOffset = event.target.getBoundingClientRect();
 		
 		localX = globalX - parentOffset.left;
 		localY = globalY - parentOffset.top;
@@ -406,7 +406,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// If the viewport is configured to not pay attention to it's bounds, basically all clicks on the canvas are processed
 			if (viewport.MouseEnabled && (!viewport.MouseBounded || viewport.isPointInside(localX, localY))) {
 				// Convert the mouse position to local viewport coordinates
-				viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos); 
+				viewport.canvasToLocalCoordinates(localX, localY, mouseWorldPos);
 				
 				// Find the top most game object that was clicked in any of the layers of the viewport
 				var result = loopLayers.call(viewport, mouseWorldPos);
@@ -424,7 +424,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 						globalMouseY: globalY
 					}
 				}
-			}          
+			}
 		}
 	}
 
@@ -452,7 +452,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	var gameObjectUnderPoint = function(viewport, mouse) {
 		var result;
 
-		// Iterate over all the game objects in a layer, do so backwards to process first the ones that are drawn last. 
+		// Iterate over all the game objects in a layer, do so backwards to process first the ones that are drawn last.
 		for (var i = this.gameObjects.length-1; i >= 0; i--) {
 			t_go = this.gameObjects[i];
 			
@@ -463,7 +463,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 							// If something is found among the children, return that
 						if (result) {
 							return result;
-						}       
+						}
 				}
 
 				// Skip game objects which are not drawing themselves
@@ -492,7 +492,7 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 				// The child is a container, test it's children recursively
 				if (child.isContainer()) {
 					result = testChildren(mouse, child, viewport);
-				}               
+				}
 
 				// Skip game objects which are not drawing themselves
 				if (!child.canDraw) continue;
@@ -502,14 +502,14 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 					// Something was found among the children, return that
 					return result;
 				} else {
-					// This game object either had no children or nothing was found on them, so the collision detection is performed on it 
+					// This game object either had no children or nothing was found on them, so the collision detection is performed on it
 					result = mouseVsGameObject(mouse, child, viewport); 
 
 					// If a collision is found, return the result
 					if (result) {
 						return result;
 					}
-				}       
+				}
 			}
 		}
 
@@ -532,11 +532,11 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 			// Setup the collider
 			gameObjectCollider.recalc();
 
-			// A game object was clicked? 
+			// A game object was clicked?
 			if (SAT.pointInPolygon(mouse, gameObjectCollider)) {
 				// Return it
 				return go;
-			} 
+			}
 		}
 
 		return null;
@@ -544,10 +544,10 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 
 	var isRegistered = function(go) {
 		return 	go.isRegistered(go.CLICK) ||
-				go.isRegistered(go.MOUSE_DOWN) || 
+				go.isRegistered(go.MOUSE_DOWN) ||
 				go.isRegistered(go.MOUSE_UP) ||
 				go.isRegistered(go.MOUSE_DRAG_START) ||
-				go.isRegistered(go.MOUSE_DRAG_END) || 
+				go.isRegistered(go.MOUSE_DRAG_END) ||
 				go.isRegistered(go.MOUSE_DRAG)
 	}
 
@@ -559,22 +559,22 @@ define(["extension", "viewports", "sat", "vector-2D", "gb", "game-object", "dele
 	Object.defineProperty(GameObject.prototype, "MOUSE_DRAG_END", { get: function() { return 'mousedragend'; } });
 	Object.defineProperty(GameObject.prototype, "CONTEXT_MENU", { get: function() { return 'context_menu'; } });
 
-	Object.defineProperty(GameObject.prototype, "Dragable", { 
-		get: function() { 
-			return this.dragable || false; 
+	Object.defineProperty(GameObject.prototype, "Dragable", {
+		get: function() {
+			return this.dragable || false;
 		},
-		set: function(value) { 
-			this.dragable = value; 
-		} 
+		set: function(value) {
+			this.dragable = value;
+		}
 	});
 
-	Object.defineProperty(GameObject.prototype, "Draging", { 
-		get: function() { 
-			return this.draging || false; 
+	Object.defineProperty(GameObject.prototype, "Draging", {
+		get: function() {
+			return this.draging || false;
 		},
-		set: function(value) { 
-			this.draging = value; 
-		} 
+		set: function(value) {
+			this.draging = value;
+		}
 	});
 
 	return MouseEvents;
