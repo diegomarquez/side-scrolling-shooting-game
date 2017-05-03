@@ -378,7 +378,7 @@ define(function(require) {
 			this.mainContainer.appendChild(titleContainer);
 			this.mainContainer.appendChild(controlsContainer);
 
-			let controls = document.getElementById('player-controls');
+			var controls = document.getElementById('player-controls');
 
 			this.addText(controls, '"← ↑ → ↓"');
 			this.addText(controls, ' to Move');
