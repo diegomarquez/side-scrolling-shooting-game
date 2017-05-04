@@ -138,11 +138,11 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		onUpPress: function() {
 			if (this.stageIndex > 0) {
 				this.stageIndex--;
-				this.execute("option");
 			}
 
 			if (this.currentIndex > 0) {
 				this.currentIndex--;
+				this.execute("option");
 			}
 			else if (this.currentIndex === 0) {
 				updateStageNames.call(this, this.currentIndex, this.stageIndex);
