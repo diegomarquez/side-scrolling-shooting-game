@@ -23,11 +23,6 @@ define(function(require) {
 				var left = event.target.scrollLeft;
 				var top = event.target.scrollTop;
 
-				var translate = "translate(" + left + "px," + top + "px" + ")";
-
-				this.canvas.style.webkitTransform = translate;
-				this.canvas.style.transform = translate;
-
 				viewport.X = -left;
 				viewport.Y = -top;
 
@@ -37,6 +32,32 @@ define(function(require) {
 				this.self.latestScrollLeft = left;
 				this.self.latestScrollTop = top;
 			}.bind(scrollContext);
+
+			this.onContextMenu = function(event) {
+				event.preventDefault();
+
+				var evt = new MouseEvent("contextmenu", {
+					clientX: event.clientX,
+					clientY: event.clientY,
+				});
+
+				gb.canvas.dispatchEvent(evt);
+			};
+			
+			this.onMouseDown = function(event) {
+				this.scrollingContainer.style.pointerEvents = "none";
+
+				var evt = new MouseEvent("mousedown", {
+					clientX: event.clientX,
+					clientY: event.clientY,
+				});
+
+				gb.canvas.dispatchEvent(evt);
+			}.bind(this);
+
+			this.documentMouseUp = function(event) {
+				this.scrollingContainer.style.pointerEvents = "";
+			}.bind(this);
 
 			this.justCreated = true;
 
@@ -84,21 +105,37 @@ define(function(require) {
 			gb.canvas.style.transition = 'none';
 
 			var scrollContainer = document.createElement('div');
-			scrollContainer.id = 'scroller';
+			scrollContainer.id = 'scrollerContainer';
 			scrollContainer.style.position = 'absolute';
 			scrollContainer.style.top = '0px';
 			scrollContainer.style.left = '0px';
 			scrollContainer.style.transition = 'none';
-			scrollContainer.style.pointerEvents = 'none';
 			
-			var main = document.querySelector('#main');
-			main.style.overflowX = 'scroll';
-			main.style.overflowY = 'scroll';
-			main.style.transition = 'none';
-			main.appendChild(scrollContainer);
-			main.addEventListener('scroll', this.onScroll);
+			var scroller = document.createElement('div');
+			scroller.id = 'scroller';
+			scroller.style.position = 'absolute';
+			scroller.style.top = '0px';
+			scroller.style.left = '0px';
+			scroller.style.transition = 'none';
+			scroller.style.pointerEvents = 'none';
+			
+			scrollContainer.style.width = "100%";
+			scrollContainer.style.height = "100%";
+			scrollContainer.style.overflowX = 'scroll';
+			scrollContainer.style.overflowY = 'scroll';
+			scrollContainer.appendChild(scroller);
+			
+			scrollContainer.addEventListener('scroll', this.onScroll, { passive: true });
+			scrollContainer.addEventListener('contextmenu', this.onContextMenu);
+			scrollContainer.addEventListener('mousedown', this.onMouseDown);
+			document.body.addEventListener('mouseup', this.documentMouseUp);
 
-			this.scrollingContainer = main;
+			this.scrollingContainer = scrollContainer;
+
+			var main = document.querySelector('#main');
+			main.style.transition = 'none';
+			main.style.pointerEvents = 'all';
+			main.appendChild(scrollContainer);
 
 			// Stuff to do when a new 'Main' viewport is added. AKA, load a new scene
 			editorDelegates.add(gb.viewports, gb.viewports.ADD, this, function (v) {
@@ -115,46 +152,50 @@ define(function(require) {
 						this.setScrollingLeft(0);
 						this.setScrollingTop(0);
 					}
-
-					gb.canvas.style.webkitTransform = "translate(" + 0 + "px," + 0 + "px" + ")";
-					gb.canvas.style.transform = "translate(" + 0 + "px," + 0 + "px" + ")";
 					
 					var diff = (world.getWidth() - gb.game.WIDTH);
-					scrollContainer.style.width = diff > 0 ? (gb.game.WIDTH + diff).toString() + "px" : gb.game.WIDTH + "px";
+					scroller.style.width = diff > 0 ? (gb.game.WIDTH + diff).toString() + "px" : gb.game.WIDTH + "px";
 
 					diff = (world.getHeight() - gb.game.HEIGHT);
-					scrollContainer.style.height = diff > 0 ? (gb.game.HEIGHT + diff).toString() + "px" : gb.game.HEIGHT + "px";
+					scroller.style.height = diff > 0 ? (gb.game.HEIGHT + diff).toString() + "px" : gb.game.HEIGHT + "px";
 				}
 			});
 
 			editorDelegates.add(world, world.CHANGE_WIDTH, this, function (width) {
-				updateScrollWidth(scrollContainer, main, width, gb.game.WIDTH, this);
+				updateScrollWidth(scroller, main, width, gb.game.WIDTH, this);
 			});
 
 			editorDelegates.add(world, world.CHANGE_HEIGHT, this, function (height) {
-				updateScrollHeight(scrollContainer, main, height, gb.game.HEIGHT, this);
+				updateScrollHeight(scroller, main, height, gb.game.HEIGHT, this);
 			});
 
 			editorDelegates.add(gb.game, gb.game.CHANGE_WIDTH, this, function (width) {
-				updateScrollWidth(scrollContainer, main, world.getWidth(), width, this);
+				updateScrollWidth(scroller, main, world.getWidth(), width, this);
 			});
 
 			editorDelegates.add(gb.game, gb.game.CHANGE_HEIGHT, this, function (height) {
-				updateScrollHeight(scrollContainer, main, world.getHeight(), height, this);
+				updateScrollHeight(scroller, main, world.getHeight(), height, this);
 			});
 		},
 
 		destroy: function() {
+			this.scrollingContainer.removeEventListener('scroll', this.onScroll);
+			this.scrollingContainer.removeEventListener('contextmenu', this.onContextMenu);
+			this.scrollingContainer.removeEventListener('mousedown', this.onMouseDown);
+			
+			document.body.addEventListener('mouseup', this.documentMouseUp);
+
 			main = document.querySelector('#main');
 			main.style.overflowX = '';
 			main.style.overflowY = '';
-			main.removeChild(document.querySelector('#scroller'));
-			main.removeEventListener('scroll', this.onScroll);
-
+			main.removeChild(document.querySelector('#scrollerContainer'));
+			
 			gb.canvas.style.position = '';
 			gb.canvas.style.left = '';
 			gb.canvas.style.top = '';
 			gb.canvas.style.transform = '';
+
+			this.scrollingContainer = null;
 		}
 	});
 

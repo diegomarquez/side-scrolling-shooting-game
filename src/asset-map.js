@@ -74,6 +74,7 @@ define(function() {
 	"SOUND.PNG": "assets/images/Sound.png?b=test",
 	"SPEEDUP.PNG": "assets/images/SpeedUp.png?b=test",
 	"SPLASH.PNG": "assets/images/Splash.png?b=test",
+	"SPLASHFB.PNG": "assets/images/SplashFb.png?b=test",
 	"STAR.PNG": "assets/images/Star.png?b=test",
 	"STOP.PNG": "assets/images/Stop.png?b=test",
 	"WARNING.PNG": "assets/images/Warning.png?b=test",
