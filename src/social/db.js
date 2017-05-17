@@ -3,7 +3,14 @@ define(function(require)
 	var clientId = '03e66s4e6ka9n6i';
 	var authUri = 'https://www.dropbox.com/oauth2/authorize';
 	var checkTokenUri = 'https://api.dropboxapi.com/2/users/get_current_account';
-	var redirectUri = require('gb').getEnvironment() === 'dev' ? 'http://localhost:5000' : 'https://www.treintipollo.com';
+	
+	var redirectUri
+
+	if (require('gb').getEnvironment() === 'dev') {
+		redirectUri = window.top.location.protocol + "//" + window.top.location.hostname + ":" + window.top.location.port;
+	} else {
+		redirectUri = 'https://www.treintipollo.com';
+	}
 
 	var moreEntries = false;
 	var cursor = "";
