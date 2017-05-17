@@ -7,7 +7,7 @@ define(function(require)
 	var redirectUri
 
 	if (require('gb').getEnvironment() === 'dev') {
-		redirectUri = window.top.location.protocol + "//" + window.top.location.hostname + ":" + window.top.location.port;
+		redirectUri = 'https://localhost:5000';
 	} else {
 		redirectUri = 'https://www.treintipollo.com';
 	}
