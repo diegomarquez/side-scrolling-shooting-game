@@ -4,17 +4,19 @@ define(function(require) {
 	var firstStartInEditorBasicCall = true;
 	var firstStartInEditorAdvancedCall = true;
 
+	var win = window.top;
+
 	return {
 		skipLoader: function() {
-			if (window.location.search) {
+			if (win.location.search) {
 				if(
-					window.location.search.match(/[?&]?editor=basic/) || 
-					window.location.search.match(/[?&]?editor=advanced/)
+					win.location.search.match(/[?&]?editor=basic/) || 
+					win.location.search.match(/[?&]?editor=advanced/)
 				) {
 					return true;
 				}
 				
-				return window.location.search.match(/[?&]?skipLoader/);
+				return win.location.search.match(/[?&]?skipLoader/);
 			}
 
 			return false;
@@ -26,8 +28,8 @@ define(function(require) {
 
 			firstStartInEditorBasicCall = false;
 
-			if (window.location.search) {
-				return window.location.search.match(/[?&]?editor=basic/);
+			if (win.location.search) {
+				return win.location.search.match(/[?&]?editor=basic/);
 			}
 
 			return false;
@@ -39,20 +41,20 @@ define(function(require) {
 
 			firstStartInEditorAdvancedCall = false;
 
-			if (window.location.search) {
-				return window.location.search.match(/[?&]?editor=advanced/);
+			if (win.location.search) {
+				return win.location.search.match(/[?&]?editor=advanced/);
 			}
 
 			return false;
 		},
 
 		hasScene: function(success, failure) {
-			if (!window.location.search) {
+			if (!win.location.search) {
 				failure();
 				return;
 			}
 			 
-			var sceneMatch = window.location.search.match(/[?&]?dbid=(.*?)$/);
+			var sceneMatch = win.location.search.match(/[?&]?dbid=(.*?)$/);
 			 
 			if (!sceneMatch) {
 				failure();
