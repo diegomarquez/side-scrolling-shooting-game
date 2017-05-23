@@ -312,9 +312,9 @@ define(function(require) {
 
 			var regions = storage.getRegions();
 
-			this.editorRegions.get().setRegionVisibility(regions['topLeft'], regions['topRight'], regions['bottomLeft'], regions['bottomRight']);
-
 			if (regions) {
+				this.editorRegions.get().setRegionVisibility(regions['topLeft'], regions['topRight'], regions['bottomLeft'], regions['bottomRight']);
+
 				// Update the side menu after adding it to the DOM
 				this.editorSideMenuController.update(regions['topLeft'], regions['topRight'], regions['bottomLeft'], regions['bottomRight']);
 			} else {
