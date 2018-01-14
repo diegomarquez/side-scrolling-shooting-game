@@ -45,7 +45,16 @@ define(function(require) {
 			};
 			
 			this.onMouseDown = function(event) {
-				this.scrollingContainer.style.pointerEvents = "none";
+				var scrollerContainer = this.self.scrollingContainer;
+				var rect = scrollerContainer.getBoundingClientRect();
+
+				var right = rect.left + scrollerContainer.clientWidth;
+				var bottom = rect.top + scrollerContainer.clientHeight;
+
+				if (event.clientX > right || event.clientY > bottom)
+					return;
+
+				this.self.scrollingContainer.style.pointerEvents = "none";
 
 				var evt = new MouseEvent("mousedown", {
 					clientX: event.clientX,
@@ -53,11 +62,14 @@ define(function(require) {
 				});
 
 				gb.canvas.dispatchEvent(evt);
-			}.bind(this);
+			}.bind(scrollContext);
 
 			this.documentMouseUp = function(event) {
-				this.scrollingContainer.style.pointerEvents = "";
-			}.bind(this);
+				var scrollerContainer = this.self.scrollingContainer;
+
+				if (scrollerContainer.style.pointerEvents === "none")
+					scrollerContainer.style.pointerEvents = "";
+			}.bind(scrollContext);
 
 			this.justCreated = true;
 
