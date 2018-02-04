@@ -15,6 +15,6 @@
 
 	// Set this to false if you don't want to load any external fonts with the [Web font loader](https://github.com/typekit/webfontloader)
 	// Leave this as false if you are not using any fonts, otherwise the loading fails.
-	"loadFonts": false
+	"loadFonts": true
 }
 
