@@ -54,11 +54,29 @@ define(function(require) {
 		
 		db.upload("facebook shares", sceneName, compressedLevel,
 		function(response) {
+			var name;
+
 			if (typeof response === "string") {
-				success(JSON.parse(response)["id"]);
+				name = JSON.parse(response)["name"];
 			} else {
-				success(response["id"]);
+				name = response["name"];
 			}
+
+			db.getLink("facebook shares/" + name, function(response) {
+				var url;
+
+				if (typeof response === "string") {
+					url = JSON.parse(response)["url"];
+				} else {
+					url = response["url"];
+				}
+
+				url = url.replace("www.dropbox.com", "dl.dropboxusercontent.com");
+				url = url.replace("?dl=0", "");
+
+				success(url);
+
+			}, failure);
 		}, failure);
 	};
 

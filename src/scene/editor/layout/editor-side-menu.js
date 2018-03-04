@@ -282,7 +282,7 @@ define(function(require) {
 									uploadDialog.destroy();
 									
 									sceneSaveDialog.serializeAndStoreRemoteShare(
-										function(dropboxFileId) {
+										function(dropboxShareLinkUrl) {
 											var sceneReadyDialog = new messageDialog();
 											
 											sceneReadyDialog.create({
@@ -297,7 +297,7 @@ define(function(require) {
 													Ok: function() {
 														sceneReadyDialog.destroy();
 														
-														fb.share(dropboxFileId,
+														fb.share(dropboxShareLinkUrl,
 														function() {
 															document.body.removeChild(blocker);
 

@@ -1,6 +1,4 @@
 define(function(require) {
-	var levelRequester = require("level-requester");
-
 	var firstStartInEditorBasicCall = true;
 	var firstStartInEditorAdvancedCall = true;
 
@@ -54,21 +52,45 @@ define(function(require) {
 				return;
 			}
 			 
-			var sceneMatch = win.location.search.match(/[?&]?dbid=(.*?)$/);
-			 
+			var sceneMatch = win.location.search.match(/[?&]?dbsurl=(.*?)$/);
+
 			if (!sceneMatch) {
 				failure();
 				return;
 			}
 			
-			var dbid = sceneMatch[1];
+			var dbsurl = sceneMatch[1];
 			
-			if (!dbid) {
+			if (!dbsurl) {
 				failure();
 				return;
 			}
-			
-			levelRequester.getScene(dbid, success, failure);
+
+			var xhr = new XMLHttpRequest();
+
+			var complete = false;
+
+			xhr.onreadystatechange = function()
+			{
+				if (complete)
+					return;
+
+				if (xhr.readyState == 4 && xhr.status == 200 && xhr.status != 0) {
+					var levelCompressor = require("level-compressor");
+					success(levelCompressor.decompress(xhr.responseText))
+
+					complete = true;
+				}
+				else if (xhr.status != 200 && xhr.status != 0) {
+					failure();
+
+					complete = true;
+				}
+			}
+
+			xhr.open("GET", decodeURIComponent(dbsurl));
+
+			xhr.send();
 		}
 	}
 });

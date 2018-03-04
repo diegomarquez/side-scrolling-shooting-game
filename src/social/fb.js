@@ -47,10 +47,10 @@ define(function(require)
 		}
 	}
 
-	Facebook.prototype.share = function(dropboxFileId, oncomplete, onerror) {
+	Facebook.prototype.share = function(dropboxShareLinkUrl, oncomplete, onerror) {
 		FB.ui({
 			method: 'share',
-			href: 'https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxFileId)
+			href: 'https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxShareLinkUrl)
 		},
 		function(response) {
 			if (response === undefined) {
