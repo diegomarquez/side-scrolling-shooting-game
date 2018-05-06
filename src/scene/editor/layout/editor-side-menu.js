@@ -407,6 +407,159 @@ define(function(require) {
 				'fa fa-lg'
 			));
 
+			items.push(createOptionItem(
+				'Twitter',
+				'fa-twitter',
+				function() {
+					var blocker = document.createElement('div');
+					blocker.id = 'blocker';
+					
+					document.body.appendChild(blocker);
+					
+					var tw = require('tw');
+					
+					tw.load(
+					function() {
+						var uploadDialog = new messageDialog();
+
+						uploadDialog.create({
+							title: "Upload to Dropbox required",
+							message: "In order to share a scene it must first be uploaded to Dropbox. If you have an account you will be prompted to login. If you don't have an account you will need to create one first.",
+							modal: true,
+							close: function() {
+								uploadDialog.destroy();
+								document.body.removeChild(blocker);
+							},
+							buttons: {
+								Ok: function() {
+									uploadDialog.destroy();
+									
+									sceneSaveDialog.serializeAndStoreRemoteShare(
+										function(dropboxShareLinkUrl) {
+											var sceneReadyDialog = new messageDialog();
+											
+											sceneReadyDialog.create({
+												title: "Scene is ready to be shared",
+												message: "Click 'Ok' to share the scene.",
+												modal: true,
+												close: function() {
+													document.body.removeChild(blocker);
+													sceneReadyDialog.destroy();
+												},
+												buttons: {
+													Ok: function() {
+														sceneReadyDialog.destroy();
+														
+														tw.share(dropboxShareLinkUrl,
+														function() {
+															document.body.removeChild(blocker);
+
+															require('gb').game.get_extension(require('logger')).success('Scene shared to Twitter successfully!');
+															require('gb').game.get_extension(require('logger')).show();
+														},
+														function(error) {
+															if (error === "user-closed") {
+																document.body.removeChild(blocker);
+																return;
+															}
+															
+															var failureDialog = new messageDialog();
+															
+															failureDialog.create({
+																title: "Share Failed",
+																message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+																modal: true,
+																close: function () {
+																	document.body.removeChild(blocker);
+																	failureDialog.destroy();
+																	
+																	require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+																	require('gb').game.get_extension(require('logger')).show();
+																},
+																buttons: {
+																	Ok: function() {
+																		document.body.removeChild(blocker);
+																		failureDialog.destroy();
+																		
+																		require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+																		require('gb').game.get_extension(require('logger')).show();
+																	}
+																}
+															});
+														});
+													}
+												}
+											});
+										},
+										function(error) {
+											if (error === "user-closed") {
+												document.body.removeChild(blocker);
+												return;
+											}
+											
+											var failureDialog = new messageDialog();
+											
+											failureDialog.create({
+												title: "Share Failed",
+												message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+												modal: true,
+												close: function() {
+													uploadDialog.destroy();
+													document.body.removeChild(blocker);
+													
+													require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+													require('gb').game.get_extension(require('logger')).show();
+												},
+												buttons: {
+													Ok: function() {
+														document.body.removeChild(blocker);
+														failureDialog.destroy();
+														
+														require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+														require('gb').game.get_extension(require('logger')).show();
+													}
+												}
+											});
+										}
+									);
+								}
+							}
+						});
+					},
+					function(error) {
+						if (error === "user-closed") {
+							document.body.removeChild(blocker);
+							return;
+						}
+						
+						var failureDialog = new messageDialog();
+			
+						failureDialog.create({
+							title: "Share Failed",
+							message: "Sharing failed, please try again later. Reasons for the failure are unknown. It is a mystery.",
+							modal: true,
+							close: function() {
+								failureDialog.destroy();
+								document.body.removeChild(blocker);
+								
+								require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+								require('gb').game.get_extension(require('logger')).show();
+							},
+							buttons: {
+								Ok: function() {
+									document.body.removeChild(blocker);
+									failureDialog.destroy();
+									
+									require('gb').game.get_extension(require('logger')).error('Share to Twitter failed');
+									require('gb').game.get_extension(require('logger')).show();
+								}
+							}
+						});
+					})
+				},
+				'fa fa-lg'
+			));
+
 			items.push(createDivider());
 			items.push(createTitleItem('Misc.'));
 

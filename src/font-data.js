@@ -7,8 +7,7 @@ define(function() {
 	// This assumes you will be using [Google Fonts](https://www.google.com/fonts), but there are other options
 	"data": {
 		"custom": {
-			"families": ["Exo", "CGFLocustResistance", "Russo One"],
-			"urls": ["/styles/css/all_styles.css"]
+			"families": ["Exo", "CGFLocustResistance", "Russo One"]
 		},
 	},
 

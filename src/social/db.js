@@ -36,7 +36,7 @@ define(function(require)
 			var token = require('local-storage').getDropboxToken();
 			
 			request({
-				'url': 'https://api.dropboxapi.com/2/files/create_folder',
+				'url': 'https://api.dropboxapi.com/2/files/create_folder_v2',
 				'headers': {
 					"Authorization": "Bearer " + token,
 					"Content-Type": 'application/json'
@@ -68,7 +68,7 @@ define(function(require)
 				});
 			}, function(response) {
 				var error = JSON.parse(response.response)["error_summary"];
-				
+
 				if (error.match("path/conflict/folder/")) {
 					request({
 						'url': 'https://content.dropboxapi.com/2/files/upload',
@@ -114,7 +114,7 @@ define(function(require)
 				onSuccess(response);
 			}, function(response) {
 				var error = JSON.parse(response.response)["error_summary"];
-				
+
 				if (error.match("shared_link_already_exists")) {
 					request({
 						'url': 'https://api.dropboxapi.com/2/sharing/list_shared_links',
@@ -127,7 +127,19 @@ define(function(require)
 							"path": "/" + path
 						})
 					}, function(response) {
-						onSuccess(JSON.parse(response)["links"][0]);
+						var links = JSON.parse(response)["links"];
+						var matchingLink;
+
+						for (var i = 0; i < links.length; i++) {
+							var link = links[i];
+
+							if (link["path_lower"].match(path)) {
+								matchingLink = link;
+								break;
+							}
+						}
+
+						onSuccess(matchingLink);
 					}, function(response) {
 						console.log(response);
 						

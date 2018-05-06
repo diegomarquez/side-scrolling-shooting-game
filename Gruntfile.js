@@ -383,7 +383,8 @@ module.exports = function(grunt) {
 	// This task opens index.html
 	grunt.registerTask('run', ['open:index']);
 	// Refreshes all the data before opening index.html
-	grunt.registerTask('refresh', ['css', 'asset-map-dev', 'copy:vendor-to-lib', 'open:index']);
+	grunt.registerTask('refresh', ['css', 'asset-map-dev', 'copy:vendor-to-lib']);
+	grunt.registerTask('refresh-and-open', ['refresh', 'open:index']);
 
 	grunt.registerTask('build-jquery', ['clean:jquery', 'shell:build-jquery', 'copy:jquery', 'clean:jquery']);
 

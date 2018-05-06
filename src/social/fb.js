@@ -1,69 +1,47 @@
 define(function(require)
 {
-	var gb = require('gb');
-	
-	var Facebook = function() {
-		this.initialized = false;
-	};
+	var Facebook = function() {};
 
 	Facebook.prototype.load = function(oncomplete, onerror) {
-		var self = this;
-		
-		if (this.initialized) {
-			oncomplete();
-		} else {
-			window.fbAsyncInit = function() {
-				
-				FB.init({
-					appId: gb.getEnvironment() === 'dev' ? '678625568980303' : '1910504332510208',
-					version : 'v2.8'
-				});
-				
-				self.initialized = true;
-
-				oncomplete();
-			};
-
-			var js, fjs = document.getElementsByTagName('script')[0];
-	
-			if (document.getElementById('facebook-jssdk')) {
-				return;
-			}
-	
-			js = document.createElement('script');
-	
-			js.onerror = function() {
-				onerror();
-			}
-	
-			js.id = 'facebook-jssdk';
-			js.src = '//connect.facebook.net/en_US/sdk.js';
-	
-			if (fjs) {
-				fjs.parentNode.insertBefore(js, fjs);
-			} else {
-				document.body.appendChild(js);
-			}
-		}
+		oncomplete();
 	}
 
 	Facebook.prototype.share = function(dropboxShareLinkUrl, oncomplete, onerror) {
-		FB.ui({
-			method: 'share',
-			href: 'https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxShareLinkUrl)
-		},
-		function(response) {
-			if (response === undefined) {
-				onerror("user-closed");
-			} else if (response && !response.error_code) {
-				oncomplete();
-			} else if (response && response.error_code) {
-				onerror();
-			} else {
-				onerror();
+		var width = 575;
+		var height = 300;
+		var left = (window.innerWidth - width) / 2;
+		var top = (window.innerHeight - height) / 2;
+
+		var url = encodeURIComponent('https://www.treintipollo.com/spacemazefbshare/' + encodeURIComponent(dropboxShareLinkUrl));
+		var opts = 'status=1' + ',width=' + width + ',height=' + height + ',top=' + top + ',left=' + left;
+
+		var win = window.open(
+			"https://www.facebook.com/sharer/sharer.php?u="+url,
+			"Share on Facebook",
+			opts
+		);
+
+		if(!win || win.closed || typeof win.closed === 'undefined')
+			return onerror();
+
+		var poll = function() {
+			try {
+				if(!win || win.closed || typeof win.closed === 'undefined')
+					return onerror("user-closed");
+			} catch (e) {
+				return onerror();
 			}
-		});
+
+			setTimeout(poll, 50);
+		};
+
+		poll();
 	}
 
 	return new Facebook();
 });
+
+
+
+
+
