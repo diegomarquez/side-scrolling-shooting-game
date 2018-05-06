@@ -40,6 +40,20 @@ define(function(require) {
 										},
 
 										tip: "Scene name can't be empty"
+									},
+									{
+										check: function(sceneName) {
+											return !sceneName.includes("/");
+										},
+
+										tip: "Scene name can't use the '/' character"
+									},
+									{
+										check: function(sceneName) {
+											return !sceneName.includes("\\");
+										},
+
+										tip: "Scene name can't use the '\\' character"
 									}
 								]
 							}),
@@ -87,6 +101,20 @@ define(function(require) {
 										},
 
 										tip: "Scene name can't be empty"
+									},
+									{
+										check: function(sceneName) {
+											return !sceneName.includes("/");
+										},
+
+										tip: "Scene name can't use the '/' character"
+									},
+									{
+										check: function(sceneName) {
+											return !sceneName.includes("\\");
+										},
+
+										tip: "Scene name can't use the '\\' character"
 									}
 								]
 							})
