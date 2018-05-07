@@ -3,10 +3,10 @@
   	<%= head %>
     <meta charset="utf-8"></meta>
     <title><%= name %></title>
-    <link rel="stylesheet" href="https://treintipollo.com/spacemazeassets/<%= cacheBustingId %>/styles/css/all_styles.css"></link>
+    <link rel="stylesheet" href="styles/css/all_styles.css?b=<%= cacheBustingId %>"></link>
   </head>
   <body>
   	<%= body %>
-    <script src="https://treintipollo.com/spacemazeassets/<%= cacheBustingId %>/packaged.js"></script>
+    <script src="packaged.js?b=<%= cacheBustingId %>"></script>
   </body>
 </html>
