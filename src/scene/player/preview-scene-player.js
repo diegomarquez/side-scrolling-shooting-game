@@ -10,7 +10,7 @@ define(function(require) {
 			this._super(sceneData);
 
 			document.getElementById('player-title').innerHTML = "";
-			document.getElementById('player-title').appendChild(document.createTextNode('Scene Preview'));
+			document.getElementById('player-title').appendChild(document.createTextNode('Preview'));
 		},
 
 		removeContainer: function() {
