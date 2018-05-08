@@ -6,7 +6,7 @@
   "frameworkRepo": "git@github.com:diegomarquez/game-builder.git",
   "framework": "./game-builder",
   "lib": "./lib",
-  "frameworkTag": "master",
+  "frameworkTag": "v1.0",
   "dependencies": {
     "cheerio": "^0.22.0",
     "connect": "^3.4.1",
