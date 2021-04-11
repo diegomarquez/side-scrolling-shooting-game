@@ -1,4 +1,4 @@
-define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage, Util) {
+define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util", "TweenLite", "EasePack", "loader-container"], function(GameObject, Gb, TimelineLite, Keyboard, LocalStorage, Util, TweenLite, EasePack, LoaderContainer) {
 	var StageOverview = GameObject.extend({
 		init: function() {
 			this._super();
@@ -23,12 +23,12 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 			this.tl = new TimelineLite({
 				onComplete: function() {
 					Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
-						Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
-						Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-						Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
-						Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+					Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+					Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
+					Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+					Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
-						this.execute(this.ENTER);
+					this.execute(this.ENTER);
 				}.bind(this),
 
 				onReverseComplete: function() {
@@ -94,6 +94,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		},
 
 		onLeftPress: function() {
+			if (LoaderContainer.isClosed())
+        		return;
+
 			var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
 			if (!this.backOption.selected) {
@@ -115,6 +118,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		},
 
 		onRightPress: function() {
+			if (LoaderContainer.isClosed())
+        		return;
+
 			var children = this.backOption.findChildren().allWithType("MarkerArrow");
 
 			if (this.backOption.selected) {
@@ -136,6 +142,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		},
 
 		onUpPress: function() {
+			if (LoaderContainer.isClosed())
+        		return;
+
 			if (this.stageIndex > 0) {
 				this.stageIndex--;
 			}
@@ -153,6 +162,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		},
 
 		onDownPress: function() {
+			if (LoaderContainer.isClosed())
+        		return;
+
 			var stageIndexChange = false;
 
 			if (this.stageIndex < this.sceneCount) {
@@ -176,6 +188,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "local-storage", "util"
 		},
 
 		onOptionSelected: function() {
+			if (LoaderContainer.isClosed())
+        		return;
+
 			if (this.backOption.selected) {
 				this.reverse();
 				this.execute(this.BACK_SELECTED);

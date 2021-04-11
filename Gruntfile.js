@@ -106,6 +106,10 @@ module.exports = function(grunt) {
 
 			// Clone game-builder from github
 			'framework': {
+				options: {
+					stdout: true,
+					stderr: true
+				},
 				command: t('git clone -b <%= p.frameworkTag %> <%= p.frameworkRepo %> <%= p.framework %>', {data: {p:p}})
 			},
 

@@ -1,4 +1,4 @@
-define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "TweenLite", "EasePack"], function(GameObject, Gb, TimelineLite, Keyboard, LevelStorage) {
+define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "TweenLite", "EasePack", "loader-container"], function(GameObject, Gb, TimelineLite, Keyboard, LevelStorage, TweenLite, EasePack, LoaderContainer) {
   var StageOverview = GameObject.extend({
     init: function() {
       this._super();
@@ -47,57 +47,63 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     	this.tl = new TimelineLite({
     		onComplete: function() {
     			Keyboard.onKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
-				Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
-				Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-				Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+				  Keyboard.onKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
+				  Keyboard.onKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
+				  Keyboard.onKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
 				
-				Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
+				  Keyboard.onKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
-				this.execute(this.ENTER);
+				  this.execute(this.ENTER);
     		}.bind(this),
 
     		onReverseComplete: function() {
     			this.executeExitDelegate();
-    		}.bind(this) 
+    		}.bind(this)
     	});
 
-		this.tl.to(this.stages, 0.5, { y: 50 }, 'title');
-		this.tl.to(this.topLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
-		this.tl.to(this.bottomLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
-		this.tl.to(this.topRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
-		this.tl.to(this.bottomRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
-		this.tl.to(this.backOption, 0.5, { y: Gb.canvas.height - 40 }, 'title');
+  		this.tl.to(this.stages, 0.5, { y: 50 }, 'title');
+  		this.tl.to(this.topLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+  		this.tl.to(this.bottomLeft, 0.5, { x: Gb.canvas.width/2-110 }, 'stages');
+  		this.tl.to(this.topRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+  		this.tl.to(this.bottomRight, 0.5, { x: Gb.canvas.width/2+110 }, 'stages');
+  		this.tl.to(this.backOption, 0.5, { y: Gb.canvas.height - 40 }, 'title');
 
-		this.tl.play();
+  		this.tl.play();
 
-		this.onLeftPress();
+  		this.onLeftPress();
 
-		this._super();
-    }, 
+  		this._super();
+    },
 
     reverse: function() {
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+		  Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.reverse();
     },
 
     onLeftPress: function() {
+      if (LoaderContainer.isClosed())
+        return;
+
     	this.hideAllOptions();
 		
-		if (this.gridX > 0) {
-			this.gridX--;
+  		if (this.gridX > 0) {
+  			this.gridX--;
 
-			this.execute("option");
-		}
+  			this.execute("option");
+  		}
 
-		this.showSelection();
+  		this.showSelection();
     },
 
     onRightPress: function() {
+      if (LoaderContainer.isClosed())
+        return;
+
     	this.hideAllOptions();
 
     	if (this.gridX < 1) {
@@ -110,6 +116,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     },
 
     onUpPress: function() {
+      if (LoaderContainer.isClosed())
+        return;
+
     	this.hideAllOptions();
 
     	if (this.gridY > 0) {
@@ -122,12 +131,15 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     },
 
     onDownPress: function() {
+      if (LoaderContainer.isClosed())
+        return;
+
     	this.hideAllOptions();
 
     	if (this.gridY < 2) {
     		this.gridY++;
 
-    		this.execute("option");	
+    		this.execute("option"); 
     	}
 
     	this.showSelection();
@@ -197,6 +209,9 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     },
 
     onOptionSelected: function() {
+      if (LoaderContainer.isClosed())
+        return;
+
     	this.reverse();
 
     	this.executeStartSelectedDelegate();
@@ -208,7 +223,7 @@ define(["game-object", "gb", "TimelineLite", "keyboard", "level-storage", "Tween
     	Keyboard.removeKeyDown(Keyboard.GAME_LEFT, this, this.onLeftPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_RIGHT, this, this.onRightPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_UP, this, this.onUpPress);
-		Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
+		  Keyboard.removeKeyDown(Keyboard.GAME_DOWN, this, this.onDownPress);
     	Keyboard.removeKeyDown(Keyboard.GAME_BUTTON_1, this, this.onOptionSelected);
 
     	this.tl.kill();
