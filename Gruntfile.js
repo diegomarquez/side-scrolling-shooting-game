@@ -450,3 +450,10 @@ module.exports = function(grunt) {
 	// Default task setups for development
 	grunt.registerTask('default', ['setup']);
 };
+
+// NOTE: before building make sure to install
+	// npm
+	// grunt-cli (npm install grunt-cli -g), so grunt command is available globally
+	// bower (npm install bower -g)
+	// then execute "grunt setup"
+		// give credentials were needed
