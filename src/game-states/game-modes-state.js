@@ -1,4 +1,4 @@
-define(function(require) {
+ define(function(require) {
 	var stateMachineFactory = require("state-machine");
 
 	var gb = require("gb");

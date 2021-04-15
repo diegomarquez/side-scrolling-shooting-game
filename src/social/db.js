@@ -415,20 +415,12 @@ function request(arg, onSuccess, onError) {
 		if (req.status < 400 && req.status >= 200) {
 			onSuccess(req.response);
 		} else {
-			onError({
-				'response': req.response,
-				'code': req.status,
-				'status': req.statusText
-			});
+			wrapError(req, onError);
 		}
 	};
 	
 	req.ontimeout = req.onerror = req.onabort = function() {
-		onError({
-			'response': req.response,
-			'code': req.status,
-			'status': req.statusText
-		});
+		wrapError(req, onError);
 	};
 	
 	if (arg.data) {
@@ -445,6 +437,25 @@ function request(arg, onSuccess, onError) {
 		}
 	} else {
 		req.send();
+	}
+}
+
+function wrapError(req, onError)
+{
+	try {
+		JSON.parse(req.response);
+
+		onError({
+			'response': req.response,
+			'code': req.status,
+			'status': req.statusText
+		});
+	} catch (e) {
+		onError({
+			'response': JSON.stringify({ "error_summary": "wrapping unexpected error" }),
+			'code': req.status,
+			'status': req.statusText
+		});
 	}
 }
 

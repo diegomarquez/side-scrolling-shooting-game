@@ -29,6 +29,10 @@ define(function(require) {
 
 			var fieldObjects = {};
 
+			options.tabs = $(options.tabs).filter(function(index, tab) {
+				return !!tab;
+			});
+
 			$.each(options.tabs, function(index, tab) {
 				var tabItem = document.createElement('li');
 				var tabAnchor = document.createElement('a');
@@ -90,8 +94,7 @@ define(function(require) {
 							}
 						}
 					}.call(this, buttonCallback, action, validateActions, fields);
-
-				});	
+				});
 			});
 
 			options.close = function() {
@@ -113,12 +116,21 @@ define(function(require) {
 			}
 			
 			options.open = function() {
-				$.each(options.tabs, function(index, tab) {
-					resetFeedback(tip, tab.fields, options);
+				$.each($(tabs).find(".ui-tabs-panel"), function(index, tb) {
+					var tab = options.tabs[index];
+					
+					$.each(tab.fields, function(index, field) {
+						if (field.setTab)
+							field.setTab(tb);
+					});
+				});
 
+				$.each(options.tabs, function(index, tab) {
 					$.each(tab.fields, function(index, field) {
 						field.open(dialog);
 					});
+
+					resetFeedback(tip, tab.fields, options);
 				});
 
 				$(dialog).dialog("option", "position", { my: "center", at: "center", of: window });
@@ -197,6 +209,8 @@ define(function(require) {
 				}
 			});
 
+			
+
 			// Prevent form submition
 			$(dialog).submit( function(e) {
 				e.preventDefault();
@@ -270,11 +284,19 @@ define(function(require) {
 	}
 
 	var resetFeedback = function(tipContainer, fieldObjects, options) {
+		if (fieldObjects[0].getTab)
+		{
+			var tab = fieldObjects[0].getTab();
+			
+			if (tab && $(tab).is(":hidden"))
+				return;
+		}
+
 		tipContainer.toInfo(options.tip);
 
 		if (fieldObjects) {
 			$.each(fieldObjects, function (key, field) {
-				field.resetFeedback();
+				field.resetFeedback(tipContainer);
 			});
 		}
 	}

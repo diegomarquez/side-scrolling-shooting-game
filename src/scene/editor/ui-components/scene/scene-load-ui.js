@@ -15,6 +15,73 @@ define(function(require) {
 
 	var SceneLoad = require('ui-component').extend({
 		init: function() {
+
+			var urlScene = localStorageWrapper.getUrlScene();
+			var urlSceneTabItem = null;
+
+			if (urlScene)
+			{
+				urlScene = JSON.parse(urlScene);
+
+				urlSceneTabItem = {
+					name: 'Shared scene',
+
+					fields: [
+						new dialogPagingField({
+							name: 'Shared Scene',
+							itemsPerPage: 1,
+							hideNavagationButtons: true,
+							tip: "Load the shared scene",
+							autoSelect: true,
+							data: function() {
+								return [urlScene.name];
+							},
+							validations: [
+								{
+									check: function() {
+										return this.SharedScene();
+									},
+									
+									tip: "No scene selected"
+								}
+							]
+						})
+					],
+
+					buttons: {
+						'Open Shared': function () {
+							// Store a backup of the current scene in case something goes wrong while loading the new one
+							localStorageWrapper.setBackUpScene(sceneSerializer.serialize(require('scene-name').get()));
+
+							var dialogOptions = $(this).dialog('option');
+							dialogOptions.showLoadingFeedback();
+
+							try {
+								sceneLoader.load(urlScene);
+								sceneLoader.layout();
+								
+								dialogOptions.hideLoadingFeedback();
+								$(this).dialog('close');
+								
+								require('gb').game.get_extension(require('logger')).success('Shared scene loaded successfully!');
+								require('gb').game.get_extension(require('logger')).show();
+							} catch (e) {
+								// Restore the initial scene and show error feedback
+								sceneLoader.load(localStorageWrapper.getBackUpScene());
+								sceneLoader.layout();
+								
+								dialogOptions.hideLoadingFeedback();
+								dialogOptions.showErrorFeedback('Error opening scene.');
+							}
+						}
+					},
+
+					validateOnAction: {
+						'Open Local': ['Shared Scene']
+					}
+				}
+			}
+
 			this.loadSceneDialog = new dialogTabbedModular().create({
 				id: 'load-scene-dialog',
 				title: 'Open a scene',
@@ -26,6 +93,7 @@ define(function(require) {
 				modal: true,
 
 				tabs: [
+					urlSceneTabItem,
 					{
 						name: 'Local Scenes',
 

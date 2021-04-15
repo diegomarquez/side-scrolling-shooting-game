@@ -9,6 +9,16 @@ define(function(require) {
 			this.cachedData = null;
 			this.cachedPages = null;
 			this.dialog = null;
+			this.input = null;
+			this.tab = null;
+		},
+
+		setTab: function(tab) {
+			this.tab = tab;
+		},
+
+		getTab: function() {
+			return this.tab;
 		},
 
 		name: function() {
@@ -59,20 +69,29 @@ define(function(require) {
 
 			var label = document.createElement('label');
 			label.innerHTML = this.name();
+
 			$(label).attr('for', lowerCaseName);
 
 			var container = document.createElement('div');
 			
 			var data = this.data();
 
-			this.addListItem(container, { 'margin-top': '0px' }, data[0], 0);
+			if (this.itemsPerPage() !== 1)
+			{
+				this.addListItem(container, { 'margin-top': '0px' }, data[0], 0);
+			}
+			else
+			{
+				this.addListItem(container, null, data[0], 0);
+			}
 
 			for (var i = 0; i < this.itemsPerPage() - 2; i++) {
 				this.addListItem(container, null, data[i+1], i+1);
 			}
 
 			if (this.options.hideNavagationButtons) {
-				this.addListItem(container, { 'margin-bottom': '0px' }, data[this.itemsPerPage()-1], this.itemsPerPage()-1);
+				if (this.itemsPerPage() !== 1)
+					this.addListItem(container, { 'margin-bottom': '0px' }, data[this.itemsPerPage()-1], this.itemsPerPage()-1);
 			} else {
 				this.addListItem(container, null, data[this.itemsPerPage()-1], this.itemsPerPage()-1);
 				this.addNavigationButtons(container);
@@ -95,6 +114,8 @@ define(function(require) {
 			$(label).addClass('radio');
 			
 			label.style.marginBottom = '13px';
+			label.style.display = 'flex';
+ 	 	  	label.style.alignItems = 'center';
 
 			if (styles) {
 				$(label).css(styles);
@@ -104,7 +125,7 @@ define(function(require) {
 			input.type = 'radio';
 			input.name = this.name().toLowerCase() + "_radio";
 			input.style.width = 'auto';
-			input.style.marginTop = '1px';
+			input.style.marginRight = '7px';
 
 			label.appendChild(input);
 
@@ -119,6 +140,8 @@ define(function(require) {
 
 				$(input).attr("disabled", true).addClass("ui-state-disabled");
 			}
+
+			this.input = input;
 
 			label.style.fontWeight = "normal";
 
@@ -317,8 +340,15 @@ define(function(require) {
 			
 		},
 
-		resetFeedback: function() {
-			
+		resetFeedback: function(tipContainer) {
+			if (this.tab && $(this.tab).is(":hidden"))
+				return;
+
+			if (this.options.tip)
+				tipContainer.toInfo(this.options.tip);
+
+			if (this.options.autoSelect)
+				$(this.input).prop("checked", true);
 		},
 
 		enable: function() {
